@@ -1,0 +1,1 @@
+web: node api/bin/www & nuxt start & wait -n

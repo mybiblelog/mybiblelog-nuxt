@@ -1,0 +1,31 @@
+{
+  "recommendations": [
+
+    // Supercharged Git
+    "eamodio.gitlens",
+
+    // Vue Tooling
+    "octref.vetur",
+
+    // Vue "peek" and "goto definition"
+    "dariofuzinato.vue-peek",
+
+    // JS Linting
+    "dbaeumer.vscode-eslint",
+
+    // Markdown Linting
+    "davidanson.vscode-markdownlint",
+
+    // .env Support
+    "mikestead.dotenv",
+
+    // SVG Editor
+    "jock.svg",
+
+    // SVG Previewer
+    "cssho.vscode-svgviewer",
+
+    // TODO: and FIXME: Highlighter
+    "wayou.vscode-todo-highlight",
+  ]
+}

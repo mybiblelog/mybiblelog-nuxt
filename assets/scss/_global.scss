@@ -1,0 +1,27 @@
+@use 'variables' as v;
+
+/* Hide Vue.js apps until they are compiled */
+[v-cloak] {
+  display: none;
+}
+
+body {
+  &.modal-open {
+    overflow-y: hidden;
+  }
+}
+
+.container header.page-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+
+  padding: 0; /* unset from main header -- this should be more specific */
+}
+
+.no-print {
+  @media print {
+    display: none !important;
+  }
+}

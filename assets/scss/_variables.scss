@@ -1,0 +1,16 @@
+$breakpoint: 800px;
+
+$zIndexToast: 42;
+$zIndexPopUp: 41;
+$zIndexModal: 40; // 40 is the Bulma modal class z-index as well
+$zIndexBusyBar: 29;
+$zIndexSiteHeader: 3;
+$zIndexSiteNav: 2;
+$zIndexSiteNavScreen: 1;
+  
+$header-height: calc(1rem + 1.618rem + 3px);
+
+$grey-100: #e4e9f0;
+$grey-200: #cfd7e3;
+$grey-300: #b5c0cd;
+$grey-800: #3e4e63;

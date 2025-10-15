@@ -1,0 +1,102 @@
+<template>
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-two-thirds-tablet is-half-desktop">
+            <h1 class="title">
+              {{ $t('signing_in_with_google') }}
+            </h1>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</template>
+
+<script>
+export default {
+  name: 'GoogleLoginPage',
+  middleware: ['auth'],
+  data() {
+    return {
+      //
+    };
+  },
+  head() {
+    return {
+      title: this.$t('page_title'),
+    };
+  },
+  async mounted() {
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get('code');
+    const state = url.searchParams.get('state');
+
+    if (code && state) {
+      try {
+        const response = await this.$axios.get(`/api/auth/oauth2/google/verify?code=${code}&state=${state}`);
+        const { token } = response.data;
+        await this.$auth.setUserToken(token);
+
+        // Redirect to the user's preferred locale.
+        // We saved the user's locale to localStorage on the Login page,
+        // allowing us to redirect to the correct locale after login
+        // without changing the OAuth2 redirect URL.
+        // Otherwise we would need to add a language prefix to the OAuth2 redirect URL,
+        // as i18n will interpret the OAuth2 redirect URL as an intentional language switch.
+        const defaultLocale = this.$i18n.defaultLocale;
+        const loginLocale = localStorage.getItem('login_language');
+        const redirectUrl = this.localePath('/today', loginLocale || defaultLocale);
+        this.$router.push(redirectUrl);
+      }
+      catch (error) {
+        console.error('Google OAuth verification failed:', error);
+        // Redirect to login page with error
+        this.$router.push(this.localePath('/login?error=oauth_failed'));
+      }
+    }
+    else {
+      // Missing required parameters, redirect to login
+      this.$router.push(this.localePath('/login?error=invalid_oauth_response'));
+    }
+  },
+  methods: {
+    //
+  },
+  auth: 'guest',
+};
+</script>
+
+<style lang="scss" scoped>
+//
+</style>
+
+<i18n lang="json">
+{
+  "de": {
+    "page_title": "Anmelden – Google",
+    "signing_in_with_google": "Mit Google anmelden..."
+  },
+  "en": {
+    "page_title": "Sign In - Google",
+    "signing_in_with_google": "Signing in with Google..."
+  },
+  "es": {
+    "page_title": "Iniciar sesión - Google",
+    "signing_in_with_google": "Iniciando sesión con Google..."
+  },
+  "fr": {
+    "page_title": "Connexion - Google",
+    "signing_in_with_google": "Connexion avec Google en cours..."
+  },
+  "pt": {
+    "page_title": "Entrar - Google",
+    "signing_in_with_google": "Entrando com Google..."
+  },
+  "uk": {
+    "page_title": "Увійти - Google",
+    "signing_in_with_google": "Увійти через Google..."
+  }
+}
+</i18n>
