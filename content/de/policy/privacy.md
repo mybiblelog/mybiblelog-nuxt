@@ -1,4 +1,4 @@
-# Meine Bibel Log Datenschutzrichtlinie
+# My Bible Log Datenschutzrichtlinie
 
 Diese Datenschutzrichtlinie erläutert, wie Ihre persönlichen Informationen behandelt werden, wenn Sie [https://www.mybiblelog.com](https://www.mybiblelog.com) (die "Website") verwenden.
 

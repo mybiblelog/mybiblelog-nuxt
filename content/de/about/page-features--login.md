@@ -1,31 +1,31 @@
 ---
 seo:
   title: Kontoerstellung
-  description: So erstellen Sie ein Konto auf Mein Bibelprotokoll
+  description: So erstellen Sie ein Konto auf My Bible Log
 og:
   title: Kontoerstellung
-  description: So erstellen Sie ein Konto auf Mein Bibelprotokoll
+  description: So erstellen Sie ein Konto auf My Bible Log
 ---
 
 ![](/share.jpg)
 
 # Kontoerstellung
 
-Mein Bibelprotokoll unterstützt mehrere Methoden der Authentifizierung, um den Einstieg zu erleichtern.
+My Bible Log unterstützt mehrere Methoden der Authentifizierung, um den Einstieg zu erleichtern.
 
 ## Soziale Anmeldung
 
 Benutzer mit einem Google-Konto können es zur Anmeldung verwenden. Auf der Anmeldeseite befindet sich eine "Mit Google anmelden"-Schaltfläche, die Sie zur Anmeldung bei Google weiterleitet.
 
-Benutzer geben ihr Google-Passwort nie bei Mein Bibelprotokoll ein. Sobald sich ein Benutzer bei Google angemeldet hat, wird Google zurückspringen zu Mein Bibelprotokoll und die Bestätigung weitergeben, dass Sie sich auf dieser Website angemeldet haben.
+Benutzer geben ihr Google-Passwort nie bei My Bible Log ein. Sobald sich ein Benutzer bei Google angemeldet hat, wird Google zurückspringen zu My Bible Log und die Bestätigung weitergeben, dass Sie sich auf dieser Website angemeldet haben.
 
 ## Lokale Kontenerstellung
 
 Benutzerkonten sind an E-Mail-Adressen gebunden. Die Anmeldung mit Google ist eine Möglichkeit, eine E-Mail-Adresse zu überprüfen.
 
-Benutzer, die sich direkt bei Mein Bibelprotokoll anmelden möchten, können sich auf der Website registrieren. Geben Sie dazu eine E-Mail-Adresse und ein Passwort an. Ein Bestätigungslink wird an die angegebene E-Mail-Adresse gesendet, und die E-Mail-Adresse muss mit diesem Link bestätigt werden, bevor sich ein Benutzer anmelden kann.
+Benutzer, die sich direkt bei My Bible Log anmelden möchten, können sich auf der Website registrieren. Geben Sie dazu eine E-Mail-Adresse und ein Passwort an. Ein Bestätigungslink wird an die angegebene E-Mail-Adresse gesendet, und die E-Mail-Adresse muss mit diesem Link bestätigt werden, bevor sich ein Benutzer anmelden kann.
 
-Durch die Überprüfung von E-Mail-Adressen verhindert Mein Bibelprotokoll das Missbrauchen von Serverressourcen durch Spam-Konten und stellt sicher, dass die Website für alle Benutzer schnell und leistungsfähig bleibt.
+Durch die Überprüfung von E-Mail-Adressen verhindert My Bible Log das Missbrauchen von Serverressourcen durch Spam-Konten und stellt sicher, dass die Website für alle Benutzer schnell und leistungsfähig bleibt.
 
 ## Ändern der Anmeldemethoden
 
@@ -37,7 +37,7 @@ Benutzer, die zuvor die soziale Anmeldung genutzt haben und kein Passwort haben,
 - Klicken Sie auf "Anmelden" (keine Eingabe der E-Mail-Adresse oder des Passworts erforderlich)
 - Ein Link erscheint, der Ihnen anbietet, Ihr Passwort über E-Mail zurückzusetzen. Klicken Sie darauf.
 - Öffnen Sie die E-Mail und klicken Sie auf den Link.
-- Sie können nun ein Passwort für Mein Bibelprotokoll erstellen.
+- Sie können nun ein Passwort für My Bible Log erstellen.
 - Sobald Ihr Passwort erstellt ist, werden Sie automatisch angemeldet.
 
 ## Ändern der E-Mail-Adresse des Kontos
