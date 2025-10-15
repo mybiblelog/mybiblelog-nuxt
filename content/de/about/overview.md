@@ -1,19 +1,27 @@
 ---
 seo:
-  title: Mein Bibel-Logbuch - Dein persönlicher Begleiter beim Bibellesen
-  description: Mein Bibel-Logbuch ist ein kostenloses Online-Tool, das Ihnen hilft, Ihre Bibellese-Reise zu verfolgen und zu organisieren
+  title: My Bible Log - Dein persönlicher Begleiter beim Bibellesen
+  description: My Bible Log ist ein kostenloses Online-Tool, das Ihnen hilft, Ihre Bibellese-Reise zu verfolgen und zu organisieren
 og:
-  title: Mein Bibel-Logbuch - Dein persönlicher Begleiter beim Bibellesen
-  description: Mein Bibel-Logbuch ist ein kostenloses Online-Tool, das Ihnen hilft, Ihre Bibellese-Reise zu verfolgen und zu organisieren
+  title: My Bible Log - Dein persönlicher Begleiter beim Bibellesen
+  description: My Bible Log ist ein kostenloses Online-Tool, das Ihnen hilft, Ihre Bibellese-Reise zu verfolgen und zu organisieren
 ---
 
 <h1>
   <img src="/share.jpg" alt="My Bible Log">
 </h1>
 
-Feedback geben? Sie können eine Funktionsanfrage, einen Fehlerbericht oder eine andere Nachricht mit [diesem Formular](/feedback) senden.
+## Feedback
 
-## Erste Schritte mit Mein Bibel-Logbuch
+Sie können eine Funktionsanfrage, einen Fehlerbericht oder eine andere Nachricht mit [diesem Formular](/feedback) senden.
+
+## Mitwirken
+
+My Bible Log ist Open Source! Sie können den Quellcode auf GitHub finden: [My Bible Log Repository](https://github.com/mybiblelog/mybiblelog-nuxt)
+
+Jeder ist willkommen, den Code zu kopieren, für den eigenen Gebrauch zu modifizieren, eine eigene Instanz von My Bible Log zu hosten und zum ursprünglichen Codebase beizutragen.
+
+## Erste Schritte mit My Bible Log
 
 * [Erstellen Sie Ihr kostenloses Konto](/de/about/page-features--login)
 * [Installation auf jedem Gerät](/de/about/page-features--install)

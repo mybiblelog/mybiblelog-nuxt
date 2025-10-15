@@ -11,7 +11,15 @@ og:
   <img src="/share.jpg" alt="My Bible Log">
 </h1>
 
-Tem feedback? Você pode enviar uma solicitação de recurso, relatório de bug ou outra mensagem com [este formulário](/feedback).
+## Feedback
+
+Você pode enviar uma solicitação de recurso, relatório de bug ou outra mensagem com [este formulário](/feedback).
+
+## Contribuir
+
+My Bible Log é open source! Você pode encontrar o código-fonte no GitHub: [My Bible Log Repository](https://github.com/mybiblelog/mybiblelog-nuxt)
+
+Qualquer pessoa é bem-vinda para copiar o código, modificá-lo para seu próprio uso, hospedar sua própria instância do My Bible Log e contribuir para o código base original.
 
 ## Começando com My Bible Log
 
