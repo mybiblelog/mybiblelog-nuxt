@@ -1,0 +1,37 @@
+{
+  "name": "mybiblelog-client",
+  "version": "1.0.0",
+  "description": "My Bible Log Nuxt.js Web App",
+  "license": "MIT",
+  "author": "Aaron Smith",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "build": "nuxt build",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxt/content": "^1.14.0",
+    "@nuxtjs/auth": "^4.9.0",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/i18n": "^7.3.1",
+    "@nuxtjs/proxy": "^2.0.0",
+    "@nuxtjs/pwa": "^3.3.4",
+    "@nuxtjs/redirect-module": "^0.3.1",
+    "@nuxtjs/robots": "^2.5.0",
+    "@nuxtjs/style-resources": "^1.2.2",
+    "cookie": "^0.4.2",
+    "csv": "^5.3.2",
+    "dayjs": "^1.10.4",
+    "dotenv": "^8.2.0",
+    "nuxt": "^2.18.1",
+    "redirect-ssl": "^3.0.0",
+    "sass": "^1.71.1",
+    "vue-gtag": "^1.16.1"
+  },
+  "devDependencies": {
+    "sass-loader": "^10.4.1"
+  }
+}

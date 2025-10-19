@@ -4,7 +4,7 @@ const express = require('express');
 const xml = require('xml');
 const config = require('../../config');
 
-const i18nConfig = require('../../../i18n.config');
+const i18nConfig = require('../../../nuxt/i18n.config');
 const siteLocales = i18nConfig.locales.map(locale => locale.code);
 
 const router = express.Router();

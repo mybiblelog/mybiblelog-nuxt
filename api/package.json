@@ -1,0 +1,46 @@
+{
+  "name": "mybiblelog-api",
+  "version": "1.0.0",
+  "description": "My Bible Log API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon bin/www --watch .",
+    "start:prod": "cross-env NODE_ENV=production node bin/www",
+    "test": "jest ./test",
+    "test:serial": "jest --runInBand ./test",
+    "test:watch": "jest --watch ./test",
+    "script:seed": "node ./scripts/seed.js",
+    "script:backup": "node ./scripts/backup.js",
+    "script:delete-test-users": "node ./scripts/delete-test-users.js",
+    "script:delete-stranded-data": "node ./scripts/delete-stranded-data.js"
+  },
+  "author": "Aaron Smith",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dayjs": "^1.10.4",
+    "dotenv": "^8.2.0",
+    "errorhandler": "^1.5.1",
+    "express": "^5.0.0",
+    "form-data": "^4.0.0",
+    "helmet": "^8.1.0",
+    "http-errors": "^1.7.3",
+    "http-status": "^1.4.2",
+    "jsonwebtoken": "^9.0.0",
+    "mailgun.js": "^8.2.1",
+    "mongoose": "^8.5.1",
+    "mongoose-unique-validator": "^5.0.1",
+    "morgan": "^1.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "xml": "^1.0.1",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+  }
+}
