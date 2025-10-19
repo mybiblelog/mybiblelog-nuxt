@@ -36,7 +36,8 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",
@@ -49,7 +50,6 @@
     "eslint-plugin-vue": "^7.20.0",
     "jest": "^29.7.0",
     "nodemon": "^2.0.22",
-    "npm-run-all": "^4.1.5",
     "openai": "^4.54.0",
     "supertest": "^7.1.0"
   }
