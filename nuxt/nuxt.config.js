@@ -1,7 +1,12 @@
 const path = require('node:path');
+const dotenv = require('dotenv');
 const redirectSSL = require('redirect-ssl');
 const sass = require('sass');
 const i18nConfig = require('./i18n.config');
+
+dotenv.config({
+  path: path.resolve(__dirname, '../.env'),
+});
 
 module.exports = {
   /*
