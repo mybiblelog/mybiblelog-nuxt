@@ -9,7 +9,7 @@ const path = require('node:path');
 const { existsSync } = require('node:fs');
 const OpenAI = require('openai');
 const dotenv = require('dotenv');
-const bibleBooks = require('./shared/static/bible-books.js');
+const bibleBooks = require('../shared/static/bible-books.js');
 
 dotenv.config();
 

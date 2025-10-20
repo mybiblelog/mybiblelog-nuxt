@@ -95,6 +95,7 @@ describe('Auth routes', () => {
           field: 'email',
           kind: 'api_error.review',
           properties: {
+            length: 13,
             message: 'is invalid',
             path: 'email',
             regexp: {},
@@ -106,6 +107,9 @@ describe('Auth routes', () => {
     });
 
     it('error if email already in use', async () => {
+      // Helper function to truncate email for error message
+      const truncatedEmail = email => email.substring(0, 30) + '...';
+
       // Arrange
       const testUser = await createTestUser();
 
@@ -126,10 +130,11 @@ describe('Auth routes', () => {
           kind: 'api_error.unique',
           field: 'email',
           properties: {
-            message: `Error, expected \`email\` to be unique. Value: \`${testUser.email}\``,
+            length: 42,
+            message: `Error, expected \`email\` to be unique. Value: \`${truncatedEmail(testUser.email)}\``,
             path: 'email',
             type: 'unique',
-            value: testUser.email,
+            value: truncatedEmail(testUser.email),
           },
         },
       });
@@ -154,7 +159,8 @@ describe('Auth routes', () => {
           field: 'password',
           kind: 'api_error.min_length',
           properties: {
-            message: 'Path `password` (`123`) is shorter than the minimum allowed length (8).',
+            length: 3,
+            message: 'Path `password` (`123`, length 3) is shorter than the minimum allowed length (8).',
             minlength: 8,
             path: 'password',
             type: 'minlength',

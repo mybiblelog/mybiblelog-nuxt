@@ -24,13 +24,13 @@
     "test": "jest ./test shared",
     "test:serial": "jest --runInBand ./test shared",
     "test:watch": "jest --watch ./test shared",
-    "test:api": "cd api && npm test",
+    "test:api": "npm run --prefix api test",
     "test:e2e": "playwright test e2e",
     "test:e2e:ui": "playwright test e2e --ui",
-    "script:seed": "cd api && npm run script:seed",
-    "script:backup": "cd api && npm run script:backup",
-    "script:delete-test-users": "cd api && npm run script:delete-test-users",
-    "script:delete-stranded-data": "cd api && npm run script:delete-stranded-data"
+    "script:seed": "npm run --prefix api script:seed",
+    "script:backup": "npm run --prefix api script:backup",
+    "script:delete-test-users": "npm run --prefix api script:delete-test-users",
+    "script:delete-stranded-data": "npm run --prefix api script:delete-stranded-data"
   },
   "jest": {
     "testEnvironment": "node"
