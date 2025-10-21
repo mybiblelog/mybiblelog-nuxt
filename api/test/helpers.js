@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const path = require('path');
+const crypto = require('node:crypto');
+const path = require('node:path');
 const request = require('supertest');
 const dotenv = require('dotenv');
 

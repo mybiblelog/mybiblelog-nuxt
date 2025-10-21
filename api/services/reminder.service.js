@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 const config = require('../config');
 const Bible = require('../../shared/bible');
 const useMongooseModels = require('../mongoose/useMongooseModels');
