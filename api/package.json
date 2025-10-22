@@ -2,18 +2,20 @@
   "name": "mybiblelog-api",
   "version": "1.0.0",
   "description": "My Bible Log API",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server.js --watch . --watch ../.env",
-    "build": "echo 'Build of API server not needed'",
-    "start": "cross-env NODE_ENV=production node server.js",
+    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node server.ts --watch . --watch ../.env",
+    "dev:ts": "cross-env NODE_ENV=development nodemon --exec ts-node --transpile-only server.ts --watch . --watch ../.env",
+    "build": "tsc",
+    "start": "cross-env NODE_ENV=production node server.ts",
     "test": "jest ./test",
     "test:serial": "jest --runInBand ./test",
     "test:watch": "jest --watch ./test",
-    "script:seed": "node ./scripts/seed.js",
-    "script:backup": "node ./scripts/backup.js",
-    "script:delete-test-users": "node ./scripts/delete-test-users.js",
-    "script:delete-stranded-data": "node ./scripts/delete-stranded-data.js"
+    "type-check": "tsc --noEmit",
+    "script:seed": "ts-node ./scripts/seed.js",
+    "script:backup": "ts-node ./scripts/backup.js",
+    "script:delete-test-users": "ts-node ./scripts/delete-test-users.js",
+    "script:delete-stranded-data": "ts-node ./scripts/delete-stranded-data.js"
   },
   "author": "Aaron Smith",
   "license": "MIT",
@@ -41,5 +43,24 @@
     "xml": "^1.0.1",
     "xml2js": "^0.6.2",
     "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/helmet": "^0.0.48",
+    "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/mongoose": "^5.11.96",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.9.1",
+    "@types/supertest": "^6.0.3",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "@types/xml2js": "^0.4.14",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }
