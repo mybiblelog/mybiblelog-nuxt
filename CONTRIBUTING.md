@@ -17,7 +17,7 @@ Thank you for your interest in contributing to My Bible Log! This project is a N
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [AaronSmithX](https://github.com/AaronSmithX).
+This project and everyone participating in it is governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [mybiblelog.com@gmail.com](mailto:mybiblelog.com@gmail.com).
 
 ## Getting Started
 
@@ -169,6 +169,7 @@ npm run lint -- --fix
    ```
 
 2. **Make your changes**
+
    - Write clean, well-tested code
    - Update documentation if needed
    - Add tests for new functionality
@@ -285,7 +286,7 @@ For more information, see our [Security Policy](SECURITY.md).
 
 - **General questions**: Use the [question template](.github/ISSUE_TEMPLATE/question.md)
 - **Security concerns**: Email [mybiblelog.com@gmail.com](mailto:mybiblelog.com@gmail.com)
-- **Code of Conduct violations**: Contact [AaronSmithX](https://github.com/AaronSmithX)
+- **Code of Conduct violations**: Contact [mybiblelog.com@gmail.com](mailto:mybiblelog.com@gmail.com)
 
 ## License
 
