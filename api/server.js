@@ -3,10 +3,10 @@
 const http = require('node:http');
 const debug = require('debug')('app:server');
 
-const config = require('../config');
-const useMongooseModels = require('../mongoose/useMongooseModels');
-const initReminderService = require('../services/reminder.service');
-const buildApp = require('../index.js');
+const config = require('./config');
+const useMongooseModels = require('./mongoose/useMongooseModels');
+const initReminderService = require('./services/reminder.service');
+const buildApp = require('./app.js');
 
 // Normalize a port into a number, string, or false.
 const normalizePort = (val) => {
