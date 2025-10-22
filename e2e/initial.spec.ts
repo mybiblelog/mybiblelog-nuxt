@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
-import { createTestUser, deleteTestUser } from '~/test/helpers';
+import { createTestUser, deleteTestUser } from '~/api/test/helpers';
 
 const SITE_URL = process.env.TEST_SITE_URL || 'http://localhost:3000';
 

@@ -24,7 +24,7 @@ const mongoose = require('mongoose');
 const SimpleDate = require('../../../shared/simple-date');
 const { BibleVersions } = require('../../../shared/util');
 
-const i18nConfig = require('../../../i18n.config');
+const i18nConfig = require('../../../nuxt/i18n.config');
 const siteLocales = i18nConfig.locales.map(locale => locale.code);
 
 const UserSettingsSchema = new mongoose.Schema({

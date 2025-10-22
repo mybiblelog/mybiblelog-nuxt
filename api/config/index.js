@@ -1,7 +1,10 @@
+const path = require('node:path');
 const dotenv = require('dotenv');
 const z = require('zod');
 
-dotenv.config();
+dotenv.config({
+  path: path.resolve(__dirname, '../../.env'),
+});
 
 const booleanStringDefaultingToTrue = z.enum(['true', 'false']).transform(val => val !== 'false');
 

@@ -59,7 +59,7 @@
  *           description: The date and time when the user was last updated
  */
 
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');

@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 const express = require('express');
 const xml = require('xml');
 const config = require('../../config');
 
-const i18nConfig = require('../../../i18n.config');
+const i18nConfig = require('../../../nuxt/i18n.config');
 const siteLocales = i18nConfig.locales.map(locale => locale.code);
 
 const router = express.Router();
@@ -45,7 +45,7 @@ router.get('/sitemap.xml', (req, res, next) => {
   for (const locale of siteLocales) {
     const localePrefix = locale === 'en' ? '' : `/${locale}`;
 
-    const aboutDir = path.resolve(process.cwd(), 'content', locale, 'about');
+    const aboutDir = path.resolve(process.cwd(), '..', 'nuxt', 'content', locale, 'about');
     const aboutPageFiles = fs.readdirSync(aboutDir);
     for (const file of aboutPageFiles) {
       const slug = file.replace('.md', '');

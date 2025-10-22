@@ -44,7 +44,7 @@
  *           description: The date and time when the reminder was last updated
  */
 
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 const mongoose = require('mongoose');
 
 const DailyReminderSchema = new mongoose.Schema({
