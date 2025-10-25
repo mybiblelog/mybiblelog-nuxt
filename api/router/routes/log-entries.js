@@ -1,9 +1,9 @@
 const createError = require('http-errors');
 const express = require('express');
 const { ObjectId } = require('mongodb');
-const SimpleDate = require('../../../shared/simple-date');
-const authCurrentUser = require('../helpers/authCurrentUser');
-const useMongooseModels = require('../../mongoose/useMongooseModels');
+const SimpleDate = require('../../../shared/simple-date.ts').default;
+const authCurrentUser = require('../helpers/authCurrentUser').default;
+const useMongooseModels = require('../../mongoose/useMongooseModels').default;
 
 const router = express.Router();
 

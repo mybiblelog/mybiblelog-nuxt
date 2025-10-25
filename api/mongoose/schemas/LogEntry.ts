@@ -1,3 +1,8 @@
+import mongoose from 'mongoose';
+
+import Bible from '@shared/bible';
+import SimpleDate from '@shared/simple-date';
+
 /**
  * @swagger
  * components:
@@ -36,11 +41,6 @@
  *           description: The date and time when the log entry was last updated
  */
 
-const mongoose = require('mongoose');
-
-const Bible = require('../../../shared/bible');
-const SimpleDate = require('../../../shared/simple-date');
-
 const LogEntrySchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -71,9 +71,17 @@ const LogEntrySchema = new mongoose.Schema({
       message: props => `${props.value} is not a valid verse`,
     },
   },
-}, { timestamps: true });
+}, {
+  timestamps: true,
+  methods: {
+    toJSON() {
+      const { _id, date, startVerseId, endVerseId } = this;
+      return { id: _id, date, startVerseId, endVerseId };
+    },
+  },
+});
 
-LogEntrySchema.pre('validate', function(next) {
+LogEntrySchema.pre('validate', function (next) {
   if (!Bible.validateRange(this.startVerseId, this.endVerseId)) {
     next(new Error('Invalid Verse Range'));
   }
@@ -82,9 +90,6 @@ LogEntrySchema.pre('validate', function(next) {
   }
 });
 
-LogEntrySchema.methods.toJSON = function() {
-  const { _id, date, startVerseId, endVerseId } = this;
-  return { id: _id, date, startVerseId, endVerseId };
-};
+const LogEntry = mongoose.model('LogEntry', LogEntrySchema);
 
-module.exports = LogEntrySchema;
+export default LogEntry;

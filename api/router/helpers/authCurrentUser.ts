@@ -1,18 +1,21 @@
-const createError = require('http-errors');
-const jwt = require('jsonwebtoken');
-const status = require('http-status');
-const jwtSecret = require('../../config').jwtSecret;
-const useMongooseModels = require('../../mongoose/useMongooseModels');
+import createError from 'http-errors';
+import jwt from 'jsonwebtoken';
+import status from 'http-status';
+import config from '../../config';
+import useMongooseModels from '../../mongoose/useMongooseModels';
+import { type Request } from 'express';
 
-const getTokenFromHeader = (req) => {
-  if ((req.headers.authorization?.split(' ')[0] === 'Token') ||
-  (req.headers.authorization?.split(' ')[0] === 'Bearer')) {
-    return req.headers.authorization.split(' ')[1];
+const { jwtSecret } = config;
+
+const getTokenFromHeader = (req: Request): string | null => {
+  const [tokenType, token] = req.headers.authorization?.split(' ') || [];
+  if (token && (tokenType === 'Token' || tokenType === 'Bearer')) {
+    return token;
   }
   return null;
 };
 
-const authCurrentUser = async (req, { optional = false, adminOnly = false } = {}) => {
+const authCurrentUser = async (req: Request, { optional = false, adminOnly = false } = {}) => {
   const { User } = await useMongooseModels();
 
   const token = getTokenFromHeader(req);
@@ -53,4 +56,4 @@ const authCurrentUser = async (req, { optional = false, adminOnly = false } = {}
   return user;
 };
 
-module.exports = authCurrentUser;
+export default authCurrentUser;

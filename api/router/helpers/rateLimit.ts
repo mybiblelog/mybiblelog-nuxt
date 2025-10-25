@@ -1,8 +1,9 @@
-const createError = require('http-errors');
-const status = require('http-status');
+import createError from 'http-errors';
+import status from 'http-status';
+import { type Request } from 'express';
 
-const defaultReqIdentifierFn = (req) => {
-  return req.ip;
+const defaultReqIdentifierFn = (req: Request): string => {
+  return req.ip || 'unknown';
 };
 
 // In-memory store for rate limiting
@@ -26,7 +27,7 @@ const rateLimitStore = {
   // key: [requestTime, requestTime, ...]
 };
 
-const clearOldRequests = (windowMs) => {
+const clearOldRequests = (windowMs: number) => {
   const currentTime = Date.now();
   const windowStart = currentTime - windowMs;
   for (const key in rateLimitStore) {
@@ -38,11 +39,15 @@ const clearOldRequests = (windowMs) => {
 };
 
 const rateLimit = (
-  req,
+  req: Request,
   {
     maxRequests = 5,
     windowMs = 60 * 1000,
     reqIdentifierFn = defaultReqIdentifierFn,
+  }: {
+    maxRequests?: number;
+    windowMs?: number;
+    reqIdentifierFn?: (req: Request) => string;
   } = {},
 ) => {
   const reqIdentifier = reqIdentifierFn(req);
@@ -69,4 +74,4 @@ const rateLimit = (
   setTimeout(() => clearOldRequests(windowMs), windowMs);
 };
 
-module.exports = rateLimit;
+export default rateLimit;

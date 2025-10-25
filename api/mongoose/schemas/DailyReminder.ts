@@ -1,3 +1,6 @@
+import mongoose from 'mongoose';
+import crypto from 'node:crypto';
+
 /**
  * @swagger
  * components:
@@ -44,9 +47,6 @@
  *           description: The date and time when the reminder was last updated
  */
 
-const crypto = require('node:crypto');
-const mongoose = require('mongoose');
-
 const DailyReminderSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -83,34 +83,42 @@ const DailyReminderSchema = new mongoose.Schema({
     type: Number,
     default: () => Date.now(),
   },
-}, { timestamps: true });
+}, {
+  timestamps: true,
+  methods: {
+    /**
+     * Returns a Date() representing the next occurrence of this reminder.
+     * This code is meant to run in the UTC timezone.
+     * When testing this code in a local timezone, the offset is not needed.
+     */
+    getNextOccurrence() {
+      // Use the UTC date minus 2 days to find a guaranteed past occurrence
+      // Then add 24 hours as needed until the time is in the future
+      const now = new Date();
+      const nextOccurrence = new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate() - 2,
+        this.hour,
+        this.minute + this.timezoneOffset,
+        0,
+        0,
+      ));
+      while (nextOccurrence.getTime() < new Date().getTime()) {
+        nextOccurrence.setHours(nextOccurrence.getHours() + 24);
+      }
+      return nextOccurrence;
+    },
+    toJSON() {
+      const { _id, hour, minute, timezoneOffset, active } = this;
+      return { id: _id, hour, minute, timezoneOffset, active };
+    },
+  },
+});
 
-/**
- * Returns a Date() representing the next occurrence of this reminder.
- * This code is meant to run in the UTC timezone.
- * When testing this code in a local timezone, the offset is not needed.
- */
-DailyReminderSchema.methods.getNextOccurrence = function() {
-  // Use the UTC date minus 2 days to find a guaranteed past occurrence
-  // Then add 24 hours as needed until the time is in the future
-  const now = new Date();
-  const nextOccurrence = new Date(Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate() - 2,
-    this.hour,
-    this.minute + this.timezoneOffset,
-    0,
-    0,
-  ));
-  while (nextOccurrence < Date.now()) {
-    nextOccurrence.setHours(nextOccurrence.getHours() + 24);
-  }
-  return nextOccurrence;
-};
-
-DailyReminderSchema.pre('save', function(next) {
-  this.nextOccurrence = this.getNextOccurrence();
+DailyReminderSchema.pre('save', function (next) {
+  const nextOccurrence = this.schema.methods.getNextOccurrence.call(this);
+  this.nextOccurrence = nextOccurrence.getTime();
 
   // If the daily reminder was just activated,
   // re-calculate an unsubscribe code
@@ -120,9 +128,6 @@ DailyReminderSchema.pre('save', function(next) {
   next();
 });
 
-DailyReminderSchema.methods.toJSON = function() {
-  const { _id, hour, minute, timezoneOffset, active } = this;
-  return { id: _id, hour, minute, timezoneOffset, active };
-};
+const DailyReminder = mongoose.model('DailyReminder', DailyReminderSchema);
 
-module.exports = DailyReminderSchema;
+export default DailyReminder;

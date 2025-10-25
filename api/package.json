@@ -4,8 +4,8 @@
   "description": "My Bible Log API",
   "main": "server.ts",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node server.ts --watch . --watch ../.env",
-    "dev:ts": "cross-env NODE_ENV=development nodemon --exec ts-node --transpile-only server.ts --watch . --watch ../.env",
+    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node server.ts --watch . --watch ../.env --ext ts,js,json",
+    "dev:ts": "cross-env NODE_ENV=development nodemon --exec ts-node --transpile-only server.ts --watch . --watch ../.env --ext ts,js,json",
     "build": "tsc",
     "start": "cross-env NODE_ENV=production node server.ts",
     "test": "jest ./test",
@@ -35,7 +35,7 @@
     "http-status": "^1.4.2",
     "jsonwebtoken": "^9.0.0",
     "mailgun.js": "^8.2.1",
-    "mongoose": "^8.5.1",
+    "mongoose": "^8.19.1",
     "mongoose-unique-validator": "^5.0.1",
     "morgan": "^1.10.0",
     "swagger-jsdoc": "^6.2.8",
@@ -52,7 +52,6 @@
     "@types/helmet": "^0.0.48",
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/mongoose": "^5.11.96",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.9.1",
     "@types/supertest": "^6.0.3",
@@ -61,6 +60,7 @@
     "@types/xml2js": "^0.4.14",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
   }
 }

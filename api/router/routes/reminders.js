@@ -1,6 +1,6 @@
 const express = require('express');
-const authCurrentUser = require('../helpers/authCurrentUser');
-const useMongooseModels = require('../../mongoose/useMongooseModels');
+const authCurrentUser = require('../helpers/authCurrentUser').default;
+const useMongooseModels = require('../../mongoose/useMongooseModels').default;
 
 const router = express.Router();
 

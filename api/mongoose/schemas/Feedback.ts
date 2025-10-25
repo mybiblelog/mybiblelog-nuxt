@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 /**
  * @swagger
  * components:
@@ -37,8 +39,6 @@
  *           description: The date and time when the feedback was last updated
  */
 
-const mongoose = require('mongoose');
-
 const FeedbackSchema = new mongoose.Schema({
   ip: {
     type: String,
@@ -70,4 +70,6 @@ const FeedbackSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-module.exports = FeedbackSchema;
+const Feedback = mongoose.model('Feedback', FeedbackSchema);
+
+export default Feedback;

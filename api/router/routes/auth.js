@@ -1,13 +1,13 @@
 const express = require('express');
 const status = require('http-status');
 const { requireEmailVerification } = require('../../config');
-const rateLimit = require('../helpers/rateLimit');
-const authCurrentUser = require('../helpers/authCurrentUser');
-const googleOauth2 = require('../helpers/google-oauth2');
+const rateLimit = require('../helpers/rateLimit').default;
+const authCurrentUser = require('../helpers/authCurrentUser').default;
+const googleOauth2 = require('../helpers/google-oauth2').default;
 const { I18nError, makeI18nError } = require('../helpers/i18n-error');
-const useMongooseModels = require('../../mongoose/useMongooseModels');
-const useMailgunService = require('../../services/mailgun.service');
-const checkTestBypass = require('../helpers/checkTestBypass');
+const useMongooseModels = require('../../mongoose/useMongooseModels').default;
+const useMailgunService = require('../../services/mailgun.service').default;
+const checkTestBypass = require('../helpers/checkTestBypass').default;
 const router = express.Router();
 
 /**

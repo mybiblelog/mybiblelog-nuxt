@@ -1,3 +1,6 @@
+import mongoose from 'mongoose';
+import Bible from '@shared/bible';
+
 /**
  * @swagger
  * components:
@@ -50,10 +53,6 @@
  *           description: The date and time when the note was last updated
  */
 
-const mongoose = require('mongoose');
-
-const Bible = require('../../../shared/bible');
-
 const PassageSchema = new mongoose.Schema({
   startVerseId: {
     type: Number,
@@ -73,7 +72,7 @@ const PassageSchema = new mongoose.Schema({
   },
 }, { timestamps: false });
 
-PassageSchema.pre('validate', function(next) {
+PassageSchema.pre('validate', function (next) {
   if (!Bible.validateRange(this.startVerseId, this.endVerseId)) {
     next(new Error('Invalid Verse Range'));
   }
@@ -101,9 +100,17 @@ const PassageNoteSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'PassageNoteTag',
   }],
-}, { timestamps: true });
+}, {
+  timestamps: true,
+  methods: {
+    toJSON() {
+      const { _id, passages, content, tags } = this;
+      return { id: _id, passages, content, tags };
+    },
+  },
+});
 
-PassageNoteSchema.pre('validate', function(next) {
+PassageNoteSchema.pre('validate', function (next) {
   if (!this.content.length && !this.passages.length) {
     next(new Error('One of `passages` or `content` required'));
   }
@@ -112,9 +119,6 @@ PassageNoteSchema.pre('validate', function(next) {
   }
 });
 
-PassageNoteSchema.methods.toJSON = function() {
-  const { _id, passages, content, tags } = this;
-  return { id: _id, passages, content, tags };
-};
+const PassageNote = mongoose.model('PassageNote', PassageNoteSchema);
 
-module.exports = PassageNoteSchema;
+export default PassageNote;

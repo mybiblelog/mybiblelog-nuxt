@@ -1,6 +1,6 @@
-const useMongooseModels = require('../../mongoose/useMongooseModels');
+import useMongooseModels from '../../mongoose/useMongooseModels';
 
-const deleteAccount = async (email) => {
+const deleteAccount = async (email: string): Promise<boolean> => {
   try {
     const { User, LogEntry, PassageNote, PassageNoteTag, DailyReminder } = await useMongooseModels();
     const user = await User.findOne({ email });
@@ -19,4 +19,4 @@ const deleteAccount = async (email) => {
   }
 };
 
-module.exports = deleteAccount;
+export default deleteAccount;

@@ -1,7 +1,8 @@
-const useMongooseModels = require('../mongoose/useMongooseModels');
+import mongoose from 'mongoose';
+import useMongooseModels, { closeConnection } from '../mongoose/useMongooseModels';
 
 // Main
-const main = async () => {
+const main = async (): Promise<void> => {
   const {
     DailyReminder,
     LogEntry,
@@ -20,12 +21,12 @@ const main = async () => {
 
   const activeUserIds = await User.distinct('_id');
   for (const entity of ownedEntities) {
-    const result = await entity.deleteMany({ owner: { $nin: activeUserIds } });
+    const result = await (entity as mongoose.Model<any>).deleteMany({ owner: { $nin: activeUserIds } });
     console.log(`Deleted ${result.deletedCount} documents from ${entity.modelName}`);
   }
 
   // close connection
-  await useMongooseModels.closeConnection();
+  await closeConnection();
 };
 
 console.log('This is a destructive operation that will permanently delete data.');

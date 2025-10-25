@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-const http = require('node:http');
-const debug = require('debug')('app:server');
+import http from 'node:http';
+import debug from 'debug';
 
-const config = require('./config');
-const useMongooseModels = require('./mongoose/useMongooseModels');
-const initReminderService = require('./services/reminder.service');
-const buildApp = require('./app.js');
+import config from './config';
+import useMongooseModels from './mongoose/useMongooseModels';
+import initReminderService from './services/reminder.service';
+import buildApp from './app';
 
 // Normalize a port into a number, string, or false.
-const normalizePort = (val) => {
+const normalizePort = (val: string) => {
   const port = parseInt(val, 10);
   if (isNaN(port)) {
     return val; // named pipe
@@ -21,7 +21,7 @@ const normalizePort = (val) => {
 };
 
 // Event listener for HTTP server "error" event.
-const onError = (error) => {
+const onError = (error: any) => {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -33,20 +33,20 @@ const onError = (error) => {
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
-  case 'EACCES':
-    console.error(bind + ' requires elevated privileges'); // eslint-disable-line no-console
-    process.exit(1);
-  case 'EADDRINUSE':
-    console.error(bind + ' is already in use'); // eslint-disable-line no-console
-    process.exit(1);
-  default:
-    throw error;
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges'); // eslint-disable-line no-console
+      process.exit(1);
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use'); // eslint-disable-line no-console
+      process.exit(1);
+    default:
+      throw error;
   }
 };
 
 // Event listener for HTTP server "listening" event.
-const onListening = server => () => {
-  const addr = server.address();
+const onListening = (server: http.Server) => () => {
+  const addr = server.address()!;
   const bind =
     typeof addr === 'string' ?
       'pipe ' + addr :

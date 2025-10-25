@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const ReportSchema = new mongoose.Schema({
   type: {
@@ -12,4 +12,6 @@ const ReportSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-module.exports = ReportSchema;
+const Report = mongoose.model('Report', ReportSchema);
+
+export default Report;

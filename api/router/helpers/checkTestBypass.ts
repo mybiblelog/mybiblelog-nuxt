@@ -1,4 +1,5 @@
-const config = require('../../config');
+import config from '../../config';
+import { type Request} from 'express';
 
 /**
  * Check if the request is coming from a test environment.
@@ -8,7 +9,7 @@ const config = require('../../config');
  * @param {import('express').Request} req
  * @returns {boolean}
  */
-const checkTestBypass = (req) => {
+const checkTestBypass = (req: Request): boolean => {
   const testBypassSecret = config.testBypassSecret;
   if (!testBypassSecret) {
     return false;
@@ -19,4 +20,4 @@ const checkTestBypass = (req) => {
   return false;
 };
 
-module.exports = checkTestBypass;
+export default checkTestBypass;

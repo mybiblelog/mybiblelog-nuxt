@@ -1,10 +1,11 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const config = require('../config');
-const Bible = require('../../shared/bible');
-const useMongooseModels = require('../mongoose/useMongooseModels');
-const useMailgunService = require('./mailgun.service');
-const renderEmail = require('./email-templates/daily-reminder.template');
+import fs from 'node:fs';
+import path from 'node:path';
+import config from '../config';
+import Bible from '../../shared/bible';
+import useMongooseModels from '../mongoose/useMongooseModels';
+import useMailgunService from './mailgun.service';
+import renderEmail from './email-templates/daily-reminder.template';
+
 const baseUrl = config.siteUrl;
 
 const getLocaleBaseUrl = (locale) => {
@@ -29,7 +30,7 @@ const init = async () => {
     ]);
 
     // Add human-readable 'displayDate' and 'passage'
-    const dateFormatOptions = { weekday: 'long', month: 'short', day: 'numeric' };
+    const dateFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'short', day: 'numeric' };
     const dateTimeFormat = new Intl.DateTimeFormat(locale, dateFormatOptions);
     recentLogEntries.forEach((logEntry) => {
       const logEntryDate = new Date(logEntry.date);
@@ -85,7 +86,7 @@ const init = async () => {
       emailDate.setTime(utcNow.valueOf() + dayMs);
     }
 
-    const dateFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
+    const dateFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
     const subjectDate = new Intl.DateTimeFormat(locale, dateFormatOptions).format(emailDate);
 
     const subject = {
@@ -162,4 +163,4 @@ const init = async () => {
   return {}; // No public API
 };
 
-module.exports = init;
+export default init;

@@ -5,7 +5,7 @@
  * Keep in sync with locales/locale.d.ts
  * @enum {string}
  */
-const I18nError = {
+export const I18nError = {
   // Request Input Validation Errors
   Required: 'required',
   NotValid: 'not_valid',
@@ -35,13 +35,8 @@ const I18nError = {
  * @param {string} field
  * @param {object} properties
  */
-const makeI18nError = (kind, field, properties = {}) => ({
+export const makeI18nError = (kind: string, field?: string, properties: Record<string, unknown> = {}) => ({
   kind: `api_error.${kind}`, // prefix for i18n key
   field,
   properties,
 });
-
-module.exports = {
-  I18nError,
-  makeI18nError,
-};

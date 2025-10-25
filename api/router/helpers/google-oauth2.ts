@@ -1,5 +1,5 @@
-const crypto = require('node:crypto');
-const config = require('../../config');
+import crypto from 'node:crypto';
+import config from '../../config';
 
 const {
   clientId,
@@ -79,12 +79,16 @@ const getAccessTokenFromCode = async (code) => {
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(`OAuth2 token exchange failed: ${response.status} - ${errorData.error_description || 'Unknown error'}`);
+      const errorData = await response.json().catch(() => ({})) as { error_description?: string };
+      throw new Error(`OAuth2 token exchange failed: ${response.status} - ${errorData?.error_description || 'Unknown error'}`);
     }
 
-    // data: { access_token, expires_in, token_type, refresh_token }
-    const data = await response.json();
+    const data = await response.json() as {
+      access_token: string,
+      expires_in: number,
+      token_type: string,
+      refresh_token: string,
+    };
     return data.access_token;
   }
   catch (err) {
@@ -105,12 +109,20 @@ const getUserProfileFromToken = async (token) => {
     throw new Error(`HTTP Error Status: ${response.status}`);
   }
 
-  // data: { id, email, verified_email, given_name, family_name, name, locale, picture }
-  const data = await response.json();
+  const data = await response.json() as {
+    id: string,
+    email: string,
+    verified_email: boolean,
+    given_name: string,
+    family_name: string,
+    name: string,
+    locale: string,
+    picture: string,
+  };
   return data;
 };
 
-module.exports = {
+export default {
   getGoogleLoginUrl,
   verifyState,
   getAccessTokenFromCode,

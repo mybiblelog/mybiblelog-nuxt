@@ -1,8 +1,8 @@
-const useMongooseModels = require('../mongoose/useMongooseModels');
-const deleteAccount = require('../router/helpers/deleteAccount');
+import useMongooseModels, { closeConnection } from '../mongoose/useMongooseModels';
+import deleteAccount from '../router/helpers/deleteAccount';
 
 // Main
-const main = async () => {
+const main = async (): Promise<void> => {
   const { User } = await useMongooseModels();
 
   const testUsers = await User.find({
@@ -22,7 +22,7 @@ const main = async () => {
   console.log(`Deleted ${testUsers.length} test users.`);
 
   // close connection
-  await useMongooseModels.closeConnection();
+  await closeConnection();
 };
 
 console.log('This is a destructive operation that will permanently delete data.');

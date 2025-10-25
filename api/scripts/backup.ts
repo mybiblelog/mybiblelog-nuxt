@@ -1,11 +1,11 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const useMongooseModels = require('../mongoose/useMongooseModels');
+import fs from 'node:fs';
+import path from 'node:path';
+import useMongooseModels, { closeConnection } from '../mongoose/useMongooseModels';
 
 const backupDir = '.mongodb_backup';
 
 // Main
-const main = async () => {
+const main = async (): Promise<void> => {
   if (fs.existsSync(backupDir)) {
     console.log('Backup directory already exists. Delete before proceeding.');
     process.exit();
@@ -31,7 +31,7 @@ const main = async () => {
   for (const modelName of modelNames) {
     console.log(`Downloading ${modelName} data...`);
     const modelBackupFile = path.resolve(backupDir, modelName + '.json');
-    const modelBackupData = [];
+    const modelBackupData: any[] = [];
 
     const Model = models[modelName];
     await new Promise((resolve) => {
@@ -48,14 +48,14 @@ const main = async () => {
             JSON.stringify(modelBackupData),
             'utf-8',
           );
-          resolve();
+          resolve(void 0);
         });
     });
   }
 
   // close connection
   console.log(`Closing database connection...`);
-  await useMongooseModels.closeConnection();
+  await closeConnection();
   console.log(`Backup complete.`);
 };
 

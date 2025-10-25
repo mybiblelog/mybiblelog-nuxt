@@ -4,10 +4,10 @@
     "module": "commonjs",
     "lib": ["ES2020"],
     "outDir": "./dist",
-    "rootDir": "./",
     "allowJs": true,
     "checkJs": false,
     "strict": false,
+    "strictNullChecks": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
@@ -25,13 +25,16 @@
     "exactOptionalPropertyTypes": false,
     "noImplicitOverride": false,
     "noPropertyAccessFromIndexSignature": false,
-    "noUncheckedIndexedAccess": false,
+    "noUncheckedIndexedAccess": true,
     "allowUnusedLabels": true,
     "allowUnreachableCode": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
     "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["../shared/*"]
+    }
   },
   "include": [
     "**/*.ts",
@@ -45,6 +48,7 @@
     "esm": false,
     "experimentalSpecifierResolution": "node",
     "transpileOnly": true,
-    "files": true
+    "files": true,
+    "require": ["tsconfig-paths/register"]
   }
 }

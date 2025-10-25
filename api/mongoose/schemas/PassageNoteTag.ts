@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 /**
  * @swagger
  * components:
@@ -37,8 +39,6 @@
  *           description: The date and time when the tag was last updated
  */
 
-const mongoose = require('mongoose');
-
 const PassageNoteTagSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -74,14 +74,19 @@ const PassageNoteTagSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
-}, { timestamps: true });
+}, {
+  timestamps: true,
+  methods: {
+    toJSON() {
+      const { _id, label, color, description, noteCount } = this;
+      return { id: _id, label, color, description, noteCount };
+    },
+  },
+});
 
 // Make sure labels are unique per user
 PassageNoteTagSchema.index({ owner: 1, label: 1 }, { unique: true });
 
-PassageNoteTagSchema.methods.toJSON = function() {
-  const { _id, label, color, description, noteCount } = this;
-  return { id: _id, label, color, description, noteCount };
-};
+const PassageNoteTag = mongoose.model('PassageNoteTag', PassageNoteTagSchema);
 
-module.exports = PassageNoteTagSchema;
+export default PassageNoteTag;

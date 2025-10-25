@@ -4,9 +4,9 @@ const { ObjectId } = require('mongoose').Types;
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
-const authCurrentUser = require('../helpers/authCurrentUser');
-const useMongooseModels = require('../../mongoose/useMongooseModels');
-const deleteAccount = require('../helpers/deleteAccount');
+const authCurrentUser = require('../helpers/authCurrentUser').default;
+const useMongooseModels = require('../../mongoose/useMongooseModels').default;
+const deleteAccount = require('../helpers/deleteAccount').default;
 
 const getUserEngagementData = async (user) => {
   const { LogEntry, PassageNote } = await useMongooseModels();

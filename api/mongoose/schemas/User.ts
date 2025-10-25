@@ -1,3 +1,13 @@
+
+
+import crypto from 'crypto';
+import mongoose, { Document } from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import config from '../../config';
+import { UserSettingsSchema, type IUserSettings } from './UserSettings';
+
 /**
  * @swagger
  * components:
@@ -59,16 +69,34 @@
  *           description: The date and time when the user was last updated
  */
 
-const crypto = require('node:crypto');
-const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const jwtSecret = require('../../config').jwtSecret;
 const SALT_WORK_FACTOR = 10;
-const UserSettingsSchema = require('./UserSettings');
 
-const UserSchema = new mongoose.Schema({
+export interface IUser extends Document {
+  email: string;
+  isAdmin: boolean;
+  password: string;
+  googleId: string;
+  emailVerificationCode: string;
+  emailVerificationExpires: Date;
+  newEmail: string;
+  newEmailVerificationCode: string;
+  newEmailVerificationExpires: Date;
+  oldEmails: string[];
+  passwordResetCode: string;
+  passwordResetExpires: Date;
+  settings: IUserSettings;
+  authenticate: (password: string) => Promise<boolean>;
+  enablePasswordReset: () => void;
+  verifyPasswordResetCode: (passwordResetCode: string) => boolean;
+  disablePasswordReset: () => void;
+  enableEmailUpdate: (newEmail: string) => void;
+  verifyNewEmailVerificationCode: (newEmailVerificationCode: string) => boolean;
+  disableEmailUpdate: () => void;
+  generateJWT: () => string;
+  toAuthJSON: () => { username: string; hasLocalAccount: boolean; email: string; isAdmin: boolean; token: string };
+}
+
+export const UserSchema = new mongoose.Schema({
   email: { type: String, lowercase: true, unique: true, required: [true, 'required'], match: [/^\S+@\S+\.\S+$/, 'is invalid'], index: true },
   isAdmin: { type: Boolean, default: false },
   password: { type: String, minlength: 8, maxlength: 100 },
@@ -95,8 +123,8 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.plugin(uniqueValidator);
 
-UserSchema.methods.authenticate = function(password) {
-  return new Promise((resolve, reject) => {
+UserSchema.methods.authenticate = function(password: string) {
+  return new Promise((resolve) => {
     bcrypt.compare(password, this.password, function(err, isMatch) {
       if (err) {
         resolve(false);
@@ -109,12 +137,13 @@ UserSchema.methods.authenticate = function(password) {
 };
 
 UserSchema.pre('save', function(next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
   // only hash the password if it has been modified (or is new)
   if (user.password === null || !user.isModified('password')) { return next(); }
   bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
     if (err) { return next(err); }
-    bcrypt.hash(user.password, salt, function(err, hash) {
+    bcrypt.hash(String(user.password), salt, function(err, hash) {
       if (err) { return next(err); }
       user.password = hash;
       next();
@@ -127,22 +156,12 @@ UserSchema.virtual('emailVerified')
     return this.emailVerificationCode === null;
   });
 
-UserSchema.methods.verifyEmailVerificationCode = function(emailVerificationCode) {
-  if (emailVerificationCode !== this.emailVerificationCode) {
-    return false;
-  }
-  if (new Date().getTime() > this.emailVerificationExpires.getTime()) {
-    return false;
-  }
-  return true;
-};
-
 UserSchema.methods.enablePasswordReset = function() {
   this.passwordResetCode = crypto.randomBytes(64).toString('hex');
   this.passwordResetExpires = new Date().getTime() + (60 * 60 * 1000); // in 1 hour
 };
 
-UserSchema.methods.verifyPasswordResetCode = function(passwordResetCode) {
+UserSchema.methods.verifyPasswordResetCode = function(passwordResetCode: string) {
   if (passwordResetCode !== this.passwordResetCode) {
     return false;
   }
@@ -157,7 +176,7 @@ UserSchema.methods.disablePasswordReset = function() {
   this.passwordResetExpires = null;
 };
 
-UserSchema.methods.enableEmailUpdate = function(newEmail) {
+UserSchema.methods.enableEmailUpdate = function(newEmail: string) {
   // Allow any user to request to change their email address to any
   // other email address -- if they don't own that other email address,
   // they simply won't be able to take control of it.
@@ -166,7 +185,7 @@ UserSchema.methods.enableEmailUpdate = function(newEmail) {
   this.newEmailVerificationExpires = new Date().getTime() + (60 * 60 * 1000); // in 1 hour
 };
 
-UserSchema.methods.verifyNewEmailVerificationCode = function(newEmailVerificationCode) {
+UserSchema.methods.verifyNewEmailVerificationCode = function(newEmailVerificationCode: string) {
   if (newEmailVerificationCode !== this.newEmailVerificationCode) {
     return false;
   }
@@ -191,8 +210,8 @@ UserSchema.methods.generateJWT = function() {
     id: this._id,
     hasLocalAccount: Boolean(this.password),
     isAdmin: this.isAdmin,
-    exp: parseInt(exp.getTime() / 1000),
-  }, jwtSecret);
+    exp: Math.round(exp.getTime() / 1000),
+  }, config.jwtSecret);
 };
 
 UserSchema.methods.toAuthJSON = function() {
@@ -204,4 +223,10 @@ UserSchema.methods.toAuthJSON = function() {
   };
 };
 
-module.exports = UserSchema;
+export const isEmailVerified = (user: IUser) => {
+  return user.emailVerificationCode === null;
+};
+
+const User = mongoose.model<IUser>('User', UserSchema);
+
+export default User;

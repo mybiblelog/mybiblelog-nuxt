@@ -1,8 +1,8 @@
-const { ObjectId } = require('mongoose').Types;
-const useMongooseModels = require('../mongoose/useMongooseModels');
+import mongoose from 'mongoose';
+import useMongooseModels, { closeConnection } from '../mongoose/useMongooseModels';
 
 // Main
-const main = async () => {
+const main = async (): Promise<void> => {
   const {
     DailyReminder,
     Email,
@@ -26,28 +26,26 @@ const main = async () => {
   await Report.deleteMany({});
 
   // seed users
-  const users = {};
-
-  users.admin = await new User({
-    _id: new ObjectId(),
+  const adminUser = await new User({
+    _id: new mongoose.Types.ObjectId(),
     email: 'admin@example.com',
     isAdmin: true,
     password: 'password',
     emailVerificationCode: null,
   });
-  await users.admin.save();
+  await adminUser.save();
 
-  users.user = await new User({
-    _id: new ObjectId(),
+  const user = await new User({
+    _id: new mongoose.Types.ObjectId(),
     email: 'user@example.com',
     isAdmin: false,
     password: 'password',
     emailVerificationCode: null,
   });
-  await users.user.save();
+  await user.save();
 
   // close connection
-  await useMongooseModels.closeConnection();
+  await closeConnection();
 };
 
 console.log('This is a destructive operation that will permanently delete data.');

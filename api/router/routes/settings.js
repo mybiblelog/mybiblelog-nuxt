@@ -1,8 +1,8 @@
 const express = require('express');
 const status = require('http-status');
 const createError = require('http-errors');
-const authCurrentUser = require('../helpers/authCurrentUser');
-const deleteAccount = require('../helpers/deleteAccount');
+const authCurrentUser = require('../helpers/authCurrentUser').default;
+const deleteAccount = require('../helpers/deleteAccount').default;
 
 const router = express.Router();
 

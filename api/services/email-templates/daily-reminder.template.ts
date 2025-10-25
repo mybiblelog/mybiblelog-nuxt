@@ -219,4 +219,4 @@ const render = ({
   </html>`
 );
 
-module.exports = render;
+export default render;

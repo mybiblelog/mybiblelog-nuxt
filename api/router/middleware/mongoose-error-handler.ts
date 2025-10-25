@@ -1,4 +1,6 @@
-const { I18nError, makeI18nError } = require('../helpers/i18n-error');
+import { type Request, type Response, type NextFunction } from 'express';
+import { I18nError, makeI18nError } from '../helpers/i18n-error';
+import { Error } from 'mongoose';
 
 // Maps mongoose validation errors to i18n keys
 const MongooseErrorKinds = {
@@ -20,18 +22,23 @@ const ErrorMap = {
   [MongooseErrorKinds.DEFAULT]: I18nError.Review,
 };
 
-const mongooseErrorHandler = (err, req, res, next) => {
-  if (err.name !== 'ValidationError') {
+const mongooseErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
+  if (!(err instanceof Error.ValidationError)) {
     return next(err);
   }
-  const errors = {};
+  const errors: Record<string, ReturnType<typeof makeI18nError>> = {};
   for (const field in err.errors) {
     const validatorError = err.errors[field];
+
+    // skip CastError instances
+    if (!(validatorError instanceof Error.ValidatorError)) {
+      continue;
+    }
     const { kind, properties } = validatorError;
-    const i18nErrorKind = ErrorMap[kind] || ErrorMap[MongooseErrorKinds.DEFAULT];
+    const i18nErrorKind = ErrorMap[kind] || ErrorMap[MongooseErrorKinds.DEFAULT] as string;
     errors[field] = makeI18nError(i18nErrorKind, field, properties);
   }
   return res.status(422).json({ errors });
 };
 
-module.exports = mongooseErrorHandler;
+export default mongooseErrorHandler;

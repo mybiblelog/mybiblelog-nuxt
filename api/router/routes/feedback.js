@@ -1,8 +1,8 @@
 const express = require('express');
 const status = require('http-status');
-const authCurrentUser = require('../helpers/authCurrentUser');
+const authCurrentUser = require('../helpers/authCurrentUser').default;
 const { I18nError, makeI18nError } = require('../helpers/i18n-error');
-const useMongooseModels = require('../../mongoose/useMongooseModels');
+const useMongooseModels = require('../../mongoose/useMongooseModels').default;
 
 const router = express.Router();
 

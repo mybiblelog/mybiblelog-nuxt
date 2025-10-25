@@ -1,6 +1,6 @@
-const path = require('node:path');
-const dotenv = require('dotenv');
-const z = require('zod');
+import path from 'node:path';
+import dotenv from 'dotenv';
+import z from 'zod';
 
 dotenv.config({
   path: path.resolve(__dirname, '../../.env'),
@@ -36,7 +36,7 @@ const config = {
   apiPort: result.data.API_PORT || '8080',
   testBypassSecret: result.data.TEST_BYPASS_SECRET,
   jwtSecret: result.data.NODE_ENV === 'production' ? result.data.JWT_SECRET : 'secret',
-  requireEmailVerification: result.data.REQUIRE_EMAIL_VERIFICATION !== 'false',
+  requireEmailVerification: result.data.REQUIRE_EMAIL_VERIFICATION !== false,
   mailgun: {
     apiKey: result.data.MAILGUN_API_KEY,
     domain: result.data.MAILGUN_DOMAIN,
@@ -51,4 +51,4 @@ const config = {
   },
 };
 
-module.exports = config;
+export default config;

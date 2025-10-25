@@ -1,23 +1,20 @@
-const createError = require('http-errors');
-const express = require('express');
+import createError from 'http-errors';
+import express from 'express';
+import compression from 'compression';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import errorhandler from 'errorhandler';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger';
+import config from './config';
+import apiRouter from './router/router';
+import mongooseErrorHandler from './router/middleware/mongoose-error-handler';
 
-const compression = require('compression');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const errorhandler = require('errorhandler');
-
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./config/swagger');
-
-const config = require('./config');
 const isProduction = config.nodeEnv === 'production';
 const isTesting = config.nodeEnv === 'test';
 
-const apiRouter = require('./router/router');
-const mongooseErrorHandler = require('./router/middleware/mongoose-error-handler');
-
-const buildApp = () => {
+const buildApp = (): express.Application => {
   const app = express();
 
   app.use(compression());
@@ -85,7 +82,7 @@ const buildApp = () => {
       isProduction &&
       config.siteUrl.includes('https://') &&
       !req.secure &&
-      !req.get('host').includes('localhost')
+      !req.get('host')?.includes('localhost')
     ) {
       console.log('Redirecting API request to HTTPS');
       return res.redirect('https://' + req.headers.host + req.originalUrl);
@@ -138,4 +135,4 @@ const buildApp = () => {
 };
 
 // Export the server middleware
-module.exports = buildApp;
+export default buildApp;

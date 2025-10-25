@@ -1,12 +1,13 @@
-const formData = require('form-data');
-const Mailgun = require('mailgun.js');
-const config = require('../config');
+import formData from 'form-data';
+import Mailgun from 'mailgun.js';
+import config from '../config';
 
 const apiKey = config.mailgun.apiKey;
 const domain = config.mailgun.domain;
 const baseUrl = config.siteUrl;
 
-const useMongooseModels = require('../mongoose/useMongooseModels');
+import useMongooseModels from '../mongoose/useMongooseModels';
+import { LocaleCode } from '../../nuxt/i18n.config';
 
 const mailgun = new Mailgun(formData);
 const client = mailgun.client({
@@ -19,28 +20,39 @@ const getLocaleBaseUrl = (locale) => {
   return baseUrl + localePathSegment;
 };
 
+type SendEmailParams = {
+  from: string;
+  to: string;
+  subject: string;
+  inline?: string[];
+} & ({
+  html: string;
+} | {
+  text: string;
+});
+
 const init = async () => {
   const { Email } = await useMongooseModels();
 
-  const sendEmail = async ({ from, to, subject, text, html, inline }) => {
+  const sendEmail = async ({ from, to, subject, inline, ...rest }: SendEmailParams) => {
     from = from || `My Bible Log <noreply@${domain}>`;
 
     try {
       // only send email in production
       if (config.nodeEnv === 'production') {
-        await client.messages.create(domain, { from, to, subject, text, html, inline });
+        await client.messages.create(domain, { from, to, subject, ...rest, inline });
       }
 
       // record email, but do not block with `await`
-      Email.create({ from, to, subject, text, html, success: true });
+      Email.create({ from, to, subject, ...rest, success: true });
     }
     catch (err) {
       // record error, but do not block with `await`
-      Email.create({ from, to, subject, text, html, success: false });
+      Email.create({ from, to, subject, ...rest, success: false });
     }
   };
 
-  const sendUserEmailVerification = async (email, emailVerificationCode, locale = 'en') => {
+  const sendUserEmailVerification = async (email, emailVerificationCode, locale: LocaleCode = 'en') => {
     const subject = {
       de: 'Email-Verifizierung',
       en: 'Email Verification',
@@ -65,10 +77,10 @@ const init = async () => {
       to: email,
       subject,
       html,
-    }, true);
+    });
   };
 
-  const sendUserPasswordResetLink = async (email, passwordResetLink, locale = 'en') => {
+  const sendUserPasswordResetLink = async (email, passwordResetLink, locale: LocaleCode = 'en') => {
     const subject = {
       de: 'Passwort zurücksetzen',
       en: 'Reset Password',
@@ -93,10 +105,10 @@ const init = async () => {
       to: email,
       subject,
       html,
-    }, true);
+    });
   };
 
-  const sendEmailUpdateLink = async (currentEmail, newEmail, newEmailVerificationCode, locale = 'en') => {
+  const sendEmailUpdateLink = async (currentEmail, newEmail, newEmailVerificationCode, locale: LocaleCode = 'en') => {
     const subject = {
       de: 'Neue E-Mail-Adresse bestätigen',
       en: 'Confirm New Email Address',
@@ -151,7 +163,8 @@ const init = async () => {
       to: newEmail,
       subject,
       html,
-    }, true);
+      inline: [],
+    });
   };
 
   return {
@@ -171,4 +184,4 @@ const useMailgunService = async () => {
   return mailgunService;
 };
 
-module.exports = useMailgunService;
+export default useMailgunService;
