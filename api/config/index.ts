@@ -2,8 +2,17 @@ import path from 'node:path';
 import dotenv from 'dotenv';
 import z from 'zod';
 
+
+// Detect if we're running compiled JS or TS source
+const isCompiled = __dirname.includes('dist');
+const envPath = isCompiled
+  // (root)/api/dist/config -> (root)/.env
+  ? path.resolve(__dirname, '../../../.env')
+  // (root)/api/config -> (root)/.env
+  : path.resolve(__dirname, '../../.env');
+
 dotenv.config({
-  path: path.resolve(__dirname, '../../.env'),
+  path: envPath,
 });
 
 const booleanStringDefaultingToTrue = z.enum(['true', 'false']).transform(val => val !== 'false');

@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-import Bible from '@shared/bible';
-import SimpleDate from '@shared/simple-date';
+import { Bible, SimpleDate } from '@mybiblelog/shared';
 
 /**
  * @swagger

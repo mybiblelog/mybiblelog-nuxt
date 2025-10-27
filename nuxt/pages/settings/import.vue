@@ -48,8 +48,7 @@
 <script>
 import { mapState } from 'vuex';
 import * as csv from 'csv';
-import Bible from '@shared/bible';
-import SimpleDate from '@shared/simple-date';
+import { Bible, SimpleDate } from '@mybiblelog/shared';
 
 const delimiter = ',';
 

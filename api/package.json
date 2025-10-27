@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node server.ts --watch . --watch ../.env --ext ts,js,json",
     "dev:ts": "cross-env NODE_ENV=development nodemon --exec ts-node --transpile-only server.ts --watch . --watch ../.env --ext ts,js,json",
     "build": "tsc",
-    "start": "cross-env NODE_ENV=production node server.ts",
+    "start": "cross-env NODE_ENV=production node dist/server.js",
     "test": "jest ./test",
     "test:serial": "jest --runInBand ./test",
     "test:watch": "jest --watch ./test",
@@ -21,6 +21,7 @@
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
+    "@mybiblelog/shared": "file:../shared",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",

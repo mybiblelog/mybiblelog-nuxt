@@ -81,7 +81,7 @@
 
 <script>
 import * as dayjs from 'dayjs';
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 import BusySpinner from '@/components/BusySpinner';
 
 export default {

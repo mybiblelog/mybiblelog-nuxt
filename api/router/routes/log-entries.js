@@ -1,7 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const { ObjectId } = require('mongodb');
-const SimpleDate = require('../../../shared/simple-date.ts').default;
+const { SimpleDate } = require('@mybiblelog/shared');
 const authCurrentUser = require('../helpers/authCurrentUser').default;
 const useMongooseModels = require('../../mongoose/useMongooseModels').default;
 

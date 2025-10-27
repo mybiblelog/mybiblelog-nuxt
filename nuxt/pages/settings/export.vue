@@ -47,7 +47,7 @@
 import { mapState } from 'vuex';
 import * as csv from 'csv';
 import * as dayjs from 'dayjs';
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 
 const delimiter = ',';
 

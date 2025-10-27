@@ -7,6 +7,11 @@
     "url": "https://github.com/AaronSmithX"
   },
   "private": true,
+  "workspaces": [
+    "api",
+    "nuxt",
+    "shared"
+  ],
   "engines": {
     "node": "24.2.0"
   },
@@ -17,9 +22,12 @@
     "start": "npm-run-all --parallel start:api start:nuxt",
     "start:api": "npm run --prefix api start",
     "start:nuxt": "npm run --prefix nuxt start",
-    "build": "npm run heroku-postbuild",
-    "heroku-prebuild": "npm install --prefix nuxt && npm install --prefix api",
-    "heroku-postbuild": "npm run build --prefix nuxt && npm run build --prefix api",
+    "build": "npm run build:shared && npm run build:projects",
+    "build:shared": "npm run build --prefix shared",
+    "build:projects": "npm run build --prefix api && npm run build --prefix nuxt",
+    "heroku-prebuild": "npm install --prefix shared && npm run build:shared && npm install --prefix nuxt && npm install --prefix api",
+    "heroku-postbuild": "npm run build:shared && npm run build:projects",
+    "clean": "rm -rf node_modules api/node_modules nuxt/node_modules shared/node_modules api/dist .nuxt nuxt/.nuxt shared/dist",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest ./test shared",
     "test:serial": "jest --runInBand ./test shared",
@@ -40,8 +48,6 @@
     "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^5.0.0",
-    "@nuxtjs/eslint-module": "^3.0.1",
     "@playwright/test": "^1.51.1",
     "@types/node": "^22.14.1",
     "babel-eslint": "^10.1.0",

@@ -137,7 +137,7 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-      config.resolve.alias['@shared'] = path.resolve(__dirname, '../shared');
+      // Webpack alias removed - now using npm workspace package
     },
     // Related issue: https://github.com/axios/axios/issues/5243
     transpile: [({ isLegacy }) => isLegacy && 'axios'],

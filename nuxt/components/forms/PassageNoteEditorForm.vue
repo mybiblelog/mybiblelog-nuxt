@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 import PassageSelector from '@/components/forms/PassageSelector';
 import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
 

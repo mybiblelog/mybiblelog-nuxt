@@ -1,0 +1,30 @@
+{
+  "name": "@mybiblelog/shared",
+  "version": "1.0.0",
+  "description": "Shared utilities for My Bible Log",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "bible",
+    "utilities",
+    "shared"
+  ],
+  "author": "Aaron Smith",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "dayjs": "^1.10.4"
+  }
+}

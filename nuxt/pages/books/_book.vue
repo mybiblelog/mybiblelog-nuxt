@@ -12,7 +12,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 import BookReport from '@/components/BookReport';
 
 export default {

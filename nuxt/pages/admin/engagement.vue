@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { displayDate } from '@shared/date-helpers';
+import { displayDate } from '@mybiblelog/shared';
 
 export default {
   name: 'AdminEngagementPage',

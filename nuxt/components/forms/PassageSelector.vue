@@ -102,7 +102,7 @@
 
 <script>
 import Modal from '@/components/popups/Modal';
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 import GridSelector from '@/components/forms/GridSelector';
 import RangeSelector from '@/components/forms/RangeSelector';
 

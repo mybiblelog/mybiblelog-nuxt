@@ -7,7 +7,7 @@ const domain = config.mailgun.domain;
 const baseUrl = config.siteUrl;
 
 import useMongooseModels from '../mongoose/useMongooseModels';
-import { LocaleCode } from '../../nuxt/i18n.config';
+import { LocaleCode } from '@mybiblelog/shared';
 
 const mailgun = new Mailgun(formData);
 const client = mailgun.client({

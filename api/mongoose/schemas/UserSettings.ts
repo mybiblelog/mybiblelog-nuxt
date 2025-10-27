@@ -1,9 +1,7 @@
-import mongoose, { Schema, Document, InferSchemaType } from 'mongoose';
-import SimpleDate from '../../../shared/simple-date';
-import { BibleVersions } from '../../../shared/util';
+import mongoose, { Schema, Document } from 'mongoose';
+import { SimpleDate, BibleVersions, LocaleCode, getLocaleCodes } from '@mybiblelog/shared';
 
-import i18nConfig, { LocaleCode } from '../../../nuxt/i18n.config';
-const siteLocales = i18nConfig.locales.map(locale => locale.code);
+const siteLocales = getLocaleCodes();
 
 /**
  * @swagger
@@ -65,7 +63,7 @@ export const UserSettingsSchema = new Schema<IUserSettings>({
     required: true,
     default: 'en',
     validate: {
-      validator: (locale: string) => siteLocales.includes(locale),
+      validator: (locale: string) => (siteLocales as string[]).includes(locale),
       message: (props: { value: string }) => `${props.value} is not a supported locale`,
     },
   },

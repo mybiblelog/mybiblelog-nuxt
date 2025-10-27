@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import config from '../config';
-import Bible from '../../shared/bible';
+import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../mongoose/useMongooseModels';
 import useMailgunService from './mailgun.service';
 import renderEmail from './email-templates/daily-reminder.template';

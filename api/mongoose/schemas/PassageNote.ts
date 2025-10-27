@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 
 /**
  * @swagger

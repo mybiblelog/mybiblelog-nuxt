@@ -1,3 +1,5 @@
+import { locales, defaultLocale, LocaleCode } from '@mybiblelog/shared';
+
 const {
   de,
   en,
@@ -7,7 +9,7 @@ const {
   uk,
 } = require('../locales/locales.js');
 
-export type LocaleCode = 'en' | 'de' | 'es' | 'fr' | 'pt' | 'uk';
+export type { LocaleCode };
 
 const numberFormats = {
   decimal: {
@@ -33,19 +35,10 @@ const numberFormats = {
  */
 const i18nConfig = {
   baseUrl: process.env.BASE_URL,
-  locales: [
-    // The only place where English is hoisted out of alphabetical order
-    { code: 'en', iso: 'en-US', name: 'English' },
-    { code: 'de', iso: 'de-DE', name: 'Deutsch' },
-    { code: 'es', iso: 'es-ES', name: 'Español' },
-    { code: 'fr', iso: 'fr-FR', name: 'Français' },
-    { code: 'pt', iso: 'pt-BR', name: 'Português' },
-    { code: 'uk', iso: 'uk-UA', name: 'українська' },
-  ],
-  defaultLocale: 'en',
+  locales,
   vueI18n: {
     silentFallbackWarn: true, // for suppressing the warning about missing translations
-    fallbackLocale: 'en',
+    fallbackLocale: defaultLocale,
     messages: {
       de,
       en,

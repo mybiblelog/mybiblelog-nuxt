@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { BibleApps, BibleVersions } from '@shared/util';
+import { BibleApps, BibleVersions } from '@mybiblelog/shared';
 
 const bibleVersionNames = {
   [BibleVersions.NASB2020]: 'New American Standard Bible (NASB)',

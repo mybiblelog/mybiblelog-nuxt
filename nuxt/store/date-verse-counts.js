@@ -1,7 +1,6 @@
 import { set as vueSet } from 'vue';
 import * as dayjs from 'dayjs';
-import Bible from '@shared/bible';
-import BrowserCache from '@shared/browser-cache';
+import { Bible, BrowserCache } from '@mybiblelog/shared';
 import {
   START_DATE_VERSE_COUNT_JOB,
   FINISH_DATE_VERSE_COUNT_JOB,

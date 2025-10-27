@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * @typedef {import('./locale.d.ts').Locales} Locales
+ * @typedef {import('./locale.js').Locales} Locales
  */
 
 /** @type {Locales} */

@@ -2,10 +2,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 const express = require('express');
 const xml = require('xml');
+const { locales } = require('@mybiblelog/shared');
 const config = require('../../config').default;
 
-const i18nConfig = require('../../../nuxt/i18n.config');
-const siteLocales = i18nConfig.locales.map(locale => locale.code);
+const siteLocales = locales.map(locale => locale.code);
 
 const router = express.Router();
 
