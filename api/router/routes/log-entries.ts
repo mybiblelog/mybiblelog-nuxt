@@ -1,9 +1,10 @@
-const createError = require('http-errors');
-const express = require('express');
-const { ObjectId } = require('mongodb');
-const { SimpleDate } = require('@mybiblelog/shared');
-const authCurrentUser = require('../helpers/authCurrentUser').default;
-const useMongooseModels = require('../../mongoose/useMongooseModels').default;
+import express from 'express';
+import createError from 'http-errors';
+import { ObjectId } from 'mongodb';
+import { SimpleDate } from '@mybiblelog/shared';
+import authCurrentUser from '../helpers/authCurrentUser';
+import useMongooseModels from '../../mongoose/useMongooseModels';
+import { Types } from 'mongoose';
 
 const router = express.Router();
 
@@ -192,7 +193,7 @@ router.post('/log-entries', async (req, res, next) => {
     const { LogEntry } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
     const logEntry = new LogEntry(req.body);
-    logEntry.owner = currentUser._id;
+    logEntry.owner = new Types.ObjectId(currentUser._id as string);
 
     try {
       await logEntry.validate();
