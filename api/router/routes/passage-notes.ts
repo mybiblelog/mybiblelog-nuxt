@@ -734,4 +734,4 @@ router.get('/passage-notes/count/books', async (req, res, next) => {
   }
 });
 
-module.exports = router;
+export default router;
