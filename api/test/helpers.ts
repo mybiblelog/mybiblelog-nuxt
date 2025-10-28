@@ -1,24 +1,37 @@
-const crypto = require('node:crypto');
-const path = require('node:path');
-const request = require('supertest');
-const dotenv = require('dotenv');
+import crypto from 'node:crypto';
+import path from 'node:path';
+import request from 'supertest';
+import dotenv from 'dotenv';
 
 dotenv.config({
   path: path.resolve(__dirname, '../../.env'),
 });
 
 const { TEST_API_URL } = process.env;
+if (!TEST_API_URL) {
+  throw new Error('TEST_API_URL environment variable is not set');
+}
 const api = request(TEST_API_URL);
 
-const generateTestEmail = () => {
+const generateTestEmail = (): string => {
   return 'test_user_' + crypto.randomBytes(10).toString('hex') + '@example.com';
 };
 
+export interface TestUser {
+  id: string;
+  email: string;
+  password: string;
+  token: string;
+}
+
+interface CreateTestUserOptions {
+  isAdmin?: boolean;
+}
+
 /**
  * Creates a test user and returns a token
- * @returns {Promise<{id: string, email: string, password: string, token: string}>}
  */
-async function createTestUser({ isAdmin = false }) {
+async function createTestUser({ isAdmin = false }: CreateTestUserOptions = {}): Promise<TestUser> {
   const email = generateTestEmail();
   const password = crypto.randomBytes(10).toString('hex');
   const testBypassSecret = process.env.TEST_BYPASS_SECRET;
@@ -26,7 +39,7 @@ async function createTestUser({ isAdmin = false }) {
   // Register the user
   const registerResponse = await api
     .post('/api/auth/register')
-    .set('x-test-bypass-secret', testBypassSecret)
+    .set('x-test-bypass-secret', testBypassSecret!)
     .send({ email, password, ...(isAdmin && { isAdmin }) });
 
   if (registerResponse.status !== 200) {
@@ -36,7 +49,7 @@ async function createTestUser({ isAdmin = false }) {
   // Login to get the token
   const loginResponse = await api
     .post('/api/auth/login')
-    .set('x-test-bypass-secret', testBypassSecret)
+    .set('x-test-bypass-secret', testBypassSecret!)
     .send({ email, password });
 
   if (loginResponse.status !== 200) {
@@ -53,17 +66,19 @@ async function createTestUser({ isAdmin = false }) {
 
 /**
  * Deletes a test user
- * @param {{ id: string, email: string, token: string }} user
  */
-async function deleteTestUser(user) {
+async function deleteTestUser(user: TestUser): Promise<void> {
   await api.put(`/api/settings/delete-account`)
     .set('Authorization', `Bearer ${user.token}`);
 }
 
-module.exports = {
-  requestApi: api,
+export {
+  api as requestApi,
   generateTestEmail,
-  createTestUser: () => createTestUser({ isAdmin: false }),
-  createTestAdmin: () => createTestUser({ isAdmin: true }),
+  createTestUser,
   deleteTestUser,
 };
+
+// Named exports for convenience
+export const createTestAdmin = () => createTestUser({ isAdmin: true });
+

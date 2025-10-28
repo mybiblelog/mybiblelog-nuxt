@@ -1,4 +1,4 @@
-const { requestApi, createTestUser, deleteTestUser } = require('./helpers');
+import { requestApi, createTestUser, deleteTestUser } from './helpers';
 
 // Test data
 const logEntry1 = { date: '2024-01-01', startVerseId: 101001001, endVerseId: 101001005 }; // Genesis 1:1-5

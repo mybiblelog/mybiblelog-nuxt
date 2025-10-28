@@ -1,5 +1,5 @@
-const xml2js = require('xml2js');
-const { requestApi } = require('./helpers');
+import xml2js from 'xml2js';
+import { requestApi } from './helpers';
 
 describe('Sitemap routes', () => {
   test('GET /api/sitemap.xml', async () => {
@@ -33,12 +33,13 @@ describe('Sitemap routes', () => {
     // Assert
     const parser = new xml2js.Parser();
     const result = await parser.parseStringPromise(res.text);
-    const urls = result.urlset.url.map(url => url.loc[0]);
+    const urls = result.urlset.url.map((url: any) => url.loc[0]);
 
     // Check for internationalized routes
-    expect(urls.some(url => url.includes('/about/'))).toBe(true);
-    expect(urls.some(url => url.includes('/es/'))).toBe(true);
-    expect(urls.some(url => url.includes('/fr/'))).toBe(true);
-    expect(urls.some(url => url.includes('/uk/'))).toBe(true);
+    expect(urls.some((url: string) => url.includes('/about/'))).toBe(true);
+    expect(urls.some((url: string) => url.includes('/es/'))).toBe(true);
+    expect(urls.some((url: string) => url.includes('/fr/'))).toBe(true);
+    expect(urls.some((url: string) => url.includes('/uk/'))).toBe(true);
   });
 });
+

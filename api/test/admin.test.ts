@@ -1,5 +1,5 @@
-const dayjs = require('dayjs');
-const { requestApi, createTestUser, createTestAdmin, deleteTestUser } = require('./helpers');
+import dayjs from 'dayjs';
+import { requestApi, createTestUser, createTestAdmin, deleteTestUser } from './helpers';
 
 describe('admin.test.js', () => {
   describe('GET /api/admin/feedback is protected', () => {

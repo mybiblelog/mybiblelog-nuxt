@@ -1,4 +1,4 @@
-const { requestApi, createTestUser, deleteTestUser } = require('./helpers');
+import { requestApi, createTestUser, deleteTestUser } from './helpers';
 
 describe('Feedback routes', () => {
   test('POST /api/feedback (guest)', async () => {
@@ -36,3 +36,4 @@ describe('Feedback routes', () => {
     await deleteTestUser(testUser);
   });
 });
+

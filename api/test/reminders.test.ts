@@ -1,7 +1,7 @@
-const { requestApi, createTestUser, deleteTestUser } = require('./helpers');
+import { requestApi, createTestUser, deleteTestUser, TestUser } from './helpers';
 
 describe('Reminders routes', () => {
-  let testUser;
+  let testUser: TestUser;
 
   beforeEach(async () => {
     testUser = await createTestUser();
@@ -60,3 +60,4 @@ describe('Reminders routes', () => {
     expect(res.body.active).toBe(true);
   });
 });
+

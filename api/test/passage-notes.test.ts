@@ -1,4 +1,4 @@
-const { requestApi, createTestUser, deleteTestUser } = require('./helpers');
+import { requestApi, createTestUser, deleteTestUser } from './helpers';
 
 // Test data
 const tag1 = { label: 'Theology', color: '#FF0000', description: 'Theological concepts' };
@@ -188,7 +188,7 @@ describe('passage-notes.test.js', () => {
           .send(passageNote1);
 
         const response = await requestApi
-          .get(`/api/passage-notes?filterPassageStartVerseId=${passageNote1.passages[0].startVerseId}&filterPassageEndVerseId=${passageNote1.passages[0].endVerseId}`)
+          .get(`/api/passage-notes?filterPassageStartVerseId=${passageNote1.passages[0]!.startVerseId}&filterPassageEndVerseId=${passageNote1.passages[0]!.endVerseId}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
         expect(response.body.results.length).toBe(1);
@@ -418,8 +418,8 @@ describe('passage-notes.test.js', () => {
           .send({ passages: passageNote1.passages });
         expect(response.status).toBe(200);
         expect(response.body.passages.length).toEqual(passageNote1.passages.length);
-        expect(response.body.passages[0].startVerseId).toEqual(passageNote1.passages[0].startVerseId);
-        expect(response.body.passages[0].endVerseId).toEqual(passageNote1.passages[0].endVerseId);
+        expect(response.body.passages[0].startVerseId).toEqual(passageNote1.passages[0]!.startVerseId);
+        expect(response.body.passages[0].endVerseId).toEqual(passageNote1.passages[0]!.endVerseId);
       }
       finally {
         await deleteTestUser(testUser);
@@ -453,8 +453,8 @@ describe('passage-notes.test.js', () => {
           });
         expect(response.status).toBe(200);
         expect(response.body.passages.length).toEqual(passageNote3.passages.length);
-        expect(response.body.passages[0].startVerseId).toEqual(passageNote3.passages[0].startVerseId);
-        expect(response.body.passages[0].endVerseId).toEqual(passageNote3.passages[0].endVerseId);
+        expect(response.body.passages[0].startVerseId).toEqual(passageNote3.passages[0]!.startVerseId);
+        expect(response.body.passages[0].endVerseId).toEqual(passageNote3.passages[0]!.endVerseId);
         expect(response.body.content).toBe(passageNote3.content);
       }
       finally {
@@ -541,8 +541,8 @@ describe('passage-notes.test.js', () => {
           .send({ passages: passageNote2.passages });
         expect(response.status).toBe(200);
         expect(response.body.passages.length).toEqual(passageNote2.passages.length);
-        expect(response.body.passages[0].startVerseId).toEqual(passageNote2.passages[0].startVerseId);
-        expect(response.body.passages[0].endVerseId).toEqual(passageNote2.passages[0].endVerseId);
+        expect(response.body.passages[0].startVerseId).toEqual(passageNote2.passages[0]!.startVerseId);
+        expect(response.body.passages[0].endVerseId).toEqual(passageNote2.passages[0]!.endVerseId);
       }
       finally {
         await deleteTestUser(testUser);

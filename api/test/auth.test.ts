@@ -1,4 +1,4 @@
-const { requestApi, createTestUser, deleteTestUser, generateTestEmail } = require('./helpers');
+import { requestApi, createTestUser, deleteTestUser, generateTestEmail } from './helpers';
 
 const { TEST_BYPASS_SECRET } = process.env;
 
@@ -30,7 +30,7 @@ describe('Auth routes', () => {
     // Act
     const res = await requestApi
       .post('/api/auth/login')
-      .set('x-test-bypass-secret', TEST_BYPASS_SECRET)
+      .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
       .send({
         email: testUser.email,
         password: testUser.password,
@@ -83,7 +83,7 @@ describe('Auth routes', () => {
       const response = await requestApi
         .post('/api/auth/register')
         // bypass rate limiting
-        .set('x-test-bypass-secret', TEST_BYPASS_SECRET)
+        .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
         .send({
           email: 'invalid-email',
           password: 'password123',
@@ -108,7 +108,7 @@ describe('Auth routes', () => {
 
     it('error if email already in use', async () => {
       // Helper function to truncate email for error message
-      const truncatedEmail = email => email.substring(0, 30) + '...';
+      const truncatedEmail = (email: string) => email.substring(0, 30) + '...';
 
       // Arrange
       const testUser = await createTestUser();
@@ -117,7 +117,7 @@ describe('Auth routes', () => {
       const response = await requestApi
         .post('/api/auth/register')
         // bypass rate limiting
-        .set('x-test-bypass-secret', TEST_BYPASS_SECRET)
+        .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
         .send({
           email: testUser.email,
           password: 'newpassword123',
@@ -147,7 +147,7 @@ describe('Auth routes', () => {
       const response = await requestApi
         .post('/api/auth/register')
         // bypass rate limiting
-        .set('x-test-bypass-secret', TEST_BYPASS_SECRET)
+        .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
         .send({
           email: generateTestEmail(),
           password: '123',
@@ -173,7 +173,7 @@ describe('Auth routes', () => {
     it('enforces rate limiting when test bypass header is not present', async () => {
       // Send 6 requests to ensure the rate limit is enforced
       // (previous tests may have already counted against the rate limit)
-      let response = null;
+      let response: any = null;
       for (let i = 0; i < 6; i++) {
         response = await requestApi
           .post('/api/auth/register')
@@ -191,11 +191,11 @@ describe('Auth routes', () => {
 
     it('bypasses rate limiting when test bypass header is present', async () => {
       // Should be able to make more than 5 requests when bypass header is present
-      const successfulRequests = [];
+      const successfulRequests: any[] = [];
       for (let i = 0; i < 7; i++) {
         const response = await requestApi
           .post('/api/auth/register')
-          .set('x-test-bypass-secret', TEST_BYPASS_SECRET)
+          .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
           .send({
             email: generateTestEmail(),
             password: 'password123',
@@ -207,3 +207,4 @@ describe('Auth routes', () => {
     });
   });
 });
+

@@ -1,4 +1,4 @@
-const { requestApi } = require('./helpers');
+import { requestApi } from './helpers';
 
 describe('Error Handling', () => {
   describe('API Error Responses', () => {
@@ -14,3 +14,4 @@ describe('Error Handling', () => {
     });
   });
 });
+

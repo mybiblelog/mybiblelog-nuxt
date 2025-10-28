@@ -1,4 +1,4 @@
-const { requestApi, createTestUser, deleteTestUser } = require('./helpers');
+import { requestApi, createTestUser, deleteTestUser } from './helpers';
 
 // Test data
 const tag1 = {
