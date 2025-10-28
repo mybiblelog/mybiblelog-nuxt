@@ -1,36 +1,49 @@
-const express = require('express');
-const createError = require('http-errors');
-const { ObjectId } = require('mongoose').Types;
-const dayjs = require('dayjs');
-const utc = require('dayjs/plugin/utc');
-dayjs.extend(utc);
-const authCurrentUser = require('../helpers/authCurrentUser').default;
-const useMongooseModels = require('../../mongoose/useMongooseModels').default;
-const deleteAccount = require('../helpers/deleteAccount').default;
+import express from 'express';
+import createError from 'http-errors';
+import { FilterQuery, Types } from 'mongoose';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import authCurrentUser from '../helpers/authCurrentUser';
+import useMongooseModels from '../../mongoose/useMongooseModels';
+import deleteAccount from '../helpers/deleteAccount';
+import { UserDoc } from 'mongoose/types';
+import { IUser } from 'mongoose/schemas/User';
 
-const getUserEngagementData = async (user) => {
+dayjs.extend(utc);
+
+type PastWeekEngagementData = {
+  date: string;
+  newUserAccounts: number;
+  usersWithLogEntry: number;
+  usersWithNote: number;
+};
+
+const getUserEngagementData = async (user: IUser) => {
   const { LogEntry, PassageNote } = await useMongooseModels();
   const lastLogEntry = await LogEntry
-    .find({ owner: new ObjectId(user._id) })
+    .find({ owner: new Types.ObjectId(user._id as string) })
     .sort({ date: -1 })
     .limit(1)
     .exec();
   const logEntryCount = await LogEntry
-    .countDocuments({ owner: new ObjectId(user._id) })
+    .countDocuments({ owner: new Types.ObjectId(user._id as string) })
     .exec();
   const lastNote = await PassageNote
-    .find({ owner: new ObjectId(user._id) })
+    .find({ owner: new Types.ObjectId(user._id as string) })
     .sort({ createdAt: -1 })
     .limit(1)
     .exec();
   const noteCount = await PassageNote
-    .countDocuments({ owner: new ObjectId(user._id) })
+    .countDocuments({ owner: new Types.ObjectId(user._id as string) })
     .exec();
-  user.lastLogEntryDate = lastLogEntry[0]?.date || '';
-  user.logEntryCount = logEntryCount;
-  user.lastNoteDate = lastNote[0] ? dayjs(lastNote[0]?.createdAt).format('YYYY-MM-DD') : '';
-  user.noteCount = noteCount;
-  return user;
+
+  return {
+    ...user.toObject(),
+    lastLogEntryDate: lastLogEntry[0]?.date || '',
+    logEntryCount,
+    lastNoteDate: lastNote[0] ? dayjs(lastNote[0]?.createdAt).format('YYYY-MM-DD') : '',
+    noteCount,
+  };
 };
 
 let generatingUserEngagementReport = false;
@@ -52,7 +65,7 @@ const generateUserEngagementReport = async () => {
     .exec();
 
   const userObjects = users.map(user => user.toObject());
-  const populatedUsers = [];
+  const populatedUsers: UserDoc[] = [];
   for (const user of userObjects) {
     const populatedUser = await getUserEngagementData(user);
     populatedUsers.push(populatedUser);
@@ -163,7 +176,7 @@ const getPastWeekEngagement = async () => {
   };
 
   const getLastSevenDays = () => {
-    const dates = [];
+    const dates: string[] = [];
     for (let i = 0; i < 7; i++) {
       dates.push(dayjs().subtract(i, 'day').format('YYYY-MM-DD'));
     }
@@ -171,7 +184,7 @@ const getPastWeekEngagement = async () => {
   };
 
   const dates = getLastSevenDays();
-  const engagementData = [];
+  const engagementData: PastWeekEngagementData[] = [];
   for (const date of dates) {
     const data = await getEngagementForDate(date);
     engagementData.push(data);
@@ -389,10 +402,24 @@ router.get('/admin/reports/user-engagement/past-week', async (req, res, next) =>
   }
 });
 
-const validateQuery = (query) => {
+type ValidatedQuery = {
+  limit: number;
+  offset: number;
+  sortOn: string;
+  sortDirection: 1 | -1;
+  searchText: string;
+};
+
+const validateQuery = (query: {
+  limit?: string;
+  offset?: string;
+  sortOn?: string;
+  sortDirection?: string;
+  searchText?: string;
+}): ValidatedQuery | null => {
   const MAX_PAGE_SIZE = 100;
 
-  const validated = {
+  const validated: ValidatedQuery = {
     limit: 50, // default page size
     offset: 0,
     sortOn: 'createdAt',
@@ -419,10 +446,10 @@ const validateQuery = (query) => {
   if (query.limit !== undefined) {
     const parsed = parseInt(query.limit);
     if (isNaN(parsed)) {
-      return;
+      return null;
     }
     if (parsed <= 0) {
-      return;
+      return null;
     }
     if (parsed > MAX_PAGE_SIZE) {
       validated.limit = MAX_PAGE_SIZE;
@@ -436,7 +463,7 @@ const validateQuery = (query) => {
   if (query.offset !== undefined) {
     const parsed = parseInt(query.offset);
     if (isNaN(parsed)) {
-      return;
+      return null;
     }
     if (!isNaN(parsed) && parsed >= 0) {
       validated.offset = parsed;
@@ -524,7 +551,11 @@ router.get('/admin/users', async (req, res, next) => {
     await authCurrentUser(req, { adminOnly: true });
     const query = validateQuery(req.query);
 
-    const filterQuery = {}; // all users
+    if (!query) {
+      return next(createError(400, 'Invalid query parameters'));
+    }
+
+    const filterQuery: FilterQuery<IUser> = {}; // all users
 
     if (query.searchText) {
       // Escape special regex characters to prevent injection
@@ -532,7 +563,7 @@ router.get('/admin/users', async (req, res, next) => {
       filterQuery.email = { $regex: escapedSearchText, $options: 'i' };
     }
 
-    const sortQuery = {
+    const sortQuery: Record<string, 1 | -1> = {
       [query.sortOn]: query.sortDirection,
     };
 
