@@ -1,6 +1,6 @@
-const express = require('express');
-const authCurrentUser = require('../helpers/authCurrentUser').default;
-const useMongooseModels = require('../../mongoose/useMongooseModels').default;
+import express from 'express';
+import authCurrentUser from '../helpers/authCurrentUser';
+import useMongooseModels from '../../mongoose/useMongooseModels';
 
 const router = express.Router();
 
@@ -194,14 +194,19 @@ router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next)
   }
 
   const user = await User.findOne({ _id: reminder.owner });
+  if (!user) {
+    return res.send({
+      error: true,
+    });
+  }
 
   reminder.active = false;
   await reminder.save();
 
-  res.send({
+  return res.send({
     error: false,
     email: user.email,
   });
 });
 
-module.exports = router;
+export default router;
