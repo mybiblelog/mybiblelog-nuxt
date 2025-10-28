@@ -7,6 +7,7 @@
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node server.ts --watch . --watch ../.env --ext ts,js,json",
     "dev:ts": "cross-env NODE_ENV=development nodemon --exec ts-node --transpile-only server.ts --watch . --watch ../.env --ext ts,js,json",
     "build": "tsc",
+    "postbuild": "cp -r services/email-assets dist/services/email-assets",
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "test": "jest ./test",
     "test:serial": "jest --runInBand ./test",
