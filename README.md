@@ -161,14 +161,14 @@ The `$terr` helper is a custom function that unwraps server errors. It is define
 
 These are the steps to adding an entirely new locale to the site (along with any relevant helper tools):
 
-1. Define the locale in `i18n.config.js` (manual)
-1. Add the locale to `locales/locales.js` (use Cursor)
-1. Import the locale for `dayjs` in `shared/date-helpers.js` (manual)
-1. Add Bible book title translations to `shared/static/bible-books.js` (\_translate.js)
+1. Define the locale in `nuxt/i18n.config.js` (manual)
+1. Add the locale to `nuxt/locales/locales.js` (use Cursor)
+1. Import the locale for `dayjs` in `shared/date-helpers.ts` (manual)
+1. Add Bible book title translations to `shared/static/bible-books.ts` (\_translate.js)
 1. Each component manages its own translation messages in an `<i18n>` block, so add the locale to all `.vue` files in the `pages` and `components` directories. (\_translate.js)
-1. Email templates manage their own translation messages, so add the locale to each `api/services/email-templates/*.js` file. (use Cursor)
-1. The email service manages translations for several emails inline, so add the locale to `api/services/mailgun.service.js`. (use Cursor)
-1. The reminder service translates the title to the email, so add that to `api/services/reminder.service.js`.
-1. Each language has its own `/content` directory with markdown files that back the `/about` and `/policy` pages. (\_translate.js)
-1. Each language currently has its own printable reading tracker PDF in `/static/downloads` which is manually listed in the XML sitemap route, `/api/router/routes/sitemap.js`. (manually "print as PDF", update sitemap route, and update `/resources/printable-bible-reading-tracker.vue`)
-1. Add at least one preferred Bible translation option for the new language in both `shared/util.js` and `pages/settings/reading.vue`.
+1. Email templates manage their own translation messages, so add the locale to each `api/services/email-templates/*.ts` file. (use Cursor)
+1. The email service manages translations for several emails inline, so add the locale to `api/services/mailgun.service.ts`. (use Cursor)
+1. The reminder service translates the title to the email, so add that to `api/services/reminder.service.ts`.
+1. Each language has its own `nuxt/content` directory with markdown files that back the `/about` and `/policy` pages. (`nuxt/_translate.js`)
+1. Each language currently has its own printable reading tracker PDF in `nuxt/static/downloads` which is manually listed in the XML sitemap route, `/api/router/routes/sitemap.ts`. (manually "print as PDF", update sitemap route, and update `nuxt/pages/resources/printable-bible-reading-tracker.vue`)
+1. Add at least one preferred Bible translation option for the new language in both `shared/util.ts` and `pages/settings/reading.vue`.
