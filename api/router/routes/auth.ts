@@ -1,13 +1,18 @@
-const express = require('express');
-const status = require('http-status');
-const { requireEmailVerification } = require('../../config');
-const rateLimit = require('../helpers/rateLimit').default;
-const authCurrentUser = require('../helpers/authCurrentUser').default;
-const googleOauth2 = require('../helpers/google-oauth2').default;
-const { I18nError, makeI18nError } = require('../helpers/i18n-error');
-const useMongooseModels = require('../../mongoose/useMongooseModels').default;
-const useMailgunService = require('../../services/mailgun.service').default;
-const checkTestBypass = require('../helpers/checkTestBypass').default;
+import express from 'express';
+import status from 'http-status';
+import config from '../../config';
+import rateLimit from '../helpers/rateLimit';
+import authCurrentUser from '../helpers/authCurrentUser';
+import googleOauth2 from '../helpers/google-oauth2';
+import { I18nError, makeI18nError } from '../helpers/i18n-error';
+import useMongooseModels from '../../mongoose/useMongooseModels';
+import useMailgunService from '../../services/mailgun.service';
+import checkTestBypass from '../helpers/checkTestBypass';
+import { IUserSettings } from 'mongoose/schemas/UserSettings';
+import { isEmailVerified } from 'mongoose/schemas/User';
+
+const { requireEmailVerification } = config;
+
 const router = express.Router();
 
 /**
@@ -169,10 +174,9 @@ router.post('/auth/login', async (req, res, next) => {
     return res.status(422).json({ errors: { _form: makeI18nError(I18nError.InvalidLogin, '_form') } });
   }
   const bypass = checkTestBypass(req);
-  if (requireEmailVerification && !user.emailVerified && !bypass) {
+  if (requireEmailVerification && !isEmailVerified(user) && !bypass) {
     return res.status(422).json({ errors: { _form: makeI18nError(I18nError.VerifyEmail, '_form', { email: user.email }) } });
   }
-  user.token = user.generateJWT();
   return res.json(user.toAuthJSON());
 });
 
@@ -272,10 +276,11 @@ router.post('/auth/register', async (req, res, next) => {
   try {
     user.email = email;
     user.password = password;
-    user.settings = { locale };
+    // remaining settings will be set by Mongoose default
+    user.settings = { locale } as IUserSettings;
 
     if (authBypass) {
-      user.emailVerified = true;
+      // setting emailVerificationCode to null will mark the user as email verified
       user.emailVerificationCode = null;
       if (isAdmin) {
         user.isAdmin = true;
@@ -633,7 +638,7 @@ router.get('/auth/change-email', async (req, res, next) => {
     if (currentUser.newEmail) {
       return res.send({
         newEmail: currentUser.newEmail,
-        expires: currentUser.newEmailVerificationCodeExpires,
+        expires: currentUser.newEmailVerificationExpires,
       });
     }
 
@@ -671,7 +676,7 @@ router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next
   if (user) {
     return res.send({
       newEmail: user.newEmail,
-      expires: user.newEmailVerificationCodeExpires,
+      expires: user.newEmailVerificationExpires,
     });
   }
 
@@ -905,6 +910,13 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
     return res.sendStatus(404);
   }
 
+  // Verify the code and check expiration
+  if (!user.verifyNewEmailVerificationCode(newEmailVerificationCode)) {
+    return res.status(400).json({
+      errors: { _form: makeI18nError(I18nError.VerificationCodeExpired, '_form') },
+    });
+  }
+
   const { newEmail } = user;
 
   // Ensure the new email isn't in use by another user.
@@ -920,10 +932,10 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   // Keep track of the user's current (now old) email address.
   // Mark the user's email as verified by setting the verification code to null.
   user.oldEmails.push(user.email);
-  user.email = newEmail;
+  user.email = newEmail as string;
   user.newEmail = null;
   user.newEmailVerificationCode = null;
-  user.newEmailVerificationCodeExpires = null;
+  user.newEmailVerificationExpires = null;
   await user.save();
 
   // Send a JWT back for auto-login
@@ -931,4 +943,4 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   res.json({ jwt });
 });
 
-module.exports = router;
+export default router;

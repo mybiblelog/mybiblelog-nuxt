@@ -74,22 +74,23 @@ const SALT_WORK_FACTOR = 10;
 export interface IUser extends Document {
   email: string;
   isAdmin: boolean;
-  password: string;
+  password: string | null;
   googleId: string;
-  emailVerificationCode: string;
-  emailVerificationExpires: Date;
-  newEmail: string;
-  newEmailVerificationCode: string;
-  newEmailVerificationExpires: Date;
+  emailVerificationCode: string | null;
+  emailVerificationExpires: Date | null;
+  newEmail: string | null;
+  newEmailVerificationCode: string | null;
+  newEmailVerificationExpires: Date | null;
   oldEmails: string[];
-  passwordResetCode: string;
-  passwordResetExpires: Date;
+  passwordResetCode: string | null;
+  passwordResetExpires: Date | null;
   settings: IUserSettings;
   authenticate: (password: string) => Promise<boolean>;
   enablePasswordReset: () => void;
   verifyPasswordResetCode: (passwordResetCode: string) => boolean;
   disablePasswordReset: () => void;
   enableEmailUpdate: (newEmail: string) => void;
+  verifyEmailVerificationCode: (emailVerificationCode: string) => boolean;
   verifyNewEmailVerificationCode: (newEmailVerificationCode: string) => boolean;
   disableEmailUpdate: () => void;
   generateJWT: () => string;
@@ -183,6 +184,16 @@ UserSchema.methods.enableEmailUpdate = function(newEmail: string) {
   this.newEmail = newEmail;
   this.newEmailVerificationCode = crypto.randomBytes(64).toString('hex');
   this.newEmailVerificationExpires = new Date().getTime() + (60 * 60 * 1000); // in 1 hour
+};
+
+UserSchema.methods.verifyEmailVerificationCode = function(emailVerificationCode: string) {
+  if (emailVerificationCode !== this.emailVerificationCode) {
+    return false;
+  }
+  if (new Date().getTime() > this.emailVerificationExpires) {
+    return false;
+  }
+  return true;
 };
 
 UserSchema.methods.verifyNewEmailVerificationCode = function(newEmailVerificationCode: string) {
