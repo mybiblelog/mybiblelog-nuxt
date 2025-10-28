@@ -7,7 +7,7 @@ import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import deleteAccount from '../helpers/deleteAccount';
 import { UserDoc } from 'mongoose/types';
-import { IUser } from 'mongoose/schemas/User';
+import { IUser } from '../../mongoose/schemas/User';
 
 dayjs.extend(utc);
 

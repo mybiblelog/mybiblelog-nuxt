@@ -8,8 +8,8 @@ import { I18nError, makeI18nError } from '../helpers/i18n-error';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import useMailgunService from '../../services/mailgun.service';
 import checkTestBypass from '../helpers/checkTestBypass';
-import { IUserSettings } from 'mongoose/schemas/UserSettings';
-import { isEmailVerified } from 'mongoose/schemas/User';
+import { IUserSettings } from '../../mongoose/schemas/UserSettings';
+import { isEmailVerified } from '../../mongoose/schemas/User';
 
 const { requireEmailVerification } = config;
 
