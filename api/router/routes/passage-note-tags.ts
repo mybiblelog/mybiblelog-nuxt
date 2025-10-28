@@ -1,8 +1,9 @@
-const createError = require('http-errors');
-const express = require('express');
-const { ObjectId } = require('mongodb');
-const authCurrentUser = require('../helpers/authCurrentUser').default;
-const useMongooseModels = require('../../mongoose/useMongooseModels').default;
+import express from 'express';
+import createError from 'http-errors';
+import { ObjectId } from 'mongodb';
+import authCurrentUser from '../helpers/authCurrentUser';
+import useMongooseModels from '../../mongoose/useMongooseModels';
+import { Types } from 'mongoose';
 
 const router = express.Router();
 
@@ -169,7 +170,7 @@ router.post('/passage-note-tags', async (req, res, next) => {
     const { PassageNoteTag } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
     const passageNoteTag = new PassageNoteTag(req.body);
-    passageNoteTag.owner = currentUser._id;
+    passageNoteTag.owner = new Types.ObjectId(currentUser._id as string);
     try {
       await passageNoteTag.validate();
     }
@@ -320,4 +321,4 @@ router.delete('/passage-note-tags/:id', async (req, res, next) => {
   }
 });
 
-module.exports = router;
+export default router;

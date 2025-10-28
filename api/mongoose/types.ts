@@ -2,7 +2,7 @@ import mongoose, { HydratedDocument, Document } from 'mongoose';
 import type { IUser } from './schemas/User';
 
 // Define document interfaces based on schemas
-interface IEmail extends Document {
+export interface IEmail extends Document {
   from: string;
   to: string;
   subject: string;
@@ -13,12 +13,12 @@ interface IEmail extends Document {
   updatedAt: Date;
 }
 
-interface IPassage {
+export interface IPassage {
   startVerseId: number;
   endVerseId: number;
 }
 
-interface ILogEntry extends Document {
+export interface ILogEntry extends Document {
   owner: mongoose.Types.ObjectId;
   date: string;
   startVerseId: number;
@@ -28,7 +28,7 @@ interface ILogEntry extends Document {
   updatedAt: Date;
 }
 
-interface IPassageNote extends Document {
+export interface IPassageNote extends Document {
   owner: mongoose.Types.ObjectId;
   passages: IPassage[];
   content: string;
@@ -38,7 +38,7 @@ interface IPassageNote extends Document {
   updatedAt: Date;
 }
 
-interface IPassageNoteTag extends Document {
+export interface IPassageNoteTag extends Document {
   owner: mongoose.Types.ObjectId;
   label: string;
   color: string;
@@ -49,7 +49,7 @@ interface IPassageNoteTag extends Document {
   updatedAt: Date;
 }
 
-interface IDailyReminder extends Document {
+export interface IDailyReminder extends Document {
   owner: mongoose.Types.ObjectId;
   hour: number;
   minute: number;
@@ -63,7 +63,7 @@ interface IDailyReminder extends Document {
   updatedAt: Date;
 }
 
-interface IReport extends Document {
+export interface IReport extends Document {
   type: 'user-engagement';
   data: Record<string, unknown>;
   owner?: mongoose.Types.ObjectId;
@@ -71,7 +71,7 @@ interface IReport extends Document {
   updatedAt: Date;
 }
 
-interface IFeedback extends Document {
+export interface IFeedback extends Document {
   ip: string;
   owner: mongoose.Types.ObjectId | null;
   email: string;

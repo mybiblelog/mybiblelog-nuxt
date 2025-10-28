@@ -1,10 +1,12 @@
-const createError = require('http-errors');
-const express = require('express');
-const { ObjectId } = require('mongoose').Types;
-const authCurrentUser = require('../helpers/authCurrentUser').default;
-const { Bible } = require('@mybiblelog/shared');
-const useMongooseModels = require('../../mongoose/useMongooseModels').default;
+import express from 'express';
+import createError from 'http-errors';
+import { ObjectId } from 'mongodb';
+import authCurrentUser from '../helpers/authCurrentUser';
+import { Bible } from '@mybiblelog/shared';
+import useMongooseModels from '../../mongoose/useMongooseModels';
 
+import { FilterQuery, Types } from 'mongoose';
+import { IPassageNote } from 'mongoose/types';
 const router = express.Router();
 
 /**
@@ -84,6 +86,19 @@ const validateTags = async (tagIds) => {
   return true;
 };
 
+type ValidatedQuery = {
+  limit: number;
+  offset: number;
+  sortOn: string;
+  sortDirection: 1 | -1;
+  filterTags: ObjectId[];
+  filterTagMatching: 'any' | 'all' | 'exact';
+  searchText: string;
+  filterPassageStartVerseId: number;
+  filterPassageEndVerseId: number;
+  filterPassageMatching: 'inclusive' | 'exclusive';
+};
+
 /**
  * Validates the query parameters for the passage notes route
  * Returns undefined if the query is invalid
@@ -94,7 +109,7 @@ const validateQuery = (query) => {
   const MAX_PAGE_SIZE = 50;
 
   // default query values
-  const validated = {
+  const validated: ValidatedQuery = {
     limit: 10, // default page size
     offset: 0,
     sortOn: 'createdAt',
@@ -302,7 +317,7 @@ router.get('/passage-notes', async (req, res, next) => {
       return res.status(400).send({ error: 'Invalid query parameters' });
     }
 
-    const filterQuery = {
+    const filterQuery: FilterQuery<IPassageNote> = {
       owner: currentUser._id,
     };
 
@@ -347,7 +362,7 @@ router.get('/passage-notes', async (req, res, next) => {
       };
     }
 
-    const sortQuery = {
+    const sortQuery: Record<string, 1 | -1> = {
       [query.sortOn]: query.sortDirection,
     };
 
@@ -486,7 +501,7 @@ router.post('/passage-notes', async (req, res, next) => {
       return next(createError(409, 'Cannot Create'));
     }
 
-    passageNote.owner = currentUser._id;
+    passageNote.owner = new Types.ObjectId(currentUser._id as string);
     try {
       await passageNote.validate();
     }
