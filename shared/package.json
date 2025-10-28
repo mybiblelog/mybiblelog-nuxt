@@ -12,6 +12,8 @@
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "prepare": "npm run build"
   },
   "keywords": [

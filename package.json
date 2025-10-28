@@ -27,9 +27,9 @@
     "heroku-postbuild": "npm run build",
     "clean": "rm -rf node_modules api/node_modules nuxt/node_modules shared/node_modules api/dist .nuxt nuxt/.nuxt shared/dist",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "test": "jest ./test shared",
-    "test:serial": "jest --runInBand ./test shared",
-    "test:watch": "jest --watch ./test shared",
+    "test": "jest",
+    "test:serial": "jest --runInBand",
+    "test:watch": "jest --watch",
     "test:api": "npm run --prefix api test",
     "test:e2e": "playwright test e2e",
     "test:e2e:ui": "playwright test e2e --ui",
@@ -39,7 +39,26 @@
     "script:delete-stranded-data": "npm run --prefix api script:delete-stranded-data"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testTimeout": 10000,
+    "projects": [
+      {
+        "displayName": "api-tests",
+        "testMatch": ["<rootDir>/api/test/**/*.test.js"],
+        "testEnvironment": "node"
+      },
+      {
+        "displayName": "shared-tests",
+        "preset": "ts-jest",
+        "testMatch": ["<rootDir>/shared/**/*.test.ts"],
+        "testEnvironment": "node",
+        "roots": ["<rootDir>/shared"],
+        "transform": {
+          "^.+\\.ts$": "ts-jest"
+        },
+        "moduleFileExtensions": ["ts", "js", "json", "node"]
+      }
+    ]
   },
   "dependencies": {
     "cross-env": "^7.0.3",
@@ -47,6 +66,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.51.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.14.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
@@ -55,6 +75,7 @@
     "jest": "^29.7.0",
     "nodemon": "^2.0.22",
     "openai": "^4.54.0",
-    "supertest": "^7.1.0"
+    "supertest": "^7.1.0",
+    "ts-jest": "^29.2.0"
   }
 }
