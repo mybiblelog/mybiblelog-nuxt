@@ -126,4 +126,4 @@ router.put('/settings/delete-account', async (req, res, next) => {
   }
 });
 
-module.exports = router;
+export default router;

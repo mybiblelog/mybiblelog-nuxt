@@ -1,8 +1,8 @@
-const express = require('express');
-const status = require('http-status');
-const authCurrentUser = require('../helpers/authCurrentUser').default;
-const { I18nError, makeI18nError } = require('../helpers/i18n-error');
-const useMongooseModels = require('../../mongoose/useMongooseModels').default;
+import express from 'express';
+import status from 'http-status';
+import authCurrentUser from '../helpers/authCurrentUser';
+import { I18nError, makeI18nError } from '../helpers/i18n-error';
+import useMongooseModels from '../../mongoose/useMongooseModels';
 
 const router = express.Router();
 
@@ -126,4 +126,4 @@ router.post('/feedback', async (req, res, next) => {
   }
 });
 
-module.exports = router;
+export default router;

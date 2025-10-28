@@ -758,4 +758,4 @@ router.delete('/admin/users/:email', async (req, res, next) => {
   }
 });
 
-module.exports = router;
+export default router;
