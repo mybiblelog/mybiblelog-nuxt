@@ -5,6 +5,8 @@ import config from '../../config';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { type Request } from 'express';
 
+import type { UserDoc } from '../../mongoose/types';
+
 const { jwtSecret } = config;
 
 const getTokenFromHeader = (req: Request): string | null => {
@@ -15,7 +17,21 @@ const getTokenFromHeader = (req: Request): string | null => {
   return null;
 };
 
-const authCurrentUser = async (req: Request, { optional = false, adminOnly = false } = {}) => {
+async function authCurrentUser(
+  req: Request,
+): Promise<UserDoc>;
+
+async function authCurrentUser(
+  req: Request,
+  opts: { optional?: false; adminOnly?: boolean }
+): Promise<UserDoc>;
+
+async function authCurrentUser(
+  req: Request,
+  opts: { optional: true; adminOnly?: boolean }
+): Promise<UserDoc | null>;
+
+async function authCurrentUser(req: Request, { optional = false, adminOnly = false } = {}): Promise<UserDoc | null> {
   const { User } = await useMongooseModels();
 
   const token = getTokenFromHeader(req);
@@ -44,7 +60,7 @@ const authCurrentUser = async (req: Request, { optional = false, adminOnly = fal
     return null;
   }
 
-  const user = await User.findById(payload.id);
+  const user: UserDoc | null = await User.findById(payload.id);
   if (!user) {
     // We throw an error even when optional because the token is expired
     // and the client will need to re-authenticate. (Or the account was deleted.)
@@ -54,6 +70,6 @@ const authCurrentUser = async (req: Request, { optional = false, adminOnly = fal
     throw createError(status.FORBIDDEN);
   }
   return user;
-};
+}
 
 export default authCurrentUser;

@@ -1,8 +1,8 @@
-const express = require('express');
-const status = require('http-status');
-const createError = require('http-errors');
-const authCurrentUser = require('../helpers/authCurrentUser').default;
-const deleteAccount = require('../helpers/deleteAccount').default;
+import express from 'express';
+import status from 'http-status';
+import createError from 'http-errors';
+import authCurrentUser from '../helpers/authCurrentUser';
+import deleteAccount from '../helpers/deleteAccount';
 
 const router = express.Router();
 
@@ -47,6 +47,9 @@ const router = express.Router();
 router.get('/settings', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
+    if (!currentUser) {
+      return next(createError(401, 'Unauthorized'));
+    }
     res.json(currentUser.settings);
   }
   catch (error) {
@@ -86,7 +89,7 @@ router.put('/settings', async (req, res, next) => {
       'locale',
     ].forEach((property) => {
       if (typeof settings[property] !== 'undefined') {
-        currentUser.settings[property] = settings[property];
+        currentUser.settings![property] = settings[property];
       }
     });
     await currentUser.save();

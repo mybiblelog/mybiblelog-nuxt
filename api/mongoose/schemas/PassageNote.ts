@@ -81,7 +81,7 @@ PassageSchema.pre('validate', function (next) {
   }
 });
 
-const PassageNoteSchema = new mongoose.Schema({
+export const PassageNoteSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

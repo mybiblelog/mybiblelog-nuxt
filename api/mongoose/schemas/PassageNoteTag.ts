@@ -39,7 +39,7 @@ import mongoose from 'mongoose';
  *           description: The date and time when the tag was last updated
  */
 
-const PassageNoteTagSchema = new mongoose.Schema({
+export const PassageNoteTagSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

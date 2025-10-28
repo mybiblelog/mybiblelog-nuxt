@@ -40,7 +40,7 @@ import { Bible, SimpleDate } from '@mybiblelog/shared';
  *           description: The date and time when the log entry was last updated
  */
 
-const LogEntrySchema = new mongoose.Schema({
+export const LogEntrySchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

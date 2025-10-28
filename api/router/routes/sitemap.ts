@@ -1,11 +1,11 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const express = require('express');
-const xml = require('xml');
-const { locales } = require('@mybiblelog/shared');
-const config = require('../../config').default;
+import fs from 'node:fs';
+import path from 'node:path';
+import express from 'express';
+import xml from 'xml';
+import { locales } from '@mybiblelog/shared';
+import config from '../../config';
 
-const siteLocales = locales.map(locale => locale.code);
+const siteLocales = locales.map((locale) => locale.code);
 
 const router = express.Router();
 
@@ -83,4 +83,4 @@ router.get('/sitemap.xml', (req, res, next) => {
 });
 
 // Export the router directly
-module.exports = router;
+export default router;

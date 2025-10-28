@@ -47,7 +47,7 @@ import crypto from 'node:crypto';
  *           description: The date and time when the reminder was last updated
  */
 
-const DailyReminderSchema = new mongoose.Schema({
+export const DailyReminderSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
