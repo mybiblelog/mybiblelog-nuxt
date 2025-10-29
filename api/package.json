@@ -40,6 +40,7 @@
     "mongoose": "^8.19.2",
     "mongoose-unique-validator": "^5.0.1",
     "morgan": "^1.10.0",
+    "supertest": "^7.1.4",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "xml": "^1.0.1",
