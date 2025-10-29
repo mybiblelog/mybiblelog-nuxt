@@ -47,7 +47,7 @@
 
 <script>
 import * as dayjs from 'dayjs';
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 import ChapterReport from '@/components/ChapterReport';
 import SegmentBar from '@/components/SegmentBar';
 import LogEntryEditorModal from '@/components/forms/LogEntryEditorModal';

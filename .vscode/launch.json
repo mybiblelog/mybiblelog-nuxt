@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug API Server",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/api/node_modules/.bin/ts-node",
+      "args": ["server.ts"],
+      "cwd": "${workspaceFolder}/api",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "runtimeArgs": ["--inspect"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "protocol": "inspector",
+      "skipFiles": ["<node_internals>/**"],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "name": "Debug API Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/api/node_modules/.bin/jest",
+      "args": ["--runInBand", "--no-cache", "--detectOpenHandles"],
+      "cwd": "${workspaceFolder}/api",
+      "env": {
+        "NODE_ENV": "test"
+      },
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}

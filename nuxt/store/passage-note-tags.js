@@ -1,4 +1,4 @@
-import BrowserCache from '@shared/browser-cache';
+import { BrowserCache } from '@mybiblelog/shared';
 import {
   SET_PASSAGE_NOTE_TAGS,
   ADD_PASSAGE_NOTE_TAG,

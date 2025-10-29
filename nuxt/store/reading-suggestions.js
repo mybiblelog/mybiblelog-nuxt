@@ -3,9 +3,7 @@ import {
   SET_READING_SUGGESTIONS,
 } from './mutation-types';
 
-import Bible from '@shared/bible';
-import SimpleDate from '@shared/simple-date';
-import { displayDaysSince } from '@shared/date-helpers';
+import { Bible, SimpleDate, displayDaysSince } from '@mybiblelog/shared';
 
 export const state = () => ({
   passages: [],

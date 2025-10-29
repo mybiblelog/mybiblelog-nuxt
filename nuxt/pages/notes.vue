@@ -233,8 +233,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import Bible from '@shared/bible';
-import { displayDateTime, displayTimeSince } from '@shared/date-helpers';
+import { Bible, displayDateTime, displayTimeSince } from '@mybiblelog/shared';
 import HyperlinkedText from '@/components/HyperlinkedText';
 import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
 import PassageSelector from '@/components/forms/PassageSelector';

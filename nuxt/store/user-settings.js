@@ -1,9 +1,10 @@
 import {
   BibleApps,
+  BibleVersions,
   getAppReadingUrl,
   getDefaultBibleApp,
   getDefaultBibleVersion,
-} from '../../shared/util';
+} from '@mybiblelog/shared';
 import {
   SET_USER_SETTINGS,
 } from './mutation-types';

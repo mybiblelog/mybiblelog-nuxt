@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 import SegmentBar from '@/components/SegmentBar';
 import Star from '@/components/svg/Star';
 import InfoLink from '@/components/InfoLink';

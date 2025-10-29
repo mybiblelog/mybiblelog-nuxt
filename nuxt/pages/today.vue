@@ -60,8 +60,7 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 import * as dayjs from 'dayjs';
-import Bible from '@shared/bible';
-import { displayDate } from '@shared/date-helpers';
+import { Bible, displayDate } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import DoubleProgressBar from '@/components/DoubleProgressBar';
 import LogEntryEditorModal from '@/components/forms/LogEntryEditorModal';

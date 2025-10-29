@@ -221,7 +221,7 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 import * as dayjs from 'dayjs';
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import InfoLink from '@/components/InfoLink';
 import CaretRight from '@/components/svg/CaretRight';

@@ -11,6 +11,7 @@
     "build": "nuxt build"
   },
   "dependencies": {
+    "@mybiblelog/shared": "file:../shared",
     "@nuxt/content": "^1.14.0",
     "@nuxtjs/auth": "^4.9.0",
     "@nuxtjs/axios": "^5.13.6",
@@ -29,5 +30,9 @@
     "sass": "^1.71.1",
     "sass-loader": "^10.5.2",
     "vue-gtag": "^1.16.1"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^5.0.0",
+    "@nuxtjs/eslint-module": "^3.1.0"
   }
 }

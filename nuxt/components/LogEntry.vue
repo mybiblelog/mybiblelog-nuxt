@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Bible from '@shared/bible';
+import { Bible } from '@mybiblelog/shared';
 
 export default {
   name: 'LogEntry',
