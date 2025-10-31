@@ -1,9 +1,8 @@
 import * as dayjs from 'dayjs';
+import { Bible, SimpleDate, displayDaysSince } from '@mybiblelog/shared';
 import {
   SET_READING_SUGGESTIONS,
 } from './mutation-types';
-
-import { Bible, SimpleDate, displayDaysSince } from '@mybiblelog/shared';
 
 export const state = () => ({
   passages: [],

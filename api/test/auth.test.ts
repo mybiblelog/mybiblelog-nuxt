@@ -1,3 +1,4 @@
+import { describe, it, test, expect } from '@jest/globals';
 import { requestApi, createTestUser, deleteTestUser, generateTestEmail } from './helpers';
 
 const { TEST_BYPASS_SECRET } = process.env;

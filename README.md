@@ -41,6 +41,9 @@ $ npm run start
 In development, create a `.env` file at the root of the project:
 
 ```bash
+# Disable the repetitive console ad from the `dotenv` package
+DOTENV_DISABLE_AD=1
+
 # Base site URL (used for canonical links)
 # Also used to resolve absolute URL links in emails and axios requests
 SITE_URL=https://xxxxxxxxxx

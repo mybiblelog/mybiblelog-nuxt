@@ -99,7 +99,26 @@ export const displayDateTime = (dateString: string, locale = 'en') => {
   return `${displayDate} @ ${hours}:${minutes} ${amPm}`;
 };
 
-export const displayTimeSince = (dateString: string, locale = 'en') => {
-  const difference = dayjs(dateString).diff(dayjs());
+/**
+ * Returns the time duration between now and the given date/time in a
+ * human readable format. For example: "a few seconds ago", "8 hours ago".
+ * @param {string} dateString 'YYYY-MM-DD'
+ * @param {string} locale 'en', 'es', etc.
+ * @returns {string}
+ */
+export const displayTimeSince = (dateTimeString: string, locale = 'en') => {
+  const difference = dayjs(dateTimeString).diff(dayjs());
   return dayjs.duration(difference).locale(locale).humanize(true);
+};
+
+/**
+ * Returns the number of days between now and the given date in a
+ * human readable format. For example: "2 days ago", "in 3 days".
+ * @param {string} dateString 'YYYY-MM-DD'
+ * @param {string} locale 'en', 'es', etc.
+ * @returns {string}
+ */
+export const displayDaysSince = (dateString, locale = 'en') => {
+  const difference = dayjs(dateString).diff(dayjs(), 'day');
+  return dayjs.duration(difference, 'day').locale(locale).humanize(true);
 };

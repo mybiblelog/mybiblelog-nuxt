@@ -1,3 +1,4 @@
+import { describe, it, test, expect } from '@jest/globals';
 import { requestApi, createTestUser, deleteTestUser } from './helpers';
 
 describe('settings.test.js', () => {
