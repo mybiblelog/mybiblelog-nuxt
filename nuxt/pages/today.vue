@@ -32,19 +32,21 @@
             </div>
           </div>
           <div class="entry-container" role="list" data-testid="log-entries">
-            <log-entry
-              v-for="entry of logEntriesForToday"
-              :key="entry.id"
-              role="listitem"
-              :passage="entry"
-              :actions="actionsForTodayLogEntry(entry)"
-            />
-            <log-entry
-              v-if="!logEntriesForToday.length"
-              key="no-entries"
-              role="listitem"
-              :message="$t('no_entries')"
-            />
+            <client-only>
+              <log-entry
+                v-for="entry of logEntriesForToday"
+                :key="entry.id"
+                role="listitem"
+                :passage="entry"
+                :actions="actionsForTodayLogEntry(entry)"
+              />
+              <log-entry
+                v-if="!logEntriesForToday.length"
+                key="no-entries"
+                role="listitem"
+                :message="$t('no_entries')"
+              />
+            </client-only>
           </div>
           <br>
           <h3 class="title is-5">
