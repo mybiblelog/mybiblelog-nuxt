@@ -13,7 +13,7 @@ og:
 
 ## Feedback
 
-Você pode enviar uma solicitação de recurso, relatório de bug ou outra mensagem com [este formulário](/feedback).
+Você pode enviar uma solicitação de recurso, relatório de bug ou outra mensagem com [este formulário](/pt/feedback).
 
 ## Contribuir
 

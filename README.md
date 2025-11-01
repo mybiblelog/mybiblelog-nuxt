@@ -164,6 +164,7 @@ The `$terr` helper is a custom function that unwraps server errors. It is define
 
 These are the steps to adding an entirely new locale to the site (along with any relevant helper tools):
 
+1. Add the locale to `shared/i18n.ts` (manual)
 1. Define the locale in `nuxt/i18n.config.js` (manual)
 1. Add the locale to `nuxt/locales/locales.js` (use Cursor)
 1. Import the locale for `dayjs` in `shared/date-helpers.ts` (manual)

@@ -52,7 +52,7 @@ Alterar sua data de revisão não apagará nenhum dado do My Bible Log. Todas as
 
 Você pode escolher uma tradução que prefere usar para leitura. Links de leitura externos abrirão esta tradução da Bíblia em seu aplicativo de leitura preferido.
 
-Se uma tradução que você deseja usar não estiver listada, por favor solicite-a por meio [deste formulário](/feedback).
+Se uma tradução que você deseja usar não estiver listada, por favor solicite-a por meio [deste formulário](/pt/feedback).
 
 ### Aplicativo Preferido da Bíblia
 
@@ -60,7 +60,7 @@ Você pode escolher o aplicativo ou site que será aberto ao clicar em um link d
 
 Essa configuração é armazenada no dispositivo em vez de em sua conta, permitindo que você use diferentes aplicativos ou sites em dispositivos diferentes.
 
-Se um site ou aplicativo que você deseja usar não estiver listado, por favor solicite-o por meio [deste formulário](/feedback).
+Se um site ou aplicativo que você deseja usar não estiver listado, por favor solicite-o por meio [deste formulário](/pt/feedback).
 
 ## E-mails de Lembrete Diário
 

@@ -52,7 +52,7 @@ Das Ändern Ihres Rückblickdatums löscht keine Daten aus My Bible Log. Alle Ih
 
 Sie können eine Übersetzung auswählen, die Sie zum Lesen bevorzugen. Externe Lese-Links öffnen diese Bibelübersetzung in Ihrer bevorzugten Lese-App.
 
-Wenn eine Übersetzung, die Sie verwenden möchten, nicht aufgeführt ist, fordern Sie diese bitte mit [diesem Formular](/feedback) an.
+Wenn eine Übersetzung, die Sie verwenden möchten, nicht aufgeführt ist, fordern Sie diese bitte mit [diesem Formular](/de/feedback) an.
 
 ### Bevorzugte Bibel-App
 
@@ -60,7 +60,7 @@ Sie können die App oder Website auswählen, die geöffnet wird, wenn Sie auf ei
 
 Diese Einstellung wird auf dem Gerät gespeichert, anstatt auf Ihrem Konto, sodass Sie auf verschiedenen Geräten verschiedene Apps oder Websites verwenden können.
 
-Wenn eine Website oder App, die Sie verwenden möchten, nicht aufgeführt ist, fordern Sie diese bitte mit [diesem Formular](/feedback) an.
+Wenn eine Website oder App, die Sie verwenden möchten, nicht aufgeführt ist, fordern Sie diese bitte mit [diesem Formular](/de/feedback) an.
 
 ## Tägliche Erinnerungs-E-Mails
 

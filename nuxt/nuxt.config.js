@@ -122,7 +122,10 @@ module.exports = {
     ],
   },
   redirect: [
-    // Currently no redirects from moved or removed URLs
+    // The default locale was unintentionally removed from the i18n config,
+    // so /en/ URLs may have been cached or indexed.
+    // All /en/ URLs should be redirected to remove the locale prefix.
+    { from: '^/en/(.*)$', to: '/$1' },
   ],
   robots: {
     Sitemap: `${process.env.SITE_URL}/api/sitemap.xml`,

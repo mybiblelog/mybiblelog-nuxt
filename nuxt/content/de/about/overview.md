@@ -13,7 +13,7 @@ og:
 
 ## Feedback
 
-Sie können eine Funktionsanfrage, einen Fehlerbericht oder eine andere Nachricht mit [diesem Formular](/feedback) senden.
+Sie können eine Funktionsanfrage, einen Fehlerbericht oder eine andere Nachricht mit [diesem Formular](/de/feedback) senden.
 
 ## Mitwirken
 
