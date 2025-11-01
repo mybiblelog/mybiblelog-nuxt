@@ -29,5 +29,5 @@ La barra se llenará según tu meta diaria de versículos. Si tu meta diaria es 
 Si alcanzas tu meta diaria de versículos al leer suficientes versículos, aparecerá una estrella azul oscuro para esa fecha. Si alcanzas tu meta diaria de versículos al leer versículos nuevos, aparecerá una estrella dorada para esa fecha.
 
 <div class="buttons">
-  <a class="button is-light" href="/calendar">Ir a la página del Calendario</a>
+  <a class="button is-light" href="/es/calendar">Ir a la página del Calendario</a>
 </div>

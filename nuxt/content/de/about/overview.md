@@ -48,4 +48,4 @@ Jeder ist willkommen, den Code zu kopieren, für den eigenen Gebrauch zu modifiz
 
 ## Ressourcen
 
-* [Druckbarer Bibel-Lese-Tracker](/resources/printable-bible-reading-tracker)
+* [Druckbarer Bibel-Lese-Tracker](/de/resources/printable-bible-reading-tracker)

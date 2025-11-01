@@ -124,5 +124,5 @@ Die Funktion zum Importieren des Lese-Logs verwendet das gleiche Dateiformat wie
 Wenn Sie eine Tabelle importieren, wird der Importfortschritt auf der Seite angezeigt. My Bible Log erstellt keine Log-Einträge neu, die bereits existieren. Wenn Sie am 1. Januar Genesis 1 gelesen und in My Bible Log verfolgt haben und dann eine Tabelle importiert haben, die einen Log-Eintrag für denselben Abschnitt und dasselbe Datum enthielt, würde My Bible Log diesen ignorieren.
 
 <div class="buttons">
-  <a class="button is-light" href="/settings">Zur Einstellungsseite gehen</a>
+  <a class="button is-light" href="/de/settings">Zur Einstellungsseite gehen</a>
 </div>

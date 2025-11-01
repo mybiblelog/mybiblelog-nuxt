@@ -42,5 +42,5 @@ Quando se trata de atualizações, Meu Registro Bíblico se comporta como um sit
 Basta atualizar a página para garantir que você esteja usando a versão mais recente do aplicativo.
 
 <div class="buttons">
-  <a class="button is-light" href="/today">Comece Agora</a>
+  <a class="button is-light" href="/pt/today">Comece Agora</a>
 </div>

@@ -41,5 +41,5 @@ Puedes hacer clic en cualquier capítulo para **Abrir** o **Registrar** ese cap�
 * La opción **Registrar** creará una nueva entrada en el registro para ese capítulo. Puedes ajustar esta entrada en el registro antes de guardarla. Esto es útil si solo leíste parte del capítulo o si leíste varios capítulos y querías registrarlos todos a la vez.
 
 <div class="buttons">
-  <a class="button is-light" href="/books">Ir a la página de Libros</a>
+  <a class="button is-light" href="/es/books">Ir a la página de Libros</a>
 </div>

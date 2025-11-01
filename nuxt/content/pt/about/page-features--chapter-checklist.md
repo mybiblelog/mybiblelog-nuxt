@@ -43,5 +43,5 @@ No entanto, ler quatro capítulos por dia fará com que você termine a Bíblia 
 Em vez disso, leia pelo menos 3 capítulos por dia, mas garanta ler esse quarto capítulo extra uma ou duas vezes por semana para manter o ritmo. Se você ler 23 capítulos por semana, terminará a Bíblia em um ano.
 
 <div class="buttons">
-  <a class="button is-light" href="/checklist">Ir para a página de Lista de Capítulos</a>
+  <a class="button is-light" href="/pt/checklist">Ir para a página de Lista de Capítulos</a>
 </div>

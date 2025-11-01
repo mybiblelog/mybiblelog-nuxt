@@ -29,5 +29,5 @@ Die Leiste wird entsprechend Ihrem täglichen Verszielerfüllungsziel gefüllt. 
 Wenn Sie Ihr tägliches Verszielerfüllungsziel durch ausreichendes Lesen von Versen erreichen, erscheint an diesem Tag ein dunkelblauer Stern. Wenn Sie Ihr tägliches Verszielerfüllungsziel durch Lesen neuer Verse erreichen, erscheint an diesem Tag stattdessen ein goldener Stern.
 
 <div class="buttons">
-  <a class="button is-light" href="/calendar">Zur Kalenderseite gehen</a>
+  <a class="button is-light" href="/de/calendar">Zur Kalenderseite gehen</a>
 </div>

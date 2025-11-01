@@ -28,8 +28,8 @@ Crea una etiqueta para al menos 3 preguntas que quieras investigar en la Biblia.
 * ¿Cómo habla la Biblia sobre la iglesia? ¿Quién o qué cuenta como iglesia? ¿La Biblia nos ordena "ir a la iglesia"? Etiqueta sugerida: Iglesia
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Ir a la página de Notas</a>
-  <a class="button is-light" href="/tags">Ir a la página de Etiquetas</a>
+  <a class="button is-light" href="/es/notes">Ir a la página de Notas</a>
+  <a class="button is-light" href="/es/tags">Ir a la página de Etiquetas</a>
 </div>
 
 ## 2. Discipulado / Puntos de conversación 1:1
@@ -41,8 +41,8 @@ Muchas personas estudian la Biblia con un amigo o mentor. Los mentores pueden re
 Crea una etiqueta para cada persona con la que estudias o con la que puedes hablar sobre la Biblia. Para cada persona, crea al menos una nota con algo que quieras hablar con esa persona.
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Ir a la página de Notas</a>
-  <a class="button is-light" href="/tags">Ir a la página de Etiquetas</a>
+  <a class="button is-light" href="/es/notes">Ir a la página de Notas</a>
+  <a class="button is-light" href="/es/tags">Ir a la página de Etiquetas</a>
 </div>
 
 ## 3. Estudio temático
@@ -66,8 +66,8 @@ Utiliza esta lista como inspiración:
 * Dones espirituales
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Ir a la página de Notas</a>
-  <a class="button is-light" href="/tags">Ir a la página de Etiquetas</a>
+  <a class="button is-light" href="/es/notes">Ir a la página de Notas</a>
+  <a class="button is-light" href="/es/tags">Ir a la página de Etiquetas</a>
 </div>
 
 ## 4. Lenguaje original
@@ -81,8 +81,8 @@ Muchas palabras tienen matices diferentes en diferentes idiomas. Por ejemplo, en
 Crea una etiqueta para pasajes que desees buscar en el idioma original, como "Idioma original". Encuentra al menos 3 versículos diferentes con la palabra "amor" y etiquétalos con esta nueva etiqueta. Puedes investigar estos versículos en su idioma original en sitios como [Blue Letter Bible](https://www.blueletterbible.org/study.cfm).
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Ir a la página de Notas</a>
-  <a class="button is-light" href="/tags">Ir a la página de Etiquetas</a>
+  <a class="button is-light" href="/es/notes">Ir a la página de Notas</a>
+  <a class="button is-light" href="/es/tags">Ir a la página de Etiquetas</a>
 </div>
 
 ## 5. Comparar traducciones
@@ -114,8 +114,8 @@ Con esta distinción, ahora podemos saber cuándo los autores originales estaban
 Encuentra versículos que digan "hermanos" en el NASB95 y verifica si se han actualizado a "hermanos y hermanas" en el NASB2020, o si esos versículos realmente se referían solo a hombres.
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Ir a la página de Notas</a>
-  <a class="button is-light" href="/tags">Ir a la página de Etiquetas</a>
+  <a class="button is-light" href="/es/notes">Ir a la página de Notas</a>
+  <a class="button is-light" href="/es/tags">Ir a la página de Etiquetas</a>
 </div>
 
 ## 6. Versículos de memoria
@@ -145,8 +145,8 @@ Hay muchos pasajes en la Biblia que comparten la importancia y el valor de las E
 Crea una etiqueta para hacer un seguimiento de tus versículos de memoria. Elige al menos 3 de estos pasajes y etiquétalos como versículos de memoria.
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Ir a la página de Notas</a>
-  <a class="button is-light" href="/tags">Ir a la página de Etiquetas</a>
+  <a class="button is-light" href="/es/notes">Ir a la página de Notas</a>
+  <a class="button is-light" href="/es/tags">Ir a la página de Etiquetas</a>
 </div>
 
 ## 7. Diario y oración
@@ -164,8 +164,8 @@ Cada una de estas podría ser una etiqueta:
 Crea una etiqueta para hacer un seguimiento de las entradas de tu diario. Comienza escribiendo tu primera nota en el diario y etiquetándola.
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Ir a la página de Notas</a>
-  <a class="button is-light" href="/tags">Ir a la página de Etiquetas</a>
+  <a class="button is-light" href="/es/notes">Ir a la página de Notas</a>
+  <a class="button is-light" href="/es/tags">Ir a la página de Etiquetas</a>
 </div>
 
 ## Conclusión

@@ -124,5 +124,5 @@ O recurso de importação de registro de leitura usa o mesmo formato de arquivo 
 Ao importar uma planilha, o progresso da importação será exibido na página. O My Bible Log não recriará entradas de registro que já existem. Se você leu Gênesis 1 em 1 de janeiro e rastreou no My Bible Log, e depois importou uma planilha que incluía uma entrada de log para aquela mesma passagem e data, o My Bible Log a ignoraria.
 
 <div class="buttons">
-  <a class="button is-light" href="/settings">Ir para página de Configurações</a>
+  <a class="button is-light" href="/pt/settings">Ir para página de Configurações</a>
 </div>

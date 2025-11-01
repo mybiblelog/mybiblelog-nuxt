@@ -45,5 +45,5 @@ Für jedes Kapitel haben Sie zwei Optionen:
   * Mehrere Kapitel auf einmal protokollieren möchten
 
 <div class="buttons">
-  <a class="button is-light" href="/books">Zur Bücherseite gehen</a>
+  <a class="button is-light" href="/de/books">Zur Bücherseite gehen</a>
 </div>

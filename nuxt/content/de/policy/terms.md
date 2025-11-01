@@ -27,7 +27,7 @@ Bitte nutzen Sie die Seite verantwortungsbewusst und gesetzeskonform. Sie stimme
 
 ## Ihre Inhalte und Datenschutz
 
-Die von Ihnen auf My Bible Log erstellten Inhalte (wie Notizen und Lesefortschritte) gehören Ihnen. Wir werden sie privat halten und nicht ohne Ihre Zustimmung teilen, es sei denn, wie in unserer [Datenschutzrichtlinie](/policy/privacy) beschrieben.
+Die von Ihnen auf My Bible Log erstellten Inhalte (wie Notizen und Lesefortschritte) gehören Ihnen. Wir werden sie privat halten und nicht ohne Ihre Zustimmung teilen, es sei denn, wie in unserer [Datenschutzrichtlinie](/de/policy/privacy) beschrieben.
 
 Ihre Übermittlung personenbezogener Informationen über die Website unterliegt unserer Datenschutzrichtlinie. Wir können Ihre Inhalte unverschlüsselt über verschiedene Netzwerke übertragen und an die technischen Anforderungen von Verbindungsnetzwerken oder Geräten anpassen.
 

@@ -26,7 +26,7 @@ Por favor, use o site de forma responsável e legal. Você concorda em não:
 
 ## Seu Conteúdo e Privacidade
 
-O conteúdo que você cria no My Bible Log (como notas e progresso de leitura) pertence a você. Nós o manteremos privado e não o compartilharemos sem sua permissão, exceto conforme descrito em nossa [Política de Privacidade](/policy/privacy).
+O conteúdo que você cria no My Bible Log (como notas e progresso de leitura) pertence a você. Nós o manteremos privado e não o compartilharemos sem sua permissão, exceto conforme descrito em nossa [Política de Privacidade](/pt/policy/privacy).
 
 Sua submissão de informações pessoais através do site é regida pela nossa Política de Privacidade. Podemos transferir seu conteúdo de forma não criptografada por várias redes e adaptá-lo aos requisitos técnicos de redes ou dispositivos de conexão.
 
