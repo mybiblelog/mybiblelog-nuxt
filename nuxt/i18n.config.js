@@ -34,6 +34,8 @@ const numberFormats = {
 const i18nConfig = {
   baseUrl: process.env.BASE_URL,
   locales,
+  defaultLocale,
+  strategy: 'prefix_except_default', // default value, but explicitly set for clarity
   vueI18n: {
     silentFallbackWarn: true, // for suppressing the warning about missing translations
     fallbackLocale: defaultLocale,

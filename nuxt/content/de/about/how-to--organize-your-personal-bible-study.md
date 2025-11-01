@@ -28,8 +28,8 @@ Erstellen Sie einen Tag für mindestens 3 Fragen, die Sie in der Bibel recherchi
 * Wie spricht die Bibel über die Kirche? Wer oder was zählt als Kirche? Gebietet uns die Bibel, "in die Kirche zu gehen"? Vorgeschlagener Tag: Kirche
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Gehe zur Notizseite</a>
-  <a class="button is-light" href="/tags">Gehe zur Tags Seite</a>
+  <a class="button is-light" href="/de/notes">Gehe zur Notizseite</a>
+  <a class="button is-light" href="/de/tags">Gehe zur Tags Seite</a>
 </div>
 
 ## 2. Jüngerschaft / Eins-zu-Eins-Gesprächsthemen
@@ -41,8 +41,8 @@ Viele Menschen studieren die Bibel mit einem Freund oder Mentor. Mentoren könne
 Erstellen Sie einen Tag für jede Person, mit der Sie studieren oder über die Bibel sprechen können. Für jede Person erstellen Sie mindestens eine Notiz mit etwas, über das Sie mit dieser Person sprechen möchten.
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Gehe zur Notizseite</a>
-  <a class="button is-light" href="/tags">Gehe zur Tags Seite</a>
+  <a class="button is-light" href="/de/notes">Gehe zur Notizseite</a>
+  <a class="button is-light" href="/de/tags">Gehe zur Tags Seite</a>
 </div>
 
 ## 3. Thematisches Studium
@@ -66,8 +66,8 @@ Verwenden Sie diese Liste zur Inspiration:
 * Geistliche Gaben
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Gehe zur Notizseite</a>
-  <a class="button is-light" href="/tags">Gehe zur Tags Seite</a>
+  <a class="button is-light" href="/de/notes">Gehe zur Notizseite</a>
+  <a class="button is-light" href="/de/tags">Gehe zur Tags Seite</a>
 </div>
 
 ## 4. Ursprüngliche Sprache
@@ -81,8 +81,8 @@ Viele Wörter haben in verschiedenen Sprachen unterschiedliche Nuancen. Zum Beis
 Erstellen Sie einen Tag für Passagen, die Sie in der originalen Sprache nachschlagen möchten, z.B. "Urspr. Sprache". Finden Sie mindestens 3 verschiedene Verse mit dem Wort "Liebe" und versehen Sie sie mit diesem neuen Tag. Sie können diese Verse in ihrer ursprünglichen Sprache auf Websites wie [Blue Letter Bible](https://www.blueletterbible.org/study.cfm) recherchieren.
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Gehe zur Notizseite</a>
-  <a class="button is-light" href="/tags">Gehe zur Tags Seite</a>
+  <a class="button is-light" href="/de/notes">Gehe zur Notizseite</a>
+  <a class="button is-light" href="/de/tags">Gehe zur Tags Seite</a>
 </div>
 
 ## 5. Übersetzungen vergleichen
@@ -122,8 +122,8 @@ Durch diese Unterscheidung können wir nun erkennen, wann die ursprünglichen Au
 Finden Sie Verse, die in der NASB95 "Brüder" sagen, und prüfen Sie, ob sie in der NASB2020 in "Brüder und Schwestern" aktualisiert wurden oder ob diese Verse wirklich nur Männer betrafen.
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Gehe zur Notizseite</a>
-  <a class="button is-light" href="/tags">Gehe zur Tags Seite</a>
+  <a class="button is-light" href="/de/notes">Gehe zur Notizseite</a>
+  <a class="button is-light" href="/de/tags">Gehe zur Tags Seite</a>
 </div>
 
 ## 6. Merkverse
@@ -153,8 +153,8 @@ Es gibt viele Passagen in der Bibel, die die Bedeutung und den Wert der Schrift 
 Erstellen Sie einen Tag, um Ihre Merkverse im Auge zu behalten. Wählen Sie mindestens 3 dieser Passagen aus und versehen Sie sie mit dem Tag "Merkverse".
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Gehe zur Notizseite</a>
-  <a class="button is-light" href="/tags">Gehe zur Tags Seite</a>
+  <a class="button is-light" href="/de/notes">Gehe zur Notizseite</a>
+  <a class="button is-light" href="/de/tags">Gehe zur Tags Seite</a>
 </div>
 
 ## 7. Tagebuch und Gebet
@@ -176,8 +176,8 @@ Verwenden Sie den **Erhörtes Gebet**-Tag, um die ermutigenden Dinge, die Gott i
 Erstellen Sie einen Tag, um Ihre Tagebucheinträge im Auge zu behalten. Fangen Sie an, Ihren ersten Tagebuch-Eintrag zu schreiben und versehen Sie ihn mit einem Tag.
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Gehe zur Notizseite</a>
-  <a class="button is-light" href="/tags">Gehe zur Tags Seite</a>
+  <a class="button is-light" href="/de/notes">Gehe zur Notizseite</a>
+  <a class="button is-light" href="/de/tags">Gehe zur Tags Seite</a>
 </div>
 
 ## Fazit

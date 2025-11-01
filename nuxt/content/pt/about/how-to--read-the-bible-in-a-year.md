@@ -132,5 +132,5 @@ Uma outra ótima maneira de continuar em direção ao seu objetivo é falar sobr
 Finalmente, aproveite tudo que o motiva a ler a Bíblia. Se você encontrar um trecho interessante durante um estudo bíblico, um sermão ou sua devoção diária, continue lendo! Você não precisa parar em um certo número de versículos ou capítulos todos os dias. Quando encontrar um livro ou seção da Bíblia inspirador, aproveite o seu impulso e leia o quanto quiser!
 
 <div class="buttons">
-  <a class="button is-light" href="/today">Começar</a>
+  <a class="button is-light" href="/pt/today">Começar</a>
 </div>

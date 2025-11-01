@@ -69,6 +69,6 @@ Na página de Tags, você pode ver o número de notas que estão usando cada tag
 Você não pode excluir uma tag que ainda está em uso, então você precisará desmarcar ou excluir quaisquer notas que estão usando uma tag antes de poder excluir a tag.
 
 <div class="buttons">
-  <a class="button is-light" href="/notes">Ir para a página de Notas</a>
-  <a class="button is-light" href="/tags">Ir para a página de Tags</a>
+  <a class="button is-light" href="/pt/notes">Ir para a página de Notas</a>
+  <a class="button is-light" href="/pt/tags">Ir para a página de Tags</a>
 </div>

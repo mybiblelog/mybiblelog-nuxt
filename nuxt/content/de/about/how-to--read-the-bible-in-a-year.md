@@ -132,5 +132,5 @@ Ein weiterer effektiver Weg, um auf dein Ziel zuzugehen, ist, mit Freunden darü
 Schließlich nutze alles, was dich interessiert, um die Bibel zu lesen. Wenn du während einer Bibelstudie, einer Predigt oder deiner täglichen Andacht eine interessante Passage findest, lies weiter! Du musst nicht bei einer bestimmten Anzahl von Versen oder Kapiteln pro Tag aufhören. Wenn du wirklich einen Abschnitt oder ein Buch der Bibel inspirierend findest, nutze deinen Schwung und lese so viel wie du möchtest!
 
 <div class="buttons">
-  <a class="button is-light" href="/today">Los geht's</a>
+  <a class="button is-light" href="/de/today">Los geht's</a>
 </div>

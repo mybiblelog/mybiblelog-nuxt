@@ -11,7 +11,7 @@ og:
   <img src="/share.jpg" alt="My Bible Log">
 </h1>
 
-## Feedback
+## Enviar Comentarios
 
 Puedes enviar una solicitud de función, informe de error u otro mensaje con [este formulario](/es/feedback).
 

@@ -28,8 +28,8 @@ Crie uma tag para pelo menos 3 perguntas que deseja pesquisar na Bíblia. Você 
 * Como a Bíblia fala sobre igreja? Quem ou o que conta como igreja? A Bíblia nos ordena a "ir à igreja"? Tag sugerida: Igreja
 
 <div class="buttons">
-  <a class="button is-light" href="/notas">Ir para a página de Notas</a>
-  <a class="button is-light" href="/tags">Ir para a página de Tags</a>
+  <a class="button is-light" href="/pt/notas">Ir para a página de Notas</a>
+  <a class="button is-light" href="/pt/tags">Ir para a página de Tags</a>
 </div>
 
 ## 2. Discipulado / Pontos de Conversa 1:1
@@ -41,8 +41,8 @@ Muitas pessoas estudam a Bíblia com um amigo ou mentor. Mentores podem se reuni
 Crie uma tag para cada pessoa com quem você estuda ou pode conversar sobre a Bíblia. Para cada pessoa, crie pelo menos uma nota com algo que você deseja conversar com ela.
 
 <div class="buttons">
-  <a class="button is-light" href="/notas">Ir para a página de Notas</a>
-  <a class="button is-light" href="/tags">Ir para a página de Tags</a>
+  <a class="button is-light" href="/pt/notas">Ir para a página de Notas</a>
+  <a class="button is-light" href="/pt/tags">Ir para a página de Tags</a>
 </div>
 
 ## 3. Estudo por Tópicos
@@ -66,8 +66,8 @@ Use esta lista para se inspirar:
 * Dons Espirituais
 
 <div class="buttons">
-  <a class="button is-light" href="/notas">Ir para a página de Notas</a>
-  <a class="button is-light" href="/tags">Ir para a página de Tags</a>
+  <a class="button is-light" href="/pt/notas">Ir para a página de Notas</a>
+  <a class="button is-light" href="/pt/tags">Ir para a página de Tags</a>
 </div>
 
 ## 4. Idioma Original
@@ -81,8 +81,8 @@ Muitas palavras têm nuances diferentes em idiomas diferentes. Por exemplo, em i
 Crie uma tag para passagens que deseja pesquisar no idioma original, como "Idioma Original". Encontre pelo menos 3 versículos diferentes com a palavra "amor" e marque-os com essa nova tag. Você pode pesquisar esses versículos em seu idioma original em sites como [Blue Letter Bible](https://www.blueletterbible.org/study.cfm).
 
 <div class="buttons">
-  <a class="button is-light" href="/notas">Ir para a página de Notas</a>
-  <a class="button is-light" href="/tags">Ir para a página de Tags</a>
+  <a class="button is-light" href="/pt/notas">Ir para a página de Notas</a>
+  <a class="button is-light" href="/pt/tags">Ir para a página de Tags</a>
 </div>
 
 ## 5. Comparar Traduções
@@ -122,8 +122,8 @@ Com essa distinção, agora podemos saber quando os autores originais estavam fa
 Encontre versículos que dizem "irmãos" na BEA95 e veja se foram atualizados para "irmãos e irmãs" na BEA2020, ou se esses versículos realmente se referiam apenas a homens.
 
 <div class="buttons">
-  <a class="button is-light" href="/notas">Ir para a página de Notas</a>
-  <a class="button is-light" href="/tags">Ir para a página de Tags</a>
+  <a class="button is-light" href="/pt/notas">Ir para a página de Notas</a>
+  <a class="button is-light" href="/pt/tags">Ir para a página de Tags</a>
 </div>
 
 ## 6. Versículos de Memória
@@ -153,8 +153,8 @@ Há muitos trechos na Bíblia que compartilham a importância e valor da Escritu
 Crie uma tag para acompanhar seus versículos de memória. Escolha pelo menos 3 desses trechos e os marque como versículos de memória.
 
 <div class="buttons">
-  <a class="button is-light" href="/notas">Ir para a página de Notas</a>
-  <a class="button is-light" href="/tags">Ir para a página de Tags</a>
+  <a class="button is-light" href="/pt/notas">Ir para a página de Notas</a>
+  <a class="button is-light" href="/pt/tags">Ir para a página de Tags</a>
 </div>
 
 ## 7. Diário e Oração
@@ -176,8 +176,8 @@ Use a tag **Oração Respondida** para trazer à tona as coisas encorajadoras qu
 Crie uma tag para acompanhar entradas de diário. Comece escrevendo sua primeira nota de diário e etiquetando-a.
 
 <div class="buttons">
-  <a class="button is-light" href="/notas">Ir para a página de Notas</a>
-  <a class="button is-light" href="/tags">Ir para a página de Tags</a>
+  <a class="button is-light" href="/pt/notas">Ir para a página de Notas</a>
+  <a class="button is-light" href="/pt/tags">Ir para a página de Tags</a>
 </div>
 
 ## Conclusão

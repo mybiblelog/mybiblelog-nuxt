@@ -42,5 +42,5 @@ Die Vorschläge umfassen eine Mischung aus:
 Wenn Sie die vorgeschlagenen Kapitel abschließen, werden neue erscheinen, um Ihr Lesen frisch und spannend zu halten.
 
 <div class="buttons">
-  <a class="button is-light" href="/today">Zur Today-Seite</a>
+  <a class="button is-light" href="/de/today">Zur Today-Seite</a>
 </div>

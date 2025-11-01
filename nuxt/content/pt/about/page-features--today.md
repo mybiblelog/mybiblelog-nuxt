@@ -42,5 +42,5 @@ As sugestões incluem uma mistura de:
 Conforme você completa os capítulos sugeridos, novos aparecerão para manter sua leitura atualizada e envolvente.
 
 <div class="buttons">
-  <a class="button is-light" href="/today">Ir para a página de Hoje</a>
+  <a class="button is-light" href="/pt/today">Ir para a página de Hoje</a>
 </div>

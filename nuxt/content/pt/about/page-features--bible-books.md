@@ -45,5 +45,5 @@ Para cada capítulo, você tem duas opções:
   * Deseja registrar vários capítulos de uma vez
 
 <div class="buttons">
-  <a class="button is-light" href="/books">Ir para a página de Livros</a>
+  <a class="button is-light" href="/pt/books">Ir para a página de Livros</a>
 </div>

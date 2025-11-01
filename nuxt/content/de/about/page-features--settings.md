@@ -52,7 +52,7 @@ Das Ändern Ihres Rückblickdatums löscht keine Daten aus My Bible Log. Alle Ih
 
 Sie können eine Übersetzung auswählen, die Sie zum Lesen bevorzugen. Externe Lese-Links öffnen diese Bibelübersetzung in Ihrer bevorzugten Lese-App.
 
-Wenn eine Übersetzung, die Sie verwenden möchten, nicht aufgeführt ist, fordern Sie diese bitte mit [diesem Formular](/feedback) an.
+Wenn eine Übersetzung, die Sie verwenden möchten, nicht aufgeführt ist, fordern Sie diese bitte mit [diesem Formular](/de/feedback) an.
 
 ### Bevorzugte Bibel-App
 
@@ -60,7 +60,7 @@ Sie können die App oder Website auswählen, die geöffnet wird, wenn Sie auf ei
 
 Diese Einstellung wird auf dem Gerät gespeichert, anstatt auf Ihrem Konto, sodass Sie auf verschiedenen Geräten verschiedene Apps oder Websites verwenden können.
 
-Wenn eine Website oder App, die Sie verwenden möchten, nicht aufgeführt ist, fordern Sie diese bitte mit [diesem Formular](/feedback) an.
+Wenn eine Website oder App, die Sie verwenden möchten, nicht aufgeführt ist, fordern Sie diese bitte mit [diesem Formular](/de/feedback) an.
 
 ## Tägliche Erinnerungs-E-Mails
 
@@ -124,5 +124,5 @@ Die Funktion zum Importieren des Lese-Logs verwendet das gleiche Dateiformat wie
 Wenn Sie eine Tabelle importieren, wird der Importfortschritt auf der Seite angezeigt. My Bible Log erstellt keine Log-Einträge neu, die bereits existieren. Wenn Sie am 1. Januar Genesis 1 gelesen und in My Bible Log verfolgt haben und dann eine Tabelle importiert haben, die einen Log-Eintrag für denselben Abschnitt und dasselbe Datum enthielt, würde My Bible Log diesen ignorieren.
 
 <div class="buttons">
-  <a class="button is-light" href="/settings">Zur Einstellungsseite gehen</a>
+  <a class="button is-light" href="/de/settings">Zur Einstellungsseite gehen</a>
 </div>

@@ -42,5 +42,5 @@ Wenn es um Aktualisierungen geht, verhält sich My Bible Log wie eine Website.
 Aktualisieren Sie einfach die Seite, um sicherzustellen, dass Sie die neueste Version der App verwenden.
 
 <div class="buttons">
-  <a class="button is-light" href="/today">Loslegen</a>
+  <a class="button is-light" href="/de/today">Loslegen</a>
 </div>

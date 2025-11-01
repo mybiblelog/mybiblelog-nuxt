@@ -42,5 +42,5 @@ Lesen Sie jedoch täglich vier Kapitel, bedeutet dies, dass Sie die Bibel nach 2
 Stattdessen lesen Sie mindestens 3 Kapitel pro Tag, aber stellen Sie sicher, dass Sie dieses zusätzliche vierte Kapitel einmal oder zweimal pro Woche lesen, um das Tempo zu halten. Wenn Sie 23 Kapitel pro Woche lesen, werden Sie die Bibel in einem Jahr durchlesen.
 
 <div class="buttons">
-  <a class="button is-light" href="/checklist">Zur Kapitellisten-Seite</a>
+  <a class="button is-light" href="/de/checklist">Zur Kapitellisten-Seite</a>
 </div>
