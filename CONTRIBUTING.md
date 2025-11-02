@@ -34,7 +34,7 @@ Before you begin, ensure you have the following installed:
 1. **Fork and clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/mybiblelog-nuxt.git
+   git clone https://github.com/mybiblelog-nuxt/mybiblelog-nuxt.git
    cd mybiblelog-nuxt
    ```
 
@@ -46,40 +46,9 @@ Before you begin, ensure you have the following installed:
 
 3. **Set up environment variables**
 
-   Create a `.env` file at the root of the project:
+   Create a `.env` file at the root of the project.
 
-   ```bash
-   # Base site URL (used for canonical links)
-   SITE_URL=https://localhost:3000
-
-   # Connection URL for MongoDB
-   MONGODB_URI=mongodb://localhost:27017/mybiblelog_dev
-
-   # JSON Web Token secret
-   JWT_SECRET=your-jwt-secret-here
-
-   # The Mailgun API key and domain for sending email (optional for development of non-email features)
-   MAILGUN_API_KEY=your-mailgun-api-key
-   MAILGUN_DOMAIN=your-mailgun-domain
-
-   # Whether email verification is required before users can sign in
-   REQUIRE_EMAIL_VERIFICATION=false
-
-   # Google OAuth2 (optional for development)
-   GOOGLE_CLIENT_ID=your-google-client-id
-   GOOGLE_CLIENT_SECRET=your-google-client-secret
-   GOOGLE_REDIRECT=http://localhost:3000/google-login
-
-   # Google Analytics ID (optional)
-   GA_MEASUREMENT_ID=your-ga-id
-
-   # Open AI API Key (for automatic i18n block translations)
-   OPENAI_API_KEY=your-openai-api-key
-
-   # Test Data
-   TEST_SITE_URL=https://localhost:3000
-   TEST_BYPASS_SECRET=your-test-secret
-   ```
+   Refer to the Environment Variables section of the README for a template of this file.
 
 4. **Start the development servers**
 
@@ -88,9 +57,6 @@ Before you begin, ensure you have the following installed:
    ```
 
    This will start both the API server (Express) and the Nuxt.js frontend with hot reload.
-
-   At times the proxy between the servers will disconnect during the hot reload process.
-   Simply stop and restart the servers if this happens.
 
 5. **Access the application**
    - Frontend: <http://localhost:3000>
@@ -104,7 +70,7 @@ Please ensure all tests pass before submitting a pull request.
 Note that API tests that result in a value being incremented/decremented
 sometimes suffer from race conditions with other tests and fail with an off-by-one expected value.
 
-Those tests should still consistently pass when run in isolation.
+All tests should consistently pass when run in isolation or serially.
 
 ### API Tests (Jest)
 
@@ -131,11 +97,11 @@ npm run test:e2e:ui
 
 ### Test Requirements
 
-- All new features must include appropriate tests
-- Bug fixes must include tests that verify the fix
-- API endpoints must have corresponding Jest tests
-- Ideally, UI changes must have corresponding Playwright tests
-- Tests must pass in both development and any CI environments (currently there is no CI environment)
+- All new features should include appropriate tests
+- Bug fixes should include tests that verify the fix
+- API endpoints should have corresponding Jest tests
+- Ideally, UI changes should have corresponding Playwright tests
+- Tests should pass in both development and any CI environments (currently there is no CI environment)
 
 ## Code Style
 
@@ -177,6 +143,7 @@ npm run lint -- --fix
 3. **Test your changes**
 
    ```bash
+   npm run test # shared project
    npm run test:api
    npm run test:e2e
    npm run lint
@@ -242,15 +209,7 @@ My Bible Log supports multiple languages. When contributing to i18n features:
 
 ### Adding a New Locale
 
-1. Define the locale in `i18n.config.js`
-2. Add the locale to `locales/locales.js`
-3. Import the locale for `dayjs` in `shared/date-helpers.js`
-4. Add Bible book title translations to `shared/static/bible-books.js`
-5. Add translations to all `.vue` files in `pages` and `components` directories
-6. Add translations to email templates in `api/services/email-templates/`
-7. Add translations to `api/services/mailgun.service.js` and `api/services/reminder.service.js`
-8. Create content files in the appropriate `/content` directory
-9. Add Bible translation options in `shared/util.js` and `pages/settings/reading.vue`
+Refer to the README for a checklist of how to add a new locale.
 
 ### Translation Guidelines
 
@@ -273,14 +232,6 @@ Instead, please:
 3. We will respond within 48 hours
 
 For more information, see our [Security Policy](SECURITY.md).
-
-### Security Best Practices
-
-- Never commit sensitive data (API keys, passwords, etc.)
-- Use environment variables for configuration
-- Validate all user inputs
-- Follow OWASP guidelines
-- Keep dependencies updated
 
 ## Questions?
 
