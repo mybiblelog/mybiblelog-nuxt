@@ -2,47 +2,22 @@
 
 ## Description
 
+<!--
+Provide a clear and concise description of what this PR does.
 
-
-## Type of Change
-
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Breaking change
-- [ ] Documentation update
-- [ ] Code refactoring
-- [ ] Other:
+Information to include (if relevant)
+* Screenshots
+* Database changes
+* API changes
+* Breaking changes
+* Security considerations
+* Performance impact
+* Internationalization changes
+-->
 
 ## Related Issues
-
-- Fixes #
+<!-- Link to any related issues using "Fixes #123" or "Closes #123" -->
 - Related to #
 
-## Changes Made
-
-- 
-- 
-
-## Information to include (if relevant)
-
-- Screenshots
-- Database changes
-- API changes
-- Breaking changes
-- Security considerations
-- Performance impact
-- Internationalization changes
-
-## Testing
-
-- [ ] All existing tests pass
-- [ ] New tests added (if applicable)
-- [ ] Manual testing completed
-- [ ] Linting passes
-
-## Checklist
-
-- [ ] Code follows project style guidelines (`npm run lint` shows no errors)
-- [ ] Self-review completed
-- [ ] Documentation updated (if needed)
-- [ ] No new warnings
+## Additional Notes
+<!-- Any additional context, concerns, or areas you'd like reviewers to focus on -->
