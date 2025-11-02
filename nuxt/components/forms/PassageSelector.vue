@@ -101,8 +101,8 @@
 </template>
 
 <script>
-import Modal from '@/components/popups/Modal';
 import { Bible } from '@mybiblelog/shared';
+import Modal from '@/components/popups/Modal';
 import GridSelector from '@/components/forms/GridSelector';
 import RangeSelector from '@/components/forms/RangeSelector';
 

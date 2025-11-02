@@ -1,69 +1,36 @@
 ---
 name: Bug Report
 about: Create a report to help us improve My Bible Log
-title: '[BUG] '
+title: ''
 labels: bug
 assignees: ''
 ---
 
-## Bug Descriptions
+## Bug Description
 
-A clear and concise description of what the bug is.
 
-## To Reproduce
 
-Steps to reproduce the behavior:
+## Steps to Reproduce
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+1. 
+2. 
+3. 
 
 ## Expected Behavior
 
-A clear and concise description of what you expected to happen.
+
 
 ## Actual Behavior
 
-A clear and concise description of what actually happened.
 
-## Screenshots
 
-If applicable, add screenshots to help explain your problem.
+## Information to include (if relevant)
 
-## Environment
-
-Please complete the following information:
-
-- **OS**: [e.g. macOS 14.0, Windows 11, Ubuntu 22.04]
-- **Browser**: [e.g. Chrome 120, Firefox 121, Safari 17]
-- **Node.js Version**: [e.g. 24.2.0]
-- **MongoDB Version**: [e.g. 7.0.4]
-- **My Bible Log Version**: [e.g. 1.0.0 or commit hash]
-
-## Additional Context
-
-Add any other context about the problem here.
-
-## Console Logs
-
-If applicable, paste any relevant console logs or error messages here.
-
-```txt
-Paste console logs here
-```
-
-## Database State
-
-If the bug involves data, please describe:
-
-- What data was present when the bug occurred
-- Whether this is reproducible with fresh data
-- Any specific user accounts or reading plans involved
+- Environment (OS, Browser, Node.js version, etc.)
+- Screenshots
+- Console logs or error messages
+- Database/data details (if applicable)
 
 ## Checklist
 
-- [ ] I have searched existing issues to ensure this is not a duplicate
-- [ ] I have provided all the requested information above
-- [ ] I have tested this on the latest version
-- [ ] I have checked the browser console for errors
+- [ ] Searched existing issues to avoid duplicates
