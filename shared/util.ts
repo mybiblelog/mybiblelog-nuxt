@@ -89,6 +89,7 @@ const getOsisCode = (bookName: string) => {
  * to other Bible reading apps.
  */
 export const BibleVersions = {
+  AMP: 'AMP',
   KJV: 'KJV',
   NKJV: 'NKJV',
   NIV: 'NIV',
@@ -110,6 +111,7 @@ type BibleVersionsType = {
 };
 
 const BlueLetterBibleVersions: BibleVersionsType = {
+  [BibleVersions.AMP]: 'amp',
   [BibleVersions.KJV]: 'kjv',
   [BibleVersions.NKJV]: 'nkjv',
   [BibleVersions.NIV]: 'niv',
@@ -127,6 +129,7 @@ const BlueLetterBibleVersions: BibleVersionsType = {
 } as const;
 
 const BibleGatewayVersions: BibleVersionsType = {
+  [BibleVersions.AMP]: 'AMP',
   [BibleVersions.KJV]: 'KJV',
   [BibleVersions.NKJV]: 'NKJV',
   [BibleVersions.NIV]: 'NIV',
@@ -145,6 +148,7 @@ const BibleGatewayVersions: BibleVersionsType = {
 
 // The language code of each translation on Bible.com
 const BibleComTranslationLanguages: BibleVersionsType = {
+  [BibleVersions.AMP]: 1588,
   [BibleVersions.KJV]: 1,
   [BibleVersions.NKJV]: 114,
   [BibleVersions.NIV]: 111,
