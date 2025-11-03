@@ -176,3 +176,20 @@ These are the steps to adding an entirely new locale to the site (along with any
 1. Each language has its own `nuxt/content` directory with markdown files that back the `/about` and `/policy` pages. (`nuxt/_translate.js`)
 1. Each language currently has its own printable reading tracker PDF in `nuxt/static/downloads` which is manually listed in the XML sitemap route, `/api/router/routes/sitemap.ts`. (manually "print as PDF", update sitemap route, and update `nuxt/pages/resources/printable-bible-reading-tracker.vue`)
 1. Add at least one preferred Bible translation option for the new language in both `shared/util.ts` and `pages/settings/reading.vue`.
+
+## Adding support for a new Bible translation
+
+1. Define the translation in `shared/util.ts` by adding it to the `BibleVersions` constant.
+1. Also in in `shared/util.ts`: for each of the supported apps, there is a `BibleVersionsType` constant containing that app's internal code/tag/label for that translation. Find and add the code for the translation in each app. (Typescript will raise an error to highlight where these updates are needed.)
+1. In the `nuxt/pages/settings/reading.vue` file, add the display name of the translation to the `bibleVersionNames` constant.
+
+NOTE: you will need to run `npm run heroku-prebuild` before running `npm run dev` to see your changes, as this will require rebuilding the `shared` project and installing it as a dependency in the other projects.
+
+## Adding support for a new Bible reading app or website
+
+1. Define the app in `shared/util.ts` by adding it to the `BibleApps` constant.
+1. Also in `shared/util.ts`: define a new function like `get{NewAppName}ReadingURL` that accepts a Bible version, book index, and chapter index, and returns a URL to directly open that chapter in the app.
+1. Also in `shared/util.ts`: update the `getAppReadingUrl` function to use your new function to generate the external reading URL for the app.
+1. In the `nuxt/pages/settings/reading.vue` file, add the display name of the app to the `bibleAppNames` constant.
+
+NOTE: you will need to run `npm run heroku-prebuild` before running `npm run dev` to see your changes, as this will require rebuilding the `shared` project and installing it as a dependency in the other projects.
