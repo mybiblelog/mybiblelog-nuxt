@@ -105,6 +105,7 @@ import { BibleApps, BibleVersions } from '@mybiblelog/shared';
 const bibleVersionNames = {
   [BibleVersions.NASB2020]: 'New American Standard Bible (NASB)',
   [BibleVersions.NASB1995]: 'New American Standard Bible 1995 (NASB 1995)',
+  [BibleVersions.AMP]: 'Amplified Bible (AMP)',
   [BibleVersions.KJV]: 'King James Version (KJV)',
   [BibleVersions.NKJV]: 'New King James Version (NKJV)',
   [BibleVersions.NIV]: 'New International Version (NIV)',
