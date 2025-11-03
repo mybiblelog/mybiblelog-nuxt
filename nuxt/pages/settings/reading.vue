@@ -109,6 +109,7 @@ const bibleVersionNames = {
   [BibleVersions.NKJV]: 'New King James Version (NKJV)',
   [BibleVersions.NIV]: 'New International Version (NIV)',
   [BibleVersions.ESV]: 'English Standard Version (ESV)',
+  [BibleVersions.NABRE]: 'New American Bible Revised Edition (NABRE)',
   [BibleVersions.RVR1960]: 'Reina-Valera 1960 (RVR1960)',
   [BibleVersions.RVR2020]: 'Reina-Valera 2020 (RVR2020)',
   [BibleVersions.UKR]: 'українська (UKRK)',
