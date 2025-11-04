@@ -97,6 +97,9 @@ export const BibleVersions = {
   NASB1995: 'NASB1995',
   NASB2020: 'NASB2020',
   NABRE: 'NABRE',
+  NLT: 'NLT',
+  TPT: 'TPT',
+  MSG: 'MSG', // The Message
   RVR1960: 'RVR1960', // Reina Valera 1960 (Spanish)
   RVR2020: 'RVR2020', // Reina Valera 2020 (Spanish)
   UKR: 'UKR', // Ukrainian (any version available)
@@ -119,6 +122,9 @@ const BlueLetterBibleVersions: BibleVersionsType = {
   [BibleVersions.NASB1995]: 'nasb95',
   [BibleVersions.NASB2020]: 'nasb20',
   [BibleVersions.NABRE]: 'nasb20', // NABRE not available -- fall back to NASB2020
+  [BibleVersions.NLT]: 'nlt',
+  [BibleVersions.TPT]: 'nlt', // Fall back to NLT on Blue Letter Bible
+  [BibleVersions.MSG]: 'nlt', // Fall back to NLT on Blue Letter Bible
   [BibleVersions.RVR1960]: 'rvr60',
   [BibleVersions.RVR2020]: 'rvr60', // 2020 not available -- fall back to 1960
   [BibleVersions.UKR]: 'niv', // There is no Ukrainian version on Blue Letter Bible
@@ -137,6 +143,9 @@ const BibleGatewayVersions: BibleVersionsType = {
   [BibleVersions.NASB1995]: 'NASB1995',
   [BibleVersions.NASB2020]: 'NASB',
   [BibleVersions.NABRE]: 'NABRE',
+  [BibleVersions.NLT]: 'NLT',
+  [BibleVersions.TPT]: 'MSG', // Bible Gateway doesn't support TPT, but The Message is similar
+  [BibleVersions.MSG]: 'MSG',
   [BibleVersions.RVR1960]: 'RVR1960',
   [BibleVersions.RVR2020]: 'RVR1960', // 2020 not available -- fall back to 1960
   [BibleVersions.UKR]: 'UKR',
@@ -156,6 +165,9 @@ const BibleComTranslationLanguages: BibleVersionsType = {
   [BibleVersions.NASB1995]: 100,
   [BibleVersions.NASB2020]: 2692,
   [BibleVersions.NABRE]: 463,
+  [BibleVersions.NLT]: 116,
+  [BibleVersions.TPT]: 1849,
+  [BibleVersions.MSG]: 97,
   [BibleVersions.RVR1960]: 149,
   [BibleVersions.RVR2020]: 3425,
   [BibleVersions.UKR]: 188,
