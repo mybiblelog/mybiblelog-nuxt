@@ -3,9 +3,6 @@
     <h2 class="title is-4">
       {{ $t('start_page') }}
     </h2>
-    <h3 class="title is-5">
-      {{ $t('preferred_start_page.title') }}
-    </h3>
     <div class="field has-addons">
       <div class="control">
         <div class="select">
@@ -111,7 +108,6 @@ select {
     "save": "Speichern",
     "select_an_option": "Eine Option auswählen",
     "preferred_start_page": {
-      "title": "Bevorzugte Startseite",
       "info": {
         "1": "Diese Seite wird angezeigt, wenn Sie sich zum ersten Mal bei My Bible Log anmelden."
       }
@@ -132,7 +128,6 @@ select {
     "save": "Save",
     "select_an_option": "Select an Option",
     "preferred_start_page": {
-      "title": "Preferred Start Page",
       "info": {
         "1": "This page will be displayed when you first log in to My Bible Log."
       }
@@ -153,7 +148,6 @@ select {
     "save": "Guardar",
     "select_an_option": "Seleccionar una opción",
     "preferred_start_page": {
-      "title": "Página de Inicio Preferida",
       "info": {
         "1": "Esta página se mostrará cuando inicie sesión por primera vez en My Bible Log."
       }
@@ -174,7 +168,6 @@ select {
     "save": "Enregistrer",
     "select_an_option": "Sélectionner une option",
     "preferred_start_page": {
-      "title": "Page de Démarrage Préférée",
       "info": {
         "1": "Cette page s'affichera lorsque vous vous connecterez pour la première fois à My Bible Log."
       }
@@ -195,7 +188,6 @@ select {
     "save": "Salvar",
     "select_an_option": "Selecionar uma Opção",
     "preferred_start_page": {
-      "title": "Página de Início Preferida",
       "info": {
         "1": "Esta página será exibida quando você fizer login pela primeira vez no My Bible Log."
       }
@@ -216,7 +208,6 @@ select {
     "save": "Зберегти",
     "select_an_option": "Вибрати опцію",
     "preferred_start_page": {
-      "title": "Обрана стартова сторінка",
       "info": {
         "1": "Ця сторінка буде відображатися, коли ви вперше ввійдете в My Bible Log."
       }
