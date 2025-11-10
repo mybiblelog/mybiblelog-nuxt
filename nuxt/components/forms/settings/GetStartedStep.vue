@@ -49,7 +49,7 @@ export default {
         notes: '/notes',
       }[startPage] || '/today';
 
-      this.$router.push(this.$localePath(redirectPath, locale));
+      this.$router.push(this.localePath(redirectPath, locale));
     },
   },
 };
