@@ -10,16 +10,10 @@
 
             <!-- Progress Indicator -->
             <div class="progress-indicator">
-              <p class="has-text-centered">
-                {{ $t('start_page.progress', { current: progressTab + 1, total: totalSteps }) }}
-              </p>
-              <progress
-                class="progress is-primary"
-                :value="progressTab + 1"
-                :max="totalSteps"
-              >
-                {{ Math.round(((progressTab + 1) / totalSteps) * 100) }}%
-              </progress>
+              <PillProgressBar
+                :current-step="progressTab + 1"
+                :total-steps="totalSteps"
+              />
             </div>
 
             <!-- Welcome -->
@@ -105,6 +99,7 @@ import PreferredBibleVersionForm from '@/components/forms/settings/PreferredBibl
 import PreferredBibleAppForm from '@/components/forms/settings/PreferredBibleAppForm.vue';
 import StartPageForm from '@/components/forms/settings/StartPageForm.vue';
 import GetStartedStep from '@/components/forms/settings/GetStartedStep.vue';
+import PillProgressBar from '@/components/PillProgressBar.vue';
 
 export default {
   name: 'StartPage',
@@ -116,6 +111,7 @@ export default {
     PreferredBibleAppForm,
     StartPageForm,
     GetStartedStep,
+    PillProgressBar,
   },
   middleware: ['auth'],
   async asyncData({ $axios, app, redirect }) {
@@ -180,10 +176,6 @@ export default {
 .progress-indicator {
   margin-bottom: 2rem;
 }
-
-.progress {
-  margin-top: 0.5rem;
-}
 </style>
 
 <i18n lang="json">
@@ -191,7 +183,6 @@ export default {
   "de": {
     "start_page": {
       "title": "Start",
-      "progress": "Fortschritt: {current}/{total}",
       "save_and_continue": "Speichern und Fortfahren",
       "back": "Zurück",
       "welcome": {
@@ -202,7 +193,6 @@ export default {
   "en": {
     "start_page": {
       "title": "Start",
-      "progress": "Progress: {current}/{total}",
       "save_and_continue": "Save and Continue",
       "back": "Back",
       "welcome": {
@@ -213,7 +203,6 @@ export default {
   "es": {
     "start_page": {
       "title": "Inicio",
-      "progress": "Progreso: {current}/{total}",
       "save_and_continue": "Guardar y Continuar",
       "back": "Atrás",
       "welcome": {
@@ -224,7 +213,6 @@ export default {
   "fr": {
     "start_page": {
       "title": "Démarrer",
-      "progress": "Progression : {current}/{total}",
       "save_and_continue": "Enregistrer et Continuer",
       "back": "Retour",
       "welcome": {
@@ -235,7 +223,6 @@ export default {
   "pt": {
     "start_page": {
       "title": "Início",
-      "progress": "Progresso: {current}/{total}",
       "save_and_continue": "Salvar e Continuar",
       "back": "Voltar",
       "welcome": {
@@ -246,7 +233,6 @@ export default {
   "uk": {
     "start_page": {
       "title": "Старт",
-      "progress": "Прогрес: {current}/{total}",
       "save_and_continue": "Зберегти та Продовжити",
       "back": "Назад",
       "welcome": {
