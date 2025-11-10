@@ -53,7 +53,7 @@
         <button class="button" :disabled="isSaving" @click="handlePrevious">
           {{ previousButtonText }}
         </button>
-        <button class="button is-primary" :disabled="isSaving || !preferredBibleApp" @click="handleSubmit">
+        <button class="button is-info" :disabled="isSaving || !preferredBibleApp" @click="handleSubmit">
           {{ nextButtonText }}
         </button>
       </div>

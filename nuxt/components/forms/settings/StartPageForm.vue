@@ -43,7 +43,7 @@
             </h3>
             <p>{{ option.description }}</p>
             <button
-              class="button is-primary is-small"
+              class="button is-info is-small"
               @click.stop="handleSelect(option.value)"
             >
               {{ $t('start_page.start_page.start_here') }}

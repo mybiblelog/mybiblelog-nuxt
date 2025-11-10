@@ -13,7 +13,7 @@
         <button class="button" @click="handlePrevious">
           {{ previousButtonText }}
         </button>
-        <button class="button is-primary is-large" @click="handleGetStarted">
+        <button class="button is-info is-large" @click="handleGetStarted">
           {{ $t('start_page.get_started.button') }}
         </button>
       </div>

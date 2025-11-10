@@ -13,7 +13,7 @@
     </div>
     <div class="field">
       <div class="control">
-        <button class="button is-primary" @click="handleNext">
+        <button class="button is-info" @click="handleNext">
           {{ buttonText }}
         </button>
       </div>

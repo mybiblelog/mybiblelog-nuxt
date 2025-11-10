@@ -4,10 +4,6 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-two-thirds-tablet is-half-desktop">
-            <h1 class="title">
-              {{ $t('start_page.title') }}
-            </h1>
-
             <!-- Progress Indicator -->
             <div class="progress-indicator">
               <PillProgressBar
@@ -182,7 +178,6 @@ export default {
 {
   "de": {
     "start_page": {
-      "title": "Start",
       "save_and_continue": "Speichern und Fortfahren",
       "back": "Zurück",
       "welcome": {
@@ -192,7 +187,6 @@ export default {
   },
   "en": {
     "start_page": {
-      "title": "Start",
       "save_and_continue": "Save and Continue",
       "back": "Back",
       "welcome": {
@@ -202,7 +196,6 @@ export default {
   },
   "es": {
     "start_page": {
-      "title": "Inicio",
       "save_and_continue": "Guardar y Continuar",
       "back": "Atrás",
       "welcome": {
@@ -212,7 +205,6 @@ export default {
   },
   "fr": {
     "start_page": {
-      "title": "Démarrer",
       "save_and_continue": "Enregistrer et Continuer",
       "back": "Retour",
       "welcome": {
@@ -222,7 +214,6 @@ export default {
   },
   "pt": {
     "start_page": {
-      "title": "Início",
       "save_and_continue": "Salvar e Continuar",
       "back": "Voltar",
       "welcome": {
@@ -232,7 +223,6 @@ export default {
   },
   "uk": {
     "start_page": {
-      "title": "Старт",
       "save_and_continue": "Зберегти та Продовжити",
       "back": "Назад",
       "welcome": {
