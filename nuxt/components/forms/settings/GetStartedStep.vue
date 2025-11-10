@@ -9,7 +9,10 @@
       </p>
     </div>
     <div class="field">
-      <div class="control">
+      <div class="control buttons">
+        <button class="button" @click="handlePrevious">
+          {{ previousButtonText }}
+        </button>
         <button class="button is-primary is-large" @click="handleGetStarted">
           {{ $t('start_page.get_started.button') }}
         </button>
@@ -21,12 +24,21 @@
 <script>
 export default {
   name: 'GetStartedStep',
+  props: {
+    previousButtonText: {
+      type: String,
+      default: 'Back',
+    },
+  },
   computed: {
     userSettings() {
       return this.$store.state['user-settings'].settings;
     },
   },
   methods: {
+    handlePrevious() {
+      this.$emit('previous');
+    },
     handleGetStarted() {
       const { startPage, locale } = this.userSettings;
       const redirectPath = {

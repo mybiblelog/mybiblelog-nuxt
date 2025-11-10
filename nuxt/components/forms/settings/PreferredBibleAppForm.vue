@@ -49,9 +49,12 @@
     </div>
 
     <div class="field">
-      <div class="control">
+      <div class="control buttons">
+        <button class="button" :disabled="isSaving" @click="handlePrevious">
+          {{ previousButtonText }}
+        </button>
         <button class="button is-primary" :disabled="isSaving || !preferredBibleApp" @click="handleSubmit">
-          {{ buttonText }}
+          {{ nextButtonText }}
         </button>
       </div>
     </div>
@@ -84,9 +87,13 @@ export default {
       type: String,
       default: '',
     },
-    buttonText: {
+    nextButtonText: {
       type: String,
       default: 'Save and Continue',
+    },
+    previousButtonText: {
+      type: String,
+      default: 'Back',
     },
     showToast: {
       type: Boolean,
@@ -109,6 +116,9 @@ export default {
     },
   },
   methods: {
+    handlePrevious() {
+      this.$emit('previous');
+    },
     async handleSubmit() {
       this.error = '';
 

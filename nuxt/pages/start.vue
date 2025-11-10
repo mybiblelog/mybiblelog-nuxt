@@ -33,49 +33,63 @@
             <DailyVerseCountGoalForm
               v-if="progressTab === 1"
               :initial-value="userSettings.dailyVerseCountGoal"
-              :button-text="$t('start_page.save_and_continue')"
+              :next-button-text="$t('start_page.save_and_continue')"
+              :previous-button-text="$t('start_page.back')"
               :show-toast="false"
               @next="handleNext"
+              @previous="handlePrevious"
             />
 
             <!-- Look Back Date -->
             <LookBackDateForm
               v-if="progressTab === 2"
               :initial-value="userSettings.lookBackDate"
-              :button-text="$t('start_page.save_and_continue')"
+              :next-button-text="$t('start_page.save_and_continue')"
+              :previous-button-text="$t('start_page.back')"
               :show-toast="false"
               @next="handleNext"
+              @previous="handlePrevious"
             />
 
             <!-- Preferred Bible Version -->
             <PreferredBibleVersionForm
               v-if="progressTab === 3"
               :initial-value="userSettings.preferredBibleVersion"
-              :button-text="$t('start_page.save_and_continue')"
+              :next-button-text="$t('start_page.save_and_continue')"
+              :previous-button-text="$t('start_page.back')"
               :show-toast="false"
               @next="handleNext"
+              @previous="handlePrevious"
             />
 
             <!-- Preferred Bible App -->
             <PreferredBibleAppForm
               v-if="progressTab === 4"
               :initial-value="userSettings.preferredBibleApp"
-              :button-text="$t('start_page.save_and_continue')"
+              :next-button-text="$t('start_page.save_and_continue')"
+              :previous-button-text="$t('start_page.back')"
               :show-toast="false"
               @next="handleNext"
+              @previous="handlePrevious"
             />
 
             <!-- Start Page -->
             <StartPageForm
               v-if="progressTab === 5"
               :initial-value="userSettings.startPage || 'today'"
-              :button-text="$t('start_page.save_and_continue')"
+              :next-button-text="$t('start_page.save_and_continue')"
+              :previous-button-text="$t('start_page.back')"
               :show-toast="false"
               @next="handleNext"
+              @previous="handlePrevious"
             />
 
             <!-- Get Started -->
-            <GetStartedStep v-if="progressTab === 6" />
+            <GetStartedStep
+              v-if="progressTab === 6"
+              :previous-button-text="$t('start_page.back')"
+              @previous="handlePrevious"
+            />
           </div>
         </div>
       </div>
@@ -153,6 +167,11 @@ export default {
         this.progressTab += 1;
       }
     },
+    handlePrevious() {
+      if (this.progressTab > 0) {
+        this.progressTab -= 1;
+      }
+    },
   },
 };
 </script>
@@ -174,6 +193,7 @@ export default {
       "title": "Start",
       "progress": "Fortschritt: {current}/{total}",
       "save_and_continue": "Speichern und Fortfahren",
+      "back": "Zurück",
       "welcome": {
         "button": "Einstellungen wählen"
       }
@@ -184,6 +204,7 @@ export default {
       "title": "Start",
       "progress": "Progress: {current}/{total}",
       "save_and_continue": "Save and Continue",
+      "back": "Back",
       "welcome": {
         "button": "Choose Settings"
       }
@@ -194,6 +215,7 @@ export default {
       "title": "Inicio",
       "progress": "Progreso: {current}/{total}",
       "save_and_continue": "Guardar y Continuar",
+      "back": "Atrás",
       "welcome": {
         "button": "Elegir Configuración"
       }
@@ -204,6 +226,7 @@ export default {
       "title": "Démarrer",
       "progress": "Progression : {current}/{total}",
       "save_and_continue": "Enregistrer et Continuer",
+      "back": "Retour",
       "welcome": {
         "button": "Choisir les Paramètres"
       }
@@ -214,6 +237,7 @@ export default {
       "title": "Início",
       "progress": "Progresso: {current}/{total}",
       "save_and_continue": "Salvar e Continuar",
+      "back": "Voltar",
       "welcome": {
         "button": "Escolher Configurações"
       }
@@ -224,6 +248,7 @@ export default {
       "title": "Старт",
       "progress": "Прогрес: {current}/{total}",
       "save_and_continue": "Зберегти та Продовжити",
+      "back": "Назад",
       "welcome": {
         "button": "Вибрати Налаштування"
       }

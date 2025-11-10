@@ -52,6 +52,14 @@
         </div>
       </div>
     </div>
+
+    <div class="field">
+      <div class="control">
+        <button class="button" @click="handlePrevious">
+          {{ previousButtonText }}
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -63,9 +71,13 @@ export default {
       type: String,
       default: '',
     },
-    buttonText: {
+    nextButtonText: {
       type: String,
       default: 'Save and Continue',
+    },
+    previousButtonText: {
+      type: String,
+      default: 'Back',
     },
     showToast: {
       type: Boolean,
@@ -124,6 +136,9 @@ export default {
     },
   },
   methods: {
+    handlePrevious() {
+      this.$emit('previous');
+    },
     async handleSelect(value) {
       this.startPage = value;
       await this.handleSubmit();
