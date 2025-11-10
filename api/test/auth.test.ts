@@ -89,6 +89,7 @@ describe('Auth routes', () => {
           email: 'invalid-email',
           password: 'password123',
           name: 'Test User',
+          locale: 'en',
         });
       expect(response.status).toBe(422);
       expect(response.body.errors).toEqual({
@@ -122,6 +123,7 @@ describe('Auth routes', () => {
         .send({
           email: testUser.email,
           password: 'newpassword123',
+          locale: 'en',
         });
 
       // Assert
@@ -153,6 +155,7 @@ describe('Auth routes', () => {
           email: generateTestEmail(),
           password: '123',
           name: 'Test User',
+          locale: 'en',
         });
       expect(response.status).toBe(422);
       expect(response.body.errors).toEqual({
@@ -181,6 +184,7 @@ describe('Auth routes', () => {
           .send({
             email: generateTestEmail(),
             password: 'password123',
+            locale: 'en',
           });
       }
 
@@ -200,6 +204,7 @@ describe('Auth routes', () => {
           .send({
             email: generateTestEmail(),
             password: 'password123',
+            locale: 'en',
           });
 
         expect(response.status).toBe(200);

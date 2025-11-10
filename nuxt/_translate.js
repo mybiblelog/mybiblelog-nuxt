@@ -11,7 +11,7 @@ const OpenAI = require('openai');
 const dotenv = require('dotenv');
 const { bibleBooks } = require('@mybiblelog/shared');
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const newLanguageCode = '';
 const newLanguageName = '';

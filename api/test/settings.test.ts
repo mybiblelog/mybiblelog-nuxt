@@ -19,6 +19,7 @@ describe('settings.test.js', () => {
         expect(response.body).toHaveProperty('dailyVerseCountGoal');
         expect(response.body).toHaveProperty('lookBackDate');
         expect(response.body).toHaveProperty('preferredBibleVersion');
+        expect(response.body).toHaveProperty('startPage');
         expect(response.body).toHaveProperty('locale');
       }
       finally {

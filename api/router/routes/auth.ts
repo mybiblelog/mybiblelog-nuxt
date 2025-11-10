@@ -373,7 +373,7 @@ router.get('/auth/oauth2/google/url', (req, res, next) => {
  */
 router.get('/auth/oauth2/google/verify', async (req, res, next) => {
   try {
-    const { code, state } = req.query;
+    const { code, state, locale } = req.query;
 
     // Verify state parameter to prevent CSRF attacks
     if (!state || !googleOauth2.verifyState(state)) {
@@ -418,6 +418,10 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     user.emailVerificationCode = null; // Google verified emails don't need verification
     user.password = null;
     user.googleId = id;
+
+    // remaining settings will be set by Mongoose default
+    user.settings = { locale } as IUserSettings;
+
     await user.save();
     const jwt = user.generateJWT();
     res.send({ token: jwt });

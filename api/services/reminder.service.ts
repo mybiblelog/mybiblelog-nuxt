@@ -98,7 +98,7 @@ const init = async () => {
       uk: `Нагадування My Bible Log для ${subjectDate}`,
     }[locale];
 
-    const siteLink = `${getLocaleBaseUrl(locale)}/today`;
+    const siteLink = `${getLocaleBaseUrl(locale)}/start`;
     const settingsLink = `${getLocaleBaseUrl(locale)}/settings/reminder`;
     const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.unsubscribeCode}`;
 

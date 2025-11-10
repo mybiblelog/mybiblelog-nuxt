@@ -1,0 +1,230 @@
+<template>
+  <div class="container">
+    <h2 class="title is-4">
+      {{ $t('start_page') }}
+    </h2>
+    <h3 class="title is-5">
+      {{ $t('preferred_start_page.title') }}
+    </h3>
+    <div class="field has-addons">
+      <div class="control">
+        <div class="select">
+          <select v-model="userSettingsForm.startPage">
+            <option value="" selected="selected" disabled="disabled">
+              {{ $t('select_an_option') }}
+            </option>
+            <option v-for="option in startPageOptions" :key="option.value" :value="option.value" :selected="option.value === userSettingsForm.startPage">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="control">
+        <a class="button is-primary" @click="handleStartPageSubmit">{{ $t('save') }}</a>
+      </div>
+    </div>
+    <div v-if="userSettingsErrors.startPage" class="help is-danger">
+      {{ $terr(userSettingsErrors.startPage, { field: $t('preferred_start_page.title') }) }}
+    </div>
+    <p>{{ $t('preferred_start_page.info.1') }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'StartPageSettingsPage',
+  middleware: ['auth'],
+  data() {
+    return {
+      userSettingsForm: {
+        startPage: '',
+      },
+      userSettingsErrors: {
+        startPage: '',
+      },
+    };
+  },
+  head() {
+    return {
+      meta: [
+        { hid: 'robots', name: 'robots', content: 'noindex' },
+      ],
+    };
+  },
+  computed: {
+    userSettings() {
+      return this.$store.state['user-settings'].settings;
+    },
+    startPageOptions() {
+      return [
+        { text: this.$t('start'), value: 'start' },
+        { text: this.$t('today'), value: 'today' },
+        { text: this.$t('bible_books'), value: 'books' },
+        { text: this.$t('chapter_checklist'), value: 'checklist' },
+        { text: this.$t('calendar'), value: 'calendar' },
+        { text: this.$t('notes'), value: 'notes' },
+      ];
+    },
+  },
+  created() {
+    this.userSettingsForm.startPage = this.userSettings.startPage || 'start';
+  },
+  methods: {
+    async handleStartPageSubmit() {
+      const { startPage } = this.userSettingsForm;
+      const success = await this.$store.dispatch('user-settings/updateSettings', { startPage });
+      if (success) {
+        this.$store.dispatch('toast/add', {
+          type: 'success',
+          text: this.$t('messaging.preferred_start_page_saved_successfully'),
+        });
+      }
+      else {
+        this.userSettingsErrors.startPage = this.$t('messaging.unable_to_save_preferred_start_page');
+      }
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+main p {
+  margin-bottom: 1rem;
+}
+
+select {
+  // cap <select> width so it doesn't overflow mobile device
+  max-width: 65vw;
+}
+</style>
+
+<i18n lang="json">
+{
+  "de": {
+    "start_page": "Startseite",
+    "start": "Start",
+    "today": "Heute",
+    "bible_books": "Bibelbücher",
+    "chapter_checklist": "Kapitel Checkliste",
+    "calendar": "Kalender",
+    "notes": "Notizen",
+    "save": "Speichern",
+    "select_an_option": "Eine Option auswählen",
+    "preferred_start_page": {
+      "title": "Bevorzugte Startseite",
+      "info": {
+        "1": "Diese Seite wird angezeigt, wenn Sie sich zum ersten Mal bei My Bible Log anmelden."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Bevorzugte Startseite erfolgreich gespeichert.",
+      "unable_to_save_preferred_start_page": "Nicht gespeichert."
+    }
+  },
+  "en": {
+    "start_page": "Start Page",
+    "start": "Start",
+    "today": "Today",
+    "bible_books": "Bible Books",
+    "chapter_checklist": "Chapter Checklist",
+    "calendar": "Calendar",
+    "notes": "Notes",
+    "save": "Save",
+    "select_an_option": "Select an Option",
+    "preferred_start_page": {
+      "title": "Preferred Start Page",
+      "info": {
+        "1": "This page will be displayed when you first log in to My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Preferred start page saved successfully.",
+      "unable_to_save_preferred_start_page": "Unable to save."
+    }
+  },
+  "es": {
+    "start_page": "Página de inicio",
+    "start": "Inicio",
+    "today": "Hoy",
+    "bible_books": "Libros Bíblicos",
+    "chapter_checklist": "Lista de Capítulos",
+    "calendar": "Calendario",
+    "notes": "Notas",
+    "save": "Guardar",
+    "select_an_option": "Seleccionar una opción",
+    "preferred_start_page": {
+      "title": "Página de Inicio Preferida",
+      "info": {
+        "1": "Esta página se mostrará cuando inicie sesión por primera vez en My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Página de inicio preferida guardada con éxito.",
+      "unable_to_save_preferred_start_page": "No se puede guardar."
+    }
+  },
+  "fr": {
+    "start_page": "Page de démarrage",
+    "start": "Démarrer",
+    "today": "Aujourd'hui",
+    "bible_books": "Livres de la Bible",
+    "chapter_checklist": "Liste de Contrôle",
+    "calendar": "Calendrier",
+    "notes": "Notes",
+    "save": "Enregistrer",
+    "select_an_option": "Sélectionner une option",
+    "preferred_start_page": {
+      "title": "Page de Démarrage Préférée",
+      "info": {
+        "1": "Cette page s'affichera lorsque vous vous connecterez pour la première fois à My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Page de démarrage préférée enregistrée avec succès.",
+      "unable_to_save_preferred_start_page": "Impossible d'enregistrer."
+    }
+  },
+  "pt": {
+    "start_page": "Página de início",
+    "start": "Início",
+    "today": "Hoje",
+    "bible_books": "Livros da Bíblia",
+    "chapter_checklist": "Lista de Capítulos",
+    "calendar": "Calendário",
+    "notes": "Notas",
+    "save": "Salvar",
+    "select_an_option": "Selecionar uma Opção",
+    "preferred_start_page": {
+      "title": "Página de Início Preferida",
+      "info": {
+        "1": "Esta página será exibida quando você fizer login pela primeira vez no My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Página de início preferida salva com sucesso.",
+      "unable_to_save_preferred_start_page": "Não é possível salvar."
+    }
+  },
+  "uk": {
+    "start_page": "Стартова сторінка",
+    "start": "Старт",
+    "today": "Сьогодні",
+    "bible_books": "Книги Біблії",
+    "chapter_checklist": "Список розділів",
+    "calendar": "Календар",
+    "notes": "Нотатки",
+    "save": "Зберегти",
+    "select_an_option": "Вибрати опцію",
+    "preferred_start_page": {
+      "title": "Обрана стартова сторінка",
+      "info": {
+        "1": "Ця сторінка буде відображатися, коли ви вперше ввійдете в My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Обрану стартову сторінку успішно збережено.",
+      "unable_to_save_preferred_start_page": "Не вдалося зберегти."
+    }
+  }
+}
+</i18n>

@@ -54,20 +54,6 @@ export default {
       return this.$i18n.locales;
     },
   },
-  watch: {
-    '$auth.loggedIn': {
-      handler() {
-        // If the user registers or logs in, we capture the currently selected locale in the database
-        if (this.$auth.loggedIn) {
-          // FIXME: this fires once on the server and once on the client with every full page load
-          // Navigation between pages doesn't trigger it after the initial site load.
-          // However, this is still redundant. This should only trigger on register/login.
-          this.$store.dispatch('user-settings/updateSettings', { locale: this.$i18n.locale });
-        }
-      },
-      immediate: true,
-    },
-  },
   methods: {
     setLocale(locale) {
       this.$i18n.setLocale(locale);

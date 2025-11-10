@@ -35,11 +35,7 @@ export default {
 
     if (code && state) {
       try {
-        const response = await this.$axios.get(`/api/auth/oauth2/google/verify?code=${code}&state=${state}`);
-        const { token } = response.data;
-        await this.$auth.setUserToken(token);
-
-        // Redirect to the user's preferred locale.
+        // Get the user's preferred locale to save as their user settings
         // We saved the user's locale to localStorage on the Login page,
         // allowing us to redirect to the correct locale after login
         // without changing the OAuth2 redirect URL.
@@ -47,7 +43,14 @@ export default {
         // as i18n will interpret the OAuth2 redirect URL as an intentional language switch.
         const defaultLocale = this.$i18n.defaultLocale;
         const loginLocale = localStorage.getItem('login_language');
-        const redirectUrl = this.localePath('/today', loginLocale || defaultLocale);
+        const userLocale = loginLocale || defaultLocale;
+
+        const response = await this.$axios.get(`/api/auth/oauth2/google/verify?code=${code}&state=${state}&locale=${userLocale}`);
+        const { token } = response.data;
+        await this.$auth.setUserToken(token);
+
+        // Redirect to the user's preferred locale.
+        const redirectUrl = this.localePath('/start', userLocale);
         this.$router.push(redirectUrl);
       }
       catch (error) {
