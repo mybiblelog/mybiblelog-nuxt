@@ -44,8 +44,8 @@ export default {
     "start_page": {
       "welcome": {
         "title": "Willkommen in Ihrem neuen My Bible Log-Konto!",
-        "description": "Lassen Sie uns Ihre Einstellungen aktualisieren, damit Sie das Beste aus der App herausholen können.",
-        "nav_hint": "Sie können auch auf einen beliebigen Link in der Navigation klicken, um sofort loszulegen."
+        "description": "Lassen Sie uns Ihre Einstellungen personalisieren, damit Sie das Beste aus der App herausholen können.",
+        "nav_hint": "Sie können auch auf einen Link in der Navigation klicken, um die App mit den Standardeinstellungen zu verwenden."
       }
     }
   },
@@ -53,8 +53,8 @@ export default {
     "start_page": {
       "welcome": {
         "title": "Welcome to your new My Bible Log account!",
-        "description": "Let's update your settings so you can get the most out of the app.",
-        "nav_hint": "You can also click any link in the nav to get started right away."
+        "description": "Let's personalize your settings so you can get the most out of the app.",
+        "nav_hint": "You can also click a link in the nav to start using the app with default settings."
       }
     }
   },
@@ -62,8 +62,8 @@ export default {
     "start_page": {
       "welcome": {
         "title": "¡Bienvenido a tu nueva cuenta de My Bible Log!",
-        "description": "Actualicemos tu configuración para que puedas aprovechar al máximo la aplicación.",
-        "nav_hint": "También puedes hacer clic en cualquier enlace en la navegación para comenzar de inmediato."
+        "description": "Personalicemos tu configuración para que puedas aprovechar al máximo la aplicación.",
+        "nav_hint": "También puedes hacer clic en un enlace en la navegación para comenzar a usar la aplicación con la configuración predeterminada."
       }
     }
   },
@@ -71,8 +71,8 @@ export default {
     "start_page": {
       "welcome": {
         "title": "Bienvenue dans votre nouveau compte My Bible Log !",
-        "description": "Mettons à jour vos paramètres pour que vous puissiez tirer le meilleur parti de l'application.",
-        "nav_hint": "Vous pouvez également cliquer sur n'importe quel lien dans la navigation pour commencer immédiatement."
+        "description": "Personnalisons vos paramètres pour que vous puissiez tirer le meilleur parti de l'application.",
+        "nav_hint": "Vous pouvez également cliquer sur un lien dans la navigation pour commencer à utiliser l'application avec les paramètres par défaut."
       }
     }
   },
@@ -80,8 +80,8 @@ export default {
     "start_page": {
       "welcome": {
         "title": "Bem-vindo à sua nova conta My Bible Log!",
-        "description": "Vamos atualizar suas configurações para que você possa aproveitar ao máximo o aplicativo.",
-        "nav_hint": "Você também pode clicar em qualquer link na navegação para começar imediatamente."
+        "description": "Vamos personalizar suas configurações para que você possa aproveitar ao máximo o aplicativo.",
+        "nav_hint": "Você também pode clicar em um link na navegação para começar a usar o aplicativo com as configurações padrão."
       }
     }
   },
@@ -89,8 +89,8 @@ export default {
     "start_page": {
       "welcome": {
         "title": "Ласкаво просимо до вашого нового облікового запису My Bible Log!",
-        "description": "Давайте оновимо ваші налаштування, щоб ви могли максимально використовувати додаток.",
-        "nav_hint": "Ви також можете натиснути будь-яке посилання в навігації, щоб почати відразу."
+        "description": "Давайте персоналізуємо ваші налаштування, щоб ви могли максимально використовувати додаток.",
+        "nav_hint": "Ви також можете натиснути посилання в навігації, щоб почати використовувати додаток з налаштуваннями за замовчуванням."
       }
     }
   }

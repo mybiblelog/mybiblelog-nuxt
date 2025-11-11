@@ -179,7 +179,7 @@ export default {
       "save_and_continue": "Speichern und Fortfahren",
       "back": "Zurück",
       "welcome": {
-        "button": "Einstellungen wählen"
+        "button": "Meine Einstellungen personalisieren"
       }
     }
   },
@@ -188,7 +188,7 @@ export default {
       "save_and_continue": "Save and Continue",
       "back": "Back",
       "welcome": {
-        "button": "Choose Settings"
+        "button": "Personalize My Settings"
       }
     }
   },
@@ -197,7 +197,7 @@ export default {
       "save_and_continue": "Guardar y Continuar",
       "back": "Atrás",
       "welcome": {
-        "button": "Elegir Configuración"
+        "button": "Personalizar Mi Configuración"
       }
     }
   },
@@ -206,7 +206,7 @@ export default {
       "save_and_continue": "Enregistrer et Continuer",
       "back": "Retour",
       "welcome": {
-        "button": "Choisir les Paramètres"
+        "button": "Personnaliser Mes Paramètres"
       }
     }
   },
@@ -215,7 +215,7 @@ export default {
       "save_and_continue": "Salvar e Continuar",
       "back": "Voltar",
       "welcome": {
-        "button": "Escolher Configurações"
+        "button": "Personalizar Minhas Configurações"
       }
     }
   },
@@ -224,7 +224,7 @@ export default {
       "save_and_continue": "Зберегти та Продовжити",
       "back": "Назад",
       "welcome": {
-        "button": "Вибрати Налаштування"
+        "button": "Персоналізувати Мої Налаштування"
       }
     }
   }

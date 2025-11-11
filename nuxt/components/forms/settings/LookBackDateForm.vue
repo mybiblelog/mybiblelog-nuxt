@@ -8,7 +8,10 @@
         {{ $t('start_page.look_back_date.description') }}
       </p>
       <p>
-        {{ $t('start_page.look_back_date.explanation') }}
+        {{ $t('start_page.look_back_date.explanation.1') }}
+      </p>
+      <p>
+        {{ $t('start_page.look_back_date.explanation.2') }}
       </p>
     </div>
 
@@ -140,8 +143,11 @@ export default {
     "start_page": {
       "look_back_date": {
         "title": "Rückblickdatum",
-        "description": "Ihr Rückblickdatum ist der Tag, an dem Sie begonnen haben, auf Ihr aktuelles Leseziel hinzuarbeiten.",
-        "explanation": "Die meisten My Bible Log-Funktionen ignorieren Ihre Lektüre vor diesem Datum, sodass Sie Ihren Fortschritt jederzeit zurücksetzen und neu starten können. Sie verlieren keine Lektüre, die Sie bereits verfolgt haben, wenn Sie dieses Datum zurücksetzen.",
+        "description": "Ihr Rückblickdatum ist der Tag, an dem Sie begonnen haben, auf Ihr Leseziel hinzuarbeiten. Es beginnt als das Datum, an dem Sie Ihr Konto erstellt haben.",
+        "explanation": {
+          "1": "Die Fortschrittsbalken von My Bible Log ignorieren Ihre Lektüre vor diesem Datum, sodass Sie dieses Datum zurücksetzen können, um von vorne zu beginnen und Ihre Lektüre erneut zu verfolgen.",
+          "2": "Sie verlieren keine Lektüre, die Sie bereits verfolgt haben, wenn Sie dieses Datum zurücksetzen. Sie wird nur von Ihrem Fortschritt ausgeblendet."
+        },
         "label": "Rückblickdatum",
         "change_hint": "Sie können diese Einstellung jederzeit ändern."
       }
@@ -155,8 +161,11 @@ export default {
     "start_page": {
       "look_back_date": {
         "title": "Look Back Date",
-        "description": "Your Look Back Date is the day you started working toward your current reading goal.",
-        "explanation": "Most My Bible Log features will ignore your reading from before this date, allowing you to reset your progress and start fresh at any time. You won't lose any reading you already tracked when you reset this date.",
+        "description": "Your Look Back Date is the day you started working toward your reading goal. It starts as the date you created your account.",
+        "explanation": {
+          "1": "My Bible Log progress bars ignore your reading before this date, so you can reset this date to start over and track your reading again.",
+          "2": "You won't lose any reading you already tracked if you reset this date. It is only hidden from your progress."
+        },
         "label": "Look Back Date",
         "change_hint": "You can change this setting at any time."
       }
@@ -170,8 +179,11 @@ export default {
     "start_page": {
       "look_back_date": {
         "title": "Fecha de Revisión",
-        "description": "Su Fecha de Revisión es el día en que comenzó a trabajar hacia su objetivo de lectura actual.",
-        "explanation": "La mayoría de las funciones de My Bible Log ignorarán su lectura anterior a esta fecha, lo que le permitirá restablecer su progreso y comenzar de nuevo en cualquier momento. No perderá ninguna lectura que ya haya registrado cuando restablezca esta fecha.",
+        "description": "Su Fecha de Revisión es el día en que comenzó a trabajar hacia su objetivo de lectura. Comienza como la fecha en que creó su cuenta.",
+        "explanation": {
+          "1": "Las barras de progreso de My Bible Log ignoran su lectura anterior a esta fecha, por lo que puede restablecer esta fecha para comenzar de nuevo y rastrear su lectura nuevamente.",
+          "2": "No perderá ninguna lectura que ya haya registrado si restablece esta fecha. Solo se oculta de su progreso."
+        },
         "label": "Fecha de Revisión",
         "change_hint": "Puede cambiar esta configuración en cualquier momento."
       }
@@ -185,8 +197,11 @@ export default {
     "start_page": {
       "look_back_date": {
         "title": "Date de retour en arrière",
-        "description": "Votre Date de retour en arrière est le jour où vous avez commencé à travailler vers votre objectif de lecture actuel.",
-        "explanation": "La plupart des fonctionnalités de My Bible Log ignoreront votre lecture avant cette date, vous permettant de réinitialiser votre progression et de recommencer à tout moment. Vous ne perdrez aucune lecture que vous avez déjà suivie lorsque vous réinitialiserez cette date.",
+        "description": "Votre Date de retour en arrière est le jour où vous avez commencé à travailler vers votre objectif de lecture. Elle commence à la date où vous avez créé votre compte.",
+        "explanation": {
+          "1": "Les barres de progression de My Bible Log ignorent votre lecture avant cette date, vous permettant de réinitialiser cette date pour recommencer et suivre votre lecture à nouveau.",
+          "2": "Vous ne perdrez aucune lecture que vous avez déjà suivie si vous réinitialisez cette date. Elle est simplement masquée de votre progression."
+        },
         "label": "Date de retour en arrière",
         "change_hint": "Vous pouvez modifier ce paramètre à tout moment."
       }
@@ -200,8 +215,11 @@ export default {
     "start_page": {
       "look_back_date": {
         "title": "Data de Retrocesso",
-        "description": "Sua Data de Retrocesso é o dia em que você começou a trabalhar em direção ao seu objetivo de leitura atual.",
-        "explanation": "A maioria dos recursos do My Bible Log ignorará sua leitura anterior a esta data, permitindo que você redefina seu progresso e comece de novo a qualquer momento. Você não perderá nenhuma leitura que já rastreou quando redefinir esta data.",
+        "description": "Sua Data de Retrocesso é o dia em que você começou a trabalhar em direção ao seu objetivo de leitura. Ela começa como a data em que você criou sua conta.",
+        "explanation": {
+          "1": "As barras de progresso do My Bible Log ignoram sua leitura anterior a esta data, permitindo que você redefina esta data para começar de novo e rastrear sua leitura novamente.",
+          "2": "Você não perderá nenhuma leitura que já rastreou se redefinir esta data. Ela apenas fica oculta do seu progresso."
+        },
         "label": "Data de Retrocesso",
         "change_hint": "Você pode alterar esta configuração a qualquer momento."
       }
@@ -215,8 +233,11 @@ export default {
     "start_page": {
       "look_back_date": {
         "title": "Дата перегляду",
-        "description": "Ваша Дата перегляду - це день, коли ви почали працювати над вашою поточною метою читання.",
-        "explanation": "Більшість функцій My Bible Log ігноруватимуть ваше читання до цієї дати, дозволяючи вам скинути свій прогрес і почати заново в будь-який час. Ви не втратите жодного читання, яке ви вже відстежували, коли скидаєте цю дату.",
+        "description": "Ваша Дата перегляду - це день, коли ви почали працювати над вашою метою читання. Вона починається з дати створення вашого облікового запису.",
+        "explanation": {
+          "1": "Смужки прогресу My Bible Log ігнорують ваше читання до цієї дати, дозволяючи вам скинути цю дату, щоб почати заново і знову відстежувати ваше читання.",
+          "2": "Ви не втратите жодного читання, яке ви вже відстежували, якщо скинете цю дату. Воно лише приховане від вашого прогресу."
+        },
         "label": "Дата перегляду",
         "change_hint": "Ви можете змінити це налаштування в будь-який час."
       }
