@@ -27,9 +27,6 @@
       >
         <div
           class="box tile-box"
-          :class="{ 'has-background-primary-light': startPage === option.value }"
-          style="cursor: pointer;"
-          @click="startPage = option.value"
         >
           <figure v-if="option.image" class="image tile-image">
             <img :src="option.image" :alt="option.text">
@@ -44,7 +41,7 @@
             <p>{{ option.description }}</p>
             <button
               class="button is-info is-small"
-              @click.stop="handleSelect(option.value)"
+              @click.stop="handleSubmit(option.value)"
             >
               {{ $t('start_page.start_page.start_here') }}
             </button>
@@ -71,10 +68,6 @@ export default {
       type: String,
       default: '',
     },
-    nextButtonText: {
-      type: String,
-      default: 'Save and Continue',
-    },
     previousButtonText: {
       type: String,
       default: 'Back',
@@ -86,7 +79,6 @@ export default {
   },
   data() {
     return {
-      startPage: this.initialValue || 'today',
       error: '',
       isSaving: false,
     };
@@ -128,32 +120,21 @@ export default {
       ];
     },
   },
-  watch: {
-    initialValue(newValue) {
-      if (newValue) {
-        this.startPage = newValue;
-      }
-    },
-  },
   methods: {
     handlePrevious() {
       this.$emit('previous');
     },
-    async handleSelect(value) {
-      this.startPage = value;
-      await this.handleSubmit();
-    },
-    async handleSubmit() {
+    async handleSubmit(startPage) {
       this.error = '';
 
-      if (!this.startPage) {
+      if (!startPage) {
         this.error = this.$t('messaging.unable_to_save_preferred_start_page');
         return;
       }
 
       this.isSaving = true;
       const success = await this.$store.dispatch('user-settings/updateSettings', {
-        startPage: this.startPage,
+        startPage,
       });
 
       if (success) {
@@ -163,7 +144,7 @@ export default {
             text: this.$t('messaging.preferred_start_page_saved_successfully'),
           });
         }
-        this.$emit('saved', this.startPage);
+        this.$emit('saved', startPage);
         this.$emit('next');
       }
       else {

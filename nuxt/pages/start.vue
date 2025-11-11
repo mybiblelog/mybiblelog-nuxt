@@ -66,8 +66,6 @@
             <!-- Start Page -->
             <StartPageForm
               v-if="progressTab === 5"
-              :initial-value="userSettings.startPage || 'today'"
-              :next-button-text="$t('start_page.save_and_continue')"
               :previous-button-text="$t('start_page.back')"
               :show-toast="false"
               @next="handleNext"
