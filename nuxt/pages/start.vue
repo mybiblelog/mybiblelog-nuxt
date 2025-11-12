@@ -41,21 +41,11 @@
               @previous="handlePrevious"
             />
 
-            <!-- Preferred Bible Version -->
+            <!-- Preferred Bible Version and App -->
             <PreferredBibleVersionForm
               v-if="progressTab === 3"
               :initial-value="userSettings.preferredBibleVersion"
-              :next-button-text="$t('start_page.save_and_continue')"
-              :previous-button-text="$t('start_page.back')"
-              :show-toast="false"
-              @next="handleNext"
-              @previous="handlePrevious"
-            />
-
-            <!-- Preferred Bible App -->
-            <PreferredBibleAppForm
-              v-if="progressTab === 4"
-              :initial-value="userSettings.preferredBibleApp"
+              :initial-bible-app="userSettings.preferredBibleApp"
               :next-button-text="$t('start_page.save_and_continue')"
               :previous-button-text="$t('start_page.back')"
               :show-toast="false"
@@ -65,7 +55,7 @@
 
             <!-- Start Page -->
             <StartPageForm
-              v-if="progressTab === 5"
+              v-if="progressTab === 4"
               :previous-button-text="$t('start_page.back')"
               :show-toast="false"
               @next="handleNext"
@@ -74,7 +64,7 @@
 
             <!-- Get Started -->
             <GetStartedStep
-              v-if="progressTab === 6"
+              v-if="progressTab === 5"
               :previous-button-text="$t('start_page.back')"
               @previous="handlePrevious"
             />
@@ -90,7 +80,6 @@ import WelcomeStep from '@/components/forms/settings/WelcomeStep.vue';
 import DailyVerseCountGoalForm from '@/components/forms/settings/DailyVerseCountGoalForm.vue';
 import LookBackDateForm from '@/components/forms/settings/LookBackDateForm.vue';
 import PreferredBibleVersionForm from '@/components/forms/settings/PreferredBibleVersionForm.vue';
-import PreferredBibleAppForm from '@/components/forms/settings/PreferredBibleAppForm.vue';
 import StartPageForm from '@/components/forms/settings/StartPageForm.vue';
 import GetStartedStep from '@/components/forms/settings/GetStartedStep.vue';
 import PillProgressBar from '@/components/PillProgressBar.vue';
@@ -102,7 +91,6 @@ export default {
     DailyVerseCountGoalForm,
     LookBackDateForm,
     PreferredBibleVersionForm,
-    PreferredBibleAppForm,
     StartPageForm,
     GetStartedStep,
     PillProgressBar,
@@ -135,12 +123,11 @@ export default {
       // 0: Welcome
       // 1: Daily Verse Count Goal
       // 2: Look Back Date
-      // 3: Preferred Bible Version
-      // 4: Preferred Bible App
-      // 5: Start Page
-      // 6: Get Started
+      // 3: Preferred Bible Version and App
+      // 4: Start Page
+      // 5: Get Started
       progressTab: 0,
-      totalSteps: 7,
+      totalSteps: 6,
     };
   },
   async fetch() {
