@@ -1,26 +1,43 @@
 <template>
-  <nuxt-link
-    v-if="$auth.loggedIn && $route.path !== localePath('/feedback')"
-    :to="localePath('/feedback')"
-    class="floating-action-button"
-    :aria-label="$t('floating_action_button.give_feedback')"
-  >
-    <feedback-icon fill="white" width="28px" height="28px" />
-  </nuxt-link>
+  <div v-if="$auth.loggedIn">
+    <button
+      class="floating-action-button"
+      :aria-label="$t('floating_action_button.give_feedback')"
+      @click="openModal"
+    >
+      <feedback-icon fill="white" width="28px" height="28px" />
+    </button>
+    <FeedbackModal :is-visible="isModalVisible" @close="closeModal" />
+  </div>
 </template>
 
 <script>
 import FeedbackIcon from '@/components/svg/Feedback.vue';
+import FeedbackModal from '@/components/popups/FeedbackModal.vue';
 
 export default {
   name: 'FloatingFeedbackButton',
   components: {
     FeedbackIcon,
+    FeedbackModal,
+  },
+  data() {
+    return {
+      isModalVisible: false,
+    };
+  },
+  methods: {
+    openModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .floating-action-button {
   position: fixed;
   bottom: 2rem;
@@ -35,8 +52,10 @@ export default {
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  z-index: 1000;
+  z-index: $zIndexActionButton;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
 }
 
 .floating-action-button:hover {
