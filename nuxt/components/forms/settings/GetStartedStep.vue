@@ -7,14 +7,6 @@
       <p>
         {{ $t('start_page.get_started.description') }}
       </p>
-      <div class="feedback-card">
-        <div class="feedback-icon-container">
-          <feedback-icon fill="white" width="28px" height="28px" />
-        </div>
-        <p class="feedback-text">
-          {{ $t('start_page.get_started.feedback_hint') }}
-        </p>
-      </div>
     </div>
     <div class="field">
       <div class="control buttons">
@@ -27,13 +19,8 @@
 </template>
 
 <script>
-import FeedbackIcon from '@/components/svg/Feedback.vue';
-
 export default {
   name: 'GetStartedStep',
-  components: {
-    FeedbackIcon,
-  },
   props: {
     previousButtonText: {
       type: String,
@@ -49,17 +36,9 @@ export default {
     handlePrevious() {
       this.$emit('previous');
     },
-    handleGetStarted() {
-      const { startPage, locale } = this.userSettings;
-      const redirectPath = {
-        today: '/today',
-        books: '/books',
-        checklist: '/checklist',
-        calendar: '/calendar',
-        notes: '/notes',
-      }[startPage] || '/today';
-
-      this.$router.push(this.localePath(redirectPath, locale));
+    async handleGetStarted() {
+      await this.$store.dispatch('user-settings/updateSettings', { startPage: 'today' });
+      this.$router.push('/today');
     },
   },
 };

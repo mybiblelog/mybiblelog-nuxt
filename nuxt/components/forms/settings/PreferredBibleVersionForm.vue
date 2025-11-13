@@ -4,54 +4,52 @@
       {{ $t('start_page.preferred_bible_version.title') }}
     </h2>
 
-    <div class="field">
-      <label class="label">{{ $t('start_page.preferred_bible_version.translation_label') }}</label>
-      <div class="control">
-        <div class="select">
-          <select v-model="preferredBibleVersion">
-            <option value="" selected="selected" disabled="disabled">
-              {{ $t('select_an_option') }}
-            </option>
-            <option
-              v-for="option in bibleVersionOptions"
-              :key="option.value"
-              :value="option.value"
-            >
-              {{ option.text }}
-            </option>
-          </select>
+    <div class="box field-box">
+      <div class="field">
+        <label class="label">{{ $t('start_page.preferred_bible_version.translation_label') }}</label>
+        <div class="control">
+          <div class="select">
+            <select v-model="preferredBibleVersion">
+              <option value="" selected="selected" disabled="disabled">
+                {{ $t('select_an_option') }}
+              </option>
+              <option
+                v-for="option in bibleVersionOptions"
+                :key="option.value"
+                :value="option.value"
+              >
+                {{ option.text }}
+              </option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="field">
-      <label class="label">{{ $t('start_page.preferred_bible_version.app_label') }}</label>
-      <div class="control">
-        <div class="select">
-          <select v-model="preferredBibleApp">
-            <option value="" selected="selected" disabled="disabled">
-              {{ $t('select_an_option') }}
-            </option>
-            <option
-              v-for="option in bibleAppOptions"
-              :key="option.value"
-              :value="option.value"
-            >
-              {{ option.text }}
-            </option>
-          </select>
+    <div class="box field-box">
+      <div class="field">
+        <label class="label">{{ $t('start_page.preferred_bible_version.app_label') }}</label>
+        <div class="control">
+          <div class="select">
+            <select v-model="preferredBibleApp">
+              <option value="" selected="selected" disabled="disabled">
+                {{ $t('select_an_option') }}
+              </option>
+              <option
+                v-for="option in bibleAppOptions"
+                :key="option.value"
+                :value="option.value"
+              >
+                {{ option.text }}
+              </option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
 
     <div v-if="error" class="help is-danger">
       {{ error }}
-    </div>
-
-    <div class="message">
-      <div class="message-body">
-        {{ $t('start_page.preferred_bible_version.device_note') }}
-      </div>
     </div>
 
     <div class="content">
@@ -214,6 +212,15 @@ export default {
 </script>
 
 <style scoped>
+.field-box {
+  margin-bottom: 1.5rem;
+}
+
+.field-box .label {
+  font-weight: normal;
+  margin-bottom: 0.75rem;
+}
+
 select {
   max-width: 65vw;
 }
@@ -227,7 +234,6 @@ select {
         "title": "Bibel-Einstellungen",
         "translation_label": "Wenn ich die Bibel von My Bible Log öffne, möchte ich diese Übersetzung lesen:",
         "app_label": "Wenn ich eine Passage von My Bible Log öffne, möchte ich, dass sie in dieser App oder Website geöffnet wird:",
-        "device_note": "Die App-Einstellung wird auf Ihrem Gerät gespeichert, nicht in Ihrem Konto. Dies ermöglicht es Ihnen, eine App auf einem Mobilgerät und eine Website auf einem Computer zu verwenden, wenn Sie möchten.",
         "change_hint": "Sie können diese Einstellungen jederzeit ändern."
       }
     },
@@ -245,7 +251,6 @@ select {
         "title": "Bible Settings",
         "translation_label": "When I open the Bible from My Bible Log, I want to read this translation:",
         "app_label": "When I open a passage from My Bible Log, I want it to open in this app or website:",
-        "device_note": "The app setting is saved on your device rather than your account. This allows you to use an app on a mobile device and a website on a computer, if you want.",
         "change_hint": "You can change these settings at any time."
       }
     },
@@ -263,7 +268,6 @@ select {
         "title": "Configuración de la Biblia",
         "translation_label": "Cuando abro la Biblia desde My Bible Log, quiero leer esta traducción:",
         "app_label": "Cuando abro un pasaje desde My Bible Log, quiero que se abra en esta aplicación o sitio web:",
-        "device_note": "La configuración de la aplicación se guarda en su dispositivo en lugar de en su cuenta. Esto le permite usar una aplicación en un dispositivo móvil y un sitio web en una computadora, si lo desea.",
         "change_hint": "Puede cambiar esta configuración en cualquier momento."
       }
     },
@@ -281,7 +285,6 @@ select {
         "title": "Paramètres de la Bible",
         "translation_label": "Lorsque j'ouvre la Bible depuis My Bible Log, je veux lire cette traduction :",
         "app_label": "Lorsque j'ouvre un passage depuis My Bible Log, je veux qu'il s'ouvre dans cette application ou ce site web :",
-        "device_note": "Le paramètre de l'application est enregistré sur votre appareil plutôt que sur votre compte. Cela vous permet d'utiliser une application sur un appareil mobile et un site web sur un ordinateur, si vous le souhaitez.",
         "change_hint": "Vous pouvez modifier ces paramètres à tout moment."
       }
     },
@@ -299,7 +302,6 @@ select {
         "title": "Configurações da Bíblia",
         "translation_label": "Quando abro a Bíblia do My Bible Log, quero ler esta tradução:",
         "app_label": "Quando abro uma passagem do My Bible Log, quero que ela abra neste aplicativo ou site:",
-        "device_note": "A configuração do aplicativo é salva em seu dispositivo em vez de em sua conta. Isso permite que você use um aplicativo em um dispositivo móvel e um site em um computador, se desejar.",
         "change_hint": "Você pode alterar essas configurações a qualquer momento."
       }
     },
@@ -317,7 +319,6 @@ select {
         "title": "Налаштування Біблії",
         "translation_label": "Коли я відкриваю Біблію з My Bible Log, я хочу читати цей переклад:",
         "app_label": "Коли я відкриваю уривок з My Bible Log, я хочу, щоб він відкрився в цій програмі або на веб-сайті:",
-        "device_note": "Налаштування програми зберігається на вашому пристрої, а не в вашому обліковому записі. Це дозволяє вам використовувати програму на мобільному пристрої та веб-сайт на комп'ютері, якщо ви хочете.",
         "change_hint": "Ви можете змінити ці налаштування в будь-який час."
       }
     },
