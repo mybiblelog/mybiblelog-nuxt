@@ -2,16 +2,16 @@
   <nav class="navbar is-light is-fixed-top no-print" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <nuxt-link class="navbar-item" :to="localePath($auth.loggedIn ? '/today' : '/')" aria-label="home">
+        <nuxt-link class="navbar-item" :to="localePath($auth.loggedIn ? '/start' : '/')" aria-label="home">
           <img src="/images/logo.svg" width="28" height="28" alt="">
         </nuxt-link>
         <template v-if="!$auth.loggedIn">
-          <nuxt-link class="navbar-item" :to="localePath($auth.loggedIn ? '/today' : '/')">
+          <nuxt-link class="navbar-item" :to="localePath($auth.loggedIn ? '/start' : '/')">
             {{ $t('my_bible_log') }}
           </nuxt-link>
         </template>
         <template v-else>
-          <nuxt-link class="navbar-item is-hidden-desktop-only" :to="localePath($auth.loggedIn ? '/today' : '/')">
+          <nuxt-link class="navbar-item is-hidden-desktop-only" :to="localePath($auth.loggedIn ? '/start' : '/')">
             {{ $t('my_bible_log') }}
           </nuxt-link>
         </template>

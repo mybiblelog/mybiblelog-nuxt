@@ -694,12 +694,12 @@ const displayVerseRange = (startVerseId: number, endVerseId: number, lang: strin
 };
 
 const RegEx = {
-  BookChapterVerseToChapterVerse: /((?:\d\s)?[\w\s]+)\.?\s+(\d+)\s*:\s*(\d+)\s*[-–—]+\s*(\d+)\s*:\s*(\d+)/i,
-  BookChapterVerseToVerse: /((?:\d\s)?[\w\s]+)\.?\s+(\d+)\s*:\s*(\d+)\s*[-–—]+\s*(\d+)/i,
-  BookChapterToChapter: /((?:\d\s)?[\w\s]+)\.?\s+(\d+)\s*[-–—]+\s*(\d+)/i,
-  BookChapterVerse: /((?:\d\s)?[\w\s]+)\.?\s+(\d+)\s*:\s*(\d+)/i,
-  BookChapter: /((?:\d\s)?[\w\s]+)\.?\s+(\d+)/i,
-  Book: /((?:\d\s)?[\w\s]+)/i,
+  BookChapterVerseToChapterVerse: /((?:\d+\s*)?[\p{L}\p{M}\p{N}\s'-]+)\.?\s+(\d+)\s*:\s*(\d+)\s*[-–—]+\s*(\d+)\s*:\s*(\d+)/iu,
+  BookChapterVerseToVerse: /((?:\d+\s*)?[\p{L}\p{M}\p{N}\s'-]+)\.?\s+(\d+)\s*:\s*(\d+)\s*[-–—]+\s*(\d+)/iu,
+  BookChapterToChapter: /((?:\d+\s*)?[\p{L}\p{M}\p{N}\s'-]+)\.?\s+(\d+)\s*[-–—]+\s*(\d+)/iu,
+  BookChapterVerse: /((?:\d+\s*)?[\p{L}\p{M}\p{N}\s'-]+)\.?\s+(\d+)\s*:\s*(\d+)/iu,
+  BookChapter: /((?:\d+\s*)?[\p{L}\p{M}\p{N}\s'-]+)\.?\s+(\d+)/iu,
+  Book: /((?:\d+\s*)?[\p{L}\p{M}\p{N}\s'-]+)/iu,
 };
 const parseVerseRange = (verseRangeString: string, lang: string = 'en'): VerseRange | null => {
   const start: {

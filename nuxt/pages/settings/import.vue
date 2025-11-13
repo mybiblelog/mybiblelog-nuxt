@@ -13,6 +13,20 @@
       </label>
     </div>
     <hr>
+    <div v-if="showLookBackDateResetMessage" class="message is-info">
+      <div class="message-body">
+        <p>{{ $t('messaging.look_back_date_reset_message.1') }}</p>
+        <p>{{ $t('messaging.look_back_date_reset_message.2', { lookBackDate: displayDate(userSettings.lookBackDate, $i18n.locale) }) }}</p>
+        <div class="buttons">
+          <button class="button is-primary" @click="updateLookBackDate">
+            {{ $t('messaging.update_look_back_date_yes') }}
+          </button>
+          <button class="button" @click="() => showLookBackDateResetMessage = false">
+            {{ $t('messaging.update_look_back_date_no') }}
+          </button>
+        </div>
+      </div>
+    </div>
     <h3 class="title is-5">
       {{ $t('log_import_progress') }}
     </h3>
@@ -48,7 +62,7 @@
 <script>
 import { mapState } from 'vuex';
 import * as csv from 'csv';
-import { Bible, SimpleDate } from '@mybiblelog/shared';
+import { Bible, SimpleDate, displayDate } from '@mybiblelog/shared';
 
 const delimiter = ',';
 
@@ -58,6 +72,9 @@ export default {
     return {
       logEntryUploadFormData: null,
       importLogEntries: [],
+
+      earliestLogEntryDate: null,
+      showLookBackDateResetMessage: false,
     };
   },
   async fetch() {
@@ -70,8 +87,12 @@ export default {
     activeLocale() {
       return this.$i18n.locales.find(locale => locale.code === this.$i18n.locale).name;
     },
+    userSettings() {
+      return this.$store.state['user-settings'].settings;
+    },
   },
   methods: {
+    displayDate,
     displayVerseRange(startVerseId, endVerseId) {
       return Bible.displayVerseRange(startVerseId, endVerseId, this.$i18n.locale);
     },
@@ -153,6 +174,11 @@ export default {
           );
         });
 
+        // Check date to see if it's before the earliest log entry date
+        if (!this.earliestLogEntryDate || newLogEntry.date < this.earliestLogEntryDate) {
+          this.earliestLogEntryDate = newLogEntry.date;
+        }
+
         if (existingLogEntry) {
           newLogEntry.status = this.$t('log_entry_status.already_exists');
         }
@@ -209,6 +235,10 @@ export default {
             type: 'success',
             text: this.$t('messaging.successfully_processed_log_entries', { count: this.importLogEntries.length }),
           });
+
+          if (this.earliestLogEntryDate && this.earliestLogEntryDate < this.userSettings.lookBackDate) {
+            this.showLookBackDateResetMessage = true;
+          }
         })
         .catch(() => {
           this.$store.dispatch('toast/add', {
@@ -216,6 +246,14 @@ export default {
             text: this.$t('messaging.there_was_a_problem_creating_the_log_entries'),
           });
         });
+    },
+    async updateLookBackDate() {
+      await this.$store.dispatch('user-settings/updateSettings', { lookBackDate: this.earliestLogEntryDate });
+      this.$store.dispatch('toast/add', {
+        type: 'success',
+        text: this.$t('messaging.look_back_date_updated_successfully'),
+      });
+      this.showLookBackDateResetMessage = false;
     },
   },
   head() {
@@ -259,7 +297,14 @@ main p {
       "unable_to_parse_file": "Die Datei {filename} kann nicht analysiert werden. Stellen Sie sicher, dass das Format korrekt ist.",
       "unable_to_parse_any_log_entries": "Die Journal-Einträge aus den hochgeladenen Dateien können nicht analysiert werden.",
       "successfully_processed_log_entries": "Erfolgreich verarbeitet {count} Journal-Einträge.",
-      "there_was_a_problem_creating_the_log_entries": "Es gab ein Problem beim Erstellen der Journal-Einträge."
+      "there_was_a_problem_creating_the_log_entries": "Es gab ein Problem beim Erstellen der Journal-Einträge.",
+      "look_back_date_reset_message": {
+        "1": "Ihre importierte Datei enthält Journal-Einträge vor Ihrem Rückblickdatum. Die meisten Seiten werden diese Einträge beim Anzeigen Ihres Fortschritts ignorieren.",
+        "2": "Möchten Sie Ihr Rückblickdatum auf {lookBackDate} aktualisieren, um diese Einträge zu berücksichtigen?"
+      },
+      "update_look_back_date_yes": "Rückblickdatum aktualisieren",
+      "update_look_back_date_no": "Aktuelles Rückblickdatum beibehalten",
+      "look_back_date_updated_successfully": "Rückblickdatum erfolgreich aktualisiert."
     }
   },
   "en": {
@@ -284,7 +329,14 @@ main p {
       "unable_to_parse_file": "Unable to parse file {filename}. Make sure the format is correct.",
       "unable_to_parse_any_log_entries": "Unable to parse any log entries from uploaded files.",
       "successfully_processed_log_entries": "Successfully processed {count} log entries.",
-      "there_was_a_problem_creating_the_log_entries": "There was a problem creating the log entries."
+      "there_was_a_problem_creating_the_log_entries": "There was a problem creating the log entries.",
+      "look_back_date_reset_message": {
+        "1": "Your imported file includes log entries before your Look Back Date. Most pages will ignore these entries when showing your progress.",
+        "2": "Would you like to update your Look Back Date to {lookBackDate} to include these entries?"
+      },
+      "update_look_back_date_yes": "Update Look Back Date",
+      "update_look_back_date_no": "Keep Current Look Back Date",
+      "look_back_date_updated_successfully": "Look back date updated successfully."
     }
   },
   "es": {
@@ -309,7 +361,14 @@ main p {
       "unable_to_parse_file": "No se puede analizar el archivo {filename}. Asegúrese de que el formato sea correcto.",
       "unable_to_parse_any_log_entries": "No se pueden analizar las entradas de registro de los archivos cargados.",
       "successfully_processed_log_entries": "Se procesaron correctamente {count} entradas de registro.",
-      "there_was_a_problem_creating_the_log_entries": "Hubo un problema al crear las entradas de registro."
+      "there_was_a_problem_creating_the_log_entries": "Hubo un problema al crear las entradas de registro.",
+      "look_back_date_reset_message": {
+        "1": "Su archivo importado incluye entradas de registro anteriores a su Fecha de Retroceso. La mayoría de las páginas ignorarán estas entradas al mostrar su progreso.",
+        "2": "¿Le gustaría actualizar su Fecha de Retroceso a {lookBackDate} para incluir estas entradas?"
+      },
+      "update_look_back_date_yes": "Actualizar Fecha de Retroceso",
+      "update_look_back_date_no": "Mantener Fecha de Retroceso Actual",
+      "look_back_date_updated_successfully": "Fecha de retroceso actualizada correctamente."
     }
   },
   "fr": {
@@ -334,7 +393,14 @@ main p {
       "unable_to_parse_file": "Impossible d'analyser le fichier {filename}. Assurez-vous que le format est correct.",
       "unable_to_parse_any_log_entries": "Impossible d'analyser des entrées de journal à partir des fichiers téléchargés.",
       "successfully_processed_log_entries": "Traitement réussi de {count} entrées de journal.",
-      "there_was_a_problem_creating_the_log_entries": "Un problème est survenu lors de la création des entrées de journal."
+      "there_was_a_problem_creating_the_log_entries": "Un problème est survenu lors de la création des entrées de journal.",
+      "look_back_date_reset_message": {
+        "1": "Votre fichier importé contient des entrées de journal antérieures à votre Date de Rétrospection. La plupart des pages ignoreront ces entrées lors de l'affichage de votre progression.",
+        "2": "Souhaitez-vous mettre à jour votre Date de Rétrospection à {lookBackDate} pour inclure ces entrées ?"
+      },
+      "update_look_back_date_yes": "Mettre à jour la Date de Rétrospection",
+      "update_look_back_date_no": "Conserver la Date de Rétrospection Actuelle",
+      "look_back_date_updated_successfully": "Date de rétrospection mise à jour avec succès."
     }
   },
   "pt": {
@@ -359,7 +425,14 @@ main p {
       "unable_to_parse_file": "Não é possível analisar o arquivo {filename}. Certifique-se de que o formato está correto.",
       "unable_to_parse_any_log_entries": "Não é possível analisar nenhuma entrada de log dos arquivos enviados.",
       "successfully_processed_log_entries": "Entradas de log processadas com sucesso: {count}.",
-      "there_was_a_problem_creating_the_log_entries": "Houve um problema ao criar as entradas de log."
+      "there_was_a_problem_creating_the_log_entries": "Houve um problema ao criar as entradas de log.",
+      "look_back_date_reset_message": {
+        "1": "Seu arquivo importado inclui entradas de log anteriores à sua Data de Retrocesso. A maioria das páginas ignorará essas entradas ao mostrar seu progresso.",
+        "2": "Gostaria de atualizar sua Data de Retrocesso para {lookBackDate} para incluir essas entradas?"
+      },
+      "update_look_back_date_yes": "Atualizar Data de Retrocesso",
+      "update_look_back_date_no": "Manter Data de Retrocesso Atual",
+      "look_back_date_updated_successfully": "Data de retrocesso atualizada com sucesso."
     }
   },
   "uk": {
@@ -384,7 +457,14 @@ main p {
       "unable_to_parse_file": "Не вдалося проаналізувати файл {filename}. Переконайтеся, що формат правильний.",
       "unable_to_parse_any_log_entries": "Не вдалося проаналізувати жодного запису журналу з завантажених файлів.",
       "successfully_processed_log_entries": "Успішно оброблено {count} записів журналу.",
-      "there_was_a_problem_creating_the_log_entries": "Виникла проблема при створенні записів журналу."
+      "there_was_a_problem_creating_the_log_entries": "Виникла проблема при створенні записів журналу.",
+      "look_back_date_reset_message": {
+        "1": "Ваш імпортований файл містить записи журналу до вашої Дати Огляду. Більшість сторінок ігноруватимуть ці записи під час відображення вашого прогресу.",
+        "2": "Чи хочете ви оновити вашу Дату Огляду до {lookBackDate}, щоб включити ці записи?"
+      },
+      "update_look_back_date_yes": "Оновити Дату Огляду",
+      "update_look_back_date_no": "Залишити Поточну Дату Огляду",
+      "look_back_date_updated_successfully": "Дату огляду успішно оновлено."
     }
   }
 }

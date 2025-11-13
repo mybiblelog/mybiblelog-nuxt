@@ -12,11 +12,17 @@
         </div>
       </div>
     </section>
+    <floating-feedback-button />
   </main>
 </template>
 
 <script>
+import FloatingFeedbackButton from '@/components/FloatingFeedbackButton.vue';
+
 export default {
+  components: {
+    FloatingFeedbackButton,
+  },
   props: {
     error: {
       type: Object,

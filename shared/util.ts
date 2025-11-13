@@ -1,4 +1,5 @@
 import Bible from './bible';
+import { LocaleCode } from './i18n';
 
 /** Determines if the operating system is a mobile device (for opening links in apps). */
 const isMobileOperatingSystem = () => {
@@ -108,6 +109,15 @@ export const BibleVersions = {
   ARC: 'ARC', // Almeida Revista e Corrigida (Portuguese)
   LUT: 'LUT', // Luther 1912 (German)
 } as const;
+
+export const defaultLocaleBibleVersions = {
+  en: BibleVersions.NASB2020,
+  de: BibleVersions.LUT,
+  es: BibleVersions.RVR2020,
+  fr: BibleVersions.LSG,
+  pt: BibleVersions.ARC,
+  uk: BibleVersions.UKR,
+} as const satisfies Record<LocaleCode, typeof BibleVersions[keyof typeof BibleVersions]>;
 
 type BibleVersionsType = {
   [Key in keyof typeof BibleVersions]: string | number;

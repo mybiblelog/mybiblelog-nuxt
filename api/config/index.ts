@@ -13,6 +13,7 @@ const envPath = isCompiled
 
 dotenv.config({
   path: envPath,
+  quiet: true,
 });
 
 const booleanStringDefaultingToTrue = z.enum(['true', 'false']).transform(val => val !== 'false');

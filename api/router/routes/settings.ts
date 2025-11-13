@@ -86,6 +86,7 @@ router.put('/settings', async (req, res, next) => {
       'dailyVerseCountGoal',
       'lookBackDate',
       'preferredBibleVersion',
+      'startPage',
       'locale',
     ].forEach((property) => {
       if (typeof settings[property] !== 'undefined') {

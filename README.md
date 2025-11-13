@@ -41,9 +41,6 @@ $ npm run start
 In development, create a `.env` file at the root of the project:
 
 ```bash
-# Disable the repetitive console ad from the `dotenv` package
-DOTENV_DISABLE_AD=1
-
 # Base site URL (used for canonical links)
 # Also used to resolve absolute URL links in emails and axios requests
 SITE_URL=https://xxxxxxxxxx
@@ -173,9 +170,10 @@ These are the steps to adding an entirely new locale to the site (along with any
 1. Email templates manage their own translation messages, so add the locale to each `api/services/email-templates/*.ts` file. (use Cursor)
 1. The email service manages translations for several emails inline, so add the locale to `api/services/mailgun.service.ts`. (use Cursor)
 1. The reminder service translates the title to the email, so add that to `api/services/reminder.service.ts`.
-1. Each language has its own `nuxt/content` directory with markdown files that back the `/about` and `/policy` pages. (`nuxt/_translate.js`)
-1. Each language currently has its own printable reading tracker PDF in `nuxt/static/downloads` which is manually listed in the XML sitemap route, `/api/router/routes/sitemap.ts`. (manually "print as PDF", update sitemap route, and update `nuxt/pages/resources/printable-bible-reading-tracker.vue`)
-1. Add at least one preferred Bible translation option for the new language in both `shared/util.ts` and `pages/settings/reading.vue`.
+1. Each locale has its own `nuxt/content` directory with markdown files that back the `/about` and `/policy` pages. (`nuxt/_translate.js`)
+1. Each locale currently has its own printable reading tracker PDF in `nuxt/static/downloads` which is manually listed in the XML sitemap route, `/api/router/routes/sitemap.ts`. (manually "print as PDF", update sitemap route, and update `nuxt/pages/resources/printable-bible-reading-tracker.vue`)
+1. Add at least one preferred Bible translation option for the new locale in both `shared/util.ts` and `pages/settings/reading.vue`.
+1. Add a default Bible translation for the new locale to the `defaultLocaleBibleVersions` constant in `shared/util.ts` in.
 
 ## Adding support for a new Bible translation
 

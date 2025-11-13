@@ -6,6 +6,7 @@ const i18nConfig = require('./i18n.config');
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
+  quiet: true,
 });
 
 module.exports = {

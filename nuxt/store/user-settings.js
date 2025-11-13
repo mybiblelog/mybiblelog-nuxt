@@ -1,6 +1,5 @@
 import {
   BibleApps,
-  BibleVersions,
   getAppReadingUrl,
   getDefaultBibleApp,
   getDefaultBibleVersion,
@@ -40,6 +39,7 @@ export const mutations = {
     dailyVerseCountGoal,
     preferredBibleApp,
     preferredBibleVersion,
+    startPage,
     locale,
   }) {
     if (lookBackDate) {
@@ -54,6 +54,9 @@ export const mutations = {
     if (preferredBibleVersion) {
       state.settings.preferredBibleVersion = preferredBibleVersion;
     }
+    if (startPage) {
+      state.settings.startPage = startPage;
+    }
     if (locale) {
       state.settings.locale = locale;
     }
@@ -66,6 +69,7 @@ export const actions = {
     dailyVerseCountGoal,
     preferredBibleApp,
     preferredBibleVersion,
+    startPage,
     locale,
   }) {
     try {
@@ -79,6 +83,7 @@ export const actions = {
           lookBackDate,
           dailyVerseCountGoal,
           preferredBibleVersion,
+          startPage,
           locale,
         },
       });
@@ -87,6 +92,7 @@ export const actions = {
         dailyVerseCountGoal,
         preferredBibleApp,
         preferredBibleVersion,
+        startPage,
         locale,
       });
       return true;
@@ -105,12 +111,14 @@ export const actions = {
       lookBackDate,
       dailyVerseCountGoal,
       preferredBibleVersion,
+      startPage,
       locale,
     } = response.data;
     commit(SET_USER_SETTINGS, {
       lookBackDate,
       dailyVerseCountGoal,
       preferredBibleVersion,
+      startPage,
       locale,
     });
   },

@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config({
   path: path.resolve(__dirname, '../../.env'),
+  quiet: true,
 });
 
 const { TEST_API_URL } = process.env;
@@ -25,13 +26,14 @@ export interface TestUser {
 }
 
 interface CreateTestUserOptions {
+  locale?: string;
   isAdmin?: boolean;
 }
 
 /**
  * Creates a test user and returns a token
  */
-async function createTestUser({ isAdmin = false }: CreateTestUserOptions = {}): Promise<TestUser> {
+async function createTestUser({ locale = 'en', isAdmin = false }: CreateTestUserOptions = {}): Promise<TestUser> {
   const email = generateTestEmail();
   const password = crypto.randomBytes(10).toString('hex');
   const testBypassSecret = process.env.TEST_BYPASS_SECRET;
@@ -40,7 +42,7 @@ async function createTestUser({ isAdmin = false }: CreateTestUserOptions = {}): 
   const registerResponse = await api
     .post('/api/auth/register')
     .set('x-test-bypass-secret', testBypassSecret!)
-    .send({ email, password, ...(isAdmin && { isAdmin }) });
+    .send({ email, password, locale, ...(isAdmin && { isAdmin }) });
 
   if (registerResponse.status !== 200) {
     throw new Error(`Failed to register test user: ${registerResponse.body.message}`);
