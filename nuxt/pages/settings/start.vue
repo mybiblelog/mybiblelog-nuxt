@@ -54,7 +54,8 @@ export default {
     },
     startPageOptions() {
       return [
-        { text: this.$t('start'), value: 'start' },
+        // This option can be enabled for development of the "Start" page
+        // { text: this.$t('start'), value: 'start' },
         { text: this.$t('today'), value: 'today' },
         { text: this.$t('bible_books'), value: 'books' },
         { text: this.$t('chapter_checklist'), value: 'checklist' },
