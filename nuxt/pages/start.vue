@@ -35,7 +35,7 @@
               v-if="progressTab === 2"
               :initial-value="userSettings.preferredBibleVersion"
               :initial-bible-app="userSettings.preferredBibleApp"
-              :next-button-text="$t('start_page.save_and_continue')"
+              :next-button-text="$t('start_page.save_and_finish')"
               :previous-button-text="$t('start_page.back')"
               :show-toast="false"
               @next="handleNext"
@@ -144,6 +144,7 @@ export default {
   "de": {
     "start_page": {
       "save_and_continue": "Speichern und Fortfahren",
+      "save_and_finish": "Speichern und Fertigstellen",
       "back": "Zurück",
       "welcome": {
         "button": "Meine Einstellungen personalisieren"
@@ -153,6 +154,7 @@ export default {
   "en": {
     "start_page": {
       "save_and_continue": "Save and Continue",
+      "save_and_finish": "Save and Finish",
       "back": "Back",
       "welcome": {
         "button": "Personalize My Settings"
@@ -162,6 +164,7 @@ export default {
   "es": {
     "start_page": {
       "save_and_continue": "Guardar y Continuar",
+      "save_and_finish": "Guardar y Finalizar",
       "back": "Atrás",
       "welcome": {
         "button": "Personalizar Mi Configuración"
@@ -171,6 +174,7 @@ export default {
   "fr": {
     "start_page": {
       "save_and_continue": "Enregistrer et Continuer",
+      "save_and_finish": "Enregistrer et Finir",
       "back": "Retour",
       "welcome": {
         "button": "Personnaliser Mes Paramètres"
@@ -180,6 +184,7 @@ export default {
   "pt": {
     "start_page": {
       "save_and_continue": "Salvar e Continuar",
+      "save_and_finish": "Salvar e Finalizar",
       "back": "Voltar",
       "welcome": {
         "button": "Personalizar Minhas Configurações"
@@ -189,6 +194,7 @@ export default {
   "uk": {
     "start_page": {
       "save_and_continue": "Зберегти та Продовжити",
+      "save_and_finish": "Зберегти та Завершити",
       "back": "Назад",
       "welcome": {
         "button": "Персоналізувати Мої Налаштування"
