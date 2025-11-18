@@ -20,6 +20,9 @@
                     <nuxt-link class="dropdown-item" :to="localePath('/settings')">
                       {{ $t('account') }}
                     </nuxt-link>
+                    <nuxt-link class="dropdown-item" :to="localePath('/settings/start')">
+                      {{ $t('start_page') }}
+                    </nuxt-link>
                     <nuxt-link class="dropdown-item" :to="localePath('/settings/reading')">
                       {{ $t('reading') }}
                     </nuxt-link>
@@ -41,6 +44,11 @@
                 <li>
                   <nuxt-link :to="localePath('/settings')">
                     {{ $t('account') }}
+                  </nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link :to="localePath('/settings/start')">
+                    {{ $t('start_page') }}
                   </nuxt-link>
                 </li>
                 <li>
@@ -122,6 +130,7 @@ export default {
     "settings": "Einstellungen",
     "menu": "Menü",
     "account": "Konto",
+    "start_page": "Startseite",
     "reading": "Lesen",
     "reminder": "Erinnerung",
     "export": "Exportieren",
@@ -131,6 +140,7 @@ export default {
     "settings": "Settings",
     "menu": "Menu",
     "account": "Account",
+    "start_page": "Start Page",
     "reading": "Reading",
     "reminder": "Reminder",
     "export": "Export",
@@ -140,6 +150,7 @@ export default {
     "settings": "Configuración",
     "menu": "Menú",
     "account": "Cuenta",
+    "start_page": "Página de inicio",
     "reading": "Lectura",
     "reminder": "Recordatorio",
     "export": "Exportar",
@@ -149,6 +160,7 @@ export default {
     "settings": "Paramètres",
     "menu": "Menu",
     "account": "Compte",
+    "start_page": "Page de démarrage",
     "reading": "Lecture",
     "reminder": "Rappel",
     "export": "Exporter",
@@ -158,6 +170,7 @@ export default {
     "settings": "Configurações",
     "menu": "Menu",
     "account": "Conta",
+    "start_page": "Página de início",
     "reading": "Leitura",
     "reminder": "Lembrete",
     "export": "Exportar",
@@ -167,6 +180,7 @@ export default {
     "settings": "Налаштування",
     "menu": "Меню",
     "account": "Акаунт",
+    "start_page": "Стартова сторінка",
     "reading": "Читання",
     "reminder": "Нагадування",
     "export": "Експорт",

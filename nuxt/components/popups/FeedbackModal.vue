@@ -1,48 +1,54 @@
 <template>
-  <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <h1 class="title">
-              {{ $t('feedback_form') }}
-            </h1>
-            <div class="content">
-              <p>{{ $t('feedback_form_intro.p1') }}</p>
-              <p>{{ $t('feedback_form_intro.p2') }}</p>
-            </div>
-            <FeedbackForm />
-          </div>
+  <div v-if="isVisible" class="modal is-active" role="dialog">
+    <div class="modal-background" @click="close" />
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">
+          {{ $t('feedback_form') }}
+        </p>
+        <button class="delete" aria-label="close" @click="close" />
+      </header>
+      <section class="modal-card-body">
+        <div class="content">
+          <p>{{ $t('feedback_form_intro.p1') }}</p>
+          <p>{{ $t('feedback_form_intro.p2') }}</p>
         </div>
-      </div>
-    </section>
-  </main>
+        <FeedbackForm @success="handleSuccess" />
+      </section>
+    </div>
+  </div>
 </template>
 
 <script>
 import FeedbackForm from '@/components/forms/FeedbackForm.vue';
 
 export default {
-  name: 'FeedbackFormPage',
+  name: 'FeedbackModal',
   components: {
     FeedbackForm,
   },
-  head() {
-    return {
-      title: this.$t('feedback_form'),
-      meta: [
-        { hid: 'robots', name: 'robots', content: 'noindex' },
-      ],
-    };
+  props: {
+    isVisible: {
+      type: Boolean,
+      default: false,
+    },
   },
-  // NO auth middleware -- this page will be accessible
-  // for both authenticated and unauthenticated users
-  auth: false,
+  methods: {
+    close() {
+      this.$emit('close');
+    },
+    handleSuccess() {
+      // Close modal after successful submission
+      this.close();
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-//
+.modal-card-body {
+  padding: 2rem;
+}
 </style>
 
 <i18n lang="json">

@@ -1,7 +1,9 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { SimpleDate, BibleVersions, LocaleCode, getLocaleCodes } from '@mybiblelog/shared';
+import { SimpleDate, BibleVersions, LocaleCode, getLocaleCodes, defaultLocaleBibleVersions } from '@mybiblelog/shared';
 
 const siteLocales = getLocaleCodes();
+
+export const StartPages = ['start', 'today', 'books', 'checklist', 'calendar', 'notes'] as const;
 
 /**
  * @swagger
@@ -20,6 +22,9 @@ const siteLocales = getLocaleCodes();
  *         preferredBibleVersion:
  *           type: string
  *           description: The user's preferred Bible version
+ *         startPage:
+ *           type: string
+ *           description: The user's preferred start page
  *         locale:
  *           type: string
  *           description: The user's preferred locale
@@ -29,6 +34,7 @@ export interface IUserSettings extends Document {
   dailyVerseCountGoal: number;
   lookBackDate: string;
   preferredBibleVersion: string;
+  startPage: string;
   locale: LocaleCode;
 }
 
@@ -52,16 +58,27 @@ export const UserSettingsSchema = new Schema<IUserSettings>({
   preferredBibleVersion: {
     type: String,
     required: true,
-    default: BibleVersions.NASB2020,
+    default: function () {
+      const locale = this.locale || 'en';
+      return defaultLocaleBibleVersions[locale];
+    },
     validate: {
       validator: (version: string) => Object.keys(BibleVersions).includes(version),
       message: (props: { value: string }) => `${props.value} is not a recognized Bible translation`,
     },
   },
+  startPage: {
+    type: String,
+    required: true,
+    default: 'start',
+    validate: {
+      validator: (page: string) => StartPages.includes(page as (typeof StartPages)[number]),
+      message: (props: { value: string }) => `${props.value} is not a valid start page`,
+    },
+  },
   locale: {
     type: String,
     required: true,
-    default: 'en',
     validate: {
       validator: (locale: string) => (siteLocales as string[]).includes(locale),
       message: (props: { value: string }) => `${props.value} is not a supported locale`,

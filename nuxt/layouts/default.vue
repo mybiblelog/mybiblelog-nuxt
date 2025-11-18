@@ -6,17 +6,20 @@
     </div>
     <toaster />
     <pop-ups />
+    <floating-feedback-button />
   </div>
 </template>
 
 <script>
 import SiteNav from '@/components/SiteNav.vue';
+import FloatingFeedbackButton from '@/components/FloatingFeedbackButton.vue';
 import Toaster from '@/components/Toaster.vue';
 import PopUps from '@/components/popups/PopUps.vue';
 
 export default {
   components: {
     SiteNav,
+    FloatingFeedbackButton,
     Toaster,
     PopUps,
   },
@@ -40,5 +43,6 @@ export default {
 <style lang="scss" scoped>
 .site-container {
   min-height: 80vh;
+  padding-bottom: 2rem;
 }
 </style>

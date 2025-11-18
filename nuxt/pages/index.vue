@@ -21,7 +21,7 @@
               <p>{{ $t('overview.p2') }}</p>
               <p>{{ $t('overview.p3') }}</p>
               <p class="has-text-centered">
-                <nuxt-link class="button is-link" :to="localePath('/today')">
+                <nuxt-link class="button is-link" :to="localePath('/start')">
                   {{ $t('cta') }}
                 </nuxt-link>
               </p>
@@ -61,7 +61,7 @@
             </h3>
             <p>{{ $t('set_goals.p1') }}</p>
             <p>{{ $t('set_goals.p2') }}</p>
-            <nuxt-link class="button is-link" :to="localePath('/today')">
+            <nuxt-link class="button is-link" :to="localePath('/start')">
               {{ $t('cta') }}
             </nuxt-link>
           </figcaption>
@@ -95,7 +95,7 @@
             </h3>
             <p>{{ $t('track_whole_bible_progress.p1') }}</p>
             <p>{{ $t('track_whole_bible_progress.p2') }}</p>
-            <nuxt-link class="button is-link" :to="localePath('/today')">
+            <nuxt-link class="button is-link" :to="localePath('/start')">
               {{ $t('cta') }}
             </nuxt-link>
           </figcaption>
@@ -132,7 +132,7 @@
             <p>{{ $t('track_reading_with_a_single_click.p1') }}</p>
             <p>{{ $t('track_reading_with_a_single_click.p2') }}</p>
             <p>{{ $t('track_reading_with_a_single_click.p3') }}</p>
-            <nuxt-link class="button is-link" :to="localePath('/today')">
+            <nuxt-link class="button is-link" :to="localePath('/start')">
               {{ $t('cta') }}
             </nuxt-link>
           </figcaption>
@@ -199,7 +199,7 @@
               <p>{{ $t('reading_the_bible_in_a_year.p4') }}</p>
               <p>{{ $t('reading_the_bible_in_a_year.p5') }}</p>
               <p class="has-text-centered">
-                <nuxt-link class="button is-link" :to="localePath('/today')">
+                <nuxt-link class="button is-link" :to="localePath('/start')">
                   {{ $t('cta') }}
                 </nuxt-link>
               </p>
@@ -266,7 +266,7 @@
             </h3>
             <p>{{ $t('install_anywhere.p1') }}</p>
             <p>{{ $t('install_anywhere.p2') }}</p>
-            <nuxt-link class="button is-link" :to="localePath('/today')">
+            <nuxt-link class="button is-link" :to="localePath('/start')">
               {{ $t('cta') }}
             </nuxt-link>
           </figcaption>
@@ -366,7 +366,7 @@
           <div class="column is-two-thirds-tablet">
             <div class="content">
               <p class="has-text-centered">
-                <nuxt-link class="button is-link" :to="localePath('/today')">
+                <nuxt-link class="button is-link" :to="localePath('/start')">
                   {{ $t('cta') }}
                 </nuxt-link>
               </p>
@@ -407,7 +407,7 @@ export default {
   asyncData({ $auth, redirect, app }) {
     if ($auth.loggedIn) {
       const currentSetLocale = app.i18n.locale;
-      return redirect(app.localePath('/today', currentSetLocale));
+      return redirect(app.localePath('/start', currentSetLocale));
     }
   },
   head() {

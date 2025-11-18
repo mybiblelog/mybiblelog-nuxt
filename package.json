@@ -36,7 +36,8 @@
     "script:seed": "npm run --prefix api script:seed",
     "script:backup": "npm run --prefix api script:backup",
     "script:delete-test-users": "npm run --prefix api script:delete-test-users",
-    "script:delete-stranded-data": "npm run --prefix api script:delete-stranded-data"
+    "script:delete-stranded-data": "npm run --prefix api script:delete-stranded-data",
+    "script:migrate": "npm run --prefix api script:migrate"
   },
   "jest": {
     "testEnvironment": "node",
