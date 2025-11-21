@@ -33,13 +33,27 @@ export const mutations = {
 };
 
 export const actions = {
-  async loadLogEntries({ commit }) {
-    const response = await this.$axios.get('/api/log-entries');
-    commit(SET_LOG_ENTRIES, response.data);
+  async loadLogEntries({ commit, rootState }) {
+    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
+    url.pathname = '/api/log-entries';
+    const response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+      },
+    });
+    const data = await response.json();
+    commit(SET_LOG_ENTRIES, data);
   },
-  async createLogEntry({ commit, dispatch }, { date, startVerseId, endVerseId }) {
-    const response = await this.$axios.post('/api/log-entries', { date, startVerseId, endVerseId });
-    const { data } = response;
+  async createLogEntry({ commit, dispatch, rootState }, { date, startVerseId, endVerseId }) {
+    const response = await fetch('/api/log-entries', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ date, startVerseId, endVerseId }),
+    });
+    const data = await response.json();
     if (!data) { return null; }
     commit(ADD_LOG_ENTRY, data);
 

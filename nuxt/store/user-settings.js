@@ -78,14 +78,22 @@ export const actions = {
       if (preferredBibleApp) {
         localStorage.setItem(LocalStorageKeys.PREFERRED_BIBLE_APP, preferredBibleApp);
       }
-      await this.$axios.put('/api/settings', {
-        settings: {
-          lookBackDate,
-          dailyVerseCountGoal,
-          preferredBibleVersion,
-          startPage,
-          locale,
+      const url = new URL(this.$config.siteUrl); // from nuxt.config.js
+      url.pathname = '/api/settings';
+      await fetch(url.toString(), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          settings: {
+            lookBackDate,
+            dailyVerseCountGoal,
+            preferredBibleVersion,
+            startPage,
+            locale,
+          },
+        }),
       });
       commit(SET_USER_SETTINGS, {
         lookBackDate,
@@ -105,15 +113,22 @@ export const actions = {
     dispatch('loadClientSettings');
     await dispatch('loadServerSettings');
   },
-  async loadServerSettings({ commit }) {
-    const response = await this.$axios.get('/api/settings');
+  async loadServerSettings({ commit, rootState }) {
+    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
+    url.pathname = '/api/settings';
+    const response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+      },
+    });
+    const data = await response.json();
     const {
       lookBackDate,
       dailyVerseCountGoal,
       preferredBibleVersion,
       startPage,
       locale,
-    } = response.data;
+    } = data;
     commit(SET_USER_SETTINGS, {
       lookBackDate,
       dailyVerseCountGoal,

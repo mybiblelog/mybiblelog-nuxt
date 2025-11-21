@@ -80,8 +80,8 @@ export default {
   },
   data() {
     return {
-      email: null,
-      password: null,
+      email: '',
+      password: '',
       errors: {},
       formSubmitted: false,
       requireEmailVerification: true,
@@ -89,7 +89,7 @@ export default {
   },
   head() {
     return {
-      title: this.$t('register'),
+      title: this.$t('sign_up'),
       meta: [
         { hid: 'robots', name: 'robots', content: 'noindex' },
       ],

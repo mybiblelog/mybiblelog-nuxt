@@ -2,7 +2,7 @@ import express from 'express';
 import status from 'http-status';
 import config from '../../config';
 import rateLimit from '../helpers/rateLimit';
-import authCurrentUser from '../helpers/authCurrentUser';
+import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import googleOauth2 from '../helpers/google-oauth2';
 import { I18nError, makeI18nError } from '../helpers/i18n-error';
 import useMongooseModels from '../../mongoose/useMongooseModels';
@@ -177,7 +177,13 @@ router.post('/auth/login', async (req, res, next) => {
   if (requireEmailVerification && !isEmailVerified(user) && !bypass) {
     return res.status(422).json({ errors: { _form: makeI18nError(I18nError.VerifyEmail, '_form', { email: user.email }) } });
   }
-  return res.json(user.toAuthJSON());
+  const authJSON = user.toAuthJSON();
+  res.cookie(AUTH_COOKIE_NAME, authJSON.token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 60 * 60 * 24 * 30, // 30 days
+  });
+  return res.json(authJSON);
 });
 
 /**
@@ -200,7 +206,7 @@ router.post('/auth/login', async (req, res, next) => {
 router.post('/auth/logout', async (req, res, next) => {
   try {
     await authCurrentUser(req);
-    // TODO: track end of JWT "session"
+    res.clearCookie(AUTH_COOKIE_NAME);
     return res.json(true);
   }
   catch (error) {

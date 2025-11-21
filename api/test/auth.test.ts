@@ -3,6 +3,8 @@ import { requestApi, createTestUser, deleteTestUser, generateTestEmail } from '.
 
 const { TEST_BYPASS_SECRET } = process.env;
 
+const AUTH_COOKIE_NAME = 'auth_token';
+
 describe('Auth routes', () => {
   test('POST /api/auth/login (invalid credentials)', async () => {
     // Act
@@ -15,6 +17,7 @@ describe('Auth routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(422);
+    expect(res.headers['set-cookie']).toBeUndefined();
     expect(res.body.errors).toEqual({
       _form: {
         kind: 'api_error.invalid_login',
@@ -39,7 +42,8 @@ describe('Auth routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(200);
-    expect(res.body.token).toBeDefined();
+    expect(res.headers['set-cookie']).toBeDefined();
+    expect(res.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=`);
 
     // Cleanup
     await deleteTestUser(testUser);
