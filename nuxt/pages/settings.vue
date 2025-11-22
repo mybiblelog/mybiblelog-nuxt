@@ -89,7 +89,7 @@ export default {
   components: {
     InfoLink,
   },
-  middleware: ['auth'],
+  middleware: ['auth2'],
   data() {
     return {
       menuOpen: false,

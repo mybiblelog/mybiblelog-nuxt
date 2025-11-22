@@ -20,24 +20,29 @@ export const mutations = {
 
 export const actions = {
   async login({ commit }, { email, password }) {
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      const { token, ...user } = data;
-      commit(SET_USER, user);
-      commit(SET_USER_TOKEN, token);
-      return true;
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        const { token, ...user } = data;
+        commit(SET_USER, user);
+        commit(SET_USER_TOKEN, token);
+        return { success: true, error: null };
+      }
+      else {
+        commit(SET_USER, null);
+        commit(SET_USER_TOKEN, null);
+        return { success: false, error: data.errors };
+      }
     }
-    else {
-      commit(SET_USER, null);
-      commit(SET_USER_TOKEN, null);
-      return false;
+    catch (error) {
+      return { success: false, error: error.message };
     }
   },
   async setUserToken({ commit }, token) {
@@ -61,27 +66,20 @@ export const actions = {
     }
   },
   async logout({ commit }) {
-    // Send API request to delete token from HttpOnly cookie
-    await fetch('/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    try {
+      // Send API request to delete token from HttpOnly cookie
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
+    catch (error) {
+      // This is expected to fail after account deletion
+    }
     commit(SET_USER, null);
     commit(SET_USER_TOKEN, null);
   },
-  // TODO: loginWith in:
-  // login.vue
-  // register.vue
-  // --- this will be replaced with 'login' above (will still need a manual redirect afterward -- to an i18n-aware redirect URL)
-  // TODO: handle 'onRedirect' in:
-  // plugins/auth-i18n-redirect.js
-  // ---  the redirect behavior comes from auth middleware, right?
-  //      so if we implement custom auth middleware, we can handle the redirect behavior there.
-  // TODO: how to access state from this store in the global store?
-  // nuxt/store/index.js
-  // --- can access user from 'req' object: https://v2.nuxt.com/docs/directory-structure/store/#the-nuxtserverinit-action
-
 };

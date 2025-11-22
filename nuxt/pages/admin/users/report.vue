@@ -168,7 +168,10 @@ export default {
     CompletionBar,
     CaretDown,
   },
-  middleware: ['auth', 'auth-admin'],
+  middleware: ['auth2'],
+  meta: {
+    auth: 'admin',
+  },
   data() {
     return {
       pollInterval: null,

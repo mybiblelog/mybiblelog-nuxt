@@ -17,7 +17,7 @@
 <script>
 export default {
   name: 'GoogleLoginPage',
-  middleware: ['auth'],
+  middleware: ['auth2'],
   data() {
     return {
       //
@@ -47,7 +47,7 @@ export default {
 
         const response = await this.$axios.get(`/api/auth/oauth2/google/verify?code=${code}&state=${state}&locale=${userLocale}`);
         const { token } = response.data;
-        await this.$auth.setUserToken(token);
+        await this.$store.dispatch('auth2/setUserToken', token);
 
         // Redirect to the user's preferred locale.
         const redirectUrl = this.localePath('/start', userLocale);
@@ -67,7 +67,9 @@ export default {
   methods: {
     //
   },
-  auth: 'guest',
+  meta: {
+    auth: 'guest',
+  },
 };
 </script>
 

@@ -42,8 +42,28 @@ describe('Auth routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(200);
+    // expect cookie to be set in header
     expect(res.headers['set-cookie']).toBeDefined();
     expect(res.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=`);
+
+    // Cleanup
+    await deleteTestUser(testUser);
+  });
+
+  test('POST /api/auth/logout', async () => {
+    // Arrange
+    const testUser = await createTestUser();
+
+    // Act
+    const res = await requestApi
+      .post('/api/auth/logout')
+      .set('Authorization', `Bearer ${testUser.token}`);
+
+    // Assert
+    expect(res.statusCode).toBe(200);
+    // expect cookie to be cleared in header
+    expect(res.headers['set-cookie']).toBeDefined();
+    expect(res.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=;`);
 
     // Cleanup
     await deleteTestUser(testUser);

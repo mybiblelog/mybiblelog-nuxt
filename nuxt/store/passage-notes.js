@@ -97,7 +97,7 @@ export const actions = {
   stageQuery({ commit }, queryUpdate) {
     commit(SET_PASSAGE_NOTES_STAGED_QUERY, queryUpdate);
   },
-  async loadPassageNotesPage({ commit, state }) {
+  async loadPassageNotesPage({ commit, state, rootState }) {
     commit(SET_PASSAGE_NOTES_LOADING, true);
     // Build the request URL
     const url = new URL(this.$config.siteUrl); // from nuxt.config.js
@@ -133,14 +133,19 @@ export const actions = {
       url.searchParams.set('offset', state.query.offset);
     }
 
-    const response = await this.$axios.get(url);
+    const response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+      },
+    });
+    const responseData = await response.json();
 
     const {
       offset,
       limit,
       size,
       results,
-    } = response.data;
+    } = responseData;
     commit(SET_PASSAGE_NOTES, results);
     commit(SET_PASSAGE_NOTE_PAGINATION, {
       limit,
@@ -150,22 +155,48 @@ export const actions = {
     });
     commit(SET_PASSAGE_NOTES_LOADING, false);
   },
-  async createPassageNote({ commit, dispatch }, newPassageNote) {
-    const response = await this.$axios.post('/api/passage-notes', newPassageNote);
-    const { data } = response;
+  async createPassageNote({ commit, dispatch, rootState }, newPassageNote) {
+    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
+    url.pathname = '/api/passage-notes';
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newPassageNote),
+    });
+    const data = await response.json();
     if (!data) { return null; }
     return data;
   },
-  async updatePassageNote({ commit, dispatch }, passageNoteUpdate) {
+  async updatePassageNote({ commit, dispatch, rootState }, passageNoteUpdate) {
     const { id } = passageNoteUpdate;
-    const response = await this.$axios.put(`/api/passage-notes/${id}`, passageNoteUpdate);
-    const { data } = response;
+    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
+    url.pathname = `/api/passage-notes/${id}`;
+    const response = await fetch(url.toString(), {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(passageNoteUpdate),
+    });
+    const data = await response.json();
     if (!data) { return null; }
     return data;
   },
-  async deletePassageNote({ commit, dispatch }, passageNoteId) {
-    const response = await this.$axios.delete(`/api/passage-notes/${passageNoteId}`);
-    if (response.data) {
+  async deletePassageNote({ commit, dispatch, rootState }, passageNoteId) {
+    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
+    url.pathname = `/api/passage-notes/${passageNoteId}`;
+    const response = await fetch(url.toString(), {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+      },
+    });
+    const data = await response.json();
+    if (data) {
       await dispatch('loadPassageNotesPage');
       return true;
     }
@@ -207,14 +238,19 @@ export const actions = {
       url.searchParams.set('offset', state.query.offset);
     }
 
-    const response = await this.$axios.get(url);
+    const response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+      },
+    });
+    const responseData = await response.json();
 
     const {
       offset,
       limit,
       size,
       results,
-    } = response.data;
+    } = responseData;
     commit(SET_PASSAGE_NOTES, results);
     commit(SET_PASSAGE_NOTE_PAGINATION, {
       limit,

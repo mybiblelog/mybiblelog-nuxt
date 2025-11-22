@@ -1,19 +1,18 @@
 const AUTH_COOKIE_NAME = 'auth_token';
 
 export const actions = {
-  // async nuxtServerInit({ dispatch }, { req, $auth }) {
-  async nuxtServerInit({ dispatch }, { req, $auth }) {
+  async nuxtServerInit({ dispatch, state }, { req }) {
     if (req.headers && req.headers.cookie && req.headers.cookie.includes(`${AUTH_COOKIE_NAME}=`)) {
       const token = req.headers.cookie.split(`${AUTH_COOKIE_NAME}=`)[1].split(';')[0];
       await dispatch('auth2/setUserToken', token);
     }
 
-    if ($auth.loggedIn) {
+    if (state.auth2.loggedIn) {
       await dispatch('loadUserData');
     }
   },
-  async nuxtClientInit({ dispatch }, { app: { $auth } }) {
-    if ($auth.loggedIn) {
+  async nuxtClientInit({ dispatch, state }) {
+    if (state.auth2.loggedIn) {
       // On client side, re-trigger user settings load
       // since some settings are stored in LocalStorage
       await dispatch('user-settings/loadClientSettings');

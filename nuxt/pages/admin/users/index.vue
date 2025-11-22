@@ -142,7 +142,10 @@ export default {
   components: {
     CaretDown,
   },
-  middleware: ['auth', 'auth-admin'],
+  middleware: ['auth2'],
+  meta: {
+    auth: 'admin',
+  },
   data() {
     return {
       users: null, // becomes array when loaded
@@ -252,7 +255,7 @@ export default {
       this.loadUsers();
     },
     async deleteUser(email) {
-      if (email === this.$auth.user.email) {
+      if (email === this.$store.state.auth2.user.email) {
         await this.$store.dispatch('dialog/alert', {
           message: 'You cannot delete your own account.',
         });
@@ -304,7 +307,7 @@ export default {
         const response = await this.$axios.get(`/api/admin/users/${this.selectedUser.email}/login`);
         this.$router.push(this.localePath({ path: '/', query: { } }));
         const { jwt } = response.data;
-        this.$auth.setUserToken(jwt);
+        this.$store.dispatch('auth2/setUserToken', jwt);
       }
       catch (err) {
         await this.$store.dispatch('dialog/alert', {

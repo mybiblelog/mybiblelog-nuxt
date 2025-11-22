@@ -50,7 +50,7 @@
 <script>
 export default {
   name: 'DeleteAccountPage',
-  middleware: ['auth'],
+  middleware: ['auth2'],
   data() {
     return {
       formBusy: false,
@@ -80,15 +80,24 @@ export default {
     },
   },
   methods: {
-    deleteAccount() {
-      this.$axios.put('/api/settings/delete-account', {})
-        .then(() => this.$auth.logout())
-        .catch(() => {
-          this.$store.dispatch('toast/add', {
-            type: 'error',
-            text: this.$t('unable_to_delete'),
-          });
+    async deleteAccount() {
+      const response = await fetch('/api/settings/delete-account', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.ok) {
+        await this.$store.dispatch('auth2/logout');
+        this.$router.push(this.localePath('/login', this.$i18n.locale));
+      }
+      else {
+        this.$store.dispatch('toast/add', {
+          type: 'error',
+          text: this.$t('unable_to_delete'),
         });
+      }
     },
   },
 };

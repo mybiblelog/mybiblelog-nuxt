@@ -107,7 +107,7 @@ export default {
     });
 
     // Apply the new JWT so the user is logged in with their new email
-    await this.$auth.setUserToken(jwt);
+    await this.$store.dispatch('auth2/setUserToken', jwt);
 
     // Redirect to the settings page, which displays the current email
     this.$router.push(this.localePath('/settings'));

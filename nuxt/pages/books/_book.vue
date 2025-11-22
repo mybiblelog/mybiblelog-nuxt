@@ -56,7 +56,7 @@ export default {
       title: Bible.getBookName(this.bookIndex, this.$i18n.locale),
     };
   },
-  middleware: ['auth'],
+  middleware: ['auth2'],
 };
 </script>
 

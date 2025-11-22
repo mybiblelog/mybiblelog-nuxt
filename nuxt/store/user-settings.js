@@ -64,7 +64,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async updateSettings({ commit }, {
+  async updateSettings({ commit, rootState }, {
     lookBackDate,
     dailyVerseCountGoal,
     preferredBibleApp,
@@ -83,6 +83,7 @@ export const actions = {
       await fetch(url.toString(), {
         method: 'PUT',
         headers: {
+          Authorization: `Bearer ${rootState.auth2.token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -109,7 +110,7 @@ export const actions = {
       return false;
     }
   },
-  async loadSettings({ commit, dispatch }) {
+  async loadSettings({ dispatch }) {
     dispatch('loadClientSettings');
     await dispatch('loadServerSettings');
   },

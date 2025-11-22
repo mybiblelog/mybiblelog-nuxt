@@ -49,6 +49,7 @@ module.exports = {
   plugins: [
     '~/plugins/gtag.client.js',
     '~/plugins/translate-api.js',
+    '~/plugins/nuxt-client-init.client.js',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -65,7 +66,6 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
     // Doc: https://www.npmjs.com/package/@nuxtjs/style-resources
     '@nuxtjs/style-resources',
     // Doc: https://www.npmjs.com/package/@nuxtjs/redirect-module
@@ -77,26 +77,6 @@ module.exports = {
     // Doc: https://i18n.nuxtjs.org/
     '@nuxtjs/i18n',
   ],
-  auth: {
-    plugins: [
-      // Registers a plugin like the top-level `plugins` array,
-      // but allows this plugin to access `context.app.$auth`
-      '~/plugins/nuxt-client-init.client.js',
-      '~/plugins/auth-i18n-redirect.js',
-    ],
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/api/auth/login', method: 'post', propertyName: 'token' },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' },
-        },
-        tokenRequired: true,
-        tokenType: 'Bearer',
-        autoFetchUser: true,
-      },
-    },
-  },
   i18n: i18nConfig,
   styleResources: {
     scss: ['./assets/scss/_variables.scss'],
@@ -116,11 +96,6 @@ module.exports = {
     '/api': {
       target: process.env.API_BASE_URL || 'http://localhost:8080',
     },
-  },
-  router: {
-    middleware: [
-      'auth',
-    ],
   },
   redirect: [
     // The default locale was unintentionally removed from the i18n config,

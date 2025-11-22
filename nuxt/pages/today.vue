@@ -268,7 +268,7 @@ export default {
       title: this.$t('today'),
     };
   },
-  middleware: ['auth'],
+  middleware: ['auth2'],
 };
 </script>
 

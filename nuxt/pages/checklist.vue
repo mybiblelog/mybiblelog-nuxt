@@ -241,7 +241,7 @@ export default {
       title: this.$t('chapter_checklist'),
     };
   },
-  middleware: ['auth'],
+  middleware: ['auth2'],
 };
 </script>
 

@@ -406,7 +406,7 @@ export default {
       title: this.$t('progress'),
     };
   },
-  middleware: ['auth'],
+  middleware: ['auth2'],
 };
 </script>
 

@@ -30,7 +30,7 @@
 <script>
 export default {
   name: 'StartPageSettingsPage',
-  middleware: ['auth'],
+  middleware: ['auth2'],
   data() {
     return {
       userSettingsForm: {

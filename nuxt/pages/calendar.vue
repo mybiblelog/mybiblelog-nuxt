@@ -150,7 +150,7 @@ export default {
       title: this.$t('page_title'),
     };
   },
-  middleware: ['auth'],
+  middleware: ['auth2'],
 };
 </script>
 

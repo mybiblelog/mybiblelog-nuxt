@@ -40,7 +40,7 @@
 <script>
 export default {
   name: 'ReminderSettingsPage',
-  middleware: ['auth'],
+  middleware: ['auth2'],
   async asyncData({ $axios }) {
     const response = await $axios.get(`/api/reminders/daily-reminder`);
     const reminder = response.data;

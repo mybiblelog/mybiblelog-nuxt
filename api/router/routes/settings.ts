@@ -1,7 +1,7 @@
 import express from 'express';
 import status from 'http-status';
 import createError from 'http-errors';
-import authCurrentUser from '../helpers/authCurrentUser';
+import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import deleteAccount from '../helpers/deleteAccount';
 
 const router = express.Router();
@@ -120,6 +120,8 @@ router.put('/settings/delete-account', async (req, res, next) => {
     if (!success) {
       return next(createError(500, 'Failed to delete account'));
     }
+    // clear the auth cookie on account deletion
+    res.clearCookie(AUTH_COOKIE_NAME);
     return res.sendStatus(status.OK);
   }
   catch (error) {

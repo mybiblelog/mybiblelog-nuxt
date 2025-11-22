@@ -63,9 +63,18 @@ export const actions = {
 
     return data;
   },
-  async updateLogEntry({ commit, dispatch }, { id, date, startVerseId, endVerseId }) {
-    const response = await this.$axios.put(`/api/log-entries/${id}`, { id, date, startVerseId, endVerseId });
-    const { data } = response;
+  async updateLogEntry({ commit, dispatch, rootState }, { id, date, startVerseId, endVerseId }) {
+    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
+    url.pathname = `/api/log-entries/${id}`;
+    const response = await fetch(url.toString(), {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, date, startVerseId, endVerseId }),
+    });
+    const data = await response.json();
     if (!data) { return null; }
     commit(UPDATE_LOG_ENTRY, data);
 
@@ -75,9 +84,17 @@ export const actions = {
 
     return data;
   },
-  async deleteLogEntry({ commit, dispatch, state }, logEntryId) {
-    const response = await this.$axios.delete(`/api/log-entries/${logEntryId}`);
-    if (response.data) {
+  async deleteLogEntry({ commit, dispatch, state, rootState }, logEntryId) {
+    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
+    url.pathname = `/api/log-entries/${logEntryId}`;
+    const response = await fetch(url.toString(), {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${rootState.auth2.token}`,
+      },
+    });
+    const data = await response.json();
+    if (data) {
       // find the deleted log entry and get its date for efficient cache updating
       const logEntry = state.logEntries.find(logEntry => logEntry.id === logEntryId);
       const date = logEntry.date;

@@ -74,7 +74,7 @@ export default {
     GoogleLoginButton,
     InfoLink,
   },
-  middleware: ['auth'],
+  middleware: ['auth2'],
   async asyncData({ $axios }) {
     let googleOauth2Url = null;
     try {
@@ -125,18 +125,21 @@ export default {
     localStorage.setItem('login_language', this.$i18n.locale);
   },
   methods: {
-    onSubmit() {
-      this.$auth.loginWith('local', {
-        data: {
-          email: this.email,
-          password: this.password,
-        },
-      })
-        .catch((error) => {
-          const unknownError = { _form: 'An unknown error occurred.' };
-          this.errors = error.response.data.errors || unknownError;
-          this.failedLoginAttempt = true;
-        });
+    async onSubmit() {
+      const { success, error } = await this.$store.dispatch('auth2/login', {
+        email: this.email,
+        password: this.password,
+      });
+
+      if (!success) {
+        const unknownError = { _form: 'An unknown error occurred.' };
+        this.errors = error || unknownError;
+        this.failedLoginAttempt = true;
+      }
+      else {
+        const targetPath = this.localePath('/start', this.$i18n.locale);
+        this.$router.push(targetPath);
+      }
     },
     sendPasswordReset() {
       if (!this.email) {
@@ -153,7 +156,9 @@ export default {
         });
     },
   },
-  auth: 'guest',
+  meta: {
+    auth: 'guest',
+  },
 };
 </script>
 

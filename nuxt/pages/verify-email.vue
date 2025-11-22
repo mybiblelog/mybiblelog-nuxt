@@ -46,7 +46,7 @@ export default {
         // Remove the query manually first
         this.$router.push(this.localePath({ path: this.$route.path, query: { } }));
         const { jwt } = response.data;
-        this.$auth.setUserToken(jwt);
+        this.$store.dispatch('auth2/setUserToken', jwt);
       })
       .catch((err) => {
         this.error = err.message;
@@ -60,8 +60,10 @@ export default {
       ],
     };
   },
-  middleware: ['auth'],
-  auth: 'guest',
+  middleware: ['auth2'],
+  meta: {
+    auth: 'guest',
+  },
 };
 </script>
 

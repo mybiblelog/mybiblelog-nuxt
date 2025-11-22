@@ -70,10 +70,17 @@ export default {
     GetStartedModal,
     PillProgressBar,
   },
-  middleware: ['auth'],
-  async asyncData({ $axios, app, redirect }) {
+  middleware: ['auth2'],
+  async asyncData({ app, redirect, store }) {
     // Redirect to the user's preferred start page if they have one
-    const { data } = await $axios.get('/api/settings');
+    const url = new URL(app.$config.siteUrl); // from nuxt.config.js
+    url.pathname = '/api/settings';
+    const response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${store.state.auth2.token}`,
+      },
+    });
+    const data = await response.json();
     const { startPage, locale } = data;
 
     if (startPage !== 'start') {

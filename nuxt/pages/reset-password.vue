@@ -57,7 +57,7 @@
 <script>
 export default {
   name: 'ResetPasswordPage',
-  middleware: ['auth'],
+  middleware: ['auth2'],
   data() {
     return {
       passwordResetCode: undefined,
@@ -127,7 +127,7 @@ export default {
           // Remove the query manually first
           this.$router.push(this.localePath({ path: this.$route.path, query: { } }));
           const { jwt } = response.data;
-          this.$auth.setUserToken(jwt);
+          this.$store.dispatch('auth2/setUserToken', jwt);
         })
         // Display form errors form the server
         .catch(error => Object.assign(this.changePasswordErrors, error.response.data.errors))
@@ -141,7 +141,9 @@ export default {
         });
     },
   },
-  auth: 'guest',
+  meta: {
+    auth: 'guest',
+  },
 };
 </script>
 
