@@ -1,5 +1,6 @@
 // This is an evergreen migration script, meant to update MongoDB data to the latest schema.
 
+import { SimpleDate } from '@shared/dist';
 import useMongooseModels, { closeConnection } from '../mongoose/useMongooseModels';
 
 // Main
@@ -27,6 +28,20 @@ const main = async (): Promise<void> => {
   for (const user of usersWithoutStartPage) {
     console.log(`Migrating user ${user.email} to 'today' start page...`);
     user.settings.startPage = 'today';
+    await user.save();
+  }
+
+  // users with invalid lookBackDate need to have the format fixed
+  const usersWithInvalidLookBackDate = await User.find({ 'settings.lookBackDate': { $not: /^\d\d\d\d-\d\d-\d\d$/ } });
+  for (const user of usersWithInvalidLookBackDate) {
+    console.log(`Migrating user ${user.email} to valid lookBackDate format...`);
+    const justDate = user.settings.lookBackDate.split('T')[0];
+    if (justDate && SimpleDate.validateString(justDate)) {
+      user.settings.lookBackDate = justDate;
+    }
+    else {
+      user.settings.lookBackDate = SimpleDate.now().toString();
+    }
     await user.save();
   }
 

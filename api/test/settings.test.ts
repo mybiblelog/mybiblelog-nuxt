@@ -21,6 +21,10 @@ describe('settings.test.js', () => {
         expect(response.body).toHaveProperty('preferredBibleVersion');
         expect(response.body).toHaveProperty('startPage');
         expect(response.body).toHaveProperty('locale');
+
+        // verify lookBackDate is in correct format
+        expect(typeof response.body.lookBackDate).toBe('string');
+        expect(response.body.lookBackDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       }
       finally {
         await deleteTestUser(testUser);

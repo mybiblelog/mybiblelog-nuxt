@@ -49,7 +49,7 @@ export const UserSettingsSchema = new Schema<IUserSettings>({
   lookBackDate: {
     type: String,
     required: true,
-    default: new Date().toISOString(),
+    default: SimpleDate.now().toString(),
     validate: {
       validator: (date: string) => SimpleDate.validateString(date),
       message: (props: { value: string }) => `${props.value} is not a valid date string`,
