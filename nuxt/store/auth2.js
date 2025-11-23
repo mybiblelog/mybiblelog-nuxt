@@ -1,20 +1,15 @@
 // actions
 const SET_USER = 'SET_USER';
-const SET_USER_TOKEN = 'SET_USER_TOKEN';
 
 export const state = () => ({
   loggedIn: false,
   user: null,
-  token: null,
 });
 
 export const mutations = {
   [SET_USER](state, user) {
     state.user = user;
     state.loggedIn = !!user;
-  },
-  [SET_USER_TOKEN](state, token) {
-    state.token = token;
   },
 };
 
@@ -32,12 +27,10 @@ export const actions = {
       if (response.ok) {
         const { token, ...user } = data;
         commit(SET_USER, user);
-        commit(SET_USER_TOKEN, token);
         return { success: true, error: null };
       }
       else {
         commit(SET_USER, null);
-        commit(SET_USER_TOKEN, null);
         return { success: false, error: data.errors };
       }
     }
@@ -45,25 +38,29 @@ export const actions = {
       return { success: false, error: error.message };
     }
   },
-  async setUserToken({ commit }, token) {
+  async fetchServerUser({ commit }) {
     const url = new URL(this.$config.siteUrl); // from nuxt.config.js
     url.pathname = '/api/auth/user';
     const response = await fetch(url.toString(), {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${this.app.ssrToken}`,
       },
     });
     const data = await response.json();
-    if (response.ok && data?.user) {
-      const { user } = data;
-      delete user.token;
-      commit(SET_USER, user);
-      commit(SET_USER_TOKEN, token);
-    }
-    else {
-      commit(SET_USER, null);
-      commit(SET_USER_TOKEN, null);
-    }
+    const { user } = data;
+    delete user.token;
+    commit(SET_USER, user);
+  },
+  async refreshUser({ commit }) {
+    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
+    url.pathname = '/api/auth/user';
+    const response = await fetch(url.toString(), {
+      credentials: 'include',
+    });
+    const data = await response.json();
+    const { user } = data;
+    delete user.token;
+    commit(SET_USER, user);
   },
   async logout({ commit }) {
     try {
@@ -80,6 +77,5 @@ export const actions = {
       // This is expected to fail after account deletion
     }
     commit(SET_USER, null);
-    commit(SET_USER_TOKEN, null);
   },
 };

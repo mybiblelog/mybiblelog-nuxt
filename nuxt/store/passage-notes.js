@@ -134,9 +134,7 @@ export const actions = {
     }
 
     const response = await fetch(url.toString(), {
-      headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
-      },
+      credentials: 'include',
     });
     const responseData = await response.json();
 
@@ -160,8 +158,8 @@ export const actions = {
     url.pathname = '/api/passage-notes';
     const response = await fetch(url.toString(), {
       method: 'POST',
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newPassageNote),
@@ -176,8 +174,8 @@ export const actions = {
     url.pathname = `/api/passage-notes/${id}`;
     const response = await fetch(url.toString(), {
       method: 'PUT',
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(passageNoteUpdate),
@@ -191,9 +189,7 @@ export const actions = {
     url.pathname = `/api/passage-notes/${passageNoteId}`;
     const response = await fetch(url.toString(), {
       method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
-      },
+      credentials: 'include',
     });
     const data = await response.json();
     if (data) {
@@ -202,7 +198,7 @@ export const actions = {
     }
     return false;
   },
-  async fetchPassageNotes({ commit, state, rootState }, { $config }) {
+  async fetchPassageNotes({ commit, state }, { $config }) {
     commit(SET_PASSAGE_NOTES_LOADING, true);
     // Build the request URL
     const url = new URL($config.siteUrl); // from nuxt.config.js
@@ -239,8 +235,9 @@ export const actions = {
     }
 
     const response = await fetch(url.toString(), {
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
+        Authorization: this.app?.ssrToken ? `Bearer ${this.app.ssrToken}` : undefined,
       },
     });
     const responseData = await response.json();

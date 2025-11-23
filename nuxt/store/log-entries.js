@@ -33,12 +33,13 @@ export const mutations = {
 };
 
 export const actions = {
-  async loadLogEntries({ commit, rootState }) {
+  async loadLogEntries({ commit }) {
     const url = new URL(this.$config.siteUrl); // from nuxt.config.js
     url.pathname = '/api/log-entries';
     const response = await fetch(url.toString(), {
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
+        Authorization: this.app?.ssrToken ? `Bearer ${this.app.ssrToken}` : undefined,
       },
     });
     const data = await response.json();
@@ -47,8 +48,8 @@ export const actions = {
   async createLogEntry({ commit, dispatch, rootState }, { date, startVerseId, endVerseId }) {
     const response = await fetch('/api/log-entries', {
       method: 'POST',
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ date, startVerseId, endVerseId }),
@@ -68,8 +69,8 @@ export const actions = {
     url.pathname = `/api/log-entries/${id}`;
     const response = await fetch(url.toString(), {
       method: 'PUT',
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id, date, startVerseId, endVerseId }),
@@ -89,9 +90,7 @@ export const actions = {
     url.pathname = `/api/log-entries/${logEntryId}`;
     const response = await fetch(url.toString(), {
       method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
-      },
+      credentials: 'include',
     });
     const data = await response.json();
     if (data) {

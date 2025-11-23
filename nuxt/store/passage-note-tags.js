@@ -39,8 +39,9 @@ export const actions = {
     const url = new URL(this.$config.siteUrl); // from nuxt.config.js
     url.pathname = '/api/passage-note-tags';
     const response = await fetch(url.toString(), {
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
+        Authorization: this.app?.ssrToken ? `Bearer ${this.app.ssrToken}` : undefined,
       },
     });
     passageNoteTags = await response.json();
@@ -51,8 +52,8 @@ export const actions = {
     url.pathname = '/api/passage-note-tags';
     const response = await fetch(url.toString(), {
       method: 'POST',
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ label, color, description }),
@@ -67,8 +68,8 @@ export const actions = {
     url.pathname = `/api/passage-note-tags/${id}`;
     const response = await fetch(url.toString(), {
       method: 'PUT',
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id, label, color, description }),
@@ -83,9 +84,7 @@ export const actions = {
     url.pathname = `/api/passage-note-tags/${passageNoteTagId}`;
     const response = await fetch(url.toString(), {
       method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
-      },
+      credentials: 'include',
     });
     const data = await response.json();
     if (data) {

@@ -1,10 +1,14 @@
-const AUTH_COOKIE_NAME = 'auth_token';
+export const AUTH_COOKIE_NAME = 'auth_token';
 
 export const actions = {
-  async nuxtServerInit({ dispatch, state }, { req }) {
+  async nuxtServerInit({ dispatch, state }, { req, app }) {
     if (req.headers && req.headers.cookie && req.headers.cookie.includes(`${AUTH_COOKIE_NAME}=`)) {
       const token = req.headers.cookie.split(`${AUTH_COOKIE_NAME}=`)[1].split(';')[0];
-      await dispatch('auth2/setUserToken', token);
+
+      // `app` is not serialized into the HTML response,
+      // so it's safe to store the token here for SSR access
+      app.ssrToken = token;
+      await dispatch('auth2/fetchServerUser');
     }
 
     if (state.auth2.loggedIn) {

@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import GoogleLoginButton from '~/components/forms/GoogleLoginButton.vue';
+import GoogleLoginButton from '@/components/forms/GoogleLoginButton.vue';
 import InfoLink from '@/components/InfoLink';
 export default {
   name: 'LoginPage',
@@ -75,11 +75,14 @@ export default {
     InfoLink,
   },
   middleware: ['auth2'],
-  async asyncData({ $axios }) {
+  async asyncData({ $config }) {
     let googleOauth2Url = null;
     try {
-      const googleUrlResponse = await $axios.get(`/api/auth/oauth2/google/url`);
-      googleOauth2Url = googleUrlResponse.data.url;
+      const googleUrlResponse = await fetch(`${$config.siteUrl}/api/auth/oauth2/google/url`, {
+        credentials: 'include',
+      });
+      const data = await googleUrlResponse.json();
+      googleOauth2Url = data.url;
     }
     catch (error) {
       console.error('Failed to get Google OAuth2 URL:', error);
@@ -141,19 +144,26 @@ export default {
         this.$router.push(targetPath);
       }
     },
-    sendPasswordReset() {
+    async sendPasswordReset() {
       if (!this.email) {
         this.errors.email = 'Your email address is required.';
         return;
       }
-      this.$axios.post('/api/auth/reset-password', { email: this.email })
-        .then((response) => {
-          this.passwordResetSubmitted = true;
-        })
-        .catch((error) => {
-          const unknownError = { _form: 'An unknown error occurred.' };
-          this.errors = error.response.data.errors || unknownError;
-        });
+      const response = await fetch(`${this.$config.siteUrl}/api/auth/reset-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          credentials: 'include',
+        },
+        body: JSON.stringify({ email: this.email }),
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        const unknownError = { _form: 'An unknown error occurred.' };
+        this.errors = data.errors || unknownError;
+        return;
+      }
+      this.passwordResetSubmitted = true;
     },
   },
   meta: {

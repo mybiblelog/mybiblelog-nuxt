@@ -33,24 +33,31 @@ export default {
   computed: {
     ...mapGetters(['isAuthenticated', 'loggedInUser']),
   },
-  mounted() {
+  async mounted() {
     const emailVerificationCode = new URL(window.location.href).searchParams.get('code');
     if (!emailVerificationCode) {
       this.$router.push(this.localePath('/login'));
       return;
     }
-    this.$axios.get('/api/auth/verify-email/' + emailVerificationCode)
-      .then((response) => {
-        // If successful, automatically log the user in
-        // The auto-login will result in a redirect, but will leave the query in the URL
-        // Remove the query manually first
-        this.$router.push(this.localePath({ path: this.$route.path, query: { } }));
-        const { jwt } = response.data;
-        this.$store.dispatch('auth2/setUserToken', jwt);
-      })
-      .catch((err) => {
-        this.error = err.message;
-      });
+
+    const response = await fetch(`/api/auth/verify-email/${emailVerificationCode}`);
+    if (!response.ok) {
+      const data = await response.json();
+      const errors = data.errors;
+      if (errors) {
+        Object.assign(this.verificationErrors, errors);
+      }
+      else {
+        this.verificationErrors._form = this.$t('an_unknown_error_occurred');
+      }
+      return;
+    }
+
+    // If successful, automatically log the user in
+    // The auto-login will result in a redirect, but will leave the query in the URL
+    // Remove the query manually first
+    await this.$router.push(this.localePath({ path: this.$route.path, query: { } }));
+    await this.$store.dispatch('auth2/refreshUser');
   },
   head() {
     return {

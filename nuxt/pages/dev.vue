@@ -77,12 +77,35 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import dayjs from 'dayjs';
+import getCookieToken from '@/helpers/getCookieToken';
 
 export default {
   name: 'DevPage',
   layout: 'empty',
+  async asyncData({ req, app }) {
+    const token = getCookieToken(req);
+    let asyncDataUser = null;
+    if (token) {
+      try {
+        const url = new URL(app.$config.siteUrl); // from nuxt.config.js
+        url.pathname = '/api/auth/user';
+        asyncDataUser = await fetch(url.toString(), {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+      catch (error) {
+        console.error(error);
+      }
+    }
+    return {
+      asyncDataUser,
+    };
+  },
   data() {
     return {
+      asyncDataUser: null,
       form: {
         // email: '',
         // password: '',
@@ -125,11 +148,6 @@ export default {
         // only doing this here since we aren't redirecting
         await this.$store.dispatch('loadUserData');
       }
-
-      // FIXME: eventual desired behavior?
-      // if (loginSuccess) {
-      //   this.$router.push(this.localePath('/start', this.$i18n.locale));
-      // }
     },
     async logout() {
       await this.$store.dispatch('auth2/logout');

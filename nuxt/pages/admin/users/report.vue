@@ -148,7 +148,7 @@
 
 <script>
 import dayjs from 'dayjs';
-import CompletionBar from '~/components/CompletionBar';
+import CompletionBar from '@/components/CompletionBar';
 import CaretDown from '@/components/svg/CaretDown';
 
 const SortColumns = {

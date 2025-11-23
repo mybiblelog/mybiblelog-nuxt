@@ -2,7 +2,7 @@ import express from 'express';
 import status from 'http-status';
 import config from '../../config';
 import rateLimit from '../helpers/rateLimit';
-import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
+import authCurrentUser, { AUTH_COOKIE_MAX_AGE, AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import googleOauth2 from '../helpers/google-oauth2';
 import { I18nError, makeI18nError } from '../helpers/i18n-error';
 import useMongooseModels from '../../mongoose/useMongooseModels';
@@ -181,7 +181,7 @@ router.post('/auth/login', async (req, res, next) => {
   res.cookie(AUTH_COOKIE_NAME, authJSON.token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 60 * 60 * 24 * 30, // 30 days
+    maxAge: AUTH_COOKIE_MAX_AGE,
   });
   return res.json(authJSON);
 });
@@ -430,6 +430,11 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
 
     await user.save();
     const jwt = user.generateJWT();
+    res.cookie(AUTH_COOKIE_NAME, jwt, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: AUTH_COOKIE_MAX_AGE,
+    });
     res.send({ token: jwt });
   }
   catch (err) {
@@ -487,6 +492,11 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
 
   // Send a JWT back for auto-login
   const jwt = user.generateJWT();
+  res.cookie(AUTH_COOKIE_NAME, jwt, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: AUTH_COOKIE_MAX_AGE,
+  });
   res.json({ jwt });
 });
 
@@ -767,6 +777,12 @@ router.post('/auth/reset-password', async (req, res) => {
   user.enablePasswordReset();
   await user.save();
   // send success response
+  const jwt = user.generateJWT();
+  res.cookie(AUTH_COOKIE_NAME, jwt, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: AUTH_COOKIE_MAX_AGE,
+  });
   res.sendStatus(status.OK);
   // send password reset code via email
   const mailgunService = await useMailgunService();
@@ -950,6 +966,11 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
 
   // Send a JWT back for auto-login
   const jwt = user.generateJWT();
+  res.cookie(AUTH_COOKIE_NAME, jwt, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: AUTH_COOKIE_MAX_AGE,
+  });
   res.json({ jwt });
 });
 

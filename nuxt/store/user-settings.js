@@ -82,8 +82,8 @@ export const actions = {
       url.pathname = '/api/settings';
       await fetch(url.toString(), {
         method: 'PUT',
+        credentials: 'include',
         headers: {
-          Authorization: `Bearer ${rootState.auth2.token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -118,8 +118,9 @@ export const actions = {
     const url = new URL(this.$config.siteUrl); // from nuxt.config.js
     url.pathname = '/api/settings';
     const response = await fetch(url.toString(), {
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${rootState.auth2.token}`,
+        Authorization: this.app?.ssrToken ? `Bearer ${this.app.ssrToken}` : undefined,
       },
     });
     const data = await response.json();

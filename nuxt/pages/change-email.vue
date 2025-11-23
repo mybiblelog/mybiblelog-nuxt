@@ -106,8 +106,8 @@ export default {
       text: this.$t('your_email_address_was_updated_successfully'),
     });
 
-    // Apply the new JWT so the user is logged in with their new email
-    await this.$store.dispatch('auth2/setUserToken', jwt);
+    // Reload user now that auth cookie should be set
+    await this.$store.dispatch('auth2/refreshUser');
 
     // Redirect to the settings page, which displays the current email
     this.$router.push(this.localePath('/settings'));

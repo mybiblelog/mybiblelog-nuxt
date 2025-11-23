@@ -304,12 +304,16 @@ export default {
         // Clear any cached data from admin account session
         sessionStorage.clear();
 
-        const response = await this.$axios.get(`/api/admin/users/${this.selectedUser.email}/login`);
-        this.$router.push(this.localePath({ path: '/', query: { } }));
-        const { jwt } = response.data;
-        this.$store.dispatch('auth2/setUserToken', jwt);
+        const response = await fetch(`/api/admin/users/${this.selectedUser.email}/login`, {
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Unable to sign in as user.');
+        }
+        await this.$router.push(this.localePath({ path: '/', query: { } }));
+        await this.$store.dispatch('auth2/refreshUser');
       }
-      catch (err) {
+      catch (error) {
         await this.$store.dispatch('dialog/alert', {
           message: 'Unable to sign in as user.',
         });

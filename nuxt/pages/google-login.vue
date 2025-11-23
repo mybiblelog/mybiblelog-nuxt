@@ -45,23 +45,30 @@ export default {
         const loginLocale = localStorage.getItem('login_language');
         const userLocale = loginLocale || defaultLocale;
 
-        const response = await this.$axios.get(`/api/auth/oauth2/google/verify?code=${code}&state=${state}&locale=${userLocale}`);
-        const { token } = response.data;
-        await this.$store.dispatch('auth2/setUserToken', token);
+        const response = await fetch(`/api/auth/oauth2/google/verify?code=${code}&state=${state}&locale=${userLocale}`, {
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          throw new Error('Google OAuth verification failed');
+        }
+
+        // Reload user now that auth cookie should be set
+        await this.$store.dispatch('auth2/refreshUser');
 
         // Redirect to the user's preferred locale.
         const redirectUrl = this.localePath('/start', userLocale);
-        this.$router.push(redirectUrl);
+        await this.$router.push(redirectUrl);
       }
       catch (error) {
         console.error('Google OAuth verification failed:', error);
         // Redirect to login page with error
-        this.$router.push(this.localePath('/login?error=oauth_failed'));
+        await this.$router.push(this.localePath('/login?error=oauth_failed'));
       }
     }
     else {
       // Missing required parameters, redirect to login
-      this.$router.push(this.localePath('/login?error=invalid_oauth_response'));
+      await this.$router.push(this.localePath('/login?error=invalid_oauth_response'));
     }
   },
   methods: {

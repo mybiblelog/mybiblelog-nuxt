@@ -82,20 +82,19 @@ export default {
       ],
     };
   },
-  mounted() {
+  async mounted() {
     const passwordResetCode = new URL(window.location.href).searchParams.get('code');
     if (!passwordResetCode) {
-      this.$router.push(this.localePath('/login'));
+      await this.$router.push(this.localePath('/login'));
+      return;
     }
     this.passwordResetCode = passwordResetCode;
 
     // Determine if password reset code is valid
-    this.$axios.get(`/api/auth/reset-password/${this.passwordResetCode}/valid`)
-      .then((response) => {
-        if (response.data === false) {
-          this.passwordResetCodeValid = false;
-        }
-      });
+    const response = await fetch(`/api/auth/reset-password/${this.passwordResetCode}/valid`);
+    if (!response.ok) {
+      this.passwordResetCodeValid = false;
+    }
   },
   methods: {
     resetChangePasswordErrors() {
@@ -106,7 +105,7 @@ export default {
         confirmNewPassword: '',
       });
     },
-    submitChangePassword() {
+    async submitChangePassword() {
       // Disable form and remove previous errors
       this.formBusy = true;
       this.resetChangePasswordErrors();
@@ -118,27 +117,34 @@ export default {
         return;
       }
 
-      this.$axios.post(`/api/auth/reset-password/${this.passwordResetCode}`, {
-        newPassword,
-      })
-        .then((response) => {
-          // If successful, automatically log the user in
-          // The auto-login will result in a redirect, but will leave the query in the URL
-          // Remove the query manually first
-          this.$router.push(this.localePath({ path: this.$route.path, query: { } }));
-          const { jwt } = response.data;
-          this.$store.dispatch('auth2/setUserToken', jwt);
-        })
-        // Display form errors form the server
-        .catch(error => Object.assign(this.changePasswordErrors, error.response.data.errors))
-        // Account for actual server errors
-        .catch(() => {
+      const response = await fetch(`/api/auth/reset-password/${this.passwordResetCode}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newPassword }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        const errors = data.errors;
+        if (errors) {
+          Object.assign(this.changePasswordErrors, errors);
+        }
+        else {
           this.changePasswordErrors._form = this.$t('an_unknown_error_occurred');
-        })
-        // Re-enable the form
-        .then(() => {
-          this.formBusy = false;
-        });
+        }
+        this.formBusy = false;
+        return;
+      }
+
+      // If successful, automatically log the user in
+      // The auto-login will result in a redirect, but will leave the query in the URL
+      // Remove the query manually first
+      this.$router.push(this.localePath({ path: this.$route.path, query: { } }));
+
+      // Reload user now that auth cookie should be set
+      await this.$store.dispatch('auth2/refreshUser');
     },
   },
   meta: {

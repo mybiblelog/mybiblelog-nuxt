@@ -8,6 +8,7 @@ import { type Request } from 'express';
 import type { UserDoc } from '../../mongoose/types';
 
 export const AUTH_COOKIE_NAME = 'auth_token';
+export const AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
 const { jwtSecret } = config;
 

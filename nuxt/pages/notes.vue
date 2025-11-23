@@ -70,7 +70,6 @@
                   <div class="passage-note--passages">
                     <ul>
                       <li v-for="passage in note.passages" :key="passage.id">
-                        <!-- FIXME: we could allow the user to touch here to open the passage in the reading view, with the option to open the full chapter externally -->
                         <a :href="readingUrl(passage)" target="_blank">
                           <strong>{{ displayVerseRange(passage.startVerseId, passage.endVerseId) }}</strong>
                         </a>
