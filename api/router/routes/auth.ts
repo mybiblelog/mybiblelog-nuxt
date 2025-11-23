@@ -415,6 +415,11 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
       }
 
       const token = existingUser.generateJWT();
+      res.cookie(AUTH_COOKIE_NAME, token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: AUTH_COOKIE_MAX_AGE,
+      });
       return res.send({ token });
     }
 
