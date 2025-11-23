@@ -60,7 +60,6 @@ import DailyVerseCountGoalForm from '@/components/forms/settings/DailyVerseCount
 import PreferredBibleVersionForm from '@/components/forms/settings/PreferredBibleVersionForm.vue';
 import GetStartedModal from '@/components/popups/GetStartedModal.vue';
 import PillProgressBar from '@/components/PillProgressBar.vue';
-import getCookieToken from '@/helpers/getCookieToken';
 
 export default {
   name: 'StartPage',
@@ -72,14 +71,14 @@ export default {
     PillProgressBar,
   },
   middleware: ['auth2'],
-  async asyncData({ app, redirect, req }) {
-    const token = getCookieToken(req);
+  async asyncData({ app, redirect }) {
     // Redirect to the user's preferred start page if they have one
     const url = new URL(app.$config.siteUrl); // from nuxt.config.js
     url.pathname = '/api/settings';
     const response = await fetch(url.toString(), {
+      credentials: 'include',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: app.ssrToken ? `Bearer ${app.ssrToken}` : undefined,
       },
     });
     const data = await response.json();

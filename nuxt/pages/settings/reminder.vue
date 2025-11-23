@@ -41,9 +41,14 @@
 export default {
   name: 'ReminderSettingsPage',
   middleware: ['auth2'],
-  async asyncData({ $axios }) {
-    const response = await $axios.get(`/api/reminders/daily-reminder`);
-    const reminder = response.data;
+  async asyncData({ app }) {
+    const response = await fetch(`/api/reminders/daily-reminder`, {
+      credentials: 'include',
+      headers: {
+        Authorization: app.ssrToken ? `Bearer ${app.ssrToken}` : undefined,
+      },
+    });
+    const reminder = await response.json();
     const {
       hour,
       minute,

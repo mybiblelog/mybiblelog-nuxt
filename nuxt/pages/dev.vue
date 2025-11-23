@@ -77,21 +77,21 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import dayjs from 'dayjs';
-import getCookieToken from '@/helpers/getCookieToken';
 
 export default {
   name: 'DevPage',
   layout: 'empty',
-  async asyncData({ req, app }) {
-    const token = getCookieToken(req);
+  async asyncData({ store, app }) {
+    // FIXME: this contrived example is redundant - can just use the store.state.auth2.user directly
     let asyncDataUser = null;
-    if (token) {
+    if (store.state.auth2.loggedIn) {
       try {
         const url = new URL(app.$config.siteUrl); // from nuxt.config.js
         url.pathname = '/api/auth/user';
         asyncDataUser = await fetch(url.toString(), {
+          credentials: 'include',
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: app.ssrToken ? `Bearer ${app.ssrToken}` : undefined,
           },
         });
       }
