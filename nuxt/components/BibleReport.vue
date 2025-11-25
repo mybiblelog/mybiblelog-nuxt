@@ -99,13 +99,17 @@ export default {
     },
   },
   mounted() {
-    this.$axios.get('/api/passage-notes/count/books')
-      .then((response) => {
-        this.bookNotesCounts = response.data;
-        for (let i = 1, l = Bible.getBookCount(); i <= l; i++) {
-          if (this.bookNotesCounts[i] > 0) {
-            this.anyBooksHaveNotes = true;
-            break;
+    fetch('/api/passage-notes/count/books', {
+      credentials: 'include',
+    })
+      .then(async (response) => {
+        if (response.ok) {
+          this.bookNotesCounts = await response.json();
+          for (let i = 1, l = Bible.getBookCount(); i <= l; i++) {
+            if (this.bookNotesCounts[i] > 0) {
+              this.anyBooksHaveNotes = true;
+              break;
+            }
           }
         }
       })

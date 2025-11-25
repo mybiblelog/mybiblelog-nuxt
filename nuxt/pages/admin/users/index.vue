@@ -226,14 +226,20 @@ export default {
     },
     loadUsers() {
       const url = this.buildUsersRequestUrl();
-      this.$axios.$get(url)
-        .then((response) => {
+      fetch(url, {
+        credentials: 'include',
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error('Failed to load users');
+          }
+          const responseData = await response.json();
           const {
             // limit,
             // offset,
             results: users,
             size,
-          } = response;
+          } = responseData;
 
           this.users = users;
           this.totalUsers = size;
@@ -275,7 +281,13 @@ export default {
         return;
       }
       try {
-        await this.$axios.delete(`/api/admin/users/${email}`);
+        const response = await fetch(`/api/admin/users/${email}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to delete user');
+        }
         this.selectedUser = null;
         this.loadUsers();
       }

@@ -65,8 +65,13 @@ export default {
   methods: {
     async loadData() {
       try {
-        const response = await this.$axios.get(`/api/admin/reports/user-engagement/past-week`);
-        this.engagementData = response.data;
+        const response = await fetch(`/api/admin/reports/user-engagement/past-week`, {
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to load engagement data');
+        }
+        this.engagementData = await response.json();
       }
       catch (err) {
         await this.$store.dispatch('dialog/alert', {

@@ -77,7 +77,13 @@ export default {
   methods: {
     dayjs,
     async loadFeedbacks() {
-      this.feedbacks = await this.$axios.$get('/api/admin/feedback');
+      const response = await fetch('/api/admin/feedback', {
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to load feedbacks');
+      }
+      this.feedbacks = await response.json();
     },
     feedbackKindClass(kind) {
       return {

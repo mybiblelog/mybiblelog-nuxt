@@ -78,7 +78,7 @@ export default {
     };
   },
   methods: {
-    handleReminderSubmit() {
+    async handleReminderSubmit() {
       this.formBusy = true;
       this.reminderErrors._form = '';
 
@@ -91,28 +91,38 @@ export default {
       const [, hour, minute] = hourMinuteRE.exec(time);
       const timezoneOffset = new Date().getTimezoneOffset();
 
-      this.$axios.put('/api/reminders/daily-reminder', {
-        hour,
-        minute,
-        timezoneOffset,
-        active,
-      })
-        .then((response) => {
+      try {
+        const response = await fetch('/api/reminders/daily-reminder', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            hour,
+            minute,
+            timezoneOffset,
+            active,
+          }),
+        });
+
+        if (response.ok) {
           this.$store.dispatch('toast/add', {
             type: 'success',
             text: this.$t('messaging.reminder_settings_updated_successfully'),
           });
-        })
-        // Display form errors form the server
-        .catch(error => Object.assign(this.reminderErrors, error.response.data.errors))
-        // Account for actual server errors
-        .catch(() => {
-          this.reminderErrors._form = this.$t('messaging.an_unknown_error_occurred');
-        })
-        // Re-enable the form
-        .then(() => {
-          this.formBusy = false;
-        });
+        }
+        else {
+          const errorData = await response.json();
+          Object.assign(this.reminderErrors, errorData.response?.data?.errors || {});
+        }
+      }
+      catch (err) {
+        this.reminderErrors._form = this.$t('messaging.an_unknown_error_occurred');
+      }
+      finally {
+        this.formBusy = false;
+      }
     },
   },
 };

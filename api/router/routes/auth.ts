@@ -667,7 +667,10 @@ router.get('/auth/change-email', async (req, res, next) => {
       });
     }
 
-    return res.send(null);
+    return res.send({
+      newEmail: null,
+      expires: null,
+    });
   }
   catch (error) {
     next(error);
@@ -944,7 +947,7 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   // Verify the code and check expiration
   if (!user.verifyNewEmailVerificationCode(newEmailVerificationCode)) {
     return res.status(400).json({
-      errors: { _form: makeI18nError(I18nError.VerificationCodeExpired, '_form') },
+      error: makeI18nError(I18nError.VerificationCodeExpired),
     });
   }
 

@@ -71,11 +71,24 @@ export default {
     async submitFeedback() {
       this.errors = {};
       try {
-        await this.$axios.post('/api/feedback', {
-          email: this.form.email,
-          kind: this.form.kind,
-          message: this.form.message,
+        const response = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            email: this.form.email,
+            kind: this.form.kind,
+            message: this.form.message,
+          }),
         });
+        if (!response.ok) {
+          const errorData = await response.json();
+          const error = new Error('Failed to submit feedback');
+          error.response = { data: errorData };
+          throw error;
+        }
 
         // Clear the form
         this.form.kind = 'bug';

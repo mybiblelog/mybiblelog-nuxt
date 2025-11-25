@@ -72,10 +72,14 @@ export default {
   methods: {
     unsubscribe() {
       const unsubscribeUrl = `/api/reminders/daily-reminder/unsubscribe/${this.reminderUnsubscribeCode}`;
-      this.$axios.put(unsubscribeUrl)
-        .then((response) => {
+      fetch(unsubscribeUrl, {
+        method: 'PUT',
+        credentials: 'include',
+      })
+        .then(async (response) => {
           if (response.status === 200) {
-            if (response.data.error) {
+            const data = await response.json();
+            if (data.error) {
               // if the server can't unsubscribe with this code,
               // it will return an error message explaining why
               this.error = [
@@ -87,7 +91,7 @@ export default {
             else {
               // if there was no error returned, the unsubscribe was successful
               this.complete = true;
-              this.email = response.data.email;
+              this.email = data.email;
             }
           }
         })

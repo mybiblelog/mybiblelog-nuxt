@@ -130,15 +130,27 @@ export default {
 
     // Checks if there is an email change request in progress
     async checkChangeEmailRequestState() {
-      await this.$axios.get('/api/auth/change-email')
-        .then((response) => {
-          this.currentChangeEmailRequest = response.data;
-          this.checkingForEmailChangeRequest = false;
+      try {
+        const response = await fetch('/api/auth/change-email', {
+          credentials: 'include',
+          cache: 'no-store',
         });
+        const data = await response.json();
+        if (data.newEmail) {
+          // no `newEmail` means there is no email change request in progress
+          this.currentChangeEmailRequest = data;
+        }
+        else {
+          this.currentChangeEmailRequest = null;
+        }
+      }
+      finally {
+        this.checkingForEmailChangeRequest = false;
+      }
     },
 
     // Submits 'Change Email' form data and handles response.
-    submitChangeEmail() {
+    async submitChangeEmail() {
       // Disable form and remove previous errors
       this.formBusy = true;
       this.resetChangeEmailErrors();
@@ -150,37 +162,54 @@ export default {
         return;
       }
 
-      this.$axios.post('/api/auth/change-email', {
-        password,
-        newEmail,
-      })
-        .then((response) => {
+      try {
+        const response = await fetch('/api/auth/change-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            password,
+            newEmail,
+          }),
+        });
+
+        if (response.ok) {
           this.resetChangeEmailForm();
           this.$store.dispatch('toast/add', {
             type: 'success',
             text: this.$t('messaging.confirmation_link_sent'),
           });
-        })
-      // Display form errors form the server
-        .catch((error) => {
-          Object.assign(this.changeEmailErrors, error.response.data.errors);
-        })
-      // Account for actual server errors
-        .catch(() => {
-          this.changeEmailErrors._form = this.$t('messaging.an_unknown_error_occurred');
-        })
+        }
+        else {
+          // Display form errors from the server
+          const errorData = await response.json();
+          Object.assign(this.changeEmailErrors, errorData.response?.data?.errors || {});
+        }
+      }
+      catch (err) {
+        this.changeEmailErrors._form = this.$t('messaging.an_unknown_error_occurred');
+      }
+      finally {
       // Re-enable the form
-        .then(() => {
-          this.formBusy = false;
-        })
-        .then(this.checkChangeEmailRequestState);
+        this.formBusy = false;
+        this.checkChangeEmailRequestState();
+      }
     },
 
     async cancelChangeEmailRequest() {
       this.formBusy = true;
       try {
-        const response = await this.$axios.delete('/api/auth/change-email');
-        if (response.data === true) {
+        const response = await fetch('/api/auth/change-email', {
+          method: 'DELETE',
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to cancel request');
+        }
+        const data = await response.json();
+        if (data === true) {
           this.currentChangeEmailRequest = null;
           await this.$store.dispatch('dialog/alert', {
             message: this.$t('messaging.your_request_was_cancelled'),

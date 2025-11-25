@@ -63,8 +63,13 @@ export default {
     // Determine if change email code is valid
     let changeEmailRequest;
     try {
-      const response = await this.$axios.get(`/api/auth/change-email/${newEmailVerificationCode}`);
-      changeEmailRequest = response.data;
+      const response = await fetch(`/api/auth/change-email/${newEmailVerificationCode}`, {
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to get change email request');
+      }
+      changeEmailRequest = await response.json();
     }
     catch (err) {
       // If there is no open email change request (404), redirect to the settings page
@@ -82,20 +87,23 @@ export default {
     }
 
     // Submit change email code to finalize the update
-    // Only one of 'jwt' or 'errors' will be populated
-    let jwt;
     try {
-      const { data } = await this.$axios.post(`/api/auth/change-email/${newEmailVerificationCode}`);
-      jwt = data.jwt;
+      const response = await fetch(`/api/auth/change-email/${newEmailVerificationCode}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        this.serverError = errorData.error;
+        this.busy = false;
+        return;
+      }
     }
     catch (err) {
-      const error = err?.response?.data?.error;
-      if (error) {
-        this.serverError = error;
-      }
-      else {
-        this.serverError = this.$t('an_unknown_error_occurred');
-      }
+      this.serverError = this.$t('an_unknown_error_occurred');
       this.busy = false;
       return;
     }

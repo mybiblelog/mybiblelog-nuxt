@@ -64,10 +64,10 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
     // Doc: https://www.npmjs.com/package/@nuxtjs/style-resources
     '@nuxtjs/style-resources',
+    // Doc: https://nuxt.com/modules/proxy
+    '@nuxtjs/proxy',
     // Doc: https://www.npmjs.com/package/@nuxtjs/redirect-module
     '@nuxtjs/redirect-module',
     // Doc: https://content.nuxtjs.org/
@@ -80,14 +80,6 @@ module.exports = {
   i18n: i18nConfig,
   styleResources: {
     scss: ['./assets/scss/_variables.scss'],
-  },
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
-    proxy: true,
-    baseURL: process.env.SITE_URL,
   },
   /*
   ** Proxy
@@ -118,8 +110,6 @@ module.exports = {
     extend(config, ctx) {
       // Webpack alias removed - now using npm workspace package
     },
-    // Related issue: https://github.com/axios/axios/issues/5243
-    transpile: [({ isLegacy }) => isLegacy && 'axios'],
     loaders: {
       scss: {
         implementation: sass,
@@ -146,14 +136,6 @@ module.exports = {
     siteUrl: process.env.SITE_URL,
     requireEmailVerification: process.env.REQUIRE_EMAIL_VERIFICATION !== 'false',
     googleAnalytics4MeasurementId: process.env.GA_MEASUREMENT_ID,
-    axios: {
-      browserBaseURL: process.env.SITE_URL,
-    },
-  },
-  privateRuntimeConfig: {
-    axios: {
-      baseURL: process.env.SITE_URL,
-    },
   },
   pwa: {
     manifest: {

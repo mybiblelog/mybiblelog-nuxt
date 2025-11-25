@@ -125,7 +125,13 @@ export default {
       this.generateDownload(filename, this.notesExportTextFileContent);
     },
     async generateTextDownloadFromNotes() {
-      const { data: tags } = await this.$axios.get('/api/passage-note-tags');
+      const tagsResponse = await fetch('/api/passage-note-tags', {
+        credentials: 'include',
+      });
+      if (!tagsResponse.ok) {
+        throw new Error('Failed to load tags');
+      }
+      const { data: tags } = await tagsResponse.json();
       const notes = await this.loadAllNotes();
 
       const noteTexts = notes.map(note => this.generateNoteText(note, tags));
@@ -151,7 +157,13 @@ export default {
       this.generateDownload(filename, this.notesExportJsonFileContent);
     },
     async generateJsonDownloadFromNotes() {
-      const { data: tags } = await this.$axios.get('/api/passage-note-tags');
+      const tagsResponse = await fetch('/api/passage-note-tags', {
+        credentials: 'include',
+      });
+      if (!tagsResponse.ok) {
+        throw new Error('Failed to load tags');
+      }
+      const { data: tags } = await tagsResponse.json();
       const notes = await this.loadAllNotes();
       this.notesExportJsonFileContent = JSON.stringify({ notes, tags });
     },
@@ -167,12 +179,18 @@ export default {
         const url = new URL(this.$config.siteUrl); // from nuxt.config.js
         url.pathname = '/api/passage-notes';
         url.searchParams.set('offset', offset);
+        const response = await fetch(url, {
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to load notes');
+        }
         const {
           data: {
             results,
             size,
           },
-        } = await this.$axios.get(url);
+        } = await response.json();
         if (allNotes.length < size) {
           allNotes.push(...results);
           offset += 10;
