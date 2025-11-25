@@ -42,6 +42,9 @@ describe('Auth routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(200);
+    // expect token in response body
+    expect(res.body).toHaveProperty('token');
+    expect(typeof res.body.token).toBe('string');
     // expect cookie to be set in header
     expect(res.headers['set-cookie']).toBeDefined();
     expect(res.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=`);
@@ -234,6 +237,45 @@ describe('Auth routes', () => {
         expect(response.status).toBe(200);
         successfulRequests.push(response);
       }
+    });
+  });
+
+  describe('GET /api/auth/verify-email/:emailVerificationCode', () => {
+    it('returns 404 for invalid verification code', async () => {
+      const res = await requestApi
+        .get('/api/auth/verify-email/invalid-code-12345');
+      expect(res.statusCode).toBe(404);
+    });
+  });
+
+  describe('POST /api/auth/reset-password/:passwordResetCode', () => {
+    it('returns 404 for invalid reset code', async () => {
+      const res = await requestApi
+        .post('/api/auth/reset-password/invalid-code-12345')
+        .send({ newPassword: 'newpassword123' });
+      expect(res.statusCode).toBe(404);
+    });
+  });
+
+  describe('GET /api/auth/oauth2/google/verify', () => {
+    it('returns 400 for invalid state parameter', async () => {
+      const res = await requestApi
+        .get('/api/auth/oauth2/google/verify?code=test-code&state=invalid-state');
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('errors');
+    });
+
+    // Note: A full test that verifies token and cookie would require mocking
+    // the Google OAuth API calls (getAccessTokenFromCode and getUserProfileFromToken).
+    // The endpoint does set a cookie and return a token when successful,
+    // as seen in the route implementation at api/router/routes/auth.ts:414-483
+  });
+
+  describe('POST /api/auth/change-email/:newEmailVerificationCode', () => {
+    it('returns 404 for invalid verification code', async () => {
+      const res = await requestApi
+        .post('/api/auth/change-email/invalid-code-12345');
+      expect(res.statusCode).toBe(404);
     });
   });
 });

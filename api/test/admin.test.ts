@@ -710,7 +710,7 @@ describe('admin.test.js', () => {
       }
     });
 
-    it('admin can get a JWT to login as another user', async () => {
+    it('admin can get a token to login as another user', async () => {
       const admin = await createTestAdmin();
       const testUser = await createTestUser();
       try {
@@ -718,14 +718,18 @@ describe('admin.test.js', () => {
           .get(`/api/admin/users/${testUser.email}/login`)
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('jwt');
-        expect(typeof response.body.jwt).toBe('string');
+        // expect token in response body
+        expect(response.body).toHaveProperty('token');
+        expect(typeof response.body.token).toBe('string');
+        // expect cookie to be set in header
+        expect(response.headers['set-cookie']).toBeDefined();
+        expect(response.headers['set-cookie']?.[0]).toContain('auth_token=');
 
-        // Verify the JWT can perform authenticated requests
-        const jwt = response.body.jwt;
+        // Verify the token can be used to perform authenticated requests
+        const token = response.body.token;
         const userResponse = await requestApi
           .get('/api/auth/user')
-          .set('Authorization', `Bearer ${jwt}`);
+          .set('Authorization', `Bearer ${token}`);
         expect(userResponse.status).toBe(200);
         expect(userResponse.body).toHaveProperty('user');
         expect(userResponse.body.user).not.toBeNull();

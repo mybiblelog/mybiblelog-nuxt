@@ -674,14 +674,25 @@ router.get('/admin/users/:email', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: JWT token for the user
+ *         headers:
+ *           Set-Cookie:
+ *             description: |
+ *               Authentication cookie containing the JWT token.
+ *               - Cookie name: `auth_token`
+ *               - HttpOnly: true
+ *               - Secure: true (in production)
+ *               - Max-Age: 2592000 seconds (30 days)
+ *             schema:
+ *               type: string
+ *               example: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Secure; Max-Age=2592000
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 jwt:
+ *                 token:
  *                   type: string
- *                   description: JWT token for authentication
+ *                   description: Token for authentication
  *       401:
  *         description: Unauthorized - User is not authenticated
  *       403:
@@ -701,13 +712,13 @@ router.get('/admin/users/:email/login', async (req, res, next) => {
       return next(createError(404));
     }
 
-    const jwt = user.generateJWT();
-    res.cookie(AUTH_COOKIE_NAME, jwt, {
+    const token = user.generateJWT();
+    res.cookie(AUTH_COOKIE_NAME, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: AUTH_COOKIE_MAX_AGE,
     });
-    res.json({ jwt });
+    res.json({ token });
   }
   catch (error) {
     next(error);

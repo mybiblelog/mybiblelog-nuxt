@@ -1,3 +1,17 @@
+/**
+ * AUTH STRATEGY
+ *
+ * For authentication, Nuxt relies completely on an httpOnly cookie named `auth_token`.
+ * For security, the token is never serialized to HTML and never accessible to browser JS.
+ *
+ * During SSR, the token is temporarily stored as `app.ssrToken`.
+ * The `app.ssrToken` value is used as an Authorization header in server-initiated `fetch` requests,
+ * since cookies are not available during SSR.
+ * The `app.ssrToken` value is not serialized in the initial HTML and never reaches the browser.
+ *
+ * Any API route that creates a new user session (issues a token) also sets the cookie.
+ */
+
 // actions
 const SET_USER = 'SET_USER';
 

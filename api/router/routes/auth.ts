@@ -124,14 +124,25 @@ router.get('/auth/user', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Login successful
+ *         headers:
+ *           Set-Cookie:
+ *             description: |
+ *               Authentication cookie containing the JWT token.
+ *               - Cookie name: `auth_token`
+ *               - HttpOnly: true
+ *               - Secure: true (in production)
+ *               - Max-Age: 2592000 seconds (30 days)
+ *             schema:
+ *               type: string
+ *               example: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Secure; Max-Age=2592000
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 jwt:
+ *                 token:
  *                   type: string
- *                   description: JWT token to be used for authentication
+ *                   description: Token for authentication
  *                 user:
  *                   $ref: '#/components/schemas/User'
  *       401:
@@ -178,12 +189,16 @@ router.post('/auth/login', async (req, res, next) => {
     return res.status(422).json({ errors: { _form: makeI18nError(I18nError.VerifyEmail, '_form', { email: user.email }) } });
   }
   const authJSON = user.toAuthJSON();
+  const { token, ...userData } = authJSON;
   res.cookie(AUTH_COOKIE_NAME, authJSON.token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: AUTH_COOKIE_MAX_AGE,
   });
-  return res.json(authJSON);
+  return res.json({
+    token,
+    user: userData,
+  });
 });
 
 /**
@@ -202,6 +217,14 @@ router.post('/auth/login', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: User logged out successfully
+ *         headers:
+ *           Set-Cookie:
+ *             description: |
+ *               Clears the authentication cookie by setting it to expire immediately.
+ *               - Cookie name: `auth_token`
+ *             schema:
+ *               type: string
+ *               example: auth_token=; HttpOnly; Secure; Max-Age=0
  */
 router.post('/auth/logout', async (req, res, next) => {
   try {
@@ -364,14 +387,25 @@ router.get('/auth/oauth2/google/url', (req, res, next) => {
  *     responses:
  *       200:
  *         description: Google OAuth2 verification successful
+ *         headers:
+ *           Set-Cookie:
+ *             description: |
+ *               Authentication cookie containing the JWT token.
+ *               - Cookie name: `auth_token`
+ *               - HttpOnly: true
+ *               - Secure: true (in production)
+ *               - Max-Age: 2592000 seconds (30 days)
+ *             schema:
+ *               type: string
+ *               example: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Secure; Max-Age=2592000
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 jwt:
+ *                 token:
  *                   type: string
- *                   description: JWT token to be used for authentication
+ *                   description: Token for authentication
  *                 user:
  *                   $ref: '#/components/schemas/User'
  *       400:
@@ -389,8 +423,8 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     }
 
     const { User } = await useMongooseModels();
-    const token = await googleOauth2.getAccessTokenFromCode(code);
-    const profile = await googleOauth2.getUserProfileFromToken(token);
+    const accessToken = await googleOauth2.getAccessTokenFromCode(code);
+    const profile = await googleOauth2.getUserProfileFromToken(accessToken);
 
     /* eslint-disable camelcase */
     const {
@@ -434,13 +468,13 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     user.settings = { locale } as IUserSettings;
 
     await user.save();
-    const jwt = user.generateJWT();
-    res.cookie(AUTH_COOKIE_NAME, jwt, {
+    const token = user.generateJWT();
+    res.cookie(AUTH_COOKIE_NAME, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: AUTH_COOKIE_MAX_AGE,
     });
-    res.send({ token: jwt });
+    res.send({ token });
   }
   catch (err) {
     next(err);
@@ -464,13 +498,25 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Email verified successfully
+ *         headers:
+ *           Set-Cookie:
+ *             description: |
+ *               Authentication cookie containing the JWT token.
+ *               - Cookie name: `auth_token`
+ *               - HttpOnly: true
+ *               - Secure: true (in production)
+ *               - Max-Age: 2592000 seconds (30 days)
+ *             schema:
+ *               type: string
+ *               example: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Secure; Max-Age=2592000
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 jwt:
+ *                 token:
  *                   type: string
+ *                   description: Token for authentication
  *       404:
  *         description: Verification code not found
  */
@@ -496,13 +542,13 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   await user.save();
 
   // Send a JWT back for auto-login
-  const jwt = user.generateJWT();
-  res.cookie(AUTH_COOKIE_NAME, jwt, {
+  const token = user.generateJWT();
+  res.cookie(AUTH_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: AUTH_COOKIE_MAX_AGE,
   });
-  res.json({ jwt });
+  res.json({ token });
 });
 
 /**
@@ -853,13 +899,25 @@ router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, nex
  *     responses:
  *       200:
  *         description: Password reset successful
+ *         headers:
+ *           Set-Cookie:
+ *             description: |
+ *               Authentication cookie containing the JWT token.
+ *               - Cookie name: `auth_token`
+ *               - HttpOnly: true
+ *               - Secure: true (in production)
+ *               - Max-Age: 2592000 seconds (30 days)
+ *             schema:
+ *               type: string
+ *               example: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Secure; Max-Age=2592000
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 jwt:
+ *                 token:
  *                   type: string
+ *                   description: Token for authentication
  *       400:
  *         description: Password reset link expired
  *       404:
@@ -897,13 +955,13 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
     return next(err);
   }
   // Send a JWT back for auto-login
-  const jwt = user.generateJWT();
-  res.cookie(AUTH_COOKIE_NAME, jwt, {
+  const token = user.generateJWT();
+  res.cookie(AUTH_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: AUTH_COOKIE_MAX_AGE,
   });
-  res.json({ jwt });
+  res.json({ token });
 });
 
 /**
@@ -922,13 +980,25 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
  *     responses:
  *       200:
  *         description: Email change completed successfully
+ *         headers:
+ *           Set-Cookie:
+ *             description: |
+ *               Authentication cookie containing the JWT token.
+ *               - Cookie name: `auth_token`
+ *               - HttpOnly: true
+ *               - Secure: true (in production)
+ *               - Max-Age: 2592000 seconds (30 days)
+ *             schema:
+ *               type: string
+ *               example: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Secure; Max-Age=2592000
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 jwt:
+ *                 token:
  *                   type: string
+ *                   description: Token for authentication
  *       404:
  *         description: Email verification code not found
  *       422:
@@ -972,13 +1042,13 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   await user.save();
 
   // Send a JWT back for auto-login
-  const jwt = user.generateJWT();
-  res.cookie(AUTH_COOKIE_NAME, jwt, {
+  const token = user.generateJWT();
+  res.cookie(AUTH_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: AUTH_COOKIE_MAX_AGE,
   });
-  res.json({ jwt });
+  res.json({ token });
 });
 
 export default router;
