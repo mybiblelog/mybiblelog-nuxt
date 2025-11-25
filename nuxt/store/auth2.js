@@ -48,7 +48,9 @@ export const actions = {
     });
     const data = await response.json();
     const { user } = data;
-    delete user.token;
+    if (user) {
+      delete user.token;
+    }
     commit(SET_USER, user);
   },
   async refreshUser({ commit }) {

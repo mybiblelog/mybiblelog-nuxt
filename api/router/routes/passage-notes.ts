@@ -501,7 +501,7 @@ router.post('/passage-notes', async (req, res, next) => {
       return next(createError(409, 'Cannot Create'));
     }
 
-    passageNote.owner = new Types.ObjectId(currentUser._id as string);
+    passageNote.owner = new Types.ObjectId(currentUser._id);
     try {
       await passageNote.validate();
     }

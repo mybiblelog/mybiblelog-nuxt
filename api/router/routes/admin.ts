@@ -21,20 +21,20 @@ type PastWeekEngagementData = {
 const getUserEngagementData = async (user: IUser) => {
   const { LogEntry, PassageNote } = await useMongooseModels();
   const lastLogEntry = await LogEntry
-    .find({ owner: new Types.ObjectId(user._id as string) })
+    .find({ owner: new Types.ObjectId(user._id) })
     .sort({ date: -1 })
     .limit(1)
     .exec();
   const logEntryCount = await LogEntry
-    .countDocuments({ owner: new Types.ObjectId(user._id as string) })
+    .countDocuments({ owner: new Types.ObjectId(user._id) })
     .exec();
   const lastNote = await PassageNote
-    .find({ owner: new Types.ObjectId(user._id as string) })
+    .find({ owner: new Types.ObjectId(user._id) })
     .sort({ createdAt: -1 })
     .limit(1)
     .exec();
   const noteCount = await PassageNote
-    .countDocuments({ owner: new Types.ObjectId(user._id as string) })
+    .countDocuments({ owner: new Types.ObjectId(user._id) })
     .exec();
 
   return {
