@@ -48,9 +48,7 @@ export const actions = {
     });
     const data = await response.json();
     const { user } = data;
-    if (user) {
-      delete user.token;
-    }
+    delete user?.token;
     commit(SET_USER, user);
   },
   async refreshUser({ commit }) {
@@ -61,7 +59,7 @@ export const actions = {
     });
     const data = await response.json();
     const { user } = data;
-    delete user.token;
+    delete user?.token;
     commit(SET_USER, user);
   },
   async logout({ commit }) {
