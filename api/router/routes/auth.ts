@@ -785,12 +785,6 @@ router.post('/auth/reset-password', async (req, res) => {
   user.enablePasswordReset();
   await user.save();
   // send success response
-  const jwt = user.generateJWT();
-  res.cookie(AUTH_COOKIE_NAME, jwt, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: AUTH_COOKIE_MAX_AGE,
-  });
   res.sendStatus(status.OK);
   // send password reset code via email
   const mailgunService = await useMailgunService();
@@ -904,6 +898,11 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   }
   // Send a JWT back for auto-login
   const jwt = user.generateJWT();
+  res.cookie(AUTH_COOKIE_NAME, jwt, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: AUTH_COOKIE_MAX_AGE,
+  });
   res.json({ jwt });
 });
 
