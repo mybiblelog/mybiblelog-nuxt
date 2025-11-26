@@ -188,9 +188,9 @@ router.post('/auth/login', async (req, res, next) => {
   if (requireEmailVerification && !isEmailVerified(user) && !bypass) {
     return res.status(422).json({ errors: { _form: makeI18nError(I18nError.VerifyEmail, '_form', { email: user.email }) } });
   }
-  const authJSON = user.toAuthJSON();
-  const { token, ...userData } = authJSON;
-  res.cookie(AUTH_COOKIE_NAME, authJSON.token, {
+  const userData = user.toAuthJSON();
+  const token = user.generateJWT();
+  res.cookie(AUTH_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: AUTH_COOKIE_MAX_AGE,
