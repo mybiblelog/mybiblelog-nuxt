@@ -90,6 +90,9 @@ export const actions = {
     catch (error) {
       // This is expected to fail after account deletion
     }
-    commit(SET_USER, null);
+    // Clear session storage and fully reload the page
+    // to ensure the user is logged out and all store data is cleared.
+    sessionStorage.clear();
+    window.location.href = '/login';
   },
 };

@@ -322,8 +322,9 @@ export default {
         if (!response.ok) {
           throw new Error('Unable to sign in as user.');
         }
-        await this.$router.push(this.localePath({ path: '/', query: { } }));
-        await this.$store.dispatch('auth2/refreshUser');
+        // Instead of relying on the store to reload user and data,
+        // fully reload the page to ensure the new user is logged in and data is refreshed.
+        window.location.href = '/start';
       }
       catch (error) {
         await this.$store.dispatch('dialog/alert', {
