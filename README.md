@@ -47,8 +47,10 @@ SITE_URL=https://xxxxxxxxxx
 
 # Optional: set a custom API port
 # Below values are used if no env var is set
-API_PORT=8080 # the Express API listens on this port
-API_BASE_URL=http://localhost:8080 # Nuxt proxies /api/* requests here
+# the Express API listens on this port
+API_PORT=8080
+# Nuxt proxies /api/* requests here
+API_BASE_URL=http://localhost:8080
 
 # Connection URL for MongoDB (example matches docker-compose.yml file)
 MONGODB_URI=mongodb://root:examplepassword@localhost:27017
@@ -105,7 +107,13 @@ $ npm run test:e2e
 To run a single test file:
 
 ```sh
-npx jest -- ./shared/bible.test.js
+# Shared project
+cd shared
+npx jest -- ./shared/bible.test.ts
+
+# API project
+cd api
+npx jest -- ./test/auth.test.ts
 ```
 
 ## Custom Scripts
@@ -122,6 +130,9 @@ $ npm run script:delete-test-users
 
 # Delete orphaned user data
 $ npm run script:delete-stranded-data
+
+# Migrate MongoDB to latest schema
+$ npm run script:migrate
 ```
 
 ## HTTPS on localhost

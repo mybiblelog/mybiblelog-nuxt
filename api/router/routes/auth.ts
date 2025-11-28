@@ -275,11 +275,12 @@ router.post('/auth/logout', async (req, res, next) => {
  *             schema:
  *               type: object
  *               properties:
- *                 jwt:
+ *                 success:
  *                   type: string
- *                   description: JWT token to be used for authentication
- *                 user:
- *                   $ref: '#/components/schemas/User'
+ *                   description: Success message
+ *                 emailVerificationCode:
+ *                   type: string
+ *                   description: Email verification code (only returned when test bypass header is present)
  *       422:
  *         description: Validation error (e.g., email already in use, invalid email format)
  *         content:
@@ -298,7 +299,13 @@ router.post('/auth/register', async (req, res, next) => {
     await rateLimit(req, { maxRequests: 5, windowMs: 60 * 1000 });
   }
 
-  const { email, password, isAdmin, locale } = req.body;
+  const {
+    email,
+    password,
+    isAdmin,
+    locale,
+    emailVerificationCode,
+  } = req.body;
 
   const { User } = await useMongooseModels();
   const user = new User();
@@ -310,14 +317,19 @@ router.post('/auth/register', async (req, res, next) => {
 
     if (authBypass) {
       // setting emailVerificationCode to null will mark the user as email verified
-      user.emailVerificationCode = null;
+      user.emailVerificationCode = emailVerificationCode || null;
+      user.emailVerificationExpires = emailVerificationCode ? new Date(Date.now() + 24 * 60 * 60 * 1000) : null; // 24 hours
       if (isAdmin) {
         user.isAdmin = true;
       }
     }
 
     await user.save();
-    res.sendStatus(200);
+
+    if (authBypass && emailVerificationCode) {
+      return res.json({ success: true, emailVerificationCode: user.emailVerificationCode });
+    }
+    return res.json({ success: true });
 
     // Send a verification email
     const mailgunService = await useMailgunService();
@@ -642,6 +654,9 @@ router.post('/auth/change-password', async (req, res, next) => {
  *         description: Validation error
  */
 router.post('/auth/change-email', async (req, res, next) => {
+  // If the request is coming from a test, bypass restrictions
+  const authBypass = checkTestBypass(req);
+
   try {
     const { User } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
@@ -669,7 +684,10 @@ router.post('/auth/change-email', async (req, res, next) => {
     await currentUser.save();
 
     // send success response
-    res.sendStatus(200);
+    if (authBypass) {
+      return res.send({ success: true, newEmailVerificationCode: currentUser.newEmailVerificationCode });
+    }
+    return res.send({ success: true });
 
     // send an email update confirmation code
     const mailgunService = await useMailgunService();
@@ -830,8 +848,15 @@ router.post('/auth/reset-password', async (req, res) => {
   // have the password reset expire in 1 hour
   user.enablePasswordReset();
   await user.save();
-  // send success response
-  res.sendStatus(status.OK);
+
+  // send success response, but don't `return` here so the email can be sent
+  if (authBypass) {
+    res.send({ success: true, passwordResetCode: user.passwordResetCode });
+  }
+  else {
+    res.send({ success: true });
+  }
+
   // send password reset code via email
   const mailgunService = await useMailgunService();
   mailgunService.sendUserPasswordResetLink(user.email, user.passwordResetCode, user.settings.locale);

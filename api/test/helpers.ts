@@ -18,6 +18,10 @@ const generateTestEmail = (): string => {
   return 'test_user_' + crypto.randomBytes(10).toString('hex') + '@example.com';
 };
 
+const generateRandomString = (): string => {
+  return crypto.randomBytes(64).toString('hex');
+};
+
 export interface TestUser {
   id: string;
   email: string;
@@ -69,7 +73,7 @@ async function createTestUser({ locale = 'en', isAdmin = false }: CreateTestUser
 /**
  * Deletes a test user
  */
-async function deleteTestUser(user: TestUser): Promise<void> {
+async function deleteTestUser(user: TestUser | { token: TestUser['token'] }): Promise<void> {
   await api.put(`/api/settings/delete-account`)
     .set('Authorization', `Bearer ${user.token}`);
 }
@@ -77,6 +81,7 @@ async function deleteTestUser(user: TestUser): Promise<void> {
 export {
   api as requestApi,
   generateTestEmail,
+  generateRandomString,
   createTestUser,
   deleteTestUser,
 };
