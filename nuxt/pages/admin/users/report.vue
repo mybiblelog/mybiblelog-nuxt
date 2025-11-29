@@ -148,7 +148,7 @@
 
 <script>
 import dayjs from 'dayjs';
-import CompletionBar from '~/components/CompletionBar';
+import CompletionBar from '@/components/CompletionBar';
 import CaretDown from '@/components/svg/CaretDown';
 
 const SortColumns = {
@@ -168,7 +168,10 @@ export default {
     CompletionBar,
     CaretDown,
   },
-  middleware: ['auth', 'auth-admin'],
+  middleware: ['auth'],
+  meta: {
+    auth: 'admin',
+  },
   data() {
     return {
       pollInterval: null,
@@ -224,8 +227,13 @@ export default {
     pollReportStatus() {
       const getReportStatus = async () => {
         try {
-          const reportStatusResponse = await this.$axios.get(`/api/admin/reports/user-engagement/status`);
-          const { status, progress } = reportStatusResponse.data;
+          const reportStatusResponse = await fetch(`/api/admin/reports/user-engagement/status`, {
+            credentials: 'include',
+          });
+          if (!reportStatusResponse.ok) {
+            throw new Error('Failed to get report status');
+          }
+          const { status, progress } = await reportStatusResponse.json();
           this.percentComplete = progress;
           if (status === 'ready') {
             clearInterval(this.pollInterval);
@@ -242,8 +250,13 @@ export default {
     },
     async loadReport() {
       try {
-        const reportResponse = await this.$axios.get(`/api/admin/reports/user-engagement`);
-        const report = reportResponse.data;
+        const reportResponse = await fetch(`/api/admin/reports/user-engagement`, {
+          credentials: 'include',
+        });
+        if (!reportResponse.ok) {
+          throw new Error('Failed to load report');
+        }
+        const report = await reportResponse.json();
         const users = report.data.users;
 
         const today = dayjs();

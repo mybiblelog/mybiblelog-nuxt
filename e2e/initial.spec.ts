@@ -10,6 +10,9 @@ const logInWithTestUser = async (page: Page) => {
   await page.getByRole('textbox', { name: 'Email' }).fill(testUser.email);
   await page.getByRole('textbox', { name: 'Password' }).fill(testUser.password);
   await page.getByRole('button', { name: 'Sign In' }).click();
+
+  await page.getByRole('button', { name: 'Skip Personalization' }).click();
+
   await expect(page.getByRole('heading', { name: 'Today' })).toBeVisible();
   return testUser;
 };

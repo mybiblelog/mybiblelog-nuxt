@@ -94,7 +94,7 @@ export interface IUser extends Document {
   verifyNewEmailVerificationCode: (newEmailVerificationCode: string) => boolean;
   disableEmailUpdate: () => void;
   generateJWT: () => string;
-  toAuthJSON: () => { username: string; hasLocalAccount: boolean; email: string; isAdmin: boolean; token: string };
+  toAuthJSON: () => { username: string; hasLocalAccount: boolean; email: string; isAdmin: boolean; };
 }
 
 export const UserSchema = new mongoose.Schema({
@@ -230,7 +230,6 @@ UserSchema.methods.toAuthJSON = function() {
     hasLocalAccount: Boolean(this.password),
     email: this.email,
     isAdmin: this.isAdmin,
-    token: this.generateJWT(),
   };
 };
 

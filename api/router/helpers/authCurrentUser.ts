@@ -7,12 +7,19 @@ import { type Request } from 'express';
 
 import type { UserDoc } from '../../mongoose/types';
 
+export const AUTH_COOKIE_NAME = 'auth_token';
+export const AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+
 const { jwtSecret } = config;
 
 const getTokenFromHeader = (req: Request): string | null => {
   const [tokenType, token] = req.headers.authorization?.split(' ') || [];
   if (token && (tokenType === 'Token' || tokenType === 'Bearer')) {
     return token;
+  }
+  // eslint-disable-next-line dot-notation
+  if (req.headers.cookie?.includes(`${AUTH_COOKIE_NAME}=`)) {
+    return req.headers.cookie.split(`${AUTH_COOKIE_NAME}=`)[1]?.split(';')[0] || null;
   }
   return null;
 };

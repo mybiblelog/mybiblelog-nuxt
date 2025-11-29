@@ -3,7 +3,7 @@ import createError from 'http-errors';
 import { FilterQuery, Types } from 'mongoose';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import authCurrentUser from '../helpers/authCurrentUser';
+import authCurrentUser, { AUTH_COOKIE_MAX_AGE, AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import deleteAccount from '../helpers/deleteAccount';
 import { UserDoc } from 'mongoose/types';
@@ -21,20 +21,20 @@ type PastWeekEngagementData = {
 const getUserEngagementData = async (user: IUser) => {
   const { LogEntry, PassageNote } = await useMongooseModels();
   const lastLogEntry = await LogEntry
-    .find({ owner: new Types.ObjectId(user._id as string) })
+    .find({ owner: new Types.ObjectId(user._id) })
     .sort({ date: -1 })
     .limit(1)
     .exec();
   const logEntryCount = await LogEntry
-    .countDocuments({ owner: new Types.ObjectId(user._id as string) })
+    .countDocuments({ owner: new Types.ObjectId(user._id) })
     .exec();
   const lastNote = await PassageNote
-    .find({ owner: new Types.ObjectId(user._id as string) })
+    .find({ owner: new Types.ObjectId(user._id) })
     .sort({ createdAt: -1 })
     .limit(1)
     .exec();
   const noteCount = await PassageNote
-    .countDocuments({ owner: new Types.ObjectId(user._id as string) })
+    .countDocuments({ owner: new Types.ObjectId(user._id) })
     .exec();
 
   return {
@@ -674,14 +674,25 @@ router.get('/admin/users/:email', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: JWT token for the user
+ *         headers:
+ *           Set-Cookie:
+ *             description: |
+ *               Authentication cookie containing the JWT token.
+ *               - Cookie name: `auth_token`
+ *               - HttpOnly: true
+ *               - Secure: true (in production)
+ *               - Max-Age: 2592000 seconds (30 days)
+ *             schema:
+ *               type: string
+ *               example: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Secure; Max-Age=2592000
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 jwt:
+ *                 token:
  *                   type: string
- *                   description: JWT token for authentication
+ *                   description: Token for authentication
  *       401:
  *         description: Unauthorized - User is not authenticated
  *       403:
@@ -701,8 +712,13 @@ router.get('/admin/users/:email/login', async (req, res, next) => {
       return next(createError(404));
     }
 
-    const jwt = user.generateJWT();
-    res.json({ jwt });
+    const token = user.generateJWT();
+    res.cookie(AUTH_COOKIE_NAME, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: AUTH_COOKIE_MAX_AGE,
+    });
+    res.json({ token });
   }
   catch (error) {
     next(error);

@@ -142,7 +142,10 @@ export default {
   components: {
     CaretDown,
   },
-  middleware: ['auth', 'auth-admin'],
+  middleware: ['auth'],
+  meta: {
+    auth: 'admin',
+  },
   data() {
     return {
       users: null, // becomes array when loaded
@@ -199,8 +202,7 @@ export default {
   },
   methods: {
     buildUsersRequestUrl() {
-      const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-      url.pathname = '/api/admin/users';
+      const url = new URL('/api/admin/users', this.$config.siteUrl);
 
       if (this.searchText) {
         url.searchParams.set('searchText', this.searchText);
@@ -223,14 +225,20 @@ export default {
     },
     loadUsers() {
       const url = this.buildUsersRequestUrl();
-      this.$axios.$get(url)
-        .then((response) => {
+      fetch(url, {
+        credentials: 'include',
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error('Failed to load users');
+          }
+          const responseData = await response.json();
           const {
             // limit,
             // offset,
             results: users,
             size,
-          } = response;
+          } = responseData;
 
           this.users = users;
           this.totalUsers = size;
@@ -252,7 +260,7 @@ export default {
       this.loadUsers();
     },
     async deleteUser(email) {
-      if (email === this.$auth.user.email) {
+      if (email === this.$store.state.auth.user.email) {
         await this.$store.dispatch('dialog/alert', {
           message: 'You cannot delete your own account.',
         });
@@ -272,7 +280,13 @@ export default {
         return;
       }
       try {
-        await this.$axios.delete(`/api/admin/users/${email}`);
+        const response = await fetch(`/api/admin/users/${email}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Failed to delete user');
+        }
         this.selectedUser = null;
         this.loadUsers();
       }
@@ -301,12 +315,17 @@ export default {
         // Clear any cached data from admin account session
         sessionStorage.clear();
 
-        const response = await this.$axios.get(`/api/admin/users/${this.selectedUser.email}/login`);
-        this.$router.push(this.localePath({ path: '/', query: { } }));
-        const { jwt } = response.data;
-        this.$auth.setUserToken(jwt);
+        const response = await fetch(`/api/admin/users/${this.selectedUser.email}/login`, {
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Unable to sign in as user.');
+        }
+        // Instead of relying on the store to reload user and data,
+        // fully reload the page to ensure the new user is logged in and data is refreshed.
+        window.location.href = '/start';
       }
-      catch (err) {
+      catch (error) {
         await this.$store.dispatch('dialog/alert', {
           message: 'Unable to sign in as user.',
         });

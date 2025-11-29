@@ -94,7 +94,7 @@ export default {
     },
 
     // Submits 'Change Password' form data and handles response.
-    submitChangePassword() {
+    async submitChangePassword() {
       // Disable form and remove previous errors
       this.formBusy = true;
       this.resetChangePasswordErrors();
@@ -111,27 +111,38 @@ export default {
         return;
       }
 
-      this.$axios.post('/api/auth/change-password', {
-        currentPassword,
-        newPassword,
-      })
-        .then((response) => {
+      try {
+        const response = await fetch('/api/auth/change-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            currentPassword,
+            newPassword,
+          }),
+        });
+
+        if (response.ok) {
           this.resetChangePasswordForm();
           this.$store.dispatch('toast/add', {
             type: 'success',
             text: this.$t('password_changed_successfully'),
           });
-        })
-        // Display form errors form the server
-        .catch(error => Object.assign(this.changePasswordErrors, error.response.data.errors))
-        // Account for actual server errors
-        .catch(() => {
-          this.changePasswordErrors._form = this.$t('an_unknown_error_occurred');
-        })
-        // Re-enable the form
-        .then(() => {
-          this.formBusy = false;
-        });
+        }
+        else {
+          // Display form errors from the server
+          const errorData = await response.json();
+          Object.assign(this.changePasswordErrors, errorData.response?.data?.errors || {});
+        }
+      }
+      catch (err) {
+        this.changePasswordErrors._form = this.$t('an_unknown_error_occurred');
+      }
+      finally {
+        this.formBusy = false;
+      }
     },
   },
 };

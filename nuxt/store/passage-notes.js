@@ -97,11 +97,10 @@ export const actions = {
   stageQuery({ commit }, queryUpdate) {
     commit(SET_PASSAGE_NOTES_STAGED_QUERY, queryUpdate);
   },
-  async loadPassageNotesPage({ commit, state }) {
+  async loadPassageNotesPage({ commit, state, rootState }) {
     commit(SET_PASSAGE_NOTES_LOADING, true);
     // Build the request URL
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/passage-notes';
+    const url = new URL('/api/passage-notes', this.$config.siteUrl);
     if (state.query.filterTags.length) {
       for (const filterTag of state.query.filterTags) {
         url.searchParams.append('filterTags', filterTag);
@@ -133,14 +132,17 @@ export const actions = {
       url.searchParams.set('offset', state.query.offset);
     }
 
-    const response = await this.$axios.get(url);
+    const response = await fetch(url.toString(), {
+      credentials: 'include',
+    });
+    const responseData = await response.json();
 
     const {
       offset,
       limit,
       size,
       results,
-    } = response.data;
+    } = responseData;
     commit(SET_PASSAGE_NOTES, results);
     commit(SET_PASSAGE_NOTE_PAGINATION, {
       limit,
@@ -150,78 +152,46 @@ export const actions = {
     });
     commit(SET_PASSAGE_NOTES_LOADING, false);
   },
-  async createPassageNote({ commit, dispatch }, newPassageNote) {
-    const response = await this.$axios.post('/api/passage-notes', newPassageNote);
-    const { data } = response;
+  async createPassageNote({ commit, dispatch, rootState }, newPassageNote) {
+    const url = new URL('/api/passage-notes', this.$config.siteUrl);
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newPassageNote),
+    });
+    const data = await response.json();
     if (!data) { return null; }
     return data;
   },
-  async updatePassageNote({ commit, dispatch }, passageNoteUpdate) {
+  async updatePassageNote({ commit, dispatch, rootState }, passageNoteUpdate) {
     const { id } = passageNoteUpdate;
-    const response = await this.$axios.put(`/api/passage-notes/${id}`, passageNoteUpdate);
-    const { data } = response;
+    const url = new URL(`/api/passage-notes/${id}`, this.$config.siteUrl);
+    const response = await fetch(url.toString(), {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(passageNoteUpdate),
+    });
+    const data = await response.json();
     if (!data) { return null; }
     return data;
   },
-  async deletePassageNote({ commit, dispatch }, passageNoteId) {
-    const response = await this.$axios.delete(`/api/passage-notes/${passageNoteId}`);
-    if (response.data) {
+  async deletePassageNote({ commit, dispatch, rootState }, passageNoteId) {
+    const url = new URL(`/api/passage-notes/${passageNoteId}`, this.$config.siteUrl);
+    const response = await fetch(url.toString(), {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+    const data = await response.json();
+    if (data) {
       await dispatch('loadPassageNotesPage');
       return true;
     }
     return false;
-  },
-  async fetchPassageNotes({ commit, state, rootState }, { $config }) {
-    commit(SET_PASSAGE_NOTES_LOADING, true);
-    // Build the request URL
-    const url = new URL($config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/passage-notes';
-    if (state.query.filterTags.length) {
-      for (const filterTag of state.query.filterTags) {
-        url.searchParams.append('filterTags', filterTag);
-      }
-    }
-    if (state.query.searchText) {
-      url.searchParams.set('searchText', state.query.searchText);
-    }
-    if (state.query.filterTagMatching) {
-      url.searchParams.set('filterTagMatching', state.query.filterTagMatching);
-    }
-    if (state.query.filterPassageStartVerseId && state.query.filterPassageEndVerseId) {
-      url.searchParams.set('filterPassageStartVerseId', state.query.filterPassageStartVerseId);
-      url.searchParams.set('filterPassageEndVerseId', state.query.filterPassageEndVerseId);
-      if (state.query.filterPassageMatching) {
-        url.searchParams.set('filterPassageMatching', state.query.filterPassageMatching);
-      }
-    }
-    if (state.query.sortOn) {
-      url.searchParams.set('sortOn', state.query.sortOn);
-    }
-    if (state.query.sortDirection) {
-      url.searchParams.set('sortDirection', state.query.sortDirection);
-    }
-    if (state.query.limit) {
-      url.searchParams.set('limit', state.query.limit);
-    }
-    if (state.query.offset) {
-      url.searchParams.set('offset', state.query.offset);
-    }
-
-    const response = await this.$axios.get(url);
-
-    const {
-      offset,
-      limit,
-      size,
-      results,
-    } = response.data;
-    commit(SET_PASSAGE_NOTES, results);
-    commit(SET_PASSAGE_NOTE_PAGINATION, {
-      limit,
-      page: Math.floor(offset / limit) + 1,
-      size,
-      totalPages: Math.ceil(size / limit),
-    });
-    commit(SET_PASSAGE_NOTES_LOADING, false);
   },
 };

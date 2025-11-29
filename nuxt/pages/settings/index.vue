@@ -6,7 +6,7 @@
       </h1>
       <div class="content">
         <p>
-          <em>{{ $auth.user.email }}</em>
+          <em>{{ $store.state.auth.user.email }}</em>
         </p>
         <p>
           <nuxt-link class="button is-primary" :to="localePath('/settings/email')">
@@ -14,7 +14,7 @@
           </nuxt-link>
         </p>
       </div>
-      <template v-if="$auth.user.hasLocalAccount">
+      <template v-if="$store.state.auth.user.hasLocalAccount">
         <h2 class="title is-4">
           {{ $t('password') }}
         </h2>

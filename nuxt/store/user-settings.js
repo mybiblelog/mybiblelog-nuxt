@@ -64,7 +64,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async updateSettings({ commit }, {
+  async updateSettings({ commit, rootState }, {
     lookBackDate,
     dailyVerseCountGoal,
     preferredBibleApp,
@@ -78,14 +78,22 @@ export const actions = {
       if (preferredBibleApp) {
         localStorage.setItem(LocalStorageKeys.PREFERRED_BIBLE_APP, preferredBibleApp);
       }
-      await this.$axios.put('/api/settings', {
-        settings: {
-          lookBackDate,
-          dailyVerseCountGoal,
-          preferredBibleVersion,
-          startPage,
-          locale,
+      const url = new URL('/api/settings', this.$config.siteUrl);
+      await fetch(url.toString(), {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          settings: {
+            lookBackDate,
+            dailyVerseCountGoal,
+            preferredBibleVersion,
+            startPage,
+            locale,
+          },
+        }),
       });
       commit(SET_USER_SETTINGS, {
         lookBackDate,
@@ -101,19 +109,26 @@ export const actions = {
       return false;
     }
   },
-  async loadSettings({ commit, dispatch }) {
+  async loadSettings({ dispatch }) {
     dispatch('loadClientSettings');
     await dispatch('loadServerSettings');
   },
-  async loadServerSettings({ commit }) {
-    const response = await this.$axios.get('/api/settings');
+  async loadServerSettings({ commit, rootState }) {
+    const url = new URL('/api/settings', this.$config.siteUrl);
+    const response = await fetch(url.toString(), {
+      credentials: 'include',
+      headers: {
+        Authorization: this.app?.ssrToken ? `Bearer ${this.app.ssrToken}` : undefined,
+      },
+    });
+    const data = await response.json();
     const {
       lookBackDate,
       dailyVerseCountGoal,
       preferredBibleVersion,
       startPage,
       locale,
-    } = response.data;
+    } = data;
     commit(SET_USER_SETTINGS, {
       lookBackDate,
       dailyVerseCountGoal,

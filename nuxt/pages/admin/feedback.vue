@@ -55,7 +55,10 @@ import dayjs from 'dayjs';
 
 export default {
   name: 'AdminFeedbackReviewPage',
-  middleware: ['auth', 'auth-admin'],
+  middleware: ['auth'],
+  meta: {
+    auth: 'admin',
+  },
   data() {
     return {
       feedbacks: [],
@@ -74,7 +77,13 @@ export default {
   methods: {
     dayjs,
     async loadFeedbacks() {
-      this.feedbacks = await this.$axios.$get('/api/admin/feedback');
+      const response = await fetch('/api/admin/feedback', {
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to load feedbacks');
+      }
+      this.feedbacks = await response.json();
     },
     feedbackKindClass(kind) {
       return {

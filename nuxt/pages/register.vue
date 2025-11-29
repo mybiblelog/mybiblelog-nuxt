@@ -80,8 +80,8 @@ export default {
   },
   data() {
     return {
-      email: null,
-      password: null,
+      email: '',
+      password: '',
       errors: {},
       formSubmitted: false,
       requireEmailVerification: true,
@@ -89,38 +89,54 @@ export default {
   },
   head() {
     return {
-      title: this.$t('register'),
+      title: this.$t('sign_up'),
       meta: [
         { hid: 'robots', name: 'robots', content: 'noindex' },
       ],
     };
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       this.email = this.email.trim(); // trim accidental spaces
       const { email, password } = this;
       const locale = this.$i18n.locale;
-      this.$axios.post('/api/auth/register', { email, password, locale })
-        .then((response) => {
-          this.formSubmitted = true;
 
-          // if email verification is not required, log the user in:
-          if (!this.requireEmailVerification) {
-            this.$auth.loginWith('local', {
-              data: {
-                email: this.email,
-                password: this.password,
-              },
-            });
-          }
-        })
-        .catch((error) => {
-          const unknownError = { _form: 'An unknown error occurred.' };
-          this.errors = error.response.data.errors || unknownError;
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, locale }),
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        const unknownError = { _form: 'An unknown error occurred.' };
+        this.errors = data.errors || unknownError;
+        return;
+      }
+
+      this.formSubmitted = true;
+
+      // if email verification is not required, log the user in:
+      if (!this.requireEmailVerification) {
+        const { success, error } = await this.$store.dispatch('auth/login', {
+          email: this.email,
+          password: this.password,
         });
+
+        if (!success) {
+          const unknownError = { _form: 'An unknown error occurred.' };
+          this.errors = error || unknownError;
+          return;
+        }
+
+        this.$router.push(this.localePath('/start', this.$i18n.locale));
+      }
     },
   },
-  auth: 'guest',
+  meta: {
+    auth: 'guest',
+  },
 };
 </script>
 

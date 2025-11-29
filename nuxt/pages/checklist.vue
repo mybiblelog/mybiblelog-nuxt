@@ -57,7 +57,7 @@ import { mapGetters } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible, BrowserCache } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
-import CompletionBar from '~/components/CompletionBar';
+import CompletionBar from '@/components/CompletionBar';
 import CheckMark from '@/components/svg/CheckMark';
 import CaretDown from '@/components/svg/CaretDown';
 import Spinner from '@/components/svg/Spinner';

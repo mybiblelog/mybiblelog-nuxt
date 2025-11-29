@@ -170,7 +170,7 @@ router.post('/passage-note-tags', async (req, res, next) => {
     const { PassageNoteTag } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
     const passageNoteTag = new PassageNoteTag(req.body);
-    passageNoteTag.owner = new Types.ObjectId(currentUser._id as string);
+    passageNoteTag.owner = new Types.ObjectId(currentUser._id);
     try {
       await passageNoteTag.validate();
     }

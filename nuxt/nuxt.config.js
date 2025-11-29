@@ -49,6 +49,7 @@ module.exports = {
   plugins: [
     '~/plugins/gtag.client.js',
     '~/plugins/translate-api.js',
+    '~/plugins/nuxt-client-init.client.js',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -63,11 +64,10 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/auth',
     // Doc: https://www.npmjs.com/package/@nuxtjs/style-resources
     '@nuxtjs/style-resources',
+    // Doc: https://nuxt.com/modules/proxy
+    '@nuxtjs/proxy',
     // Doc: https://www.npmjs.com/package/@nuxtjs/redirect-module
     '@nuxtjs/redirect-module',
     // Doc: https://content.nuxtjs.org/
@@ -77,37 +77,9 @@ module.exports = {
     // Doc: https://i18n.nuxtjs.org/
     '@nuxtjs/i18n',
   ],
-  auth: {
-    plugins: [
-      // Registers a plugin like the top-level `plugins` array,
-      // but allows this plugin to access `context.app.$auth`
-      '~/plugins/nuxt-client-init.client.js',
-      '~/plugins/auth-i18n-redirect.js',
-    ],
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/api/auth/login', method: 'post', propertyName: 'token' },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' },
-        },
-        tokenRequired: true,
-        tokenType: 'Bearer',
-        autoFetchUser: true,
-      },
-    },
-  },
   i18n: i18nConfig,
   styleResources: {
     scss: ['./assets/scss/_variables.scss'],
-  },
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
-    proxy: true,
-    baseURL: process.env.SITE_URL,
   },
   /*
   ** Proxy
@@ -116,11 +88,6 @@ module.exports = {
     '/api': {
       target: process.env.API_BASE_URL || 'http://localhost:8080',
     },
-  },
-  router: {
-    middleware: [
-      'auth',
-    ],
   },
   redirect: [
     // The default locale was unintentionally removed from the i18n config,
@@ -143,8 +110,6 @@ module.exports = {
     extend(config, ctx) {
       // Webpack alias removed - now using npm workspace package
     },
-    // Related issue: https://github.com/axios/axios/issues/5243
-    transpile: [({ isLegacy }) => isLegacy && 'axios'],
     loaders: {
       scss: {
         implementation: sass,
@@ -171,14 +136,6 @@ module.exports = {
     siteUrl: process.env.SITE_URL,
     requireEmailVerification: process.env.REQUIRE_EMAIL_VERIFICATION !== 'false',
     googleAnalytics4MeasurementId: process.env.GA_MEASUREMENT_ID,
-    axios: {
-      browserBaseURL: process.env.SITE_URL,
-    },
-  },
-  privateRuntimeConfig: {
-    axios: {
-      baseURL: process.env.SITE_URL,
-    },
   },
   pwa: {
     manifest: {

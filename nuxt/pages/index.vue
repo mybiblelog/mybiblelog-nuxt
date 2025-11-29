@@ -404,8 +404,8 @@ export default {
   components: {
   },
   middleware: ['auth'],
-  asyncData({ $auth, redirect, app }) {
-    if ($auth.loggedIn) {
+  asyncData({ app, redirect, store }) {
+    if (store.state.auth.loggedIn) {
       const currentSetLocale = app.i18n.locale;
       return redirect(app.localePath('/start', currentSetLocale));
     }
@@ -488,7 +488,9 @@ export default {
       ],
     };
   },
-  auth: 'guest',
+  meta: {
+    auth: 'guest',
+  },
 };
 </script>
 

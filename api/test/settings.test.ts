@@ -1,5 +1,6 @@
 import { describe, it, test, expect } from '@jest/globals';
 import { requestApi, createTestUser, deleteTestUser } from './helpers';
+import { AUTH_COOKIE_NAME } from '../router/helpers/authCurrentUser';
 
 describe('settings.test.js', () => {
   describe('GET /api/settings', () => {
@@ -164,6 +165,9 @@ describe('settings.test.js', () => {
           .put('/api/settings/delete-account')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
+        // expect cookie to be cleared in header
+        expect(response.headers['set-cookie']).toBeDefined();
+        expect(response.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=;`);
 
         // Verify user can no longer access protected endpoints
         const verifyResponse = await requestApi

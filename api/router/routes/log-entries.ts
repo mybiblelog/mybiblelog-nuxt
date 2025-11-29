@@ -193,7 +193,7 @@ router.post('/log-entries', async (req, res, next) => {
     const { LogEntry } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
     const logEntry = new LogEntry(req.body);
-    logEntry.owner = new Types.ObjectId(currentUser._id as string);
+    logEntry.owner = new Types.ObjectId(currentUser._id);
 
     try {
       await logEntry.validate();

@@ -34,12 +34,26 @@ export const mutations = {
 
 export const actions = {
   async loadLogEntries({ commit }) {
-    const response = await this.$axios.get('/api/log-entries');
-    commit(SET_LOG_ENTRIES, response.data);
+    const url = new URL('/api/log-entries', this.$config.siteUrl);
+    const response = await fetch(url.toString(), {
+      credentials: 'include',
+      headers: {
+        Authorization: this.app?.ssrToken ? `Bearer ${this.app.ssrToken}` : undefined,
+      },
+    });
+    const data = await response.json();
+    commit(SET_LOG_ENTRIES, data);
   },
-  async createLogEntry({ commit, dispatch }, { date, startVerseId, endVerseId }) {
-    const response = await this.$axios.post('/api/log-entries', { date, startVerseId, endVerseId });
-    const { data } = response;
+  async createLogEntry({ commit, dispatch, rootState }, { date, startVerseId, endVerseId }) {
+    const response = await fetch(new URL('/api/log-entries', this.$config.siteUrl), {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ date, startVerseId, endVerseId }),
+    });
+    const data = await response.json();
     if (!data) { return null; }
     commit(ADD_LOG_ENTRY, data);
 
@@ -49,9 +63,17 @@ export const actions = {
 
     return data;
   },
-  async updateLogEntry({ commit, dispatch }, { id, date, startVerseId, endVerseId }) {
-    const response = await this.$axios.put(`/api/log-entries/${id}`, { id, date, startVerseId, endVerseId });
-    const { data } = response;
+  async updateLogEntry({ commit, dispatch, rootState }, { id, date, startVerseId, endVerseId }) {
+    const url = new URL(`/api/log-entries/${id}`, this.$config.siteUrl);
+    const response = await fetch(url.toString(), {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, date, startVerseId, endVerseId }),
+    });
+    const data = await response.json();
     if (!data) { return null; }
     commit(UPDATE_LOG_ENTRY, data);
 
@@ -61,9 +83,14 @@ export const actions = {
 
     return data;
   },
-  async deleteLogEntry({ commit, dispatch, state }, logEntryId) {
-    const response = await this.$axios.delete(`/api/log-entries/${logEntryId}`);
-    if (response.data) {
+  async deleteLogEntry({ commit, dispatch, state, rootState }, logEntryId) {
+    const url = new URL(`/api/log-entries/${logEntryId}`, this.$config.siteUrl);
+    const response = await fetch(url.toString(), {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+    const data = await response.json();
+    if (data) {
       // find the deleted log entry and get its date for efficient cache updating
       const logEntry = state.logEntries.find(logEntry => logEntry.id === logEntryId);
       const date = logEntry.date;

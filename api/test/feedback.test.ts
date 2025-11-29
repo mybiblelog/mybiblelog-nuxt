@@ -2,7 +2,7 @@ import { describe, test, expect } from '@jest/globals';
 import { requestApi, createTestUser, deleteTestUser } from './helpers';
 
 describe('Feedback routes', () => {
-  test('POST /api/feedback (guest)', async () => {
+  test('POST /api/feedback (guest) (flaky - rate limiting)', async () => {
     // Act
     const res = await requestApi
       .post('/api/feedback')
