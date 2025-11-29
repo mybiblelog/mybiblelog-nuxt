@@ -318,7 +318,6 @@ router.post('/auth/register', async (req, res, next) => {
     if (authBypass) {
       // setting emailVerificationCode to null will mark the user as email verified
       user.emailVerificationCode = emailVerificationCode || null;
-      user.emailVerificationExpires = emailVerificationCode ? new Date(Date.now() + 24 * 60 * 60 * 1000) : null; // 24 hours
       if (isAdmin) {
         user.isAdmin = true;
       }
@@ -326,10 +325,7 @@ router.post('/auth/register', async (req, res, next) => {
 
     await user.save();
 
-    if (authBypass && emailVerificationCode) {
-      return res.json({ success: true, emailVerificationCode: user.emailVerificationCode });
-    }
-    return res.json({ success: true });
+    res.json({ success: true });
 
     // Send a verification email
     const mailgunService = await useMailgunService();

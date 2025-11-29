@@ -244,49 +244,7 @@ describe('Auth routes', () => {
         successfulRequests.push(response);
       }
     });
-
-    it('returns the email verification code in the response body when test bypass header is present', async () => {
-      const testUser = await createTestUser();
-      const testEmailVerificationCode = generateRandomString();
-      const response = await requestApi
-        .post('/api/auth/register')
-        .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
-        .set('Authorization', `Bearer ${testUser.token}`)
-        .send({
-          email: generateTestEmail(),
-          password: 'password123',
-          emailVerificationCode: testEmailVerificationCode,
-          locale: 'en',
-        });
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('success');
-      expect(response.body.success).toBe(true);
-      expect(response.body).toHaveProperty('emailVerificationCode');
-      expect(response.body.emailVerificationCode).toBe(testEmailVerificationCode);
-
-      await deleteTestUser(testUser);
-    });
-
-    it('does not return the email verification code in the response body when no emailVerificationCode was sent', async () => {
-      const testUser = await createTestUser();
-      const response = await requestApi
-        .post('/api/auth/register')
-        .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
-        .set('Authorization', `Bearer ${testUser.token}`)
-        .send({
-          email: generateTestEmail(),
-          password: 'password123',
-          locale: 'en',
-        });
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('success');
-      expect(response.body.success).toBe(true);
-      expect(response.body).not.toHaveProperty('emailVerificationCode');
-
-      await deleteTestUser(testUser);
-    });
   });
-
 
   describe('GET /api/auth/verify-email/:emailVerificationCode', () => {
     it('returns 404 for invalid verification code', async () => {
@@ -308,8 +266,6 @@ describe('Auth routes', () => {
           emailVerificationCode: testEmailVerificationCode,
         });
       expect(registerResponse.statusCode).toBe(200);
-      const emailVerificationCode = registerResponse.body.emailVerificationCode;
-      expect(emailVerificationCode).toBe(testEmailVerificationCode);
 
       const res = await requestApi
         .get(`/api/auth/verify-email/${testEmailVerificationCode}`);
