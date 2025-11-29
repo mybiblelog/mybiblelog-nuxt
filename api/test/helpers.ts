@@ -18,8 +18,8 @@ const generateTestEmail = (): string => {
   return 'test_user_' + crypto.randomBytes(10).toString('hex') + '@example.com';
 };
 
-const generateRandomString = (): string => {
-  return crypto.randomBytes(64).toString('hex');
+const generateRandomString = (bytes: number): string => {
+  return crypto.randomBytes(bytes).toString('hex');
 };
 
 export interface TestUser {

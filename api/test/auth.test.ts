@@ -211,37 +211,67 @@ describe('Auth routes', () => {
       // Send 6 requests to ensure the rate limit is enforced
       // (previous tests may have already counted against the rate limit)
       let response: any = null;
+      const testUsers: { email: string; password: string; token: string }[] = [];
       for (let i = 0; i < 6; i++) {
+        const email = generateTestEmail();
+        const password = generateRandomString(10);
         response = await requestApi
           .post('/api/auth/register')
           .send({
-            email: generateTestEmail(),
-            password: 'password123',
+            email,
+            password,
             locale: 'en',
           });
+
+        if (response.status === 200) {
+          testUsers.push({
+            email,
+            password,
+            token: response.body.token,
+          });
+        }
       }
 
       expect(response.status).toBe(429); // Too Many Requests
       expect(response.body).toHaveProperty('errors');
       expect(response.body.errors).toHaveProperty('error');
       expect(response.body.errors.error.message).toContain('Rate limit exceeded');
+
+      for (const testUser of testUsers) {
+        await deleteTestUser(testUser);
+      }
     });
 
     it('bypasses rate limiting when test bypass header is present', async () => {
       // Should be able to make more than 5 requests when bypass header is present
       const successfulRequests: any[] = [];
+      const testUsers: { email: string; password: string; token: string }[] = [];
       for (let i = 0; i < 7; i++) {
+        const email = generateTestEmail();
+        const password = generateRandomString(10);
+
         const response = await requestApi
           .post('/api/auth/register')
           .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
           .send({
-            email: generateTestEmail(),
-            password: 'password123',
+            email,
+            password,
             locale: 'en',
           });
 
         expect(response.status).toBe(200);
         successfulRequests.push(response);
+        if (response.status === 200) {
+          testUsers.push({
+            email,
+            password,
+            token: response.body.token,
+          });
+        }
+      }
+
+      for (const testUser of testUsers) {
+        await deleteTestUser(testUser);
       }
     });
   });
@@ -255,7 +285,7 @@ describe('Auth routes', () => {
 
     it('returns a token with cookie when verification code is valid', async () => {
       const testEmail = generateTestEmail();
-      const testEmailVerificationCode = generateRandomString();
+      const testEmailVerificationCode = generateRandomString(64);
       const registerResponse = await requestApi
         .post('/api/auth/register')
         .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
