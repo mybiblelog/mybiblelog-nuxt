@@ -8,7 +8,7 @@
     <div class="field">
       <label class="label">{{ $t('your_email') }}</label>
       <div class="control">
-        <input v-model="form.email" class="input" type="email" :placeholder="$t('your_email')" :disabled="$store.state.auth2.loggedIn">
+        <input v-model="form.email" class="input" type="email" :placeholder="$t('your_email')" :disabled="$store.state.auth.loggedIn">
         <div v-if="errors.email" class="help is-danger">
           {{ $terr(errors.email) }}
         </div>
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       form: {
-        email: this.$store.state.auth2.user?.email || '',
+        email: this.$store.state.auth.user?.email || '',
         kind: 'bug',
         message: '',
       },

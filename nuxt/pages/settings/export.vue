@@ -246,7 +246,7 @@ export default {
       ],
     };
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
 };
 </script>
 

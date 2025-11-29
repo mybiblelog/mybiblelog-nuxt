@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.state.auth2.loggedIn">
+  <div v-if="$store.state.auth.loggedIn">
     <button
       class="floating-action-button"
       :aria-label="$t('floating_action_button.give_feedback')"

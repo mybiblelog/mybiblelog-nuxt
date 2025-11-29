@@ -115,7 +115,7 @@ export default {
     });
 
     // Reload user now that auth cookie should be set
-    await this.$store.dispatch('auth2/refreshUser');
+    await this.$store.dispatch('auth/refreshUser');
 
     // Redirect to the settings page, which displays the current email
     this.$router.push(this.localePath('/settings'));

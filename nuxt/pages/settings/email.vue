@@ -13,7 +13,7 @@
         <p>
           {{ $t('current_request.your_current_email_is') }}
           <br>
-          <strong>{{ $store.state.auth2.user.email }}</strong>
+          <strong>{{ $store.state.auth.user.email }}</strong>
         </p>
         <p>
           {{ $t('current_request.your_requested_email_is') }}
@@ -76,7 +76,7 @@
 <script>
 export default {
   name: 'EmailSettingsPage',
-  middleware: ['auth2'],
+  middleware: ['auth'],
   data() {
     return {
       formBusy: false, // if any form was submitted and is awaiting response

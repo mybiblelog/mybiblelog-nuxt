@@ -17,7 +17,7 @@
 <script>
 export default {
   name: 'GoogleLoginPage',
-  middleware: ['auth2'],
+  middleware: ['auth'],
   data() {
     return {
       //
@@ -54,7 +54,7 @@ export default {
         }
 
         // Reload user now that auth cookie should be set
-        await this.$store.dispatch('auth2/refreshUser');
+        await this.$store.dispatch('auth/refreshUser');
 
         // Redirect to the user's preferred locale.
         const redirectUrl = this.localePath('/start', userLocale);

@@ -48,7 +48,7 @@
 <script>
 export default {
   name: 'PasswordSettingsPage',
-  middleware: ['auth2'],
+  middleware: ['auth'],
   data() {
     return {
       formBusy: false,

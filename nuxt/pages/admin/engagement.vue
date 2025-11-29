@@ -42,7 +42,7 @@ import { displayDate } from '@mybiblelog/shared';
 
 export default {
   name: 'AdminEngagementPage',
-  middleware: ['auth2'],
+  middleware: ['auth'],
   meta: {
     auth: 'admin',
   },

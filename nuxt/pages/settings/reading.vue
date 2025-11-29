@@ -149,7 +149,7 @@ const bibleAppOptions = Object.keys(bibleAppNames).map((key) => {
 
 export default {
   name: 'ReadingSettingsPage',
-  middleware: ['auth2'],
+  middleware: ['auth'],
   data() {
     return {
       bibleVersionOptions,

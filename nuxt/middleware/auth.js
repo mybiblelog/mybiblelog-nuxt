@@ -1,7 +1,7 @@
 export default function({ store, route, redirect, error, app }) {
   const authRule = route.meta[0]?.auth;
-  const isLoggedIn = store.state.auth2.loggedIn;
-  const isAdmin = isLoggedIn && store.state.auth2.user.isAdmin;
+  const isLoggedIn = store.state.auth.loggedIn;
+  const isAdmin = isLoggedIn && store.state.auth.user.isAdmin;
 
   if (authRule === 'guest') {
     if (isLoggedIn) {

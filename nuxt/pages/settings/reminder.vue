@@ -40,7 +40,7 @@
 <script>
 export default {
   name: 'ReminderSettingsPage',
-  middleware: ['auth2'],
+  middleware: ['auth'],
   async asyncData({ app }) {
     const response = await fetch(`/api/reminders/daily-reminder`, {
       credentials: 'include',

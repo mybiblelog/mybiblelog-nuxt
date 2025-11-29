@@ -217,7 +217,7 @@ export default {
       title: this.$t('note_tags'),
     };
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
 };
 </script>
 

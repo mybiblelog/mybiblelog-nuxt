@@ -72,7 +72,7 @@ export default {
   components: {
     InfoLink,
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
   asyncData({ $config }) {
     return {
       requireEmailVerification: $config.requireEmailVerification,
@@ -119,7 +119,7 @@ export default {
 
       // if email verification is not required, log the user in:
       if (!this.requireEmailVerification) {
-        const { success, error } = await this.$store.dispatch('auth2/login', {
+        const { success, error } = await this.$store.dispatch('auth/login', {
           email: this.email,
           password: this.password,
         });

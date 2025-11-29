@@ -70,7 +70,7 @@ export default {
     GetStartedModal,
     PillProgressBar,
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
   async asyncData({ app, redirect }) {
     // Redirect to the user's preferred start page if they have one
     const url = new URL(app.$config.siteUrl); // from nuxt.config.js

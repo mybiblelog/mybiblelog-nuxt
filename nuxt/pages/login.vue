@@ -74,7 +74,7 @@ export default {
     GoogleLoginButton,
     InfoLink,
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
   async asyncData({ $config }) {
     let googleOauth2Url = null;
     try {
@@ -129,7 +129,7 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const { success, error } = await this.$store.dispatch('auth2/login', {
+      const { success, error } = await this.$store.dispatch('auth/login', {
         email: this.email,
         password: this.password,
       });

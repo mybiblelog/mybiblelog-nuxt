@@ -168,7 +168,7 @@ export default {
     CompletionBar,
     CaretDown,
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
   meta: {
     auth: 'admin',
   },

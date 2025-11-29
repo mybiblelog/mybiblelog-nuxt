@@ -142,7 +142,7 @@ export default {
   components: {
     CaretDown,
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
   meta: {
     auth: 'admin',
   },
@@ -260,7 +260,7 @@ export default {
       this.loadUsers();
     },
     async deleteUser(email) {
-      if (email === this.$store.state.auth2.user.email) {
+      if (email === this.$store.state.auth.user.email) {
         await this.$store.dispatch('dialog/alert', {
           message: 'You cannot delete your own account.',
         });

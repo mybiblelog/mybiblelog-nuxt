@@ -538,7 +538,7 @@ export default {
       title: this.$t('notes'),
     };
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
 };
 </script>
 

@@ -403,9 +403,9 @@ export default {
   name: 'HomePage',
   components: {
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
   asyncData({ app, redirect, store }) {
-    if (store.state.auth2.loggedIn) {
+    if (store.state.auth.loggedIn) {
       const currentSetLocale = app.i18n.locale;
       return redirect(app.localePath('/start', currentSetLocale));
     }

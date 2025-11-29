@@ -57,7 +57,7 @@
 <script>
 export default {
   name: 'ResetPasswordPage',
-  middleware: ['auth2'],
+  middleware: ['auth'],
   data() {
     return {
       passwordResetCode: undefined,
@@ -144,7 +144,7 @@ export default {
       this.$router.push(this.localePath({ path: this.$route.path, query: { } }));
 
       // Reload user now that auth cookie should be set
-      await this.$store.dispatch('auth2/refreshUser');
+      await this.$store.dispatch('auth/refreshUser');
     },
   },
   meta: {

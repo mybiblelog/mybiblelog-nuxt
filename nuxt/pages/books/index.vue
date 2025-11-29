@@ -36,7 +36,7 @@ export default {
       title: this.$t('page_title'),
     };
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
 };
 </script>
 

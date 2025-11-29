@@ -50,7 +50,7 @@
 <script>
 export default {
   name: 'DeleteAccountPage',
-  middleware: ['auth2'],
+  middleware: ['auth'],
   data() {
     return {
       formBusy: false,
@@ -89,7 +89,7 @@ export default {
         },
       });
       if (response.ok) {
-        await this.$store.dispatch('auth2/logout');
+        await this.$store.dispatch('auth/logout');
         this.$router.push(this.localePath('/login', this.$i18n.locale));
       }
       else {

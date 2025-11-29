@@ -57,7 +57,7 @@ export default {
     // The auto-login will result in a redirect, but will leave the query in the URL
     // Remove the query manually first
     await this.$router.push(this.localePath({ path: this.$route.path, query: { } }));
-    await this.$store.dispatch('auth2/refreshUser');
+    await this.$store.dispatch('auth/refreshUser');
   },
   head() {
     return {
@@ -67,7 +67,7 @@ export default {
       ],
     };
   },
-  middleware: ['auth2'],
+  middleware: ['auth'],
   meta: {
     auth: 'guest',
   },

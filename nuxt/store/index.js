@@ -8,15 +8,15 @@ export const actions = {
       // `app` is not serialized into the HTML response,
       // so it's safe to store the token here for SSR access
       app.ssrToken = token;
-      await dispatch('auth2/fetchServerUser');
+      await dispatch('auth/fetchServerUser');
     }
 
-    if (state.auth2.loggedIn) {
+    if (state.auth.loggedIn) {
       await dispatch('loadUserData');
     }
   },
   async nuxtClientInit({ dispatch, state }) {
-    if (state.auth2.loggedIn) {
+    if (state.auth.loggedIn) {
       // On client side, re-trigger user settings load
       // since some settings are stored in LocalStorage
       await dispatch('user-settings/loadClientSettings');

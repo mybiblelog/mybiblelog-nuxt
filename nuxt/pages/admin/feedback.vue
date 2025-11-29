@@ -55,7 +55,7 @@ import dayjs from 'dayjs';
 
 export default {
   name: 'AdminFeedbackReviewPage',
-  middleware: ['auth2'],
+  middleware: ['auth'],
   meta: {
     auth: 'admin',
   },
