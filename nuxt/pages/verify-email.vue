@@ -54,10 +54,8 @@ export default {
     }
 
     // If successful, automatically log the user in
-    // The auto-login will result in a redirect, but will leave the query in the URL
-    // Remove the query manually first
-    await this.$router.push(this.localePath({ path: this.$route.path, query: { } }));
     await this.$store.dispatch('auth/refreshUser');
+    await this.$router.push(this.localePath('/start'));
   },
   head() {
     return {

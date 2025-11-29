@@ -680,10 +680,11 @@ router.post('/auth/change-email', async (req, res, next) => {
     await currentUser.save();
 
     // send success response
-    if (authBypass) {
-      return res.send({ success: true, newEmailVerificationCode: currentUser.newEmailVerificationCode });
+    const response: { success: boolean; newEmailVerificationCode?: string } = { success: true };
+    if (authBypass && currentUser.newEmailVerificationCode) {
+      response.newEmailVerificationCode = currentUser.newEmailVerificationCode;
     }
-    return res.send({ success: true });
+    res.send(response);
 
     // send an email update confirmation code
     const mailgunService = await useMailgunService();
@@ -846,12 +847,11 @@ router.post('/auth/reset-password', async (req, res) => {
   await user.save();
 
   // send success response, but don't `return` here so the email can be sent
-  if (authBypass) {
-    res.send({ success: true, passwordResetCode: user.passwordResetCode });
+  const response: { success: boolean; passwordResetCode?: string } = { success: true };
+  if (authBypass && user.passwordResetCode) {
+    response.passwordResetCode = user.passwordResetCode;
   }
-  else {
-    res.send({ success: true });
-  }
+  res.send(response);
 
   // send password reset code via email
   const mailgunService = await useMailgunService();
