@@ -100,8 +100,7 @@ export const actions = {
   async loadPassageNotesPage({ commit, state, rootState }) {
     commit(SET_PASSAGE_NOTES_LOADING, true);
     // Build the request URL
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/passage-notes';
+    const url = new URL('/api/passage-notes', this.$config.siteUrl);
     if (state.query.filterTags.length) {
       for (const filterTag of state.query.filterTags) {
         url.searchParams.append('filterTags', filterTag);
@@ -154,8 +153,7 @@ export const actions = {
     commit(SET_PASSAGE_NOTES_LOADING, false);
   },
   async createPassageNote({ commit, dispatch, rootState }, newPassageNote) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/passage-notes';
+    const url = new URL('/api/passage-notes', this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       method: 'POST',
       credentials: 'include',
@@ -170,8 +168,7 @@ export const actions = {
   },
   async updatePassageNote({ commit, dispatch, rootState }, passageNoteUpdate) {
     const { id } = passageNoteUpdate;
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = `/api/passage-notes/${id}`;
+    const url = new URL(`/api/passage-notes/${id}`, this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       method: 'PUT',
       credentials: 'include',
@@ -185,8 +182,7 @@ export const actions = {
     return data;
   },
   async deletePassageNote({ commit, dispatch, rootState }, passageNoteId) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = `/api/passage-notes/${passageNoteId}`;
+    const url = new URL(`/api/passage-notes/${passageNoteId}`, this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       method: 'DELETE',
       credentials: 'include',

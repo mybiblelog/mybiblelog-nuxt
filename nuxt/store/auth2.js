@@ -53,8 +53,7 @@ export const actions = {
     }
   },
   async fetchServerUser({ commit }) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/auth/user';
+    const url = new URL('/api/auth/user', this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       headers: {
         Authorization: `Bearer ${this.app.ssrToken}`,
@@ -66,8 +65,7 @@ export const actions = {
     commit(SET_USER, user);
   },
   async refreshUser({ commit }) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/auth/user';
+    const url = new URL('/api/auth/user', this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       credentials: 'include',
     });

@@ -34,8 +34,7 @@ export const mutations = {
 
 export const actions = {
   async loadLogEntries({ commit }) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/log-entries';
+    const url = new URL('/api/log-entries', this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       credentials: 'include',
       headers: {
@@ -46,7 +45,7 @@ export const actions = {
     commit(SET_LOG_ENTRIES, data);
   },
   async createLogEntry({ commit, dispatch, rootState }, { date, startVerseId, endVerseId }) {
-    const response = await fetch('/api/log-entries', {
+    const response = await fetch(new URL('/api/log-entries', this.$config.siteUrl), {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -65,8 +64,7 @@ export const actions = {
     return data;
   },
   async updateLogEntry({ commit, dispatch, rootState }, { id, date, startVerseId, endVerseId }) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = `/api/log-entries/${id}`;
+    const url = new URL(`/api/log-entries/${id}`, this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       method: 'PUT',
       credentials: 'include',
@@ -86,8 +84,7 @@ export const actions = {
     return data;
   },
   async deleteLogEntry({ commit, dispatch, state, rootState }, logEntryId) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = `/api/log-entries/${logEntryId}`;
+    const url = new URL(`/api/log-entries/${logEntryId}`, this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       method: 'DELETE',
       credentials: 'include',

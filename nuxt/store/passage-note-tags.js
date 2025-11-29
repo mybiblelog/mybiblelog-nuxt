@@ -36,8 +36,7 @@ export const actions = {
     if (passageNoteTags) {
       BrowserCache.set(PASSAGE_NOTE_TAGS_CACHE_KEY, passageNoteTags, PASSAGE_NOTE_TAGS_CACHE_MINUTES);
     }
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/passage-note-tags';
+    const url = new URL('/api/passage-note-tags', this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       credentials: 'include',
       headers: {
@@ -48,8 +47,7 @@ export const actions = {
     commit(SET_PASSAGE_NOTE_TAGS, passageNoteTags);
   },
   async createPassageNoteTag({ commit, dispatch, rootState }, { label, color, description }) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/passage-note-tags';
+    const url = new URL('/api/passage-note-tags', this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       method: 'POST',
       credentials: 'include',
@@ -64,8 +62,7 @@ export const actions = {
     return data;
   },
   async updatePassageNoteTag({ commit, dispatch, rootState }, { id, label, color, description }) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = `/api/passage-note-tags/${id}`;
+    const url = new URL(`/api/passage-note-tags/${id}`, this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       method: 'PUT',
       credentials: 'include',
@@ -80,8 +77,7 @@ export const actions = {
     return data;
   },
   async deletePassageNoteTag({ commit, dispatch, rootState }, passageNoteTagId) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = `/api/passage-note-tags/${passageNoteTagId}`;
+    const url = new URL(`/api/passage-note-tags/${passageNoteTagId}`, this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       method: 'DELETE',
       credentials: 'include',

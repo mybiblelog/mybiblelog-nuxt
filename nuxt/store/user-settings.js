@@ -78,8 +78,7 @@ export const actions = {
       if (preferredBibleApp) {
         localStorage.setItem(LocalStorageKeys.PREFERRED_BIBLE_APP, preferredBibleApp);
       }
-      const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-      url.pathname = '/api/settings';
+      const url = new URL('/api/settings', this.$config.siteUrl);
       await fetch(url.toString(), {
         method: 'PUT',
         credentials: 'include',
@@ -115,8 +114,7 @@ export const actions = {
     await dispatch('loadServerSettings');
   },
   async loadServerSettings({ commit, rootState }) {
-    const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/settings';
+    const url = new URL('/api/settings', this.$config.siteUrl);
     const response = await fetch(url.toString(), {
       credentials: 'include',
       headers: {

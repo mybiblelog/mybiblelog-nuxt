@@ -176,8 +176,7 @@ export default {
       let done = false;
       let offset = 0;
       do {
-        const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-        url.pathname = '/api/passage-notes';
+        const url = new URL('/api/passage-notes', this.$config.siteUrl);
         url.searchParams.set('offset', offset);
         const response = await fetch(url, {
           credentials: 'include',

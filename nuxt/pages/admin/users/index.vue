@@ -202,8 +202,7 @@ export default {
   },
   methods: {
     buildUsersRequestUrl() {
-      const url = new URL(this.$config.siteUrl); // from nuxt.config.js
-      url.pathname = '/api/admin/users';
+      const url = new URL('/api/admin/users', this.$config.siteUrl);
 
       if (this.searchText) {
         url.searchParams.set('searchText', this.searchText);
