@@ -2,7 +2,7 @@ import express from 'express';
 import status from 'http-status';
 import config from '../../config';
 import rateLimit from '../helpers/rateLimit';
-import authCurrentUser, { AUTH_COOKIE_MAX_AGE, AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
+import authCurrentUser, { AUTH_COOKIE_NAME, setAuthTokenCookie } from '../helpers/authCurrentUser';
 import googleOauth2 from '../helpers/google-oauth2';
 import { I18nError, makeI18nError } from '../helpers/i18n-error';
 import useMongooseModels from '../../mongoose/useMongooseModels';
@@ -190,11 +190,7 @@ router.post('/auth/login', async (req, res, next) => {
   }
   const userData = user.toAuthJSON();
   const token = user.generateJWT();
-  res.cookie(AUTH_COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: AUTH_COOKIE_MAX_AGE,
-  });
+  setAuthTokenCookie(res, token);
   return res.json({
     token,
     user: userData,
@@ -457,11 +453,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
       }
 
       const token = existingUser.generateJWT();
-      res.cookie(AUTH_COOKIE_NAME, token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: AUTH_COOKIE_MAX_AGE,
-      });
+      setAuthTokenCookie(res, token);
       return res.send({ token });
     }
 
@@ -477,11 +469,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
 
     await user.save();
     const token = user.generateJWT();
-    res.cookie(AUTH_COOKIE_NAME, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: AUTH_COOKIE_MAX_AGE,
-    });
+    setAuthTokenCookie(res, token);
     res.send({ token });
   }
   catch (err) {
@@ -551,11 +539,7 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
 
   // Send a JWT back for auto-login
   const token = user.generateJWT();
-  res.cookie(AUTH_COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: AUTH_COOKIE_MAX_AGE,
-  });
+  setAuthTokenCookie(res, token);
   res.json({ token });
 });
 
@@ -977,11 +961,7 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   }
   // Send a JWT back for auto-login
   const token = user.generateJWT();
-  res.cookie(AUTH_COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: AUTH_COOKIE_MAX_AGE,
-  });
+  setAuthTokenCookie(res, token);
   res.json({ token });
 });
 
@@ -1064,11 +1044,7 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
 
   // Send a JWT back for auto-login
   const token = user.generateJWT();
-  res.cookie(AUTH_COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: AUTH_COOKIE_MAX_AGE,
-  });
+  setAuthTokenCookie(res, token);
   res.json({ token });
 });
 
