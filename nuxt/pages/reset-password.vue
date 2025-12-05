@@ -95,6 +95,8 @@ export default {
     if (!response.ok) {
       this.passwordResetCodeValid = false;
     }
+    const data = await response.json();
+    this.passwordResetCodeValid = data.valid;
   },
   methods: {
     resetChangePasswordErrors() {

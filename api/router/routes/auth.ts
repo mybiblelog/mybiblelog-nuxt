@@ -953,10 +953,10 @@ router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, nex
   const { User } = await useMongooseModels();
   const user = await User.findOne({ passwordResetCode });
   if (user) {
-    return res.send(true);
+    return res.json({ valid: true });
   }
   else {
-    return res.send(false);
+    return res.json({ valid: false });
   }
 });
 
@@ -1008,8 +1008,8 @@ router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, nex
  *                   description: Token for authentication
  *       400:
  *         description: Password reset link expired
- *       404:
- *         description: Password reset code not found
+ *       400:
+ *         description: Password reset link not valid
  */
 router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) => {
   const { passwordResetCode } = req.params;
@@ -1019,7 +1019,9 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   const { User } = await useMongooseModels();
   const user = await User.findOne({ passwordResetCode });
   if (!user) {
-    return res.sendStatus(404);
+    return res.status(status.BAD_REQUEST).send({
+      errors: { _form: makeI18nError(I18nError.InvalidRequest, '_form') },
+    });
   }
 
   // Ensure the password reset is not expired
