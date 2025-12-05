@@ -78,9 +78,7 @@ export default {
   async asyncData({ $config }) {
     let googleOauth2Url = null;
     try {
-      const googleUrlResponse = await fetch(`${$config.siteUrl}/api/auth/oauth2/google/url`, {
-        credentials: 'include',
-      });
+      const googleUrlResponse = await fetch(`${$config.siteUrl}/api/auth/oauth2/google/url`);
       const data = await googleUrlResponse.json();
       googleOauth2Url = data.url;
     }
