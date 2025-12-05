@@ -792,6 +792,89 @@ router.delete('/auth/change-email', async (req, res, next) => {
 
 /**
  * @swagger
+ * /auth/change-email/{newEmailVerificationCode}:
+ *   post:
+ *     summary: Complete email change process using verification code
+ *     tags: [Authentication]
+ *     parameters:
+ *       - in: path
+ *         name: newEmailVerificationCode
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The new email verification code
+ *     responses:
+ *       200:
+ *         description: Email change completed successfully
+ *         headers:
+ *           Set-Cookie:
+ *             description: |
+ *               Authentication cookie containing the JWT token.
+ *               - Cookie name: `auth_token`
+ *               - HttpOnly: true
+ *               - Secure: true (in production)
+ *               - Max-Age: 2592000 seconds (30 days)
+ *             schema:
+ *               type: string
+ *               example: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Secure; Max-Age=2592000
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: Token for authentication
+ *       404:
+ *         description: Email verification code not found
+ *       422:
+ *         description: Email already in use
+ */
+router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, next) => {
+  const { newEmailVerificationCode } = req.params;
+  // Find the user (if not found, error)
+  const { User } = await useMongooseModels();
+  const user = await User.findOne({ newEmailVerificationCode });
+  if (!user) {
+    return res.sendStatus(404);
+  }
+
+  // Verify the code and check expiration
+  if (!user.verifyNewEmailVerificationCode(newEmailVerificationCode)) {
+    return res.status(400).json({
+      error: makeI18nError(I18nError.VerificationCodeExpired),
+    });
+  }
+
+  const { newEmail } = user;
+
+  // Ensure the new email isn't in use by another user.
+  // This would be an unlikely situation, but is still technically possible.
+  // We validate at this point to ensure the owner of a given email address
+  // will not lose control of that email address because another user
+  // happened to request to change their email to that address first.
+  const existingUserWithEmail = await User.findOne({ email: newEmail });
+  if (existingUserWithEmail) {
+    return res.status(422).json({ error: makeI18nError(I18nError.EmailInUse) });
+  }
+
+  // Keep track of the user's current (now old) email address.
+  // Mark the user's email as verified by setting the verification code to null.
+  user.oldEmails.push(user.email);
+  user.email = newEmail as string;
+  user.newEmail = null;
+  user.newEmailVerificationCode = '';
+  user.newEmailVerificationExpires = new Date(0);
+  await user.save();
+
+  // Send a JWT back for auto-login
+  const token = user.generateJWT();
+  setAuthTokenCookie(res, token);
+  res.json({ token });
+});
+
+/**
+ * @swagger
  * /auth/reset-password:
  *   post:
  *     summary: Initiate password reset process
@@ -959,89 +1042,6 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
     }
     return next(err);
   }
-  // Send a JWT back for auto-login
-  const token = user.generateJWT();
-  setAuthTokenCookie(res, token);
-  res.json({ token });
-});
-
-/**
- * @swagger
- * /auth/change-email/{newEmailVerificationCode}:
- *   post:
- *     summary: Complete email change process using verification code
- *     tags: [Authentication]
- *     parameters:
- *       - in: path
- *         name: newEmailVerificationCode
- *         schema:
- *           type: string
- *         required: true
- *         description: The new email verification code
- *     responses:
- *       200:
- *         description: Email change completed successfully
- *         headers:
- *           Set-Cookie:
- *             description: |
- *               Authentication cookie containing the JWT token.
- *               - Cookie name: `auth_token`
- *               - HttpOnly: true
- *               - Secure: true (in production)
- *               - Max-Age: 2592000 seconds (30 days)
- *             schema:
- *               type: string
- *               example: auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...; HttpOnly; Secure; Max-Age=2592000
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
- *       404:
- *         description: Email verification code not found
- *       422:
- *         description: Email already in use
- */
-router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, next) => {
-  const { newEmailVerificationCode } = req.params;
-  // Find the user (if not found, error)
-  const { User } = await useMongooseModels();
-  const user = await User.findOne({ newEmailVerificationCode });
-  if (!user) {
-    return res.sendStatus(404);
-  }
-
-  // Verify the code and check expiration
-  if (!user.verifyNewEmailVerificationCode(newEmailVerificationCode)) {
-    return res.status(400).json({
-      error: makeI18nError(I18nError.VerificationCodeExpired),
-    });
-  }
-
-  const { newEmail } = user;
-
-  // Ensure the new email isn't in use by another user.
-  // This would be an unlikely situation, but is still technically possible.
-  // We validate at this point to ensure the owner of a given email address
-  // will not lose control of that email address because another user
-  // happened to request to change their email to that address first.
-  const existingUserWithEmail = await User.findOne({ email: newEmail });
-  if (existingUserWithEmail) {
-    return res.status(422).json({ error: makeI18nError(I18nError.EmailInUse) });
-  }
-
-  // Keep track of the user's current (now old) email address.
-  // Mark the user's email as verified by setting the verification code to null.
-  user.oldEmails.push(user.email);
-  user.email = newEmail as string;
-  user.newEmail = null;
-  user.newEmailVerificationCode = '';
-  user.newEmailVerificationExpires = new Date(0);
-  await user.save();
-
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
