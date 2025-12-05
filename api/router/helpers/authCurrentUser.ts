@@ -3,14 +3,22 @@ import jwt from 'jsonwebtoken';
 import status from 'http-status';
 import config from '../../config';
 import useMongooseModels from '../../mongoose/useMongooseModels';
-import { type Request } from 'express';
+import { type Request, type Response } from 'express';
 
 import type { UserDoc } from '../../mongoose/types';
 
 export const AUTH_COOKIE_NAME = 'auth_token';
-export const AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+export const AUTH_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30; // 30 days
 
 const { jwtSecret } = config;
+
+export const setAuthTokenCookie = (res: Response, token: string) => {
+  res.cookie(AUTH_COOKIE_NAME, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: AUTH_COOKIE_MAX_AGE,
+  });
+};
 
 const getTokenFromHeader = (req: Request): string | null => {
   const [tokenType, token] = req.headers.authorization?.split(' ') || [];

@@ -3,7 +3,7 @@ import createError from 'http-errors';
 import { FilterQuery, Types } from 'mongoose';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import authCurrentUser, { AUTH_COOKIE_MAX_AGE, AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
+import authCurrentUser, { setAuthTokenCookie } from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import deleteAccount from '../helpers/deleteAccount';
 import { UserDoc } from 'mongoose/types';
@@ -713,11 +713,7 @@ router.get('/admin/users/:email/login', async (req, res, next) => {
     }
 
     const token = user.generateJWT();
-    res.cookie(AUTH_COOKIE_NAME, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: AUTH_COOKIE_MAX_AGE,
-    });
+    setAuthTokenCookie(res, token);
     res.json({ token });
   }
   catch (error) {
