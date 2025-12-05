@@ -9,11 +9,10 @@ export const EmailSchema = new mongoose.Schema({
   success: { type: Boolean, required: true },
 }, { timestamps: true });
 
-EmailSchema.pre('validate', function (next) {
+EmailSchema.pre('validate', async function () {
   if (!this.text && !this.html) {
-    return next(new Error('Text or HTML required'));
+    throw new Error('Text or HTML required');
   }
-  next();
 });
 
 const Email = mongoose.model('Email', EmailSchema);

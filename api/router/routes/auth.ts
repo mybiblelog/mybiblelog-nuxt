@@ -8,7 +8,7 @@ import { I18nError, makeI18nError } from '../helpers/i18n-error';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import useMailgunService from '../../services/mailgun.service';
 import checkTestBypass from '../helpers/checkTestBypass';
-import { IUserSettings } from '../../mongoose/schemas/UserSettings';
+import UserSettings from '../../mongoose/schemas/UserSettings';
 import { isEmailVerified } from '../../mongoose/schemas/User';
 
 const { requireEmailVerification } = config;
@@ -309,11 +309,11 @@ router.post('/auth/register', async (req, res, next) => {
     user.email = email;
     user.password = password;
     // remaining settings will be set by Mongoose default
-    user.settings = { locale } as IUserSettings;
+    user.settings = new UserSettings({ locale });
 
     if (authBypass) {
       // setting emailVerificationCode to null will mark the user as email verified
-      user.emailVerificationCode = emailVerificationCode || null;
+      user.emailVerificationCode = emailVerificationCode || '';
       if (isAdmin) {
         user.isAdmin = true;
       }
@@ -460,12 +460,12 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     // Create new user account
     const user = new User();
     user.email = email;
-    user.emailVerificationCode = null; // Google verified emails don't need verification
+    user.emailVerificationCode = ''; // Google verified emails don't need verification
     user.password = null;
     user.googleId = id;
 
     // remaining settings will be set by Mongoose default
-    user.settings = { locale } as IUserSettings;
+    user.settings = new UserSettings({ locale });
 
     await user.save();
     const token = user.generateJWT();
@@ -533,8 +533,8 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   }
 
   // Mark the user's email as verified by setting the verification code to null
-  user.emailVerificationCode = null;
-  user.emailVerificationExpires = null;
+  user.emailVerificationCode = '';
+  user.emailVerificationExpires = new Date(0);
   await user.save();
 
   // Send a JWT back for auto-login
@@ -1038,8 +1038,8 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   user.oldEmails.push(user.email);
   user.email = newEmail as string;
   user.newEmail = null;
-  user.newEmailVerificationCode = null;
-  user.newEmailVerificationExpires = null;
+  user.newEmailVerificationCode = '';
+  user.newEmailVerificationExpires = new Date(0);
   await user.save();
 
   // Send a JWT back for auto-login

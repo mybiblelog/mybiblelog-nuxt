@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { InferSchemaType } from 'mongoose';
 import { Bible } from '@mybiblelog/shared';
 
 /**
@@ -72,12 +72,9 @@ const PassageSchema = new mongoose.Schema({
   },
 }, { timestamps: false });
 
-PassageSchema.pre('validate', function (next) {
+PassageSchema.pre('validate', async function () {
   if (!Bible.validateRange(this.startVerseId, this.endVerseId)) {
-    next(new Error('Invalid Verse Range'));
-  }
-  else {
-    next();
+    throw new Error('Invalid Verse Range');
   }
 });
 
@@ -110,15 +107,14 @@ export const PassageNoteSchema = new mongoose.Schema({
   },
 });
 
-PassageNoteSchema.pre('validate', function (next) {
+PassageNoteSchema.pre('validate', async function () {
   if (!this.content.length && !this.passages.length) {
-    next(new Error('One of `passages` or `content` required'));
-  }
-  else {
-    next();
+    throw new Error('One of `passages` or `content` required');
   }
 });
 
 const PassageNote = mongoose.model('PassageNote', PassageNoteSchema);
+
+export type IPassageNote = InferSchemaType<typeof PassageNoteSchema>;
 
 export default PassageNote;

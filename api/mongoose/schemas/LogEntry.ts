@@ -80,12 +80,9 @@ export const LogEntrySchema = new mongoose.Schema({
   },
 });
 
-LogEntrySchema.pre('validate', function (next) {
+LogEntrySchema.pre('validate', async function () {
   if (!Bible.validateRange(this.startVerseId, this.endVerseId)) {
-    next(new Error('Invalid Verse Range'));
-  }
-  else {
-    next();
+    throw new Error('Invalid Verse Range');
   }
 });
 

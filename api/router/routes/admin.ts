@@ -1,12 +1,11 @@
 import express from 'express';
 import createError from 'http-errors';
-import { FilterQuery, Types } from 'mongoose';
+import { type QueryFilter } from 'mongoose';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import authCurrentUser, { setAuthTokenCookie } from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import deleteAccount from '../helpers/deleteAccount';
-import { UserDoc } from 'mongoose/types';
 import { IUser } from '../../mongoose/schemas/User';
 
 dayjs.extend(utc);
@@ -16,69 +15,6 @@ type PastWeekEngagementData = {
   newUserAccounts: number;
   usersWithLogEntry: number;
   usersWithNote: number;
-};
-
-const getUserEngagementData = async (user: IUser) => {
-  const { LogEntry, PassageNote } = await useMongooseModels();
-  const lastLogEntry = await LogEntry
-    .find({ owner: new Types.ObjectId(user._id) })
-    .sort({ date: -1 })
-    .limit(1)
-    .exec();
-  const logEntryCount = await LogEntry
-    .countDocuments({ owner: new Types.ObjectId(user._id) })
-    .exec();
-  const lastNote = await PassageNote
-    .find({ owner: new Types.ObjectId(user._id) })
-    .sort({ createdAt: -1 })
-    .limit(1)
-    .exec();
-  const noteCount = await PassageNote
-    .countDocuments({ owner: new Types.ObjectId(user._id) })
-    .exec();
-
-  return {
-    ...user.toObject(),
-    lastLogEntryDate: lastLogEntry[0]?.date || '',
-    logEntryCount,
-    lastNoteDate: lastNote[0] ? dayjs(lastNote[0]?.createdAt).format('YYYY-MM-DD') : '',
-    noteCount,
-  };
-};
-
-let generatingUserEngagementReport = false;
-let userEngagementReportProgress = 0;
-const generateUserEngagementReport = async () => {
-  const { User, Report } = await useMongooseModels();
-
-  generatingUserEngagementReport = true;
-  userEngagementReportProgress = 0;
-
-  const users = await User
-    .find()
-    .select({
-      _id: 1,
-      email: 1,
-      isAdmin: 1,
-      createdAt: 1,
-    })
-    .exec();
-
-  const userObjects = users.map(user => user.toObject());
-  const populatedUsers: UserDoc[] = [];
-  for (const user of userObjects) {
-    const populatedUser = await getUserEngagementData(user);
-    populatedUsers.push(populatedUser);
-    userEngagementReportProgress = Math.floor(populatedUsers.length / users.length * 100);
-  }
-
-  const report = new Report();
-  report.type = 'user-engagement';
-  report.data = { users: populatedUsers };
-  await report.save();
-
-  userEngagementReportProgress = 100;
-  generatingUserEngagementReport = false;
 };
 
 const getPastWeekEngagement = async () => {
@@ -227,127 +163,6 @@ router.get('/admin/feedback', async (req, res, next) => {
       .sort({ createdAt: -1 })
       .exec();
     res.send(feedback);
-  }
-  catch (error) {
-    next(error);
-  }
-});
-
-/**
- * @swagger
- * /admin/reports/user-engagement/status:
- *   get:
- *     summary: Get status of user engagement report generation
- *     tags: [Admin]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Status of the report generation
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   enum: [processing, ready]
- *                   description: Current status of the report
- *                 progress:
- *                   type: number
- *                   description: Progress percentage (0-100)
- *       401:
- *         description: Unauthorized - User is not authenticated
- *       403:
- *         description: Forbidden - User is not an admin
- */
-// GET user report status ('processing', 'ready')
-router.get('/admin/reports/user-engagement/status', async (req, res, next) => {
-  try {
-    const { Report } = await useMongooseModels();
-    await authCurrentUser(req, { adminOnly: true });
-    const report = await Report.findOne({ type: 'user-engagement' });
-
-    // If a report is in progress, return the progress
-    if (generatingUserEngagementReport) {
-      return res.send({
-        status: 'processing',
-        progress: userEngagementReportProgress,
-      });
-    }
-
-    // If there is no report, start making one
-    if (!report) {
-      generateUserEngagementReport();
-      return res.send({
-        status: 'processing',
-        progress: 0,
-      });
-    }
-
-    // If the current report is expired, delete it and start making a new one
-    if (dayjs(report.createdAt).isBefore(dayjs().subtract(1, 'hour'))) {
-      await Report.deleteOne({ _id: report._id });
-      generateUserEngagementReport();
-      return res.send({
-        status: 'processing',
-        progress: 0,
-      });
-    }
-
-    // If a report exists and is not expired, it is ready
-    res.send({
-      status: 'ready',
-      progress: 100,
-    });
-  }
-  catch (error) {
-    next(error);
-  }
-});
-
-/**
- * @swagger
- * /admin/reports/user-engagement:
- *   get:
- *     summary: Get user engagement report
- *     tags: [Admin]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: User engagement report data
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     users:
- *                       type: array
- *                       items:
- *                         type: object
- *       401:
- *         description: Unauthorized - User is not authenticated
- *       403:
- *         description: Forbidden - User is not an admin
- *       404:
- *         description: Report not found
- */
-// GET user engagement report (if exists)
-router.get('/admin/reports/user-engagement', async (req, res, next) => {
-  try {
-    const { Report } = await useMongooseModels();
-    await authCurrentUser(req, { adminOnly: true });
-    const report = await Report.findOne({ type: 'user-engagement' });
-    if (report) {
-      return res.send({
-        data: report.data,
-      });
-    }
-    return next(createError(404));
   }
   catch (error) {
     next(error);
@@ -555,7 +370,7 @@ router.get('/admin/users', async (req, res, next) => {
       return next(createError(400, 'Invalid query parameters'));
     }
 
-    const filterQuery: FilterQuery<IUser> = {}; // all users
+    const filterQuery: QueryFilter<IUser> = {}; // all users
 
     if (query.searchText) {
       // Escape special regex characters to prevent injection

@@ -116,7 +116,7 @@ export const DailyReminderSchema = new mongoose.Schema({
   },
 });
 
-DailyReminderSchema.pre('save', function (next) {
+DailyReminderSchema.pre('save', async function () {
   const nextOccurrence = this.schema.methods.getNextOccurrence.call(this);
   this.nextOccurrence = nextOccurrence.getTime();
 
@@ -125,7 +125,6 @@ DailyReminderSchema.pre('save', function (next) {
   if (this.isModified('active') && this.active) {
     this.unsubscribeCode = crypto.randomBytes(64).toString('hex');
   }
-  next();
 });
 
 const DailyReminder = mongoose.model('DailyReminder', DailyReminderSchema);

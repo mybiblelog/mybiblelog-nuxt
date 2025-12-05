@@ -30,15 +30,7 @@ export const StartPages = ['start', 'today', 'books', 'checklist', 'calendar', '
  *           description: The user's preferred locale
  */
 
-export interface IUserSettings extends Document {
-  dailyVerseCountGoal: number;
-  lookBackDate: string;
-  preferredBibleVersion: string;
-  startPage: string;
-  locale: LocaleCode;
-}
-
-export const UserSettingsSchema = new Schema<IUserSettings>({
+export const UserSettingsSchema = new Schema({
   dailyVerseCountGoal: {
     type: Number,
     default: 86,
