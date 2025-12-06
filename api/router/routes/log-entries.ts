@@ -75,7 +75,7 @@ router.get('/log-entries', async (req, res, next) => {
   try {
     const { LogEntry } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
-    const { startDate, endDate } = req.query;
+    const { startDate, endDate } = req.query as { startDate: string; endDate: string };
 
     if (startDate && !SimpleDate.validateString(startDate)) {
       return next(createError(400, 'Invalid startDate'));
@@ -91,16 +91,16 @@ router.get('/log-entries', async (req, res, next) => {
     }
 
     if (startDate && !endDate) {
-      const logEntries = await LogEntry.find({ owner: currentUser, date: { $gte: startDate } });
+      const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate } });
       return res.send(logEntries);
     }
 
     if (!startDate && endDate) {
-      const logEntries = await LogEntry.find({ owner: currentUser, date: { $lte: endDate } });
+      const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $lte: endDate } });
       return res.send(logEntries);
     }
 
-    const logEntries = await LogEntry.find({ owner: currentUser, date: { $gte: startDate, $lte: endDate } });
+    const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate, $lte: endDate } });
     return res.send(logEntries);
   }
   catch (error) {
@@ -143,7 +143,7 @@ router.get('/log-entries/:id', async (req, res, next) => {
     const { LogEntry } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
 
-    const logEntry = await LogEntry.findOne({ owner: currentUser, _id: id });
+    const logEntry = await LogEntry.findOne({ owner: currentUser._id, _id: id });
     if (!logEntry) {
       return next(createError(404, 'Not Found'));
     }
@@ -260,7 +260,7 @@ router.put('/log-entries/:id', async (req, res, next) => {
     const currentUser = await authCurrentUser(req);
     const { date, startVerseId, endVerseId } = req.body;
 
-    const logEntry = await LogEntry.findOne({ owner: currentUser, _id: id });
+    const logEntry = await LogEntry.findOne({ owner: currentUser._id, _id: id });
     if (!logEntry) {
       return next(createError(404, 'Not Found'));
     }
@@ -315,7 +315,7 @@ router.delete('/log-entries/:id', async (req, res, next) => {
     const { LogEntry } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
 
-    const result = await LogEntry.deleteOne({ owner: currentUser, _id: id });
+    const result = await LogEntry.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
       return next(createError(404, 'Not Found'));
     }

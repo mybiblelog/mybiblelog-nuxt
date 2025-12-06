@@ -5,8 +5,8 @@ import authCurrentUser from '../helpers/authCurrentUser';
 import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 
-import { FilterQuery, Types } from 'mongoose';
-import { IPassageNote } from 'mongoose/types';
+import { QueryFilter, Types } from 'mongoose';
+import { IPassageNote } from '../../mongoose/schemas/PassageNote';
 const router = express.Router();
 
 /**
@@ -317,7 +317,7 @@ router.get('/passage-notes', async (req, res, next) => {
       return res.status(400).send({ error: 'Invalid query parameters' });
     }
 
-    const filterQuery: FilterQuery<IPassageNote> = {
+    const filterQuery: QueryFilter<IPassageNote> = {
       owner: currentUser._id,
     };
 
@@ -437,7 +437,7 @@ router.get('/passage-notes/:id', async (req, res, next) => {
     const { PassageNote } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
 
-    const passageNote = await PassageNote.findOne({ owner: currentUser, _id: id });
+    const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
       return next(createError(404, 'Not Found'));
     }
@@ -575,7 +575,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
     const currentUser = await authCurrentUser(req);
     const { content, passages, tags } = req.body;
 
-    const passageNote = await PassageNote.findOne({ owner: currentUser, _id: id });
+    const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
       return next(createError(404, 'Not Found'));
     }
@@ -636,7 +636,7 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
     const { PassageNote } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
 
-    const result = await PassageNote.deleteOne({ owner: currentUser, _id: id });
+    const result = await PassageNote.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
       return next(createError(404, 'Not Found'));
     }

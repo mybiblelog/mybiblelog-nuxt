@@ -5,7 +5,7 @@
       "name": "Debug API Server",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/api/node_modules/.bin/ts-node",
+      "program": "${workspaceFolder}/node_modules/.bin/ts-node",
       "args": ["server.ts"],
       "cwd": "${workspaceFolder}/api",
       "env": {

@@ -118,7 +118,7 @@ router.get('/passage-note-tags/:id', async (req, res, next) => {
     const { PassageNoteTag } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
 
-    const passageNoteTag = await PassageNoteTag.findOne({ owner: currentUser, _id: id });
+    const passageNoteTag = await PassageNoteTag.findOne({ owner: currentUser._id, _id: id });
     if (!passageNoteTag) {
       return next(createError(404, 'Not Found'));
     }
@@ -252,7 +252,7 @@ router.put('/passage-note-tags/:id', async (req, res, next) => {
     const currentUser = await authCurrentUser(req);
     const { label, color, description } = req.body;
 
-    const passageNoteTag = await PassageNoteTag.findOne({ owner: currentUser, _id: id });
+    const passageNoteTag = await PassageNoteTag.findOne({ owner: currentUser._id, _id: id });
     if (!passageNoteTag) {
       return next(createError(404, 'Not Found'));
     }
@@ -309,7 +309,7 @@ router.delete('/passage-note-tags/:id', async (req, res, next) => {
     const { PassageNoteTag } = await useMongooseModels();
     const currentUser = await authCurrentUser(req);
 
-    const result = await PassageNoteTag.deleteOne({ owner: currentUser, _id: id });
+    const result = await PassageNoteTag.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
       return next(createError(404, 'Not Found'));
     }

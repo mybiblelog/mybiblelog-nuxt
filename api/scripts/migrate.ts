@@ -45,6 +45,44 @@ const main = async (): Promise<void> => {
     await user.save();
   }
 
+  // users with null verification codes or expiration dates need to use empty strings and dates in the past
+  const usersWithNullVerificationCodesOrExpirationDates = await User.find({ $or: [
+    { 'emailVerificationCode': null },
+    { 'emailVerificationExpires': null },
+    { 'newEmailVerificationCode': null },
+    { 'newEmailVerificationExpires': null },
+    { 'passwordResetCode': null },
+    { 'passwordResetExpires': null },
+  ] });
+  for (const user of usersWithNullVerificationCodesOrExpirationDates) {
+    console.log(`User ${user.email} has at least one null verification code or expiration date...`);
+    if (user.emailVerificationCode === null) {
+      console.log(`  emailVerificationCode is null, setting to empty string...`);
+      user.emailVerificationCode = '';
+    }
+    if (user.emailVerificationExpires === null) {
+      console.log(`  emailVerificationExpires is null, setting to date in the past...`);
+      user.emailVerificationExpires = new Date(0);
+    }
+    if (user.newEmailVerificationCode === null) {
+      console.log(`  newEmailVerificationCode is null, setting to empty string...`);
+      user.newEmailVerificationCode = '';
+    }
+    if (user.newEmailVerificationExpires === null) {
+      console.log(`  newEmailVerificationExpires is null, setting to date in the past...`);
+      user.newEmailVerificationExpires = new Date(0);
+    }
+    if (user.passwordResetCode === null) {
+      console.log(`  passwordResetCode is null, setting to empty string...`);
+      user.passwordResetCode = '';
+    }
+    if (user.passwordResetExpires === null) {
+      console.log(`  passwordResetExpires is null, setting to date in the past...`);
+      user.passwordResetExpires = new Date(0);
+    }
+    await user.save();
+  }
+
   // close connection
   await closeConnection();
 };

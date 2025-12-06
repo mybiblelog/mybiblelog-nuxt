@@ -42,7 +42,8 @@ export default {
   name: 'ReminderSettingsPage',
   middleware: ['auth'],
   async asyncData({ app }) {
-    const response = await fetch(`/api/reminders/daily-reminder`, {
+    const url = new URL('/api/reminders/daily-reminder', app.$config.siteUrl).toString();
+    const response = await fetch(url, {
       credentials: 'include',
       headers: {
         Authorization: app.ssrToken ? `Bearer ${app.ssrToken}` : undefined,

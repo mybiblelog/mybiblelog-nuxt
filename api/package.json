@@ -38,7 +38,7 @@
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.2",
     "mailgun.js": "^12.1.1",
-    "mongoose": "^8.19.2",
+    "mongoose": "^9.0.0",
     "mongoose-unique-validator": "^5.0.1",
     "morgan": "^1.10.0",
     "supertest": "^7.1.4",
