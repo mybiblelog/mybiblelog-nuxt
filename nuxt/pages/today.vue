@@ -101,6 +101,7 @@ export default {
     LogEntry,
     InfoLink,
   },
+  middleware: ['auth'],
   data() {
     return {
       editorOpen: false,
@@ -111,6 +112,11 @@ export default {
         endVerseId: 0,
       },
       loadingReadingSuggestions: true,
+    };
+  },
+  head() {
+    return {
+      title: this.$t('today'),
     };
   },
   computed: {
@@ -170,13 +176,15 @@ export default {
   methods: {
     actionsForTodayLogEntry(entry) {
       return [
+        { label: this.$t('open'), callback: () => this.openPassageInBible(entry, false) },
+        { label: this.$t('take_note'), callback: () => this.takeNoteOnPassage(entry) },
         { label: this.$t('edit'), callback: () => this.openEditEntryForm(entry.id) },
         { label: this.$t('delete'), callback: () => this.deleteEntry(entry.id) },
       ];
     },
     actionsForReadingSuggestionPassage(passage) {
       return [
-        { label: this.$t('open'), callback: () => this.openPassageInBible(passage) },
+        { label: this.$t('open'), callback: () => this.openPassageInBible(passage, true) },
         { label: this.$t('track'), callback: () => this.trackPassage(passage) },
       ];
     },
@@ -241,7 +249,7 @@ export default {
       this.editorOpen = false;
       this.editorLogEntry = { empty: true };
     },
-    openPassageInBible(passage) {
+    openPassageInBible(passage, track) {
       const { startVerseId } = passage;
       const start = Bible.parseVerseId(startVerseId);
       const url = this.getReadingUrl(start.book, start.chapter);
@@ -250,7 +258,9 @@ export default {
       // When a chapter is opened in the Bible,
       // go ahead and open the log entry modal
       // so it's easy to log reading upon return
-      setTimeout(() => this.trackPassage(passage), 500);
+      if (track) {
+        setTimeout(() => this.trackPassage(passage), 500);
+      }
     },
     trackPassage(passage) {
       const { startVerseId, endVerseId } = passage;
@@ -262,13 +272,15 @@ export default {
       };
       this.editorOpen = true;
     },
+    takeNoteOnPassage(passage) {
+      const { startVerseId, endVerseId } = passage;
+      // FIXME: this silently creates an empty note, but we want to open a prepopulated editor modal
+      this.$store.dispatch('passage-notes/createPassageNote', {
+        passages: [{ startVerseId, endVerseId }],
+        content: '',
+      });
+    },
   },
-  head() {
-    return {
-      title: this.$t('today'),
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 
@@ -285,6 +297,7 @@ export default {
     "loading": "Lädt...",
     "edit": "Bearbeiten",
     "delete": "Löschen",
+    "take_note": "Notiz hinzufügen",
     "no_entries": "Keine Einträge",
     "suggestions": "Vorschläge",
     "open": "Öffnen",
@@ -300,6 +313,7 @@ export default {
     "loading": "Loading...",
     "edit": "Edit",
     "delete": "Delete",
+    "take_note": "Take Note",
     "no_entries": "No Entries",
     "suggestions": "Suggestions",
     "open": "Open",
@@ -315,6 +329,7 @@ export default {
     "loading": "Cargando...",
     "edit": "Editar",
     "delete": "Borrar",
+    "take_note": "Tomar nota",
     "no_entries": "No hay entradas",
     "suggestions": "Sugerencias",
     "open": "Abrir",
@@ -330,6 +345,7 @@ export default {
     "loading": "Chargement...",
     "edit": "Éditer",
     "delete": "Supprimer",
+    "take_note": "Prendre note",
     "no_entries": "Pas d'entrées",
     "suggestions": "Suggestions",
     "open": "Ouvrir",
@@ -345,6 +361,7 @@ export default {
     "loading": "Carregando...",
     "edit": "Editar",
     "delete": "Excluir",
+    "take_note": "Tomar nota",
     "no_entries": "Sem Entradas",
     "suggestions": "Sugestões",
     "open": "Abrir",
@@ -360,6 +377,7 @@ export default {
     "loading": "Завантаження...",
     "edit": "Редагувати",
     "delete": "Видалити",
+    "take_note": "Записати",
     "no_entries": "Немає записів",
     "suggestions": "Рекомендації",
     "open": "Відкрити",
