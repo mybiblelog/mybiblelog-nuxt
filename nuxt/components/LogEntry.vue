@@ -24,11 +24,7 @@
         </template>
       </div>
       <div class="button-controls">
-        <div v-if="actions.length" class="buttons">
-          <button v-for="(action, index) in actions" :key="index" class="button is-small" @click="action.callback">
-            {{ action.label }}
-          </button>
-        </div>
+        <action-menu :actions="actions" />
       </div>
     </div>
   </div>
@@ -36,9 +32,13 @@
 
 <script>
 import { Bible } from '@mybiblelog/shared';
+import ActionMenu from '@/components/ActionMenu';
 
 export default {
   name: 'LogEntry',
+  components: {
+    ActionMenu,
+  },
   props: {
     empty: {
       // allows the log entry to be displayed without any border or shadow
