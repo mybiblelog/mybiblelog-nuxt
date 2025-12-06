@@ -131,8 +131,9 @@ export default {
   right: 0;
   margin-top: 0.25rem;
   background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   min-width: 150px;
   z-index: 39; // Above overlay
   overflow: hidden;
