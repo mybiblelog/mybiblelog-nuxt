@@ -105,9 +105,14 @@ export default {
     },
     actionsForLogEntry(entry) {
       return [
+        { label: this.$t('open_bible'), callback: () => this.openPassageInBible(entry) },
+        { label: this.$t('take_note'), callback: () => this.takeNoteOnPassage(entry) },
         { label: this.$t('edit'), callback: () => this.openEditEntryForm(entry.id) },
         { label: this.$t('delete'), callback: () => this.deleteEntry(entry.id) },
       ];
+    },
+    getReadingUrl(bookIndex, chapterIndex) {
+      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
     },
     async deleteEntry(id) {
       const confirmed = await this.$store.dispatch('dialog/confirm', {
@@ -136,6 +141,20 @@ export default {
         endVerseId,
       };
       this.editorOpen = true;
+    },
+    openPassageInBible(passage) {
+      const { startVerseId } = passage;
+      const start = Bible.parseVerseId(startVerseId);
+      const url = this.getReadingUrl(start.book, start.chapter);
+      window.open(url, '_blank');
+    },
+    takeNoteOnPassage(passage) {
+      const { startVerseId, endVerseId } = passage;
+      // FIXME: this silently creates an empty note, but we want to open a prepopulated editor modal
+      this.$store.dispatch('passage-notes/createPassageNote', {
+        passages: [{ startVerseId, endVerseId }],
+        content: '',
+      });
     },
     logEntryEditorClosed() {
       this.editorOpen = false;
@@ -177,6 +196,8 @@ export default {
   "de": {
     "page_title": "Kalender",
     "verse": "Vers | Verse",
+    "open_bible": "Bibel öffnen",
+    "take_note": "Notiz hinzufügen",
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "no_entries": "Keine Einträge",
@@ -186,6 +207,8 @@ export default {
   "en": {
     "page_title": "Calendar",
     "verse": "verse | verses",
+    "open_bible": "Open Bible",
+    "take_note": "Take Note",
     "edit": "Edit",
     "delete": "Delete",
     "no_entries": "No Entries",
@@ -195,6 +218,8 @@ export default {
   "es": {
     "page_title": "Calendario",
     "verse": "versículo | versículos",
+    "open_bible": "Abrir en la Biblia",
+    "take_note": "Tomar nota",
     "edit": "Editar",
     "delete": "Borrar",
     "no_entries": "No hay entradas",
@@ -204,6 +229,8 @@ export default {
   "fr": {
     "page_title": "Calendrier",
     "verse": "verset | versets",
+    "open_bible": "Ouvrir dans la Bible",
+    "take_note": "Prendre note",
     "edit": "Modifier",
     "delete": "Supprimer",
     "no_entries": "Aucune entrée",
@@ -213,6 +240,8 @@ export default {
   "pt": {
     "page_title": "Calendário",
     "verse": "versículo | versículos",
+    "open_bible": "Ler na Biblia",
+    "take_note": "Tomar nota",
     "edit": "Editar",
     "delete": "Apagar",
     "no_entries": "Nenhum registro",
@@ -222,6 +251,8 @@ export default {
   "uk": {
     "page_title": "Календар",
     "verse": "верс | верси",
+    "open_bible": "Читати в Біблії",
+    "take_note": "Записати",
     "edit": "Редагувати",
     "delete": "Видалити",
     "no_entries": "Немає записів",

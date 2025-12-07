@@ -176,7 +176,7 @@ export default {
   methods: {
     actionsForTodayLogEntry(entry) {
       return [
-        { label: this.$t('open'), callback: () => this.openPassageInBible(entry, false) },
+        { label: this.$t('open_bible'), callback: () => this.openPassageInBible(entry, false) },
         { label: this.$t('take_note'), callback: () => this.takeNoteOnPassage(entry) },
         { label: this.$t('edit'), callback: () => this.openEditEntryForm(entry.id) },
         { label: this.$t('delete'), callback: () => this.deleteEntry(entry.id) },
@@ -184,8 +184,8 @@ export default {
     },
     actionsForReadingSuggestionPassage(passage) {
       return [
-        { label: this.$t('open'), callback: () => this.openPassageInBible(passage, true) },
-        { label: this.$t('track'), callback: () => this.trackPassage(passage) },
+        { label: this.$t('open_bible'), callback: () => this.openPassageInBible(passage, true) },
+        { label: this.$t('log_it'), callback: () => this.trackPassage(passage) },
       ];
     },
     getReadingUrl(bookIndex, chapterIndex) {
@@ -300,8 +300,8 @@ export default {
     "take_note": "Notiz hinzufügen",
     "no_entries": "Keine Einträge",
     "suggestions": "Vorschläge",
-    "open": "Öffnen",
-    "track": "Verfolgen",
+    "open_bible": "Bibel öffnen",
+    "log_it": "Zu Log hinzufügen",
     "no_suggestions": "Keine Vorschläge",
     "are_you_sure_you_want_to_delete_this_entry": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
     "the_log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden."
@@ -316,8 +316,8 @@ export default {
     "take_note": "Take Note",
     "no_entries": "No Entries",
     "suggestions": "Suggestions",
-    "open": "Open",
-    "track": "Track",
+    "open_bible": "Open Bible",
+    "log_it": "Log It",
     "no_suggestions": "No Suggestions",
     "are_you_sure_you_want_to_delete_this_entry": "Are you sure you want to delete this entry?",
     "the_log_entry_could_not_be_deleted": "The log entry could not be deleted."
@@ -332,8 +332,8 @@ export default {
     "take_note": "Tomar nota",
     "no_entries": "No hay entradas",
     "suggestions": "Sugerencias",
-    "open": "Abrir",
-    "track": "Seguir",
+    "open_bible": "Abrir en la Biblia",
+    "log_it": "Agregar a registro",
     "no_suggestions": "No hay sugerencias",
     "are_you_sure_you_want_to_delete_this_entry": "¿Estás seguro de que quieres borrar esta entrada?",
     "the_log_entry_could_not_be_deleted": "No se pudo borrar la entrada del registro."
@@ -348,8 +348,8 @@ export default {
     "take_note": "Prendre note",
     "no_entries": "Pas d'entrées",
     "suggestions": "Suggestions",
-    "open": "Ouvrir",
-    "track": "Suivre",
+    "open_bible": "Ouvrir dans la Bible",
+    "log_it": "Ajouter à registre",
     "no_suggestions": "Aucune suggestion",
     "are_you_sure_you_want_to_delete_this_entry": "Êtes-vous sûr de vouloir supprimer cette entrée?",
     "the_log_entry_could_not_be_deleted": "L'entrée du journal n'a pas pu être supprimée."
@@ -364,8 +364,8 @@ export default {
     "take_note": "Tomar nota",
     "no_entries": "Sem Entradas",
     "suggestions": "Sugestões",
-    "open": "Abrir",
-    "track": "Rastrear",
+    "open_bible": "Ler na Biblia",
+    "log_it": "Adicionar a registro",
     "no_suggestions": "Sem sugestões",
     "are_you_sure_you_want_to_delete_this_entry": "Tem certeza de que deseja excluir esta entrada?",
     "the_log_entry_could_not_be_deleted": "A entrada do registro não pôde ser excluída."
@@ -380,8 +380,8 @@ export default {
     "take_note": "Записати",
     "no_entries": "Немає записів",
     "suggestions": "Рекомендації",
-    "open": "Відкрити",
-    "track": "Відстежити",
+    "open_bible": "Читати в Біблії",
+    "log_it": "Додати до реєстру",
     "no_suggestions": "Немає рекомендацій",
     "are_you_sure_you_want_to_delete_this_entry": "Ви впевнені, що хочете видалити цей запис?",
     "the_log_entry_could_not_be_deleted": "Не вдалося видалити запис."

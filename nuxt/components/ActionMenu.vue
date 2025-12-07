@@ -90,7 +90,7 @@ export default {
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
