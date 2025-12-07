@@ -150,8 +150,7 @@ export default {
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      // FIXME: this silently creates an empty note, but we want to open a prepopulated editor modal
-      this.$store.dispatch('passage-notes/createPassageNote', {
+      this.$store.dispatch('passage-note-editor/openEditor', {
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });

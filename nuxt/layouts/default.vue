@@ -6,6 +6,7 @@
     </div>
     <toaster />
     <pop-ups />
+    <passage-note-editor-modal />
     <floating-feedback-button />
   </div>
 </template>
@@ -15,6 +16,7 @@ import SiteNav from '@/components/SiteNav.vue';
 import FloatingFeedbackButton from '@/components/FloatingFeedbackButton.vue';
 import Toaster from '@/components/Toaster.vue';
 import PopUps from '@/components/popups/PopUps.vue';
+import PassageNoteEditorModal from '@/components/popups/PassageNoteEditorModal.vue';
 
 export default {
   components: {
@@ -22,6 +24,7 @@ export default {
     FloatingFeedbackButton,
     Toaster,
     PopUps,
+    PassageNoteEditorModal,
   },
   head() {
     return {
