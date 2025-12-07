@@ -482,21 +482,45 @@ form {
 form > div {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 form label {
-  font-size: 14px;
-  margin-bottom: 0.25rem;
+  position: absolute;
+  top: -0.5rem;
+  left: 0.75rem;
+  color: #09f;
+  background-color: #fff;
+  padding: 0 0.25rem;
+  z-index: 1;
+  pointer-events: none;
 }
 
-form input,
-form select {
+form input {
   font-size: 16px;
-  height: 2.5rem;
+  min-height: 3rem;
   padding: 0.5rem;
+  padding-top: 1.125rem;
   border: 2px solid #333;
   width: unset;
   border-radius: 0.25rem;
+  box-sizing: border-box;
+}
+
+form select {
+  font-size: 16px;
+  height: 3rem;
+  padding: 0.5rem;
+  padding-top: 1.125rem;
+  border: 2px solid #333;
+  width: unset;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  padding-right: 2rem;
 }
 
 form input:not(:disabled),
