@@ -3,7 +3,6 @@
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-two-thirds-tablet is-half-desktop">
-          <log-entry-editor-modal v-if="editorOpen" ref="logEntryEditorModal" :populate-with="editorLogEntry" @closed="logEntryEditorClosed" />
           <client-only>
             <busy-bar :busy="dateVerseCountsBusy" />
             <div id="calendar-page">
@@ -18,7 +17,7 @@
                       {{ entryDate.verses }} {{ $tc('verse', entryDate.verses) }}
                     </div>
                   </div>
-                  <button class="button is-small" :disabled="editorOpen" @click="openAddEntryFormForDate(entryDate.date)">
+                  <button class="button is-small" @click="openAddEntryFormForDate(entryDate.date)">
                     +
                   </button>
                 </div>
@@ -39,7 +38,6 @@ import * as dayjs from 'dayjs';
 import { Bible, displayDate } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import CalendarMonth from '@/components/calendar/CalendarMonth';
-import LogEntryEditorModal from '@/components/forms/LogEntryEditorModal';
 import LogEntry from '@/components/LogEntry';
 
 export default {
@@ -47,19 +45,11 @@ export default {
   components: {
     BusyBar,
     CalendarMonth,
-    LogEntryEditorModal,
     LogEntry,
   },
   data() {
     return {
       currentDate: null,
-      editorOpen: false,
-      editorLogEntry: {
-        id: null,
-        date: dayjs().format('YYYY-MM-DD'),
-        startVerseId: 0,
-        endVerseId: 0,
-      },
     };
   },
   async fetch() {
@@ -128,19 +118,17 @@ export default {
       }
     },
     openAddEntryFormForDate(date) {
-      this.editorLogEntry = { empty: true, date };
-      this.editorOpen = true;
+      this.$store.dispatch('log-entry-editor/openEditor', { empty: true, date });
     },
     openEditEntryForm(id) {
       const targetEntry = this.logEntries.find(e => e.id === id);
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.editorLogEntry = {
+      this.$store.dispatch('log-entry-editor/openEditor', {
         id,
         date,
         startVerseId,
         endVerseId,
-      };
-      this.editorOpen = true;
+      });
     },
     openPassageInBible(passage) {
       const { startVerseId } = passage;
@@ -154,10 +142,6 @@ export default {
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });
-    },
-    logEntryEditorClosed() {
-      this.editorOpen = false;
-      this.editorLogEntry = { empty: true };
     },
     selectDate(date) {
       this.currentDate = date;

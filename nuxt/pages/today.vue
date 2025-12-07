@@ -9,12 +9,11 @@
               {{ $t('today') }}
               <info-link :to="localePath('/about/page-features--today')" />
             </h1>
-            <button class="button is-info" :disabled="editorOpen" @click="openAddEntryForm">
+            <button class="button is-info" @click="openAddEntryForm">
               {{ $t('add_entry') }}
             </button>
           </header>
           <br>
-          <log-entry-editor-modal v-if="editorOpen" ref="logEntryEditorModal" :populate-with="editorLogEntry" @closed="logEntryEditorClosed" />
           <double-progress-bar :primary-percentage="dailyGoalPercentCompleteNew" :secondary-percentage="dailyGoalPercentComplete" />
           <div class="level is-mobile">
             <div class="level-left">
@@ -88,7 +87,6 @@ import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import DoubleProgressBar from '@/components/DoubleProgressBar';
-import LogEntryEditorModal from '@/components/forms/LogEntryEditorModal';
 import LogEntry from '@/components/LogEntry';
 import InfoLink from '@/components/InfoLink';
 
@@ -97,20 +95,12 @@ export default {
   components: {
     BusyBar,
     DoubleProgressBar,
-    LogEntryEditorModal,
     LogEntry,
     InfoLink,
   },
   middleware: ['auth'],
   data() {
     return {
-      editorOpen: false,
-      editorLogEntry: {
-        id: null,
-        date: dayjs().format('YYYY-MM-DD'),
-        startVerseId: 0,
-        endVerseId: 0,
-      },
       loadingReadingSuggestions: true,
     };
   },
@@ -231,23 +221,17 @@ export default {
       }
     },
     openAddEntryForm() {
-      this.editorLogEntry = { empty: true };
-      this.editorOpen = true;
+      this.$store.dispatch('log-entry-editor/openEditor', { empty: true });
     },
     openEditEntryForm(id) {
       const targetEntry = this.logEntries.find(e => e.id === id);
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.editorLogEntry = {
+      this.$store.dispatch('log-entry-editor/openEditor', {
         id,
         date,
         startVerseId,
         endVerseId,
-      };
-      this.editorOpen = true;
-    },
-    logEntryEditorClosed() {
-      this.editorOpen = false;
-      this.editorLogEntry = { empty: true };
+      });
     },
     openPassageInBible(passage, track) {
       const { startVerseId } = passage;
@@ -264,13 +248,12 @@ export default {
     },
     trackPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      this.editorLogEntry = {
+      this.$store.dispatch('log-entry-editor/openEditor', {
         id: null,
         date: dayjs().format('YYYY-MM-DD'),
         startVerseId,
         endVerseId,
-      };
-      this.editorOpen = true;
+      });
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;

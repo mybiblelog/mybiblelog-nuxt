@@ -41,7 +41,6 @@
         <chapter-report :key="report.chapterIndex" :report="report" @createLogEntry="openAddEntryForm" />
       </template>
     </div>
-    <log-entry-editor-modal v-if="editorOpen" ref="logEntryEditorModal" :populate-with="editorLogEntry" @closed="logEntryEditorClosed" />
   </div>
 </template>
 
@@ -50,7 +49,6 @@ import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import ChapterReport from '@/components/ChapterReport';
 import SegmentBar from '@/components/SegmentBar';
-import LogEntryEditorModal from '@/components/forms/LogEntryEditorModal';
 import CaretRight from '@/components/svg/CaretRight';
 
 const calcPercent = (numerator, denominator) => {
@@ -62,7 +60,6 @@ export default {
   components: {
     ChapterReport,
     SegmentBar,
-    LogEntryEditorModal,
     CaretRight,
   },
   props: {
@@ -77,13 +74,6 @@ export default {
   },
   data() {
     return {
-      editorOpen: false,
-      editorLogEntry: {
-        id: null,
-        date: dayjs().format('YYYY-MM-DD'),
-        startVerseId: 0,
-        endVerseId: 0,
-      },
     };
   },
   computed: {
@@ -144,17 +134,12 @@ export default {
     },
     openAddEntryForm(bookIndex, chapterIndex) {
       const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
-      this.editorLogEntry = {
+      this.$store.dispatch('log-entry-editor/openEditor', {
         id: null,
         date: dayjs().format('YYYY-MM-DD'),
         startVerseId: Bible.makeVerseId(bookIndex, chapterIndex, 1),
         endVerseId: Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount),
-      };
-      this.editorOpen = true;
-    },
-    logEntryEditorClosed() {
-      this.editorOpen = false;
-      this.editorLogEntry = { empty: true };
+      });
     },
   },
 };

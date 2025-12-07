@@ -8,6 +8,7 @@
     <pop-ups />
     <passage-note-editor-modal />
     <passage-note-tag-editor-modal />
+    <log-entry-editor-modal />
     <floating-feedback-button />
   </div>
 </template>
@@ -19,6 +20,7 @@ import Toaster from '@/components/Toaster.vue';
 import PopUps from '@/components/popups/PopUps.vue';
 import PassageNoteEditorModal from '@/components/popups/PassageNoteEditorModal.vue';
 import PassageNoteTagEditorModal from '@/components/popups/PassageNoteTagEditorModal.vue';
+import LogEntryEditorModal from '@/components/popups/LogEntryEditorModal.vue';
 
 export default {
   components: {
@@ -28,6 +30,7 @@ export default {
     PopUps,
     PassageNoteEditorModal,
     PassageNoteTagEditorModal,
+    LogEntryEditorModal,
   },
   head() {
     return {
