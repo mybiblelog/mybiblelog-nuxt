@@ -1,3 +1,5 @@
+import * as dayjs from 'dayjs';
+
 import {
   OPEN_LOG_ENTRY_EDITOR,
   CLOSE_LOG_ENTRY_EDITOR,
@@ -44,8 +46,7 @@ export const mutations = {
       }
       else {
         // Set today's date as default
-        const today = new Date();
-        state.logEntry.date = today.toISOString().split('T')[0];
+        state.logEntry.date = dayjs().format('YYYY-MM-DD');
       }
     }
     state.cleanFormValue = JSON.stringify(state.logEntry);
