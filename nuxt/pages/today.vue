@@ -168,6 +168,7 @@ export default {
       return [
         { label: this.$t('open_bible'), callback: () => this.openPassageInBible(entry, false) },
         { label: this.$t('take_note'), callback: () => this.takeNoteOnPassage(entry) },
+        { label: this.$t('view_notes'), callback: () => this.viewNotesForPassage(entry) },
         { label: this.$t('edit'), callback: () => this.openEditEntryForm(entry.id) },
         { label: this.$t('delete'), callback: () => this.deleteEntry(entry.id) },
       ];
@@ -262,6 +263,14 @@ export default {
         content: '',
       });
     },
+    viewNotesForPassage(passage) {
+      const { startVerseId, endVerseId } = passage;
+      this.$store.dispatch('passage-notes/stageQuery', {
+        filterPassageStartVerseId: startVerseId,
+        filterPassageEndVerseId: endVerseId,
+      });
+      this.$router.push(this.localePath('/notes'));
+    },
   },
 };
 </script>
@@ -280,6 +289,7 @@ export default {
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "take_note": "Notiz hinzufügen",
+    "view_notes": "Notizen ansehen",
     "no_entries": "Keine Einträge",
     "suggestions": "Vorschläge",
     "open_bible": "Bibel öffnen",
@@ -296,6 +306,7 @@ export default {
     "edit": "Edit",
     "delete": "Delete",
     "take_note": "Take Note",
+    "view_notes": "View Notes",
     "no_entries": "No Entries",
     "suggestions": "Suggestions",
     "open_bible": "Open Bible",
@@ -312,6 +323,7 @@ export default {
     "edit": "Editar",
     "delete": "Borrar",
     "take_note": "Tomar nota",
+    "view_notes": "Ver notas",
     "no_entries": "No hay entradas",
     "suggestions": "Sugerencias",
     "open_bible": "Abrir en la Biblia",
@@ -328,6 +340,7 @@ export default {
     "edit": "Éditer",
     "delete": "Supprimer",
     "take_note": "Prendre note",
+    "view_notes": "Voir les notes",
     "no_entries": "Pas d'entrées",
     "suggestions": "Suggestions",
     "open_bible": "Ouvrir dans la Bible",
@@ -344,6 +357,7 @@ export default {
     "edit": "Editar",
     "delete": "Excluir",
     "take_note": "Tomar nota",
+    "view_notes": "Ver notas",
     "no_entries": "Sem Entradas",
     "suggestions": "Sugestões",
     "open_bible": "Ler na Biblia",
@@ -360,6 +374,7 @@ export default {
     "edit": "Редагувати",
     "delete": "Видалити",
     "take_note": "Записати",
+    "view_notes": "Переглянути записи",
     "no_entries": "Немає записів",
     "suggestions": "Рекомендації",
     "open_bible": "Читати в Біблії",
