@@ -10,7 +10,7 @@
       class="action-menu-button"
       @click.stop="toggle"
     >
-      <span class="action-menu-button-icon">⋯</span>
+      <span class="action-menu-button-icon" />
     </button>
 
     <!-- Menu items -->
@@ -96,6 +96,8 @@ export default {
   justify-content: center;
   border-radius: 0.25rem;
   transition: background-color 0.2s;
+  width: 35px;
+  height: 35px;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
@@ -108,11 +110,18 @@ export default {
 }
 
 .action-menu-button-icon {
-  font-size: 1.2rem;
-  line-height: 1;
+  position: relative;
+  display: inline-block;
+  width: 3px;
+  height: 3px;
   color: #666;
-  font-weight: bold;
   user-select: none;
+  background-color: currentColor;
+  border-radius: 50%;
+  // Create three vertically stacked dots using box-shadow
+  box-shadow:
+    0 -6px 0 0 currentColor,
+    0 6px 0 0 currentColor;
 }
 
 .action-menu-overlay {
@@ -129,7 +138,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  margin-top: 0.25rem;
+  margin-top: 0;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.25rem;
