@@ -130,7 +130,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 38; // Below modals but above most content
+  z-index: $zIndexActionMenu;
   background: transparent;
 }
 
