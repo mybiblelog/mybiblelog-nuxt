@@ -38,7 +38,13 @@
     </div>
     <div class="chapter-report-grid">
       <template v-for="report in allChapterReports">
-        <chapter-report :key="report.chapterIndex" :report="report" @createLogEntry="openAddEntryForm" />
+        <chapter-report
+          :key="report.chapterIndex"
+          :report="report"
+          @createLogEntry="openAddEntryForm"
+          @takeNoteOnChapter="takeNoteOnChapter"
+          @viewNotesForChapter="viewNotesForChapter"
+        />
       </template>
     </div>
   </div>
@@ -140,6 +146,26 @@ export default {
         startVerseId: Bible.makeVerseId(bookIndex, chapterIndex, 1),
         endVerseId: Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount),
       });
+    },
+    takeNoteOnChapter(bookIndex, chapterIndex) {
+      const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
+      const startVerseId = Bible.makeVerseId(bookIndex, chapterIndex, 1);
+      const endVerseId = Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount);
+      this.$store.dispatch('passage-note-editor/openEditor', {
+        passages: [{ startVerseId, endVerseId }],
+        content: '',
+      });
+    },
+    viewNotesForChapter(bookIndex, chapterIndex) {
+      const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
+      const startVerseId = Bible.makeVerseId(bookIndex, chapterIndex, 1);
+      const endVerseId = Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount);
+
+      this.$store.dispatch('passage-notes/stageQuery', {
+        filterPassageStartVerseId: startVerseId,
+        filterPassageEndVerseId: endVerseId,
+      });
+      this.$router.push(this.localePath('/notes'));
     },
   },
 };

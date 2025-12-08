@@ -14,10 +14,16 @@
     <segment-bar class="chapter-report--completion" :segments="report.segments" />
     <div class="chapter-report--actions">
       <div class="chapter-report--actions--option" @click="openChapterInBible">
-        {{ $t('open') }}
+        {{ $t('open_bible') }}
       </div>
       <div class="chapter-report--actions--option" @click="createLogEntry(report.bookIndex, report.chapterIndex)">
-        {{ $t('track') }}
+        {{ $t('log_it') }}
+      </div>
+      <div class="chapter-report--actions--option" @click="takeNoteOnChapter">
+        {{ $t('take_note') }}
+      </div>
+      <div class="chapter-report--actions--option" @click="viewNotesForChapter">
+        {{ $t('view_notes') }}
       </div>
     </div>
   </div>
@@ -54,6 +60,12 @@ export default {
     },
     createLogEntry(bookIndex, chapterIndex) {
       this.$emit('createLogEntry', bookIndex, chapterIndex);
+    },
+    takeNoteOnChapter() {
+      this.$emit('takeNoteOnChapter', this.report.bookIndex, this.report.chapterIndex);
+    },
+    viewNotesForChapter() {
+      this.$emit('viewNotesForChapter', this.report.bookIndex, this.report.chapterIndex);
     },
   },
 };
@@ -170,28 +182,40 @@ export default {
 <i18n lang="json">
 {
   "de": {
-    "open": "Öffnen",
-    "track": "Verfolgen"
+    "open_bible": "Bibel öffnen",
+    "log_it": "Zu Log hinzufügen",
+    "take_note": "Notiz hinzufügen",
+    "view_notes": "Notizen ansehen"
   },
   "en": {
-    "open": "Open",
-    "track": "Track"
+    "open_bible": "Open Bible",
+    "log_it": "Log It",
+    "take_note": "Take Note",
+    "view_notes": "View Notes"
   },
   "es": {
-    "open": "Abrir",
-    "track": "Seguir"
+    "open_bible": "Abrir en la Biblia",
+    "log_it": "Agregar a registro",
+    "take_note": "Tomar nota",
+    "view_notes": "Ver notas"
   },
   "fr": {
-    "open": "Ouvrir",
-    "track": "Suivre"
+    "open_bible": "Ouvrir dans la Bible",
+    "log_it": "Ajouter à registre",
+    "take_note": "Prendre note",
+    "view_notes": "Voir les notes"
   },
   "pt": {
-    "open": "Abrir",
-    "track": "Rastrear"
+    "open_bible": "Ler na Biblia",
+    "log_it": "Adicionar a registro",
+    "take_note": "Tomar nota",
+    "view_notes": "Ver notas"
   },
   "uk": {
-    "open": "Відкрити",
-    "track": "Відстежити"
+    "open_bible": "Читати в Біблії",
+    "log_it": "Додати до журналу",
+    "take_note": "Записати",
+    "view_notes": "Переглянути записи"
   }
 }
 </i18n>
