@@ -473,8 +473,8 @@ form {
   padding: 0.5rem;
   margin-bottom: 0.5rem;
 
-  color: #09f;
-  background: #def;
+  color: #fff;
+  background: #09f;
   border-radius: 3px;
   font-weight: bold;
 }
