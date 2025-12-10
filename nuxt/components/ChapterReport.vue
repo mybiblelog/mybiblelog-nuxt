@@ -12,31 +12,23 @@
       </div>
     </div>
     <segment-bar class="chapter-report--completion" :segments="report.segments" />
-    <div class="chapter-report--actions">
-      <div class="chapter-report--actions--option" @click="openChapterInBible">
-        {{ $t('open_bible') }}
-      </div>
-      <div class="chapter-report--actions--option" @click="createLogEntry(report.bookIndex, report.chapterIndex)">
-        {{ $t('log_it') }}
-      </div>
-      <div class="chapter-report--actions--option" @click="takeNoteOnChapter">
-        {{ $t('take_note') }}
-      </div>
-      <div class="chapter-report--actions--option" @click="viewNotesForChapter">
-        {{ $t('view_notes') }}
-      </div>
+    <div class="chapter-report--action-menu">
+      <action-menu-button @click="openActionSheet" />
     </div>
   </div>
 </template>
 
 <script>
+import { Bible } from '@mybiblelog/shared';
 import SegmentBar from '@/components/SegmentBar';
 import Star from '@/components/svg/Star';
+import ActionMenuButton from '@/components/ActionMenuButton';
 
 export default {
   components: {
     SegmentBar,
     Star,
+    ActionMenuButton,
   },
   props: {
     report: {
@@ -44,7 +36,42 @@ export default {
       default: null,
     },
   },
+  computed: {
+    actions() {
+      return [
+        {
+          label: this.$t('open_bible'),
+          callback: () => this.openChapterInBible(),
+        },
+        {
+          label: this.$t('log_reading'),
+          callback: () => this.createLogEntry(this.report.bookIndex, this.report.chapterIndex),
+        },
+        {
+          label: this.$t('take_note'),
+          callback: () => this.takeNoteOnChapter(),
+        },
+        {
+          label: this.$t('view_notes'),
+          callback: () => this.viewNotesForChapter(),
+        },
+      ];
+    },
+    sheetTitle() {
+      if (!this.report) {
+        return null;
+      }
+      const bookName = Bible.getBookName(this.report.bookIndex, this.$i18n.locale);
+      return `${bookName} ${this.report.chapterIndex}`;
+    },
+  },
   methods: {
+    openActionSheet() {
+      this.$store.dispatch('action-sheet/openSheet', {
+        title: this.sheetTitle,
+        actions: this.actions,
+      });
+    },
     getReadingUrl(bookIndex, chapterIndex) {
       return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
     },
@@ -52,11 +79,6 @@ export default {
       const { bookIndex, chapterIndex } = this.report;
       const url = this.getReadingUrl(bookIndex, chapterIndex);
       window.open(url, '_blank');
-
-      // When a chapter is opened in the Bible,
-      // go ahead and open the log entry modal
-      // so it's easy to log reading upon return
-      setTimeout(() => this.createLogEntry(bookIndex, chapterIndex), 500);
     },
     createLogEntry(bookIndex, chapterIndex) {
       this.$emit('createLogEntry', bookIndex, chapterIndex);
@@ -126,55 +148,10 @@ export default {
     white-space: nowrap;
   }
 
-  &--completion {
-    //
-  }
-
-  &--actions {
-    display: none;
+  &--action-menu {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    border-radius: inherit;
-
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    @media screen and (max-width: 620px) {
-      z-index: 1;
-      top: 100%;
-      height: auto;
-      padding: 10% 0;
-      background: #fff;
-      box-shadow: inherit;
-    }
-
-    &--option {
-      color: #fff;
-      width: 90%;
-      text-align: center;
-      padding: 0.5em 0;
-      border-radius: 3px;
-      cursor: pointer;
-
-      &:hover {
-        background: #000;
-      }
-      @media screen and (max-width: 620px) {
-        color: #000;
-        &:hover {
-          color: #fff;
-        }
-      }
-    }
-  }
-  &:hover &--actions {
-    display: flex;
+    top: 0.5rem;
+    right: 0.5rem;
   }
 }
 </style>
@@ -183,37 +160,37 @@ export default {
 {
   "de": {
     "open_bible": "Bibel öffnen",
-    "log_it": "Zu Log hinzufügen",
+    "log_reading": "Lesen protokollieren",
     "take_note": "Notiz hinzufügen",
     "view_notes": "Notizen ansehen"
   },
   "en": {
     "open_bible": "Open Bible",
-    "log_it": "Log It",
+    "log_reading": "Log Reading",
     "take_note": "Take Note",
     "view_notes": "View Notes"
   },
   "es": {
     "open_bible": "Abrir en la Biblia",
-    "log_it": "Agregar a registro",
+    "log_reading": "Agregar lectura a registro",
     "take_note": "Tomar nota",
     "view_notes": "Ver notas"
   },
   "fr": {
     "open_bible": "Ouvrir dans la Bible",
-    "log_it": "Ajouter à registre",
+    "log_reading": "Ajouter lecture à registre",
     "take_note": "Prendre note",
     "view_notes": "Voir les notes"
   },
   "pt": {
     "open_bible": "Ler na Biblia",
-    "log_it": "Adicionar a registro",
+    "log_reading": "Adicionar leitura a registro",
     "take_note": "Tomar nota",
     "view_notes": "Ver notas"
   },
   "uk": {
     "open_bible": "Читати в Біблії",
-    "log_it": "Додати до журналу",
+    "log_reading": "Додати читання до журналу",
     "take_note": "Записати",
     "view_notes": "Переглянути записи"
   }

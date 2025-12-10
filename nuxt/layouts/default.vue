@@ -9,6 +9,7 @@
     <passage-note-editor-modal />
     <passage-note-tag-editor-modal />
     <log-entry-editor-modal />
+    <action-sheet-modal />
     <floating-feedback-button />
   </div>
 </template>
@@ -21,6 +22,7 @@ import PopUps from '@/components/popups/PopUps.vue';
 import PassageNoteEditorModal from '@/components/popups/PassageNoteEditorModal.vue';
 import PassageNoteTagEditorModal from '@/components/popups/PassageNoteTagEditorModal.vue';
 import LogEntryEditorModal from '@/components/popups/LogEntryEditorModal.vue';
+import ActionSheetModal from '@/components/popups/ActionSheetModal.vue';
 
 export default {
   components: {
@@ -31,6 +33,7 @@ export default {
     PassageNoteEditorModal,
     PassageNoteTagEditorModal,
     LogEntryEditorModal,
+    ActionSheetModal,
   },
   head() {
     return {
