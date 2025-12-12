@@ -229,10 +229,14 @@ export default {
 $breakpoint: 550px;
 
 form {
+  margin: 0 auto;
+  max-width: 200px;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 1rem;
   @media screen and (min-width: $breakpoint) {
+    max-width: 400px;
     grid-row-gap: 1rem;
   }
 }
