@@ -1,5 +1,5 @@
 <template>
-  <div class="chapter-report">
+  <button class="chapter-report" @click="openActionSheet">
     <div class="chapter-report--indicator">
       <div class="chapter-report--indicator--icon">
         <star width="100%" height="100%" :fill="report.percentage == 100 ? '#ffd700' : '#ddd'" />
@@ -12,23 +12,18 @@
       </div>
     </div>
     <segment-bar class="chapter-report--completion" :segments="report.segments" />
-    <div class="chapter-report--action-menu">
-      <action-menu-button @click="openActionSheet" />
-    </div>
-  </div>
+  </button>
 </template>
 
 <script>
 import { Bible } from '@mybiblelog/shared';
 import SegmentBar from '@/components/SegmentBar';
 import Star from '@/components/svg/Star';
-import ActionMenuButton from '@/components/ActionMenuButton';
 
 export default {
   components: {
     SegmentBar,
     Star,
-    ActionMenuButton,
   },
   props: {
     report: {
@@ -95,6 +90,11 @@ export default {
 
 <style lang="scss">
 .chapter-report {
+  // override button styles
+  border: none;
+  background: #fff;
+  cursor: pointer;
+
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.25rem;
@@ -114,6 +114,7 @@ export default {
     width: 100%;
     padding-bottom: 100%;
     min-height: 3.5rem;
+    margin-bottom: 5px;
 
     &--icon {
       position: absolute;
@@ -135,7 +136,6 @@ export default {
 
     font-weight: bold;
     font-size: 1.2rem;
-    font-family: monospace;
   }
 
   &--fraction {
@@ -146,12 +146,6 @@ export default {
     font-size: 0.8rem;
     font-weight: bold;
     white-space: nowrap;
-  }
-
-  &--action-menu {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
   }
 }
 </style>
