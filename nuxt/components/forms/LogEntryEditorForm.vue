@@ -80,16 +80,13 @@ export default {
   },
   data() {
     return {
-      books: [],
-      startChapters: [],
-      startVerses: [],
-      endChapters: [],
-      endVerses: [],
+      books: Bible.getBooks(),
     };
   },
   computed: {
     ...mapState('log-entry-editor', {
       logEntry: state => state.logEntry,
+      isValid: state => state.isValid,
     }),
     defaultDate() {
       return dayjs().format('YYYY-MM-DD');
@@ -134,140 +131,39 @@ export default {
       }
       return 0;
     },
-    displayEditorVerseRange() {
-      if (this.logEntry && this.logEntry.startVerseId && this.logEntry.endVerseId) {
-        return Bible.displayVerseRange(this.logEntry.startVerseId, this.logEntry.endVerseId, this.$i18n.locale);
-      }
-      return null;
-    },
-    isValid() {
-      const valid = this.logEntry && this.logEntry.endVerseId && this.logEntry.date;
-      this.$store.dispatch('log-entry-editor/setValid', !!valid);
-      return !!valid;
-    },
-  },
-  watch: {
-    logEntry: {
-      immediate: true,
-      handler() {
-        // When logEntry changes (e.g., when editor opens with existing data), initialize all lists
-        this.$nextTick(() => {
-          if (this.formBook > 0) {
-            this.updateChapterLists();
-            if (this.formStartChapter > 0) {
-              this.updateStartVerseList();
-              if (this.formStartVerse > 0) {
-                this.updateEndChapterList();
-                if (this.formEndChapter > 0) {
-                  this.updateEndVerseList();
-                }
-              }
-            }
-          }
-        });
-      },
-    },
-    formBook(newValue) {
-      if (newValue > 0) {
-        this.updateChapterLists();
-      }
-    },
-    formStartChapter(newValue) {
-      if (newValue > 0) {
-        this.updateStartVerseList();
-      }
-    },
-    formStartVerse(newValue) {
-      if (newValue > 0) {
-        this.updateEndChapterList();
-      }
-    },
-    formEndChapter(newValue) {
-      if (newValue > 0) {
-        this.updateEndVerseList();
-      }
-    },
-  },
-  mounted() {
-    this.books = Bible.getBooks();
-    // Ensure book property is set in store if we have verse IDs but no book property
-    if (this.logEntry && this.logEntry.startVerseId && !this.logEntry.book) {
-      const start = Bible.parseVerseId(this.logEntry.startVerseId);
-      const updatedLogEntry = JSON.parse(JSON.stringify(this.logEntry));
-      updatedLogEntry.book = start.book;
-      this.$store.dispatch('log-entry-editor/updateLogEntry', updatedLogEntry);
-    }
-    // Initialize lists based on current logEntry state
-    this.$nextTick(() => {
-      if (this.formBook > 0) {
-        this.updateChapterLists();
-        this.$nextTick(() => {
-          if (this.formStartChapter > 0) {
-            this.updateStartVerseList();
-            this.$nextTick(() => {
-              if (this.formStartVerse > 0) {
-                this.updateEndChapterList();
-                this.$nextTick(() => {
-                  if (this.formEndChapter > 0) {
-                    this.updateEndVerseList();
-                  }
-                });
-              }
-            });
-          }
-        });
-      }
-    });
-    // Ensure date is set if not already in store
-    if (!this.logEntry.date) {
-      const updatedLogEntry = JSON.parse(JSON.stringify(this.logEntry));
-      updatedLogEntry.date = this.defaultDate;
-      this.$store.dispatch('log-entry-editor/updateLogEntry', updatedLogEntry);
-    }
-  },
-  methods: {
-    displayBookName(bookIndex) {
-      return Bible.getBookName(bookIndex, this.$i18n.locale);
-    },
-    updateChapterLists() {
+    startChapters() {
       const bookIndex = this.formBook;
       if (bookIndex > 0) {
         const chapterCount = Bible.getBookChapterCount(bookIndex);
         const chapters = [];
         for (let i = 1; i <= chapterCount; i++) { chapters.push(i); }
-        this.startChapters = chapters;
+        return chapters;
       }
-      else {
-        this.startChapters = [];
-      }
+      return [];
     },
-    updateStartVerseList() {
+    startVerses() {
       const bookIndex = this.formBook;
       const chapterIndex = this.formStartChapter;
       if (bookIndex > 0 && chapterIndex > 0) {
         const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
         const verses = [];
         for (let i = 1; i <= chapterVerseCount; i++) { verses.push(i); }
-        this.startVerses = verses;
+        return verses;
       }
-      else {
-        this.startVerses = [];
-      }
+      return [];
     },
-    updateEndChapterList() {
+    endChapters() {
       const bookIndex = this.formBook;
       const startChapter = this.formStartChapter;
       if (bookIndex > 0 && startChapter > 0) {
         const chapterCount = Bible.getBookChapterCount(bookIndex);
         const chapters = [];
         for (let i = startChapter; i <= chapterCount; i++) { chapters.push(i); }
-        this.endChapters = chapters;
+        return chapters;
       }
-      else {
-        this.endChapters = [];
-      }
+      return [];
     },
-    updateEndVerseList() {
+    endVerses() {
       const bookIndex = this.formBook;
       const endChapter = this.formEndChapter;
       const startChapter = this.formStartChapter;
@@ -278,176 +174,52 @@ export default {
         let i = 1;
         if (startChapter === endChapter) { i = startVerse; }
         for (; i <= chapterVerseCount; i++) { verses.push(i); }
-        this.endVerses = verses;
+        return verses;
       }
-      else {
-        this.endVerses = [];
+      return [];
+    },
+    displayEditorVerseRange() {
+      if (this.logEntry && this.logEntry.startVerseId && this.logEntry.endVerseId) {
+        return Bible.displayVerseRange(this.logEntry.startVerseId, this.logEntry.endVerseId, this.$i18n.locale);
       }
+      return null;
+    },
+  },
+  methods: {
+    displayBookName(bookIndex) {
+      return Bible.getBookName(bookIndex, this.$i18n.locale);
     },
     updateDate(event) {
-      const updatedLogEntry = JSON.parse(JSON.stringify(this.logEntry));
-      updatedLogEntry.date = event.target.value;
-      this.$store.dispatch('log-entry-editor/updateLogEntry', updatedLogEntry);
+      this.$store.dispatch('log-entry-editor/updateDate', event.target.value);
     },
     onSelectBook(event) {
       const bookIndex = parseInt(event.target.value, 10);
-      const chapterCount = Bible.getBookChapterCount(bookIndex);
-      const chapters = [];
-      for (let i = 1; i <= chapterCount; i++) { chapters.push(i); }
-      this.startChapters = chapters;
-
-      // Store the book selection immediately
-      const updatedLogEntry = JSON.parse(JSON.stringify(this.logEntry));
-      updatedLogEntry.book = bookIndex;
-
-      let startChapter = 0;
-      let startVerse = 0;
-      let endChapter = 0;
-      let endVerse = 0;
-
-      // Make it easier to log an entry in a book with only one chapter
-      if (chapterCount === 1) {
-        startChapter = 1;
-        const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, 1);
-        startVerse = 1;
-        endChapter = 1;
-        endVerse = chapterVerseCount;
-        updatedLogEntry.startVerseId = Bible.makeVerseId(bookIndex, startChapter, startVerse);
-        updatedLogEntry.endVerseId = Bible.makeVerseId(bookIndex, endChapter, endVerse);
-      }
-      // If book has multiple chapters, preserve existing chapter/verse if they're still valid in the new book
-      else if (this.logEntry && this.logEntry.startVerseId && this.logEntry.endVerseId) {
-        const existingStart = Bible.parseVerseId(this.logEntry.startVerseId);
-        // If the existing selection is in the new book, keep it
-        if (existingStart.book === bookIndex) {
-          // Keep existing selection
-          updatedLogEntry.startVerseId = this.logEntry.startVerseId;
-          updatedLogEntry.endVerseId = this.logEntry.endVerseId;
-        }
-        else {
-          // Clear verse IDs when switching to a different book
-          updatedLogEntry.startVerseId = null;
-          updatedLogEntry.endVerseId = null;
-        }
-      }
-      else {
-        // No existing selection, clear verse IDs
-        updatedLogEntry.startVerseId = null;
-        updatedLogEntry.endVerseId = null;
-      }
-
-      this.$store.dispatch('log-entry-editor/updateLogEntry', updatedLogEntry);
-
+      this.$store.dispatch('log-entry-editor/selectBook', bookIndex);
       this.$nextTick(() => {
-        if (startChapter > 0) {
-          this.updateStartVerseList();
-          this.$nextTick(() => {
-            if (startVerse > 0) {
-              this.updateEndChapterList();
-              this.$nextTick(() => {
-                if (endChapter > 0) {
-                  this.updateEndVerseList();
-                  this.$nextTick(() => this.$refs.startChapter?.focus());
-                }
-              });
-            }
-          });
-        }
-        else {
-          this.$refs.startChapter?.focus();
-        }
+        this.$refs.startChapter?.focus();
       });
     },
     onSelectStartChapter(event) {
       const chapterIndex = parseInt(event.target.value, 10);
-      const bookIndex = this.formBook;
-      const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
-      const verses = [];
-      for (let i = 1; i <= chapterVerseCount; i++) { verses.push(i); }
-      this.startVerses = verses;
-
-      const startVerse = 1;
-      const endChapter = chapterIndex;
-      const endVerse = chapterVerseCount;
-
-      this.updateLogEntryFromForm(bookIndex, chapterIndex, startVerse, endChapter, endVerse);
-
+      this.$store.dispatch('log-entry-editor/selectStartChapter', chapterIndex);
       this.$nextTick(() => {
-        this.updateEndChapterList();
-        this.updateEndVerseList();
         this.$refs.endVerse?.focus();
       });
     },
     onSelectStartVerse(event) {
       const verseIndex = parseInt(event.target.value, 10);
-      const bookIndex = this.formBook;
-      const startChapter = this.formStartChapter;
-      const chapterCount = Bible.getBookChapterCount(bookIndex);
-      const chapters = [];
-      for (let i = startChapter; i <= chapterCount; i++) { chapters.push(i); }
-      this.endChapters = chapters;
-
-      let endChapter = startChapter;
-      const endVerse = verseIndex;
-
-      // Make it easier to log an entry that consists of a single chapter
-      if (!endChapter) {
-        endChapter = startChapter;
-      }
-
-      this.updateLogEntryFromForm(bookIndex, startChapter, verseIndex, endChapter, endVerse);
-
-      this.$nextTick(() => {
-        this.updateEndChapterList();
-        if (endChapter > 0) {
-          this.updateEndVerseList();
-        }
-      });
+      this.$store.dispatch('log-entry-editor/selectStartVerse', verseIndex);
     },
     onSelectEndChapter(event) {
       const chapterIndex = parseInt(event.target.value, 10);
-      const bookIndex = this.formBook;
-      const startChapter = this.formStartChapter;
-      const startVerse = this.formStartVerse;
-      const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
-      const verses = [];
-      let i = 1;
-      if (startChapter === chapterIndex) { i = startVerse; }
-      for (; i <= chapterVerseCount; i++) { verses.push(i); }
-      this.endVerses = verses;
-
-      const endVerse = verses[verses.length - 1];
-
-      this.updateLogEntryFromForm(bookIndex, startChapter, startVerse, chapterIndex, endVerse);
-
+      this.$store.dispatch('log-entry-editor/selectEndChapter', chapterIndex);
       this.$nextTick(() => {
-        this.updateEndVerseList();
         this.$refs.endVerse?.focus();
       });
     },
     onSelectEndVerse(event) {
       const verseIndex = parseInt(event.target.value, 10);
-      const bookIndex = this.formBook;
-      const startChapter = this.formStartChapter;
-      const startVerse = this.formStartVerse;
-      const endChapter = this.formEndChapter;
-
-      this.updateLogEntryFromForm(bookIndex, startChapter, startVerse, endChapter, verseIndex);
-    },
-    updateLogEntryFromForm(bookIndex, startChapter, startVerse, endChapter, endVerse) {
-      const updatedLogEntry = JSON.parse(JSON.stringify(this.logEntry));
-      // Always preserve the book selection
-      updatedLogEntry.book = bookIndex;
-      if (bookIndex > 0 && startChapter > 0 && startVerse > 0 && endChapter > 0 && endVerse > 0) {
-        updatedLogEntry.startVerseId = Bible.makeVerseId(bookIndex, startChapter, startVerse);
-        updatedLogEntry.endVerseId = Bible.makeVerseId(bookIndex, endChapter, endVerse);
-      }
-      else if (bookIndex > 0) {
-        // Book is selected but chapters/verses aren't complete yet - clear verse IDs
-        updatedLogEntry.startVerseId = null;
-        updatedLogEntry.endVerseId = null;
-      }
-      this.$store.dispatch('log-entry-editor/updateLogEntry', updatedLogEntry);
+      this.$store.dispatch('log-entry-editor/selectEndVerse', verseIndex);
     },
   },
 };
