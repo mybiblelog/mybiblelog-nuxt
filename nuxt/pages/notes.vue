@@ -1,110 +1,104 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <header class="page-header">
-              <h2 class="title">
-                {{ $t('notes') }}
-                <info-link :to="localePath('/about/page-features--notes')" />
-              </h2>
-              <div class="buttons is-align-items-flex-start">
-                <nuxt-link class="button" :to="localePath('/tags')">
-                  {{ $t('tags') }}
-                  <CaretRight style="margin-left: 0.2rem;" />
-                </nuxt-link>
-                <button class="button is-info" @click="openPassageNoteEditor({ empty: true })">
-                  {{ $t('new') }}
-                </button>
-              </div>
-            </header>
-            <div class="buttons">
-              <button class="button is-light is-small" @click="openSearchModal">
-                {{ $t('query.search') }} {{ query.searchText.length ? $t('query.active') : '' }}
-              </button>
-              <button class="button is-light is-small" @click="openTagFilterModal">
-                {{ $t('query.tag_filters') }} ({{ query.filterTags.length }})
-              </button>
-              <button class="button is-light is-small" @click="openPassageFilterModal">
-                {{ $t('query.passage') }}<span v-if="query.filterPassageStartVerseId && query.filterPassageEndVerseId">&nbsp;(&nbsp;
-                  <span v-if="query.filterPassageMatching === 'inclusive'">~</span>
-                  <span v-if="query.filterPassageMatching === 'exclusive'">{{ $t('query.in') }}</span>
-                  &nbsp;{{ displayVerseRange(query.filterPassageStartVerseId, query.filterPassageEndVerseId) }}
-                  )</span>
-              </button>
-              <button class="button is-light is-small" @click="openSortModal">
-                <span>{{ $t('query.sort') }}</span>
-                <span v-if="querySort === 'createdAt:descending'">: {{ $t('query.newest_first') }}</span>
-                <span v-if="querySort === 'createdAt:ascending'">: {{ $t('query.oldest_first') }}</span>
-              </button>
-              <button class="button is-light is-small" @click="resetQuery">
-                {{ $t('query.reset') }}
-              </button>
-            </div>
-            <div class="query-summary content">
-              <p>{{ querySummary }}</p>
-              <div v-if="query.filterTags.length" class="query-summary--tag-filters">
-                <div v-for="tag in populatedTags(query.filterTags)" :key="tag.id" class="passage-note-tag" :style="passageNoteTagStyle(tag)">
-                  {{ tag.label }}
-                </div>
-              </div>
-            </div>
-            <div>
-              <template v-if="loading">
-                <div class="passage-note">
-                  <div class="passage-note--content has-text-centered">
-                    {{ $t('results.loading') }}
-                  </div>
-                </div>
-              </template>
-              <template v-else-if="!passageNotes.length">
-                <div class="passage-note">
-                  <div class="passage-note--content has-text-centered">
-                    {{ $t('results.no_results') }}
-                  </div>
-                </div>
-              </template>
-              <template v-else>
-                <div v-for="note in passageNotes" :key="note.id" class="passage-note">
-                  <div class="passage-note--passages">
-                    <ul>
-                      <li v-for="passage in note.passages" :key="passage.id">
-                        <a :href="readingUrl(passage)" target="_blank">
-                          <strong>{{ displayVerseRange(passage.startVerseId, passage.endVerseId) }}</strong>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="passage-note--created-date">
-                    <span class="has-text-grey is-size-7" :title="displayDateTime(note.createdAt)">{{ displayTimeSince(note.createdAt) }}</span>
-                  </div>
-                  <div class="passage-note--content">
-                    <hyperlinked-text :text="note.content" />
-                  </div>
-                  <div class="passage-note--tags">
-                    <div v-for="tag in populatedTags(note.tags)" :key="tag.id" class="passage-note-tag" :style="passageNoteTagStyle(tag)">
-                      {{ tag.label }}
-                    </div>
-                  </div>
-                  <div class="passage-note--controls">
-                    <div class="buttons is-right">
-                      <button class="button is-small" @click="openPassageNoteEditor(note)">
-                        {{ $t('note.edit') }}
-                      </button>
-                      <button class="button is-small" @click="deletePassageNote(note.id)">
-                        {{ $t('note.delete') }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <pagination v-if="pagination.totalPages > 1" :total-pages="pagination.totalPages" :current-page="pagination.page" @pagechanged="onPageChanged" />
-              </template>
-            </div>
+    <div class="content-column">
+      <header class="page-header">
+        <h2 class="title">
+          {{ $t('notes') }}
+          <info-link :to="localePath('/about/page-features--notes')" />
+        </h2>
+        <div class="buttons is-align-items-flex-start">
+          <nuxt-link class="button" :to="localePath('/tags')">
+            {{ $t('tags') }}
+            <CaretRight style="margin-left: 0.2rem;" />
+          </nuxt-link>
+          <button class="button is-info" @click="openPassageNoteEditor({ empty: true })">
+            {{ $t('new') }}
+          </button>
+        </div>
+      </header>
+      <div class="buttons">
+        <button class="button is-light is-small" @click="openSearchModal">
+          {{ $t('query.search') }} {{ query.searchText.length ? $t('query.active') : '' }}
+        </button>
+        <button class="button is-light is-small" @click="openTagFilterModal">
+          {{ $t('query.tag_filters') }} ({{ query.filterTags.length }})
+        </button>
+        <button class="button is-light is-small" @click="openPassageFilterModal">
+          {{ $t('query.passage') }}<span v-if="query.filterPassageStartVerseId && query.filterPassageEndVerseId">&nbsp;(&nbsp;
+            <span v-if="query.filterPassageMatching === 'inclusive'">~</span>
+            <span v-if="query.filterPassageMatching === 'exclusive'">{{ $t('query.in') }}</span>
+            &nbsp;{{ displayVerseRange(query.filterPassageStartVerseId, query.filterPassageEndVerseId) }}
+            )</span>
+        </button>
+        <button class="button is-light is-small" @click="openSortModal">
+          <span>{{ $t('query.sort') }}</span>
+          <span v-if="querySort === 'createdAt:descending'">: {{ $t('query.newest_first') }}</span>
+          <span v-if="querySort === 'createdAt:ascending'">: {{ $t('query.oldest_first') }}</span>
+        </button>
+        <button class="button is-light is-small" @click="resetQuery">
+          {{ $t('query.reset') }}
+        </button>
+      </div>
+      <div class="query-summary content">
+        <p>{{ querySummary }}</p>
+        <div v-if="query.filterTags.length" class="query-summary--tag-filters">
+          <div v-for="tag in populatedTags(query.filterTags)" :key="tag.id" class="passage-note-tag" :style="passageNoteTagStyle(tag)">
+            {{ tag.label }}
           </div>
         </div>
       </div>
-    </section>
+      <div>
+        <template v-if="loading">
+          <div class="passage-note">
+            <div class="passage-note--content has-text-centered">
+              {{ $t('results.loading') }}
+            </div>
+          </div>
+        </template>
+        <template v-else-if="!passageNotes.length">
+          <div class="passage-note">
+            <div class="passage-note--content has-text-centered">
+              {{ $t('results.no_results') }}
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div v-for="note in passageNotes" :key="note.id" class="passage-note">
+            <div class="passage-note--passages">
+              <ul>
+                <li v-for="passage in note.passages" :key="passage.id">
+                  <a :href="readingUrl(passage)" target="_blank">
+                    <strong>{{ displayVerseRange(passage.startVerseId, passage.endVerseId) }}</strong>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="passage-note--created-date">
+              <span class="has-text-grey is-size-7" :title="displayDateTime(note.createdAt)">{{ displayTimeSince(note.createdAt) }}</span>
+            </div>
+            <div class="passage-note--content">
+              <hyperlinked-text :text="note.content" />
+            </div>
+            <div class="passage-note--tags">
+              <div v-for="tag in populatedTags(note.tags)" :key="tag.id" class="passage-note-tag" :style="passageNoteTagStyle(tag)">
+                {{ tag.label }}
+              </div>
+            </div>
+            <div class="passage-note--controls">
+              <div class="buttons is-right">
+                <button class="button is-small" @click="openPassageNoteEditor(note)">
+                  {{ $t('note.edit') }}
+                </button>
+                <button class="button is-small" @click="deletePassageNote(note.id)">
+                  {{ $t('note.delete') }}
+                </button>
+              </div>
+            </div>
+          </div>
+          <pagination v-if="pagination.totalPages > 1" :total-pages="pagination.totalPages" :current-page="pagination.page" @pagechanged="onPageChanged" />
+        </template>
+      </div>
+    </div>
     <modal v-if="showSearchModal" :title="$t('search_modal.search_notes')" @close="closeSearchModal()">
       <template slot="content">
         <div>

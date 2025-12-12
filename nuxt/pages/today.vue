@@ -1,84 +1,78 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds-tablet is-half-desktop">
-          <busy-bar :busy="loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length" />
-          <header class="page-header">
-            <h1 class="title">
-              {{ $t('today') }}
-              <info-link :to="localePath('/about/page-features--today')" />
-            </h1>
-            <button class="button is-info" @click="openAddEntryForm">
-              {{ $t('add_entry') }}
-            </button>
-          </header>
-          <br>
-          <double-progress-bar :primary-percentage="dailyGoalPercentCompleteNew" :secondary-percentage="dailyGoalPercentComplete" />
-          <div class="level is-mobile">
-            <div class="level-left">
-              <div v-if="userSettings.dailyVerseCountGoal" class="level-item">
-                <span>{{ $t('new_verses_read', [newVersesReadToday, userSettings.dailyVerseCountGoal]) }}</span>
-              </div>
-              <div v-else class="level-item">
-                <span>{{ $t('loading') }}</span>
-              </div>
-            </div>
-            <div class="level-right">
-              <div class="level-item">
-                <span>{{ $n(dailyGoalPercentCompleteNew / 100, 'percent') }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="entry-container" role="list" data-testid="log-entries">
-            <client-only>
-              <log-entry
-                v-for="entry of logEntriesForToday"
-                :key="entry.id"
-                role="listitem"
-                :passage="entry"
-                :actions="actionsForTodayLogEntry(entry)"
-              />
-              <log-entry
-                v-if="!logEntriesForToday.length"
-                key="no-entries"
-                role="listitem"
-                :message="$t('no_entries')"
-              />
-            </client-only>
-          </div>
-          <br>
-          <h3 class="title is-5">
-            {{ $t('suggestions') }}
-          </h3>
-          <div class="entry-container" role="list" data-testid="reading-suggestions">
-            <client-only>
-              <log-entry
-                v-for="(passage, index) of readingSuggestionsWithNewVerseCounts"
-                :key="index + '-' + passage.startVerseId + '-' + passage.endVerseId"
-                role="listitem"
-                :message="passage.suggestionContext"
-                :passage="passage"
-                :actions="actionsForReadingSuggestionPassage(passage)"
-              />
-              <log-entry
-                v-if="loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length"
-                key="loading"
-                role="listitem"
-                :message="$t('loading')"
-              />
-              <log-entry
-                v-if="!loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length"
-                key="no-suggestions"
-                role="listitem"
-                :message="$t('no_suggestions')"
-              />
-            </client-only>
-          </div>
+  <div class="content-column">
+    <busy-bar :busy="loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length" />
+    <header class="page-header">
+      <h1 class="title">
+        {{ $t('today') }}
+        <info-link :to="localePath('/about/page-features--today')" />
+      </h1>
+      <button class="button is-info" @click="openAddEntryForm">
+        {{ $t('add_entry') }}
+      </button>
+    </header>
+    <br>
+    <double-progress-bar :primary-percentage="dailyGoalPercentCompleteNew" :secondary-percentage="dailyGoalPercentComplete" />
+    <div class="level is-mobile">
+      <div class="level-left">
+        <div v-if="userSettings.dailyVerseCountGoal" class="level-item">
+          <span>{{ $t('new_verses_read', [newVersesReadToday, userSettings.dailyVerseCountGoal]) }}</span>
+        </div>
+        <div v-else class="level-item">
+          <span>{{ $t('loading') }}</span>
+        </div>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+          <span>{{ $n(dailyGoalPercentCompleteNew / 100, 'percent') }}</span>
         </div>
       </div>
     </div>
-  </section>
+    <div class="entry-container" role="list" data-testid="log-entries">
+      <client-only>
+        <log-entry
+          v-for="entry of logEntriesForToday"
+          :key="entry.id"
+          role="listitem"
+          :passage="entry"
+          :actions="actionsForTodayLogEntry(entry)"
+        />
+        <log-entry
+          v-if="!logEntriesForToday.length"
+          key="no-entries"
+          role="listitem"
+          :message="$t('no_entries')"
+        />
+      </client-only>
+    </div>
+    <br>
+    <h3 class="title is-5">
+      {{ $t('suggestions') }}
+    </h3>
+    <div class="entry-container" role="list" data-testid="reading-suggestions">
+      <client-only>
+        <log-entry
+          v-for="(passage, index) of readingSuggestionsWithNewVerseCounts"
+          :key="index + '-' + passage.startVerseId + '-' + passage.endVerseId"
+          role="listitem"
+          :message="passage.suggestionContext"
+          :passage="passage"
+          :actions="actionsForReadingSuggestionPassage(passage)"
+        />
+        <log-entry
+          v-if="loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length"
+          key="loading"
+          role="listitem"
+          :message="$t('loading')"
+        />
+        <log-entry
+          v-if="!loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length"
+          key="no-suggestions"
+          role="listitem"
+          :message="$t('no_suggestions')"
+        />
+      </client-only>
+    </div>
+  </div>
 </template>
 
 <script>

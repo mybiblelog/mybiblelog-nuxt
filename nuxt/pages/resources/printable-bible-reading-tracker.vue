@@ -1,32 +1,28 @@
 <template>
   <main>
-    <section class="section no-print">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <header class="page-header">
-              <h1 class="title">
-                {{ $t('meta.title') }}
-              </h1>
-              <div class="buttons is-align-items-flex-start">
-                <button class="button is-info" @click="print">
-                  {{ $t('print') }}
-                </button>
-              </div>
-            </header>
-            <div class="content">
-              <p>{{ $t('content.this_is') }}</p>
-              <p>{{ $t('content.printer_friendly') }}</p>
-              <p v-html="$t('content.download_directly')" />
-              <h2>{{ $t('content.chapters_in_the_bible') }}</h2>
-              <p>{{ $t('content.there_are_66_books') }}</p>
-              <h2>{{ $t('content.track_your_progress_online') }}</h2>
-              <p v-html="$t('content.if_you_would_like')" />
-            </div>
+    <div class="content-column">
+      <section class="no-print">
+        <header class="page-header">
+          <h1 class="title">
+            {{ $t('meta.title') }}
+          </h1>
+          <div class="buttons is-align-items-flex-start">
+            <button class="button is-info" @click="print">
+              {{ $t('print') }}
+            </button>
           </div>
+        </header>
+        <div class="content">
+          <p>{{ $t('content.this_is') }}</p>
+          <p>{{ $t('content.printer_friendly') }}</p>
+          <p v-html="$t('content.download_directly')" />
+          <h2>{{ $t('content.chapters_in_the_bible') }}</h2>
+          <p>{{ $t('content.there_are_66_books') }}</p>
+          <h2>{{ $t('content.track_your_progress_online') }}</h2>
+          <p v-html="$t('content.if_you_would_like')" />
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
     <div class="container">
       <div class="book-grid">
         <div v-for="book in books" :key="book.id" class="book-box">

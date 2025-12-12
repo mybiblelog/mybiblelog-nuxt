@@ -1,67 +1,61 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <div class="level">
-              <div class="level-left">
-                <h1 class="title">
-                  {{ $t('sign_in') }}
-                  <info-link :to="localePath('/about/page-features--login')" />
-                </h1>
-              </div>
-              <div v-if="!passwordResetSubmitted" class="level-right">
-                <nuxt-link :to="localePath('/register')">
-                  {{ $t('need_an_account') }}
-                </nuxt-link>
-              </div>
-            </div>
-            <template v-if="passwordResetSubmitted">
-              <p>{{ $t('password_reset_link_sent') }}</p>
-            </template>
-            <template v-else>
-              <div v-if="errors._form" class="help is-danger">
-                <div class="help is-danger">
-                  {{ $terr(errors._form) }}
-                </div>
-              </div>
-              <form @submit.prevent="onSubmit">
-                <div class="field">
-                  <label class="label">{{ $t('email') }}</label>
-                  <div class="control">
-                    <input v-model="email" class="input" type="text" :placeholder="$t('email')" :class="{ 'is-danger': errors.email }">
-                  </div>
-                  <p v-if="errors.email" class="help is-danger">
-                    {{ $terr(errors.email) }}
-                  </p>
-                </div>
-                <div class="field">
-                  <label class="label">{{ $t('password') }}</label>
-                  <div class="control">
-                    <input v-model="password" class="input" type="password" :placeholder="$t('password')" :class="{ 'is-danger': errors.password }">
-                    <p v-if="errors.password" class="help is-danger">
-                      {{ $terr(errors.password) }}
-                    </p>
-                  </div>
-                </div>
-                <div class="buttons">
-                  <button class="button is-primary">
-                    {{ $t('sign_in') }}
-                  </button>
-                  <button class="button" :class="{ 'is-text': !failedLoginAttempt, 'is-info': failedLoginAttempt }" @click.prevent="sendPasswordReset">
-                    {{ $t('forgot_your_password') }}
-                  </button>
-                </div>
-              </form>
-              <div class="is-flex mt-5">
-                <google-login-button v-if="googleOauth2Url" :google-oauth2-url="googleOauth2Url" />
-              </div>
-            </template>
-          </div>
+    <div class="content-column">
+      <div class="level">
+        <div class="level-left">
+          <h1 class="title">
+            {{ $t('sign_in') }}
+            <info-link :to="localePath('/about/page-features--login')" />
+          </h1>
+        </div>
+        <div v-if="!passwordResetSubmitted" class="level-right">
+          <nuxt-link :to="localePath('/register')">
+            {{ $t('need_an_account') }}
+          </nuxt-link>
         </div>
       </div>
-    </section>
+      <template v-if="passwordResetSubmitted">
+        <p>{{ $t('password_reset_link_sent') }}</p>
+      </template>
+      <template v-else>
+        <div v-if="errors._form" class="help is-danger">
+          <div class="help is-danger">
+            {{ $terr(errors._form) }}
+          </div>
+        </div>
+        <form @submit.prevent="onSubmit">
+          <div class="field">
+            <label class="label">{{ $t('email') }}</label>
+            <div class="control">
+              <input v-model="email" class="input" type="text" :placeholder="$t('email')" :class="{ 'is-danger': errors.email }">
+            </div>
+            <p v-if="errors.email" class="help is-danger">
+              {{ $terr(errors.email) }}
+            </p>
+          </div>
+          <div class="field">
+            <label class="label">{{ $t('password') }}</label>
+            <div class="control">
+              <input v-model="password" class="input" type="password" :placeholder="$t('password')" :class="{ 'is-danger': errors.password }">
+              <p v-if="errors.password" class="help is-danger">
+                {{ $terr(errors.password) }}
+              </p>
+            </div>
+          </div>
+          <div class="buttons">
+            <button class="button is-primary">
+              {{ $t('sign_in') }}
+            </button>
+            <button class="button" :class="{ 'is-text': !failedLoginAttempt, 'is-info': failedLoginAttempt }" @click.prevent="sendPasswordReset">
+              {{ $t('forgot_your_password') }}
+            </button>
+          </div>
+        </form>
+        <div class="is-flex mt-5">
+          <google-login-button v-if="googleOauth2Url" :google-oauth2-url="googleOauth2Url" />
+        </div>
+      </template>
+    </div>
   </main>
 </template>
 

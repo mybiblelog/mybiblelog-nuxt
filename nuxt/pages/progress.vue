@@ -1,221 +1,215 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds-tablet is-half-desktop">
-          <header class="page-header">
-            <h1 class="title">
-              {{ $t('progress') }}
-              <info-link :to="localePath('/about/page-features--progress')" />
-            </h1>
-            <nuxt-link class="button" :to="localePath('/books')">
-              {{ $t('bible_books') }}
-              <CaretRight style="margin-left: 0.2rem;" />
+  <div class="content-column">
+    <header class="page-header">
+      <h1 class="title">
+        {{ $t('progress') }}
+        <info-link :to="localePath('/about/page-features--progress')" />
+      </h1>
+      <nuxt-link class="button" :to="localePath('/books')">
+        {{ $t('bible_books') }}
+        <CaretRight style="margin-left: 0.2rem;" />
+      </nuxt-link>
+    </header>
+    <busy-bar :busy="dateVerseCountsBusy" />
+    <article class="message">
+      <div class="message-body">
+        <div class="content">
+          <h2 class="title is-5">
+            {{ $t('your_reading_settings.title') }}
+          </h2>
+          <p>{{ $t('your_reading_settings.description') }}</p>
+          <div class="buttons">
+            <nuxt-link class="button" :to="localePath('/settings/reading')">
+              {{ $t('your_reading_settings.update_settings') }}
             </nuxt-link>
-          </header>
-          <busy-bar :busy="dateVerseCountsBusy" />
-          <article class="message">
-            <div class="message-body">
-              <div class="content">
-                <h2 class="title is-5">
-                  {{ $t('your_reading_settings.title') }}
-                </h2>
-                <p>{{ $t('your_reading_settings.description') }}</p>
-                <div class="buttons">
-                  <nuxt-link class="button" :to="localePath('/settings/reading')">
-                    {{ $t('your_reading_settings.update_settings') }}
-                  </nuxt-link>
-                </div>
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td>{{ $t('your_reading_settings.look_back_date') }}</td>
-                      <td>{{ displayDate(userSettings.lookBackDate) }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_reading_settings.daily_verse_count_goal') }}</td>
-                      <td>{{ userSettings.dailyVerseCountGoal }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-          <article class="message">
-            <div class="message-body">
-              <div class="content">
-                <h2 class="title is-5">
-                  {{ $t('your_progress_so_far.title') }}
-                </h2>
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td>{{ $t('your_progress_so_far.total_bible_verses') }}</td>
-                      <td>{{ $n(totalBibleVerseCount, 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_progress_so_far.verses_read') }}</td>
-                      <td>{{ $n(uniqueVersesReadSinceLookBackDate, 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_progress_so_far.verses_remaining') }}</td>
-                      <td>{{ $n(unreadVerses, 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_progress_so_far.percent_complete') }}</td>
-                      <td>{{ $n(Math.floor(uniqueVersesReadSinceLookBackDate / totalBibleVerseCount * 100).toFixed() / 100, 'percent') }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-          <article class="message">
-            <div class="message-body">
-              <div class="content">
-                <h2 class="title is-5">
-                  {{ $t('your_outlook.historical.title') }}
-                </h2>
-                <p v-html="$t('your_outlook.historical.description')" />
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td v-html="$t('your_outlook.days_since_look_back_date')" />
-                      <td>{{ $n(daysSinceLookBackDate, 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_outlook.average_daily_verses_read') }}</td>
-                      <td>{{ $n(averageUniqueVersesReadDailySinceLookBackDate, 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_outlook.days_to_finish_at_this_rate') }}</td>
-                      <td>{{ $n(daysToFinishBibleBasedOnLookBackDateAverage, 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_outlook.date_to_finish_at_this_rate') }}</td>
-                      <td>{{ displayDate(dateToFinishBibleBasedOnLookBackDateAverage) }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-          <article class="message">
-            <div class="message-body">
-              <div class="content">
-                <h2 class="title is-5">
-                  {{ $t('your_outlook.30_day.title') }}
-                </h2>
-                <p>{{ $t('your_outlook.30_day.description') }}</p>
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td>{{ $t('your_outlook.average_daily_verses_read') }}</td>
-                      <td>{{ $n(averageDailyVersesReadPastXDays(30).toFixed(0), 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_outlook.days_to_finish_at_this_rate') }}</td>
-                      <td>{{ $n(daysToFinishBibleBasedOnXDayAverage(30), 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_outlook.date_to_finish_at_this_rate') }}</td>
-                      <td>{{ displayDate(dateToFinishBibleBasedOnXDayAverage(30)) }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-          <article class="message">
-            <div class="message-body">
-              <div class="content">
-                <h2 class="title is-5">
-                  {{ $t('your_outlook.7_day.title') }}
-                </h2>
-                <p>{{ $t('your_outlook.7_day.description') }}</p>
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td>{{ $t('your_outlook.average_daily_verses_read') }}</td>
-                      <td>{{ $n(averageDailyVersesReadPastXDays(7).toFixed(0), 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_outlook.days_to_finish_at_this_rate') }}</td>
-                      <td>{{ $n(daysToFinishBibleBasedOnXDayAverage(7), 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_outlook.date_to_finish_at_this_rate') }}</td>
-                      <td>{{ displayDate(dateToFinishBibleBasedOnXDayAverage(7)) }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-          <article class="message">
-            <div class="message-body">
-              <div class="content">
-                <h2 class="title is-5">
-                  {{ $t('your_outlook.today.title') }}
-                </h2>
-                <p>{{ $t('your_outlook.today.description') }}</p>
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td v-html="$t('your_outlook.verses_read')" />
-                      <td>{{ $n(newVersesReadToday, 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_outlook.days_to_finish_at_this_rate') }}</td>
-                      <td>{{ $n(daysToFinishBibleBasedOnToday, 'grouped') }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('your_outlook.date_to_finish_at_this_rate') }}</td>
-                      <td>{{ displayDate(dateToFinishBibleBasedOnToday) }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-          <article class="message">
-            <div class="message-body">
-              <div class="content">
-                <h2 class="title is-5">
-                  {{ $t('set_a_goal.title') }}
-                </h2>
-                <p>{{ $t('set_a_goal.description') }}</p>
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td colspan="2">
-                        <label>{{ $t('set_a_goal.goal_finish_date') }}
-                          <input v-model="goalFinishDate" class="input" type="date">
-                        </label>
-                      </td>
-                    </tr>
-                    <tr v-if="goalFinishDateError">
-                      <td colspan="2">
-                        <span class="has-text-danger">{{ goalFinishDateError }}</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('set_a_goal.days_to_finish_by_goal') }}</td>
-                      <td>{{ daysToFinishByGoalFinishDate }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ $t('set_a_goal.verses_required_each_day') }}</td>
-                      <td>{{ versesRequiredEachDayForGoal }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
+          </div>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>{{ $t('your_reading_settings.look_back_date') }}</td>
+                <td>{{ displayDate(userSettings.lookBackDate) }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_reading_settings.daily_verse_count_goal') }}</td>
+                <td>{{ userSettings.dailyVerseCountGoal }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </div>
-  </section>
+    </article>
+    <article class="message">
+      <div class="message-body">
+        <div class="content">
+          <h2 class="title is-5">
+            {{ $t('your_progress_so_far.title') }}
+          </h2>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>{{ $t('your_progress_so_far.total_bible_verses') }}</td>
+                <td>{{ $n(totalBibleVerseCount, 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_progress_so_far.verses_read') }}</td>
+                <td>{{ $n(uniqueVersesReadSinceLookBackDate, 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_progress_so_far.verses_remaining') }}</td>
+                <td>{{ $n(unreadVerses, 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_progress_so_far.percent_complete') }}</td>
+                <td>{{ $n(Math.floor(uniqueVersesReadSinceLookBackDate / totalBibleVerseCount * 100).toFixed() / 100, 'percent') }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+    <article class="message">
+      <div class="message-body">
+        <div class="content">
+          <h2 class="title is-5">
+            {{ $t('your_outlook.historical.title') }}
+          </h2>
+          <p v-html="$t('your_outlook.historical.description')" />
+          <table class="table">
+            <tbody>
+              <tr>
+                <td v-html="$t('your_outlook.days_since_look_back_date')" />
+                <td>{{ $n(daysSinceLookBackDate, 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_outlook.average_daily_verses_read') }}</td>
+                <td>{{ $n(averageUniqueVersesReadDailySinceLookBackDate, 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_outlook.days_to_finish_at_this_rate') }}</td>
+                <td>{{ $n(daysToFinishBibleBasedOnLookBackDateAverage, 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_outlook.date_to_finish_at_this_rate') }}</td>
+                <td>{{ displayDate(dateToFinishBibleBasedOnLookBackDateAverage) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+    <article class="message">
+      <div class="message-body">
+        <div class="content">
+          <h2 class="title is-5">
+            {{ $t('your_outlook.30_day.title') }}
+          </h2>
+          <p>{{ $t('your_outlook.30_day.description') }}</p>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>{{ $t('your_outlook.average_daily_verses_read') }}</td>
+                <td>{{ $n(averageDailyVersesReadPastXDays(30).toFixed(0), 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_outlook.days_to_finish_at_this_rate') }}</td>
+                <td>{{ $n(daysToFinishBibleBasedOnXDayAverage(30), 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_outlook.date_to_finish_at_this_rate') }}</td>
+                <td>{{ displayDate(dateToFinishBibleBasedOnXDayAverage(30)) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+    <article class="message">
+      <div class="message-body">
+        <div class="content">
+          <h2 class="title is-5">
+            {{ $t('your_outlook.7_day.title') }}
+          </h2>
+          <p>{{ $t('your_outlook.7_day.description') }}</p>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>{{ $t('your_outlook.average_daily_verses_read') }}</td>
+                <td>{{ $n(averageDailyVersesReadPastXDays(7).toFixed(0), 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_outlook.days_to_finish_at_this_rate') }}</td>
+                <td>{{ $n(daysToFinishBibleBasedOnXDayAverage(7), 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_outlook.date_to_finish_at_this_rate') }}</td>
+                <td>{{ displayDate(dateToFinishBibleBasedOnXDayAverage(7)) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+    <article class="message">
+      <div class="message-body">
+        <div class="content">
+          <h2 class="title is-5">
+            {{ $t('your_outlook.today.title') }}
+          </h2>
+          <p>{{ $t('your_outlook.today.description') }}</p>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td v-html="$t('your_outlook.verses_read')" />
+                <td>{{ $n(newVersesReadToday, 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_outlook.days_to_finish_at_this_rate') }}</td>
+                <td>{{ $n(daysToFinishBibleBasedOnToday, 'grouped') }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('your_outlook.date_to_finish_at_this_rate') }}</td>
+                <td>{{ displayDate(dateToFinishBibleBasedOnToday) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+    <article class="message">
+      <div class="message-body">
+        <div class="content">
+          <h2 class="title is-5">
+            {{ $t('set_a_goal.title') }}
+          </h2>
+          <p>{{ $t('set_a_goal.description') }}</p>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td colspan="2">
+                  <label>{{ $t('set_a_goal.goal_finish_date') }}
+                    <input v-model="goalFinishDate" class="input" type="date">
+                  </label>
+                </td>
+              </tr>
+              <tr v-if="goalFinishDateError">
+                <td colspan="2">
+                  <span class="has-text-danger">{{ goalFinishDateError }}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>{{ $t('set_a_goal.days_to_finish_by_goal') }}</td>
+                <td>{{ daysToFinishByGoalFinishDate }}</td>
+              </tr>
+              <tr>
+                <td>{{ $t('set_a_goal.verses_required_each_day') }}</td>
+                <td>{{ versesRequiredEachDayForGoal }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+  </div>
 </template>
 
 <script>

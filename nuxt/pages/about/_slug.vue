@@ -1,21 +1,15 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds-tablet is-half-desktop">
-          <article class="content">
-            <nuxt-content :document="doc" />
-            <template v-if="doc.slug !== 'overview'">
-              <br>
-              <nuxt-link :to="localePath('/about/overview')">
-                {{ $t('back') }}
-              </nuxt-link>
-            </template>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="content-column">
+    <article class="content">
+      <nuxt-content :document="doc" />
+      <template v-if="doc.slug !== 'overview'">
+        <br>
+        <nuxt-link :to="localePath('/about/overview')">
+          {{ $t('back') }}
+        </nuxt-link>
+      </template>
+    </article>
+  </div>
 </template>
 
 <script>

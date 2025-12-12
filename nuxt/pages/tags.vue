@@ -1,56 +1,50 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <header class="page-header">
-              <h2 class="title">
-                {{ $t('note_tags') }}
-                <info-link :to="localePath('/about/page-features--notes')" />
-              </h2>
-              <div class="buttons is-align-items-flex-start">
-                <nuxt-link class="button" :to="localePath('/notes')">
-                  {{ $t('notes') }}
-                  <CaretRight style="margin-left: 0.2rem;" />
-                </nuxt-link>
-                <button class="button is-info" @click="openPassageNoteTagEditor()">
-                  {{ $t('new') }}
-                </button>
-              </div>
-            </header>
-            <div>
-              <div v-for="tag in passageNoteTags" :key="tag.id" class="tag-line">
-                <div>
-                  <div class="passage-note-tag" :style="passageNoteTagStyle(tag)">
-                    {{ tag.label }}
-                  </div>
-                  <div class="tag-description">
-                    <hyperlinked-text :text="tag.description" />
-                  </div>
-                </div>
-                <div class="buttons is-right">
-                  <button class="button is-small" @click="viewTagNotes(tag)">
-                    {{ $t('notes_count', { count: tag.noteCount }) }}
-                  </button>
-                  <button class="button is-small" @click="openPassageNoteTagEditor(tag)">
-                    {{ $t('edit') }}
-                  </button>
-                  <button class="button is-small" @click="deletePassageNoteTag(tag.id)">
-                    {{ $t('delete') }}
-                  </button>
-                </div>
-              </div>
-              <div v-if="!passageNoteTags.length" class="tag-line">
-                <div class="has-text-centered">
-                  {{ $t('no_tags') }}
-                </div>
-              </div>
+    <div class="content-column">
+      <header class="page-header">
+        <h2 class="title">
+          {{ $t('note_tags') }}
+          <info-link :to="localePath('/about/page-features--notes')" />
+        </h2>
+        <div class="buttons is-align-items-flex-start">
+          <nuxt-link class="button" :to="localePath('/notes')">
+            {{ $t('notes') }}
+            <CaretRight style="margin-left: 0.2rem;" />
+          </nuxt-link>
+          <button class="button is-info" @click="openPassageNoteTagEditor()">
+            {{ $t('new') }}
+          </button>
+        </div>
+      </header>
+      <div>
+        <div v-for="tag in passageNoteTags" :key="tag.id" class="tag-line">
+          <div>
+            <div class="passage-note-tag" :style="passageNoteTagStyle(tag)">
+              {{ tag.label }}
             </div>
+            <div class="tag-description">
+              <hyperlinked-text :text="tag.description" />
+            </div>
+          </div>
+          <div class="buttons is-right">
+            <button class="button is-small" @click="viewTagNotes(tag)">
+              {{ $t('notes_count', { count: tag.noteCount }) }}
+            </button>
+            <button class="button is-small" @click="openPassageNoteTagEditor(tag)">
+              {{ $t('edit') }}
+            </button>
+            <button class="button is-small" @click="deletePassageNoteTag(tag.id)">
+              {{ $t('delete') }}
+            </button>
+          </div>
+        </div>
+        <div v-if="!passageNoteTags.length" class="tag-line">
+          <div class="has-text-centered">
+            {{ $t('no_tags') }}
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 </template>
 

@@ -1,35 +1,29 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds-tablet is-half-desktop">
-          <client-only>
-            <busy-bar :busy="dateVerseCountsBusy" />
-            <div id="calendar-page">
-              <calendar-month :get-date-verse-counts="getDateVerseCounts" :daily-verse-count-goal="userSettings.dailyVerseCountGoal" @daySelected="selectDate" />
-              <div v-if="currentDate" class="entry-container">
-                <div class="entry-date">
-                  <div>
-                    <div class="date">
-                      {{ displayDate(entryDate.date) }}
-                    </div>
-                    <div class="verse-count">
-                      {{ entryDate.verses }} {{ $tc('verse', entryDate.verses) }}
-                    </div>
-                  </div>
-                  <button class="button is-small" @click="openAddEntryFormForDate(entryDate.date)">
-                    +
-                  </button>
-                </div>
-                <log-entry v-for="entry of entryDate.entries" :key="entry.id" :passage="entry" :actions="actionsForLogEntry(entry)" />
-                <log-entry v-if="!entryDate.entries.length" :message="$t('no_entries')" empty="empty" />
+  <div class="content-column">
+    <client-only>
+      <busy-bar :busy="dateVerseCountsBusy" />
+      <div id="calendar-page">
+        <calendar-month :get-date-verse-counts="getDateVerseCounts" :daily-verse-count-goal="userSettings.dailyVerseCountGoal" @daySelected="selectDate" />
+        <div v-if="currentDate" class="entry-container">
+          <div class="entry-date">
+            <div>
+              <div class="date">
+                {{ displayDate(entryDate.date) }}
+              </div>
+              <div class="verse-count">
+                {{ entryDate.verses }} {{ $tc('verse', entryDate.verses) }}
               </div>
             </div>
-          </client-only>
+            <button class="button is-small" @click="openAddEntryFormForDate(entryDate.date)">
+              +
+            </button>
+          </div>
+          <log-entry v-for="entry of entryDate.entries" :key="entry.id" :passage="entry" :actions="actionsForLogEntry(entry)" />
+          <log-entry v-if="!entryDate.entries.length" :message="$t('no_entries')" empty="empty" />
         </div>
       </div>
-    </div>
-  </section>
+    </client-only>
+  </div>
 </template>
 
 <script>
