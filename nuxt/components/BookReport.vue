@@ -1,31 +1,33 @@
 <template>
   <div class="book-report">
     <header class="book-report-header is-hidden-mobile">
-      <h2 class="title mb-0">
-        <span>{{ bookName }}</span>
-      </h2>
+      <div class="book-report-header--title">
+        <button class="button" @click="$emit('exit-book-report')">
+          <CaretLeft />
+        </button>
+        <h2 class="title mb-0">
+          <span>{{ bookName }}</span>
+        </h2>
+      </div>
       <div class="buttons">
         <button class="button" @click="$emit('view-book-notes')">
-          {{ $t('notes') }}
-          <CaretRight style="margin-left: 0.2rem;" />
-        </button>
-        <button class="button" @click="$emit('exit-book-report')">
-          {{ $t('books') }}
+          {{ $t('book_notes') }}
           <CaretRight style="margin-left: 0.2rem;" />
         </button>
       </div>
     </header>
     <header class="book-report-header is-hidden-tablet">
-      <h2 class="title is-5 mb-0">
-        <span>{{ bookName }}</span>
-      </h2>
+      <div class="book-report-header--title">
+        <button class="button is-small" @click="$emit('exit-book-report')">
+          <CaretLeft />
+        </button>
+        <h2 class="title is-5 mb-0">
+          <span>{{ bookName }}</span>
+        </h2>
+      </div>
       <div class="buttons">
         <button class="button is-small" @click="$emit('view-book-notes')">
-          {{ $t('notes') }}
-          <CaretRight style="margin-left: 0.2rem;" />
-        </button>
-        <button class="button is-small" @click="$emit('exit-book-report')">
-          {{ $t('books') }}
+          {{ $t('book_notes') }}
           <CaretRight style="margin-left: 0.2rem;" />
         </button>
       </div>
@@ -56,6 +58,7 @@ import { Bible } from '@mybiblelog/shared';
 import ChapterReport from '@/components/ChapterReport';
 import SegmentBar from '@/components/SegmentBar';
 import CaretRight from '@/components/svg/CaretRight';
+import CaretLeft from '@/components/svg/CaretLeft';
 
 const calcPercent = (numerator, denominator) => {
   return Math.floor(numerator / denominator * 100);
@@ -67,6 +70,7 @@ export default {
     ChapterReport,
     SegmentBar,
     CaretRight,
+    CaretLeft,
   },
   props: {
     logEntries: {
@@ -182,6 +186,12 @@ export default {
   margin-bottom: 1rem;
 }
 
+.book-report-header--title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .plaque {
   margin-bottom: 2rem;
   p {
@@ -199,28 +209,22 @@ export default {
 <i18n lang="json">
 {
   "de": {
-    "notes": "Notizen",
-    "books": "Bücher"
+    "book_notes": "Buch Notizen"
   },
   "en": {
-    "notes": "Notes",
-    "books": "Books"
+    "book_notes": "Book Notes"
   },
   "es": {
-    "notes": "Notas",
-    "books": "Libros"
+    "book_notes": "Notas del libro"
   },
   "fr": {
-    "notes": "Notes",
-    "books": "Books"
+    "book_notes": "Notes du livre"
   },
   "pt": {
-    "notes": "Notas",
-    "books": "Livros"
+    "book_notes": "Notas do livro"
   },
   "uk": {
-    "notes": "Нотатки",
-    "books": "Книги"
+    "book_notes": "Нотатки книги"
   }
 }
 </i18n>
