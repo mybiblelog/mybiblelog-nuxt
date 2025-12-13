@@ -1,0 +1,171 @@
+<template>
+  <div class="passage-note" :class="{ 'empty': empty }">
+    <div class="passage-note--passages">
+      <ul>
+        <li v-for="passage in note.passages" :key="passage.id">
+          <a :href="readingUrl(passage)" target="_blank">
+            <strong>{{ displayVerseRange(passage.startVerseId, passage.endVerseId) }}</strong>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="passage-note--created-date">
+      <span class="has-text-grey is-size-7" :title="displayDateTime(note.createdAt)">{{ displayTimeSince(note.createdAt) }}</span>
+    </div>
+    <div class="passage-note--content">
+      <hyperlinked-text :text="note.content" />
+    </div>
+    <div class="passage-note--tags">
+      <div v-for="tag in populatedTags(note.tags)" :key="tag.id" class="passage-note-tag" :style="passageNoteTagStyle(tag)">
+        {{ tag.label }}
+      </div>
+    </div>
+    <div class="passage-note--controls">
+      <div class="buttons is-right">
+        <button
+          v-for="(action, index) in actions"
+          :key="index"
+          class="button is-small"
+          @click="action.callback"
+        >
+          {{ action.label }}
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex';
+import { Bible, displayDateTime, displayTimeSince } from '@mybiblelog/shared';
+import HyperlinkedText from '@/components/HyperlinkedText';
+
+export default {
+  name: 'PassageNote',
+  components: {
+    HyperlinkedText,
+  },
+  props: {
+    note: {
+      // expects note object with passages, content, tags, createdAt, id
+      type: Object,
+      required: true,
+    },
+    actions: {
+      // expects an array of objects with `label` and `callback` properties
+      type: Array,
+      default: () => [],
+    },
+    empty: {
+      // allows the passage note to be displayed without border or shadow
+      type: Boolean,
+      default: () => false,
+    },
+    getReadingUrl: {
+      // function to get reading URL for a passage
+      // expects (bookIndex, chapterIndex) => url
+      type: Function,
+      required: true,
+    },
+  },
+  computed: {
+    ...mapState({
+      passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
+    }),
+  },
+  methods: {
+    displayVerseRange(startVerseId, endVerseId) {
+      return Bible.displayVerseRange(startVerseId, endVerseId, this.$i18n.locale);
+    },
+    displayDateTime(date) {
+      return displayDateTime(date, this.$i18n.locale);
+    },
+    displayTimeSince(date) {
+      return displayTimeSince(date, this.$i18n.locale);
+    },
+    readingUrl(passage) {
+      const { book, chapter } = Bible.parseVerseId(passage.startVerseId);
+      return this.getReadingUrl(book, chapter);
+    },
+    populatedTags(tagIds) {
+      if (!this.passageNoteTags || !this.passageNoteTags.length) {
+        return tagIds.map(id => ({ id, label: 'Loading', color: '#333' }));
+      }
+      return tagIds.map(id => this.passageNoteTags.find(tag => tag.id === id)).filter(Boolean);
+    },
+    passageNoteTagStyle(tag) {
+      return {
+        'background-color': tag.color,
+      };
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.passage-note {
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 7px #999;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, auto);
+
+  &.empty {
+    box-shadow: none;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.passage-note--passages {
+  grid-area: 1 / 1 / 2 / 3;
+}
+
+.passage-note--created-date {
+  grid-area: 1 / 2 / 2 / 3;
+  text-align: right;
+  cursor: default;
+  & > span {
+    border-bottom: 1px dotted #ccc;
+  }
+}
+
+.passage-note--content {
+  overflow-wrap: break-word;
+  white-space: pre-line;
+  margin: 0.5rem 0;
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+.passage-note--tags {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  grid-area: 3 / 1 / 4 / 2;
+}
+
+.passage-note-tag {
+  font-size: 0.8em;
+  color: #fff;
+  text-shadow: 0 0 2px #000, 1px 1px 0 rgba(0,0,0,0.5);
+  padding: 0 0.5rem;
+  border-radius: 0.25rem;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+  max-width: 10rem;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+}
+
+.passage-note--controls {
+  display: flex;
+  flex-direction: column-reverse;
+  grid-area: 3 / 2 / 4 / 3;
+}
+</style>

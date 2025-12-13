@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="field passages-title">
-      <label class="label">{{ $t('passage') }}</label>
+      <label class="label">{{ $t('passages') }}</label>
       <button class="button is-primary is-small" :disabled="editingPassage > -1" @click.prevent="addPassage">
         {{ $t('add_passage') }}
       </button>
@@ -240,73 +240,73 @@ export default {
 <i18n lang="json">
 {
   "de": {
-    "passage": "Passage",
+    "passages": "Passagen",
     "add_passage": "Passage hinzufügen",
     "done": "Fertig",
     "cancel": "Abbrechen",
     "remove": "Entfernen",
     "no_passages": "Noch keine Passagen hinzugefügt",
-    "content": "Inhalt (Markdown)",
+    "content": "Inhalt",
     "tags": "Tags",
     "characters": "Zeichen",
     "are_you_sure": "Sind Sie sicher, dass Sie diese Passage entfernen möchten?"
   },
   "en": {
-    "passage": "Passage",
+    "passages": "Passages",
     "add_passage": "Add Passage",
     "done": "Done",
     "cancel": "Cancel",
     "remove": "Remove",
     "no_passages": "No passages added yet",
-    "content": "Content (Markdown)",
+    "content": "Content",
     "tags": "Tags",
     "characters": "characters",
     "are_you_sure": "Are you sure you want to remove this passage?"
   },
   "es": {
-    "passage": "Pasaje",
+    "passages": "Pasajes",
     "add_passage": "Añadir Pasaje",
     "done": "Hecho",
     "cancel": "Cancelar",
     "remove": "Eliminar",
     "no_passages": "No hay pasajes",
-    "content": "Contenido (Markdown)",
+    "content": "Contenido",
     "tags": "Etiquetas",
     "characters": "caracteres",
     "are_you_sure": "¿Estás seguro de que quieres eliminar este pasaje?"
   },
   "fr": {
-    "passage": "Passage",
+    "passages": "Passages",
     "add_passage": "Ajouter un passage",
     "done": "Terminé",
     "cancel": "Annuler",
     "remove": "Supprimer",
     "no_passages": "Aucun passage",
-    "content": "Contenu (Markdown)",
+    "content": "Contenu",
     "tags": "Étiquettes",
     "characters": "caractères",
     "are_you_sure": "Êtes-vous sûr de vouloir supprimer ce passage ?"
   },
   "pt": {
-    "passage": "Passagem",
+    "passages": "Passagens",
     "add_passage": "Adicionar Passagem",
     "done": "Concluído",
     "cancel": "Cancelar",
     "remove": "Remover",
     "no_passages": "Nenhuma passagem adicionada ainda",
-    "content": "Conteúdo (Markdown)",
+    "content": "Conteúdo",
     "tags": "Tags",
     "characters": "caracteres",
     "are_you_sure": "Tem certeza de que deseja remover esta passagem?"
   },
   "uk": {
-    "passage": "Пасаж",
+    "passages": "Пасажі",
     "add_passage": "Додати пасаж",
     "done": "Готово",
     "cancel": "Скасувати",
     "remove": "Видалити",
     "no_passages": "Немає пасажів",
-    "content": "Зміст (Markdown)",
+    "content": "Зміст",
     "tags": "Теги",
     "characters": "символи",
     "are_you_sure": "Ви впевнені, що хочете видалити цей пасаж?"

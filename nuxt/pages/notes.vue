@@ -63,38 +63,13 @@
           </div>
         </template>
         <template v-else>
-          <div v-for="note in passageNotes" :key="note.id" class="passage-note">
-            <div class="passage-note--passages">
-              <ul>
-                <li v-for="passage in note.passages" :key="passage.id">
-                  <a :href="readingUrl(passage)" target="_blank">
-                    <strong>{{ displayVerseRange(passage.startVerseId, passage.endVerseId) }}</strong>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="passage-note--created-date">
-              <span class="has-text-grey is-size-7" :title="displayDateTime(note.createdAt)">{{ displayTimeSince(note.createdAt) }}</span>
-            </div>
-            <div class="passage-note--content">
-              <hyperlinked-text :text="note.content" />
-            </div>
-            <div class="passage-note--tags">
-              <div v-for="tag in populatedTags(note.tags)" :key="tag.id" class="passage-note-tag" :style="passageNoteTagStyle(tag)">
-                {{ tag.label }}
-              </div>
-            </div>
-            <div class="passage-note--controls">
-              <div class="buttons is-right">
-                <button class="button is-small" @click="openPassageNoteEditor(note)">
-                  {{ $t('note.edit') }}
-                </button>
-                <button class="button is-small" @click="deletePassageNote(note.id)">
-                  {{ $t('note.delete') }}
-                </button>
-              </div>
-            </div>
-          </div>
+          <passage-note
+            v-for="note in passageNotes"
+            :key="note.id"
+            :note="note"
+            :actions="actionsForNote(note)"
+            :get-reading-url="getReadingUrl"
+          />
           <pagination v-if="pagination.totalPages > 1" :total-pages="pagination.totalPages" :current-page="pagination.page" @pagechanged="onPageChanged" />
         </template>
       </div>
@@ -206,8 +181,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import { Bible, displayDateTime, displayTimeSince } from '@mybiblelog/shared';
-import HyperlinkedText from '@/components/HyperlinkedText';
+import { Bible } from '@mybiblelog/shared';
+import PassageNote from '@/components/PassageNote';
 import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
 import PassageSelector from '@/components/forms/PassageSelector';
 import Modal from '@/components/popups/Modal';
@@ -218,7 +193,7 @@ import CaretRight from '@/components/svg/CaretRight';
 export default {
   name: 'NotesListPage',
   components: {
-    HyperlinkedText,
+    PassageNote,
     PassageNoteTagSelector,
     PassageSelector,
     Modal,
@@ -363,17 +338,14 @@ export default {
     this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
   },
   methods: {
-    displayVerseRange(startVerseId, endVerseId) {
-      return Bible.displayVerseRange(startVerseId, endVerseId, this.$i18n.locale);
-    },
-    displayDateTime(date) {
-      return displayDateTime(date, this.$i18n.locale);
-    },
-    displayTimeSince(date) {
-      return displayTimeSince(date, this.$i18n.locale);
-    },
     getReadingUrl(bookIndex, chapterIndex) {
       return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+    },
+    actionsForNote(note) {
+      return [
+        { label: this.$t('note.edit'), callback: () => this.openPassageNoteEditor(note) },
+        { label: this.$t('note.delete'), callback: () => this.deletePassageNote(note.id) },
+      ];
     },
     openSearchModal() {
       this.showSearchModal = true;
@@ -423,21 +395,6 @@ export default {
       // This wouldn't be necessary if the sort order was kept completely in the store.
       this.querySort = 'createdAt:descending';
     },
-    populatedTags(tagIds) {
-      if (!this.passageNoteTags.length) {
-        return tagIds.map(id => ({ id, label: 'Loading', color: '#333' }));
-      }
-      return tagIds.map(id => this.passageNoteTags.find(tag => tag.id === id));
-    },
-    passageNoteTagStyle(tag) {
-      return {
-        'background-color': tag.color,
-      };
-    },
-    readingUrl(passage) {
-      const { book, chapter } = Bible.parseVerseId(passage.startVerseId);
-      return this.getReadingUrl(book, chapter);
-    },
     openPassageNoteEditor(passageNote) {
       // If passageNote has empty: true, open for creating new note
       // Otherwise, open for editing existing note
@@ -478,7 +435,7 @@ export default {
 .query-summary {
   background: #efefef;
   padding: 0.5em 1em;
-  margin: 0.5em -0.5em;
+  margin: 0.5em 0;
   border-radius: 0.25em;
 }
 
@@ -487,65 +444,6 @@ export default {
   flex-wrap: wrap;
 }
 
-.passage-note {
-  padding: 0.5rem 1rem;
-  margin: 1rem -0.5rem;
-  border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
-
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(4, auto);
-}
-
-.passage-note--passages {
-  grid-area: 1 / 1 / 2 / 3;
-}
-
-.passage-note--created-date {
-  grid-area: 1 / 2 / 2 / 3;
-  text-align: right;
-  cursor: default;
-  & > span {
-    border-bottom: 1px dotted #ccc;
-  }
-}
-
-.passage-note--content {
-  overflow-wrap:break-word;
-  white-space: pre-line;
-  margin: 0.5rem 0;
-  grid-area: 2 / 1 / 3 / 3;
-}
-
-.passage-note--tags {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  grid-area: 3 / 1 / 4 / 2;
-}
-
-.passage-note-tag {
-  font-size: 0.8em;
-  color: #fff;
-  text-shadow: 0 0 2px #000, 1px 1px 0 rgba(0,0,0,0.5);
-  padding: 0 0.5rem;
-  border-radius: 0.25rem;
-  margin-right: 0.25rem;
-  margin-bottom: 0.25rem;
-  max-width: 10rem;
-  overflow-x: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
-}
-
-.passage-note--controls {
-  display: flex;
-  flex-direction: column-reverse;
-  grid-area: 3 / 2 / 4 / 3;
-}
 </style>
 
 <i18n lang="json">
