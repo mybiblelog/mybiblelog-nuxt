@@ -57,7 +57,7 @@ export default {
 /* css class for the transition */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s;
+  transition: $transition-fade;
 }
 .fade-enter,
 .fade-leave-to {

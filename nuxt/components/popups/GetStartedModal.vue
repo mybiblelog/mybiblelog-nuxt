@@ -1,15 +1,17 @@
 <template>
-  <div v-if="isVisible" class="modal is-active" role="dialog">
-    <div class="modal-background" @click="close" />
-    <div class="modal-card">
-      <section class="modal-card-body">
-        <GetStartedStep
-          :previous-button-text="$t('start_page.back')"
-          @previous="close"
-        />
-      </section>
+  <transition name="fade">
+    <div v-if="isVisible" class="modal is-active" role="dialog">
+      <div class="modal-background" @click="close" />
+      <div class="modal-card">
+        <section class="modal-card-body">
+          <GetStartedStep
+            :previous-button-text="$t('start_page.back')"
+            @previous="close"
+          />
+        </section>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -35,6 +37,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* css class for the transition */
+.modal {
+  &.fade-enter-active,
+  &.fade-leave-active {
+    transition: $transition-fade;
+
+    .modal-card {
+      transition: $transition-modal;
+    }
+  }
+
+  &.fade-enter,
+  &.fade-leave-to {
+    opacity: 0;
+
+    .modal-card {
+      transform: $modal-scale;
+    }
+  }
+}
+
 .modal-card-body {
   padding: 2rem;
 }

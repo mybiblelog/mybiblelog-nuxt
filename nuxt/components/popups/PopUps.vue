@@ -63,15 +63,6 @@ export default {
 
 <style lang="scss" scoped>
 /* css class for the transition */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-
 .popup-modal {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -83,6 +74,24 @@ export default {
   display: flex;
   align-items: center;
   z-index: $zIndexPopUp;
+
+  &.fade-enter-active,
+  &.fade-leave-active {
+    transition: $transition-fade;
+
+    .window {
+      transition: $transition-modal;
+    }
+  }
+
+  &.fade-enter,
+  &.fade-leave-to {
+    opacity: 0;
+
+    .window {
+      transform: $modal-scale;
+    }
+  }
 }
 
 .window {

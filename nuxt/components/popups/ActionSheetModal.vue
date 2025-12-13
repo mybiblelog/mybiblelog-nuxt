@@ -217,7 +217,7 @@ export default {
 
   // Large screens: use scale for center animation
   @media (min-width: $breakpoint) {
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) $modal-scale;
     opacity: 0;
   }
 }
@@ -228,7 +228,7 @@ export default {
 
   // Large screens: use scale for center animation
   @media (min-width: $breakpoint) {
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) $modal-scale;
     opacity: 0;
   }
 }

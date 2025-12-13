@@ -33,5 +33,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//
+.modal {
+  &.fade-enter-active,
+  &.fade-leave-active {
+    .modal-card {
+      transition: $transition-modal;
+    }
+  }
+
+  &.fade-enter,
+  &.fade-leave-to {
+    .modal-card {
+      transform: $modal-scale;
+    }
+  }
+}
 </style>

@@ -16,3 +16,8 @@ $grey-100: #e4e9f0;
 $grey-200: #cfd7e3;
 $grey-300: #b5c0cd;
 $grey-800: #3e4e63;
+
+// modal transitions
+$transition-fade: opacity 0.3s ease-out;
+$transition-modal: transform 0.3s ease-out;
+$modal-scale: scale(0.9);
