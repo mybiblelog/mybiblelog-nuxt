@@ -478,7 +478,7 @@ export default {
 .query-summary {
   background: #efefef;
   padding: 0.5em 1em;
-  margin: 0.5em -0.5em;
+  margin: 0.5em 0;
   border-radius: 0.25em;
 }
 
@@ -489,7 +489,7 @@ export default {
 
 .passage-note {
   padding: 0.5rem 1rem;
-  margin: 1rem -0.5rem;
+  margin: 1rem 0;
   border-radius: 0.25rem;
   box-shadow: 0 1px 7px #999;
 

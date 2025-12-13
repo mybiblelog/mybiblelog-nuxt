@@ -1,33 +1,26 @@
 <template>
   <transition name="fade">
-    <div v-if="isVisible" class="modal is-active" role="dialog">
-      <div class="modal-background" @click="close" />
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">
-            {{ $t('feedback_form') }}
-          </p>
-          <button class="delete" aria-label="close" @click="close" />
-        </header>
-        <section class="modal-card-body">
-          <div class="content">
-            <p>{{ $t('feedback_form_intro.p1') }}</p>
-            <p>{{ $t('feedback_form_intro.p2') }}</p>
-          </div>
-          <FeedbackForm @success="handleSuccess" />
-        </section>
-      </div>
-    </div>
+    <Modal v-if="isVisible" :title="$t('feedback_form')" @close="close">
+      <template slot="content">
+        <div class="content">
+          <p>{{ $t('feedback_form_intro.p1') }}</p>
+          <p>{{ $t('feedback_form_intro.p2') }}</p>
+        </div>
+        <FeedbackForm @success="handleSuccess" />
+      </template>
+    </Modal>
   </transition>
 </template>
 
 <script>
 import FeedbackForm from '@/components/forms/FeedbackForm.vue';
+import Modal from '@/components/popups/Modal.vue';
 
 export default {
   name: 'FeedbackModal',
   components: {
     FeedbackForm,
+    Modal,
   },
   props: {
     isVisible: {
@@ -49,28 +42,14 @@ export default {
 
 <style lang="scss" scoped>
 /* css class for the transition */
-.modal {
-  &.fade-enter-active,
-  &.fade-leave-active {
-    transition: $transition-fade;
-
-    .modal-card {
-      transition: $transition-modal;
-    }
-  }
-
-  &.fade-enter,
-  &.fade-leave-to {
-    opacity: 0;
-
-    .modal-card {
-      transform: $modal-scale;
-    }
-  }
+.fade-enter-active,
+.fade-leave-active {
+  transition: $transition-fade;
 }
 
-.modal-card-body {
-  padding: 2rem;
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
 

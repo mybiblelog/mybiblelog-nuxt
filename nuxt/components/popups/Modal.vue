@@ -34,6 +34,10 @@ export default {
 
 <style lang="scss" scoped>
 .modal {
+  .modal-card {
+    padding: 0 1rem;
+  }
+
   &.fade-enter-active,
   &.fade-leave-active {
     .modal-card {
