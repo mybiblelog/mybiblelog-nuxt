@@ -9,7 +9,13 @@
     </div>
     <div>
       <label for="model-book">{{ $t('book') }}</label>
-      <select id="model-book" ref="book" :value="formBook" @change="onSelectBook">
+      <select
+        id="model-book"
+        ref="book"
+        :key="`book-${formBook}`"
+        :value="formBook"
+        @change="onSelectBook"
+      >
         <option disabled="" value="0" selected="">
           {{ $t('choose_book') }}
         </option>
@@ -20,7 +26,14 @@
     </div>
     <div>
       <label for="model-startChapter">{{ $t('start_chapter') }}</label>
-      <select id="model-startChapter" ref="startChapter" :value="formStartChapter" :disabled="formBook === 0" @change="onSelectStartChapter">
+      <select
+        id="model-startChapter"
+        ref="startChapter"
+        :key="`start-chapter-${formBook}-${formStartChapter}`"
+        :value="formStartChapter"
+        :disabled="formBook === 0"
+        @change="onSelectStartChapter"
+      >
         <option disabled="" value="0" selected="">
           {{ $t('choose_start_chapter') }}
         </option>
@@ -31,7 +44,14 @@
     </div>
     <div>
       <label for="model-startVerse">{{ $t('start_verse') }}</label>
-      <select id="model-startVerse" ref="startVerse" :value="formStartVerse" :disabled="formStartChapter === 0" @change="onSelectStartVerse">
+      <select
+        id="model-startVerse"
+        ref="startVerse"
+        :key="`start-verse-${formStartChapter}-${formStartVerse}`"
+        :value="formStartVerse"
+        :disabled="formStartChapter === 0"
+        @change="onSelectStartVerse"
+      >
         <option disabled="" value="0" selected="">
           {{ $t('choose_start_verse') }}
         </option>
@@ -42,7 +62,14 @@
     </div>
     <div>
       <label for="model-endChapter">{{ $t('end_chapter') }}</label>
-      <select id="model-endChapter" ref="endChapter" :value="formEndChapter" :disabled="formStartVerse === 0" @change="onSelectEndChapter">
+      <select
+        id="model-endChapter"
+        ref="endChapter"
+        :key="`end-chapter-${formStartChapter}-${formEndChapter}`"
+        :value="formEndChapter"
+        :disabled="formStartVerse === 0"
+        @change="onSelectEndChapter"
+      >
         <option disabled="" value="0" selected="">
           {{ $t('choose_end_chapter') }}
         </option>
@@ -53,7 +80,14 @@
     </div>
     <div>
       <label for="model-endVerse">{{ $t('end_verse') }}</label>
-      <select id="model-endVerse" ref="endVerse" :value="formEndVerse" :disabled="formEndChapter === 0" @change="onSelectEndVerse">
+      <select
+        id="model-endVerse"
+        ref="endVerse"
+        :key="`end-verse-${formEndChapter}`"
+        :value="formEndVerse"
+        :disabled="formEndChapter === 0"
+        @change="onSelectEndVerse"
+      >
         <option disabled="" value="0" selected="">
           {{ $t('choose_end_verse') }}
         </option>
