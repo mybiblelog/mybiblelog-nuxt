@@ -46,7 +46,7 @@
     </div>
     <br>
     <h3 class="title is-5">
-      {{ $t('suggestions') }}
+      {{ $t('reading_suggestions') }}
     </h3>
     <div class="entry-container" role="list" data-testid="reading-suggestions">
       <client-only>
@@ -219,6 +219,7 @@ export default {
     await this.$store.dispatch('reading-suggestions/refreshReadingSuggestions');
     this.loadingReadingSuggestions = false;
     // Load the 3 most recent notes using the passage-notes store
+    await this.$store.dispatch('passage-notes/resetQuery');
     await this.$store.dispatch('passage-notes/updateQuery', {
       limit: 3,
       offset: 0,
@@ -390,6 +391,7 @@ export default {
     "take_note": "Notiz hinzufügen",
     "view_notes": "Notizen ansehen",
     "no_entries": "Keine Einträge",
+    "reading_suggestions": "Lesevorschläge",
     "suggestions": "Vorschläge",
     "open_bible": "Bibel öffnen",
     "log_reading": "Lesung hinzufügen",
@@ -420,6 +422,7 @@ export default {
     "take_note": "Take Note",
     "view_notes": "View Notes",
     "no_entries": "No Entries",
+    "reading_suggestions": "Reading Suggestions",
     "suggestions": "Suggestions",
     "open_bible": "Open Bible",
     "log_reading": "Log Reading",
@@ -450,6 +453,7 @@ export default {
     "take_note": "Tomar nota",
     "view_notes": "Ver notas",
     "no_entries": "No hay entradas",
+    "reading_suggestions": "Sugerencias de Lectura",
     "suggestions": "Sugerencias",
     "open_bible": "Abrir en la Biblia",
     "log_reading": "Agregar lectura",
@@ -480,6 +484,7 @@ export default {
     "take_note": "Prendre note",
     "view_notes": "Voir les notes",
     "no_entries": "Pas d'entrées",
+    "reading_suggestions": "Suggestions de Lecture",
     "suggestions": "Suggestions",
     "open_bible": "Ouvrir dans la Bible",
     "log_reading": "Ajouter une lecture",
@@ -510,6 +515,7 @@ export default {
     "take_note": "Tomar nota",
     "view_notes": "Ver notas",
     "no_entries": "Sem Entradas",
+    "reading_suggestions": "Sugestões de Leitura",
     "suggestions": "Sugestões",
     "open_bible": "Ler na Biblia",
     "log_reading": "Adicionar uma leitura",
@@ -540,6 +546,7 @@ export default {
     "take_note": "Записати",
     "view_notes": "Переглянути записи",
     "no_entries": "Немає записів",
+    "reading_suggestions": "Рекомендації для Читання",
     "suggestions": "Рекомендації",
     "open_bible": "Читати в Біблії",
     "log_reading": "Додати читання",
