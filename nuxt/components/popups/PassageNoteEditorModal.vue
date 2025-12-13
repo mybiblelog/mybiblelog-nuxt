@@ -1,19 +1,21 @@
 <template>
-  <modal v-if="open" :title="modalTitle" @close="handleClose">
-    <template slot="content">
-      <passage-note-editor-form
-        :passage-note-tags="passageNoteTags"
-      />
-    </template>
-    <template slot="footer">
-      <button class="button is-primary" :disabled="!isValid" @click="handleSave">
-        {{ $t('note_editor.save') }}
-      </button>
-      <button class="button is-light" @click="handleClose">
-        {{ $t('note_editor.close') }}
-      </button>
-    </template>
-  </modal>
+  <transition name="fade">
+    <modal v-if="open" :title="modalTitle" @close="handleClose">
+      <template slot="content">
+        <passage-note-editor-form
+          :passage-note-tags="passageNoteTags"
+        />
+      </template>
+      <template slot="footer">
+        <button class="button is-primary" :disabled="!isValid" @click="handleSave">
+          {{ $t('note_editor.save') }}
+        </button>
+        <button class="button is-light" @click="handleClose">
+          {{ $t('note_editor.close') }}
+        </button>
+      </template>
+    </modal>
+  </transition>
 </template>
 
 <script>
@@ -67,7 +69,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//
+/* css class for the transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
 
 <i18n lang="json">
