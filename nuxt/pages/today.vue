@@ -72,6 +72,56 @@
         />
       </client-only>
     </div>
+    <br>
+    <div class="level is-mobile">
+      <div class="level-left">
+        <div class="level-item">
+          <h3 class="title is-5">
+            {{ $t('recent_notes') }}
+          </h3>
+        </div>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+          <button class="button is-info" @click="openPassageNoteEditor({ empty: true })">
+            {{ $t('new_note') }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="recent-notes-container" role="list" data-testid="recent-notes">
+      <client-only>
+        <div
+          v-if="loadingRecentNotes && !recentNotes.length"
+          class="passage-note"
+        >
+          <div class="passage-note--content has-text-centered">
+            {{ $t('loading') }}
+          </div>
+        </div>
+        <template v-else-if="!recentNotes.length">
+          <log-entry
+            :message="$t('no_recent_notes')"
+            role="listitem"
+          />
+        </template>
+        <template v-else>
+          <passage-note
+            v-for="note in recentNotes"
+            :key="note.id"
+            :note="note"
+            :actions="actionsForRecentNote(note)"
+            :get-reading-url="getReadingUrl"
+            role="listitem"
+          />
+        </template>
+      </client-only>
+    </div>
+    <div class="has-text-centered" style="margin-top: 1rem;">
+      <nuxt-link class="button is-light" :to="localePath('/notes')">
+        {{ $t('view_all_notes') }}
+      </nuxt-link>
+    </div>
   </div>
 </template>
 
@@ -83,6 +133,7 @@ import BusyBar from '@/components/BusyBar';
 import DoubleProgressBar from '@/components/DoubleProgressBar';
 import LogEntry from '@/components/LogEntry';
 import InfoLink from '@/components/InfoLink';
+import PassageNote from '@/components/PassageNote';
 
 export default {
   name: 'TodayPage',
@@ -91,6 +142,7 @@ export default {
     DoubleProgressBar,
     LogEntry,
     InfoLink,
+    PassageNote,
   },
   middleware: ['auth'],
   data() {
@@ -110,7 +162,17 @@ export default {
     ...mapState({
       userSettings: state => state['user-settings'].settings,
       readingSuggestions: state => state['reading-suggestions'].passages,
+      passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
+      passageNotesLoading: state => state['passage-notes'].loading,
+      passageNotes: state => state['passage-notes'].passageNotes,
     }),
+    loadingRecentNotes() {
+      return this.passageNotesLoading;
+    },
+    recentNotes() {
+      // Return the first 3 notes from the store (they're already sorted by createdAt descending)
+      return this.passageNotes.slice(0, 3);
+    },
     logEntriesForToday() {
       const today = dayjs().format('YYYY-MM-DD');
       return this.logEntries.filter(logEntry => logEntry.date === today).map(this.addNewVerseCountToLogEntry);
@@ -156,6 +218,14 @@ export default {
     await this.$store.dispatch('loadUserData');
     await this.$store.dispatch('reading-suggestions/refreshReadingSuggestions');
     this.loadingReadingSuggestions = false;
+    // Load the 3 most recent notes using the passage-notes store
+    await this.$store.dispatch('passage-notes/updateQuery', {
+      limit: 3,
+      offset: 0,
+      sortOn: 'createdAt',
+      sortDirection: 'descending',
+    });
+    this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
   },
   methods: {
     actionsForTodayLogEntry(entry) {
@@ -265,12 +335,47 @@ export default {
       });
       this.$router.push(this.localePath('/notes'));
     },
+    actionsForRecentNote(note) {
+      return [
+        { label: this.$t('note.edit'), callback: () => this.openPassageNoteEditor(note) },
+        { label: this.$t('note.delete'), callback: () => this.deletePassageNote(note.id) },
+      ];
+    },
+    openPassageNoteEditor(passageNote) {
+      // If passageNote has empty: true, open for creating new note
+      // Otherwise, open for editing existing note
+      const noteToEdit = passageNote.empty ? null : passageNote;
+      this.$store.dispatch('passage-note-editor/openEditor', noteToEdit);
+    },
+    async deletePassageNote(id) {
+      const confirmed = await this.$store.dispatch('dialog/confirm', {
+        message: this.$t('messaging.are_you_sure_delete_note'),
+      });
+      if (!confirmed) { return; }
+
+      const success = await this.$store.dispatch('passage-notes/deletePassageNote', id);
+      if (!success) {
+        this.$store.dispatch('toast/add', {
+          type: 'error',
+          text: this.$t('messaging.note_could_not_be_deleted'),
+        });
+      }
+      // Reload the recent notes after deletion
+      await this.$store.dispatch('passage-notes/updateQuery', {
+        limit: 3,
+        offset: 0,
+        sortOn: 'createdAt',
+        sortDirection: 'descending',
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-//
+.recent-notes-container {
+  margin-top: 1rem;
+}
 </style>
 
 <i18n lang="json">
@@ -290,7 +395,20 @@ export default {
     "log_reading": "Lesung hinzufügen",
     "no_suggestions": "Keine Vorschläge",
     "are_you_sure_you_want_to_delete_this_entry": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
-    "the_log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden."
+    "the_log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden.",
+    "recent_notes": "Letzte Notizen",
+    "no_recent_notes": "Keine Notizen",
+    "view_note": "Notiz ansehen",
+    "new_note": "Neue Notiz",
+    "view_all_notes": "Alle Notizen ansehen",
+    "note": {
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Möchten Sie diese Notiz wirklich löschen?",
+      "note_could_not_be_deleted": "Die Notiz konnte nicht gelöscht werden."
+    }
   },
   "en": {
     "today": "Today",
@@ -307,7 +425,20 @@ export default {
     "log_reading": "Log Reading",
     "no_suggestions": "No Suggestions",
     "are_you_sure_you_want_to_delete_this_entry": "Are you sure you want to delete this entry?",
-    "the_log_entry_could_not_be_deleted": "The log entry could not be deleted."
+    "the_log_entry_could_not_be_deleted": "The log entry could not be deleted.",
+    "recent_notes": "Recent Notes",
+    "no_recent_notes": "No Notes",
+    "view_note": "View Note",
+    "new_note": "New Note",
+    "view_all_notes": "View All Notes",
+    "note": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Are you sure you want to delete this note?",
+      "note_could_not_be_deleted": "The note could not be deleted."
+    }
   },
   "es": {
     "today": "Hoy",
@@ -324,7 +455,20 @@ export default {
     "log_reading": "Agregar lectura",
     "no_suggestions": "No hay sugerencias",
     "are_you_sure_you_want_to_delete_this_entry": "¿Estás seguro de que quieres borrar esta entrada?",
-    "the_log_entry_could_not_be_deleted": "No se pudo borrar la entrada del registro."
+    "the_log_entry_could_not_be_deleted": "No se pudo borrar la entrada del registro.",
+    "recent_notes": "Notas Recientes",
+    "no_recent_notes": "Sin Notas",
+    "view_note": "Ver Nota",
+    "new_note": "Nueva Nota",
+    "view_all_notes": "Ver Todas las Notas",
+    "note": {
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "¿Estás seguro de que quieres eliminar esta nota?",
+      "note_could_not_be_deleted": "La nota no se pudo eliminar."
+    }
   },
   "fr": {
     "today": "Aujourd'hui",
@@ -341,7 +485,20 @@ export default {
     "log_reading": "Ajouter une lecture",
     "no_suggestions": "Aucune suggestion",
     "are_you_sure_you_want_to_delete_this_entry": "Êtes-vous sûr de vouloir supprimer cette entrée?",
-    "the_log_entry_could_not_be_deleted": "L'entrée du journal n'a pas pu être supprimée."
+    "the_log_entry_could_not_be_deleted": "L'entrée du journal n'a pas pu être supprimée.",
+    "recent_notes": "Notes Récentes",
+    "no_recent_notes": "Aucune Note",
+    "view_note": "Voir la Note",
+    "new_note": "Nouvelle Note",
+    "view_all_notes": "Voir Toutes les Notes",
+    "note": {
+      "edit": "Éditer",
+      "delete": "Effacer"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Êtes-vous sûr de vouloir supprimer cette note ?",
+      "note_could_not_be_deleted": "La note n'a pas pu être supprimée."
+    }
   },
   "pt": {
     "today": "Hoje",
@@ -358,7 +515,20 @@ export default {
     "log_reading": "Adicionar uma leitura",
     "no_suggestions": "Sem sugestões",
     "are_you_sure_you_want_to_delete_this_entry": "Tem certeza de que deseja excluir esta entrada?",
-    "the_log_entry_could_not_be_deleted": "A entrada do registro não pôde ser excluída."
+    "the_log_entry_could_not_be_deleted": "A entrada do registro não pôde ser excluída.",
+    "recent_notes": "Notas Recentes",
+    "no_recent_notes": "Sem Notas",
+    "view_note": "Ver Nota",
+    "new_note": "Nova Nota",
+    "view_all_notes": "Ver Todas as Notas",
+    "note": {
+      "edit": "Editar",
+      "delete": "Apagar"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Tem certeza de que deseja excluir esta nota?",
+      "note_could_not_be_deleted": "A nota não pôde ser excluída."
+    }
   },
   "uk": {
     "today": "Сьогодні",
@@ -375,7 +545,20 @@ export default {
     "log_reading": "Додати читання",
     "no_suggestions": "Немає рекомендацій",
     "are_you_sure_you_want_to_delete_this_entry": "Ви впевнені, що хочете видалити цей запис?",
-    "the_log_entry_could_not_be_deleted": "Не вдалося видалити запис."
+    "the_log_entry_could_not_be_deleted": "Не вдалося видалити запис.",
+    "recent_notes": "Останні Нотатки",
+    "no_recent_notes": "Немає Нотаток",
+    "view_note": "Переглянути Нотатку",
+    "new_note": "Нова Нотатка",
+    "view_all_notes": "Переглянути Всі Нотатки",
+    "note": {
+      "edit": "Редагувати",
+      "delete": "Видалити"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Ви впевнені, що хочете видалити цю нотатку?",
+      "note_could_not_be_deleted": "Нотатку не вдалося видалити."
+    }
   }
 }
 </i18n>
