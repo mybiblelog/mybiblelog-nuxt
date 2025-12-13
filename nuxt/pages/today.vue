@@ -114,13 +114,13 @@
             :get-reading-url="getReadingUrl"
             role="listitem"
           />
+          <div class="has-text-centered" style="margin-top: 1rem;">
+            <nuxt-link class="button is-light" :to="localePath('/notes')">
+              {{ $t('view_all_notes') }}
+            </nuxt-link>
+          </div>
         </template>
       </client-only>
-    </div>
-    <div class="has-text-centered" style="margin-top: 1rem;">
-      <nuxt-link class="button is-light" :to="localePath('/notes')">
-        {{ $t('view_all_notes') }}
-      </nuxt-link>
     </div>
   </div>
 </template>
