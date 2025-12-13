@@ -16,9 +16,7 @@
       <hyperlinked-text :text="note.content" />
     </div>
     <div class="passage-note--tags">
-      <div v-for="tag in populatedTags(note.tags)" :key="tag.id" class="passage-note-tag" :style="passageNoteTagStyle(tag)">
-        {{ tag.label }}
-      </div>
+      <passage-note-tag-pill v-for="tag in populatedTags(note.tags)" :key="tag.id" :tag="tag" />
     </div>
     <div class="passage-note--controls">
       <div class="buttons is-right">
@@ -39,11 +37,13 @@
 import { mapState } from 'vuex';
 import { Bible, displayDateTime, displayTimeSince } from '@mybiblelog/shared';
 import HyperlinkedText from '@/components/HyperlinkedText';
+import PassageNoteTagPill from '@/components/PassageNoteTagPill';
 
 export default {
   name: 'PassageNote',
   components: {
     HyperlinkedText,
+    PassageNoteTagPill,
   },
   props: {
     note: {
@@ -93,11 +93,6 @@ export default {
       }
       return tagIds.map(id => this.passageNoteTags.find(tag => tag.id === id)).filter(Boolean);
     },
-    passageNoteTagStyle(tag) {
-      return {
-        'background-color': tag.color,
-      };
-    },
   },
 };
 </script>
@@ -145,22 +140,6 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   grid-area: 3 / 1 / 4 / 2;
-}
-
-.passage-note-tag {
-  font-size: 0.8em;
-  color: #fff;
-  text-shadow: 0 0 2px #000, 1px 1px 0 rgba(0,0,0,0.5);
-  padding: 0 0.5rem;
-  border-radius: 0.25rem;
-  margin-right: 0.25rem;
-  margin-bottom: 0.25rem;
-  max-width: 10rem;
-  overflow-x: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
 }
 
 .passage-note--controls {
