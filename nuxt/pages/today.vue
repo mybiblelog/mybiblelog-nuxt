@@ -219,6 +219,7 @@ export default {
     await this.$store.dispatch('reading-suggestions/refreshReadingSuggestions');
     this.loadingReadingSuggestions = false;
     // Load the 3 most recent notes using the passage-notes store
+    await this.$store.dispatch('passage-notes/resetQuery');
     await this.$store.dispatch('passage-notes/updateQuery', {
       limit: 3,
       offset: 0,
