@@ -1,13 +1,7 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds-tablet is-half-desktop">
-          <bible-report :log-entries="logEntries" @view-book-report="viewBookReport($event)" />
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="content-column">
+    <bible-report :log-entries="logEntries" @view-book-report="viewBookReport($event)" />
+  </div>
 </template>
 
 <script>

@@ -1,16 +1,10 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <h1 class="title">
-              {{ $t('signing_in_with_google') }}
-            </h1>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="content-column">
+      <h1 class="title">
+        {{ $t('signing_in_with_google') }}
+      </h1>
+    </div>
   </main>
 </template>
 

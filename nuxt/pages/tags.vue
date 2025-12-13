@@ -1,104 +1,56 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <header class="page-header">
-              <h2 class="title">
-                {{ $t('note_tags') }}
-                <info-link :to="localePath('/about/page-features--notes')" />
-              </h2>
-              <div class="buttons is-align-items-flex-start">
-                <nuxt-link class="button" :to="localePath('/notes')">
-                  {{ $t('notes') }}
-                  <CaretRight style="margin-left: 0.2rem;" />
-                </nuxt-link>
-                <button class="button is-info" @click="openPassageNoteTagEditor()">
-                  {{ $t('new') }}
-                </button>
-              </div>
-            </header>
-            <div>
-              <div v-for="tag in passageNoteTags" :key="tag.id" class="tag-line">
-                <div>
-                  <div class="passage-note-tag" :style="passageNoteTagStyle(tag)">
-                    {{ tag.label }}
-                  </div>
-                  <div class="tag-description">
-                    <hyperlinked-text :text="tag.description" />
-                  </div>
-                </div>
-                <div class="buttons is-right">
-                  <button class="button is-small" @click="viewTagNotes(tag)">
-                    {{ $t('notes_count', { count: tag.noteCount }) }}
-                  </button>
-                  <button class="button is-small" @click="openPassageNoteTagEditor(tag)">
-                    {{ $t('edit') }}
-                  </button>
-                  <button class="button is-small" @click="deletePassageNoteTag(tag.id)">
-                    {{ $t('delete') }}
-                  </button>
-                </div>
-              </div>
-              <div v-if="!passageNoteTags.length" class="tag-line">
-                <div class="has-text-centered">
-                  {{ $t('no_tags') }}
-                </div>
-              </div>
+    <div class="content-column">
+      <header class="page-header">
+        <h2 class="title">
+          {{ $t('note_tags') }}
+          <info-link :to="localePath('/about/page-features--notes')" />
+        </h2>
+        <div class="buttons is-align-items-flex-start">
+          <nuxt-link class="button" :to="localePath('/notes')">
+            {{ $t('notes') }}
+            <CaretRight style="margin-left: 0.2rem;" />
+          </nuxt-link>
+          <button class="button is-info" @click="openPassageNoteTagEditor()">
+            {{ $t('new') }}
+          </button>
+        </div>
+      </header>
+      <div>
+        <div v-for="tag in passageNoteTags" :key="tag.id" class="tag-line">
+          <div>
+            <div class="passage-note-tag" :style="passageNoteTagStyle(tag)">
+              {{ tag.label }}
             </div>
+            <div class="tag-description">
+              <hyperlinked-text :text="tag.description" />
+            </div>
+          </div>
+          <div class="buttons is-right">
+            <button class="button is-small" @click="viewTagNotes(tag)">
+              {{ $t('notes_count', { count: tag.noteCount }) }}
+            </button>
+            <button class="button is-small" @click="openPassageNoteTagEditor(tag)">
+              {{ $t('edit') }}
+            </button>
+            <button class="button is-small" @click="deletePassageNoteTag(tag.id)">
+              {{ $t('delete') }}
+            </button>
+          </div>
+        </div>
+        <div v-if="!passageNoteTags.length" class="tag-line">
+          <div class="has-text-centered">
+            {{ $t('no_tags') }}
           </div>
         </div>
       </div>
-    </section>
-    <modal v-if="editorOpen" :title="modalTitle" @close="closePassageNoteTagEditor()">
-      <template slot="content">
-        <form>
-          <div class="field">
-            <div class="label">
-              {{ $t('label') }}
-            </div>
-            <div v-if="editorErrors.label" class="help is-danger">
-              {{ $terr(editorErrors.label, { field: $t('label') }) }}
-            </div>
-            <div class="control">
-              <input v-model="editorPassageNoteTag.label" class="input" type="text" maxlength="32">
-            </div>
-          </div>
-          <div class="field">
-            <div class="label">
-              {{ $t('color') }}
-            </div>
-            <div class="control">
-              <input v-model="editorPassageNoteTag.color" class="input" type="color">
-            </div>
-          </div>
-          <div class="field">
-            <div class="label">
-              {{ $t('description') }}
-            </div>
-            <div class="control">
-              <textarea v-model="editorPassageNoteTag.description" class="textarea" maxlength="1500" />
-            </div>
-          </div>
-        </form>
-      </template>
-      <template slot="footer">
-        <button class="button is-primary" :disabled="!editorCanSave" @click="submitPassageNoteTagEditor">
-          {{ $t('save') }}
-        </button>
-        <button class="button is-light" @click="closePassageNoteTagEditor()">
-          {{ $t('close') }}
-        </button>
-      </template>
-    </modal>
+    </div>
   </main>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import HyperlinkedText from '@/components/HyperlinkedText';
-import Modal from '@/components/popups/Modal';
 import InfoLink from '@/components/InfoLink';
 import CaretRight from '@/components/svg/CaretRight';
 
@@ -106,33 +58,13 @@ export default {
   name: 'NoteTagsListPage',
   components: {
     HyperlinkedText,
-    Modal,
     InfoLink,
     CaretRight,
-  },
-  data() {
-    return {
-      editorOpen: false,
-      editorPassageNoteTag: null,
-      editorErrors: {},
-    };
   },
   computed: {
     ...mapState({
       passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
     }),
-    editorCanSave() {
-      if (!this.editorPassageNoteTag) {
-        return false;
-      }
-      return this.validatePassageNoteTag(this.editorPassageNoteTag);
-    },
-    modalTitle() {
-      if (this.editorPassageNoteTag.id) {
-        return this.$t('edit_tag');
-      }
-      return this.$t('add_tag');
-    },
   },
   mounted() {
     this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
@@ -143,48 +75,7 @@ export default {
       this.$router.push(this.localePath('/notes'));
     },
     openPassageNoteTagEditor(passageNoteTag = null) {
-      if (passageNoteTag) {
-        // Create a copy so we don't mutate Vuex state
-        passageNoteTag = JSON.parse(JSON.stringify(passageNoteTag));
-      }
-      else {
-        // Initialize a new PassageNoteTag
-        passageNoteTag = {
-          label: '',
-          color: '#000000',
-          description: '',
-        };
-      }
-      this.editorPassageNoteTag = passageNoteTag;
-      this.editorOpen = true;
-    },
-    validatePassageNoteTag(passageNoteTag) {
-      if (passageNoteTag.label.trim().length < 1 || passageNoteTag.label.length > 32) {
-        return false;
-      }
-      if (!/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/.test(passageNoteTag.color)) {
-        return false;
-      };
-      return true;
-    },
-    async submitPassageNoteTagEditor() {
-      try {
-        if (this.editorPassageNoteTag.id) {
-          await this.$store.dispatch('passage-note-tags/updatePassageNoteTag', this.editorPassageNoteTag);
-        }
-        else {
-          await this.$store.dispatch('passage-note-tags/createPassageNoteTag', this.editorPassageNoteTag);
-        }
-        this.closePassageNoteTagEditor(true);
-      }
-      catch (err) {
-        const unknownError = { _form: this.$t('unknown_error') };
-        this.editorErrors = err.response.data.errors || unknownError;
-      }
-    },
-    closePassageNoteTagEditor() {
-      this.editorOpen = false;
-      this.editorPassageNoteTag = null;
+      this.$store.dispatch('passage-note-tag-editor/openEditor', passageNoteTag);
     },
     async deletePassageNoteTag(id) {
       if (this.passageNoteTags.find(tag => tag.id === id).noteCount > 0) {
@@ -212,12 +103,12 @@ export default {
       };
     },
   },
+  middleware: ['auth'],
   head() {
     return {
       title: this.$t('note_tags'),
     };
   },
-  middleware: ['auth'],
 };
 </script>
 

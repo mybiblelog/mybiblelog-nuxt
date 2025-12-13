@@ -1,31 +1,33 @@
 <template>
   <div class="book-report">
     <header class="book-report-header is-hidden-mobile">
-      <h2 class="title mb-0">
-        <span>{{ bookName }}</span>
-      </h2>
+      <div class="book-report-header--title">
+        <button class="button" @click="$emit('exit-book-report')">
+          <CaretLeft />
+        </button>
+        <h2 class="title mb-0">
+          <span>{{ bookName }}</span>
+        </h2>
+      </div>
       <div class="buttons">
         <button class="button" @click="$emit('view-book-notes')">
-          {{ $t('notes') }}
-          <CaretRight style="margin-left: 0.2rem;" />
-        </button>
-        <button class="button" @click="$emit('exit-book-report')">
-          {{ $t('books') }}
+          {{ $t('book_notes') }}
           <CaretRight style="margin-left: 0.2rem;" />
         </button>
       </div>
     </header>
     <header class="book-report-header is-hidden-tablet">
-      <h2 class="title is-5 mb-0">
-        <span>{{ bookName }}</span>
-      </h2>
+      <div class="book-report-header--title">
+        <button class="button is-small" @click="$emit('exit-book-report')">
+          <CaretLeft />
+        </button>
+        <h2 class="title is-5 mb-0">
+          <span>{{ bookName }}</span>
+        </h2>
+      </div>
       <div class="buttons">
         <button class="button is-small" @click="$emit('view-book-notes')">
-          {{ $t('notes') }}
-          <CaretRight style="margin-left: 0.2rem;" />
-        </button>
-        <button class="button is-small" @click="$emit('exit-book-report')">
-          {{ $t('books') }}
+          {{ $t('book_notes') }}
           <CaretRight style="margin-left: 0.2rem;" />
         </button>
       </div>
@@ -38,10 +40,15 @@
     </div>
     <div class="chapter-report-grid">
       <template v-for="report in allChapterReports">
-        <chapter-report :key="report.chapterIndex" :report="report" @createLogEntry="openAddEntryForm" />
+        <chapter-report
+          :key="report.chapterIndex"
+          :report="report"
+          @createLogEntry="openAddEntryForm"
+          @takeNoteOnChapter="takeNoteOnChapter"
+          @viewNotesForChapter="viewNotesForChapter"
+        />
       </template>
     </div>
-    <log-entry-editor-modal v-if="editorOpen" ref="logEntryEditorModal" :populate-with="editorLogEntry" @closed="logEntryEditorClosed" />
   </div>
 </template>
 
@@ -50,8 +57,8 @@ import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import ChapterReport from '@/components/ChapterReport';
 import SegmentBar from '@/components/SegmentBar';
-import LogEntryEditorModal from '@/components/forms/LogEntryEditorModal';
 import CaretRight from '@/components/svg/CaretRight';
+import CaretLeft from '@/components/svg/CaretLeft';
 
 const calcPercent = (numerator, denominator) => {
   return Math.floor(numerator / denominator * 100);
@@ -62,8 +69,8 @@ export default {
   components: {
     ChapterReport,
     SegmentBar,
-    LogEntryEditorModal,
     CaretRight,
+    CaretLeft,
   },
   props: {
     logEntries: {
@@ -77,13 +84,6 @@ export default {
   },
   data() {
     return {
-      editorOpen: false,
-      editorLogEntry: {
-        id: null,
-        date: dayjs().format('YYYY-MM-DD'),
-        startVerseId: 0,
-        endVerseId: 0,
-      },
     };
   },
   computed: {
@@ -144,17 +144,32 @@ export default {
     },
     openAddEntryForm(bookIndex, chapterIndex) {
       const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
-      this.editorLogEntry = {
+      this.$store.dispatch('log-entry-editor/openEditor', {
         id: null,
         date: dayjs().format('YYYY-MM-DD'),
         startVerseId: Bible.makeVerseId(bookIndex, chapterIndex, 1),
         endVerseId: Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount),
-      };
-      this.editorOpen = true;
+      });
     },
-    logEntryEditorClosed() {
-      this.editorOpen = false;
-      this.editorLogEntry = { empty: true };
+    takeNoteOnChapter(bookIndex, chapterIndex) {
+      const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
+      const startVerseId = Bible.makeVerseId(bookIndex, chapterIndex, 1);
+      const endVerseId = Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount);
+      this.$store.dispatch('passage-note-editor/openEditor', {
+        passages: [{ startVerseId, endVerseId }],
+        content: '',
+      });
+    },
+    viewNotesForChapter(bookIndex, chapterIndex) {
+      const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
+      const startVerseId = Bible.makeVerseId(bookIndex, chapterIndex, 1);
+      const endVerseId = Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount);
+
+      this.$store.dispatch('passage-notes/stageQuery', {
+        filterPassageStartVerseId: startVerseId,
+        filterPassageEndVerseId: endVerseId,
+      });
+      this.$router.push(this.localePath('/notes'));
     },
   },
 };
@@ -169,6 +184,12 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.book-report-header--title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .plaque {
@@ -188,28 +209,22 @@ export default {
 <i18n lang="json">
 {
   "de": {
-    "notes": "Notizen",
-    "books": "Bücher"
+    "book_notes": "Buch Notizen"
   },
   "en": {
-    "notes": "Notes",
-    "books": "Books"
+    "book_notes": "Book Notes"
   },
   "es": {
-    "notes": "Notas",
-    "books": "Libros"
+    "book_notes": "Notas del libro"
   },
   "fr": {
-    "notes": "Notes",
-    "books": "Books"
+    "book_notes": "Notes du livre"
   },
   "pt": {
-    "notes": "Notas",
-    "books": "Livros"
+    "book_notes": "Notas do livro"
   },
   "uk": {
-    "notes": "Нотатки",
-    "books": "Книги"
+    "book_notes": "Нотатки книги"
   }
 }
 </i18n>

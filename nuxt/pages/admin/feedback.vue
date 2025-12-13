@@ -1,52 +1,46 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <h1 class="title">
-              Admin Feedback Review
-            </h1>
-            <div v-if="!feedbacks.length">
-              <p>There are no feedbacks.</p>
-            </div>
-            <div v-else>
-              <div class="table-container">
-                <table class="table is-striped is-fullwidth">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>User</th>
-                      <th>Feedback</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(feedback, index) in feedbacks" :key="feedback._id">
-                      <td>{{ index + 1 }}</td>
-                      <td>
-                        <div class="is-size-7" style="text-wrap: nowrap;">
-                          {{ dayjs(feedback.createdAt).format('YYYY-MM-DD hh:mm a') }}
-                        </div>
-                        <div>{{ feedback.email }}</div>
-                        <div class="is-size-7">
-                          {{ feedback.ip }}
-                        </div>
-                      </td>
-                      <td>
-                        <div class="is-size-7" :class="feedbackKindClass(feedback.kind)">
-                          {{ feedback.kind }}
-                        </div>
-                        <div>{{ feedback.message }}</div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+    <div class="content-column">
+      <h1 class="title">
+        Admin Feedback Review
+      </h1>
+      <div v-if="!feedbacks.length">
+        <p>There are no feedbacks.</p>
+      </div>
+      <div v-else>
+        <div class="table-container">
+          <table class="table is-striped is-fullwidth">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Feedback</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(feedback, index) in feedbacks" :key="feedback._id">
+                <td>{{ index + 1 }}</td>
+                <td>
+                  <div class="is-size-7" style="text-wrap: nowrap;">
+                    {{ dayjs(feedback.createdAt).format('YYYY-MM-DD hh:mm a') }}
+                  </div>
+                  <div>{{ feedback.email }}</div>
+                  <div class="is-size-7">
+                    {{ feedback.ip }}
+                  </div>
+                </td>
+                <td>
+                  <div class="is-size-7" :class="feedbackKindClass(feedback.kind)">
+                    {{ feedback.kind }}
+                  </div>
+                  <div>{{ feedback.message }}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 </template>
 

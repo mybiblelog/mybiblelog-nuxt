@@ -1,56 +1,50 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <h1 class="title">
-              {{ $t('reset_password') }}
-            </h1>
-            <template v-if="passwordResetCodeValid">
-              <div class="content">
-                <p>{{ $t('once_you_set_a_new_password_you_will_be_automatically_logged_in') }}</p>
-              </div>
-              <form :disabled="formBusy" @submit.prevent="submitChangePassword()">
-                <div v-if="changePasswordErrors._form" class="help is-danger">
-                  {{ $terr(changePasswordErrors._form) }}
-                </div>
-                <div class="field">
-                  <label class="label" for="newPassword">{{ $t('new_password') }}</label>
-                  <div class="control">
-                    <input v-model="changePasswordModel.newPassword" class="input" type="password" name="newPassword">
-                  </div>
-                  <div v-if="changePasswordErrors.newPassword" class="help is-danger">
-                    {{ $terr(changePasswordErrors.newPassword) }}
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label" for="confirmNewPassword">{{ $t('confirm_new_password') }}</label>
-                  <div class="control">
-                    <input v-model="changePasswordModel.confirmNewPassword" class="input" type="password" name="confirmNewPassword">
-                  </div>
-                  <div v-if="changePasswordErrors.confirmNewPassword" class="help is-danger">
-                    {{ $terr(changePasswordErrors.confirmNewPassword) }}
-                  </div>
-                </div>
-                <button class="button is-primary">
-                  {{ $t('submit') }}
-                </button>
-              </form>
-            </template>
-            <template v-else>
-              <div class="content">
-                <p>{{ $t('this_password_reset_link_is_expired') }}</p>
-                <p>{{ $t('you_can_send_a_new_password_reset_email_from_the_sign_in_page') }}</p>
-              </div>
-              <nuxt-link class="button" :to="localePath('/login')">
-                Sign In
-              </nuxt-link>
-            </template>
-          </div>
+    <div class="content-column">
+      <h1 class="title">
+        {{ $t('reset_password') }}
+      </h1>
+      <template v-if="passwordResetCodeValid">
+        <div class="content">
+          <p>{{ $t('once_you_set_a_new_password_you_will_be_automatically_logged_in') }}</p>
         </div>
-      </div>
-    </section>
+        <form :disabled="formBusy" @submit.prevent="submitChangePassword()">
+          <div v-if="changePasswordErrors._form" class="help is-danger">
+            {{ $terr(changePasswordErrors._form) }}
+          </div>
+          <div class="field">
+            <label class="label" for="newPassword">{{ $t('new_password') }}</label>
+            <div class="control">
+              <input v-model="changePasswordModel.newPassword" class="input" type="password" name="newPassword">
+            </div>
+            <div v-if="changePasswordErrors.newPassword" class="help is-danger">
+              {{ $terr(changePasswordErrors.newPassword) }}
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="confirmNewPassword">{{ $t('confirm_new_password') }}</label>
+            <div class="control">
+              <input v-model="changePasswordModel.confirmNewPassword" class="input" type="password" name="confirmNewPassword">
+            </div>
+            <div v-if="changePasswordErrors.confirmNewPassword" class="help is-danger">
+              {{ $terr(changePasswordErrors.confirmNewPassword) }}
+            </div>
+          </div>
+          <button class="button is-primary">
+            {{ $t('submit') }}
+          </button>
+        </form>
+      </template>
+      <template v-else>
+        <div class="content">
+          <p>{{ $t('this_password_reset_link_is_expired') }}</p>
+          <p>{{ $t('you_can_send_a_new_password_reset_email_from_the_sign_in_page') }}</p>
+        </div>
+        <nuxt-link class="button" :to="localePath('/login')">
+          Sign In
+        </nuxt-link>
+      </template>
+    </div>
   </main>
 </template>
 

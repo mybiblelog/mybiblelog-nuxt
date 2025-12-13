@@ -1,21 +1,15 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <h1 class="title">
-              {{ $t('feedback_form') }}
-            </h1>
-            <div class="content">
-              <p>{{ $t('feedback_form_intro.p1') }}</p>
-              <p>{{ $t('feedback_form_intro.p2') }}</p>
-            </div>
-            <FeedbackForm />
-          </div>
-        </div>
+    <div class="content-column">
+      <h1 class="title">
+        {{ $t('feedback_form') }}
+      </h1>
+      <div class="content">
+        <p>{{ $t('feedback_form_intro.p1') }}</p>
+        <p>{{ $t('feedback_form_intro.p2') }}</p>
       </div>
-    </section>
+      <FeedbackForm />
+    </div>
   </main>
 </template>
 

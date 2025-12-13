@@ -1,36 +1,29 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds-tablet is-half-desktop">
-          <log-entry-editor-modal v-if="editorOpen" ref="logEntryEditorModal" :populate-with="editorLogEntry" @closed="logEntryEditorClosed" />
-          <client-only>
-            <busy-bar :busy="dateVerseCountsBusy" />
-            <div id="calendar-page">
-              <calendar-month :get-date-verse-counts="getDateVerseCounts" :daily-verse-count-goal="userSettings.dailyVerseCountGoal" @daySelected="selectDate" />
-              <div v-if="currentDate" class="entry-container">
-                <div class="entry-date">
-                  <div>
-                    <div class="date">
-                      {{ displayDate(entryDate.date) }}
-                    </div>
-                    <div class="verse-count">
-                      {{ entryDate.verses }} {{ $tc('verse', entryDate.verses) }}
-                    </div>
-                  </div>
-                  <button class="button is-small" :disabled="editorOpen" @click="openAddEntryFormForDate(entryDate.date)">
-                    +
-                  </button>
-                </div>
-                <log-entry v-for="entry of entryDate.entries" :key="entry.id" :passage="entry" :actions="actionsForLogEntry(entry)" />
-                <log-entry v-if="!entryDate.entries.length" :message="$t('no_entries')" empty="empty" />
+  <div class="content-column">
+    <client-only>
+      <busy-bar :busy="dateVerseCountsBusy" />
+      <div id="calendar-page">
+        <calendar-month :get-date-verse-counts="getDateVerseCounts" :daily-verse-count-goal="userSettings.dailyVerseCountGoal" @daySelected="selectDate" />
+        <div v-if="currentDate" class="entry-container">
+          <div class="entry-date">
+            <div>
+              <div class="date">
+                {{ displayDate(entryDate.date) }}
+              </div>
+              <div class="verse-count">
+                {{ entryDate.verses }} {{ $tc('verse', entryDate.verses) }}
               </div>
             </div>
-          </client-only>
+            <button class="button is-small" @click="openAddEntryFormForDate(entryDate.date)">
+              +
+            </button>
+          </div>
+          <log-entry v-for="entry of entryDate.entries" :key="entry.id" :passage="entry" :actions="actionsForLogEntry(entry)" />
+          <log-entry v-if="!entryDate.entries.length" :message="$t('no_entries')" empty="empty" />
         </div>
       </div>
-    </div>
-  </section>
+    </client-only>
+  </div>
 </template>
 
 <script>
@@ -39,7 +32,6 @@ import * as dayjs from 'dayjs';
 import { Bible, displayDate } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import CalendarMonth from '@/components/calendar/CalendarMonth';
-import LogEntryEditorModal from '@/components/forms/LogEntryEditorModal';
 import LogEntry from '@/components/LogEntry';
 
 export default {
@@ -47,19 +39,11 @@ export default {
   components: {
     BusyBar,
     CalendarMonth,
-    LogEntryEditorModal,
     LogEntry,
   },
   data() {
     return {
       currentDate: null,
-      editorOpen: false,
-      editorLogEntry: {
-        id: null,
-        date: dayjs().format('YYYY-MM-DD'),
-        startVerseId: 0,
-        endVerseId: 0,
-      },
     };
   },
   async fetch() {
@@ -105,9 +89,14 @@ export default {
     },
     actionsForLogEntry(entry) {
       return [
+        { label: this.$t('open_bible'), callback: () => this.openPassageInBible(entry) },
+        { label: this.$t('take_note'), callback: () => this.takeNoteOnPassage(entry) },
         { label: this.$t('edit'), callback: () => this.openEditEntryForm(entry.id) },
         { label: this.$t('delete'), callback: () => this.deleteEntry(entry.id) },
       ];
+    },
+    getReadingUrl(bookIndex, chapterIndex) {
+      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
     },
     async deleteEntry(id) {
       const confirmed = await this.$store.dispatch('dialog/confirm', {
@@ -123,23 +112,30 @@ export default {
       }
     },
     openAddEntryFormForDate(date) {
-      this.editorLogEntry = { empty: true, date };
-      this.editorOpen = true;
+      this.$store.dispatch('log-entry-editor/openEditor', { empty: true, date });
     },
     openEditEntryForm(id) {
       const targetEntry = this.logEntries.find(e => e.id === id);
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.editorLogEntry = {
+      this.$store.dispatch('log-entry-editor/openEditor', {
         id,
         date,
         startVerseId,
         endVerseId,
-      };
-      this.editorOpen = true;
+      });
     },
-    logEntryEditorClosed() {
-      this.editorOpen = false;
-      this.editorLogEntry = { empty: true };
+    openPassageInBible(passage) {
+      const { startVerseId } = passage;
+      const start = Bible.parseVerseId(startVerseId);
+      const url = this.getReadingUrl(start.book, start.chapter);
+      window.open(url, '_blank');
+    },
+    takeNoteOnPassage(passage) {
+      const { startVerseId, endVerseId } = passage;
+      this.$store.dispatch('passage-note-editor/openEditor', {
+        passages: [{ startVerseId, endVerseId }],
+        content: '',
+      });
     },
     selectDate(date) {
       this.currentDate = date;
@@ -177,6 +173,8 @@ export default {
   "de": {
     "page_title": "Kalender",
     "verse": "Vers | Verse",
+    "open_bible": "Bibel öffnen",
+    "take_note": "Notiz hinzufügen",
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "no_entries": "Keine Einträge",
@@ -186,6 +184,8 @@ export default {
   "en": {
     "page_title": "Calendar",
     "verse": "verse | verses",
+    "open_bible": "Open Bible",
+    "take_note": "Take Note",
     "edit": "Edit",
     "delete": "Delete",
     "no_entries": "No Entries",
@@ -195,6 +195,8 @@ export default {
   "es": {
     "page_title": "Calendario",
     "verse": "versículo | versículos",
+    "open_bible": "Abrir en la Biblia",
+    "take_note": "Tomar nota",
     "edit": "Editar",
     "delete": "Borrar",
     "no_entries": "No hay entradas",
@@ -204,6 +206,8 @@ export default {
   "fr": {
     "page_title": "Calendrier",
     "verse": "verset | versets",
+    "open_bible": "Ouvrir dans la Bible",
+    "take_note": "Prendre note",
     "edit": "Modifier",
     "delete": "Supprimer",
     "no_entries": "Aucune entrée",
@@ -213,6 +217,8 @@ export default {
   "pt": {
     "page_title": "Calendário",
     "verse": "versículo | versículos",
+    "open_bible": "Ler na Biblia",
+    "take_note": "Tomar nota",
     "edit": "Editar",
     "delete": "Apagar",
     "no_entries": "Nenhum registro",
@@ -222,6 +228,8 @@ export default {
   "uk": {
     "page_title": "Календар",
     "verse": "верс | верси",
+    "open_bible": "Читати в Біблії",
+    "take_note": "Записати",
     "edit": "Редагувати",
     "delete": "Видалити",
     "no_entries": "Немає записів",

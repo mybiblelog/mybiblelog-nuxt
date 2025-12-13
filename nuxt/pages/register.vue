@@ -1,66 +1,60 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <div class="level">
-              <div class="level-left">
-                <h1 class="title">
-                  {{ $t('sign_up') }}
-                  <info-link :to="localePath('/about/page-features--login')" />
-                </h1>
-              </div>
-              <div class="level-right">
-                <nuxt-link :to="localePath('/login')">
-                  {{ $t('have_an_account') }}
-                </nuxt-link>
-              </div>
-            </div>
-            <template v-if="formSubmitted">
-              <div class="content">
-                <p>{{ $t('registration_submitted') }}</p>
-              </div>
-            </template>
-            <template v-else>
-              <form @submit.prevent="onSubmit">
-                <div class="field">
-                  <label class="label">{{ $t('email') }}</label>
-                  <div class="control">
-                    <input v-model="email" class="input" type="text" :placeholder="$t('email')" :class="{ 'is-danger': errors.email }">
-                  </div>
-                  <p v-if="errors.email" class="help is-danger">
-                    {{ $terr(errors.email) }}
-                  </p>
-                </div>
-                <div class="field">
-                  <label class="label">{{ $t('password') }}</label>
-                  <div class="control">
-                    <input v-model="password" class="input" type="password" :placeholder="$t('password')" :class="{ 'is-danger': errors.password }">
-                    <p v-if="errors.password" class="help is-danger">
-                      {{ $terr(errors.password) }}
-                    </p>
-                  </div>
-                </div>
-                <button class="button is-primary">
-                  {{ $t('sign_up') }}
-                </button>
-              </form>
-            </template>
-            <div class="is-flex mt-6">
-              <article class="message is-info">
-                <div class="message-header">
-                  <p>{{ $t('have_a_google_account') }}</p>
-                </div>
-                <div class="message-body">
-                  {{ $t('sign_in_with_google') }}
-                </div>
-              </article>
-            </div>
-          </div>
+    <div class="content-column">
+      <div class="level">
+        <div class="level-left">
+          <h1 class="title">
+            {{ $t('sign_up') }}
+            <info-link :to="localePath('/about/page-features--login')" />
+          </h1>
+        </div>
+        <div class="level-right">
+          <nuxt-link :to="localePath('/login')">
+            {{ $t('have_an_account') }}
+          </nuxt-link>
         </div>
       </div>
-    </section>
+      <template v-if="formSubmitted">
+        <div class="content">
+          <p>{{ $t('registration_submitted') }}</p>
+        </div>
+      </template>
+      <template v-else>
+        <form @submit.prevent="onSubmit">
+          <div class="field">
+            <label class="label">{{ $t('email') }}</label>
+            <div class="control">
+              <input v-model="email" class="input" type="text" :placeholder="$t('email')" :class="{ 'is-danger': errors.email }">
+            </div>
+            <p v-if="errors.email" class="help is-danger">
+              {{ $terr(errors.email) }}
+            </p>
+          </div>
+          <div class="field">
+            <label class="label">{{ $t('password') }}</label>
+            <div class="control">
+              <input v-model="password" class="input" type="password" :placeholder="$t('password')" :class="{ 'is-danger': errors.password }">
+              <p v-if="errors.password" class="help is-danger">
+                {{ $terr(errors.password) }}
+              </p>
+            </div>
+          </div>
+          <button class="button is-primary">
+            {{ $t('sign_up') }}
+          </button>
+        </form>
+      </template>
+      <div class="is-flex mt-6">
+        <article class="message is-info">
+          <div class="message-header">
+            <p>{{ $t('have_a_google_account') }}</p>
+          </div>
+          <div class="message-body">
+            {{ $t('sign_in_with_google') }}
+          </div>
+        </article>
+      </div>
+    </div>
   </main>
 </template>
 

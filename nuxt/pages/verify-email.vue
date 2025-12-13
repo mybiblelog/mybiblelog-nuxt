@@ -1,22 +1,16 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <h1 class="title">
-              {{ $t('verifying_email') }}
-            </h1>
-            <p v-if="error">
-              {{ error }}
-            </p>
-            <p v-else>
-              {{ $t('one_moment_please') }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="content-column">
+      <h1 class="title">
+        {{ $t('verifying_email') }}
+      </h1>
+      <p v-if="error">
+        {{ error }}
+      </p>
+      <p v-else>
+        {{ $t('one_moment_please') }}
+      </p>
+    </div>
   </main>
 </template>
 

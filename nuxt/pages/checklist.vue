@@ -1,55 +1,49 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds-tablet is-half-desktop">
-          <busy-bar :busy="busy" />
-          <header class="page-header">
-            <h2 class="title">
-              {{ $t('chapter_checklist') }}
-              <info-link :to="localePath('/about/page-features--chapter-checklist')" />
-            </h2>
-          </header>
-          <br>
-          <div>
-            <div v-if="!bookReports.length" class="loading-card">
-              <strong>{{ $t('loading') }}</strong>
+  <div class="content-column">
+    <busy-bar :busy="busy" />
+    <header class="page-header">
+      <h2 class="title">
+        {{ $t('chapter_checklist') }}
+        <info-link :to="localePath('/about/page-features--chapter-checklist')" />
+      </h2>
+    </header>
+    <br>
+    <div>
+      <div v-if="!bookReports.length" class="loading-card">
+        <strong>{{ $t('loading') }}</strong>
+      </div>
+      <div v-for="bookReport in bookReports" :key="bookReport.bookIndex" class="book-card">
+        <div class="book-card--header">
+          <div class="book-card--completion-indicator">
+            <check-mark width="100%" height="100%" :fill="bookReport.complete ? '#0c0' : 'transparent'" />
+          </div>
+          <div class="book-card--book-name">
+            {{ bookReport.bookName }}
+          </div>
+          <div class="book-card--completion-fraction">
+            {{ bookReport.chaptersRead }} / {{ bookReport.totalChapters }}
+          </div>
+          <div class="book-card--chapter-toggle" :class="{ flipped: expandedBooks[bookReport.bookIndex] }" @click="toggleBook(bookReport.bookIndex)">
+            <caret-down width="2rem" height="2rem" fill="#ccc" />
+          </div>
+          <div class="book-card--completion-bar">
+            <completion-bar :percentage="bookReport.percentage" foreground-color="#0c0" />
+          </div>
+        </div>
+        <div v-if="expandedBooks[bookReport.bookIndex]" class="book-card--chapters">
+          <div v-for="chapterReport in bookReport.chapterReports" :key="chapterReport.chapterIndex" class="chapter-card" @click="toggleChapter(chapterReport.bookIndex, chapterReport.chapterIndex)">
+            <div class="chapter-card--chapter-number">
+              {{ chapterReport.chapterIndex }}
             </div>
-            <div v-for="bookReport in bookReports" :key="bookReport.bookIndex" class="book-card">
-              <div class="book-card--header">
-                <div class="book-card--completion-indicator">
-                  <check-mark width="100%" height="100%" :fill="bookReport.complete ? '#0c0' : 'transparent'" />
-                </div>
-                <div class="book-card--book-name">
-                  {{ bookReport.bookName }}
-                </div>
-                <div class="book-card--completion-fraction">
-                  {{ bookReport.chaptersRead }} / {{ bookReport.totalChapters }}
-                </div>
-                <div class="book-card--chapter-toggle" :class="{ flipped: expandedBooks[bookReport.bookIndex] }" @click="toggleBook(bookReport.bookIndex)">
-                  <caret-down width="2rem" height="2rem" fill="#ccc" />
-                </div>
-                <div class="book-card--completion-bar">
-                  <completion-bar :percentage="bookReport.percentage" foreground-color="#0c0" />
-                </div>
-              </div>
-              <div v-if="expandedBooks[bookReport.bookIndex]" class="book-card--chapters">
-                <div v-for="chapterReport in bookReport.chapterReports" :key="chapterReport.chapterIndex" class="chapter-card" @click="toggleChapter(chapterReport.bookIndex, chapterReport.chapterIndex)">
-                  <div class="chapter-card--chapter-number">
-                    {{ chapterReport.chapterIndex }}
-                  </div>
-                  <div class="chapter-card--completion-indicator">
-                    <spinner v-if="busyChapter === `${bookReport.bookIndex}.${chapterReport.chapterIndex}`" width="100%" height="100%" :fill="chapterReport.complete ? '#ddd' : '#0c0'" />
-                    <check-mark v-else width="100%" height="100%" :fill="chapterReport.complete ? '#0c0' : 'transparent'" />
-                  </div>
-                </div>
-              </div>
+            <div class="chapter-card--completion-indicator">
+              <spinner v-if="busyChapter === `${bookReport.bookIndex}.${chapterReport.chapterIndex}`" width="100%" height="100%" :fill="chapterReport.complete ? '#ddd' : '#0c0'" />
+              <check-mark v-else width="100%" height="100%" :fill="chapterReport.complete ? '#0c0' : 'transparent'" />
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

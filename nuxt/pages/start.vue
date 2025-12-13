@@ -1,50 +1,44 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <!-- Progress Indicator -->
-            <div class="progress-indicator">
-              <PillProgressBar
-                :current-step="progressTab + 1"
-                :total-steps="totalSteps"
-              />
-            </div>
-
-            <!-- Welcome -->
-            <WelcomeStep
-              v-if="progressTab === 0"
-              :button-text="$t('start_page.welcome.button')"
-              @next="handleNext"
-            />
-
-            <!-- Daily Verse Count Goal -->
-            <DailyVerseCountGoalForm
-              v-if="progressTab === 1"
-              :initial-value="userSettings.dailyVerseCountGoal"
-              :next-button-text="$t('start_page.save_and_continue')"
-              :previous-button-text="$t('start_page.back')"
-              :show-toast="false"
-              @next="handleNext"
-              @previous="handlePrevious"
-            />
-
-            <!-- Preferred Bible Version and App -->
-            <PreferredBibleVersionForm
-              v-if="progressTab === 2"
-              :initial-value="userSettings.preferredBibleVersion"
-              :initial-bible-app="userSettings.preferredBibleApp"
-              :next-button-text="$t('start_page.save_and_finish')"
-              :previous-button-text="$t('start_page.back')"
-              :show-toast="false"
-              @next="handleNext"
-              @previous="handlePrevious"
-            />
-          </div>
-        </div>
+    <div class="content-column">
+      <!-- Progress Indicator -->
+      <div class="progress-indicator">
+        <PillProgressBar
+          :current-step="progressTab + 1"
+          :total-steps="totalSteps"
+        />
       </div>
-    </section>
+
+      <!-- Welcome -->
+      <WelcomeStep
+        v-if="progressTab === 0"
+        :button-text="$t('start_page.welcome.button')"
+        @next="handleNext"
+      />
+
+      <!-- Daily Verse Count Goal -->
+      <DailyVerseCountGoalForm
+        v-if="progressTab === 1"
+        :initial-value="userSettings.dailyVerseCountGoal"
+        :next-button-text="$t('start_page.save_and_continue')"
+        :previous-button-text="$t('start_page.back')"
+        :show-toast="false"
+        @next="handleNext"
+        @previous="handlePrevious"
+      />
+
+      <!-- Preferred Bible Version and App -->
+      <PreferredBibleVersionForm
+        v-if="progressTab === 2"
+        :initial-value="userSettings.preferredBibleVersion"
+        :initial-bible-app="userSettings.preferredBibleApp"
+        :next-button-text="$t('start_page.save_and_finish')"
+        :previous-button-text="$t('start_page.back')"
+        :show-toast="false"
+        @next="handleNext"
+        @previous="handlePrevious"
+      />
+    </div>
 
     <!-- Get Started Modal -->
     <GetStartedModal

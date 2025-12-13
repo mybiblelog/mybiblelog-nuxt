@@ -1,46 +1,40 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-two-thirds-tablet is-half-desktop">
-            <header class="page-header">
-              <h1 class="title is-3">
-                {{ $t('unsubscribe') }}
-              </h1>
-            </header>
-            <div class="content">
-              <template v-if="complete">
-                <p v-html="$t('success', { email })" />
-                <p>
-                  <nuxt-link class="button is-primary" :to="localePath('/settings/reminder')">
-                    {{ $t('update_preferences') }}
-                  </nuxt-link>
-                </p>
-              </template>
-              <template v-else>
-                <template v-if="error">
-                  <p class="has-text-danger">
-                    {{ $t('client_error.title') }}
-                  </p>
-                  <p>{{ $t('client_error.p1') }}</p>
-                  <p>{{ $t('client_error.p2') }}</p>
-                  <p>{{ $t('client_error.p3') }}</p>
-                  <p>
-                    <nuxt-link class="button is-primary" :to="localePath('/settings/reminder')">
-                      {{ $t('update_preferences') }}
-                    </nuxt-link>
-                  </p>
-                </template>
-                <template v-else>
-                  <p>{{ $t('unsubscribing_you') }}</p>
-                </template>
-              </template>
-            </div>
-          </div>
-        </div>
+    <div class="content-column">
+      <header class="page-header">
+        <h1 class="title is-3">
+          {{ $t('unsubscribe') }}
+        </h1>
+      </header>
+      <div class="content">
+        <template v-if="complete">
+          <p v-html="$t('success', { email })" />
+          <p>
+            <nuxt-link class="button is-primary" :to="localePath('/settings/reminder')">
+              {{ $t('update_preferences') }}
+            </nuxt-link>
+          </p>
+        </template>
+        <template v-else>
+          <template v-if="error">
+            <p class="has-text-danger">
+              {{ $t('client_error.title') }}
+            </p>
+            <p>{{ $t('client_error.p1') }}</p>
+            <p>{{ $t('client_error.p2') }}</p>
+            <p>{{ $t('client_error.p3') }}</p>
+            <p>
+              <nuxt-link class="button is-primary" :to="localePath('/settings/reminder')">
+                {{ $t('update_preferences') }}
+              </nuxt-link>
+            </p>
+          </template>
+          <template v-else>
+            <p>{{ $t('unsubscribing_you') }}</p>
+          </template>
+        </template>
       </div>
-    </section>
+    </div>
   </main>
 </template>
 

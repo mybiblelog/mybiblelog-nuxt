@@ -1,85 +1,78 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds-tablet is-half-desktop">
-          <busy-bar :busy="loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length" />
-          <header class="page-header">
-            <h1 class="title">
-              {{ $t('today') }}
-              <info-link :to="localePath('/about/page-features--today')" />
-            </h1>
-            <button class="button is-info" :disabled="editorOpen" @click="openAddEntryForm">
-              {{ $t('add_entry') }}
-            </button>
-          </header>
-          <br>
-          <log-entry-editor-modal v-if="editorOpen" ref="logEntryEditorModal" :populate-with="editorLogEntry" @closed="logEntryEditorClosed" />
-          <double-progress-bar :primary-percentage="dailyGoalPercentCompleteNew" :secondary-percentage="dailyGoalPercentComplete" />
-          <div class="level is-mobile">
-            <div class="level-left">
-              <div v-if="userSettings.dailyVerseCountGoal" class="level-item">
-                <span>{{ $t('new_verses_read', [newVersesReadToday, userSettings.dailyVerseCountGoal]) }}</span>
-              </div>
-              <div v-else class="level-item">
-                <span>{{ $t('loading') }}</span>
-              </div>
-            </div>
-            <div class="level-right">
-              <div class="level-item">
-                <span>{{ $n(dailyGoalPercentCompleteNew / 100, 'percent') }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="entry-container" role="list" data-testid="log-entries">
-            <client-only>
-              <log-entry
-                v-for="entry of logEntriesForToday"
-                :key="entry.id"
-                role="listitem"
-                :passage="entry"
-                :actions="actionsForTodayLogEntry(entry)"
-              />
-              <log-entry
-                v-if="!logEntriesForToday.length"
-                key="no-entries"
-                role="listitem"
-                :message="$t('no_entries')"
-              />
-            </client-only>
-          </div>
-          <br>
-          <h3 class="title is-5">
-            {{ $t('suggestions') }}
-          </h3>
-          <div class="entry-container" role="list" data-testid="reading-suggestions">
-            <client-only>
-              <log-entry
-                v-for="(passage, index) of readingSuggestionsWithNewVerseCounts"
-                :key="index + '-' + passage.startVerseId + '-' + passage.endVerseId"
-                role="listitem"
-                :message="passage.suggestionContext"
-                :passage="passage"
-                :actions="actionsForReadingSuggestionPassage(passage)"
-              />
-              <log-entry
-                v-if="loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length"
-                key="loading"
-                role="listitem"
-                :message="$t('loading')"
-              />
-              <log-entry
-                v-if="!loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length"
-                key="no-suggestions"
-                role="listitem"
-                :message="$t('no_suggestions')"
-              />
-            </client-only>
-          </div>
+  <div class="content-column">
+    <busy-bar :busy="loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length" />
+    <header class="page-header">
+      <h1 class="title">
+        {{ $t('today') }}
+        <info-link :to="localePath('/about/page-features--today')" />
+      </h1>
+      <button class="button is-info" @click="openAddEntryForm">
+        {{ $t('add_entry') }}
+      </button>
+    </header>
+    <br>
+    <double-progress-bar :primary-percentage="dailyGoalPercentCompleteNew" :secondary-percentage="dailyGoalPercentComplete" />
+    <div class="level is-mobile">
+      <div class="level-left">
+        <div v-if="userSettings.dailyVerseCountGoal" class="level-item">
+          <span>{{ $t('new_verses_read', [newVersesReadToday, userSettings.dailyVerseCountGoal]) }}</span>
+        </div>
+        <div v-else class="level-item">
+          <span>{{ $t('loading') }}</span>
+        </div>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+          <span>{{ $n(dailyGoalPercentCompleteNew / 100, 'percent') }}</span>
         </div>
       </div>
     </div>
-  </section>
+    <div class="entry-container" role="list" data-testid="log-entries">
+      <client-only>
+        <log-entry
+          v-for="entry of logEntriesForToday"
+          :key="entry.id"
+          role="listitem"
+          :passage="entry"
+          :actions="actionsForTodayLogEntry(entry)"
+        />
+        <log-entry
+          v-if="!logEntriesForToday.length"
+          key="no-entries"
+          role="listitem"
+          :message="$t('no_entries')"
+        />
+      </client-only>
+    </div>
+    <br>
+    <h3 class="title is-5">
+      {{ $t('suggestions') }}
+    </h3>
+    <div class="entry-container" role="list" data-testid="reading-suggestions">
+      <client-only>
+        <log-entry
+          v-for="(passage, index) of readingSuggestionsWithNewVerseCounts"
+          :key="index + '-' + passage.startVerseId + '-' + passage.endVerseId"
+          role="listitem"
+          :message="passage.suggestionContext"
+          :passage="passage"
+          :actions="actionsForReadingSuggestionPassage(passage)"
+        />
+        <log-entry
+          v-if="loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length"
+          key="loading"
+          role="listitem"
+          :message="$t('loading')"
+        />
+        <log-entry
+          v-if="!loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length"
+          key="no-suggestions"
+          role="listitem"
+          :message="$t('no_suggestions')"
+        />
+      </client-only>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -88,7 +81,6 @@ import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import DoubleProgressBar from '@/components/DoubleProgressBar';
-import LogEntryEditorModal from '@/components/forms/LogEntryEditorModal';
 import LogEntry from '@/components/LogEntry';
 import InfoLink from '@/components/InfoLink';
 
@@ -97,20 +89,18 @@ export default {
   components: {
     BusyBar,
     DoubleProgressBar,
-    LogEntryEditorModal,
     LogEntry,
     InfoLink,
   },
+  middleware: ['auth'],
   data() {
     return {
-      editorOpen: false,
-      editorLogEntry: {
-        id: null,
-        date: dayjs().format('YYYY-MM-DD'),
-        startVerseId: 0,
-        endVerseId: 0,
-      },
       loadingReadingSuggestions: true,
+    };
+  },
+  head() {
+    return {
+      title: this.$t('today'),
     };
   },
   computed: {
@@ -170,14 +160,17 @@ export default {
   methods: {
     actionsForTodayLogEntry(entry) {
       return [
+        { label: this.$t('open_bible'), callback: () => this.openPassageInBible(entry, false) },
+        { label: this.$t('take_note'), callback: () => this.takeNoteOnPassage(entry) },
+        { label: this.$t('view_notes'), callback: () => this.viewNotesForPassage(entry) },
         { label: this.$t('edit'), callback: () => this.openEditEntryForm(entry.id) },
         { label: this.$t('delete'), callback: () => this.deleteEntry(entry.id) },
       ];
     },
     actionsForReadingSuggestionPassage(passage) {
       return [
-        { label: this.$t('open'), callback: () => this.openPassageInBible(passage) },
-        { label: this.$t('track'), callback: () => this.trackPassage(passage) },
+        { label: this.$t('open_bible'), callback: () => this.openPassageInBible(passage, true) },
+        { label: this.$t('log_reading'), callback: () => this.trackPassage(passage) },
       ];
     },
     getReadingUrl(bookIndex, chapterIndex) {
@@ -223,25 +216,19 @@ export default {
       }
     },
     openAddEntryForm() {
-      this.editorLogEntry = { empty: true };
-      this.editorOpen = true;
+      this.$store.dispatch('log-entry-editor/openEditor', { empty: true });
     },
     openEditEntryForm(id) {
       const targetEntry = this.logEntries.find(e => e.id === id);
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.editorLogEntry = {
+      this.$store.dispatch('log-entry-editor/openEditor', {
         id,
         date,
         startVerseId,
         endVerseId,
-      };
-      this.editorOpen = true;
+      });
     },
-    logEntryEditorClosed() {
-      this.editorOpen = false;
-      this.editorLogEntry = { empty: true };
-    },
-    openPassageInBible(passage) {
+    openPassageInBible(passage, track) {
       const { startVerseId } = passage;
       const start = Bible.parseVerseId(startVerseId);
       const url = this.getReadingUrl(start.book, start.chapter);
@@ -250,25 +237,35 @@ export default {
       // When a chapter is opened in the Bible,
       // go ahead and open the log entry modal
       // so it's easy to log reading upon return
-      setTimeout(() => this.trackPassage(passage), 500);
+      if (track) {
+        setTimeout(() => this.trackPassage(passage), 500);
+      }
     },
     trackPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      this.editorLogEntry = {
+      this.$store.dispatch('log-entry-editor/openEditor', {
         id: null,
         date: dayjs().format('YYYY-MM-DD'),
         startVerseId,
         endVerseId,
-      };
-      this.editorOpen = true;
+      });
+    },
+    takeNoteOnPassage(passage) {
+      const { startVerseId, endVerseId } = passage;
+      this.$store.dispatch('passage-note-editor/openEditor', {
+        passages: [{ startVerseId, endVerseId }],
+        content: '',
+      });
+    },
+    viewNotesForPassage(passage) {
+      const { startVerseId, endVerseId } = passage;
+      this.$store.dispatch('passage-notes/stageQuery', {
+        filterPassageStartVerseId: startVerseId,
+        filterPassageEndVerseId: endVerseId,
+      });
+      this.$router.push(this.localePath('/notes'));
     },
   },
-  head() {
-    return {
-      title: this.$t('today'),
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 
@@ -285,10 +282,12 @@ export default {
     "loading": "Lädt...",
     "edit": "Bearbeiten",
     "delete": "Löschen",
+    "take_note": "Notiz hinzufügen",
+    "view_notes": "Notizen ansehen",
     "no_entries": "Keine Einträge",
     "suggestions": "Vorschläge",
-    "open": "Öffnen",
-    "track": "Verfolgen",
+    "open_bible": "Bibel öffnen",
+    "log_reading": "Lesung hinzufügen",
     "no_suggestions": "Keine Vorschläge",
     "are_you_sure_you_want_to_delete_this_entry": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
     "the_log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden."
@@ -300,10 +299,12 @@ export default {
     "loading": "Loading...",
     "edit": "Edit",
     "delete": "Delete",
+    "take_note": "Take Note",
+    "view_notes": "View Notes",
     "no_entries": "No Entries",
     "suggestions": "Suggestions",
-    "open": "Open",
-    "track": "Track",
+    "open_bible": "Open Bible",
+    "log_reading": "Log Reading",
     "no_suggestions": "No Suggestions",
     "are_you_sure_you_want_to_delete_this_entry": "Are you sure you want to delete this entry?",
     "the_log_entry_could_not_be_deleted": "The log entry could not be deleted."
@@ -315,10 +316,12 @@ export default {
     "loading": "Cargando...",
     "edit": "Editar",
     "delete": "Borrar",
+    "take_note": "Tomar nota",
+    "view_notes": "Ver notas",
     "no_entries": "No hay entradas",
     "suggestions": "Sugerencias",
-    "open": "Abrir",
-    "track": "Seguir",
+    "open_bible": "Abrir en la Biblia",
+    "log_reading": "Agregar lectura",
     "no_suggestions": "No hay sugerencias",
     "are_you_sure_you_want_to_delete_this_entry": "¿Estás seguro de que quieres borrar esta entrada?",
     "the_log_entry_could_not_be_deleted": "No se pudo borrar la entrada del registro."
@@ -330,10 +333,12 @@ export default {
     "loading": "Chargement...",
     "edit": "Éditer",
     "delete": "Supprimer",
+    "take_note": "Prendre note",
+    "view_notes": "Voir les notes",
     "no_entries": "Pas d'entrées",
     "suggestions": "Suggestions",
-    "open": "Ouvrir",
-    "track": "Suivre",
+    "open_bible": "Ouvrir dans la Bible",
+    "log_reading": "Ajouter une lecture",
     "no_suggestions": "Aucune suggestion",
     "are_you_sure_you_want_to_delete_this_entry": "Êtes-vous sûr de vouloir supprimer cette entrée?",
     "the_log_entry_could_not_be_deleted": "L'entrée du journal n'a pas pu être supprimée."
@@ -345,10 +350,12 @@ export default {
     "loading": "Carregando...",
     "edit": "Editar",
     "delete": "Excluir",
+    "take_note": "Tomar nota",
+    "view_notes": "Ver notas",
     "no_entries": "Sem Entradas",
     "suggestions": "Sugestões",
-    "open": "Abrir",
-    "track": "Rastrear",
+    "open_bible": "Ler na Biblia",
+    "log_reading": "Adicionar uma leitura",
     "no_suggestions": "Sem sugestões",
     "are_you_sure_you_want_to_delete_this_entry": "Tem certeza de que deseja excluir esta entrada?",
     "the_log_entry_could_not_be_deleted": "A entrada do registro não pôde ser excluída."
@@ -360,10 +367,12 @@ export default {
     "loading": "Завантаження...",
     "edit": "Редагувати",
     "delete": "Видалити",
+    "take_note": "Записати",
+    "view_notes": "Переглянути записи",
     "no_entries": "Немає записів",
     "suggestions": "Рекомендації",
-    "open": "Відкрити",
-    "track": "Відстежити",
+    "open_bible": "Читати в Біблії",
+    "log_reading": "Додати читання",
     "no_suggestions": "Немає рекомендацій",
     "are_you_sure_you_want_to_delete_this_entry": "Ви впевнені, що хочете видалити цей запис?",
     "the_log_entry_could_not_be_deleted": "Не вдалося видалити запис."

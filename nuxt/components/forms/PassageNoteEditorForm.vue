@@ -46,7 +46,7 @@
     <div class="field">
       <label class="label">{{ $t('content') }}</label>
       <div class="control">
-        <textarea v-model="passageNote.content" class="textarea" :disabled="editingPassage > -1" maxlength="3000" />
+        <textarea :value="passageNote.content" class="textarea" :disabled="editingPassage > -1" maxlength="3000" @input="updateContent" />
         <p v-if="errors.content" class="help is-danger">
           {{ errors.content }}
         </p>
@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import PassageSelector from '@/components/forms/PassageSelector';
 import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
@@ -78,14 +79,6 @@ export default {
     PassageNoteTagSelector,
   },
   props: {
-    populateWith: {
-      type: Object,
-      default: () => ({ empty: true }),
-    },
-    errors: {
-      type: Object,
-      default: () => {},
-    },
     passageNoteTags: {
       type: Array,
       default: () => [],
@@ -93,23 +86,16 @@ export default {
   },
   data() {
     return {
-      passageNote: {
-        id: null,
-        passages: [],
-        content: '',
-        tags: [],
-      },
-      cleanFormValue: null,
       editingPassage: -1, // index of passage being edited
       editingPassageOriginalValue: null, // original value of passage being edited
       editingNewPassage: false, // if editor passage has not been saved yet
     };
   },
   computed: {
-    // Used by parent component directly -- this is an antipattern
-    isDirty() {
-      return JSON.stringify(this.passageNote) !== this.cleanFormValue;
-    },
+    ...mapState('passage-note-editor', {
+      passageNote: state => state.passageNote,
+      errors: state => state.errors,
+    }),
     isValid() {
       let valid = true;
       if (this.editingPassage > -1) {
@@ -119,7 +105,7 @@ export default {
       if (!this.passageNote.content.length && !this.passageNote.passages.length) {
         valid = false;
       }
-      this.$emit('validStateChange', valid);
+      this.$store.dispatch('passage-note-editor/setValid', valid);
       return valid;
     },
     editingPassageIsDirty() {
@@ -139,24 +125,20 @@ export default {
       return JSON.stringify(passage) !== this.editingPassageOriginalValue;
     },
   },
-  created() {
-    if (!this.populateWith.empty) {
-      // ensure our data is cleanly re-created and totally separate
-      // we don't want to modify Vuex store data or have any other side effects
-      this.passageNote = JSON.parse(JSON.stringify(this.populateWith));
-    }
-    this.cleanFormValue = JSON.stringify(this.passageNote);
-  },
   methods: {
     displayVerseRange(startVerseId, endVerseId) {
       return Bible.displayVerseRange(startVerseId, endVerseId, this.$i18n.locale);
     },
     passageSelectorChange(index, { startVerseId, endVerseId }) {
-      this.$set(this.passageNote.passages, index, { startVerseId, endVerseId });
+      const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
+      this.$set(updatedPassageNote.passages, index, { startVerseId, endVerseId });
+      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
     },
     addPassage() {
-      this.passageNote.passages.push({ empty: true });
-      this.editingPassage = this.passageNote.passages.length - 1;
+      const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
+      updatedPassageNote.passages.push({ empty: true });
+      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
+      this.editingPassage = updatedPassageNote.passages.length - 1;
       this.editingNewPassage = true;
     },
     startEditPassage(index) {
@@ -179,8 +161,10 @@ export default {
       }
       // if an existing passage, return to original value
       else {
+        const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
         const originalValue = JSON.parse(this.editingPassageOriginalValue);
-        this.$set(this.passageNote.passages, index, originalValue);
+        this.$set(updatedPassageNote.passages, index, originalValue);
+        this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
       }
       this.editingPassage = -1;
       this.editingNewPassage = false;
@@ -199,15 +183,24 @@ export default {
       if (this.editingPassage === index) {
         this.editingPassage = -1;
       }
-      this.passageNote.passages.splice(index, 1);
+      const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
+      updatedPassageNote.passages.splice(index, 1);
+      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
       this.editingNewPassage = false;
       this.editingPassageOriginalValue = null;
     },
+    updateContent(event) {
+      const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
+      updatedPassageNote.content = event.target.value;
+      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
+    },
     updateSelectedTags(tags) {
-      this.$set(this.passageNote, 'tags', tags);
+      const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
+      updatedPassageNote.tags = tags;
+      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
     },
     handleSubmit() {
-      this.$emit('submit', this.passageNote);
+      this.$store.dispatch('passage-note-editor/savePassageNote');
     },
   },
 };
