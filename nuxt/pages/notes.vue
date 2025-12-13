@@ -42,9 +42,7 @@
       <div class="query-summary content">
         <p>{{ querySummary }}</p>
         <div v-if="query.filterTags.length" class="query-summary--tag-filters">
-          <div v-for="tag in populatedTags(query.filterTags)" :key="tag.id" class="passage-note-tag" :style="passageNoteTagStyle(tag)">
-            {{ tag.label }}
-          </div>
+          <passage-note-tag-pill v-for="tag in populatedTags(query.filterTags)" :key="tag.id" :tag="tag" />
         </div>
       </div>
       <div>
@@ -183,6 +181,7 @@
 import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import PassageNote from '@/components/PassageNote';
+import PassageNoteTagPill from '@/components/PassageNoteTagPill';
 import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
 import PassageSelector from '@/components/forms/PassageSelector';
 import Modal from '@/components/popups/Modal';
@@ -194,6 +193,7 @@ export default {
   name: 'NotesListPage',
   components: {
     PassageNote,
+    PassageNoteTagPill,
     PassageNoteTagSelector,
     PassageSelector,
     Modal,
@@ -340,6 +340,15 @@ export default {
   methods: {
     getReadingUrl(bookIndex, chapterIndex) {
       return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+    },
+    displayVerseRange(startVerseId, endVerseId) {
+      return Bible.displayVerseRange(startVerseId, endVerseId, this.$i18n.locale);
+    },
+    populatedTags(tagIds) {
+      if (!this.passageNoteTags || !this.passageNoteTags.length) {
+        return tagIds.map(id => ({ id, label: 'Loading', color: '#333' }));
+      }
+      return tagIds.map(id => this.passageNoteTags.find(tag => tag.id === id)).filter(Boolean);
     },
     actionsForNote(note) {
       return [
