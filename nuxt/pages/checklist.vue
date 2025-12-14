@@ -15,7 +15,7 @@
       <div v-for="bookReport in bookReports" :key="bookReport.bookIndex" class="book-card">
         <div class="book-card--header">
           <div class="book-card--completion-indicator">
-            <check-mark width="100%" height="100%" :fill="bookReport.complete ? '#0c0' : 'transparent'" />
+            <check-mark-icon width="100%" height="100%" :fill="bookReport.complete ? '#0c0' : 'transparent'" />
           </div>
           <div class="book-card--book-name">
             {{ bookReport.bookName }}
@@ -24,7 +24,7 @@
             {{ bookReport.chaptersRead }} / {{ bookReport.totalChapters }}
           </div>
           <div class="book-card--chapter-toggle" :class="{ flipped: expandedBooks[bookReport.bookIndex] }" @click="toggleBook(bookReport.bookIndex)">
-            <caret-down width="2rem" height="2rem" fill="#ccc" />
+            <caret-down-icon width="2rem" height="2rem" fill="#ccc" />
           </div>
           <div class="book-card--completion-bar">
             <completion-bar :percentage="bookReport.percentage" foreground-color="#0c0" />
@@ -36,8 +36,8 @@
               {{ chapterReport.chapterIndex }}
             </div>
             <div class="chapter-card--completion-indicator">
-              <spinner v-if="busyChapter === `${bookReport.bookIndex}.${chapterReport.chapterIndex}`" width="100%" height="100%" :fill="chapterReport.complete ? '#ddd' : '#0c0'" />
-              <check-mark v-else width="100%" height="100%" :fill="chapterReport.complete ? '#0c0' : 'transparent'" />
+              <spinner-icon v-if="busyChapter === `${bookReport.bookIndex}.${chapterReport.chapterIndex}`" width="100%" height="100%" :fill="chapterReport.complete ? '#ddd' : '#0c0'" />
+              <check-mark-icon v-else width="100%" height="100%" :fill="chapterReport.complete ? '#0c0' : 'transparent'" />
             </div>
           </div>
         </div>
@@ -52,9 +52,9 @@ import * as dayjs from 'dayjs';
 import { Bible, BrowserCache } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import CompletionBar from '@/components/CompletionBar';
-import CheckMark from '@/components/svg/CheckMark';
-import CaretDown from '@/components/svg/CaretDown';
-import Spinner from '@/components/svg/Spinner';
+import CheckMarkIcon from '@/components/svg/CheckMarkIcon';
+import CaretDownIcon from '@/components/svg/CaretDownIcon';
+import SpinnerIcon from '@/components/svg/SpinnerIcon';
 import InfoLink from '@/components/InfoLink';
 const CHAPTER_CHECKLIST_CACHE_KEY = 'chapterChecklist';
 const CHAPTER_CHECKLIST_CACHE_MINUTES = 60;
@@ -67,9 +67,9 @@ export default {
   components: {
     BusyBar,
     CompletionBar,
-    CheckMark,
-    CaretDown,
-    Spinner,
+    CheckMarkIcon,
+    CaretDownIcon,
+    SpinnerIcon,
     InfoLink,
   },
   data() {

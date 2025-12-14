@@ -9,7 +9,7 @@
         <div class="buttons is-align-items-flex-start">
           <nuxt-link class="button" :to="localePath('/notes')">
             {{ $t('notes') }}
-            <CaretRight style="margin-left: 0.2rem;" />
+            <CaretRightIcon style="margin-left: 0.2rem;" />
           </nuxt-link>
           <button class="button is-info" @click="openPassageNoteTagEditor()">
             {{ $t('new') }}
@@ -52,14 +52,14 @@
 import { mapState } from 'vuex';
 import HyperlinkedText from '@/components/HyperlinkedText';
 import InfoLink from '@/components/InfoLink';
-import CaretRight from '@/components/svg/CaretRight';
+import CaretRightIcon from '@/components/svg/CaretRightIcon';
 
 export default {
   name: 'NoteTagsListPage',
   components: {
     HyperlinkedText,
     InfoLink,
-    CaretRight,
+    CaretRightIcon,
   },
   computed: {
     ...mapState({

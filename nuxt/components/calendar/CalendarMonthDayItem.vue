@@ -3,8 +3,8 @@
     <div class="date">
       {{ label }}
     </div>
-    <star v-if="primaryPercentage && primaryPercentage >= 100" class="star" width="35%" height="35%" fill="#ffd700" />
-    <star v-else-if="secondaryPercentage && secondaryPercentage >= 100" class="star" width="35%" height="35%" fill="#0077bb" />
+    <star-icon v-if="primaryPercentage && primaryPercentage >= 100" class="star" width="35%" height="35%" fill="#ffd700" />
+    <star-icon v-else-if="secondaryPercentage && secondaryPercentage >= 100" class="star" width="35%" height="35%" fill="#0077bb" />
     <div v-if="day.isCurrentMonth" class="progress-bar">
       <div class="progress-bar-fill secondary" :style="secondaryProgressBarFillStyle" />
       <div class="progress-bar-fill" :style="primaryProgressBarFillStyle" />
@@ -14,12 +14,12 @@
 
 <script>
 import dayjs from 'dayjs';
-import Star from '@/components/svg/Star';
+import StarIcon from '@/components/svg/StarIcon';
 
 export default {
   name: 'CalendarMonthDayItem',
   components: {
-    Star,
+    StarIcon,
   },
   props: {
     day: {

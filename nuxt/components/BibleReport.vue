@@ -7,7 +7,7 @@
       </h2>
       <nuxt-link class="button" :to="localePath('/progress')">
         {{ $t('progress') }}
-        <CaretRight style="margin-left: 0.2rem;" />
+        <CaretRightIcon style="margin-left: 0.2rem;" />
       </nuxt-link>
     </header>
     <div class="plaque">
@@ -19,7 +19,7 @@
     <div class="progress-list">
       <div v-for="report in allBookReports" :key="report.bookIndex" class="progress-card" @click="$emit('view-book-report', report.bookIndex)">
         <span class="progress-card-icon">
-          <star :fill="report.percentage == 100 ? '#ffd700' : '#ddd'" />
+          <star-icon :fill="report.percentage == 100 ? '#ffd700' : '#ddd'" />
         </span>
         <span class="progress-card-book">{{ report.bookName }}</span>
         <span v-if="anyBooksHaveNotes" class="progress-card-note-count-badge" @click="viewBookNotes(report.bookIndex)">
@@ -37,9 +37,9 @@
 <script>
 import { Bible } from '@mybiblelog/shared';
 import SegmentBar from '@/components/SegmentBar';
-import Star from '@/components/svg/Star';
+import StarIcon from '@/components/svg/StarIcon';
 import InfoLink from '@/components/InfoLink';
-import CaretRight from '@/components/svg/CaretRight';
+import CaretRightIcon from '@/components/svg/CaretRightIcon';
 const calcPercent = (numerator, denominator) => {
   return Math.floor(numerator / denominator * 100);
 };
@@ -48,9 +48,9 @@ export default {
   name: 'BibleReport',
   components: {
     SegmentBar,
-    Star,
+    StarIcon,
     InfoLink,
-    CaretRight,
+    CaretRightIcon,
   },
   props: {
     logEntries: {

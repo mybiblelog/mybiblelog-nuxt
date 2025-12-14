@@ -9,7 +9,7 @@
         <div class="buttons is-align-items-flex-start">
           <nuxt-link class="button" :to="localePath('/tags')">
             {{ $t('tags') }}
-            <CaretRight style="margin-left: 0.2rem;" />
+            <CaretRightIcon style="margin-left: 0.2rem;" />
           </nuxt-link>
           <button class="button is-info" @click="openPassageNoteEditor({ empty: true })">
             {{ $t('new') }}
@@ -68,11 +68,11 @@
             :actions="actionsForNote(note)"
             :get-reading-url="getReadingUrl"
           />
-          <pagination v-if="pagination.totalPages > 1" :total-pages="pagination.totalPages" :current-page="pagination.page" @pagechanged="onPageChanged" />
+          <pagination-controls v-if="pagination.totalPages > 1" :total-pages="pagination.totalPages" :current-page="pagination.page" @pagechanged="onPageChanged" />
         </template>
       </div>
     </div>
-    <modal v-if="showSearchModal" :title="$t('search_modal.search_notes')" @close="closeSearchModal()">
+    <app-modal v-if="showSearchModal" :title="$t('search_modal.search_notes')" @close="closeSearchModal()">
       <template slot="content">
         <div>
           <strong>{{ $t('search_modal.search_text') }}</strong>
@@ -87,8 +87,8 @@
           {{ $t('search_modal.cancel') }}
         </button>
       </template>
-    </modal>
-    <modal v-if="showTagFilterModal" :title="$t('tag_filter_modal.tag_filters')" @close="closeTagFilterModal()">
+    </app-modal>
+    <app-modal v-if="showTagFilterModal" :title="$t('tag_filter_modal.tag_filters')" @close="closeTagFilterModal()">
       <template slot="content">
         <div>
           <strong>{{ $t("tag_filter_modal.tag_filters") }}</strong>
@@ -117,8 +117,8 @@
           {{ $t("tag_filter_modal.done") }}
         </button>
       </template>
-    </modal>
-    <modal v-if="showPassageFilterModal" :title="$t('passage_filter_modal.passage_filters')" @close="closePassageFilterModal()">
+    </app-modal>
+    <app-modal v-if="showPassageFilterModal" :title="$t('passage_filter_modal.passage_filters')" @close="closePassageFilterModal()">
       <template slot="content">
         <div>
           <strong>{{ $t("passage_filter_modal.passage") }}</strong>
@@ -151,8 +151,8 @@
           {{ $t("passage_filter_modal.done") }}
         </button>
       </template>
-    </modal>
-    <modal v-if="showSortModal" :title="$t('sort_modal.sort_results')" @close="closeSortModal()">
+    </app-modal>
+    <app-modal v-if="showSortModal" :title="$t('sort_modal.sort_results')" @close="closeSortModal()">
       <template slot="content">
         <div>
           <strong>{{ $t("sort_modal.sort") }}</strong>
@@ -173,7 +173,7 @@
           {{ $t("sort_modal.done") }}
         </button>
       </template>
-    </modal>
+    </app-modal>
   </main>
 </template>
 
@@ -184,10 +184,10 @@ import PassageNote from '@/components/PassageNote';
 import PassageNoteTagPill from '@/components/PassageNoteTagPill';
 import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
 import PassageSelector from '@/components/forms/PassageSelector';
-import Modal from '@/components/popups/Modal';
-import Pagination from '@/components/Pagination';
+import AppModal from '@/components/popups/AppModal';
+import PaginationControls from '@/components/PaginationControls';
 import InfoLink from '@/components/InfoLink';
-import CaretRight from '@/components/svg/CaretRight';
+import CaretRightIcon from '@/components/svg/CaretRightIcon';
 
 export default {
   name: 'NotesListPage',
@@ -196,10 +196,10 @@ export default {
     PassageNoteTagPill,
     PassageNoteTagSelector,
     PassageSelector,
-    Modal,
-    Pagination,
+    AppModal,
+    PaginationControls,
     InfoLink,
-    CaretRight,
+    CaretRightIcon,
   },
   data() {
     return {
@@ -299,7 +299,7 @@ export default {
       if (this.query.filterTags.length) {
         if (matchQuery) {
           matchQuery += ' and ';
-        };
+        }
         const summaryMap = {
           any: `${prefix} ${bearings} that ${matchQuery} ${hasHave} at least one of these tags:`,
           all: `${prefix} ${bearings} that ${matchQuery} ${hasHave} all of these tags:`,
@@ -311,7 +311,7 @@ export default {
         if (this.query.filterTagMatching === 'exact') {
           if (matchQuery) {
             matchQuery += ' and ';
-          };
+          }
           return `${prefix} ${bearings} that ${matchQuery} ${hasHave} no tags.`;
         }
         if (matchQuery) {

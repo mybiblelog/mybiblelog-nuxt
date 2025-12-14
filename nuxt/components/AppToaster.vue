@@ -15,7 +15,7 @@
 <script>
 
 export default {
-  name: 'Toaster',
+  name: 'AppToaster',
   computed: {
     messages() {
       return this.$store.state.toast.messages;

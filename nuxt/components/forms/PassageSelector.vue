@@ -56,7 +56,7 @@
         </template>
       </template>
     </div>
-    <modal v-if="selectionTarget" :title="modalTitle" @close="endSelection">
+    <app-modal v-if="selectionTarget" :title="modalTitle" @close="endSelection">
       <template slot="content">
         <template v-if="selectionTarget === SELECTION.BOOK">
           <div class="book-selector-controls">
@@ -136,13 +136,13 @@
           @selection="selectEndVerse"
         />
       </template>
-    </modal>
+    </app-modal>
   </div>
 </template>
 
 <script>
 import { Bible } from '@mybiblelog/shared';
-import Modal from '@/components/popups/Modal';
+import AppModal from '@/components/popups/AppModal';
 import GridSelector from '@/components/forms/GridSelector';
 import TapRangeSelector from '@/components/forms/TapRangeSelector';
 
@@ -158,7 +158,7 @@ const SELECTION = {
 export default {
   name: 'PassageSelector',
   components: {
-    Modal,
+    AppModal,
     GridSelector,
     TapRangeSelector,
   },

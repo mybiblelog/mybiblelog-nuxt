@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Feedback',
+  name: 'FeedbackIcon',
   props: {
     width: {
       type: String,

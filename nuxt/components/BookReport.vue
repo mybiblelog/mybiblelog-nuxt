@@ -3,7 +3,7 @@
     <header class="book-report-header is-hidden-mobile">
       <div class="book-report-header--title">
         <button class="button" @click="$emit('exit-book-report')">
-          <CaretLeft />
+          <CaretLeftIcon />
         </button>
         <h2 class="title mb-0">
           <span>{{ bookName }}</span>
@@ -12,14 +12,14 @@
       <div class="buttons">
         <button class="button" @click="$emit('view-book-notes')">
           {{ $t('book_notes') }}
-          <CaretRight style="margin-left: 0.2rem;" />
+          <CaretRightIcon style="margin-left: 0.2rem;" />
         </button>
       </div>
     </header>
     <header class="book-report-header is-hidden-tablet">
       <div class="book-report-header--title">
         <button class="button is-small" @click="$emit('exit-book-report')">
-          <CaretLeft />
+          <CaretLeftIcon />
         </button>
         <h2 class="title is-5 mb-0">
           <span>{{ bookName }}</span>
@@ -28,7 +28,7 @@
       <div class="buttons">
         <button class="button is-small" @click="$emit('view-book-notes')">
           {{ $t('book_notes') }}
-          <CaretRight style="margin-left: 0.2rem;" />
+          <CaretRightIcon style="margin-left: 0.2rem;" />
         </button>
       </div>
     </header>
@@ -57,8 +57,8 @@ import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import ChapterReport from '@/components/ChapterReport';
 import SegmentBar from '@/components/SegmentBar';
-import CaretRight from '@/components/svg/CaretRight';
-import CaretLeft from '@/components/svg/CaretLeft';
+import CaretRightIcon from '@/components/svg/CaretRightIcon';
+import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
 
 const calcPercent = (numerator, denominator) => {
   return Math.floor(numerator / denominator * 100);
@@ -69,8 +69,8 @@ export default {
   components: {
     ChapterReport,
     SegmentBar,
-    CaretRight,
-    CaretLeft,
+    CaretRightIcon,
+    CaretLeftIcon,
   },
   props: {
     logEntries: {

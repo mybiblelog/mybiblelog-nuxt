@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import FeedbackIcon from '@/components/svg/Feedback.vue';
+import FeedbackIcon from '@/components/svg/FeedbackIcon.vue';
 import FeedbackModal from '@/components/popups/FeedbackModal.vue';
 
 export default {

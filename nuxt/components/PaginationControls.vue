@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: 'Pagination',
+  name: 'PaginationControls',
   props: {
     maxVisibleButtons: {
       type: Number,

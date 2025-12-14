@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: 'Spinner',
+  name: 'SpinnerIcon',
   props: {
     width: {
       type: String,
