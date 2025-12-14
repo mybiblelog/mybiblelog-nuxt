@@ -43,5 +43,6 @@ module.exports = {
         registeredComponentsOnly: true,
       },
     ],
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
 };
