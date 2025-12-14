@@ -117,8 +117,8 @@ export default {
       this.generateDownload(filename, this.logEntryExportCsvFileContent);
     },
     async downloadNotesTextFile() {
-      if (!this.logEntryExportCsvFileContent.length) {
-        await this.generateTextDownloadFromNotes(this.logEntries);
+      if (!this.notesExportTextFileContent.length) {
+        await this.generateTextDownloadFromNotes();
       }
       const today = dayjs().format('YYYY-MM-DD');
       const filename = this.$t('notes_download.text_filename', { today });
@@ -131,7 +131,7 @@ export default {
       if (!tagsResponse.ok) {
         throw new Error('Failed to load tags');
       }
-      const { data: tags } = await tagsResponse.json();
+      const tags = await tagsResponse.json();
       const notes = await this.loadAllNotes();
 
       const noteTexts = notes.map(note => this.generateNoteText(note, tags));
@@ -150,7 +150,7 @@ export default {
     },
     async downloadNotesJsonFile() {
       if (!this.notesExportJsonFileContent.length) {
-        await this.generateJsonDownloadFromNotes(this.logEntries);
+        await this.generateJsonDownloadFromNotes();
       }
       const today = dayjs().format('YYYY-MM-DD');
       const filename = this.$t('notes_download.json_filename', { today });
@@ -163,7 +163,7 @@ export default {
       if (!tagsResponse.ok) {
         throw new Error('Failed to load tags');
       }
-      const { data: tags } = await tagsResponse.json();
+      const tags = await tagsResponse.json();
       const notes = await this.loadAllNotes();
       this.notesExportJsonFileContent = JSON.stringify({ notes, tags });
     },
@@ -185,10 +185,8 @@ export default {
           throw new Error('Failed to load notes');
         }
         const {
-          data: {
-            results,
-            size,
-          },
+          results,
+          size,
         } = await response.json();
         if (allNotes.length < size) {
           allNotes.push(...results);
@@ -218,10 +216,17 @@ export default {
         result += passages.map(passage => `* ${passage}`).join('\n'); // each passage on separate line
       }
       if (note.tags.length) {
-        const tagLabels = note.tags.map(tagId => tags.find(tag => tag.id === tagId).label);
-        result += divider;
-        result += `${TAGS_HEADING}:\n`;
-        result += tagLabels.map(tag => `* ${tag}`).join('\n'); // each tag on separate line
+        const tagLabels = note.tags
+          .map((tagId) => {
+            const tag = tags.find(t => t.id === tagId || t._id === tagId);
+            return tag ? tag.label : null;
+          })
+          .filter(label => label !== null);
+        if (tagLabels.length) {
+          result += divider;
+          result += `${TAGS_HEADING}:\n`;
+          result += tagLabels.map(tag => `* ${tag}`).join('\n'); // each tag on separate line
+        }
       }
       if (note.content.length) {
         result += divider;
