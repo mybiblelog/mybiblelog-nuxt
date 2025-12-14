@@ -121,6 +121,7 @@ const config: NuxtConfig = {
         sassOptions: {
           sourceMap: true,
           includePaths: ['./assets/scss'],
+          silenceDeprecations: ['legacy-js-api'],
         } as sass.Options<'sync'>,
       },
     },
