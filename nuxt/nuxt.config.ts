@@ -1,15 +1,17 @@
-const path = require('node:path');
-const dotenv = require('dotenv');
-const redirectSSL = require('redirect-ssl');
-const sass = require('sass');
-const i18nConfig = require('./i18n.config');
+import path from 'node:path';
+import dotenv from 'dotenv';
+import redirectSSL from 'redirect-ssl';
+import sass from 'sass';
+import i18nConfig from './i18n.config';
+
+import type { NuxtConfig } from '@nuxt/types';
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
   quiet: true,
-});
+} as dotenv.DotenvConfigOptions);
 
-module.exports = {
+const config: NuxtConfig = {
   /*
   ** Headers of the page
   */
@@ -119,7 +121,7 @@ module.exports = {
         sassOptions: {
           sourceMap: true,
           includePaths: ['./assets/scss'],
-        },
+        } as sass.Options<'sync'>,
       },
     },
   },
@@ -128,7 +130,7 @@ module.exports = {
     redirectSSL.create({
       enabled: (
         process.env.NODE_ENV === 'production' &&
-        process.env.SITE_URL.includes('https://')
+        process.env.SITE_URL?.includes('https://')
       ),
     }),
   ],
@@ -166,3 +168,5 @@ module.exports = {
   // Disable telemetry
   telemetry: false,
 };
+
+export default config;

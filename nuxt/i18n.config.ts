@@ -1,37 +1,28 @@
-const { locales, defaultLocale } = require('@mybiblelog/shared');
-
-const {
-  de,
-  en,
-  es,
-  fr,
-  pt,
-  uk,
-} = require('./locales/locales.js');
+import type { Options } from '@nuxtjs/i18n';
+import { locales, defaultLocale } from '@mybiblelog/shared';
+import messages from './locales/locales';
+const { de, en, es, fr, pt, uk } = messages;
 
 const numberFormats = {
   decimal: {
-    style: 'decimal',
+    style: 'decimal' as const,
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   },
   percent: {
-    style: 'percent',
+    style: 'percent' as const,
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   },
   grouped: {
-    style: 'decimal',
+    style: 'decimal' as const,
     useGrouping: true,
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   },
 };
 
-/**
- * @type {import('@nuxtjs/i18n').ModuleOptions}
- */
-const i18nConfig = {
+const i18nConfig: Options = {
   baseUrl: process.env.BASE_URL,
   locales,
   defaultLocale,
@@ -65,4 +56,4 @@ const i18nConfig = {
   },
 };
 
-module.exports = i18nConfig;
+export default i18nConfig;

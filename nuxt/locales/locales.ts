@@ -1,11 +1,6 @@
-// @ts-check
+import type { Locales } from './locale';
 
-/**
- * @typedef {import('./locale.js').Locales} Locales
- */
-
-/** @type {Locales} */
-const locales = {
+const locales: Locales = {
   en: {
     my_bible_log: 'My Bible Log',
     api_error: {
@@ -182,4 +177,4 @@ const locales = {
   },
 };
 
-module.exports = locales;
+export default locales;
