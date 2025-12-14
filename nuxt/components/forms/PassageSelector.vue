@@ -58,14 +58,51 @@
     </div>
     <modal v-if="selectionTarget" :title="modalTitle" @close="endSelection">
       <template slot="content">
-        <grid-selector v-if="selectionTarget === SELECTION.BOOK" :options="bookOptions" :columns="4" @selection="selectBook" />
-        <template v-if="selectionTarget === SELECTION.CHAPTERS">
-          <div class="selector-note">
-            {{ $t('click_and_drag_to_select_multiple_chapters') }}
+        <template v-if="selectionTarget === SELECTION.BOOK">
+          <div class="book-selector-controls">
+            <div class="button-group">
+              <button
+                type="button"
+                class="button-group--button button-group--button-left"
+                :class="{ active: selectedTestament === 'old' }"
+                @click="selectedTestament = 'old'"
+              >
+                {{ $t('old_testament') }}
+              </button>
+              <button
+                type="button"
+                class="button-group--button button-group--button-right"
+                :class="{ active: selectedTestament === 'new' }"
+                @click="selectedTestament = 'new'"
+              >
+                {{ $t('new_testament') }}
+              </button>
+            </div>
+            <div class="button-group">
+              <button
+                type="button"
+                class="button-group--button button-group--button-left"
+                :class="{ active: bookSortOrder === 'numerical' }"
+                @click="bookSortOrder = 'numerical'"
+              >
+                123
+              </button>
+              <button
+                type="button"
+                class="button-group--button button-group--button-right"
+                :class="{ active: bookSortOrder === 'alphabetical' }"
+                @click="bookSortOrder = 'alphabetical'"
+              >
+                ABC
+              </button>
+            </div>
           </div>
-          <range-selector :min="startChapters[0]" :max="startChapters[startChapters.length-1]" :columns="8" @selection="selectChapters" />
+          <grid-selector :options="filteredBookOptions" :columns="2" @selection="selectBook" />
         </template>
-        <range-selector
+        <template v-if="selectionTarget === SELECTION.CHAPTERS">
+          <tap-range-selector :min="startChapters[0]" :max="startChapters[startChapters.length-1]" :columns="8" @selection="selectChapters" />
+        </template>
+        <tap-range-selector
           v-if="selectionTarget === SELECTION.END_CHAPTER"
           :min="endChapters[0]"
           :max="endChapters[endChapters.length-1]"
@@ -74,12 +111,9 @@
           @selection="selectEndChapter"
         />
         <template v-if="selectionTarget === SELECTION.VERSES">
-          <div class="selector-note">
-            Click and drag to select multiple verses.
-          </div>
-          <range-selector :min="startVerses[0]" :max="startVerses[startVerses.length-1]" :columns="8" @selection="selectVerses" />
+          <tap-range-selector :min="startVerses[0]" :max="startVerses[startVerses.length-1]" :columns="8" @selection="selectVerses" />
         </template>
-        <range-selector
+        <tap-range-selector
           v-if="selectionTarget === SELECTION.START_VERSE"
           :min="startVerses[0]"
           :max="startVerses[startVerses.length-1]"
@@ -87,7 +121,7 @@
           :columns="8"
           @selection="selectStartVerse"
         />
-        <range-selector
+        <tap-range-selector
           v-if="selectionTarget === SELECTION.END_VERSE"
           :min="endVerses[0]"
           :max="endVerses[endVerses.length-1]"
@@ -104,7 +138,7 @@
 import { Bible } from '@mybiblelog/shared';
 import Modal from '@/components/popups/Modal';
 import GridSelector from '@/components/forms/GridSelector';
-import RangeSelector from '@/components/forms/RangeSelector';
+import TapRangeSelector from '@/components/forms/TapRangeSelector';
 
 const SELECTION = {
   BOOK: 'BOOK',
@@ -120,7 +154,7 @@ export default {
   components: {
     Modal,
     GridSelector,
-    RangeSelector,
+    TapRangeSelector,
   },
   props: {
     populateWith: {
@@ -156,6 +190,9 @@ export default {
         startVerseId: null,
         endVerseId: null,
       },
+
+      selectedTestament: 'old',
+      bookSortOrder: 'numerical',
     };
   },
   computed: {
@@ -179,6 +216,40 @@ export default {
       default:
         return '';
       }
+    },
+    filteredBookOptions() {
+      let filtered = this.bookOptions.filter((book) => {
+        const bookData = this.books.find(b => b.bibleOrder === book.value);
+        if (!bookData) {
+          return false;
+        }
+        if (this.selectedTestament === 'old') {
+          return !bookData.newTestament;
+        }
+        else {
+          return bookData.newTestament;
+        }
+      });
+
+      if (this.bookSortOrder === 'alphabetical') {
+        filtered = [...filtered].sort((a, b) => {
+          // Strip leading numbers and whitespace for sorting
+          const stripLeadingNumbers = (str) => {
+            return str.replace(/^\d+\s*/, '').trim();
+          };
+          const aLabel = stripLeadingNumbers(a.label);
+          const bLabel = stripLeadingNumbers(b.label);
+          return aLabel.localeCompare(bLabel, this.$i18n.locale);
+        });
+      }
+      else {
+        // Numerical order (bible order)
+        filtered = [...filtered].sort((a, b) => {
+          return a.value - b.value;
+        });
+      }
+
+      return filtered;
     },
   },
   created() {
@@ -209,10 +280,7 @@ export default {
   mounted() {
     this.books = Bible.getBooks();
     this.bookOptions = this.books.map(book => ({
-      label: (
-        book.locales[this.$i18n.locale]?.abbreviations?.[0] ||
-        Bible.getBookName(book.bibleOrder, this.$i18n.locale)
-      ),
+      label: Bible.getBookName(book.bibleOrder, this.$i18n.locale),
       value: book.bibleOrder,
     }));
   },
@@ -352,8 +420,8 @@ export default {
       this.onSelectChapters();
       this.selectionTarget = null;
     },
-    selectEndChapter({ to }) {
-      this.selected.endChapter = to;
+    selectEndChapter({ from, to }) {
+      this.selected.endChapter = to || from;
       this.onSelectEndChapter();
       this.selectionTarget = null;
     },
@@ -363,13 +431,13 @@ export default {
       this.onSelectVerses();
       this.selectionTarget = null;
     },
-    selectStartVerse({ from }) {
-      this.selected.startVerse = from;
+    selectStartVerse({ from, to }) {
+      this.selected.startVerse = from || to;
       this.onSelectStartVerse();
       this.selectionTarget = null;
     },
-    selectEndVerse({ to }) {
-      this.selected.endVerse = to;
+    selectEndVerse({ from, to }) {
+      this.selected.endVerse = to || from;
       this.onSelectEndVerse();
       this.selectionTarget = null;
     },
@@ -411,6 +479,51 @@ export default {
     }
   }
 }
+
+.book-selector-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+}
+
+.button-group {
+  display: flex;
+}
+
+.button-group--button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 0.9rem;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: #09f;
+    background: #f0f8ff;
+  }
+
+  &.active {
+    background: #09f;
+    color: #fff;
+    border-color: #09f;
+  }
+
+  &.button-group--button-left {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: none;
+  }
+
+  &.button-group--button-right {
+    border-left: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
 </style>
 
 <i18n lang="json">
@@ -422,7 +535,9 @@ export default {
     "select_verses": "Wähle Verse",
     "select_start_verse": "Wähle Startvers",
     "select_end_verse": "Wähle Endvers",
-    "click_and_drag_to_select_multiple_chapters": "Klicke und ziehe, um mehrere Kapitel auszuwählen."
+    "click_and_drag_to_select_multiple_chapters": "Klicke und ziehe, um mehrere Kapitel auszuwählen.",
+    "old_testament": "Altes Testament",
+    "new_testament": "Neues Testament"
   },
   "en": {
     "select_book": "Select Book",
@@ -431,7 +546,9 @@ export default {
     "select_verses": "Select Verse(s)",
     "select_start_verse": "Select Start Verse",
     "select_end_verse": "Select End Verse",
-    "click_and_drag_to_select_multiple_chapters": "Click and drag to select multiple chapters."
+    "click_and_drag_to_select_multiple_chapters": "Click and drag to select multiple chapters.",
+    "old_testament": "Old Testament",
+    "new_testament": "New Testament"
   },
   "es": {
     "select_book": "Seleccionar Libro",
@@ -440,7 +557,9 @@ export default {
     "select_verses": "Seleccionar Versículo(s)",
     "select_start_verse": "Seleccionar Versículo Inicial",
     "select_end_verse": "Seleccionar Versículo Final",
-    "click_and_drag_to_select_multiple_chapters": "Haga clic y arrastre para seleccionar varios capítulos."
+    "click_and_drag_to_select_multiple_chapters": "Haga clic y arrastre para seleccionar varios capítulos.",
+    "old_testament": "Antiguo Testamento",
+    "new_testament": "Nuevo Testamento"
   },
   "fr": {
     "select_book": "Sélectionner le livre",
@@ -449,7 +568,9 @@ export default {
     "select_verses": "Sélectionner le(s) verset(s)",
     "select_start_verse": "Sélectionner le verset de début",
     "select_end_verse": "Sélectionner le verset de fin",
-    "click_and_drag_to_select_multiple_chapters": "Cliquer et faire glisser pour sélectionner plusieurs chapitres."
+    "click_and_drag_to_select_multiple_chapters": "Cliquer et faire glisser pour sélectionner plusieurs chapitres.",
+    "old_testament": "Ancien Testament",
+    "new_testament": "Nouveau Testament"
   },
   "pt": {
     "select_book": "Selecionar Livro",
@@ -458,7 +579,9 @@ export default {
     "select_verses": "Selecionar Versículo(s)",
     "select_start_verse": "Selecionar Versículo Inicial",
     "select_end_verse": "Selecionar Versículo Final",
-    "click_and_drag_to_select_multiple_chapters": "Clique e arraste para selecionar vários capítulos."
+    "click_and_drag_to_select_multiple_chapters": "Clique e arraste para selecionar vários capítulos.",
+    "old_testament": "Antigo Testamento",
+    "new_testament": "Novo Testamento"
   },
   "uk": {
     "select_book": "Виберіть книгу",
@@ -467,7 +590,9 @@ export default {
     "select_verses": "Виберіть вірш(і)",
     "select_start_verse": "Виберіть початковий вірш",
     "select_end_verse": "Виберіть кінцевий вірш",
-    "click_and_drag_to_select_multiple_chapters": "Клацніть і перетягніть, щоб вибрати кілька розділів."
+    "click_and_drag_to_select_multiple_chapters": "Клацніть і перетягніть, щоб вибрати кілька розділів.",
+    "old_testament": "Старий Завіт",
+    "new_testament": "Новий Завіт"
   }
 }
 </i18n>

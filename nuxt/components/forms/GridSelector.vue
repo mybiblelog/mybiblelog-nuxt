@@ -16,13 +16,17 @@ export default {
     },
     columns: {
       type: Number,
-      default: 6,
+      default: 2,
     },
   },
   computed: {
+    gridRows() {
+      return Math.ceil(this.options.length / this.columns);
+    },
     gridSelectorStyle() {
       return {
         'grid-template-columns': `repeat(${this.columns}, 1fr)`,
+        'grid-template-rows': `repeat(${this.gridRows}, 1fr)`,
       };
     },
   },
@@ -40,14 +44,16 @@ export default {
   padding: 1px;
   font-size: 0.8rem;
   user-select: none;
+  grid-auto-flow: column;
 }
 
 .grid-selector--option {
   cursor: pointer;
   position: relative;
   display: flex;
-  justify-content: center;
-  padding: 1rem 0;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
   transition: 0.2s;
 
   &::before {

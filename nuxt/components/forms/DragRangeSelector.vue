@@ -1,6 +1,6 @@
 <template>
   <div
-    class="range-selector"
+    class="drag-range-selector"
     :class="rangeSelectorClass"
     :style="rangeSelectorStyle"
     @mouseleave="endSelection()"
@@ -13,7 +13,7 @@
       v-for="(option, index) in options"
       :key="index"
       ref="option"
-      class="range-selector--option"
+      class="drag-range-selector--option"
       :data-index="index"
       :class="rangeSelectorOptionClass(option)"
       @mousedown="startSelection(option)"
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'RangeSelector',
+  name: 'DragRangeSelector',
   props: {
     min: {
       type: Number,
@@ -140,14 +140,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.range-selector {
+.drag-range-selector {
   display: grid;
   padding: 1px;
   font-size: 0.8rem;
   user-select: none;
 }
 
-.range-selector--option {
+.drag-range-selector--option {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -170,8 +170,8 @@ export default {
   }
 }
 
-.range-selector.in-progress {
-  .range-selector--option.selected {
+.drag-range-selector.in-progress {
+  .drag-range-selector--option.selected {
 
     &::before {
       border-top: 2px solid #09f;

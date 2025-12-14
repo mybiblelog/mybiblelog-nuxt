@@ -18,7 +18,7 @@
             <passage-selector :populate-with="passage" @change="(updatedPassage) => passageSelectorChange(index, updatedPassage)" />
           </template>
           <template v-else>
-            <button class="button" @click.prevent="startEditPassage(index)">
+            <button class="button" :disabled="editingPassage > -1 || editingNewPassage" @click.prevent="startEditPassage(index)">
               {{ displayVerseRange(passage.startVerseId, passage.endVerseId) }}
             </button>
           </template>
@@ -142,6 +142,11 @@ export default {
       this.editingNewPassage = true;
     },
     startEditPassage(index) {
+      // Prevent editing existing passages when a new passage is being added
+      // or when another passage is already being edited
+      if (this.editingNewPassage || this.editingPassage > -1) {
+        return;
+      }
       this.editingPassageOriginalValue = JSON.stringify(this.passageNote.passages[index]);
       this.editingPassage = index;
     },
