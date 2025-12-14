@@ -37,5 +37,11 @@ module.exports = {
     'nuxt/no-cjs-in-config': 'off',
     // TypeScript handles unused vars, so disable the base rule
     'no-unused-vars': 'off',
+    // Enforce kebab-case component names
+    'vue/component-name-in-template-casing': ['error', 'kebab-case',
+      {
+        registeredComponentsOnly: true,
+      },
+    ],
   },
 };

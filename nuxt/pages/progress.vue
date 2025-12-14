@@ -7,7 +7,7 @@
       </h1>
       <nuxt-link class="button" :to="localePath('/books')">
         {{ $t('bible_books') }}
-        <CaretRightIcon style="margin-left: 0.2rem;" />
+        <caret-right-icon style="margin-left: 0.2rem;" />
       </nuxt-link>
     </header>
     <busy-bar :busy="dateVerseCountsBusy" />

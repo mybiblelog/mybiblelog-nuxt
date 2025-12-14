@@ -8,7 +8,7 @@
         <p>{{ $t('feedback_form_intro.p1') }}</p>
         <p>{{ $t('feedback_form_intro.p2') }}</p>
       </div>
-      <FeedbackForm />
+      <feedback-form />
     </div>
   </main>
 </template>

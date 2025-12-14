@@ -7,7 +7,7 @@
     >
       <feedback-icon fill="white" width="28px" height="28px" />
     </button>
-    <FeedbackModal :is-visible="isModalVisible" @close="closeModal" />
+    <feedback-modal :is-visible="isModalVisible" @close="closeModal" />
   </div>
 </template>
 

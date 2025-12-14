@@ -4,7 +4,7 @@
       <div class="modal-background" @click="close" />
       <div class="modal-card">
         <section class="modal-card-body">
-          <GetStartedStep
+          <get-started-step
             :previous-button-text="$t('start_page.back')"
             @previous="close"
           />

@@ -3,7 +3,7 @@
     <header class="book-report-header is-hidden-mobile">
       <div class="book-report-header--title">
         <button class="button" @click="$emit('exit-book-report')">
-          <CaretLeftIcon />
+          <caret-left-icon />
         </button>
         <h2 class="title mb-0">
           <span>{{ bookName }}</span>
@@ -12,14 +12,14 @@
       <div class="buttons">
         <button class="button" @click="$emit('view-book-notes')">
           {{ $t('book_notes') }}
-          <CaretRightIcon style="margin-left: 0.2rem;" />
+          <caret-right-icon style="margin-left: 0.2rem;" />
         </button>
       </div>
     </header>
     <header class="book-report-header is-hidden-tablet">
       <div class="book-report-header--title">
         <button class="button is-small" @click="$emit('exit-book-report')">
-          <CaretLeftIcon />
+          <caret-left-icon />
         </button>
         <h2 class="title is-5 mb-0">
           <span>{{ bookName }}</span>
@@ -28,7 +28,7 @@
       <div class="buttons">
         <button class="button is-small" @click="$emit('view-book-notes')">
           {{ $t('book_notes') }}
-          <CaretRightIcon style="margin-left: 0.2rem;" />
+          <caret-right-icon style="margin-left: 0.2rem;" />
         </button>
       </div>
     </header>

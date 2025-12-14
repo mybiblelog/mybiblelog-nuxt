@@ -9,7 +9,7 @@
         <div class="buttons is-align-items-flex-start">
           <nuxt-link class="button" :to="localePath('/tags')">
             {{ $t('tags') }}
-            <CaretRightIcon style="margin-left: 0.2rem;" />
+            <caret-right-icon style="margin-left: 0.2rem;" />
           </nuxt-link>
           <button class="button is-info" @click="openPassageNoteEditor({ empty: true })">
             {{ $t('new') }}

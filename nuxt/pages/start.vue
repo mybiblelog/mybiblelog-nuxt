@@ -3,21 +3,21 @@
     <div class="content-column">
       <!-- Progress Indicator -->
       <div class="progress-indicator">
-        <PillProgressBar
+        <pill-progress-bar
           :current-step="progressTab + 1"
           :total-steps="totalSteps"
         />
       </div>
 
       <!-- Welcome -->
-      <WelcomeStep
+      <welcome-step
         v-if="progressTab === 0"
         :button-text="$t('start_page.welcome.button')"
         @next="handleNext"
       />
 
       <!-- Daily Verse Count Goal -->
-      <DailyVerseCountGoalForm
+      <daily-verse-count-goal-form
         v-if="progressTab === 1"
         :initial-value="userSettings.dailyVerseCountGoal"
         :next-button-text="$t('start_page.save_and_continue')"
@@ -28,7 +28,7 @@
       />
 
       <!-- Preferred Bible Version and App -->
-      <PreferredBibleVersionForm
+      <preferred-bible-version-form
         v-if="progressTab === 2"
         :initial-value="userSettings.preferredBibleVersion"
         :initial-bible-app="userSettings.preferredBibleApp"
@@ -41,7 +41,7 @@
     </div>
 
     <!-- Get Started Modal -->
-    <GetStartedModal
+    <get-started-modal
       :is-visible="showGetStartedModal"
       @close="closeGetStartedModal"
     />

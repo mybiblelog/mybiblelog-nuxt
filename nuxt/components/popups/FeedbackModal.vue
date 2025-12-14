@@ -6,7 +6,7 @@
           <p>{{ $t('feedback_form_intro.p1') }}</p>
           <p>{{ $t('feedback_form_intro.p2') }}</p>
         </div>
-        <FeedbackForm @success="handleSuccess" />
+        <feedback-form @success="handleSuccess" />
       </template>
     </app-modal>
   </transition>
