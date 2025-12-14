@@ -100,6 +100,9 @@
           <grid-selector :options="filteredBookOptions" :columns="2" @selection="selectBook" />
         </template>
         <template v-if="selectionTarget === SELECTION.CHAPTERS">
+          <div class="selector-note">
+            {{ $t('select_chapters_note') }}
+          </div>
           <tap-range-selector :min="startChapters[0]" :max="startChapters[startChapters.length-1]" :columns="8" @selection="selectChapters" />
         </template>
         <tap-range-selector
@@ -111,6 +114,9 @@
           @selection="selectEndChapter"
         />
         <template v-if="selectionTarget === SELECTION.VERSES">
+          <div class="selector-note">
+            {{ $t('select_verses_note') }}
+          </div>
           <tap-range-selector :min="startVerses[0]" :max="startVerses[startVerses.length-1]" :columns="8" @selection="selectVerses" />
         </template>
         <tap-range-selector
@@ -537,7 +543,9 @@ export default {
     "select_end_verse": "Wähle Endvers",
     "click_and_drag_to_select_multiple_chapters": "Klicke und ziehe, um mehrere Kapitel auszuwählen.",
     "old_testament": "Altes Testament",
-    "new_testament": "Neues Testament"
+    "new_testament": "Neues Testament",
+    "select_chapters_note": "Wählen Sie das erste und letzte Kapitel im Abschnitt aus, oder wählen Sie für ein einzelnes Kapitel zweimal aus.",
+    "select_verses_note": "Wählen Sie den ersten und letzten Vers im Kapitel aus, oder wählen Sie für einen einzelnen Vers zweimal aus."
   },
   "en": {
     "select_book": "Select Book",
@@ -548,7 +556,9 @@ export default {
     "select_end_verse": "Select End Verse",
     "click_and_drag_to_select_multiple_chapters": "Click and drag to select multiple chapters.",
     "old_testament": "Old Testament",
-    "new_testament": "New Testament"
+    "new_testament": "New Testament",
+    "select_chapters_note": "Select the first and last chapter in the passage, or for a single chapter select it twice.",
+    "select_verses_note": "Select the first and last verse in the chapter, or for a single verse select it twice."
   },
   "es": {
     "select_book": "Seleccionar Libro",
@@ -559,7 +569,9 @@ export default {
     "select_end_verse": "Seleccionar Versículo Final",
     "click_and_drag_to_select_multiple_chapters": "Haga clic y arrastre para seleccionar varios capítulos.",
     "old_testament": "Antiguo Testamento",
-    "new_testament": "Nuevo Testamento"
+    "new_testament": "Nuevo Testamento",
+    "select_chapters_note": "Seleccione el primer y último capítulo del pasaje, o para un solo capítulo selecciónelo dos veces.",
+    "select_verses_note": "Seleccione el primer y último versículo del capítulo, o para un solo versículo selecciónelo dos veces."
   },
   "fr": {
     "select_book": "Sélectionner le livre",
@@ -570,7 +582,9 @@ export default {
     "select_end_verse": "Sélectionner le verset de fin",
     "click_and_drag_to_select_multiple_chapters": "Cliquer et faire glisser pour sélectionner plusieurs chapitres.",
     "old_testament": "Ancien Testament",
-    "new_testament": "Nouveau Testament"
+    "new_testament": "Nouveau Testament",
+    "select_chapters_note": "Sélectionnez le premier et le dernier chapitre du passage, ou pour un seul chapitre, sélectionnez-le deux fois.",
+    "select_verses_note": "Sélectionnez le premier et le dernier verset du chapitre, ou pour un seul verset, sélectionnez-le deux fois."
   },
   "pt": {
     "select_book": "Selecionar Livro",
@@ -581,7 +595,9 @@ export default {
     "select_end_verse": "Selecionar Versículo Final",
     "click_and_drag_to_select_multiple_chapters": "Clique e arraste para selecionar vários capítulos.",
     "old_testament": "Antigo Testamento",
-    "new_testament": "Novo Testamento"
+    "new_testament": "Novo Testamento",
+    "select_chapters_note": "Selecione o primeiro e o último capítulo da passagem, ou para um único capítulo, selecione-o duas vezes.",
+    "select_verses_note": "Selecione o primeiro e o último versículo do capítulo, ou para um único versículo, selecione-o duas vezes."
   },
   "uk": {
     "select_book": "Виберіть книгу",
@@ -592,7 +608,9 @@ export default {
     "select_end_verse": "Виберіть кінцевий вірш",
     "click_and_drag_to_select_multiple_chapters": "Клацніть і перетягніть, щоб вибрати кілька розділів.",
     "old_testament": "Старий Завіт",
-    "new_testament": "Новий Завіт"
+    "new_testament": "Новий Завіт",
+    "select_chapters_note": "Виберіть перший і останній розділ у пасажі, або для одного розділу виберіть його двічі.",
+    "select_verses_note": "Виберіть перший і останній вірш у розділі, або для одного вірша виберіть його двічі."
   }
 }
 </i18n>
