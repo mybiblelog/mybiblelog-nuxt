@@ -13,9 +13,15 @@ export default {
   components: {
     BookReport,
   },
+  middleware: ['auth'],
   asyncData({ params }) {
     return {
       bookIndex: +params.book,
+    };
+  },
+  head() {
+    return {
+      title: Bible.getBookName(this.bookIndex, this.$i18n.locale),
     };
   },
   computed: {
@@ -45,12 +51,6 @@ export default {
       this.$router.push(this.localePath('/notes'));
     },
   },
-  head() {
-    return {
-      title: Bible.getBookName(this.bookIndex, this.$i18n.locale),
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 

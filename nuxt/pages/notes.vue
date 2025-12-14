@@ -201,6 +201,7 @@ export default {
     InfoLink,
     CaretRightIcon,
   },
+  middleware: ['auth'],
   data() {
     return {
       showSearchModal: false,
@@ -214,6 +215,11 @@ export default {
 
       querySort: 'createdAt:descending',
       queryLimit: 10, // TODO: change when a pagination component emits an event
+    };
+  },
+  head() {
+    return {
+      title: this.$t('notes'),
     };
   },
   computed: {
@@ -431,12 +437,6 @@ export default {
       this.$store.dispatch('passage-notes/updateQuery', { offset, limit });
     },
   },
-  head() {
-    return {
-      title: this.$t('notes'),
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 

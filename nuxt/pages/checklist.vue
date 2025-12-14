@@ -72,6 +72,7 @@ export default {
     SpinnerIcon,
     InfoLink,
   },
+  middleware: ['auth'],
   data() {
     const expandedBooks = {};
     const bookCount = Bible.getBookCount();
@@ -86,7 +87,10 @@ export default {
       bookReports: [],
     };
   },
-  async fetch() {
+  head() {
+    return {
+      title: this.$t('chapter_checklist'),
+    };
   },
   computed: {
     ...mapGetters({
@@ -230,12 +234,6 @@ export default {
       this.busyChapter = null;
     },
   },
-  head() {
-    return {
-      title: this.$t('chapter_checklist'),
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 

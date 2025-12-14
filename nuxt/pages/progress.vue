@@ -227,6 +227,7 @@ export default {
     InfoLink,
     CaretRightIcon,
   },
+  middleware: ['auth'],
   data() {
     return {
       goalFinishDate: '',
@@ -237,6 +238,11 @@ export default {
   },
   async fetch() {
     await this.$store.dispatch('loadUserData');
+  },
+  head() {
+    return {
+      title: this.$t('progress'),
+    };
   },
   computed: {
     ...mapGetters({
@@ -395,12 +401,6 @@ export default {
       return targetDate.format('YYYY-MM-DD');
     },
   },
-  head() {
-    return {
-      title: this.$t('progress'),
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 

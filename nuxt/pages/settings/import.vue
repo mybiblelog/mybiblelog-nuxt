@@ -68,6 +68,7 @@ const delimiter = ',';
 
 export default {
   name: 'ImportPage',
+  middleware: ['auth'],
   data() {
     return {
       logEntryUploadFormData: null,
@@ -79,6 +80,13 @@ export default {
   },
   async fetch() {
     await this.$store.dispatch('loadUserData');
+  },
+  head() {
+    return {
+      meta: [
+        { hid: 'robots', name: 'robots', content: 'noindex' },
+      ],
+    };
   },
   computed: {
     ...mapState({
@@ -102,6 +110,7 @@ export default {
         reader.addEventListener('load', (event) => {
           resolve(event.target.result);
         });
+        reader.addEventListener('error', reject);
         reader.readAsText(file);
       });
     },
@@ -256,14 +265,6 @@ export default {
       this.showLookBackDateResetMessage = false;
     },
   },
-  head() {
-    return {
-      meta: [
-        { hid: 'robots', name: 'robots', content: 'noindex' },
-      ],
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 

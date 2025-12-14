@@ -53,6 +53,7 @@ const delimiter = ',';
 
 export default {
   name: 'ExportPage',
+  middleware: ['auth'],
   data() {
     return {
       logEntryExportCsvFileContent: '',
@@ -62,6 +63,13 @@ export default {
   },
   async fetch() {
     await this.$store.dispatch('loadUserData');
+  },
+  head() {
+    return {
+      meta: [
+        { hid: 'robots', name: 'robots', content: 'noindex' },
+      ],
+    };
   },
   computed: {
     ...mapState({
@@ -244,14 +252,6 @@ export default {
       return result;
     },
   },
-  head() {
-    return {
-      meta: [
-        { hid: 'robots', name: 'robots', content: 'noindex' },
-      ],
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 

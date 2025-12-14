@@ -41,6 +41,7 @@ export default {
     CalendarMonth,
     LogEntry,
   },
+  middleware: ['auth'],
   data() {
     return {
       currentDate: null,
@@ -48,6 +49,11 @@ export default {
   },
   async fetch() {
     await this.$store.dispatch('loadUserData');
+  },
+  head() {
+    return {
+      title: this.$t('page_title'),
+    };
   },
   computed: {
     ...mapGetters({
@@ -141,12 +147,6 @@ export default {
       this.currentDate = date;
     },
   },
-  head() {
-    return {
-      title: this.$t('page_title'),
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 

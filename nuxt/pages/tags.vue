@@ -61,6 +61,12 @@ export default {
     InfoLink,
     CaretRightIcon,
   },
+  middleware: ['auth'],
+  head() {
+    return {
+      title: this.$t('note_tags'),
+    };
+  },
   computed: {
     ...mapState({
       passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
@@ -102,12 +108,6 @@ export default {
         'background-color': tag.color,
       };
     },
-  },
-  middleware: ['auth'],
-  head() {
-    return {
-      title: this.$t('note_tags'),
-    };
   },
 };
 </script>
