@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nuxt dev",
     "start": "cross-env NODE_ENV=production nuxt start",
-    "build": "nuxt build"
+    "build": "nuxt build",
+    "lint": "eslint --ext .ts,.js,.vue .",
+    "lint:fix": "eslint --ext .ts,.js,.vue . --fix"
   },
   "dependencies": {
     "@mybiblelog/shared": "file:../shared",
@@ -30,7 +32,10 @@
     "vue-gtag": "^1.16.1"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^5.0.0",
-    "@nuxtjs/eslint-module": "^3.1.0"
+    "@nuxt/types": "^2.18.1",
+    "@nuxt/typescript-build": "^3.0.2",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@nuxtjs/eslint-module": "^3.1.0",
+    "typescript": "^5.9.3"
   }
 }

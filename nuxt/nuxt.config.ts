@@ -55,6 +55,8 @@ module.exports = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    // Doc: https://typescript.nuxtjs.org/guide/setup/
+    '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://pwa.nuxtjs.org/

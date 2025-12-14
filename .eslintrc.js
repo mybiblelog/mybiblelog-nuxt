@@ -4,16 +4,15 @@ module.exports = {
     browser: true,
     node: true,
   },
-  parserOptions: {
-    parser: 'babel-eslint',
-  },
   extends: [
-    '@nuxtjs',
-    'plugin:nuxt/recommended',
+    'eslint:recommended',
   ],
-  // add your custom rules here
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+  },
+  // Shared custom rules for all JavaScript files
   rules: {
-    'nuxt/no-cjs-in-config': 'off',
     indent: [
       'error',
       2,
@@ -92,9 +91,6 @@ module.exports = {
       },
     ],
     'keyword-spacing': [
-      'error',
-    ],
-    'global-require': [
       'error',
     ],
     'no-console': [
