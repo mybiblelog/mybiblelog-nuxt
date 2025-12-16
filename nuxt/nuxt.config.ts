@@ -12,6 +12,11 @@ dotenv.config({
 } as dotenv.DotenvConfigOptions);
 
 const config: NuxtConfig = {
+  // Doc: https://nuxt.com/docs/4.x/bridge/configuration
+  bridge: {
+    typescript: true,
+    nitro: false,
+  },
   /*
   ** Headers of the page
   */
@@ -57,8 +62,6 @@ const config: NuxtConfig = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // Doc: https://typescript.nuxtjs.org/guide/setup/
-    '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://pwa.nuxtjs.org/
@@ -137,10 +140,11 @@ const config: NuxtConfig = {
   ],
   // New runtime config
   publicRuntimeConfig: {
-    siteTitle: 'My Bible Log',
     siteUrl: process.env.SITE_URL,
     requireEmailVerification: process.env.REQUIRE_EMAIL_VERIFICATION !== 'false',
     googleAnalytics4MeasurementId: process.env.GA_MEASUREMENT_ID,
+    // We only use the LocaleObject type, but check for string to appease the type checker
+    locales: i18nConfig.locales?.map((locale) => typeof locale === 'string' ? locale : locale.code) || [],
   },
   pwa: {
     manifest: {

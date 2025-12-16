@@ -6,9 +6,9 @@
   "author": "Aaron Smith",
   "type": "commonjs",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nuxt dev",
-    "start": "cross-env NODE_ENV=production nuxt start",
-    "build": "nuxt build",
+    "dev": "cross-env NODE_ENV=development nuxt2 dev",
+    "start": "cross-env NODE_ENV=production nuxt2 start",
+    "build": "nuxt2 build",
     "lint": "eslint --ext .ts,.js,.vue .",
     "lint:fix": "eslint --ext .ts,.js,.vue . --fix"
   },
@@ -32,10 +32,11 @@
     "vue-gtag": "^1.16.1"
   },
   "devDependencies": {
+    "@nuxt/bridge": "^3.6.1",
     "@nuxt/types": "^2.18.1",
-    "@nuxt/typescript-build": "^3.0.2",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/eslint-module": "^3.1.0",
+    "nuxi": "^3.31.2",
     "typescript": "^5.9.3"
   }
 }
