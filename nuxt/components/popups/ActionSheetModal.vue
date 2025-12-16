@@ -88,8 +88,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/variables';
-
 .action-sheet-overlay {
   position: fixed;
   top: 0;
