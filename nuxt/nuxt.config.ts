@@ -15,6 +15,7 @@ const config: NuxtConfig = {
   // Doc: https://nuxt.com/docs/4.x/bridge/configuration
   bridge: {
     typescript: true,
+    capi: true,
     nitro: false,
   },
   /*
