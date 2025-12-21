@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'Translator',
+  name: 'TranslatorIcon',
   props: {
     width: {
       type: String,

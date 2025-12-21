@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'CaretDown',
+  name: 'CaretRightIcon',
   props: {
     width: {
       type: String,

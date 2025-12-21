@@ -7,7 +7,7 @@
       </h1>
       <nuxt-link class="button" :to="localePath('/books')">
         {{ $t('bible_books') }}
-        <CaretRight style="margin-left: 0.2rem;" />
+        <caret-right-icon style="margin-left: 0.2rem;" />
       </nuxt-link>
     </header>
     <busy-bar :busy="dateVerseCountsBusy" />
@@ -218,15 +218,16 @@ import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import InfoLink from '@/components/InfoLink';
-import CaretRight from '@/components/svg/CaretRight';
+import CaretRightIcon from '@/components/svg/CaretRightIcon';
 
 export default {
   name: 'ProgressPage',
   components: {
     BusyBar,
     InfoLink,
-    CaretRight,
+    CaretRightIcon,
   },
+  middleware: ['auth'],
   data() {
     return {
       goalFinishDate: '',
@@ -237,6 +238,11 @@ export default {
   },
   async fetch() {
     await this.$store.dispatch('loadUserData');
+  },
+  head() {
+    return {
+      title: this.$t('progress'),
+    };
   },
   computed: {
     ...mapGetters({
@@ -395,12 +401,6 @@ export default {
       return targetDate.format('YYYY-MM-DD');
     },
   },
-  head() {
-    return {
-      title: this.$t('progress'),
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 

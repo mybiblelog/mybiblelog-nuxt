@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'CaretLeft',
+  name: 'CaretLeftIcon',
   props: {
     width: {
       type: String,

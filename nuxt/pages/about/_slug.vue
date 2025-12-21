@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import i18nConfig from '../../i18n.config';
-
 export default {
   async asyncData({ $content, params, redirect, app, error }) {
     try {
@@ -36,9 +34,9 @@ export default {
       doc: null,
     };
   },
-  head() {
+  head({ $config }) {
     const localePathSegment = this.$i18n.locale === 'en' ? '' : `/${this.$i18n.locale}`;
-    const siteLocales = i18nConfig.locales.map(locale => locale.code);
+    const siteLocales = $config.locales;
 
     // Generate hreflang links
     const hreflangLinks = siteLocales.map((locale) => {

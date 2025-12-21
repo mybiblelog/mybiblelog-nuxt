@@ -7,12 +7,12 @@
     >
       <feedback-icon fill="white" width="28px" height="28px" />
     </button>
-    <FeedbackModal :is-visible="isModalVisible" @close="closeModal" />
+    <feedback-modal :is-visible="isModalVisible" @close="closeModal" />
   </div>
 </template>
 
 <script>
-import FeedbackIcon from '@/components/svg/Feedback.vue';
+import FeedbackIcon from '@/components/svg/FeedbackIcon.vue';
 import FeedbackModal from '@/components/popups/FeedbackModal.vue';
 
 export default {

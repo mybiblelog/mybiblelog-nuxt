@@ -46,8 +46,8 @@
                   <div class="flex">
                     User
                     <template v-if="sortOn === SortColumns.email">
-                      <caret-down v-if="sortDirection === 1" width="1.5rem" height="1.5rem" fill="#666" />
-                      <caret-down v-if="sortDirection === -1" class="flipped" width="1.5rem" height="1.5rem" fill="#666" />
+                      <caret-down-icon v-if="sortDirection === 1" width="1.5rem" height="1.5rem" fill="#666" />
+                      <caret-down-icon v-if="sortDirection === -1" class="flipped" width="1.5rem" height="1.5rem" fill="#666" />
                     </template>
                   </div>
                 </th>
@@ -55,8 +55,8 @@
                   <div class="flex">
                     Join Date
                     <template v-if="sortOn === SortColumns.createdAt">
-                      <caret-down v-if="sortDirection === 1" width="1.5rem" height="1.5rem" fill="#666" />
-                      <caret-down v-if="sortDirection === -1" class="flipped" width="1.5rem" height="1.5rem" fill="#666" />
+                      <caret-down-icon v-if="sortDirection === 1" width="1.5rem" height="1.5rem" fill="#666" />
+                      <caret-down-icon v-if="sortDirection === -1" class="flipped" width="1.5rem" height="1.5rem" fill="#666" />
                     </template>
                   </div>
                 </th>
@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import CaretDown from '@/components/svg/CaretDown';
+import CaretDownIcon from '@/components/svg/CaretDownIcon';
 
 const SortColumns = {
   email: 'email',
@@ -140,7 +140,7 @@ const SortColumns = {
 export default {
   name: 'AdminUserListPage',
   components: {
-    CaretDown,
+    CaretDownIcon,
   },
   middleware: ['auth'],
   meta: {

@@ -19,9 +19,18 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'VerifyEmailPage',
+  middleware: ['auth'],
   data() {
     return {
       error: null,
+    };
+  },
+  head() {
+    return {
+      title: this.$t('verify_email'),
+      meta: [
+        { hid: 'robots', name: 'robots', content: 'noindex' },
+      ],
     };
   },
   computed: {
@@ -51,15 +60,6 @@ export default {
     await this.$store.dispatch('auth/refreshUser');
     await this.$router.push(this.localePath('/start'));
   },
-  head() {
-    return {
-      title: this.$t('verify_email'),
-      meta: [
-        { hid: 'robots', name: 'robots', content: 'noindex' },
-      ],
-    };
-  },
-  middleware: ['auth'],
   meta: {
     auth: 'guest',
   },

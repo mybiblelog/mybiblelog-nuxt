@@ -397,8 +397,6 @@
 </template>
 
 <script>
-import i18nConfig from '../i18n.config';
-
 export default {
   name: 'HomePage',
   components: {
@@ -410,8 +408,8 @@ export default {
       return redirect(app.localePath('/start', currentSetLocale));
     }
   },
-  head() {
-    const siteLocales = i18nConfig.locales.map(locale => locale.code);
+  head({ $config }) {
+    const siteLocales = $config.locales;
 
     // Generate hreflang links
     const hreflangLinks = siteLocales.map(locale => ({

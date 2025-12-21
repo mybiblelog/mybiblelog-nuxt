@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <modal v-if="open" :title="modalTitle" @close="handleClose">
+    <app-modal v-if="open" :title="modalTitle" @close="handleClose">
       <template slot="content">
         <log-entry-editor-form />
       </template>
@@ -12,19 +12,19 @@
           {{ $t('close') }}
         </button>
       </template>
-    </modal>
+    </app-modal>
   </transition>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import Modal from '@/components/popups/Modal';
+import AppModal from '@/components/popups/AppModal';
 import LogEntryEditorForm from '@/components/forms/LogEntryEditorForm';
 
 export default {
   name: 'LogEntryEditorModal',
   components: {
-    Modal,
+    AppModal,
     LogEntryEditorForm,
   },
   computed: {

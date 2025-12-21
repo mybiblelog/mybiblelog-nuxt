@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'Star',
+  name: 'StarIcon',
   props: {
     width: {
       type: String,

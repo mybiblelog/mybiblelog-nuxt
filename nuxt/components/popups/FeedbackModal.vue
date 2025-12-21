@@ -1,26 +1,26 @@
 <template>
   <transition name="fade">
-    <Modal v-if="isVisible" :title="$t('feedback_form')" @close="close">
+    <app-modal v-if="isVisible" :title="$t('feedback_form')" @close="close">
       <template slot="content">
         <div class="content">
           <p>{{ $t('feedback_form_intro.p1') }}</p>
           <p>{{ $t('feedback_form_intro.p2') }}</p>
         </div>
-        <FeedbackForm @success="handleSuccess" />
+        <feedback-form @success="handleSuccess" />
       </template>
-    </Modal>
+    </app-modal>
   </transition>
 </template>
 
 <script>
 import FeedbackForm from '@/components/forms/FeedbackForm.vue';
-import Modal from '@/components/popups/Modal.vue';
+import AppModal from '@/components/popups/AppModal.vue';
 
 export default {
   name: 'FeedbackModal',
   components: {
     FeedbackForm,
-    Modal,
+    AppModal,
   },
   props: {
     isVisible: {

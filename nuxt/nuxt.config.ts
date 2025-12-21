@@ -1,15 +1,23 @@
-const path = require('node:path');
-const dotenv = require('dotenv');
-const redirectSSL = require('redirect-ssl');
-const sass = require('sass');
-const i18nConfig = require('./i18n.config');
+import path from 'node:path';
+import dotenv from 'dotenv';
+import redirectSSL from 'redirect-ssl';
+import sass from 'sass';
+import i18nConfig from './i18n.config';
+
+import type { NuxtConfig } from '@nuxt/types';
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
   quiet: true,
-});
+} as dotenv.DotenvConfigOptions);
 
-module.exports = {
+const config: NuxtConfig = {
+  // Doc: https://nuxt.com/docs/4.x/bridge/configuration
+  bridge: {
+    typescript: true,
+    capi: true,
+    nitro: false,
+  },
   /*
   ** Headers of the page
   */
@@ -117,7 +125,8 @@ module.exports = {
         sassOptions: {
           sourceMap: true,
           includePaths: ['./assets/scss'],
-        },
+          silenceDeprecations: ['legacy-js-api'],
+        } as sass.Options<'sync'>,
       },
     },
   },
@@ -126,16 +135,17 @@ module.exports = {
     redirectSSL.create({
       enabled: (
         process.env.NODE_ENV === 'production' &&
-        process.env.SITE_URL.includes('https://')
+        process.env.SITE_URL?.includes('https://')
       ),
     }),
   ],
   // New runtime config
   publicRuntimeConfig: {
-    siteTitle: 'My Bible Log',
     siteUrl: process.env.SITE_URL,
     requireEmailVerification: process.env.REQUIRE_EMAIL_VERIFICATION !== 'false',
     googleAnalytics4MeasurementId: process.env.GA_MEASUREMENT_ID,
+    // We only use the LocaleObject type, but check for string to appease the type checker
+    locales: i18nConfig.locales?.map((locale) => typeof locale === 'string' ? locale : locale.code) || [],
   },
   pwa: {
     manifest: {
@@ -164,3 +174,5 @@ module.exports = {
   // Disable telemetry
   telemetry: false,
 };
+
+export default config;

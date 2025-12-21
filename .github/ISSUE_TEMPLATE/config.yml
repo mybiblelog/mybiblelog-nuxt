@@ -1,8 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: My Bible Log Community Discussions
-    url: https://github.com/mybiblelog/mybiblelog-nuxt/discussions
-    about: Ask questions and discuss ideas with the community
   - name: Security Vulnerability Report
     url: mailto:mybiblelog.com@gmail.com
     about: Report security vulnerabilities privately (DO NOT create public issues)

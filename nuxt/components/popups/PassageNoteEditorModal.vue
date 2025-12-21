@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <modal v-if="open" :title="modalTitle" @close="handleClose">
+    <app-modal v-if="open" :title="modalTitle" @close="handleClose">
       <template slot="content">
         <passage-note-editor-form
           :passage-note-tags="passageNoteTags"
@@ -14,19 +14,19 @@
           {{ $t('note_editor.close') }}
         </button>
       </template>
-    </modal>
+    </app-modal>
   </transition>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import Modal from '@/components/popups/Modal';
+import AppModal from '@/components/popups/AppModal';
 import PassageNoteEditorForm from '@/components/forms/PassageNoteEditorForm';
 
 export default {
   name: 'PassageNoteEditorModal',
   components: {
-    Modal,
+    AppModal,
     PassageNoteEditorForm,
   },
   computed: {

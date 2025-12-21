@@ -2,7 +2,7 @@
   <button class="chapter-report" @click="openActionSheet">
     <div class="chapter-report--indicator">
       <div class="chapter-report--indicator--icon">
-        <star width="100%" height="100%" :fill="report.percentage == 100 ? '#ffd700' : '#ddd'" />
+        <star-icon width="100%" height="100%" :fill="report.percentage == 100 ? '#ffd700' : '#ddd'" />
       </div>
       <div class="chapter-report--index">
         {{ report.chapterIndex }}
@@ -18,12 +18,12 @@
 <script>
 import { Bible } from '@mybiblelog/shared';
 import SegmentBar from '@/components/SegmentBar';
-import Star from '@/components/svg/Star';
+import StarIcon from '@/components/svg/StarIcon';
 
 export default {
   components: {
     SegmentBar,
-    Star,
+    StarIcon,
   },
   props: {
     report: {

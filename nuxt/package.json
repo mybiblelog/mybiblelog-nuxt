@@ -6,12 +6,15 @@
   "author": "Aaron Smith",
   "type": "commonjs",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nuxt dev",
-    "start": "cross-env NODE_ENV=production nuxt start",
-    "build": "nuxt build"
+    "dev": "cross-env NODE_ENV=development nuxt2 dev",
+    "start": "cross-env NODE_ENV=production nuxt2 start",
+    "build": "nuxt2 build",
+    "lint": "eslint --ext .ts,.js,.vue .",
+    "lint:fix": "eslint --ext .ts,.js,.vue . --fix"
   },
   "dependencies": {
     "@mybiblelog/shared": "file:../shared",
+    "@nuxt/bridge": "^3.6.1",
     "@nuxt/content": "^1.14.0",
     "@nuxtjs/i18n": "^7.3.1",
     "@nuxtjs/proxy": "^2.1.0",
@@ -23,6 +26,7 @@
     "csv": "^5.3.2",
     "dayjs": "^1.10.4",
     "dotenv": "^8.2.0",
+    "nuxi": "^3.31.2",
     "nuxt": "^2.18.1",
     "redirect-ssl": "^3.0.0",
     "sass": "^1.71.1",
@@ -30,7 +34,9 @@
     "vue-gtag": "^1.16.1"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^5.0.0",
-    "@nuxtjs/eslint-module": "^3.1.0"
+    "@nuxt/types": "^2.18.1",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@nuxtjs/eslint-module": "^3.1.0",
+    "typescript": "^5.9.3"
   }
 }

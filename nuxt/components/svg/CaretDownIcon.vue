@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'CaretDown',
+  name: 'CaretDownIcon',
   props: {
     width: {
       type: String,

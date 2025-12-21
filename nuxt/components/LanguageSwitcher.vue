@@ -2,7 +2,7 @@
   <div class="navbar-item has-dropdown is-hoverable">
     <div class="navbar-link desktop-switcher">
       <div class="line-height-stabilizer">
-        <translator />
+        <translator-icon />
         <span class="is-hidden-desktop"> {{ $t('choose_language') }}</span>
       </div>
     </div>
@@ -14,11 +14,11 @@
     </div>
     <div class="buttons is-centered mobile-switcher">
       <button class="button is-outline" @click="modalOpen = true">
-        <translator width="20" height="20" />
+        <translator-icon width="20" height="20" />
         <span style="padding-left: 0.2rem"> {{ $t('choose_language') }}</span>
       </button>
     </div>
-    <modal v-if="modalOpen" :title="'🌎 ' + $t('choose_language')" @close="modalOpen = false">
+    <app-modal v-if="modalOpen" :title="'🌎 ' + $t('choose_language')" @close="modalOpen = false">
       <template slot="content">
         <div class="language-buttons is-flex is-flex-direction-column is-align-items-stretch is-flex-gap-1">
           <a v-for="locale in availableLocales" :key="locale.code" class="button" href="#" @click.prevent.stop="() => { modalOpen = false; setLocale(locale.code); }">
@@ -27,19 +27,19 @@
           </a>
         </div>
       </template>
-    </modal>
+    </app-modal>
   </div>
 </template>
 
 <script>
-import Modal from '@/components/popups/Modal.vue';
-import Translator from '@/components/svg/Translator.vue';
+import AppModal from '@/components/popups/AppModal.vue';
+import TranslatorIcon from '@/components/svg/TranslatorIcon.vue';
 
 export default {
   name: 'LanguageSwitcher',
   components: {
-    Modal,
-    Translator,
+    AppModal,
+    TranslatorIcon,
   },
   data() {
     return {

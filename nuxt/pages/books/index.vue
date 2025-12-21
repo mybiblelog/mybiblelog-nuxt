@@ -12,8 +12,14 @@ export default {
   components: {
     BibleReport,
   },
+  middleware: ['auth'],
   async fetch() {
     await this.$store.dispatch('loadUserData');
+  },
+  head() {
+    return {
+      title: this.$t('page_title'),
+    };
   },
   computed: {
     ...mapGetters({
@@ -25,12 +31,6 @@ export default {
       this.$router.push(this.localePath('/books/' + bookIndex));
     },
   },
-  head() {
-    return {
-      title: this.$t('page_title'),
-    };
-  },
-  middleware: ['auth'],
 };
 </script>
 
