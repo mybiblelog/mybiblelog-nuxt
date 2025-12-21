@@ -7,7 +7,11 @@ og:
   description: My Bible Log - це безкоштовний онлайн-інструмент, який допоможе вам відстежувати та організовувати ваше читання Біблії
 ---
 
-# Головна сторінка
+<content-demo-hero
+  title="My Bible Log"
+  subtitle="Прочитайте всю Біблію — своїм шляхом."
+  description="Відстежуйте своє читання Біблії у власному темпі, дотримуючись <em>вашого</em> плану. My Bible Log — це <strong style='color: var(--primary-color);'>безкоштовний трекер читання Біблії</strong>, який допомагає вам бачити, що ви прочитали, залишатися послідовними та робити прогрес у читанні всієї Біблії."
+  button-text="Почніть безкоштовно"
+  cta-note="Зареєструйтеся за допомогою електронної пошти або Google"></content-demo-hero>
 
-<content-demo-component message="Українська" />
-
+<content-demo-component message="Українська" :list="[1, 2, 3]"></content-demo-component>
