@@ -12,6 +12,7 @@ dotenv.config({
 } as dotenv.DotenvConfigOptions);
 
 const config: NuxtConfig = {
+  components: true,
   // Doc: https://nuxt.com/docs/4.x/bridge/configuration
   bridge: {
     typescript: true,
