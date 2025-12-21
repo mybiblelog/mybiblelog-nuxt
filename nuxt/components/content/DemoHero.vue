@@ -49,13 +49,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary-color: #00aaf9;
-$secondary-color: #0965f7;
-$tertiary-color: #00d1b2;
 
 .hero-section {
   padding: 4rem 1.5rem;
-  background: linear-gradient(135deg, rgba($primary-color, 0.05) 0%, rgba($secondary-color, 0.05) 50%, rgba($tertiary-color, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(var(--primary-color), 0.05) 0%, rgba(var(--secondary-color), 0.05) 50%, rgba(var(--tertiary-color), 0.05) 100%);
   border-radius: 12px;
   margin: 2rem 0;
   text-align: center;
@@ -71,7 +68,7 @@ $tertiary-color: #00d1b2;
   font-weight: 700;
   margin-bottom: 1rem;
   line-height: 1.2;
-  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -113,7 +110,7 @@ $tertiary-color: #00d1b2;
 
   strong {
     font-weight: 600;
-    color: $secondary-color;
+    color: var(--secondary-color);
   }
 }
 
@@ -125,19 +122,19 @@ $tertiary-color: #00d1b2;
 }
 
 .button.is-primary {
-  background-color: $primary-color;
-  border-color: $primary-color;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   font-weight: 600;
   padding: 1rem 2.5rem;
   font-size: 1.125rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+  box-shadow: 0 4px 12px rgba(var(--primary-color), 0.3);
 
   &:hover {
-    background-color: $secondary-color;
-    border-color: $secondary-color;
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba($primary-color, 0.4);
+    box-shadow: 0 6px 16px rgba(var(--primary-color), 0.4);
   }
 
   &:active {
