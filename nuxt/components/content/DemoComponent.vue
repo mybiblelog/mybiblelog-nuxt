@@ -1,6 +1,11 @@
 <template>
-  <div>
+  <div class="content-column">
     Demo Component: "{{ message }}"
+    <ul>
+      <li v-for="item in list" :key="item">
+        {{ item }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -12,6 +17,10 @@ export default {
       type: String,
       default: '...',
     },
+    list: {
+      type: Array,
+      default: () => [],
+    },
   },
 };
 
@@ -19,6 +28,6 @@ export default {
 
 <style scoped>
 div {
-  color: red;
+  color: #09f;
 }
 </style>

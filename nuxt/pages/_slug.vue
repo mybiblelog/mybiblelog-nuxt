@@ -1,9 +1,7 @@
 <template>
-<div class="content-column">
   <article class="content">
     <nuxt-content :document="doc" />
   </article>
-</div>
 </template>
 
 <script>
@@ -81,11 +79,17 @@ export default {
 </script>
 
 <style lang="scss">
-  // This <style> is not scoped because @nuxt/content content is added
-  // later in the render pipeline after component compilation (still before SSR),
-  // so the Nuxt/Vue loader doesn't apply scoped styles to it
-  .icon {
-    // override Bulma so @nuxt/content title anchor links don't create empty space
-    display: inline !important;
-  }
-  </style>
+// This <style> is not scoped because @nuxt/content content is added
+// later in the render pipeline after component compilation (still before SSR),
+// so the Nuxt/Vue loader doesn't apply scoped styles to it
+.icon {
+  // override Bulma so @nuxt/content title anchor links don't create empty space
+  display: inline !important;
+}
+
+:root {
+  --primary-color: #00aaf9;
+  --secondary-color: #0965f7;
+  --tertiary-color: #00d1b2;
+}
+</style>
