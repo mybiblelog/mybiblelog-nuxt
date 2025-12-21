@@ -9,4 +9,4 @@ og:
 
 # Homepage
 
-<content-demo-component></content-demo-component>
+<content-demo-component message="English" />

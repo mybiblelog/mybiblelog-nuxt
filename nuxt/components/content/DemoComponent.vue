@@ -1,12 +1,18 @@
 <template>
   <div>
-    Demo Component
+    Demo Component: "{{ message }}"
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'DemoComponent',
+  props: {
+    message: {
+      type: String,
+      default: '...',
+    },
+  },
 };
 
 </script>
