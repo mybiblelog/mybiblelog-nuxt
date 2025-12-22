@@ -1,5 +1,5 @@
 <template>
-  <section class="fifty-fifty-section" :class="{ 'fifty-fifty-section--reverse': isReversed }">
+  <section class="fifty-fifty-section" :class="{ 'fifty-fifty-section--reverse': reverse }">
     <div class="fifty-fifty-container content-column">
       <div class="fifty-fifty-image">
         <img :src="image" :alt="imageAlt || title">
@@ -63,21 +63,11 @@ export default {
       default: '',
     },
     reverse: {
-      type: [Boolean, String],
+      type: [Boolean],
       default: false,
     },
   },
   computed: {
-    isReversed() {
-      // Handle both boolean and string values from markdown
-      if (typeof this.reverse === 'boolean') {
-        return this.reverse;
-      }
-      if (typeof this.reverse === 'string') {
-        return this.reverse.toLowerCase() === 'true';
-      }
-      return false;
-    },
     listItems() {
       if (!this.list) {
         return [];
@@ -168,9 +158,9 @@ export default {
   img {
     width: 100%;
     max-width: 500px;
+    max-height: 80vh;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    object-fit: contain;
   }
 }
 
