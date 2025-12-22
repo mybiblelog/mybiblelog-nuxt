@@ -14,4 +14,4 @@ og:
   button-text="Commencer gratuitement"
   cta-note="Inscrivez-vous avec un e-mail ou Google"></content-page-hero>
 
-<content-demo-component message="Français" :list="[1, 2, 3]"></content-demo-component>
+

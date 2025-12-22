@@ -14,4 +14,24 @@ og:
   button-text="Get Started Free"
   cta-note="Sign up with email or Google"></content-page-hero>
 
-<content-demo-component message="English" :list="[1, 2, 3]"></content-demo-component>
+<content-fifty-fifty-component
+  image="https://via.placeholder.com/150"
+  title="⭐ Stay Consistent Without Pressure"
+  subtitle="**Daily Reading Goals**"
+  description="Set a daily goal that works for you."
+  list="['Read a little or a lot — it's up to you', 'See your progress update with every log entry', 'Reading ~86 verses a day means you'll finish the Bible in a year']"
+  button-text="Get Started Free"
+  button-destination="/register"
+  note="*(IMAGE: daily reading goal)*"
+  reverse="false"></content-fifty-fifty-component>
+
+<content-fifty-fifty-component
+  image="https://via.placeholder.com/150"
+  title="⭐ Stay Consistent Without Pressure"
+  subtitle="**Daily Reading Goals**"
+  description="Set a daily goal that works for you."
+  list="['Read a little or a lot — it's up to you', 'See your progress update with every log entry', 'Reading ~86 verses a day means you'll finish the Bible in a year']"
+  button-text="Get Started Free"
+  button-destination="/register"
+  note="*(IMAGE: daily reading goal)*"
+  reverse="true"></content-fifty-fifty-component>

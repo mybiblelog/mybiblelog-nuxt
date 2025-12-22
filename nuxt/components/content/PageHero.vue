@@ -52,9 +52,9 @@ export default {
 
 .hero-section {
   padding: 4rem 1.5rem;
-  background: linear-gradient(135deg, rgba(var(--primary-color), 0.05) 0%, rgba(var(--secondary-color), 0.05) 50%, rgba(var(--tertiary-color), 0.05) 100%);
+  background: linear-gradient(135deg, rgba(0, 170, 249, 0.05) 0%, rgba(9, 101, 247, 0.05) 50%, rgba(0, 209, 178, 0.05) 100%);
   border-radius: 12px;
-  margin: 2rem 0;
+  margin: 0 0 2rem;
   text-align: center;
 }
 
@@ -128,13 +128,13 @@ export default {
   padding: 1rem 2.5rem;
   font-size: 1.125rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(var(--primary-color), 0.3);
+  box-shadow: 0 4px 12px rgba(0, 170, 249, 0.3);
 
   &:hover {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(var(--primary-color), 0.4);
+    box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
   }
 
   &:active {

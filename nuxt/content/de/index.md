@@ -14,4 +14,4 @@ og:
   button-text="Kostenlos loslegen"
   cta-note="Mit E-Mail oder Google anmelden"></content-page-hero>
 
-<content-demo-component message="Deutsch" :list="[1, 2, 3]"></content-demo-component>
+

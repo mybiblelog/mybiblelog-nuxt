@@ -14,4 +14,4 @@ og:
   button-text="Почніть безкоштовно"
   cta-note="Зареєструйтеся за допомогою електронної пошти або Google"></content-page-hero>
 
-<content-demo-component message="Українська" :list="[1, 2, 3]"></content-demo-component>
+
