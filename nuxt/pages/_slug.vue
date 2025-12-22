@@ -1,5 +1,7 @@
 <template>
-  <nuxt-content :document="doc" />
+  <div :class="{ 'content-column content': doc?.slug !== 'index' }">
+    <nuxt-content :document="doc" />
+  </div>
 </template>
 
 <script>
@@ -105,7 +107,7 @@ export default {
         },
       ],
       script: [
-        structuredData,
+        ...(structuredData ? [structuredData] : []),
       ],
     };
   },
