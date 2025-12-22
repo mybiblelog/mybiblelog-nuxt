@@ -43,6 +43,39 @@ export default {
       href: `${this.$config.siteUrl}${slugSegment}`,
     });
 
+    // Generate structured data
+    let structuredData = null;
+    if (this.doc?.slug === 'index') {
+      structuredData = {
+        type: 'application/ld+json',
+        json: {
+          '@context': 'https://schema.org',
+          '@type': 'WebApplication',
+          name: this.$t('ld_json.name'),
+          description: this.$t('ld_json.description'),
+          applicationCategory: 'EducationalApplication',
+          operatingSystem: 'Any',
+          browserRequirements: 'Any modern web browser',
+          softwareVersion: '1.0',
+          url: this.$config.siteUrl,
+          screenshot: [
+            `${this.$config.siteUrl}/screenshots/sc7-bible-progress.jpg`,
+            `${this.$config.siteUrl}/screenshots/sc12-checklist.jpg`,
+            `${this.$config.siteUrl}/screenshots/sc10-notes.jpg`,
+            `${this.$config.siteUrl}/screenshots/sc9-calendar.jpg`,
+            `${this.$config.siteUrl}/screenshots/sc4-daily-goal.jpg`,
+          ],
+          offers: {
+            '@type': 'Offer',
+            price: 'Free',
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+            url: this.$config.siteUrl,
+          },
+        },
+      };
+    }
+
     return {
       title: this.doc?.seo?.title,
       link: [
@@ -70,6 +103,9 @@ export default {
           name: 'og:image',
           content: `${this.$config.siteUrl}/share.jpg`,
         },
+      ],
+      script: [
+        structuredData,
       ],
     };
   },
