@@ -5,7 +5,7 @@
 <script>
 export default {
   name: 'ContentPage',
-  async asyncData({ $content, params, redirect, app, error }) {
+  async asyncData({ $content, params, app, error }) {
     try {
       const slug = params.slug ?? 'index';
       const doc = await $content(app.i18n.locale, slug).fetch();
@@ -24,6 +24,7 @@ export default {
   head({ $config }) {
     const localePathSegment = this.$i18n.locale === 'en' ? '' : `/${this.$i18n.locale}`;
     const siteLocales = $config.locales;
+    const slugSegment = this.doc?.slug === 'index' ? '' : `/${this.doc?.slug}`;
 
     // Generate hreflang links
     const hreflangLinks = siteLocales.map((locale) => {
@@ -31,7 +32,7 @@ export default {
       return {
         rel: 'alternate',
         hreflang: locale,
-        href: `${this.$config.siteUrl}${localePathSegment}/about/${this.doc?.slug}`,
+        href: `${this.$config.siteUrl}${localePathSegment}${slugSegment}`,
       };
     });
 
@@ -39,13 +40,13 @@ export default {
     hreflangLinks.push({
       rel: 'alternate',
       hreflang: 'x-default',
-      href: `${this.$config.siteUrl}/about/${this.doc?.slug}`,
+      href: `${this.$config.siteUrl}${slugSegment}`,
     });
 
     return {
       title: this.doc?.seo?.title,
       link: [
-        { rel: 'canonical', href: `${this.$config.siteUrl}${localePathSegment}/about/${this.doc?.slug}` },
+        { rel: 'canonical', href: `${this.$config.siteUrl}${localePathSegment}${slugSegment}` },
         ...hreflangLinks,
       ],
       meta: [
