@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'DemoHero',
+  name: 'PageHero',
   props: {
     title: {
       type: String,
