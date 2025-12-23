@@ -126,10 +126,4 @@ export default {
   // override Bulma so @nuxt/content title anchor links don't create empty space
   display: inline !important;
 }
-
-:root {
-  --primary-color: #00aaf9;
-  --secondary-color: #0965f7;
-  --tertiary-color: #00d1b2;
-}
 </style>
