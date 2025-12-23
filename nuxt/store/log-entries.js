@@ -67,7 +67,7 @@ export const actions = {
     const data = await response.json();
     commit(SET_LOG_ENTRIES, data);
   },
-  async createLogEntry({ commit, dispatch, rootState, getters }, { date, startVerseId, endVerseId }) {
+  async createLogEntry({ commit, dispatch, getters }, { date, startVerseId, endVerseId }) {
     // Get current log entries before adding the new one
     const currentLogEntries = getters.currentLogEntries;
     const bookIndex = getBookIndexFromVerseId(startVerseId);
@@ -94,14 +94,14 @@ export const actions = {
     const isBookNowComplete = isBookComplete(bookIndex, updatedLogEntries);
     const isBibleNowComplete = isBibleComplete(updatedLogEntries);
 
-    // Show alerts if completion status changed
-    if (!wasBookComplete && isBookNowComplete) {
-      const bookName = Bible.getBookName(bookIndex, rootState['user-settings']?.settings?.locale || 'en');
-      alert(`Congratulations! You have completed ${bookName}!`);
-    }
-
+    // Show achievement modals if completion status changed
     if (!wasBibleComplete && isBibleNowComplete) {
-      alert('🎉 Amazing! You have completed reading the entire Bible! 🎉');
+      // Show Bible completion first (more significant achievement)
+      dispatch('achievements/showBibleCompleteAchievement', null, { root: true });
+    }
+    else if (!wasBookComplete && isBookNowComplete) {
+      // Show book completion if Bible isn't complete
+      dispatch('achievements/showBookCompleteAchievement', bookIndex, { root: true });
     }
 
     // non-blocking updates
@@ -110,7 +110,7 @@ export const actions = {
 
     return data;
   },
-  async updateLogEntry({ commit, dispatch, rootState, getters }, { id, date, startVerseId, endVerseId }) {
+  async updateLogEntry({ commit, dispatch, getters }, { id, date, startVerseId, endVerseId }) {
     // Get current log entries before updating
     const currentLogEntries = getters.currentLogEntries;
     const bookIndex = getBookIndexFromVerseId(startVerseId);
@@ -138,14 +138,14 @@ export const actions = {
     const isBookNowComplete = isBookComplete(bookIndex, updatedLogEntries);
     const isBibleNowComplete = isBibleComplete(updatedLogEntries);
 
-    // Show alerts if completion status changed
-    if (!wasBookComplete && isBookNowComplete) {
-      const bookName = Bible.getBookName(bookIndex, rootState['user-settings']?.settings?.locale || 'en');
-      alert(`Congratulations! You have completed ${bookName}!`);
-    }
-
+    // Show achievement modals if completion status changed
     if (!wasBibleComplete && isBibleNowComplete) {
-      alert('🎉 Amazing! You have completed reading the entire Bible! 🎉');
+      // Show Bible completion first (more significant achievement)
+      dispatch('achievements/showBibleCompleteAchievement', null, { root: true });
+    }
+    else if (!wasBookComplete && isBookNowComplete) {
+      // Show book completion if Bible isn't complete
+      dispatch('achievements/showBookCompleteAchievement', bookIndex, { root: true });
     }
 
     // non-blocking updates
