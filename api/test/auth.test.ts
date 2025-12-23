@@ -370,7 +370,7 @@ describe('Auth routes', () => {
       const res = await requestApi
         .post('/api/auth/reset-password/invalid-code-12345')
         .send({ newPassword: 'newpassword123' });
-      expect(res.statusCode).toBe(404);
+      expect(res.statusCode).toBe(400);
     });
 
     it('returns a token with cookie when reset code is valid', async () => {

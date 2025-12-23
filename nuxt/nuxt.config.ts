@@ -12,6 +12,7 @@ dotenv.config({
 } as dotenv.DotenvConfigOptions);
 
 const config: NuxtConfig = {
+  components: true,
   // Doc: https://nuxt.com/docs/4.x/bridge/configuration
   bridge: {
     typescript: true,
@@ -28,6 +29,9 @@ const config: NuxtConfig = {
     titleTemplate: (titleChunk) => {
       const siteTitle = 'My Bible Log';
       if (titleChunk && titleChunk !== siteTitle) {
+        if (titleChunk.includes(siteTitle)) {
+          return titleChunk;
+        }
         return `${titleChunk} | ${siteTitle}`;
       }
       return siteTitle;

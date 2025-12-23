@@ -48,4 +48,3 @@ O Site não altera suas práticas de coleta de dados quando detecta um sinal de 
 ## Atualizações a Esta Política
 
 Esta política de privacidade pode ser atualizada ocasionalmente para refletir as mudanças na forma como o Site opera ou para cumprir requisitos legais.
----

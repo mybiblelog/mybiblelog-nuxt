@@ -48,4 +48,3 @@ Die Website ändert ihre Datensammlungspraktiken nicht, wenn sie ein "Do Not Tra
 ## Aktualisierungen dieser Richtlinie
 
 Diese Datenschutzrichtlinie kann gelegentlich aktualisiert werden, um Änderungen in der Funktionsweise der Website widerzuspiegeln oder gesetzlichen Anforderungen zu entsprechen.
----

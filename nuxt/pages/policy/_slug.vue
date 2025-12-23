@@ -1,14 +1,9 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container content">
-        <nuxt-content :document="doc" />
-        <br>
-        <nuxt-link :to="localePath('/')">
-          {{ $t('back') }}
-        </nuxt-link>
-      </div>
-    </section>
+    <div class="content-column content">
+      <nuxt-content :document="doc" />
+    </div>
+    <content-page-footer />
   </main>
 </template>
 
