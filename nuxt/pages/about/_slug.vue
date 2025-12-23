@@ -1,6 +1,6 @@
 <template>
-  <div class="content-column">
-    <article class="content">
+  <div>
+    <article class="content-column content">
       <nuxt-content :document="doc" />
       <template v-if="doc.slug !== 'overview'">
         <br>
@@ -9,6 +9,7 @@
         </nuxt-link>
       </template>
     </article>
+    <content-page-footer />
   </div>
 </template>
 
