@@ -10,11 +10,18 @@
 <script>
 export default {
   name: 'ContentPage',
-  async asyncData({ $content, params, app, error }) {
+  async asyncData({ $content, params, app, error, store, redirect }) {
     try {
       const slug = params.slug ?? 'index';
+      const isIndexPage = slug === 'index';
+
+      if (isIndexPage && store.state.auth.loggedIn) {
+        const currentSetLocale = app.i18n.locale;
+        return redirect(app.localePath('/start', currentSetLocale));
+      }
+
       const doc = await $content(app.i18n.locale, slug).fetch();
-      return { doc };
+      return { doc, isIndexPage };
     }
     catch (err) {
       // If the page doesn't exist, return a 404 error
@@ -24,12 +31,13 @@ export default {
   data() {
     return {
       doc: null,
+      isIndexPage: false,
     };
   },
   head({ $config }) {
     const localePathSegment = this.$i18n.locale === 'en' ? '' : `/${this.$i18n.locale}`;
     const siteLocales = $config.locales;
-    const slugSegment = this.doc?.slug === 'index' ? '' : `/${this.doc?.slug}`;
+    const slugSegment = this.isIndexPage ? '' : `/${this.doc?.slug}`;
 
     // Generate hreflang links
     const hreflangLinks = siteLocales.map((locale) => {
@@ -50,7 +58,7 @@ export default {
 
     // Generate structured data
     let structuredData = null;
-    if (this.doc?.slug === 'index') {
+    if (this.isIndexPage) {
       structuredData = {
         type: 'application/ld+json',
         json: {
