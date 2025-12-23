@@ -24,18 +24,15 @@
 <script>
 export default {
   name: 'PageFooter',
-  props: {
-    links: {
-      type: Array,
-      required: true,
-      validator(value) {
-        return value.every(link =>
-          link &&
-          typeof link.text === 'string' &&
-          typeof link.destination === 'string',
-        );
-      },
-    },
+  data() {
+    return {
+      links: [
+        { text: this.$t('home'), destination: '/' },
+        { text: this.$t('faq'), destination: '/faq' },
+        { text: this.$t('privacy_policy'), destination: '/policy/privacy' },
+        { text: this.$t('terms_and_conditions'), destination: '/policy/terms' },
+      ],
+    };
   },
   methods: {
     isExternalLink(url) {
@@ -121,3 +118,44 @@ export default {
   }
 }
 </style>
+
+<i18n lang="json">
+{
+  "en": {
+    "home": "Home",
+    "faq": "FAQ",
+    "privacy_policy": "Privacy Policy",
+    "terms_and_conditions": "Terms and Conditions"
+  },
+  "de": {
+    "home": "Startseite",
+    "faq": "FAQ",
+    "privacy_policy": "Datenschutzrichtlinie",
+    "terms_and_conditions": "Nutzungsbedingungen"
+  },
+  "es": {
+    "home": "Inicio",
+    "faq": "FAQ",
+    "privacy_policy": "Política de privacidad",
+    "terms_and_conditions": "Términos y condiciones"
+  },
+  "fr": {
+    "home": "Accueil",
+    "faq": "FAQ",
+    "privacy_policy": "Politique de confidentialité",
+    "terms_and_conditions": "Conditions d'utilisation"
+  },
+  "pt": {
+    "home": "Início",
+    "faq": "FAQ",
+    "privacy_policy": "Política de privacidade",
+    "terms_and_conditions": "Termos e condições"
+  },
+  "uk": {
+    "home": "Головна",
+    "faq": "FAQ",
+    "privacy_policy": "Політика конфіденційності",
+    "terms_and_conditions": "Умови використання"
+  }
+}
+</i18n>

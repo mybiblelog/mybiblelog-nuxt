@@ -3,14 +3,7 @@
     <div :class="{ 'content-column content': doc?.slug !== 'index' }">
       <nuxt-content :document="doc" />
     </div>
-    <content-page-footer
-      :links="[
-        {text:'Home',destination:'/'},
-        {text:'F.A.Q.',destination:'/faq'},
-        {text:'Privacy Policy',destination:'/policy/privacy'},
-        {text:'Terms and Conditions',destination:'/policy/terms'},
-      ]"
-    />
+    <content-page-footer />
   </div>
 </template>
 
