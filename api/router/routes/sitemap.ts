@@ -24,20 +24,19 @@ const router = express.Router();
  *               type: string
  */
 router.get('/sitemap.xml', (req, res, next) => {
-  const relativeUrls = [
-    // Start with static files that have non-locale-specific URLs
-    '/downloads/druckbare-bibel-lesetrack.pdf',
-    '/downloads/printable-bible-reading-tracker.pdf',
-    '/downloads/rastreador-de-lectura-de-la-biblia-imprimible.pdf',
-    '/downloads/feuille-de-suivi-de-lecture-de-la-Bible-imprimable.pdf',
-    '/downloads/drukovanyy-vidstezhuvach-chytannya-bibliyi.pdf',
-    '/downloads/rastreador-de-leitura-da-biblia-para-imprimir.pdf',
-  ];
+  const relativeUrls: string[] = [];
 
   // start with the homepage of each locale
   for (const locale of siteLocales) {
     // English (default locale) has no prefix
-    const url = locale === 'en' ? '/' : `/${locale}`;
+    const url = locale === 'en' ? '' : `/${locale}`;
+    relativeUrls.push(url);
+  }
+
+  // add the FAQ page of each locale
+  for (const locale of siteLocales) {
+    const localePrefix = locale === 'en' ? '' : `/${locale}`;
+    const url = `${localePrefix}/faq`;
     relativeUrls.push(url);
   }
 
@@ -53,6 +52,17 @@ router.get('/sitemap.xml', (req, res, next) => {
       relativeUrls.push(url);
     }
   }
+
+  // add the printable reading tracker PDF of each locale
+  relativeUrls.push(
+    // these are static files that have non-locale-specific URLs
+    '/downloads/druckbare-bibel-lesetrack.pdf',
+    '/downloads/printable-bible-reading-tracker.pdf',
+    '/downloads/rastreador-de-lectura-de-la-biblia-imprimible.pdf',
+    '/downloads/feuille-de-suivi-de-lecture-de-la-Bible-imprimable.pdf',
+    '/downloads/drukovanyy-vidstezhuvach-chytannya-bibliyi.pdf',
+    '/downloads/rastreador-de-leitura-da-biblia-para-imprimir.pdf',
+  );
 
   const urls = relativeUrls.map(url => config.siteUrl + url);
 
