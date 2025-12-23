@@ -56,8 +56,8 @@ export default {
         json: {
           '@context': 'https://schema.org',
           '@type': 'WebApplication',
-          name: this.$t('ld_json.name'),
-          description: this.$t('ld_json.description'),
+          name: this.doc?.ld_json?.name,
+          description: this.doc?.ld_json?.description,
           applicationCategory: 'EducationalApplication',
           operatingSystem: 'Any',
           browserRequirements: 'Any modern web browser',

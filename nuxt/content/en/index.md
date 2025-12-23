@@ -1,10 +1,13 @@
 ---
 seo:
-  title: My Bible Log
-  description: My Bible Log is a free online tool to help you track and organize your Bible reading
+  title: My Bible Log - Free Bible Reading Tracker
+  description: Track your Bible reading progress with My Bible Log, a free online Bible reading tracker. Set daily goals, take notes, and see your progress across all 66 books. No ads, no subscriptions — completely free.
 og:
-  title: My Bible Log
-  description: My Bible Log is a free online tool to help you track and organize your Bible reading
+  title: My Bible Log - Free Bible Reading Tracker
+  description: Track your Bible reading at your own pace with My Bible Log. Set daily goals, take notes, and make progress toward reading the entire Bible. Free, no ads, no subscriptions.
+ld_json:
+  name: My Bible Log
+  description: A free online Bible reading tracker that helps you track and organize your Bible reading
 ---
 
 <content-page-hero
