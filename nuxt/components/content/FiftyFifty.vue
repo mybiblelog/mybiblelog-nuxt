@@ -8,8 +8,8 @@
         <h2 class="fifty-fifty-title" v-html="title" />
         <p class="fifty-fifty-subtitle" v-html="subtitle" />
         <p class="fifty-fifty-description" v-html="description" />
-        <ul v-if="listItems && listItems.length > 0" class="fifty-fifty-list">
-          <li v-for="(item, index) in listItems" :key="index" v-html="item" />
+        <ul v-if="list && list.length > 0" class="fifty-fifty-list">
+          <li v-for="(item, index) in list" :key="index" v-html="item" />
         </ul>
         <div v-if="buttonText && buttonDestination" class="fifty-fifty-cta">
           <nuxt-link :to="localePath(buttonDestination)" class="button is-primary">
@@ -47,8 +47,8 @@ export default {
       default: '',
     },
     list: {
-      type: [String, Array],
-      default: null,
+      type: Array,
+      default: () => [],
     },
     buttonText: {
       type: String,
@@ -65,57 +65,6 @@ export default {
     reverse: {
       type: [Boolean],
       default: false,
-    },
-  },
-  computed: {
-    listItems() {
-      if (!this.list) {
-        return [];
-      }
-      // If it's already an array, return it
-      if (Array.isArray(this.list)) {
-        return this.list;
-      }
-      // If it's a string, try to parse it as JSON
-      if (typeof this.list === 'string') {
-        try {
-          // Try parsing as JSON first (handles double-quoted JSON arrays)
-          const parsed = JSON.parse(this.list);
-          return Array.isArray(parsed) ? parsed : [];
-        }
-        catch (e) {
-          // If JSON parsing fails, try to parse as a string representation of an array
-          // This handles cases like: "['item1', 'item2']" or '["item1", "item2"]'
-          try {
-            // Remove outer quotes if present (from markdown attribute)
-            let cleaned = this.list.trim();
-            if ((cleaned.startsWith('"') && cleaned.endsWith('"')) ||
-                (cleaned.startsWith("'") && cleaned.endsWith("'"))) {
-              cleaned = cleaned.slice(1, -1);
-            }
-            // Now check if it's an array representation
-            if (cleaned.startsWith('[') && cleaned.endsWith(']')) {
-              const inner = cleaned.slice(1, -1);
-              // Split by comma, but be careful with quotes
-              const items = inner.split(',').map((item) => {
-                const trimmed = item.trim();
-                // Remove surrounding quotes if present
-                if ((trimmed.startsWith("'") && trimmed.endsWith("'")) ||
-                    (trimmed.startsWith('"') && trimmed.endsWith('"'))) {
-                  return trimmed.slice(1, -1);
-                }
-                return trimmed;
-              });
-              return items.filter(item => item.length > 0);
-            }
-          }
-          catch (e2) {
-            // If all parsing fails, return empty array
-            return [];
-          }
-        }
-      }
-      return [];
     },
   },
 };
