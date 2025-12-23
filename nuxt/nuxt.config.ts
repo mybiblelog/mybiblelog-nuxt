@@ -29,6 +29,9 @@ const config: NuxtConfig = {
     titleTemplate: (titleChunk) => {
       const siteTitle = 'My Bible Log';
       if (titleChunk && titleChunk !== siteTitle) {
+        if (titleChunk.includes(siteTitle)) {
+          return titleChunk;
+        }
         return `${titleChunk} | ${siteTitle}`;
       }
       return siteTitle;
