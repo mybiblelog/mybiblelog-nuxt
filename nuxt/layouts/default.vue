@@ -6,6 +6,7 @@
     </div>
     <app-toaster />
     <pop-ups />
+    <app-achievements />
     <passage-note-editor-modal />
     <passage-note-tag-editor-modal />
     <log-entry-editor-modal />
@@ -19,6 +20,7 @@ import SiteNav from '@/components/SiteNav.vue';
 import FloatingFeedbackButton from '@/components/FloatingFeedbackButton.vue';
 import AppToaster from '@/components/AppToaster.vue';
 import PopUps from '@/components/popups/PopUps.vue';
+import AppAchievements from '~/components/popups/AppAchievements.vue';
 import PassageNoteEditorModal from '@/components/popups/PassageNoteEditorModal.vue';
 import PassageNoteTagEditorModal from '@/components/popups/PassageNoteTagEditorModal.vue';
 import LogEntryEditorModal from '@/components/popups/LogEntryEditorModal.vue';
@@ -30,6 +32,7 @@ export default {
     FloatingFeedbackButton,
     AppToaster,
     PopUps,
+    AppAchievements,
     PassageNoteEditorModal,
     PassageNoteTagEditorModal,
     LogEntryEditorModal,
