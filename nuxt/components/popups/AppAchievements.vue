@@ -4,7 +4,7 @@
       <div class="window" role="dialog">
         <div class="star-container">
           <div class="star-wrapper" :class="{ 'star-stamped': starStamped }">
-            <star-icon width="64px" height="64px" fill="#ffd700" />
+            <shimmer-star-icon width="64px" height="64px" />
           </div>
           <div
             v-for="(particle, index) in particles"
@@ -12,7 +12,7 @@
             class="particle"
             :style="particle.style"
           >
-            <star-icon width="16px" height="16px" fill="#def" />
+            <star-icon width="32px" height="32px" fill="#bdf" />
           </div>
         </div>
         <div class="title is-4">
@@ -36,11 +36,13 @@ import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import { ACHIEVEMENT } from '@/store/achievements';
 import StarIcon from '@/components/svg/StarIcon';
+import ShimmerStarIcon from '@/components/svg/ShimmerStarIcon';
 
 export default {
   name: 'AppAchievements',
   components: {
     StarIcon,
+    ShimmerStarIcon,
   },
   data() {
     return {
@@ -102,14 +104,14 @@ export default {
       this.$store.dispatch('achievements/closeAchievement');
     },
     createParticles() {
-      const particleCount = 12;
+      const particleCount = 7;
       const particles = [];
 
       for (let i = 0; i < particleCount; i++) {
         // Random angle for particle direction
         const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.5;
         // Random distance (80-120px)
-        const distance = 80 + Math.random() * 40;
+        const distance = 60 + Math.random() * 20;
         // Calculate x and y positions
         const x = Math.cos(angle) * distance;
         const y = Math.sin(angle) * distance;
@@ -218,7 +220,7 @@ export default {
   z-index: 1;
   transform: translate(-50%, -50%);
   opacity: 0;
-  animation: particle-fly 1.2s var(--delay) ease-out forwards;
+  animation: particle-fly 1s var(--delay) ease-out forwards;
 }
 
 @keyframes particle-fly {
