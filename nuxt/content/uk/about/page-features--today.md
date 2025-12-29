@@ -11,7 +11,7 @@ og:
 
 # Сторінка Сьогодення
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Скріншот сторінки Сьогодення My Bible Log" src="/screenshots/sc4-daily-goal.webp" />
 </div>
 

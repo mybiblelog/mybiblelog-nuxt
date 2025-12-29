@@ -11,7 +11,7 @@ og:
 
 # Bibelbücher-Seite
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Screenshot von My Bible Log Bibelbücher-Seite" src="/screenshots/sc7-bible-progress.webp" />
 </div>
 
@@ -26,7 +26,7 @@ Unterhalb der Fortschrittsleiste finden Sie eine Liste aller Bibelbücher. Jedes
 
 ## Individuelle Buchseiten
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Screenshot von My Bible Log individueller Buchseite" src="/screenshots/sc6-book-chapter-progress.webp" />
 </div>
 

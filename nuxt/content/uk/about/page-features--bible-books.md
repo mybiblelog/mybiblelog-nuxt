@@ -11,7 +11,7 @@ og:
 
 # Сторінка книг Біблії
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Скріншот сторінки книг Біблії My Bible Log" src="/screenshots/sc7-bible-progress.webp" />
 </div>
 
@@ -27,7 +27,7 @@ og:
 
 ## Сторінки окремих книг
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Скріншот окремої сторінки книги My Bible Log" src="/screenshots/sc6-book-chapter-progress.webp" />
 </div>
 

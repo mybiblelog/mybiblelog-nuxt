@@ -11,7 +11,7 @@ og:
 
 # Fortschrittsseite
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Screenshot der Fortschrittsseite von My Bible Log" src="/screenshots/sc13-progress.webp" />
 </div>
 

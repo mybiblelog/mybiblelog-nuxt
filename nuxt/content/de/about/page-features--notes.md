@@ -11,7 +11,7 @@ og:
 
 # Notizseite
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Screenshot der Notizseite von My Bible Log" src="/screenshots/sc10-notes.webp" />
 </div>
 
@@ -54,7 +54,7 @@ Beide Sortierreihenfolgen basieren auf dem Datum und der Uhrzeit, zu der die Not
 
 ## Tags erstellen, um Ihre Notizen zu organisieren
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Screenshot der Notiztagsseite von My Bible Log" src="/screenshots/sc11-note-tags.webp" />
 </div>
 

@@ -19,6 +19,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc4-daily-goal.webp"
+  image-alt="Додаток My Bible Log показує завершену смугу прогресу для досягнення щоденної мети читання"
+  image-container-class="phone-frame"
   title="Чому My Bible Log?"
   subtitle="Читайте Своїм Шляхом"
   description="Більшість планів читання Біблії кажуть вам <em>що</em> читати та <em>коли</em>. <strong>My Bible Log працює інакше.</strong> Ви просто реєструєте те, що вже прочитали — з проповідей, роздумів, малих груп або особистого вивчення — і все це зараховується до вашого прогресу."
@@ -26,7 +28,9 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image="/screenshots/sc2-achievements.webp"
+  image-alt="Додаток My Bible Log нагороджує золотою зіркою за читання книги Біблії"
+  image-container-class="phone-frame"
   title="Залишайтеся Послідовними Без Тиску"
   subtitle="Щоденні Цілі Читання"
   description="Встановіть щоденну мету, яка працює для вас."
@@ -37,6 +41,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc1-reading-suggestions.webp"
+  image-alt="Сторінка Сьогодні додатку My Bible Log показує кілька пропозицій для читання"
+  image-container-class="phone-frame"
   title="Завжди Знайте, Що Читати Далі"
   subtitle="Розумні Пропозиції для Читання"
   description="Зручні пропозиції допомагають вам знайти непрочитані розділи на основі того, що ви недавно зареєстрували. Ідеально, коли ви хочете читати, але не знаєте, з чого почати."
@@ -44,6 +50,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc7-bible-progress.webp"
+  image-alt="Додаток My Bible Log показує сегментовану смугу прогресу для читання всієї Біблії"
+  image-container-class="phone-frame"
   title="Бачте Свій Прогрес Одразу"
   subtitle="Відстежуйте Розділи, Книги та Всю Біблію"
   :list="['Бачте, які розділи ви прочитали', 'Переглядайте прогрес для кожної книги та всієї Біблії', 'Швидко знаходьте непрочитані розділи']"
@@ -51,6 +59,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc9-calendar.webp"
+  image-alt="Календар My Bible Log показує місяць, де багато дат отримали зірку за досягнення щоденної мети читання"
+  image-container-class="phone-frame"
   title="Створіть Звичку, на Якій Можна Роздумувати"
   subtitle="Календар Читання"
   description="Перегляньте історію свого читання та помітьте тенденції з часом."
@@ -60,7 +70,9 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc11-note-tags.webp"
+  image="/screenshots/sc10-notes.webp"
+  image-alt="Екран нотаток My Bible Log показує кілька віршів для запам'ятовування"
+  image-container-class="phone-frame"
   title="Робіть Нотатки Під Час Читання"
   subtitle="Гнучкі Нотатки для Читання Біблії"
   description="Записуйте питання, уявлення або роздуми під час вивчення. Організуйте нотатки за допомогою <strong>користувацьких тегів</strong>, щоб відповідати вашому особистому стилю вивчення — вірші для запам'ятовування, теми, питання без відповідей та інше."
@@ -68,6 +80,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc12-checklist.webp"
+  image-alt="Список перевірки розділів My Bible Log з першими чотирма розділами Об'явлення, позначеними як завершені"
+  image-container-class="phone-frame"
   title="Реєструйте Читання за Секунди"
   subtitle="Швидке Реєстрування Розділів"
   description="Не вистачає часу? Позначайте розділи як прочитані <strong>одним кліком</strong> — без необхідності введення тексту."
@@ -75,6 +89,7 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc8-install-anywhere.webp"
+  image-alt="Додаток My Bible Log працює в режимі робочого столу"
   title="Використовуйте Де Завгодно"
   subtitle="Працює Де Ви Знаходитесь"
   :list="['Використовуйте у вашому браузері', 'Встановіть як додаток на вашому телефоні, планшеті або комп\'ютері', 'Без реклами. Ніколи.', 'Безкоштовно для використання']"

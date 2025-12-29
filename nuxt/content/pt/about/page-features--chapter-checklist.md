@@ -11,7 +11,7 @@ og:
 
 # Página de Lista de Capítulos
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Captura de Tela da Página de Lista de Capítulos do My Bible Log" src="/screenshots/sc12-checklist.webp" />
 </div>
 

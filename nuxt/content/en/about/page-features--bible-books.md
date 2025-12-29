@@ -11,7 +11,7 @@ og:
 
 # Bible Books Page
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="My Bible Log Bible Books Page Screenshot" src="/screenshots/sc7-bible-progress.webp" />
 </div>
 
@@ -26,7 +26,7 @@ Below the progress bar, you'll find a list of all Bible books. Each book has:
 
 ## Individual Book Pages
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="My Bible Log Individual Book Page Screenshot" src="/screenshots/sc6-book-chapter-progress.webp" />
 </div>
 

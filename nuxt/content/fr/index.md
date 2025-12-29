@@ -19,6 +19,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc4-daily-goal.webp"
+  image-alt="L'application My Bible Log montrant une barre de progression complétée pour atteindre l'objectif de lecture quotidienne"
+  image-container-class="phone-frame"
   title="Pourquoi My Bible Log ?"
   subtitle="Lisez à Votre Façon"
   description="La plupart des plans de lecture biblique vous disent <em>quoi</em> lire et <em>quand</em>. <strong>My Bible Log fonctionne différemment.</strong> Vous enregistrez simplement ce que vous avez déjà lu — depuis des sermons, des dévotions, des petits groupes ou des études personnelles — et tout compte dans vos progrès."
@@ -26,7 +28,9 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image="/screenshots/sc2-achievements.webp"
+  image-alt="L'application My Bible Log décernant une étoile dorée pour avoir lu un livre de la Bible"
+  image-container-class="phone-frame"
   title="Restez Constant Sans Pression"
   subtitle="Objectifs de Lecture Quotidiens"
   description="Définissez un objectif quotidien qui vous convient."
@@ -37,6 +41,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc1-reading-suggestions.webp"
+  image-alt="La page Aujourd'hui de l'application My Bible Log montrant plusieurs suggestions de lecture"
+  image-container-class="phone-frame"
   title="Sachez Toujours Quoi Lire Ensuite"
   subtitle="Suggestions de Lecture Intelligentes"
   description="Des suggestions pratiques vous aident à trouver des chapitres non lus en fonction de ce que vous avez enregistré récemment. Parfait quand vous voulez lire mais ne savez pas par où commencer."
@@ -44,6 +50,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc7-bible-progress.webp"
+  image-alt="L'application My Bible Log montrant une barre de progression segmentée pour lire toute la Bible"
+  image-container-class="phone-frame"
   title="Voyez Vos Progrès en un Coup d'Œil"
   subtitle="Suivez les Chapitres, les Livres et Toute la Bible"
   :list="['Voyez quels chapitres vous avez lus', 'Consultez les progrès pour chaque livre et toute la Bible', 'Repérez rapidement les sections non lues']"
@@ -51,6 +59,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc9-calendar.webp"
+  image-alt="Le calendrier My Bible Log montrant un mois où de nombreuses dates ont gagné une étoile pour avoir atteint l'objectif de lecture quotidienne"
+  image-container-class="phone-frame"
   title="Créez une Habitude sur Laquelle Vous Pouvez Réfléchir"
   subtitle="Calendrier de Lecture"
   description="Consultez votre historique de lecture et remarquez les tendances au fil du temps."
@@ -60,7 +70,9 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc11-note-tags.webp"
+  image="/screenshots/sc10-notes.webp"
+  image-alt="L'écran de notes My Bible Log montrant plusieurs versets à mémoriser"
+  image-container-class="phone-frame"
   title="Prenez des Notes Pendant Que Vous Lisez"
   subtitle="Notes de Lecture Biblique Flexibles"
   description="Notez des questions, des idées ou des réflexions pendant que vous étudiez. Organisez vos notes avec des <strong>tags personnalisés</strong> pour correspondre à votre style d'étude personnel — versets à mémoriser, sujets, questions sans réponse, et plus encore."
@@ -68,6 +80,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc12-checklist.webp"
+  image-alt="La liste de vérification des chapitres My Bible Log avec les quatre premiers chapitres de l'Apocalypse marqués comme complétés"
+  image-container-class="phone-frame"
   title="Enregistrez la Lecture en Quelques Secondes"
   subtitle="Enregistrement Rapide de Chapitres"
   description="Manque de temps ? Marquez les chapitres comme lus avec <strong>un seul clic</strong> — aucune saisie requise."
@@ -75,6 +89,7 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc8-install-anywhere.webp"
+  image-alt="L'application My Bible Log fonctionnant en mode bureau"
   title="Utilisez-le N'importe Où"
   subtitle="Fonctionne Où Que Vous Soyez"
   :list="['Utilisez-le dans votre navigateur', 'Installez-le comme application sur votre téléphone, tablette ou ordinateur', 'Pas de publicité. Jamais.', 'Gratuit à utiliser']"

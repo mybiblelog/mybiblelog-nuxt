@@ -98,6 +98,37 @@ export default {
   // override Bulma so @nuxt/content title anchor links don't create empty space
   display: inline !important;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  clear: both;
+}
+
+// For content screenshots that look like a phone screen
+.phone-frame {
+  float: right;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+
+  padding: 14px;
+  border-radius: 24px;
+  background: #fff;
+
+  /* separation */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.04);
+
+  /* size normalization */
+  max-width: 320px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+  }
+}
 </style>
 
 <i18n lang="json">

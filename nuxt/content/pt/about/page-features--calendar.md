@@ -11,7 +11,7 @@ og:
 
 # Página do Calendário
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Captura de tela da Página de Calendário do My Bible Log" src="/screenshots/sc9-calendar.webp" />
 </div>
 

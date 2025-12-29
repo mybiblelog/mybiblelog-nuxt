@@ -207,6 +207,3 @@ Il n'inclut pas de fonctionnalités sociales, de groupe ou de partage.
 
 C'est intentionnel, aidant à promouvoir une étude personnelle ciblée et à garder My Bible Log sûr pour les utilisateurs de tous âges.
 
-
-
-

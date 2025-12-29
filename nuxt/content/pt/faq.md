@@ -207,6 +207,3 @@ Não inclui recursos sociais, de grupo ou de compartilhamento.
 
 Isso é intencional, ajudando a promover o estudo pessoal focado e manter o My Bible Log seguro para usuários de todas as idades.
 
-
-
-

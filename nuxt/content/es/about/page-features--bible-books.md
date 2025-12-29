@@ -11,7 +11,7 @@ og:
 
 # Página de Libros de la Biblia
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Captura de pantalla de la Página de Libros de la Biblia de My Bible Log" src="/screenshots/sc7-bible-progress.webp" />
 </div>
 
@@ -27,7 +27,7 @@ Como era de esperar, la página de Libros de la Biblia lista todos los libros de
 
 ## Páginas Individuales de Libros
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Captura de pantalla de la Página Individual de Libro de My Bible Log" src="/screenshots/sc6-book-chapter-progress.webp" />
 </div>
 

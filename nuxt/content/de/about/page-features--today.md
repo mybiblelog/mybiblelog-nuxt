@@ -11,7 +11,7 @@ og:
 
 # Today-Seite
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Screenshot der Today-Seite von My Bible Log" src="/screenshots/sc4-daily-goal.webp" />
 </div>
 

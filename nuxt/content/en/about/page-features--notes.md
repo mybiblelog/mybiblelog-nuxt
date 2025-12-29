@@ -11,7 +11,7 @@ og:
 
 # Notes Page
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="My Bible Log Notes Page Screenshot" src="/screenshots/sc10-notes.webp" />
 </div>
 
@@ -54,7 +54,7 @@ Both sort orders are based on the date and time the note was originally created.
 
 ## Creating Tags to Organize Your Notes
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="My Bible Log Note Tags Page Screenshot" src="/screenshots/sc11-note-tags.webp" />
 </div>
 

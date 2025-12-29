@@ -11,7 +11,7 @@ og:
 
 # Página de Notas
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Captura de tela da Página de Notas do My Bible Log" src="/screenshots/sc10-notes.webp" />
 </div>
 
@@ -54,7 +54,7 @@ Ambas as ordens de classificação são baseadas na data e hora em que a nota fo
 
 ## Criando Tags para Organizar Suas Notas
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Captura de tela da Página de Tags de Notas do My Bible Log" src="/screenshots/sc11-note-tags.webp" />
 </div>
 

@@ -11,7 +11,7 @@ og:
 
 # Сторінка нотаток
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Скріншот сторінки нотаток My Bible Log" src="/screenshots/sc10-notes.webp" />
 </div>
 
@@ -53,7 +53,7 @@ My Bible Log дозволяє вам створювати вільні нота�
 
 ## Створення тегів для організації нотаток
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Скріншот сторінки тегів нотаток My Bible Log" src="/screenshots/sc11-note-tags.webp" />
 </div>
 

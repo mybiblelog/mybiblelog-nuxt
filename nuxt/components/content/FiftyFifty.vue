@@ -2,7 +2,9 @@
   <section class="fifty-fifty-section" :class="{ 'fifty-fifty-section--reverse': reverse }">
     <div class="fifty-fifty-container content-column">
       <div class="fifty-fifty-image">
-        <img :src="image" :alt="imageAlt || title">
+        <div :class="imageContainerClass">
+          <img :src="image" :alt="imageAlt || title">
+        </div>
       </div>
       <div class="fifty-fifty-content">
         <h2 class="fifty-fifty-title" v-html="title" />
@@ -31,6 +33,10 @@ export default {
       required: true,
     },
     imageAlt: {
+      type: String,
+      default: '',
+    },
+    imageContainerClass: {
       type: String,
       default: '',
     },

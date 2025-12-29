@@ -19,6 +19,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc4-daily-goal.webp"
+  image-alt="La aplicación My Bible Log mostrando una barra de progreso completada para alcanzar el objetivo de lectura diaria"
+  image-container-class="phone-frame"
   title="¿Por qué My Bible Log?"
   subtitle="Lee a Tu Manera"
   description="La mayoría de los planes de lectura bíblica te dicen <em>qué</em> leer y <em>cuándo</em>. <strong>My Bible Log funciona de manera diferente.</strong> Simplemente registras lo que ya has leído — de sermones, devocionales, grupos pequeños o estudio personal — y todo cuenta para tu progreso."
@@ -26,7 +28,9 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image="/screenshots/sc2-achievements.webp"
+  image-alt="La aplicación My Bible Log otorgando una estrella dorada por leer un libro de la Biblia"
+  image-container-class="phone-frame"
   title="Mantente Constante Sin Presión"
   subtitle="Objetivos de Lectura Diaria"
   description="Establece un objetivo diario que funcione para ti."
@@ -37,6 +41,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc1-reading-suggestions.webp"
+  image-alt="La página Hoy de la aplicación My Bible Log mostrando varias sugerencias de lectura"
+  image-container-class="phone-frame"
   title="Siempre Sepa Qué Leer A Continuación"
   subtitle="Sugerencias Inteligentes de Lectura"
   description="Sugerencias convenientes te ayudan a encontrar capítulos no leídos basados en lo que has registrado recientemente. Perfecto cuando quieres leer pero no sabes por dónde empezar."
@@ -44,6 +50,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc7-bible-progress.webp"
+  image-alt="La aplicación My Bible Log mostrando una barra de progreso segmentada para leer toda la Biblia"
+  image-container-class="phone-frame"
   title="Ve Tu Progreso De Un Vistazo"
   subtitle="Rastrea Capítulos, Libros y Toda la Biblia"
   :list="['Ve qué capítulos has leído', 'Visualiza el progreso para cada libro y toda la Biblia', 'Identifica rápidamente secciones no leídas']"
@@ -51,6 +59,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc9-calendar.webp"
+  image-alt="El calendario My Bible Log mostrando un mes donde muchas fechas han ganado una estrella por alcanzar el objetivo de lectura diaria"
+  image-container-class="phone-frame"
   title="Crea un Hábito en el Que Puedas Reflexionar"
   subtitle="Calendario de Lectura"
   description="Revisa tu historial de lectura y nota patrones con el tiempo."
@@ -60,7 +70,9 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc11-note-tags.webp"
+  image="/screenshots/sc10-notes.webp"
+  image-alt="La pantalla de notas de My Bible Log mostrando varios versículos para memorizar"
+  image-container-class="phone-frame"
   title="Toma Notas Mientras Lees"
   subtitle="Notas Flexibles de Lectura Bíblica"
   description="Anota preguntas, ideas o reflexiones mientras estudias. Organiza notas con <strong>etiquetas personalizadas</strong> para que coincidan con tu estilo de estudio personal — versículos para memorizar, temas, preguntas sin respuesta y más."
@@ -68,6 +80,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc12-checklist.webp"
+  image-alt="La lista de verificación de capítulos de My Bible Log con los primeros cuatro capítulos de Apocalipsis marcados como completos"
+  image-container-class="phone-frame"
   title="Registra la Lectura en Segundos"
   subtitle="Registro Rápido de Capítulos"
   description="¿Poco tiempo? Marca capítulos como leídos con <strong>un solo clic</strong> — no se requiere escritura."
@@ -75,6 +89,7 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc8-install-anywhere.webp"
+  image-alt="La aplicación My Bible Log ejecutándose en modo escritorio"
   title="Úsalo En Cualquier Lugar"
   subtitle="Funciona Donde Estés"
   :list="['Úsalo en tu navegador', 'Instálalo como aplicación en tu teléfono, tableta o computadora', 'Sin anuncios. Nunca.', 'Gratis de usar']"

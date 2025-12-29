@@ -19,6 +19,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc4-daily-goal.webp"
+  image-alt="Die My Bible Log App zeigt eine abgeschlossene Fortschrittsleiste für das Erreichen des täglichen Leseziels"
+  image-container-class="phone-frame"
   title="Warum My Bible Log?"
   subtitle="Lies auf Deine Weise"
   description="Die meisten Bibellespläne sagen dir <em>was</em> du lesen sollst und <em>wann</em>. <strong>My Bible Log funktioniert anders.</strong> Du protokollierst einfach, was du bereits gelesen hast — aus Predigten, Andachten, Kleingruppen oder persönlichem Studium — und alles zählt zu deinem Fortschritt."
@@ -26,7 +28,9 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image="/screenshots/sc2-achievements.webp"
+  image-alt="Die My Bible Log App vergibt einen goldenen Stern für das Lesen eines Buches der Bibel"
+  image-container-class="phone-frame"
   title="Bleib Konsequent Ohne Druck"
   subtitle="Tägliche Leseziele"
   description="Setze ein tägliches Ziel, das für dich funktioniert."
@@ -37,6 +41,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc1-reading-suggestions.webp"
+  image-alt="Die My Bible Log App Heute-Seite zeigt mehrere Lesevorschläge"
+  image-container-class="phone-frame"
   title="Wisse Immer, Was Als Nächstes Zu Lesen Ist"
   subtitle="Intelligente Lesevorschläge"
   description="Praktische Vorschläge helfen dir, ungelesene Kapitel basierend auf dem zu finden, was du kürzlich protokolliert hast. Perfekt, wenn du lesen möchtest, aber nicht weißt, wo du anfangen sollst."
@@ -44,6 +50,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc7-bible-progress.webp"
+  image-alt="Die My Bible Log App zeigt eine segmentierte Fortschrittsleiste für das Lesen der ganzen Bibel"
+  image-container-class="phone-frame"
   title="Sieh Deinen Fortschritt Auf Einen Blick"
   subtitle="Verfolge Kapitel, Bücher und die Ganze Bibel"
   :list="['Sieh, welche Kapitel du gelesen hast', 'Betrachte den Fortschritt für jedes Buch und die gesamte Bibel', 'Erkenne schnell ungelesene Abschnitte']"
@@ -51,6 +59,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc9-calendar.webp"
+  image-alt="Der My Bible Log Kalender zeigt einen Monat, in dem viele Daten einen Stern für das Erreichen des täglichen Leseziels erhalten haben"
+  image-container-class="phone-frame"
   title="Baue Eine Gewohnheit Auf, Über Die Du Nachdenken Kannst"
   subtitle="Lese-Kalender"
   description="Überprüfe deine Lesegeschichte und bemerke Muster im Laufe der Zeit."
@@ -60,7 +70,9 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc11-note-tags.webp"
+  image="/screenshots/sc10-notes.webp"
+  image-alt="Der My Bible Log Notizen-Bildschirm zeigt mehrere Merkverse"
+  image-container-class="phone-frame"
   title="Mache Notizen Während Du Liest"
   subtitle="Flexible Bibellesenotizen"
   description="Notiere Fragen, Erkenntnisse oder Reflexionen während du studierst. Organisiere Notizen mit <strong>benutzerdefinierten Tags</strong>, um zu deinem persönlichen Studienstil zu passen — Merkverse, Themen, unbeantwortete Fragen und mehr."
@@ -68,6 +80,8 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc12-checklist.webp"
+  image-alt="Die My Bible Log Kapitel-Checkliste mit den ersten vier Kapiteln der Offenbarung als abgeschlossen markiert"
+  image-container-class="phone-frame"
   title="Protokolliere Lesen In Sekunden"
   subtitle="Schnelle Kapitelprotokollierung"
   description="Kurz an Zeit? Markiere Kapitel als gelesen mit <strong>einem einzigen Klick</strong> — keine Eingabe erforderlich."
@@ -75,6 +89,7 @@ ld_json:
 
 <content-fifty-fifty
   image="/screenshots/sc8-install-anywhere.webp"
+  image-alt="Die My Bible Log App läuft im Desktop-Modus"
   title="Verwende Es Überall"
   subtitle="Funktioniert Wo Immer Du Bist"
   :list="['Verwende es in deinem Browser', 'Installiere es als App auf deinem Telefon, Tablet oder Desktop', 'Keine Werbung. Niemals.', 'Kostenlos zu verwenden']"

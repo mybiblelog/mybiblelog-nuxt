@@ -11,7 +11,7 @@ og:
 
 # Página de Progresso
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Captura de Tela da Página de Progresso do My Bible Log" src="/screenshots/sc13-progress.webp" />
 </div>
 

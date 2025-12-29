@@ -11,7 +11,7 @@ og:
 
 # Сторінка переліку глав
 
-<div style="width: 50%; float: right; margin: 1rem">
+<div class="phone-frame">
   <img alt="Скріншот сторінки переліку глав My Bible Log" src="/screenshots/sc12-checklist.webp" />
 </div>
 
