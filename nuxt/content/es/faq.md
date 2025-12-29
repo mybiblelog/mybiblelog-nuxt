@@ -206,4 +206,3 @@ My Bible Log está actualmente diseñado para **lectura y estudio bíblico perso
 No incluye funciones sociales, grupales o de compartir.
 
 Esto es intencional, ayudando a promover el estudio personal enfocado y mantener My Bible Log seguro para usuarios de todas las edades.
-
