@@ -11,8 +11,8 @@ og:
 
 # Chapter Checklist Page
 
-<div style="width: 50%; float: right; margin: 1rem">
-  <img alt="My Bible Log Chapter Checklist Page Screenshot" src="/screenshots/sc12-checklist.jpg" />
+<div class="phone-frame">
+  <img alt="My Bible Log Chapter Checklist Page Screenshot" src="/screenshots/sc12-checklist.webp" />
 </div>
 
 The Chapter Checklist page is the simplest and fastest way to track your reading, as it allows you to mark a chapter as "read" with a single click or tap.

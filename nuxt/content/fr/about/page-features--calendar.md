@@ -11,8 +11,8 @@ og:
 
 # Page du calendrier
 
-<div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Capture d'écran de la page du calendrier de My Bible Log" src="/screenshots/sc9-calendar.jpg" />
+<div class="phone-frame">
+  <img alt="Capture d'écran de la page du calendrier de My Bible Log" src="/screenshots/sc9-calendar.webp" />
 </div>
 
 La page du calendrier présente un calendrier de vos lectures bibliques au fil du temps.

@@ -11,8 +11,8 @@ og:
 
 # Página de Lista de Capítulos
 
-<div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Captura de pantalla de la Página de Lista de Capítulos de My Bible Log" src="/screenshots/sc12-checklist.jpg" />
+<div class="phone-frame">
+  <img alt="Captura de pantalla de la Página de Lista de Capítulos de My Bible Log" src="/screenshots/sc12-checklist.webp" />
 </div>
 
 La página de Lista de Capítulos es la forma más sencilla y rápida de realizar un seguimiento de tu lectura, ya que te permite marcar un capítulo como "leído" con un solo clic o toque.

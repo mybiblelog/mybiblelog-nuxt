@@ -11,8 +11,8 @@ og:
 
 # Kapitellisten-Seite
 
-<div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Screenshot der Kapitellisten-Seite von My Bible Log" src="/screenshots/sc12-checklist.jpg" />
+<div class="phone-frame">
+  <img alt="Screenshot der Kapitellisten-Seite von My Bible Log" src="/screenshots/sc12-checklist.webp" />
 </div>
 
 Die Kapitellisten-Seite ist der einfachste und schnellste Weg, um Ihr Lesen zu verfolgen, da Sie ein Kapitel mit einem einzigen Klick oder Tippen als "gelesen" markieren können.

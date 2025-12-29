@@ -11,8 +11,8 @@ og:
 
 # Сторінка переліку глав
 
-<div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Скріншот сторінки переліку глав My Bible Log" src="/screenshots/sc12-checklist.jpg" />
+<div class="phone-frame">
+  <img alt="Скріншот сторінки переліку глав My Bible Log" src="/screenshots/sc12-checklist.webp" />
 </div>
 
 Сторінка переліку глав - це найпростіший та найшвидший спосіб відстежити своє читання, оскільки вона дозволяє вам позначити розділ як "прочитаний" одним кліком або натисканням.
