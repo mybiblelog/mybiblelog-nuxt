@@ -207,3 +207,6 @@ Es enthält keine sozialen, Gruppen- oder Freigabefunktionen.
 
 Dies ist beabsichtigt und hilft, fokussiertes persönliches Studium zu fördern und My Bible Log für Benutzer aller Altersgruppen sicher zu halten.
 
+
+
+

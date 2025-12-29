@@ -12,7 +12,7 @@ og:
 # Página de Notas
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Captura de tela da Página de Notas do My Bible Log" src="/screenshots/sc10-notes.jpg" />
+  <img alt="Captura de tela da Página de Notas do My Bible Log" src="/screenshots/sc10-notes.webp" />
 </div>
 
 O My Bible Log permite que você faça anotações livres para coletar, organizar e processar enquanto lê.
@@ -55,7 +55,7 @@ Ambas as ordens de classificação são baseadas na data e hora em que a nota fo
 ## Criando Tags para Organizar Suas Notas
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Captura de tela da Página de Tags de Notas do My Bible Log" src="/screenshots/sc11-note-tags.jpg" />
+  <img alt="Captura de tela da Página de Tags de Notas do My Bible Log" src="/screenshots/sc11-note-tags.webp" />
 </div>
 
 Para acessar a página de Tags e trabalhar com suas próprias tags personalizadas, clique no botão "Tags" na página de Notas.

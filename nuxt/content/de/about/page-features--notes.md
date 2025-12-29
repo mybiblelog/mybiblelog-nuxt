@@ -12,7 +12,7 @@ og:
 # Notizseite
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Screenshot der Notizseite von My Bible Log" src="/screenshots/sc10-notes.jpg" />
+  <img alt="Screenshot der Notizseite von My Bible Log" src="/screenshots/sc10-notes.webp" />
 </div>
 
 My Bible Log ermöglicht es Ihnen, freie Notizen zu erstellen, zu organisieren und zu verarbeiten, während Sie lesen.
@@ -55,7 +55,7 @@ Beide Sortierreihenfolgen basieren auf dem Datum und der Uhrzeit, zu der die Not
 ## Tags erstellen, um Ihre Notizen zu organisieren
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Screenshot der Notiztagsseite von My Bible Log" src="/screenshots/sc11-note-tags.jpg" />
+  <img alt="Screenshot der Notiztagsseite von My Bible Log" src="/screenshots/sc11-note-tags.webp" />
 </div>
 
 Um zur Tags-Seite zu gelangen und mit Ihren eigenen individuellen Tags zu arbeiten, klicken Sie auf den Button "Tags" auf der Notizseite.

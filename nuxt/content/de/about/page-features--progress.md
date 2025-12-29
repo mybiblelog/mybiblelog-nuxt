@@ -12,7 +12,7 @@ og:
 # Fortschrittsseite
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Screenshot der Fortschrittsseite von My Bible Log" src="/screenshots/sc13-progress.jpg" />
+  <img alt="Screenshot der Fortschrittsseite von My Bible Log" src="/screenshots/sc13-progress.webp" />
 </div>
 
 Die Fortschrittsseite kann erreicht werden, indem man zur Bibelbücherseite geht und oben auf die Schaltfläche "Fortschritt" klickt.

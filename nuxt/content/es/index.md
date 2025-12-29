@@ -18,7 +18,7 @@ ld_json:
   cta-note="Regístrate con correo electrónico o Google"></content-page-hero>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.jpg"
+  image="/screenshots/sc4-daily-goal.webp"
   title="¿Por qué My Bible Log?"
   subtitle="Lee a Tu Manera"
   description="La mayoría de los planes de lectura bíblica te dicen <em>qué</em> leer y <em>cuándo</em>. <strong>My Bible Log funciona de manera diferente.</strong> Simplemente registras lo que ya has leído — de sermones, devocionales, grupos pequeños o estudio personal — y todo cuenta para tu progreso."
@@ -26,7 +26,7 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.jpg"
+  image="/screenshots/sc4-daily-goal.webp"
   title="Mantente Constante Sin Presión"
   subtitle="Objetivos de Lectura Diaria"
   description="Establece un objetivo diario que funcione para ti."
@@ -36,21 +36,21 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc1-reading-suggestions.jpg"
+  image="/screenshots/sc1-reading-suggestions.webp"
   title="Siempre Sepa Qué Leer A Continuación"
   subtitle="Sugerencias Inteligentes de Lectura"
   description="Sugerencias convenientes te ayudan a encontrar capítulos no leídos basados en lo que has registrado recientemente. Perfecto cuando quieres leer pero no sabes por dónde empezar."
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc7-bible-progress.jpg"
+  image="/screenshots/sc7-bible-progress.webp"
   title="Ve Tu Progreso De Un Vistazo"
   subtitle="Rastrea Capítulos, Libros y Toda la Biblia"
   :list="['Ve qué capítulos has leído', 'Visualiza el progreso para cada libro y toda la Biblia', 'Identifica rápidamente secciones no leídas']"
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc9-calendar.jpg"
+  image="/screenshots/sc9-calendar.webp"
   title="Crea un Hábito en el Que Puedas Reflexionar"
   subtitle="Calendario de Lectura"
   description="Revisa tu historial de lectura y nota patrones con el tiempo."
@@ -60,21 +60,21 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc11-note-tags.jpg"
+  image="/screenshots/sc11-note-tags.webp"
   title="Toma Notas Mientras Lees"
   subtitle="Notas Flexibles de Lectura Bíblica"
   description="Anota preguntas, ideas o reflexiones mientras estudias. Organiza notas con <strong>etiquetas personalizadas</strong> para que coincidan con tu estilo de estudio personal — versículos para memorizar, temas, preguntas sin respuesta y más."
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc12-checklist.jpg"
+  image="/screenshots/sc12-checklist.webp"
   title="Registra la Lectura en Segundos"
   subtitle="Registro Rápido de Capítulos"
   description="¿Poco tiempo? Marca capítulos como leídos con <strong>un solo clic</strong> — no se requiere escritura."
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc8-install-anywhere.jpg"
+  image="/screenshots/sc8-install-anywhere.webp"
   title="Úsalo En Cualquier Lugar"
   subtitle="Funciona Donde Estés"
   :list="['Úsalo en tu navegador', 'Instálalo como aplicación en tu teléfono, tableta o computadora', 'Sin anuncios. Nunca.', 'Gratis de usar']"

@@ -12,7 +12,7 @@ og:
 # Página de Progresso
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Captura de Tela da Página de Progresso do My Bible Log" src="/screenshots/sc13-progress.jpg" />
+  <img alt="Captura de Tela da Página de Progresso do My Bible Log" src="/screenshots/sc13-progress.webp" />
 </div>
 
 A página de Progresso pode ser acessada indo para a página dos Livros da Bíblia e clicando no botão "Progresso" no topo.

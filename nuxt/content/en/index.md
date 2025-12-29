@@ -18,7 +18,7 @@ ld_json:
   cta-note="Sign up with email or Google"></content-page-hero>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.jpg"
+  image="/screenshots/sc4-daily-goal.webp"
   title="Why My Bible Log?"
   subtitle="Read Your Way"
   description="Most Bible reading plans tell you <em>what</em> to read and <em>when</em>. <strong>My Bible Log works differently.</strong> You simply log what you've already read — from sermons, devotionals, small groups, or personal study — and it all counts toward your progress."
@@ -26,7 +26,7 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.jpg"
+  image="/screenshots/sc4-daily-goal.webp"
   title="Stay Consistent Without Pressure"
   subtitle="Daily Reading Goals"
   description="Set a daily goal that works for you."
@@ -36,21 +36,21 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc1-reading-suggestions.jpg"
+  image="/screenshots/sc1-reading-suggestions.webp"
   title="Always Know What to Read Next"
   subtitle="Smart Reading Suggestions"
   description="Convenient suggestions help you find unread chapters based on what you've logged recently. Perfect when you want to read but don't know where to start."
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc7-bible-progress.jpg"
+  image="/screenshots/sc7-bible-progress.webp"
   title="See Your Progress at a Glance"
   subtitle="Track Chapters, Books, and the Whole Bible"
   :list="['See which chapters you\'ve read', 'View progress for each book and the entire Bible', 'Quickly spot unread sections']"
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc9-calendar.jpg"
+  image="/screenshots/sc9-calendar.webp"
   title="Build a Habit You Can Reflect On"
   subtitle="Reading Calendar"
   description="Review your reading history and notice patterns over time."
@@ -60,21 +60,21 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc11-note-tags.jpg"
+  image="/screenshots/sc11-note-tags.webp"
   title="Take Notes as You Read"
   subtitle="Flexible Bible Reading Notes"
   description="Write down questions, insights, or reflections as you study. Organize notes with <strong>custom tags</strong> to match your personal study style — memory verses, topics, unanswered questions, and more."
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc12-checklist.jpg"
+  image="/screenshots/sc12-checklist.webp"
   title="Log Reading in Seconds"
   subtitle="Quick Chapter Logging"
   description="Short on time? Mark chapters as read with <strong>a single click</strong> — no typing required."
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc8-install-anywhere.jpg"
+  image="/screenshots/sc8-install-anywhere.webp"
   title="Use It Anywhere"
   subtitle="Works Wherever You Do"
   :list="['Use it in your browser', 'Install it as an app on your phone, tablet, or desktop', 'No ads. Ever.', 'Free to use']"

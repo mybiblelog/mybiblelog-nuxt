@@ -12,7 +12,7 @@ og:
 # Today Page
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="My Bible Log Today Page Screenshot" src="/screenshots/sc4-daily-goal.jpg" />
+  <img alt="My Bible Log Today Page Screenshot" src="/screenshots/sc4-daily-goal.webp" />
 </div>
 
 The Today page helps you track your daily Bible reading progress. At the top, you'll see a progress bar showing how close you are to meeting your daily goal. For example, if your goal is 86 verses, the bar will be full once you've read 86 verses today.

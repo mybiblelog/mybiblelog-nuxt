@@ -72,11 +72,11 @@ export default {
           softwareVersion: '1.0',
           url: this.$config.siteUrl,
           screenshot: [
-            `${this.$config.siteUrl}/screenshots/sc7-bible-progress.jpg`,
-            `${this.$config.siteUrl}/screenshots/sc12-checklist.jpg`,
-            `${this.$config.siteUrl}/screenshots/sc10-notes.jpg`,
-            `${this.$config.siteUrl}/screenshots/sc9-calendar.jpg`,
-            `${this.$config.siteUrl}/screenshots/sc4-daily-goal.jpg`,
+            `${this.$config.siteUrl}/screenshots/sc7-bible-progress.webp`,
+            `${this.$config.siteUrl}/screenshots/sc12-checklist.webp`,
+            `${this.$config.siteUrl}/screenshots/sc10-notes.webp`,
+            `${this.$config.siteUrl}/screenshots/sc9-calendar.webp`,
+            `${this.$config.siteUrl}/screenshots/sc4-daily-goal.webp`,
           ],
           offers: {
             '@type': 'Offer',

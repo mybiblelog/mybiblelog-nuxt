@@ -12,7 +12,7 @@ og:
 # Página de Livros da Bíblia
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Captura de Tela da Página de Livros da Bíblia do My Bible Log" src="/screenshots/sc7-bible-progress.jpg" />
+  <img alt="Captura de Tela da Página de Livros da Bíblia do My Bible Log" src="/screenshots/sc7-bible-progress.webp" />
 </div>
 
 A página de Livros da Bíblia ajuda você a acompanhar seu progresso de leitura por toda a Bíblia. No topo, você verá uma barra de progresso visual que mostra quais partes da Bíblia você leu. Ao contrário de uma simples barra de progresso da esquerda para a direita, esta preenche exatamente onde você leu - seja no início, meio ou final da Bíblia.
@@ -27,7 +27,7 @@ Abaixo da barra de progresso, você encontrará uma lista de todos os livros da 
 ## Páginas Individuais dos Livros
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Captura de Tela da Página de Livros Individual do My Bible Log" src="/screenshots/sc6-book-chapter-progress.jpg" />
+  <img alt="Captura de Tela da Página de Livros Individual do My Bible Log" src="/screenshots/sc6-book-chapter-progress.webp" />
 </div>
 
 Clique em qualquer livro para ver sua página detalhada de progresso. Aqui você encontrará:

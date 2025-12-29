@@ -12,7 +12,7 @@ og:
 # Página del Calendario
 
 <div style="width: 50%; float: right; margin: 1rem">
-  <img alt="Captura de pantalla de la Página del Calendario de My Bible Log" src="/screenshots/sc9-calendar.jpg" />
+  <img alt="Captura de pantalla de la Página del Calendario de My Bible Log" src="/screenshots/sc9-calendar.webp" />
 </div>
 
 La página del Calendario presenta un calendario de tu lectura bíblica a lo largo del tiempo.
