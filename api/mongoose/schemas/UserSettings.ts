@@ -1,5 +1,5 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import { SimpleDate, BibleVersions, LocaleCode, getLocaleCodes, defaultLocaleBibleVersions } from '@mybiblelog/shared';
+import mongoose, { Schema } from 'mongoose';
+import { SimpleDate, BibleVersions, getLocaleCodes, defaultLocaleBibleVersions } from '@mybiblelog/shared';
 
 const siteLocales = getLocaleCodes();
 

@@ -15,7 +15,6 @@ import { InternalError } from './router/errors/internal-error';
 import { NotFoundError } from './router/errors/http-errors';
 
 const isProduction = config.nodeEnv === 'production';
-const isTesting = config.nodeEnv === 'test';
 
 const buildApp = (): express.Application => {
   const app = express();

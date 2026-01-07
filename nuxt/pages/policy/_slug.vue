@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  async asyncData({ $content, params, redirect, app, error }) {
+  async asyncData({ $content, params, app, error }) {
     try {
       const doc = await $content(app.i18n.locale, 'policy', params.slug).fetch();
       return { doc };

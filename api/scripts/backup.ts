@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import fs from 'node:fs';
 import path from 'node:path';
 import useMongooseModels, { closeConnection } from '../mongoose/useMongooseModels';

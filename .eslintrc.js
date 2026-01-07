@@ -105,6 +105,10 @@ module.exports = {
     ],
     'no-unused-vars': [
       'warn',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
     ],
     strict: [
       'warn',
@@ -120,7 +124,13 @@ module.exports = {
       rules: {
         // TypeScript handles unused vars, so disable the base rule
         'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': 'warn',
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_',
+          },
+        ],
       },
     },
   ],
