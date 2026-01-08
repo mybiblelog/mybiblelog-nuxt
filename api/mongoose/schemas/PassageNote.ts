@@ -7,7 +7,7 @@ const PassageSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: Bible.verseExists,
-      message: props => `${props.value} is not a valid verse`,
+      message: (props) => `${props.value} is not a valid verse`,
     },
   },
   endVerseId: {
@@ -15,12 +15,12 @@ const PassageSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: Bible.verseExists,
-      message: props => `${props.value} is not a valid verse`,
+      message: (props) => `${props.value} is not a valid verse`,
     },
   },
 }, { timestamps: false });
 
-PassageSchema.pre('validate', async function () {
+PassageSchema.pre('validate', async function() {
   if (!Bible.validateRange(this.startVerseId, this.endVerseId)) {
     throw new Error('Invalid Verse Range');
   }
@@ -55,7 +55,7 @@ export const PassageNoteSchema = new mongoose.Schema({
   },
 });
 
-PassageNoteSchema.pre('validate', async function () {
+PassageNoteSchema.pre('validate', async function() {
   if (!this.content.length && !this.passages.length) {
     throw new Error('One of `passages` or `content` required');
   }

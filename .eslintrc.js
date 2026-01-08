@@ -52,10 +52,6 @@ module.exports = {
         allowMultiplePropertiesPerLine: true,
       },
     ],
-    'operator-linebreak': [
-      'error',
-      'after',
-    ],
     'block-spacing': [
       'error',
     ],
@@ -93,6 +89,14 @@ module.exports = {
     'keyword-spacing': [
       'error',
     ],
+    'key-spacing': [
+      'error',
+      {
+        beforeColon: false,
+        afterColon: true,
+        mode: 'strict',
+      },
+    ],
     'no-console': [
       'warn',
     ],
@@ -107,4 +111,17 @@ module.exports = {
       'global',
     ],
   },
+  overrides: [
+    {
+      files: ['**/*.ts'],
+      parser: '@typescript-eslint/parser',
+      plugins: ['@typescript-eslint'],
+      extends: ['plugin:@typescript-eslint/recommended'],
+      rules: {
+        // TypeScript handles unused vars, so disable the base rule
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': 'warn',
+      },
+    },
+  ],
 };

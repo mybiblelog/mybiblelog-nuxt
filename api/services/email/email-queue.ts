@@ -18,13 +18,15 @@ export function createQueue<T>(sendFn: (job: T) => Promise<void>): { enqueue: (j
       try {
         await sendFn(job);
         console.log('Email queued successfully');
-      } catch (err) {
+      }
+      catch (err) {
         if (err.statusCode === 429) {
           console.warn('Email provider throttled — retrying in 2s');
           await sleep(2000);
           queue.unshift(job);
           continue;
-        } else {
+        }
+        else {
           console.error('Email failed permanently:', err);
         }
       }

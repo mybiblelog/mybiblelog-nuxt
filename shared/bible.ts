@@ -8,7 +8,7 @@ import chapterVerses from './static/chapter-verses/nasb';
  */
 function createSortedIndices<T>(array: ReadonlyArray<Readonly<T>>, compareFn: (a: T, b: T) => number): number[] {
   return Array.from(array.keys()).sort((a, b) =>
-    compareFn(array[a], array[b])
+    compareFn(array[a], array[b]),
   );
 }
 
@@ -54,7 +54,7 @@ const getChapterVerses = () => chapterVerses;
 const getBookCount = (): number => Bible.getBooks().length;
 
 const getBookChapterCount = (bookIndex: number): number => {
-  const targetBook = bibleBooks.find(b => b.bibleOrder === bookIndex);
+  const targetBook = bibleBooks.find((b) => b.bibleOrder === bookIndex);
   if (!targetBook) { return 0; }
   return targetBook.chapterCount;
 };
@@ -66,7 +66,7 @@ const getChapterVerseCount = (bookIndex: number, chapterIndex: number): number =
 };
 
 const getBookName = (bookIndex: number, lang: string = 'en'): string => {
-  const targetBook = bibleBooks.find(b => b.bibleOrder === bookIndex);
+  const targetBook = bibleBooks.find((b) => b.bibleOrder === bookIndex);
   if (!targetBook) { return ''; }
   return targetBook.locales[lang].name;
 };
@@ -75,7 +75,7 @@ const getBookIndex = (bookName: string, lang: string = 'en'): number => {
   const caseInsensitive = bookName.toLocaleLowerCase();
   const targetBook = bibleBooks.find((b) => {
     if (b.locales[lang].name.toLocaleLowerCase() === caseInsensitive) { return true; }
-    const insensitiveAbbreviations = b.locales[lang].abbreviations.map(a => a.toLocaleLowerCase());
+    const insensitiveAbbreviations = b.locales[lang].abbreviations.map((a) => a.toLocaleLowerCase());
     if (insensitiveAbbreviations.includes(caseInsensitive)) { return true; }
     return false;
   });
@@ -556,7 +556,7 @@ const generateSegments = (firstVerseId: VerseId, finalVerseId: VerseId, ranges: 
       const unreadStartVerseId = Bible.getNextVerseId(lastReadVerseId, true);
       if (range.startVerseId !== unreadStartVerseId) {
         const unreadRanges = Bible.getRangesBetweenVerseIds(lastReadVerseId, range.startVerseId);
-        const unreadSegments = unreadRanges.map(range => ({
+        const unreadSegments = unreadRanges.map((range) => ({
           startVerseId: range.startVerseId,
           endVerseId: range.endVerseId,
           read: false,

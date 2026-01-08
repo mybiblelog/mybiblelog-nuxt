@@ -64,9 +64,9 @@ router.get('/sitemap.xml', (req, res, next) => {
     '/downloads/rastreador-de-leitura-da-biblia-para-imprimir.pdf',
   );
 
-  const urls = relativeUrls.map(url => config.siteUrl + url);
+  const urls = relativeUrls.map((url) => config.siteUrl + url);
 
-  const sitemapItems = urls.map(url => ({
+  const sitemapItems = urls.map((url) => ({
     url: [
       { loc: url },
       { lastmod: new Date().toISOString().split('T')[0] },

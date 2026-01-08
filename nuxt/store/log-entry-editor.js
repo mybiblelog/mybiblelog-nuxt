@@ -148,9 +148,9 @@ export const actions = {
   // Action to select start verse - includes auto-fill logic
   selectStartVerse({ commit, state }, verseIndex) {
     const bookIndex = state.logEntry.book;
-    const startChapter = state.logEntry.startVerseId ?
-      Bible.parseVerseId(state.logEntry.startVerseId).chapter :
-      0;
+    const startChapter = state.logEntry.startVerseId
+      ? Bible.parseVerseId(state.logEntry.startVerseId).chapter
+      : 0;
 
     if (!bookIndex || bookIndex === 0 || !startChapter || startChapter === 0) { return; }
 
@@ -179,12 +179,12 @@ export const actions = {
   // Action to select end chapter - includes auto-fill logic
   selectEndChapter({ commit, state }, chapterIndex) {
     const bookIndex = state.logEntry.book;
-    const startChapter = state.logEntry.startVerseId ?
-      Bible.parseVerseId(state.logEntry.startVerseId).chapter :
-      0;
-    const startVerse = state.logEntry.startVerseId ?
-      Bible.parseVerseId(state.logEntry.startVerseId).verse :
-      1;
+    const startChapter = state.logEntry.startVerseId
+      ? Bible.parseVerseId(state.logEntry.startVerseId).chapter
+      : 0;
+    const startVerse = state.logEntry.startVerseId
+      ? Bible.parseVerseId(state.logEntry.startVerseId).verse
+      : 1;
 
     if (!bookIndex || bookIndex === 0) { return; }
 
@@ -203,9 +203,9 @@ export const actions = {
   // Action to select end verse
   selectEndVerse({ commit, state }, verseIndex) {
     const bookIndex = state.logEntry.book;
-    const endChapter = state.logEntry.endVerseId ?
-      Bible.parseVerseId(state.logEntry.endVerseId).chapter :
-      0;
+    const endChapter = state.logEntry.endVerseId
+      ? Bible.parseVerseId(state.logEntry.endVerseId).chapter
+      : 0;
 
     if (!bookIndex || bookIndex === 0 || !endChapter || endChapter === 0) { return; }
 

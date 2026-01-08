@@ -150,7 +150,7 @@ const config: NuxtConfig = {
     requireEmailVerification: process.env.REQUIRE_EMAIL_VERIFICATION !== 'false',
     googleAnalytics4MeasurementId: process.env.GA_MEASUREMENT_ID,
     // We only use the LocaleObject type, but check for string to appease the type checker
-    locales: i18nConfig.locales?.map((locale) => typeof locale === 'string' ? locale : locale.code) || [],
+    locales: i18nConfig.locales?.map(locale => typeof locale === 'string' ? locale : locale.code) || [],
   },
   pwa: {
     manifest: {

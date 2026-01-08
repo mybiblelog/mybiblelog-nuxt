@@ -1,10 +1,10 @@
-const setBrowserCache = (key: string, value: any, expirationInMinutes: number) => {
+const setBrowserCache = (key: string, value: string, expirationInMinutes: number) => {
   if (typeof window === 'undefined') {
     return;
   }
 
   const now = new Date();
-  const item = {
+  const item: { value: string, expiration: number } = {
     value,
     expiration: now.getTime() + expirationInMinutes * 60000,
   };

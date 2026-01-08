@@ -8,14 +8,14 @@ const tag2 = { label: 'Application', color: '#00FF00', description: 'Practical a
 // Helper function to create tags
 async function createPassageNoteTags(testUser, tags) {
   const tagResponses = await Promise.all(
-    tags.map(tag =>
+    tags.map((tag) =>
       requestApi
         .post('/api/passage-note-tags')
         .set('Authorization', `Bearer ${testUser.token}`)
         .send(tag),
     ),
   );
-  return tagResponses.map(response => response.body.data);
+  return tagResponses.map((response) => response.body.data);
 }
 
 // Test data with tag IDs (to be populated during test setup)

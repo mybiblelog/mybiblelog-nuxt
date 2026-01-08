@@ -118,9 +118,9 @@ const buildApp = (): express.Application => {
   // Handle any other errors
   const apiRouterErrorHandler = (err, req, res, next) => {
     const error =
-      err instanceof AppError
-      ? err
-      : new InternalError();
+      err instanceof AppError ?
+        err :
+        new InternalError();
 
     const body: ApiResponse = {
       error: {

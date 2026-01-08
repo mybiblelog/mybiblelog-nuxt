@@ -71,7 +71,8 @@ const main = async (): Promise<void> => {
                 const percentage = ((documentCount / totalCount) * 100).toFixed(1);
                 console.log(`  Progress: ${documentCount}/${totalCount} (${percentage}%)`);
               }
-            } catch (error) {
+            }
+            catch (error) {
               cursor.destroy();
               reject(new Error(`Error writing ${modelName} document: ${error instanceof Error ? error.message : String(error)}`));
             }
@@ -90,7 +91,8 @@ const main = async (): Promise<void> => {
     console.log('\nClosing database connection...');
     await closeConnection();
     console.log('✓ Backup complete.');
-  } catch (error) {
+  }
+  catch (error) {
     console.error('\n✗ Backup failed:', error instanceof Error ? error.message : String(error));
 
     // Attempt cleanup on error
@@ -99,14 +101,16 @@ const main = async (): Promise<void> => {
         console.log('Cleaning up backup directory...');
         fs.rmSync(backupDir, { recursive: true, force: true });
       }
-    } catch (cleanupError) {
+    }
+    catch (cleanupError) {
       console.error('Warning: Failed to cleanup backup directory:', cleanupError instanceof Error ? cleanupError.message : String(cleanupError));
     }
 
     // Close connection if still open
     try {
       await closeConnection();
-    } catch (closeError) {
+    }
+    catch (closeError) {
       // Ignore close errors during error handling
     }
 

@@ -30,7 +30,7 @@ const clearOldRequests = (windowMs: number) => {
   const currentTime = Date.now();
   const windowStart = currentTime - windowMs;
   for (const key in rateLimitStore) {
-    rateLimitStore[key] = rateLimitStore[key].filter(requestTime => requestTime >= windowStart);
+    rateLimitStore[key] = rateLimitStore[key].filter((requestTime) => requestTime >= windowStart);
     if (rateLimitStore[key].length === 0) {
       delete rateLimitStore[key];
     }
@@ -59,7 +59,7 @@ const rateLimit = (
   // filter out requests older than the window first
   const currentTime = Date.now();
   const windowStart = currentTime - windowMs;
-  rateLimitStore[key] = rateLimitStore[key].filter(requestTime => requestTime >= windowStart);
+  rateLimitStore[key] = rateLimitStore[key].filter((requestTime) => requestTime >= windowStart);
 
   // check if the limit is exceeded before adding the current request
   if (rateLimitStore[key].length >= maxRequests) {

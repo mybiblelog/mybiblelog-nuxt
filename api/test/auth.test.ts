@@ -340,7 +340,7 @@ describe('Auth routes', () => {
         .post('/api/auth/reset-password')
         .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
         .send({
-          email: testUser.email
+          email: testUser.email,
         });
       expect(response.statusCode).toBe(200);
       expect(response.body).toHaveProperty('data');
@@ -358,7 +358,7 @@ describe('Auth routes', () => {
       const response = await requestApi
         .post('/api/auth/reset-password')
         .send({
-          email: testUser.email
+          email: testUser.email,
         });
       expect(response.statusCode).toBe(200);
       expect(response.body).toHaveProperty('data');
@@ -373,7 +373,7 @@ describe('Auth routes', () => {
         .post('/api/auth/reset-password')
         .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
         .send({
-          email: 'invalid-email'
+          email: 'invalid-email',
         });
       expect(response.statusCode).toBe(404);
       expect(response.body).toHaveProperty('error');

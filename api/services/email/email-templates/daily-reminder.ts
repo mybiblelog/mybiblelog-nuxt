@@ -1,10 +1,10 @@
-import { LocaleCode } from "@shared/dist/i18n";
+import { LocaleCode } from '@shared/dist/i18n';
 
 const translations = {
   de: {
     my_bible_log: 'My Bible Log',
     this_is_your_reminder: 'Dies ist Ihr täglicher Erinnerungs-E-Mail von My Bible Log.',
-    you_can_update_preferences: settingsLink => `Sie können Ihre Erinnerungseinstellungen <a href="${settingsLink}">hier</a> aktualisieren.`,
+    you_can_update_preferences: (settingsLink) => `Sie können Ihre Erinnerungseinstellungen <a href="${settingsLink}">hier</a> aktualisieren.`,
     open_my_bible_log: 'My Bible Log öffnen',
     most_recent_log_entries: 'Letzte Einträge im Journal',
     no_log_entries_found: 'Keine Einträge im Journal gefunden. Zeit, loszulegen!',
@@ -15,7 +15,7 @@ const translations = {
   en: {
     my_bible_log: 'My Bible Log',
     this_is_your_reminder: 'This is your daily reminder email from My Bible Log.',
-    you_can_update_preferences: settingsLink => `You can update your reminder preferences <a href="${settingsLink}">here</a>.`,
+    you_can_update_preferences: (settingsLink) => `You can update your reminder preferences <a href="${settingsLink}">here</a>.`,
     open_my_bible_log: 'Open My Bible Log',
     most_recent_log_entries: 'Most Recent Log Entries',
     no_log_entries_found: 'No log entries found. Time to start reading!',
@@ -26,7 +26,7 @@ const translations = {
   es: {
     my_bible_log: 'My Bible Log',
     this_is_your_reminder: 'Este es tu correo electrónico de recordatorio diario de My Bible Log.',
-    you_can_update_preferences: settingsLink => `Puedes actualizar tus preferencias de recordatorio <a href="${settingsLink}">aquí</a>.`,
+    you_can_update_preferences: (settingsLink) => `Puedes actualizar tus preferencias de recordatorio <a href="${settingsLink}">aquí</a>.`,
     open_my_bible_log: 'Abrir My Bible Log',
     most_recent_log_entries: 'Entradas más recientes del registro',
     no_log_entries_found: 'No se encontraron entradas en el registro. ¡Tiempo de empezar a leer!',
@@ -37,7 +37,7 @@ const translations = {
   fr: {
     my_bible_log: 'My Bible Log',
     this_is_your_reminder: 'Voici votre e-mail de rappel quotidien de My Bible Log.',
-    you_can_update_preferences: settingsLink => `Vous pouvez modifier vos préférences de rappel <a href="${settingsLink}">ici</a>.`,
+    you_can_update_preferences: (settingsLink) => `Vous pouvez modifier vos préférences de rappel <a href="${settingsLink}">ici</a>.`,
     open_my_bible_log: 'Ouvrir My Bible Log',
     most_recent_log_entries: 'Dernières entrées du journal',
     no_log_entries_found: 'Aucune entrée trouvée dans le journal. Il est temps de commencer à lire!',
@@ -48,7 +48,7 @@ const translations = {
   pt: {
     my_bible_log: 'My Bible Log',
     this_is_your_reminder: 'Este é seu e-mail de lembrete diário do My Bible Log.',
-    you_can_update_preferences: settingsLink => `Você pode atualizar suas preferências de lembrete <a href="${settingsLink}">aqui</a>.`,
+    you_can_update_preferences: (settingsLink) => `Você pode atualizar suas preferências de lembrete <a href="${settingsLink}">aqui</a>.`,
     open_my_bible_log: 'Abrir My Bible Log',
     most_recent_log_entries: 'Entradas mais recentes do registro',
     no_log_entries_found: 'Nenhuma entrada encontrada no registro. É hora de começar a ler!',
@@ -59,7 +59,7 @@ const translations = {
   uk: {
     my_bible_log: 'My Bible Log',
     this_is_your_reminder: 'Це ваш щоденний лист-нагадування від Мого My Bible Log.',
-    you_can_update_preferences: settingsLink => `Ви можете змінити налаштування нагадувань <a href="${settingsLink}">тут</a>.`,
+    you_can_update_preferences: (settingsLink) => `Ви можете змінити налаштування нагадувань <a href="${settingsLink}">тут</a>.`,
     open_my_bible_log: 'Відкрити My Bible Log',
     most_recent_log_entries: 'Останні записи в журналі',
     no_log_entries_found: 'Немає записів в журналі. Час почати читати!',
@@ -68,6 +68,8 @@ const translations = {
     unsubscribe: 'Відписатися',
   },
 };
+
+/* eslint-disable indent */
 
 const renderHead = () => (`
   <head>
@@ -143,6 +145,12 @@ const renderBody = ({
   unsubscribeLink,
   recentLogEntries,
   t,
+}: {
+  siteLink: string;
+  settingsLink: string;
+  unsubscribeLink: string;
+  recentLogEntries: { displayDate: string, passage: string }[];
+  t: typeof translations[LocaleCode];
 }) => (`
   <body>
     <table border="0" cellpadding="5" cellspacing="0" width="100%">
@@ -183,7 +191,7 @@ const renderBody = ({
                 </thead>
                 <tbody>
                   ${recentLogEntries.length > 0 ? (
-                    recentLogEntries.map(logEntry => (`
+                    recentLogEntries.map((logEntry) => (`
                       <tr>
                         <td>${logEntry.displayDate}</td>
                         <td>${logEntry.passage}</td>
@@ -212,11 +220,13 @@ const renderBody = ({
   </body>`
 );
 
+/* eslint-enable indent */
+
 type RenderDailyReminderEmailParams = {
   siteLink: string;
   settingsLink: string;
   unsubscribeLink: string;
-  recentLogEntries: any[];
+  recentLogEntries: { displayDate: string, passage: string }[];
   emailDate: Date;
   locale: LocaleCode;
 };

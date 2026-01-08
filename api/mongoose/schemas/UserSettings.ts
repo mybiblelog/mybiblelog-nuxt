@@ -50,7 +50,7 @@ export const UserSettingsSchema = new Schema({
   preferredBibleVersion: {
     type: String,
     required: true,
-    default: function () {
+    default: function() {
       const locale = this.locale || 'en';
       return defaultLocaleBibleVersions[locale];
     },

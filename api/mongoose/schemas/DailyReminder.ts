@@ -70,7 +70,7 @@ export const DailyReminderSchema = new mongoose.Schema({
   },
 });
 
-DailyReminderSchema.pre('save', async function () {
+DailyReminderSchema.pre('save', async function() {
   const nextOccurrence = this.schema.methods.getNextOccurrence.call(this);
   this.nextOccurrence = nextOccurrence.getTime();
 
