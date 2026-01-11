@@ -10,16 +10,19 @@
       </div>
       <feedback-form />
     </div>
+    <content-page-footer />
   </main>
 </template>
 
 <script>
 import FeedbackForm from '@/components/forms/FeedbackForm.vue';
+import ContentPageFooter from '@/components/content/PageFooter.vue';
 
 export default {
   name: 'FeedbackFormPage',
   components: {
     FeedbackForm,
+    ContentPageFooter,
   },
   head() {
     return {

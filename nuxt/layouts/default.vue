@@ -56,8 +56,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.site-container {
-  min-height: 80vh;
-  padding-bottom: 2rem;
-}
+/* no scoped styles */
 </style>

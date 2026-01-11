@@ -19,8 +19,9 @@ body {
 
 .content-column {
   max-width: 708px;
+  min-height: 70vh;
   margin: 0 auto;
-  padding: 3rem 1rem;
+  padding: 3rem 1rem 5rem;
 }
 
 .container header.page-header,

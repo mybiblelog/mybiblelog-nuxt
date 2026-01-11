@@ -134,4 +134,5 @@ export default {
   // override Bulma so @nuxt/content title anchor links don't create empty space
   display: inline !important;
 }
+
 </style>
