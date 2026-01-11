@@ -7,8 +7,6 @@ og:
   description: Get answers to common questions about My Bible Log, a free Bible reading tracker. Learn about features, reading goals, notes, privacy, account management, and how to track your Bible reading progress.
 ---
 
-<content-table-of-contents></content-table-of-contents>
-
 ## Frequently Asked Questions
 
 ### What is My Bible Log?

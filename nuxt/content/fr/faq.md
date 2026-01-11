@@ -7,8 +7,6 @@ og:
   description: Obtenez des réponses aux questions courantes sur My Bible Log, un suivi gratuit de lecture biblique. Découvrez les fonctionnalités, les objectifs de lecture, les notes, la confidentialité, la gestion de compte et comment suivre vos progrès de lecture biblique.
 ---
 
-<content-table-of-contents></content-table-of-contents>
-
 ## Questions Fréquemment Posées
 
 ### Qu'est-ce que My Bible Log ?

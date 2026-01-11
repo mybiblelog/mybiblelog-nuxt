@@ -7,8 +7,6 @@ og:
   description: Obtenha respostas para perguntas comuns sobre o My Bible Log, um rastreador gratuito de leitura bíblica. Saiba mais sobre recursos, metas de leitura, notas, privacidade, gerenciamento de conta e como acompanhar seu progresso de leitura bíblica.
 ---
 
-<content-table-of-contents></content-table-of-contents>
-
 ## Perguntas Frequentes
 
 ### O que é My Bible Log?

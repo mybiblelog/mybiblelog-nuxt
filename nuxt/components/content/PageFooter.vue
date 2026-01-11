@@ -1,21 +1,27 @@
 <template>
-  <footer v-if="links && links.length > 0" class="page-footer">
-    <div class="footer-container content-column">
+  <footer v-if="columns && columns.length > 0" class="page-footer">
+    <div class="footer-container">
       <nav class="footer-nav">
-        <ul class="footer-links">
-          <li v-for="(link, index) in links" :key="index" class="footer-link-item">
-            <component
-              :is="isExternalLink(link.destination) ? 'a' : 'nuxt-link'"
-              :href="isExternalLink(link.destination) ? link.destination : undefined"
-              :to="isExternalLink(link.destination) ? undefined : localePath(link.destination)"
-              :target="isExternalLink(link.destination) ? '_blank' : undefined"
-              :rel="isExternalLink(link.destination) ? 'noopener noreferrer' : undefined"
-              class="footer-link"
-            >
-              {{ link.text }}
-            </component>
-          </li>
-        </ul>
+        <div class="footer-columns">
+          <ul
+            v-for="(column, columnIndex) in columns"
+            :key="columnIndex"
+            class="footer-column"
+          >
+            <li v-for="(link, linkIndex) in column" :key="linkIndex" class="footer-link-item">
+              <component
+                :is="isExternalLink(link.destination) ? 'a' : 'nuxt-link'"
+                :href="isExternalLink(link.destination) ? link.destination : undefined"
+                :to="isExternalLink(link.destination) ? undefined : localePath(link.destination)"
+                :target="isExternalLink(link.destination) ? '_blank' : undefined"
+                :rel="isExternalLink(link.destination) ? 'noopener noreferrer' : undefined"
+                class="footer-link"
+              >
+                {{ link.text }}
+              </component>
+            </li>
+          </ul>
+        </div>
       </nav>
     </div>
   </footer>
@@ -26,11 +32,23 @@ export default {
   name: 'PageFooter',
   data() {
     return {
-      links: [
-        { text: this.$t('home'), destination: '/' },
-        { text: this.$t('faq'), destination: '/faq' },
-        { text: this.$t('privacy_policy'), destination: '/policy/privacy' },
-        { text: this.$t('terms_and_conditions'), destination: '/policy/terms' },
+      columns: [
+        [
+          { text: this.$t('home'), destination: '/' },
+          { text: this.$t('faq'), destination: '/faq' },
+        ],
+        [
+          { text: this.$t('give_feedback'), destination: '/feedback' },
+          { text: this.$t('contribute'), destination: '/contribute' },
+        ],
+        [
+          { text: this.$t('donate_ko_fi'), destination: 'https://ko-fi.com/mybiblelog' },
+          { text: this.$t('code_on_github'), destination: 'https://github.com/mybiblelog/mybiblelog-nuxt' },
+        ],
+        [
+          { text: this.$t('privacy_policy'), destination: '/policy/privacy' },
+          { text: this.$t('terms_and_conditions'), destination: '/policy/terms' },
+        ],
       ],
     };
   },
@@ -44,6 +62,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-footer {
+  min-height: 20vh;
   margin: 4rem 0 0;
   padding: 3rem 0;
   background: linear-gradient(135deg, rgba(0, 170, 249, 0.05) 0%, rgba(9, 101, 247, 0.05) 50%, rgba(0, 209, 178, 0.05) 100%);
@@ -60,20 +79,28 @@ export default {
   width: 100%;
 }
 
-.footer-links {
+.footer-columns {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(max-content, 1fr);
+  justify-content: center;
+  gap: 3rem;
+
+  @media screen and (max-width: 768px) {
+    grid-auto-flow: row;
+    grid-auto-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.footer-column {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem 2rem;
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .footer-link-item {
@@ -124,36 +151,60 @@ export default {
   "en": {
     "home": "Home",
     "faq": "FAQ",
+    "give_feedback": "Give Feedback",
+    "contribute": "Contribute",
+    "donate_ko_fi": "Donate via Ko-fi",
+    "code_on_github": "Code on GitHub",
     "privacy_policy": "Privacy Policy",
     "terms_and_conditions": "Terms and Conditions"
   },
   "de": {
     "home": "Startseite",
     "faq": "FAQ",
+    "give_feedback": "Feedback geben",
+    "contribute": "Mitwirken",
+    "donate_ko_fi": "Mitwirken via Ko-fi",
+    "code_on_github": "Code auf GitHub",
     "privacy_policy": "Datenschutzrichtlinie",
     "terms_and_conditions": "Nutzungsbedingungen"
   },
   "es": {
     "home": "Inicio",
     "faq": "FAQ",
+    "give_feedback": "Enviar feedback",
+    "contribute": "Contribuir",
+    "donate_ko_fi": "Donar via Ko-fi",
+    "code_on_github": "Código en GitHub",
     "privacy_policy": "Política de privacidad",
     "terms_and_conditions": "Términos y condiciones"
   },
   "fr": {
     "home": "Accueil",
     "faq": "FAQ",
+    "give_feedback": "Donner un feedback",
+    "contribute": "Contribuer",
+    "donate_ko_fi": "Donner via Ko-fi",
+    "code_on_github": "Code sur GitHub",
     "privacy_policy": "Politique de confidentialité",
     "terms_and_conditions": "Conditions d'utilisation"
   },
   "pt": {
     "home": "Início",
     "faq": "FAQ",
+    "give_feedback": "Enviar feedback",
+    "contribute": "Contribuir",
+    "donate_ko_fi": "Doar via Ko-fi",
+    "code_on_github": "Código em GitHub",
     "privacy_policy": "Política de privacidade",
     "terms_and_conditions": "Termos e condições"
   },
   "uk": {
     "home": "Головна",
     "faq": "FAQ",
+    "give_feedback": "Надіслати відгук",
+    "contribute": "Допомога",
+    "donate_ko_fi": "Зробити подарунок через Ko-fi",
+    "code_on_github": "Код на GitHub",
     "privacy_policy": "Політика конфіденційності",
     "terms_and_conditions": "Умови використання"
   }

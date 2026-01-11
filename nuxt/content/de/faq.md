@@ -7,8 +7,6 @@ og:
   description: Erhalten Sie Antworten auf häufige Fragen zu My Bible Log, einem kostenlosen Bibellesetracker. Erfahren Sie mehr über Funktionen, Leseziele, Notizen, Datenschutz, Kontoverwaltung und wie Sie Ihren Bibellesefortschritt verfolgen können.
 ---
 
-<content-table-of-contents></content-table-of-contents>
-
 ## Häufig Gestellte Fragen
 
 ### Was ist My Bible Log?
