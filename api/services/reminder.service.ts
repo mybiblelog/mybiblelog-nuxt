@@ -3,8 +3,8 @@ import path from 'node:path';
 import config from '../config';
 import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../mongoose/useMongooseModels';
-import useMailgunService from './mailgun.service';
 import renderEmail from './email-templates/daily-reminder.template';
+import { EmailService } from './email.service';
 
 const baseUrl = config.siteUrl;
 
@@ -13,9 +13,8 @@ const getLocaleBaseUrl = (locale) => {
   return baseUrl + localePathSegment;
 };
 
-const init = async () => {
+const init = async ({ emailService }: { emailService: EmailService }) => {
   const { DailyReminder, User, LogEntry } = await useMongooseModels();
-  const mailgunService = await useMailgunService();
 
   const getRecentLogEntries = async (user) => {
     const { locale } = user.settings;
@@ -103,9 +102,7 @@ const init = async () => {
     const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.unsubscribeCode}`;
 
     // Load brand logo asset
-    const brand = fs.createReadStream(
-      path.resolve(__dirname, 'email-assets', 'brand.png'),
-    );
+    const brandLogoAssetPath = path.resolve(__dirname, 'email-assets', 'brand.png');
 
     const html = renderEmail({
       siteLink,
@@ -116,10 +113,15 @@ const init = async () => {
     });
 
     return {
+      from: `noreply@${config.emailSendingDomain}`,
       to: user.email,
       subject,
       html,
-      inline: [brand],
+      attachments: [{
+        filename: 'brand.png',
+        content: fs.createReadStream(brandLogoAssetPath),
+        cid: 'logo@mybiblelog',
+      }],
     };
   };
 
@@ -133,7 +135,7 @@ const init = async () => {
     await reminder.save();
 
     // Send email after database is updated
-    await mailgunService.sendEmail(email);
+    await emailService.sendEmail(email);
   };
 
   const triggerReminders = async () => {

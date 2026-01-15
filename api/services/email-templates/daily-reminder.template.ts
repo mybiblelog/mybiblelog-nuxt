@@ -146,7 +146,7 @@ const renderBody = ({
           <td class="gray" width="*"></td>
           <td class="title-box content-area" width="500px">
             <h1></h1>
-              <img class="brand" alt="" src="cid:brand.png" width="50" height="50">
+              <img class="brand" alt="" src="cid:logo@mybiblelog" width="50" height="50">
               ${t.my_bible_log}
             </h1>
           </td>

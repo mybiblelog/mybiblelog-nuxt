@@ -23,6 +23,7 @@
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.968.0",
     "@mybiblelog/shared": "file:../shared",
     "bcrypt": "^6.0.0",
     "compression": "^1.8.1",
@@ -41,6 +42,7 @@
     "mongoose": "^9.0.0",
     "mongoose-unique-validator": "^5.0.1",
     "morgan": "^1.10.0",
+    "nodemailer": "^7.0.12",
     "supertest": "^7.1.4",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
@@ -56,6 +58,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.9.1",
+    "@types/nodemailer": "^7.0.5",
     "@types/supertest": "^6.0.3",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",

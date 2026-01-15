@@ -61,6 +61,16 @@ JWT_SECRET=xxxxxxxxxx
 # Whether email verification is required before users can sign in
 REQUIRE_EMAIL_VERIFICATION=xxxxxxxxxx
 
+# Custom "FROM" domain for email sending
+EMAIL_SENDING_DOMAIN=xxxxxxxxxx
+
+# AWS access key and secret for Simple Email Service
+# Only needed if developing/using email features
+# (pre-login email verification, reminder emails, password reset)
+AWS_ACCESS_KEY_ID=xxxxxxxxxx
+AWS_SECRET_ACCESS_KEY=xxxxxxxxxx
+AWS_SES_REGION=xxxxxxxxxx
+
 # The Mailgun API key and domain for sending email
 # Only needed if developing/using email features
 # (pre-login email verification, reminder emails, password reset)

@@ -1,19 +1,26 @@
-import formData from 'form-data';
-import Mailgun from 'mailgun.js';
-import config from '../config';
+import nodemailer from "nodemailer";
+import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
+import config from "../config";
+import { EmailService, SendEmailParams, useEmailService } from "./email.service";
+import useMongooseModels from "mongoose/useMongooseModels";
+import { LocaleCode } from "@mybiblelog/shared";
 
-const apiKey = config.mailgun.apiKey;
 const domain = config.emailSendingDomain;
+const accessKeyId = config.aws.accessKeyId;
+const secretAccessKey = config.aws.secretAccessKey;
+const sesRegion = config.aws.sesRegion;
 const baseUrl = config.siteUrl;
 
-import useMongooseModels from '../mongoose/useMongooseModels';
-import { LocaleCode } from '@mybiblelog/shared';
-import { EmailService, SendEmailParams, useEmailService } from './email.service.d';
+const sesClient = new SESv2Client({
+  region: sesRegion,
+  credentials: {
+    accessKeyId,
+    secretAccessKey,
+  },
+});
 
-const mailgun = new Mailgun(formData);
-const client = mailgun.client({
-  username: 'api',
-  key: apiKey,
+const transport = nodemailer.createTransport({
+  SES: { sesClient, SendEmailCommand },
 });
 
 const getLocaleBaseUrl = (locale: LocaleCode) => {
@@ -30,11 +37,7 @@ const init = async () => {
     try {
       // only send email in production
       if (config.nodeEnv === 'production') {
-        const attachmentData = attachments.map(attachment => ({
-          filename: attachment.filename,
-          data: attachment.content,
-        }));
-        await client.messages.create(domain, { from, to, subject, ...rest, inline: attachmentData });
+        await transport.sendMail({ from, to, subject, ...rest, attachments });
       }
 
       // record email, but do not block with `await`
@@ -169,13 +172,13 @@ const init = async () => {
   };
 };
 
-let mailgunService: EmailService;
+let simpleEmailService: EmailService;
 
-const useMailgunService: useEmailService = async () => {
-  if (!mailgunService) {
-    mailgunService = await init();
+const useSimpleEmailService: useEmailService = async () => {
+  if (!simpleEmailService) {
+    simpleEmailService = await init();
   }
-  return mailgunService;
+  return simpleEmailService;
 };
 
-export default useMailgunService;
+export default useSimpleEmailService;
