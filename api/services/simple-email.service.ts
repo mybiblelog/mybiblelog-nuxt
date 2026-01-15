@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import config from "../config";
 import { EmailService, SendEmailParams, useEmailService } from "./email.service";
-import useMongooseModels from "mongoose/useMongooseModels";
+import useMongooseModels from "../mongoose/useMongooseModels";
 import { LocaleCode } from "@mybiblelog/shared";
 
 const domain = config.emailSendingDomain;
