@@ -6,7 +6,7 @@ import authCurrentUser, { AUTH_COOKIE_NAME, setAuthTokenCookie } from '../helper
 import googleOauth2 from '../helpers/google-oauth2';
 import { I18nError, makeI18nError } from '../helpers/i18n-error';
 import useMongooseModels from '../../mongoose/useMongooseModels';
-import useMailgunService from '../../services/mailgun.service';
+import useSimpleEmailService from '../../services/simple-email.service';
 import checkTestBypass from '../helpers/checkTestBypass';
 import UserSettings from '../../mongoose/schemas/UserSettings';
 import { isEmailVerified } from '../../mongoose/schemas/User';
@@ -324,8 +324,8 @@ router.post('/auth/register', async (req, res, next) => {
     res.json({ success: true });
 
     // Send a verification email
-    const mailgunService = await useMailgunService();
-    mailgunService.sendUserEmailVerification(email, user.emailVerificationCode, locale);
+    const simpleEmailService = await useSimpleEmailService();
+    simpleEmailService.sendUserEmailVerification(email, user.emailVerificationCode, locale);
   }
   catch (err) {
     next(err);
@@ -671,8 +671,8 @@ router.post('/auth/change-email', async (req, res, next) => {
     res.send(response);
 
     // send an email update confirmation code
-    const mailgunService = await useMailgunService();
-    mailgunService.sendEmailUpdateLink(currentUser.email, newEmail, currentUser.newEmailVerificationCode, currentUser.settings.locale);
+    const simpleEmailService = await useSimpleEmailService();
+    simpleEmailService.sendEmailUpdateLink(currentUser.email, newEmail, currentUser.newEmailVerificationCode, currentUser.settings.locale);
   }
   catch (error) {
     next(error);
@@ -921,8 +921,8 @@ router.post('/auth/reset-password', async (req, res) => {
   res.send(response);
 
   // send password reset code via email
-  const mailgunService = await useMailgunService();
-  mailgunService.sendUserPasswordResetLink(user.email, user.passwordResetCode, user.settings.locale);
+  const simpleEmailService = await useSimpleEmailService();
+  simpleEmailService.sendUserPasswordResetLink(user.email, user.passwordResetCode, user.settings.locale);
 });
 
 /**
