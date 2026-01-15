@@ -7,7 +7,7 @@ import config from './config';
 import useMongooseModels from './mongoose/useMongooseModels';
 import initReminderService from './services/reminder.service';
 import buildApp from './app';
-import useSimpleEmailService from 'services/simple-email.service';
+import useSimpleEmailService from './services/simple-email.service';
 
 // Normalize a port into a number, string, or false.
 const normalizePort = (val: string) => {

@@ -189,7 +189,7 @@ These are the steps to adding an entirely new locale to the site (along with any
 1. Add Bible book title translations to `shared/static/bible-books.ts` (\_translate.js)
 1. Each component manages its own translation messages in an `<i18n>` block, so add the locale to all `.vue` files in the `pages` and `components` directories. (\_translate.js)
 1. Email templates manage their own translation messages, so add the locale to each `api/services/email-templates/*.ts` file. (use Cursor)
-1. The email service manages translations for several emails inline, so add the locale to `api/services/mailgun.service.ts`. (use Cursor)
+1. The email service manages translations for several emails inline, so add the locale to `api/services/simple-email.service.ts`. (use Cursor)
 1. The reminder service translates the title to the email, so add that to `api/services/reminder.service.ts`.
 1. Each locale has its own `nuxt/content` directory with markdown files that back the `/about` and `/policy` pages. (`nuxt/_translate.js`)
 1. Each locale currently has its own printable reading tracker PDF in `nuxt/static/downloads` which is manually listed in the XML sitemap route, `/api/router/routes/sitemap.ts`. (manually "print as PDF", update sitemap route, and update `nuxt/pages/resources/printable-bible-reading-tracker.vue`)
