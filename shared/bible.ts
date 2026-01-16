@@ -397,7 +397,7 @@ const consolidateRanges = (ranges: ReadonlyArray<Readonly<VerseRange>>): VerseRa
   for (const index of sortedIndices) {
     const range = ranges[index];
     const { book } = Bible.parseVerseId(range.startVerseId);
-    allBookRanges[book].push(range);
+    allBookRanges[book].push({ ...range });
   }
   for (let bookIndex = 1, l = Bible.getBookCount(); bookIndex <= l; bookIndex++) {
     const bookRanges = allBookRanges[bookIndex];
