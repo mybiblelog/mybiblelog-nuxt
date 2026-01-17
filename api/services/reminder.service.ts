@@ -3,7 +3,7 @@ import path from 'node:path';
 import config from '../config';
 import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../mongoose/useMongooseModels';
-import renderEmail from './email-templates/daily-reminder.template';
+import renderDailyReminderEmail from './email-templates/daily-reminder';
 import { EmailService } from './email.service';
 
 const baseUrl = config.siteUrl;
@@ -85,18 +85,6 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
       emailDate.setTime(utcNow.valueOf() + dayMs);
     }
 
-    const dateFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
-    const subjectDate = new Intl.DateTimeFormat(locale, dateFormatOptions).format(emailDate);
-
-    const subject = {
-      de: `My Bible Log Erinnerung für ${subjectDate}`,
-      en: `My Bible Log Reminder for ${subjectDate}`,
-      es: `Recordatorio de My Bible Log para ${subjectDate}`,
-      fr: `Rappel de My Bible Log pour le ${subjectDate}`,
-      pt: `Lembrete do My Bible Log para ${subjectDate}`,
-      uk: `Нагадування My Bible Log для ${subjectDate}`,
-    }[locale];
-
     const siteLink = `${getLocaleBaseUrl(locale)}/start`;
     const settingsLink = `${getLocaleBaseUrl(locale)}/settings/reminder`;
     const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.unsubscribeCode}`;
@@ -104,11 +92,12 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
     // Load brand logo asset
     const brandLogoAssetPath = path.resolve(__dirname, 'email-assets', 'brand.png');
 
-    const html = renderEmail({
+    const { subject, html } = renderDailyReminderEmail({
       siteLink,
       settingsLink,
       unsubscribeLink,
       recentLogEntries,
+      emailDate,
       locale,
     });
 

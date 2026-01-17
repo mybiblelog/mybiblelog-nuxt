@@ -1,3 +1,5 @@
+import { LocaleCode } from "@shared/dist/i18n";
+
 const translations = {
   de: {
     my_bible_log: 'My Bible Log',
@@ -200,23 +202,51 @@ const renderBody = ({
   </body>`
 );
 
+type RenderDailyReminderEmailParams = {
+  siteLink: string;
+  settingsLink: string;
+  unsubscribeLink: string;
+  recentLogEntries: any[];
+  emailDate: Date;
+  locale: LocaleCode;
+};
+
 const render = ({
   siteLink,
   settingsLink,
   unsubscribeLink,
   recentLogEntries,
+  emailDate,
   locale,
-}) => (
-  `<html>
-  ${renderHead()}
-  ${renderBody({
-    siteLink,
-    settingsLink,
-    unsubscribeLink,
-    recentLogEntries,
-    t: translations[locale],
-  })}
-  </html>`
-);
+}: RenderDailyReminderEmailParams) => {
+  const dateFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
+  const subjectDate = new Intl.DateTimeFormat(locale, dateFormatOptions).format(emailDate);
+
+  const subject = {
+    de: `My Bible Log Erinnerung für ${subjectDate}`,
+    en: `My Bible Log Reminder for ${subjectDate}`,
+    es: `Recordatorio de My Bible Log para ${subjectDate}`,
+    fr: `Rappel de My Bible Log pour le ${subjectDate}`,
+    pt: `Lembrete do My Bible Log para ${subjectDate}`,
+    uk: `Нагадування My Bible Log для ${subjectDate}`,
+  }[locale];
+
+  const html = (
+    `<html>
+    ${renderHead()}
+    ${renderBody({
+      siteLink,
+      settingsLink,
+      unsubscribeLink,
+      recentLogEntries,
+      t: translations[locale],
+    })}
+    </html>`
+  );
+  return {
+    subject,
+    html,
+  };
+};
 
 export default render;
