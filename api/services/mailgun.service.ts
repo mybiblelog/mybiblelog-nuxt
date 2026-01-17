@@ -7,7 +7,6 @@ import renderEmailUpdate from "./email-templates/email-update";
 
 const apiKey = config.mailgun.apiKey;
 const domain = config.emailSendingDomain;
-const baseUrl = config.siteUrl;
 
 import useMongooseModels from '../mongoose/useMongooseModels';
 import { LocaleCode } from '@mybiblelog/shared';
@@ -18,11 +17,6 @@ const client = mailgun.client({
   username: 'api',
   key: apiKey,
 });
-
-const getLocaleBaseUrl = (locale: LocaleCode) => {
-  const localePathSegment = locale === 'en' ? '' : '/' + locale;
-  return baseUrl + localePathSegment;
-};
 
 const init = async () => {
   const { Email } = await useMongooseModels();

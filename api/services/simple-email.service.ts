@@ -12,7 +12,6 @@ const domain = config.emailSendingDomain;
 const accessKeyId = config.aws.accessKeyId;
 const secretAccessKey = config.aws.secretAccessKey;
 const sesRegion = config.aws.sesRegion;
-const baseUrl = config.siteUrl;
 
 const sesClient = new SESv2Client({
   region: sesRegion,
