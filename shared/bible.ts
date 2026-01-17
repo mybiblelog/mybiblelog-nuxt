@@ -2,11 +2,15 @@ import bibleBooks, { type BibleBook } from './static/bible-books';
 import chapterVerses from './static/chapter-verses/nasb';
 
 /**
- * Create a new `Object` with the same nested properties as the input.
- * Used to manipulate data without mutating the original input.
- * @param {Object} data
+ * Creates a sorted array of indices for an array,
+ * enabling efficient iteration over the array in sorted order
+ * without mutating the original array or needing to clone it.
  */
-const cloneData = <T>(data: T): T => JSON.parse(JSON.stringify(data));
+function createSortedIndices<T>(array: ReadonlyArray<Readonly<T>>, compareFn: (a: T, b: T) => number): number[] {
+  return Array.from(array.keys()).sort((a, b) =>
+    compareFn(array[a], array[b])
+  );
+}
 
 type ParsedVerseId = {
   book: number,
@@ -284,12 +288,13 @@ const checkRangeOverlap = (range1: VerseRange, range2: VerseRange): boolean => {
  * Counts the total number of verses in an array of ranges,
  * never counting the same verse more than once.
  */
-const countUniqueRangeVerses = (ranges: VerseRange[]): number => {
-  ranges = cloneData(ranges);
-  ranges = ranges.sort(Bible.compareRanges);
+const countUniqueRangeVerses = (ranges: ReadonlyArray<Readonly<VerseRange>>): number => {
+  const sortedIndices = createSortedIndices(ranges, Bible.compareRanges);
+
   let totalVerses = 0;
   let lastRange: VerseRange | null = null;
-  for (const range of ranges) {
+  for (const index of sortedIndices) {
+    const range = ranges[index];
     if (!lastRange) {
       lastRange = range;
     }
@@ -312,7 +317,7 @@ const countUniqueRangeVerses = (ranges: VerseRange[]): number => {
 /**
  * Finds the number of unique verses that exist among `ranges` for the given `book`.
  */
-const countUniqueBookRangeVerses = (bookIndex: number, ranges: VerseRange[]): number => {
+const countUniqueBookRangeVerses = (bookIndex: number, ranges: ReadonlyArray<Readonly<VerseRange>>): number => {
   ranges = Bible.filterRangesByBook(bookIndex, ranges);
   return Bible.countUniqueRangeVerses(ranges);
 };
@@ -320,8 +325,7 @@ const countUniqueBookRangeVerses = (bookIndex: number, ranges: VerseRange[]): nu
 /**
  * Returns a new array comprised only of ranges in the given book.
  */
-const filterRangesByBook = (bookIndex: number, ranges: VerseRange[]): VerseRange[] => {
-  ranges = cloneData(ranges);
+const filterRangesByBook = (bookIndex: number, ranges: ReadonlyArray<Readonly<VerseRange>>): VerseRange[] => {
   return ranges.filter((r) => {
     const startVerse = Bible.parseVerseId(r.startVerseId);
     return startVerse.book === bookIndex;
@@ -332,8 +336,7 @@ const filterRangesByBook = (bookIndex: number, ranges: VerseRange[]): VerseRange
  * Filters out all ranges that do not overlap the given book chapter,
  * returning the new resulting array.
  */
-const filterRangesByBookChapter = (bookIndex: number, chapterIndex: number, ranges: VerseRange[]): VerseRange[] => {
-  ranges = cloneData(ranges);
+const filterRangesByBookChapter = (bookIndex: number, chapterIndex: number, ranges: ReadonlyArray<Readonly<VerseRange>>): VerseRange[] => {
   return ranges.filter((r) => {
     const startVerse = Bible.parseVerseId(r.startVerseId);
     const endVerse = Bible.parseVerseId(r.endVerseId);
@@ -365,7 +368,7 @@ const cropRangeToBookChapter = (bookIndex: number, chapterIndex: number, range: 
   return Object.assign({}, range, { startVerseId, endVerseId });
 };
 
-const countUniqueBookChapterRangeVerses = (bookIndex: number, chapterIndex: number, ranges: VerseRange[]): number => {
+const countUniqueBookChapterRangeVerses = (bookIndex: number, chapterIndex: number, ranges: ReadonlyArray<Readonly<VerseRange>>): number => {
   // Include only ranges that overlap into the given chapter of the given book
   const filteredRanges = Bible.filterRangesByBookChapter(bookIndex, chapterIndex, ranges);
 
@@ -382,9 +385,8 @@ const countUniqueBookChapterRangeVerses = (bookIndex: number, chapterIndex: numb
  *
  * This function works across books, but will not create ranges that span multiple books.
  */
-const consolidateRanges = (ranges: VerseRange[]): VerseRange[] => {
-  ranges = cloneData(ranges);
-  ranges = ranges.sort(Bible.compareRanges);
+const consolidateRanges = (ranges: ReadonlyArray<Readonly<VerseRange>>): VerseRange[] => {
+  const sortedIndices = createSortedIndices(ranges, Bible.compareRanges);
   const result: VerseRange[] = [];
 
   // Sort ranges into constituent books
@@ -392,9 +394,10 @@ const consolidateRanges = (ranges: VerseRange[]): VerseRange[] => {
   for (let i = 1, l = Bible.getBookCount(); i <= l; i++) {
     allBookRanges[i] = [];
   }
-  for (const range of ranges) {
+  for (const index of sortedIndices) {
+    const range = ranges[index];
     const { book } = Bible.parseVerseId(range.startVerseId);
-    allBookRanges[book].push(range);
+    allBookRanges[book].push({ ...range });
   }
   for (let bookIndex = 1, l = Bible.getBookCount(); bookIndex <= l; bookIndex++) {
     const bookRanges = allBookRanges[bookIndex];
@@ -492,7 +495,7 @@ const getRangesBetweenVerseIds = (startVerseId: VerseId, endVerseId: VerseId): V
  * Input `ranges` that do not fall within `firstVerseId` and `finalVerseId` will be filtered out.
  * Input `ranges` that overlap `firstVerseId` or `finalVerseId` will be cropped.
  */
-const generateSegments = (firstVerseId: VerseId, finalVerseId: VerseId, ranges: VerseRange[]): Segment[] => {
+const generateSegments = (firstVerseId: VerseId, finalVerseId: VerseId, ranges: ReadonlyArray<Readonly<VerseRange>>): Segment[] => {
   if (firstVerseId > finalVerseId) {
     throw new Error('firstVerseId must be before finalVerseId');
   }
@@ -515,10 +518,10 @@ const generateSegments = (firstVerseId: VerseId, finalVerseId: VerseId, ranges: 
   });
 
   // Sort and consolidate ranges
-  ranges = Bible.consolidateRanges(ranges);
+  const consolidatedRanges = Bible.consolidateRanges(ranges);
 
   // Crop ranges to firstVerseId and finalVerseId
-  for (const range of ranges) {
+  for (const range of consolidatedRanges) {
     if (range.startVerseId < firstVerseId) {
       range.startVerseId = firstVerseId;
     }
@@ -528,8 +531,8 @@ const generateSegments = (firstVerseId: VerseId, finalVerseId: VerseId, ranges: 
   }
 
   let lastReadVerseId;
-  for (let rangeIndex = 0, rangeCount = ranges.length; rangeIndex < rangeCount; rangeIndex++) {
-    const range = ranges[rangeIndex];
+  for (let rangeIndex = 0, rangeCount = consolidatedRanges.length; rangeIndex < rangeCount; rangeIndex++) {
+    const range = consolidatedRanges[rangeIndex];
 
     // Create initial UNREAD segment before first range if needed
     if (rangeIndex === 0) {
@@ -548,7 +551,7 @@ const generateSegments = (firstVerseId: VerseId, finalVerseId: VerseId, ranges: 
     // create an UNREAD segment between the two ranges for each book that was crossed.
     else {
       if (!lastReadVerseId) {
-        throw new Error('lastReadVerseId is undefined'); // FIXME: appeasing TypeScript
+        throw new Error('lastReadVerseId is undefined');
       }
       const unreadStartVerseId = Bible.getNextVerseId(lastReadVerseId, true);
       if (range.startVerseId !== unreadStartVerseId) {
@@ -595,10 +598,10 @@ const generateSegments = (firstVerseId: VerseId, finalVerseId: VerseId, ranges: 
  *
  * Each segment has: `startVerseId`, `endVerseId`, `read`, and `verseCount`.
  */
-const generateBibleSegments = (ranges: VerseRange[]): Segment[] => {
+const generateBibleSegments = (ranges: ReadonlyArray<Readonly<VerseRange>>): Segment[] => {
   const segments: Segment[] = [];
   const bookCount = Bible.getBookCount();
-  ranges = Bible.consolidateRanges(ranges);
+  const consolidatedRanges = Bible.consolidateRanges(ranges);
   let rangeIndex = 0;
   for (let bookIndex = 1; bookIndex <= bookCount; bookIndex++) {
     const lastChapterIndex = Bible.getBookChapterCount(bookIndex);
@@ -606,8 +609,8 @@ const generateBibleSegments = (ranges: VerseRange[]): Segment[] => {
     const firstVerseId = Bible.makeVerseId(bookIndex, 1, 1);
     const finalVerseId = Bible.makeVerseId(bookIndex, lastChapterIndex, lastChapterVerseCount);
     const bookRanges: VerseRange[] = [];
-    while (rangeIndex < ranges.length && Bible.parseVerseId(ranges[rangeIndex].startVerseId).book === bookIndex) {
-      bookRanges.push(ranges[rangeIndex]);
+    while (rangeIndex < consolidatedRanges.length && Bible.parseVerseId(consolidatedRanges[rangeIndex].startVerseId).book === bookIndex) {
+      bookRanges.push(consolidatedRanges[rangeIndex]);
       rangeIndex++;
     }
     segments.push(...Bible.generateSegments(firstVerseId, finalVerseId, bookRanges));
@@ -615,30 +618,30 @@ const generateBibleSegments = (ranges: VerseRange[]): Segment[] => {
   return segments;
 };
 
-const generateBookSegments = (bookIndex: number, ranges: VerseRange[]): Segment[] => {
+const generateBookSegments = (bookIndex: number, ranges: ReadonlyArray<Readonly<VerseRange>>): Segment[] => {
   const lastChapterIndex = Bible.getBookChapterCount(bookIndex);
   const lastChapterVerseCount = Bible.getChapterVerseCount(bookIndex, lastChapterIndex);
 
   const firstVerseId = Bible.makeVerseId(bookIndex, 1, 1);
   const finalVerseId = Bible.makeVerseId(bookIndex, lastChapterIndex, lastChapterVerseCount);
 
-  ranges = Bible.filterRangesByBook(bookIndex, ranges);
+  const filteredRanges = Bible.filterRangesByBook(bookIndex, ranges);
 
-  return Bible.generateSegments(firstVerseId, finalVerseId, ranges);
+  return Bible.generateSegments(firstVerseId, finalVerseId, filteredRanges);
 };
 
-const generateBookChapterSegments = (bookIndex: number, chapterIndex: number, ranges: VerseRange[]): Segment[] => {
+const generateBookChapterSegments = (bookIndex: number, chapterIndex: number, ranges: ReadonlyArray<Readonly<VerseRange>>): Segment[] => {
   const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
 
   const firstVerseId = Bible.makeVerseId(bookIndex, chapterIndex, 1);
   const finalVerseId = Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount);
 
-  ranges = Bible.filterRangesByBookChapter(bookIndex, chapterIndex, ranges);
-  ranges = ranges.map((range) => {
+  const filteredRanges = Bible.filterRangesByBookChapter(bookIndex, chapterIndex, ranges);
+  const croppedRanges = filteredRanges.map((range) => {
     return Bible.cropRangeToBookChapter(bookIndex, chapterIndex, range);
   });
 
-  return Bible.generateSegments(firstVerseId, finalVerseId, ranges);
+  return Bible.generateSegments(firstVerseId, finalVerseId, croppedRanges);
 };
 
 const displayVerseRange = (startVerseId: number, endVerseId: number, lang: string = 'en'): string => {
