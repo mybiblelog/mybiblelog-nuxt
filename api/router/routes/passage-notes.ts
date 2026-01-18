@@ -1,5 +1,4 @@
 import express from 'express';
-import createError from 'http-errors';
 import { ObjectId } from 'mongodb';
 import authCurrentUser from '../helpers/authCurrentUser';
 import { Bible } from '@mybiblelog/shared';
@@ -389,10 +388,14 @@ router.get('/passage-notes', async (req, res, next) => {
     const totalResultCount = await PassageNote.countDocuments(filterQuery);
 
     const response = {
-      offset: query.offset,
-      limit: query.limit,
-      size: totalResultCount,
-      results: passageNotes,
+      data: passageNotes,
+      meta: {
+        pagination: {
+          offset: query.offset,
+          limit: query.limit,
+          size: totalResultCount,
+        },
+      },
     };
 
     return res.send(response);
@@ -431,7 +434,7 @@ router.get('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -439,9 +442,9 @@ router.get('/passage-notes/:id', async (req, res, next) => {
 
     const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
-      return next(createError(404, 'Not Found'));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.send(passageNote.toJSON());
+    res.send({ data: passageNote.toJSON() });
   }
   catch (error) {
     next(error);
@@ -498,7 +501,7 @@ router.post('/passage-notes', async (req, res, next) => {
     // validate that all tags exist
     const tagsValid = await validateTags(passageNote.tags);
     if (!tagsValid) {
-      return next(createError(409, 'Cannot Create'));
+      return res.status(409).send({ error: { error: { message: 'Cannot Create' } } });
     }
 
     passageNote.owner = new Types.ObjectId(currentUser._id);
@@ -506,11 +509,11 @@ router.post('/passage-notes', async (req, res, next) => {
       await passageNote.validate();
     }
     catch (error) {
-      return next(createError(400, 'Invalid passage note'));
+      return res.status(400).send({ error: { error: { message: 'Invalid passage note' } } });
     }
     await passageNote.save();
 
-    res.send(passageNote.toJSON());
+    res.send({ data: passageNote.toJSON() });
   }
   catch (error) {
     next(error);
@@ -568,7 +571,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -577,7 +580,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
 
     const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
-      return next(createError(404, 'Not Found'));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
     if (content) { passageNote.content = content; }
@@ -586,7 +589,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
       // validate that all tags exist
       const tagsValid = await validateTags(tags);
       if (!tagsValid) {
-        return next(createError(409, 'Cannot Update'));
+        return res.status(409).send({ error: { error: { message: 'Cannot Update' } } });
       }
       passageNote.tags = tags;
     }
@@ -594,11 +597,11 @@ router.put('/passage-notes/:id', async (req, res, next) => {
       await passageNote.validate();
     }
     catch (error) {
-      return next(createError(400, 'Invalid passage note'));
+      return res.status(400).send({ error: { error: { message: 'Invalid passage note' } } });
     }
     await passageNote.save();
 
-    res.send(passageNote.toJSON());
+    res.send({ data: passageNote.toJSON() });
   }
   catch (error) {
     next(error);
@@ -630,7 +633,7 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -638,10 +641,10 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
 
     const result = await PassageNote.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
-      return next(createError(404, 'Not Found'));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
-    res.send(result.deletedCount);
+    res.send({ data: result.deletedCount });
   }
   catch (error) {
     next(error);

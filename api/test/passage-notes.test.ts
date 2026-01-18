@@ -15,7 +15,7 @@ async function createPassageNoteTags(testUser, tags) {
         .send(tag),
     ),
   );
-  return tagResponses.map(response => response.body);
+  return tagResponses.map(response => response.body.data);
 }
 
 // Test data with tag IDs (to be populated during test setup)
@@ -37,22 +37,10 @@ const passageNote3 = {
   tags: [], // Will be populated with tag IDs during test setup
 };
 
-const invalidPassageNote1 = {
-  passages: [{ startVerseId: 100000000, endVerseId: 100000001 }], // Invalid verse IDs
-  content: 'x'.repeat(3001),
-  tags: ['nonexistent-tag'],
-};
-
-const invalidPassageNote2 = {
+const invalidPassageNote = {
   passages: [{ startVerseId: 101001005, endVerseId: 101001001 }], // Start verse after end verse
   content: 'Test note 7',
   tags: ['Theology'],
-};
-
-const invalidPassageNote3 = {
-  passages: [{ startVerseId: 101001001, endVerseId: 143001005 }], // Different books
-  content: 'Test note 8',
-  tags: ['Application'],
 };
 
 const missingObjectId = '666666666666666666666666';
@@ -72,11 +60,14 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('offset');
-        expect(response.body).toHaveProperty('limit');
-        expect(response.body).toHaveProperty('size');
-        expect(response.body).toHaveProperty('results');
-        expect(Array.isArray(response.body.results)).toBe(true);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).toHaveProperty('meta');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
+        expect(response.body.meta).toHaveProperty('pagination');
+        expect(response.body.meta.pagination).toHaveProperty('offset');
+        expect(response.body.meta.pagination).toHaveProperty('limit');
+        expect(response.body.meta.pagination).toHaveProperty('size');
       }
       finally {
         await deleteTestUser(testUser);
@@ -90,6 +81,7 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes?limit=invalid&offset=invalid&sortOn=invalid&sortDirection=invalid')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(400);
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -103,6 +95,7 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes?filterTags=invalid&filterTagMatching=invalid&filterPassageStartVerseId=invalid&filterPassageEndVerseId=invalid&filterPassageMatching=invalid')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(400);
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -130,17 +123,24 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('results');
-        expect(response.body).toHaveProperty('offset');
-        expect(response.body).toHaveProperty('limit');
-        expect(response.body).toHaveProperty('size');
-        expect(Array.isArray(response.body.results)).toBe(true);
-        expect(response.body.results[0]).toHaveProperty('id');
-        expect(response.body.results[0]).toHaveProperty('passages');
-        expect(response.body.results[0]).toHaveProperty('content');
-        expect(response.body.results[0]).toHaveProperty('tags');
-        expect(response.body.results[0]).toHaveProperty('createdAt');
-        expect(response.body.results[0]).toHaveProperty('updatedAt');
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).toHaveProperty('meta');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
+        expect(response.body.meta).toHaveProperty('pagination');
+        expect(response.body.meta.pagination).toHaveProperty('offset');
+        expect(response.body.meta.pagination).toHaveProperty('limit');
+        expect(response.body.meta.pagination).toHaveProperty('size');
+        expect(response.body.data.length).toBeGreaterThan(0);
+        expect(response.body.data[0]).toHaveProperty('id');
+        expect(response.body.data[0]).toHaveProperty('passages');
+        expect(response.body.data[0]).toHaveProperty('content');
+        expect(response.body.data[0]).toHaveProperty('tags');
+        expect(response.body.data[0]).toHaveProperty('createdAt');
+        expect(response.body.data[0]).toHaveProperty('updatedAt');
+        expect(response.body.meta.pagination.offset).toBe(0);
+        expect(response.body.meta.pagination.limit).toBe(10);
+        expect(response.body.meta.pagination.size).toBe(1);
       }
       finally {
         await deleteTestUser(testUser);
@@ -168,8 +168,19 @@ describe('passage-notes.test.js', () => {
           .get(`/api/passage-notes?filterTags=${tags[0].id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBe(1);
-        expect(response.body.results[0].id).toBe(createResponse.body.id);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).toHaveProperty('meta');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
+        expect(response.body.data.length).toBe(1);
+        expect(response.body.data[0].id).toBe(createResponse.body.data.id);
+        expect(response.body.meta).toHaveProperty('pagination');
+        expect(response.body.meta.pagination).toHaveProperty('offset');
+        expect(response.body.meta.pagination).toHaveProperty('limit');
+        expect(response.body.meta.pagination).toHaveProperty('size');
+        expect(response.body.meta.pagination.offset).toBe(0);
+        expect(response.body.meta.pagination.limit).toBe(10);
+        expect(response.body.meta.pagination.size).toBe(1);
       }
       finally {
         await deleteTestUser(testUser);
@@ -192,8 +203,19 @@ describe('passage-notes.test.js', () => {
           .get(`/api/passage-notes?filterPassageStartVerseId=${passageNote1.passages[0]!.startVerseId}&filterPassageEndVerseId=${passageNote1.passages[0]!.endVerseId}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBe(1);
-        expect(response.body.results[0].id).toBe(createResponse.body.id);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).toHaveProperty('meta');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
+        expect(response.body.data.length).toBe(1);
+        expect(response.body.data[0].id).toBe(createResponse.body.data.id);
+        expect(response.body.meta).toHaveProperty('pagination');
+        expect(response.body.meta.pagination).toHaveProperty('offset');
+        expect(response.body.meta.pagination).toHaveProperty('limit');
+        expect(response.body.meta.pagination).toHaveProperty('size');
+        expect(response.body.meta.pagination.offset).toBe(0);
+        expect(response.body.meta.pagination.limit).toBe(10);
+        expect(response.body.meta.pagination.size).toBe(1);
       }
       finally {
         await deleteTestUser(testUser);
@@ -216,8 +238,19 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes?searchText=Test note 1')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBe(1);
-        expect(response.body.results[0].id).toBe(createResponse.body.id);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).toHaveProperty('meta');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
+        expect(response.body.data.length).toBe(1);
+        expect(response.body.data[0].id).toBe(createResponse.body.data.id);
+        expect(response.body.meta).toHaveProperty('pagination');
+        expect(response.body.meta.pagination).toHaveProperty('offset');
+        expect(response.body.meta.pagination).toHaveProperty('limit');
+        expect(response.body.meta.pagination).toHaveProperty('size');
+        expect(response.body.meta.pagination.offset).toBe(0);
+        expect(response.body.meta.pagination.limit).toBe(10);
+        expect(response.body.meta.pagination.size).toBe(1);
       }
       finally {
         await deleteTestUser(testUser);
@@ -245,8 +278,19 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes?sortOn=createdAt&sortDirection=descending')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBe(2);
-        expect(new Date(response.body.results[0].createdAt) > new Date(response.body.results[1].createdAt)).toBe(true);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).toHaveProperty('meta');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
+        expect(response.body.data.length).toBe(2);
+        expect(new Date(response.body.data[0].createdAt) > new Date(response.body.data[1].createdAt)).toBe(true);
+        expect(response.body.meta).toHaveProperty('pagination');
+        expect(response.body.meta.pagination).toHaveProperty('offset');
+        expect(response.body.meta.pagination).toHaveProperty('limit');
+        expect(response.body.meta.pagination).toHaveProperty('size');
+        expect(response.body.meta.pagination.offset).toBe(0);
+        expect(response.body.meta.pagination.limit).toBe(10);
+        expect(response.body.meta.pagination.size).toBe(2);
       }
       finally {
         await deleteTestUser(testUser);
@@ -271,9 +315,10 @@ describe('passage-notes.test.js', () => {
             .set('Authorization', `Bearer ${testUser.token}`)
             .send({});
           expect(response.status).toBe(400);
-          expect(response.body.errors).toEqual({
+          expect(response.body).toHaveProperty('error');
+          expect(response.body).not.toHaveProperty('data');
+          expect(response.body.error).toEqual({
             error: { message: 'Invalid passage note' },
-            message: 'Invalid passage note',
           });
         }
         finally {
@@ -295,9 +340,10 @@ describe('passage-notes.test.js', () => {
               }],
             });
           expect(response.status).toBe(400);
-          expect(response.body.errors).toEqual({
+          expect(response.body).toHaveProperty('error');
+          expect(response.body).not.toHaveProperty('data');
+          expect(response.body.error).toEqual({
             error: { message: 'Invalid passage note' },
-            message: 'Invalid passage note',
           });
         }
         finally {
@@ -319,9 +365,10 @@ describe('passage-notes.test.js', () => {
               }],
             });
           expect(response.status).toBe(400);
-          expect(response.body.errors).toEqual({
+          expect(response.body).toHaveProperty('error');
+          expect(response.body).not.toHaveProperty('data');
+          expect(response.body.error).toEqual({
             error: { message: 'Invalid passage note' },
-            message: 'Invalid passage note',
           });
         }
         finally {
@@ -336,8 +383,13 @@ describe('passage-notes.test.js', () => {
         const response = await requestApi
           .post('/api/passage-notes')
           .set('Authorization', `Bearer ${testUser.token}`)
-          .send(invalidPassageNote2);
+          .send(invalidPassageNote);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
+        expect(response.body.error).toEqual({
+          error: { message: 'Invalid passage note' },
+        });
       }
       finally {
         await deleteTestUser(testUser);
@@ -359,9 +411,8 @@ describe('passage-notes.test.js', () => {
 
       // Assert
       expect(response.statusCode).toBe(400);
-      expect(response.body.errors).toEqual({
+      expect(response.body.error).toEqual({
         error: { message: 'Invalid passage note' },
-        message: 'Invalid passage note',
       });
 
       // Cleanup
@@ -387,9 +438,8 @@ describe('passage-notes.test.js', () => {
 
       // Assert
       expect(response.statusCode).toBe(400);
-      expect(response.body.errors).toEqual({
+      expect(response.body.error).toEqual({
         error: { message: 'Invalid passage note' },
-        message: 'Invalid passage note',
       });
 
       // Cleanup
@@ -404,6 +454,8 @@ describe('passage-notes.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ passages: [], content: '' });
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -418,9 +470,11 @@ describe('passage-notes.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ passages: passageNote1.passages });
         expect(response.status).toBe(200);
-        expect(response.body.passages.length).toEqual(passageNote1.passages.length);
-        expect(response.body.passages[0].startVerseId).toEqual(passageNote1.passages[0]!.startVerseId);
-        expect(response.body.passages[0].endVerseId).toEqual(passageNote1.passages[0]!.endVerseId);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.passages.length).toEqual(passageNote1.passages.length);
+        expect(response.body.data.passages[0].startVerseId).toEqual(passageNote1.passages[0]!.startVerseId);
+        expect(response.body.data.passages[0].endVerseId).toEqual(passageNote1.passages[0]!.endVerseId);
       }
       finally {
         await deleteTestUser(testUser);
@@ -435,7 +489,9 @@ describe('passage-notes.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ content: passageNote2.content });
         expect(response.status).toBe(200);
-        expect(response.body.content).toBe(passageNote2.content);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.content).toBe(passageNote2.content);
       }
       finally {
         await deleteTestUser(testUser);
@@ -453,10 +509,12 @@ describe('passage-notes.test.js', () => {
             content: passageNote3.content,
           });
         expect(response.status).toBe(200);
-        expect(response.body.passages.length).toEqual(passageNote3.passages.length);
-        expect(response.body.passages[0].startVerseId).toEqual(passageNote3.passages[0]!.startVerseId);
-        expect(response.body.passages[0].endVerseId).toEqual(passageNote3.passages[0]!.endVerseId);
-        expect(response.body.content).toBe(passageNote3.content);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.passages.length).toEqual(passageNote3.passages.length);
+        expect(response.body.data.passages[0].startVerseId).toEqual(passageNote3.passages[0]!.startVerseId);
+        expect(response.body.data.passages[0].endVerseId).toEqual(passageNote3.passages[0]!.endVerseId);
+        expect(response.body.data.content).toBe(passageNote3.content);
       }
       finally {
         await deleteTestUser(testUser);
@@ -479,7 +537,9 @@ describe('passage-notes.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(noteWithTag);
         expect(response.status).toBe(200);
-        expect(response.body.tags).toEqual([tags[0].id]);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.tags).toEqual([tags[0].id]);
       }
       finally {
         await deleteTestUser(testUser);
@@ -501,7 +561,7 @@ describe('passage-notes.test.js', () => {
           .send(passageNote1);
 
         const response = await requestApi
-          .put(`/api/passage-notes/${createResponse.body.id}`)
+          .put(`/api/passage-notes/${createResponse.body.data.id}`)
           .send(passageNote2);
         expect(response.status).toBe(401);
       }
@@ -518,6 +578,8 @@ describe('passage-notes.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(passageNote1);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -537,13 +599,15 @@ describe('passage-notes.test.js', () => {
           .send(passageNote1);
 
         const response = await requestApi
-          .put(`/api/passage-notes/${createResponse.body.id}`)
+          .put(`/api/passage-notes/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ passages: passageNote2.passages });
         expect(response.status).toBe(200);
-        expect(response.body.passages.length).toEqual(passageNote2.passages.length);
-        expect(response.body.passages[0].startVerseId).toEqual(passageNote2.passages[0]!.startVerseId);
-        expect(response.body.passages[0].endVerseId).toEqual(passageNote2.passages[0]!.endVerseId);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.passages.length).toEqual(passageNote2.passages.length);
+        expect(response.body.data.passages[0].startVerseId).toEqual(passageNote2.passages[0]!.startVerseId);
+        expect(response.body.data.passages[0].endVerseId).toEqual(passageNote2.passages[0]!.endVerseId);
       }
       finally {
         await deleteTestUser(testUser);
@@ -563,11 +627,13 @@ describe('passage-notes.test.js', () => {
           .send(passageNote1);
 
         const response = await requestApi
-          .put(`/api/passage-notes/${createResponse.body.id}`)
+          .put(`/api/passage-notes/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ content: passageNote2.content });
         expect(response.status).toBe(200);
-        expect(response.body.content).toBe(passageNote2.content);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.content).toBe(passageNote2.content);
       }
       finally {
         await deleteTestUser(testUser);
@@ -587,11 +653,13 @@ describe('passage-notes.test.js', () => {
           .send(passageNote1);
 
         const response = await requestApi
-          .put(`/api/passage-notes/${createResponse.body.id}`)
+          .put(`/api/passage-notes/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ tags: [tags[0].id] });
         expect(response.status).toBe(200);
-        expect(response.body.tags).toEqual([tags[0].id]);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.tags).toEqual([tags[0].id]);
       }
       finally {
         await deleteTestUser(testUser);
@@ -606,6 +674,8 @@ describe('passage-notes.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(passageNote1);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -627,7 +697,7 @@ describe('passage-notes.test.js', () => {
           .send(passageNote1);
 
         const response = await requestApi
-          .delete(`/api/passage-notes/${createResponse.body.id}`);
+          .delete(`/api/passage-notes/${createResponse.body.data.id}`);
         expect(response.status).toBe(401);
       }
       finally {
@@ -642,6 +712,8 @@ describe('passage-notes.test.js', () => {
           .delete(`/api/passage-notes/${missingObjectId}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -661,10 +733,12 @@ describe('passage-notes.test.js', () => {
           .send(passageNote1);
 
         const response = await requestApi
-          .delete(`/api/passage-notes/${createResponse.body.id}`)
+          .delete(`/api/passage-notes/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body).toBe(1);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data).toBe(1);
       }
       finally {
         await deleteTestUser(testUser);
@@ -685,14 +759,16 @@ describe('passage-notes.test.js', () => {
 
         // First delete
         await requestApi
-          .delete(`/api/passage-notes/${createResponse.body.id}`)
+          .delete(`/api/passage-notes/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
 
         // Second delete
         const response = await requestApi
-          .delete(`/api/passage-notes/${createResponse.body.id}`)
+          .delete(`/api/passage-notes/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -706,6 +782,8 @@ describe('passage-notes.test.js', () => {
           .delete('/api/passage-notes/invalid-id')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -832,6 +910,8 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes/invalid-id')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);

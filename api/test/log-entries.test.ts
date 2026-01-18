@@ -25,7 +25,9 @@ describe('log-entries.test.js', () => {
           .get('/api/log-entries')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(Array.isArray(response.body)).toBe(true);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
       }
       finally {
         await deleteTestUser(testUser);
@@ -39,6 +41,8 @@ describe('log-entries.test.js', () => {
           .get('/api/log-entries?startDate=invalid')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -52,6 +56,8 @@ describe('log-entries.test.js', () => {
           .get('/api/log-entries?startDate=2024-01-01&endDate=invalid')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -77,8 +83,10 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`);
 
         expect(response.status).toBe(200);
-        expect(response.body.length).toBe(1);
-        expect(response.body[0].id).toBe(entry2.body.id);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.length).toBe(1);
+        expect(response.body.data[0].id).toBe(entry2.body.data.id);
       }
       finally {
         await deleteTestUser(testUser);
@@ -104,8 +112,10 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`);
 
         expect(response.status).toBe(200);
-        expect(response.body.length).toBe(1);
-        expect(response.body[0].id).toBe(entry1.body.id);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.length).toBe(1);
+        expect(response.body.data[0].id).toBe(entry1.body.data.id);
       }
       finally {
         await deleteTestUser(testUser);
@@ -131,7 +141,9 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`);
 
         expect(response.status).toBe(200);
-        expect(response.body.length).toBe(2);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.length).toBe(2);
       }
       finally {
         await deleteTestUser(testUser);
@@ -158,7 +170,9 @@ describe('log-entries.test.js', () => {
         .set('Authorization', `Bearer ${testUser.token}`);
 
       expect(response.status).toBe(200);
-      expect(response.body.length).toBe(2);
+      expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty('error');
+      expect(response.body.data.length).toBe(2);
     }
     finally {
       await deleteTestUser(testUser);
@@ -181,6 +195,8 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({});
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -195,6 +211,8 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(invalidLogEntry1);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -209,6 +227,8 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(invalidLogEntry1);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -223,6 +243,8 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(invalidLogEntry2);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -237,6 +259,8 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(invalidLogEntry3);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -252,7 +276,9 @@ describe('log-entries.test.js', () => {
           .send(logEntry1);
 
         expect(response.status).toBe(200);
-        expect(response.body).toMatchObject({
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data).toMatchObject({
           date: logEntry1.date,
           startVerseId: logEntry1.startVerseId,
           endVerseId: logEntry1.endVerseId,
@@ -275,7 +301,7 @@ describe('log-entries.test.js', () => {
           .send(logEntry1);
 
         const response = await requestApi
-          .put(`/api/log-entries/${createResponse.body.id}`)
+          .put(`/api/log-entries/${createResponse.body.data.id}`)
           .send(logEntry2);
         expect(response.status).toBe(401);
       }
@@ -292,6 +318,8 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(logEntry2);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -308,10 +336,12 @@ describe('log-entries.test.js', () => {
           .send(logEntry1);
 
         const response = await requestApi
-          .put(`/api/log-entries/${createResponse.body.id}`)
+          .put(`/api/log-entries/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(invalidLogEntry2);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -328,12 +358,14 @@ describe('log-entries.test.js', () => {
           .send(logEntry1);
 
         const response = await requestApi
-          .put(`/api/log-entries/${createResponse.body.id}`)
+          .put(`/api/log-entries/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ date: logEntry2.date });
 
         expect(response.status).toBe(200);
-        expect(response.body.date).toBe(logEntry2.date);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.date).toBe(logEntry2.date);
       }
       finally {
         await deleteTestUser(testUser);
@@ -350,7 +382,7 @@ describe('log-entries.test.js', () => {
           .send(logEntry1);
 
         const response = await requestApi
-          .put(`/api/log-entries/${createResponse.body.id}`)
+          .put(`/api/log-entries/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({
             startVerseId: logEntry2.startVerseId,
@@ -358,8 +390,10 @@ describe('log-entries.test.js', () => {
           });
 
         expect(response.status).toBe(200);
-        expect(response.body.startVerseId).toBe(logEntry2.startVerseId);
-        expect(response.body.endVerseId).toBe(logEntry2.endVerseId);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.startVerseId).toBe(logEntry2.startVerseId);
+        expect(response.body.data.endVerseId).toBe(logEntry2.endVerseId);
       }
       finally {
         await deleteTestUser(testUser);
@@ -374,6 +408,8 @@ describe('log-entries.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(logEntry2);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -392,7 +428,7 @@ describe('log-entries.test.js', () => {
           .send(logEntry1);
 
         const response = await requestApi
-          .delete(`/api/log-entries/${createResponse.body.id}`);
+          .delete(`/api/log-entries/${createResponse.body.data.id}`);
         expect(response.status).toBe(401);
       }
       finally {
@@ -407,6 +443,8 @@ describe('log-entries.test.js', () => {
           .delete(`/api/log-entries/${missingObjectId}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -423,9 +461,12 @@ describe('log-entries.test.js', () => {
           .send(logEntry1);
 
         const response = await requestApi
-          .delete(`/api/log-entries/${createResponse.body.id}`)
+          .delete(`/api/log-entries/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data).toBe(1);
       }
       finally {
         await deleteTestUser(testUser);
@@ -443,14 +484,16 @@ describe('log-entries.test.js', () => {
 
         // First delete
         await requestApi
-          .delete(`/api/log-entries/${createResponse.body.id}`)
+          .delete(`/api/log-entries/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
 
         // Second delete
         const response = await requestApi
-          .delete(`/api/log-entries/${createResponse.body.id}`)
+          .delete(`/api/log-entries/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -464,6 +507,8 @@ describe('log-entries.test.js', () => {
           .delete('/api/log-entries/invalid-id')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);

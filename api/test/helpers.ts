@@ -63,10 +63,10 @@ async function createTestUser({ locale = 'en', isAdmin = false }: CreateTestUser
   }
 
   return {
-    id: loginResponse.body.id,
+    id: loginResponse.body.data.id,
     email,
     password,
-    token: loginResponse.body.token,
+    token: loginResponse.body.data.token,
   };
 }
 

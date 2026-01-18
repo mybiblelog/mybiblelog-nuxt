@@ -1,5 +1,4 @@
 import express from 'express';
-import createError from 'http-errors';
 import { type QueryFilter } from 'mongoose';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -162,7 +161,7 @@ router.get('/admin/feedback', async (req, res, next) => {
       .find()
       .sort({ createdAt: -1 })
       .exec();
-    res.send(feedback);
+    res.send({ data: feedback });
   }
   catch (error) {
     next(error);
@@ -210,7 +209,7 @@ router.get('/admin/reports/user-engagement/past-week', async (req, res, next) =>
   try {
     await authCurrentUser(req, { adminOnly: true });
     const engagementData = await getPastWeekEngagement();
-    res.send(engagementData);
+    res.send({ data: engagementData });
   }
   catch (error) {
     next(error);
@@ -367,7 +366,7 @@ router.get('/admin/users', async (req, res, next) => {
     const query = validateQuery(req.query);
 
     if (!query) {
-      return next(createError(400, 'Invalid query parameters'));
+      return res.status(400).send({ error: { error: { message: 'Invalid query parameters' } } });
     }
 
     const filterQuery: QueryFilter<IUser> = {}; // all users
@@ -410,14 +409,15 @@ router.get('/admin/users', async (req, res, next) => {
     // Count the total number of results for all applied filters
     const totalResultCount = await User.countDocuments(filterQuery);
 
-    const response = {
-      offset: query.offset,
-      limit: query.limit,
-      size: totalResultCount,
-      results: users,
+    const meta = {
+      pagination: {
+        offset: query.offset,
+        limit: query.limit,
+        size: totalResultCount,
+      },
     };
 
-    return res.send(response);
+    return res.send({ data: users, meta });
   }
   catch (error) {
     next(error);
@@ -463,8 +463,10 @@ router.get('/admin/users/:email', async (req, res, next) => {
       .findOne({ email })
       .select({ email: 1 })
       .exec();
-    if (!user) { return next(createError(404)); }
-    res.send(user);
+    if (!user) {
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+    }
+    res.send({ data: user });
   }
   catch (error) {
     next(error);
@@ -524,12 +526,12 @@ router.get('/admin/users/:email/login', async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return next(createError(404));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
     const token = user.generateJWT();
     setAuthTokenCookie(res, token);
-    res.json({ token });
+    res.json({ data: { token } });
   }
   catch (error) {
     next(error);
@@ -571,14 +573,14 @@ router.delete('/admin/users/:email', async (req, res, next) => {
 
     // Prevent admin from deleting their own account
     if (currentUser.email === email) {
-      return next(createError(400, 'You cannot delete your own admin account'));
+      return res.status(400).send({ error: { error: { message: 'You cannot delete your own admin account' } } });
     }
 
     const success = await deleteAccount(email);
     if (!success) {
-      return next(createError(404));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.sendStatus(200);
+    res.send({ data: 1 });
   }
   catch (error) {
     next(error);

@@ -14,6 +14,15 @@ describe('Feedback routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(201);
+    expect(res.body).toHaveProperty('data');
+    expect(res.body).not.toHaveProperty('error');
+    expect(res.body.data).toHaveProperty('ip');
+    expect(res.body.data).toHaveProperty('owner');
+    expect(res.body.data).toHaveProperty('email');
+    expect(res.body.data).toHaveProperty('kind');
+    expect(res.body.data).toHaveProperty('message');
+    expect(res.body.data).toHaveProperty('createdAt');
+    expect(res.body.data).toHaveProperty('updatedAt');
   });
 
   test('POST /api/feedback (authenticated user)', async () => {
@@ -32,6 +41,15 @@ describe('Feedback routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(201);
+    expect(res.body).toHaveProperty('data');
+    expect(res.body).not.toHaveProperty('error');
+    expect(res.body.data).toHaveProperty('ip');
+    expect(res.body.data).toHaveProperty('owner');
+    expect(res.body.data).toHaveProperty('email');
+    expect(res.body.data).toHaveProperty('kind');
+    expect(res.body.data).toHaveProperty('message');
+    expect(res.body.data).toHaveProperty('createdAt');
+    expect(res.body.data).toHaveProperty('updatedAt');
 
     // Cleanup
     await deleteTestUser(testUser);

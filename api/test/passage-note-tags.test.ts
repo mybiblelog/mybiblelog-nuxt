@@ -37,7 +37,9 @@ describe('passage-note-tags.test.js', () => {
           .get('/api/passage-note-tags')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(Array.isArray(response.body)).toBe(true);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
       }
       finally {
         await deleteTestUser(testUser);
@@ -57,11 +59,13 @@ describe('passage-note-tags.test.js', () => {
           .get('/api/passage-note-tags')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body[0]).toHaveProperty('id');
-        expect(response.body[0]).toHaveProperty('label');
-        expect(response.body[0]).toHaveProperty('color');
-        expect(response.body[0]).toHaveProperty('description');
-        expect(response.body[0]).toHaveProperty('noteCount');
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data[0]).toHaveProperty('id');
+        expect(response.body.data[0]).toHaveProperty('label');
+        expect(response.body.data[0]).toHaveProperty('color');
+        expect(response.body.data[0]).toHaveProperty('description');
+        expect(response.body.data[0]).toHaveProperty('noteCount');
       }
       finally {
         await deleteTestUser(testUser);
@@ -83,6 +87,8 @@ describe('passage-note-tags.test.js', () => {
           .get('/api/passage-note-tags/invalid-id')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -96,6 +102,8 @@ describe('passage-note-tags.test.js', () => {
           .get(`/api/passage-note-tags/${missingObjectId}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -112,14 +120,16 @@ describe('passage-note-tags.test.js', () => {
           .send(tag1);
 
         const response = await requestApi
-          .get(`/api/passage-note-tags/${createResponse.body.id}`)
+          .get(`/api/passage-note-tags/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.id).toBe(createResponse.body.id);
-        expect(response.body.label).toBe(tag1.label);
-        expect(response.body.color).toBe(tag1.color);
-        expect(response.body.description).toBe(tag1.description);
-        expect(response.body.noteCount).toBe(0);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.id).toBe(createResponse.body.data.id);
+        expect(response.body.data.label).toBe(tag1.label);
+        expect(response.body.data.color).toBe(tag1.color);
+        expect(response.body.data.description).toBe(tag1.description);
+        expect(response.body.data.noteCount).toBe(0);
       }
       finally {
         await deleteTestUser(testUser);
@@ -143,6 +153,8 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({});
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -157,6 +169,8 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(invalidTag);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -171,10 +185,12 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(tag1);
         expect(response.status).toBe(200);
-        expect(response.body.label).toBe(tag1.label);
-        expect(response.body.color).toBe(tag1.color);
-        expect(response.body.description).toBe(tag1.description);
-        expect(response.body.noteCount).toBe(0);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.label).toBe(tag1.label);
+        expect(response.body.data.color).toBe(tag1.color);
+        expect(response.body.data.description).toBe(tag1.description);
+        expect(response.body.data.noteCount).toBe(0);
       }
       finally {
         await deleteTestUser(testUser);
@@ -189,10 +205,12 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(tag2);
         expect(response.status).toBe(200);
-        expect(response.body.label).toBe(tag2.label);
-        expect(response.body.color).toBe(tag2.color);
-        expect(response.body.description).toBe(tag2.description);
-        expect(response.body.noteCount).toBe(0);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.label).toBe(tag2.label);
+        expect(response.body.data.color).toBe(tag2.color);
+        expect(response.body.data.description).toBe(tag2.description);
+        expect(response.body.data.noteCount).toBe(0);
       }
       finally {
         await deleteTestUser(testUser);
@@ -209,7 +227,9 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser1.token}`)
           .send(tag1);
         expect(response1.status).toBe(200);
-        expect(response1.body.label).toBe(tag1.label);
+        expect(response1.body).toHaveProperty('data');
+        expect(response1.body).not.toHaveProperty('error');
+        expect(response1.body.data.label).toBe(tag1.label);
 
         // Create tag with same label for second user
         const response2 = await requestApi
@@ -217,20 +237,22 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser2.token}`)
           .send(tag1);
         expect(response2.status).toBe(200);
-        expect(response2.body.label).toBe(tag1.label);
+        expect(response2.body).toHaveProperty('data');
+        expect(response2.body).not.toHaveProperty('error');
+        expect(response2.body.data.label).toBe(tag1.label);
 
         // Verify both tags exist and have the same label
         const tags1 = await requestApi
           .get('/api/passage-note-tags')
           .set('Authorization', `Bearer ${testUser1.token}`);
-        expect(tags1.body.length).toBe(1);
-        expect(tags1.body[0].label).toBe(tag1.label);
+        expect(tags1.body.data.length).toBe(1);
+        expect(tags1.body.data[0].label).toBe(tag1.label);
 
         const tags2 = await requestApi
           .get('/api/passage-note-tags')
           .set('Authorization', `Bearer ${testUser2.token}`);
-        expect(tags2.body.length).toBe(1);
-        expect(tags2.body[0].label).toBe(tag1.label);
+        expect(tags2.body.data.length).toBe(1);
+        expect(tags2.body.data[0].label).toBe(tag1.label);
       }
       finally {
         await deleteTestUser(testUser1);
@@ -247,7 +269,9 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(tag1);
         expect(response1.status).toBe(200);
-        expect(response1.body.label).toBe(tag1.label);
+        expect(response1.body).toHaveProperty('data');
+        expect(response1.body).not.toHaveProperty('error');
+        expect(response1.body.data.label).toBe(tag1.label);
 
         // Try to create second tag with same label
         const response2 = await requestApi
@@ -255,14 +279,16 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(tag1);
         expect(response2.status).toBe(422);
-        expect(response2.body.errors.label).toBeDefined();
+        expect(response2.body).toHaveProperty('error');
+        expect(response2.body).not.toHaveProperty('data');
+        expect(response2.body.error.error).toBeDefined();
 
         // Verify only one tag exists
         const tags = await requestApi
           .get('/api/passage-note-tags')
           .set('Authorization', `Bearer ${testUser.token}`);
-        expect(tags.body.length).toBe(1);
-        expect(tags.body[0].label).toBe(tag1.label);
+        expect(tags.body.data.length).toBe(1);
+        expect(tags.body.data[0].label).toBe(tag1.label);
       }
       finally {
         await deleteTestUser(testUser);
@@ -281,7 +307,7 @@ describe('passage-note-tags.test.js', () => {
           .send(tag1);
 
         const response = await requestApi
-          .put(`/api/passage-note-tags/${createResponse.body.id}`)
+          .put(`/api/passage-note-tags/${createResponse.body.data.id}`)
           .send(tag2);
         expect(response.status).toBe(401);
       }
@@ -298,6 +324,8 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(tag1);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -312,6 +340,8 @@ describe('passage-note-tags.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(tag1);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -328,13 +358,15 @@ describe('passage-note-tags.test.js', () => {
           .send(tag1);
 
         const response = await requestApi
-          .put(`/api/passage-note-tags/${createResponse.body.id}`)
+          .put(`/api/passage-note-tags/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ label: 'Updated Label' });
         expect(response.status).toBe(200);
-        expect(response.body.label).toBe('Updated Label');
-        expect(response.body.color).toBe(tag1.color);
-        expect(response.body.description).toBe(tag1.description);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.label).toBe('Updated Label');
+        expect(response.body.data.color).toBe(tag1.color);
+        expect(response.body.data.description).toBe(tag1.description);
       }
       finally {
         await deleteTestUser(testUser);
@@ -351,13 +383,15 @@ describe('passage-note-tags.test.js', () => {
           .send(tag1);
 
         const response = await requestApi
-          .put(`/api/passage-note-tags/${createResponse.body.id}`)
+          .put(`/api/passage-note-tags/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ color: '#00FF00' });
         expect(response.status).toBe(200);
-        expect(response.body.label).toBe(tag1.label);
-        expect(response.body.color).toBe('#00FF00');
-        expect(response.body.description).toBe(tag1.description);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.label).toBe(tag1.label);
+        expect(response.body.data.color).toBe('#00FF00');
+        expect(response.body.data.description).toBe(tag1.description);
       }
       finally {
         await deleteTestUser(testUser);
@@ -374,13 +408,15 @@ describe('passage-note-tags.test.js', () => {
           .send(tag1);
 
         const response = await requestApi
-          .put(`/api/passage-note-tags/${createResponse.body.id}`)
+          .put(`/api/passage-note-tags/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ description: 'Updated description' });
         expect(response.status).toBe(200);
-        expect(response.body.label).toBe(tag1.label);
-        expect(response.body.color).toBe(tag1.color);
-        expect(response.body.description).toBe('Updated description');
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.label).toBe(tag1.label);
+        expect(response.body.data.color).toBe(tag1.color);
+        expect(response.body.data.description).toBe('Updated description');
       }
       finally {
         await deleteTestUser(testUser);
@@ -399,7 +435,7 @@ describe('passage-note-tags.test.js', () => {
           .send(tag1);
 
         const response = await requestApi
-          .delete(`/api/passage-note-tags/${createResponse.body.id}`);
+          .delete(`/api/passage-note-tags/${createResponse.body.data.id}`);
         expect(response.status).toBe(401);
       }
       finally {
@@ -414,6 +450,8 @@ describe('passage-note-tags.test.js', () => {
           .delete(`/api/passage-note-tags/${missingObjectId}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -430,10 +468,12 @@ describe('passage-note-tags.test.js', () => {
           .send(tag1);
 
         const response = await requestApi
-          .delete(`/api/passage-note-tags/${createResponse.body.id}`)
+          .delete(`/api/passage-note-tags/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body).toBe(1);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data).toBe(1);
       }
       finally {
         await deleteTestUser(testUser);
@@ -451,14 +491,16 @@ describe('passage-note-tags.test.js', () => {
 
         // First delete
         await requestApi
-          .delete(`/api/passage-note-tags/${createResponse.body.id}`)
+          .delete(`/api/passage-note-tags/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
 
         // Second delete
         const response = await requestApi
-          .delete(`/api/passage-note-tags/${createResponse.body.id}`)
+          .delete(`/api/passage-note-tags/${createResponse.body.data.id}`)
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);
@@ -472,6 +514,8 @@ describe('passage-note-tags.test.js', () => {
           .delete('/api/passage-note-tags/invalid-id')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(testUser);

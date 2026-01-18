@@ -24,7 +24,10 @@ describe('Auth routes', () => {
     // Assert
     expect(res.statusCode).toBe(422);
     expect(res.headers['set-cookie']).toBeUndefined();
-    expect(res.body.errors).toEqual({
+    expect(res.body).toHaveProperty('error');
+    expect(res.body).not.toHaveProperty('data');
+    expect(res.body.error).toHaveProperty('errors');
+    expect(res.body.error.errors).toEqual({
       _form: {
         kind: 'api_error.invalid_login',
         field: '_form',
@@ -48,9 +51,11 @@ describe('Auth routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty('data');
+    expect(res.body).not.toHaveProperty('error');
     // expect token in response body
-    expect(res.body).toHaveProperty('token');
-    expect(typeof res.body.token).toBe('string');
+    expect(res.body.data).toHaveProperty('token');
+    expect(typeof res.body.data.token).toBe('string');
     // expect cookie to be set in header
     expect(res.headers['set-cookie']).toBeDefined();
     expect(res.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=`);
@@ -87,9 +92,10 @@ describe('Auth routes', () => {
     // The ONE unauthenticated route that returns a 200
     // only because Nuxt auth would fail otherwise
     expect(res.statusCode).toBe(200);
-
-    expect(res.body).toHaveProperty('user');
-    expect(res.body.user).toBe(null);
+    expect(res.body).toHaveProperty('data');
+    expect(res.body).not.toHaveProperty('error');
+    expect(res.body.data).toHaveProperty('user');
+    expect(res.body.data.user).toBe(null);
   });
 
   test('GET /api/auth/user (authenticated)', async () => {
@@ -103,10 +109,12 @@ describe('Auth routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(200);
-    expect(res.body).toHaveProperty('user');
-    expect(res.body.user.email).toBe(testUser.email);
-    expect(res.body.user.hasLocalAccount).toBe(true);
-    expect(res.body.user.isAdmin).toBe(false);
+    expect(res.body).toHaveProperty('data');
+    expect(res.body).not.toHaveProperty('error');
+    expect(res.body.data).toHaveProperty('user');
+    expect(res.body.data.user.email).toBe(testUser.email);
+    expect(res.body.data.user.hasLocalAccount).toBe(true);
+    expect(res.body.data.user.isAdmin).toBe(false);
 
     // Cleanup
     await deleteTestUser(testUser);
@@ -227,7 +235,7 @@ describe('Auth routes', () => {
           testUsers.push({
             email,
             password,
-            token: response.body.token,
+            token: response.body.data.token,
           });
         }
       }
@@ -260,13 +268,24 @@ describe('Auth routes', () => {
           });
 
         expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body.data).toHaveProperty('success');
+        expect(response.body.data.success).toBe(true);
         successfulRequests.push(response);
+
+        // Login to get token for cleanup
         if (response.status === 200) {
-          testUsers.push({
-            email,
-            password,
-            token: response.body.token,
-          });
+          const loginResponse = await requestApi
+            .post('/api/auth/login')
+            .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
+            .send({ email, password });
+          if (loginResponse.status === 200) {
+            testUsers.push({
+              email,
+              password,
+              token: loginResponse.body.data.token,
+            });
+          }
         }
       }
 
@@ -300,14 +319,45 @@ describe('Auth routes', () => {
       const res = await requestApi
         .get(`/api/auth/verify-email/${testEmailVerificationCode}`);
       expect(res.statusCode).toBe(200);
+      expect(res.body).toHaveProperty('data');
+      expect(res.body).not.toHaveProperty('error');
       expect(res.headers['set-cookie']).toBeDefined();
       expect(res.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=`);
-      expect(res.body).toHaveProperty('token');
-      expect(typeof res.body.token).toBe('string');
+      expect(res.body.data).toHaveProperty('token');
+      expect(typeof res.body.data.token).toBe('string');
 
-      await deleteTestUser({ token: registerResponse.body.token });
+      await deleteTestUser({ token: registerResponse.body.data.token });
     });
   });
+
+
+  describe('PUT /api/auth/change-password', () => {
+    test('Incorrect password for password change', async () => {
+      // Arrange
+      const testUser = await createTestUser();
+
+      // Act
+      const response = await requestApi
+        .put('/api/auth/change-password')
+        .set('Authorization', `Bearer ${testUser.token}`)
+        .send({
+          currentPassword: 'wrongpassword',
+          newPassword: 'newpassword123',
+        });
+
+      // Assert
+      expect(response.statusCode).toBe(400);
+      expect(response.body).toHaveProperty('error');
+      expect(response.body).not.toHaveProperty('data');
+      expect(response.body.error).toEqual({
+        currentPassword: { field: 'currentPassword', kind: 'api_error.password_incorrect', properties: {} }
+      });
+
+      // Cleanup
+      await deleteTestUser(testUser);
+    });
+  });
+
 
   describe('POST /api/auth/reset-password', () => {
     it('returns the password reset code in the response body when test bypass header is present', async () => {
@@ -319,10 +369,12 @@ describe('Auth routes', () => {
           email: testUser.email
         });
       expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('success');
-      expect(response.body.success).toBe(true);
-      expect(response.body).toHaveProperty('passwordResetCode');
-      expect(response.body.passwordResetCode).toBeDefined();
+      expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty('error');
+      expect(response.body.data).toHaveProperty('success');
+      expect(response.body.data.success).toBe(true);
+      expect(response.body.data).toHaveProperty('passwordResetCode');
+      expect(response.body.data.passwordResetCode).toBeDefined();
 
       await deleteTestUser(testUser);
     });
@@ -335,7 +387,9 @@ describe('Auth routes', () => {
           email: testUser.email
         });
       expect(response.statusCode).toBe(200);
-      expect(response.body).not.toHaveProperty('passwordResetCode');
+      expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty('error');
+      expect(response.body.data).not.toHaveProperty('passwordResetCode');
 
       await deleteTestUser(testUser);
     });
@@ -343,25 +397,15 @@ describe('Auth routes', () => {
     it('returns 422 for invalid email', async () => {
       const response = await requestApi
         .post('/api/auth/reset-password')
+        .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
         .send({
           email: 'invalid-email'
         });
       expect(response.statusCode).toBe(422);
-      expect(response.body).toHaveProperty('errors');
-      expect(response.body.errors).toHaveProperty('email');
-    });
-
-    it('does not return the password reset code in the response body when test bypass header is not present', async () => {
-      const testUser = await createTestUser();
-      const response = await requestApi
-        .post('/api/auth/reset-password')
-        .send({
-          email: testUser.email
-        });
-        expect(response.statusCode).toBe(200);
-      expect(response.body).not.toHaveProperty('passwordResetCode');
-
-      await deleteTestUser(testUser);
+      expect(response.body).toHaveProperty('error');
+      expect(response.body).not.toHaveProperty('data');
+      expect(response.body.error).toHaveProperty('errors');
+      expect(response.body.error.errors).toHaveProperty('email');
     });
   });
 
@@ -380,7 +424,7 @@ describe('Auth routes', () => {
         .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
         .send({ email: testUser.email });
 
-      const passwordResetCode = passwordResetCodeResponse.body.passwordResetCode;
+      const passwordResetCode = passwordResetCodeResponse.body.data.passwordResetCode;
       expect(passwordResetCode).toBeDefined();
 
       const response = await requestApi
@@ -390,8 +434,11 @@ describe('Auth routes', () => {
       expect(response.statusCode).toBe(200);
       expect(response.headers['set-cookie']).toBeDefined();
       expect(response.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=`);
-      expect(response.body).toHaveProperty('token');
-      expect(typeof response.body.token).toBe('string');
+      expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty('error');
+      expect(response.body.data).toHaveProperty('token');
+      expect(response.body.data.token).toBeDefined();
+      expect(typeof response.body.data.token).toBe('string');
 
       await deleteTestUser(testUser);
     });
@@ -402,7 +449,9 @@ describe('Auth routes', () => {
       const res = await requestApi
         .get('/api/auth/oauth2/google/verify?code=test-code&state=invalid-state');
       expect(res.statusCode).toBe(400);
-      expect(res.body).toHaveProperty('errors');
+      expect(res.body).toHaveProperty('error');
+      expect(res.body).not.toHaveProperty('data');
+      expect(res.body.error).toHaveProperty('errors');
     });
 
     // Note: A full test that verifies token and cookie would require mocking
@@ -423,10 +472,12 @@ describe('Auth routes', () => {
           password: testUser.password,
         });
       expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('success');
-      expect(response.body.success).toBe(true);
-      expect(response.body).toHaveProperty('newEmailVerificationCode');
-      expect(response.body.newEmailVerificationCode).toBeDefined();
+      expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty('error');
+      expect(response.body.data).toHaveProperty('success');
+      expect(response.body.data.success).toBe(true);
+      expect(response.body.data).toHaveProperty('newEmailVerificationCode');
+      expect(response.body.data.newEmailVerificationCode).toBeDefined();
 
       await deleteTestUser(testUser);
     });
@@ -441,7 +492,9 @@ describe('Auth routes', () => {
           password: testUser.password,
         });
       expect(response.statusCode).toBe(200);
-      expect(response.body).not.toHaveProperty('newEmailVerificationCode');
+      expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty('error');
+      expect(response.body.data).not.toHaveProperty('newEmailVerificationCode');
 
       await deleteTestUser(testUser);
     });
@@ -459,7 +512,7 @@ describe('Auth routes', () => {
           newEmail,
           password: testUser.password,
         });
-      const newEmailVerificationCode = newEmailVerificationCodeResponse.body.newEmailVerificationCode;
+      const newEmailVerificationCode = newEmailVerificationCodeResponse.body.data.newEmailVerificationCode;
       expect(newEmailVerificationCode).toBeDefined();
 
       const response = await requestApi
@@ -470,8 +523,10 @@ describe('Auth routes', () => {
           password: testUser.password,
         });
       expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('token');
-      expect(typeof response.body.token).toBe('string');
+      expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty('error');
+      expect(response.body.data).toHaveProperty('token');
+      expect(typeof response.body.data.token).toBe('string');
       expect(response.headers['set-cookie']).toBeDefined();
       expect(response.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=`);
 
@@ -483,6 +538,8 @@ describe('Auth routes', () => {
           password: testUser.password,
         });
       expect(loginResponse.statusCode).toBe(200);
+      expect(loginResponse.body).toHaveProperty('data');
+      expect(loginResponse.body).not.toHaveProperty('error');
 
       await deleteTestUser(testUser);
     });

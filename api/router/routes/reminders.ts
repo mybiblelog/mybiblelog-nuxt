@@ -89,7 +89,7 @@ router.get('/reminders/daily-reminder', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     const reminder = await getUserReminder(currentUser);
-    return res.send(reminder.toJSON());
+    return res.send({ data: reminder.toJSON() });
   }
   catch (error) {
     next(error);
@@ -147,7 +147,7 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
       }
     });
     await reminder.save();
-    res.send(reminder.toJSON());
+    res.send({ data: reminder.toJSON() });
   }
   catch (error) {
     next(error);
@@ -188,25 +188,18 @@ router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next)
 
   const reminder = await DailyReminder.findOne({ unsubscribeCode: code });
   if (!reminder) {
-    return res.send({
-      error: true,
-    });
+    return res.status(404).send({ error: { error: { message: 'Not Found' } } });
   }
 
   const user = await User.findOne({ _id: reminder.owner });
   if (!user) {
-    return res.send({
-      error: true,
-    });
+    return res.status(404).send({ error: { error: { message: 'Not Found' } } });
   }
 
   reminder.active = false;
   await reminder.save();
 
-  return res.send({
-    error: false,
-    email: user.email,
-  });
+  return res.send({ data: { email: user.email } });
 });
 
 export default router;

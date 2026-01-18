@@ -74,7 +74,7 @@ const router = express.Router();
  *             schema:
  *               type: object
  *               properties:
- *                 errors:
+ *                 error:
  *                   type: object
  */
 
@@ -101,7 +101,7 @@ router.post('/feedback', async (req, res, next) => {
       if (recentFeedbackCount >= 5) {
         return res
           .status(status.TOO_MANY_REQUESTS)
-          .json({ errors: { _form: makeI18nError(I18nError.TooManyRequests, '_form') } });
+          .json({ error: { _form: makeI18nError(I18nError.TooManyRequests, '_form') } });
       }
     }
 
@@ -119,7 +119,7 @@ router.post('/feedback', async (req, res, next) => {
     });
 
     await feedback.save();
-    res.sendStatus(status.CREATED);
+    res.status(status.CREATED).send({ data: feedback.toJSON() });
   }
   catch (error) {
     next(error);

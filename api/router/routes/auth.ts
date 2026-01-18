@@ -88,8 +88,8 @@ const router = express.Router();
 router.get('/auth/user', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req, { optional: true });
-    if (!currentUser) { return res.json({ user: null }); }
-    return res.json({ user: currentUser.toAuthJSON() });
+    if (!currentUser) { return res.json({ data: { user: null } }); }
+    return res.json({ data: { user: currentUser.toAuthJSON() } });
   }
   catch (error) {
     next(error);
@@ -166,35 +166,37 @@ router.post('/auth/login', async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email) {
-    return res.status(422).json({ errors: { email: makeI18nError(I18nError.Required, 'email') } });
+    return res.status(422).json({ error: { errors: { email: makeI18nError(I18nError.Required, 'email') } } });
   }
 
   if (!password) {
-    return res.status(422).json({ errors: { password: makeI18nError(I18nError.Required, 'password') } });
+    return res.status(422).json({ error: { errors: { password: makeI18nError(I18nError.Required, 'password') } } });
   }
 
   const { User } = await useMongooseModels();
   const user = await User.findOne({ email });
   if (!user) {
     // definitely invalid email, but not giving that away
-    return res.status(422).json({ errors: { _form: makeI18nError(I18nError.InvalidLogin, '_form') } });
+    return res.status(422).json({ error: { errors: { _form: makeI18nError(I18nError.InvalidLogin, '_form') } } });
   }
 
   const passwordValid = await user.authenticate(password);
   if (!passwordValid) {
     // definitely invalid password, but not giving that away
-    return res.status(422).json({ errors: { _form: makeI18nError(I18nError.InvalidLogin, '_form') } });
+    return res.status(422).json({ error: { errors: { _form: makeI18nError(I18nError.InvalidLogin, '_form') } } });
   }
   const bypass = checkTestBypass(req);
   if (requireEmailVerification && !isEmailVerified(user) && !bypass) {
-    return res.status(422).json({ errors: { _form: makeI18nError(I18nError.VerifyEmail, '_form', { email: user.email }) } });
+    return res.status(422).json({ error: { errors: { _form: makeI18nError(I18nError.VerifyEmail, '_form', { email: user.email }) } } });
   }
   const userData = user.toAuthJSON();
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
   return res.json({
-    token,
-    user: userData,
+    data: {
+      token,
+      user: userData,
+    },
   });
 });
 
@@ -227,7 +229,7 @@ router.post('/auth/logout', async (req, res, next) => {
   try {
     await authCurrentUser(req);
     res.clearCookie(AUTH_COOKIE_NAME);
-    return res.json(true);
+    return res.json({ data: true });
   }
   catch (error) {
     next(error);
@@ -322,7 +324,7 @@ router.post('/auth/register', async (req, res, next) => {
 
     await user.save();
 
-    res.json({ success: true });
+    res.json({ data: { success: true } });
 
     // Send a verification email
     const emailService = await useEmailService();
@@ -365,7 +367,7 @@ router.post('/auth/register', async (req, res, next) => {
  */
 router.get('/auth/oauth2/google/url', (req, res, next) => {
   const { url, state } = googleOauth2.getGoogleLoginUrl();
-  res.send({ url, state });
+  res.send({ data: { url, state } });
 });
 
 /**
@@ -423,7 +425,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     // Verify state parameter to prevent CSRF attacks
     if (!state || !googleOauth2.verifyState(state)) {
       return res.status(400).json({
-        errors: { _form: makeI18nError(I18nError.InvalidRequest, '_form') },
+        error: { errors: { _form: makeI18nError(I18nError.InvalidRequest, '_form') } },
       });
     }
 
@@ -441,7 +443,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     // Only accept verified Google emails
     if (verified_email !== true) {
       return res.status(400).json({
-        errors: { _form: makeI18nError(I18nError.EmailNotVerified, '_form') },
+        error: { errors: { _form: makeI18nError(I18nError.EmailNotVerified, '_form') } },
       });
     }
 
@@ -455,7 +457,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
 
       const token = existingUser.generateJWT();
       setAuthTokenCookie(res, token);
-      return res.send({ token });
+      return res.send({ data: { token } });
     }
 
     // Create new user account
@@ -471,7 +473,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     await user.save();
     const token = user.generateJWT();
     setAuthTokenCookie(res, token);
-    res.send({ token });
+    res.send({ data: { token } });
   }
   catch (err) {
     next(err);
@@ -529,7 +531,7 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   // Verify the code and check expiration
   if (!user.verifyEmailVerificationCode(emailVerificationCode)) {
     return res.status(400).json({
-      errors: { _form: makeI18nError(I18nError.VerificationCodeExpired, '_form') },
+      error: { errors: { _form: makeI18nError(I18nError.VerificationCodeExpired, '_form') } },
     });
   }
 
@@ -541,13 +543,13 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ token });
+  res.json({ data: { token } });
 });
 
 /**
  * @swagger
  * /auth/change-password:
- *   post:
+ *   put:
  *     summary: Change user password
  *     tags: [Authentication]
  *     security:
@@ -572,7 +574,7 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
  *       400:
  *         description: Current password is incorrect
  */
-router.post('/auth/change-password', async (req, res, next) => {
+router.put('/auth/change-password', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     const { currentPassword, newPassword } = req.body;
@@ -581,7 +583,7 @@ router.post('/auth/change-password', async (req, res, next) => {
     const passwordValid = await currentUser.authenticate(currentPassword);
     if (!passwordValid) {
       return res.status(status.BAD_REQUEST).send({
-        errors: {
+        error: {
           currentPassword: makeI18nError(I18nError.PasswordIncorrect, 'currentPassword'),
         },
       });
@@ -591,7 +593,7 @@ router.post('/auth/change-password', async (req, res, next) => {
     currentUser.password = newPassword;
     try {
       await currentUser.save();
-      res.send(status.OK);
+      res.send({ data: status.OK });
     }
     catch (err) {
       // Any 'password' validation errors should be seen on the 'newPassword' field
@@ -645,19 +647,19 @@ router.post('/auth/change-email', async (req, res, next) => {
 
     // disallow newEmail to be current email
     if (newEmail === currentUser.email) {
-      return res.status(422).json({ errors: { newEmail: makeI18nError(I18nError.NewEmailRequired, 'newEmail') } });
+      return res.status(422).json({ error: { errors: { newEmail: makeI18nError(I18nError.NewEmailRequired, 'newEmail') } } });
     }
 
     // disallow newEmail to be an email currently in use by another user
     const existingUserWithEmail = await User.findOne({ email: newEmail });
     if (existingUserWithEmail) {
-      return res.status(422).json({ errors: { newEmail: makeI18nError(I18nError.EmailInUse, 'newEmail') } });
+      return res.status(422).json({ error: { errors: { newEmail: makeI18nError(I18nError.EmailInUse, 'newEmail') } } });
     }
 
     // confirm password
     const passwordValid = await currentUser.authenticate(password);
     if (!passwordValid) {
-      return res.status(422).json({ errors: { password: makeI18nError(I18nError.PasswordIncorrect, 'password') } });
+      return res.status(422).json({ error: { errors: { password: makeI18nError(I18nError.PasswordIncorrect, 'password') } } });
     }
 
     // have the new email confirmation expire in 1 hour
@@ -665,11 +667,11 @@ router.post('/auth/change-email', async (req, res, next) => {
     await currentUser.save();
 
     // send success response
-    const response: { success: boolean; newEmailVerificationCode?: string } = { success: true };
+    const responseData: { success: boolean; newEmailVerificationCode?: string } = { success: true };
     if (authBypass && currentUser.newEmailVerificationCode) {
-      response.newEmailVerificationCode = currentUser.newEmailVerificationCode;
+      responseData.newEmailVerificationCode = currentUser.newEmailVerificationCode;
     }
-    res.send(response);
+    res.send({ data: responseData });
 
     // send an email update confirmation code
     const emailService = await useEmailService();
@@ -708,14 +710,18 @@ router.get('/auth/change-email', async (req, res, next) => {
 
     if (currentUser.newEmail) {
       return res.send({
-        newEmail: currentUser.newEmail,
-        expires: currentUser.newEmailVerificationExpires,
+        data: {
+          newEmail: currentUser.newEmail,
+          expires: currentUser.newEmailVerificationExpires,
+        },
       });
     }
 
     return res.send({
-      newEmail: null,
-      expires: null,
+      data: {
+        newEmail: null,
+        expires: null,
+      },
     });
   }
   catch (error) {
@@ -749,12 +755,14 @@ router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next
 
   if (user) {
     return res.send({
-      newEmail: user.newEmail,
-      expires: user.newEmailVerificationExpires,
+      data: {
+        newEmail: user.newEmail,
+        expires: user.newEmailVerificationExpires,
+      },
     });
   }
 
-  return res.send(null);
+  return res.send({ data: null });
 });
 
 /**
@@ -780,14 +788,14 @@ router.delete('/auth/change-email', async (req, res, next) => {
     if (currentUser.newEmail) {
       currentUser.disableEmailUpdate();
       await currentUser.save();
-      return res.send(true);
+      return res.send({ data: true });
     }
 
-    return res.send(false);
+    return res.send({ data: false });
   }
   catch (err) {
     console.log(err);
-    return res.send(false);
+    return res.send({ data: false });
   }
 });
 
@@ -871,7 +879,7 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ token });
+  res.json({ data: { token } });
 });
 
 /**
@@ -908,18 +916,18 @@ router.post('/auth/reset-password', async (req, res) => {
   const { User } = await useMongooseModels();
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(422).json({ errors: { email: makeI18nError(I18nError.AccountNotFound, 'email') } });
+    return res.status(422).json({ error: { errors: { email: makeI18nError(I18nError.AccountNotFound, 'email') } } });
   }
   // have the password reset expire in 1 hour
   user.enablePasswordReset();
   await user.save();
 
   // send success response, but don't `return` here so the email can be sent
-  const response: { success: boolean; passwordResetCode?: string } = { success: true };
+  const responseData: { success: boolean; passwordResetCode?: string } = { success: true };
   if (authBypass && user.passwordResetCode) {
-    response.passwordResetCode = user.passwordResetCode;
+    responseData.passwordResetCode = user.passwordResetCode;
   }
-  res.send(response);
+  res.send({ data: responseData });
 
   // send password reset code via email
   const emailService = await useEmailService();
@@ -954,10 +962,10 @@ router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, nex
   const { User } = await useMongooseModels();
   const user = await User.findOne({ passwordResetCode });
   if (user) {
-    return res.json({ valid: true });
+    return res.json({ data: { valid: true } });
   }
   else {
-    return res.json({ valid: false });
+    return res.json({ data: { valid: false } });
   }
 });
 
@@ -1021,14 +1029,14 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   const user = await User.findOne({ passwordResetCode });
   if (!user) {
     return res.status(status.BAD_REQUEST).send({
-      errors: { _form: makeI18nError(I18nError.InvalidRequest, '_form') },
+      error: { errors: { _form: makeI18nError(I18nError.InvalidRequest, '_form') } },
     });
   }
 
   // Ensure the password reset is not expired
   if (!user.verifyPasswordResetCode(passwordResetCode)) {
     return res.status(status.BAD_REQUEST).send({
-      errors: { _form: makeI18nError(I18nError.PasswordResetLinkExpired, '_form') },
+      error: { errors: { _form: makeI18nError(I18nError.PasswordResetLinkExpired, '_form') } },
     });
   }
 
@@ -1048,7 +1056,7 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ token });
+  res.json({ data: { token } });
 });
 
 export default router;

@@ -1,6 +1,4 @@
 import express from 'express';
-import status from 'http-status';
-import createError from 'http-errors';
 import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import deleteAccount from '../helpers/deleteAccount';
 
@@ -48,9 +46,9 @@ router.get('/settings', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     if (!currentUser) {
-      return next(createError(401, 'Unauthorized'));
+      return res.status(401).send({ error: { error: { message: 'Unauthorized' } } });
     }
-    res.json(currentUser.settings);
+    res.json({ data: currentUser.settings });
   }
   catch (error) {
     next(error);
@@ -94,7 +92,7 @@ router.put('/settings', async (req, res, next) => {
       }
     });
     await currentUser.save();
-    return res.sendStatus(status.OK);
+    return res.send({ data: currentUser.settings });
   }
   catch (error) {
     next(error);
@@ -118,11 +116,11 @@ router.put('/settings/delete-account', async (req, res, next) => {
     const currentUser = await authCurrentUser(req);
     const success = await deleteAccount(currentUser.email);
     if (!success) {
-      return next(createError(500, 'Failed to delete account'));
+      return res.status(500).send({ error: { error: { message: 'Failed to delete account' } } });
     }
     // clear the auth cookie on account deletion
     res.clearCookie(AUTH_COOKIE_NAME);
-    return res.sendStatus(status.OK);
+    return res.send({ data: 1 });
   }
   catch (error) {
     next(error);

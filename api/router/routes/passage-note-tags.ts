@@ -1,5 +1,4 @@
 import express from 'express';
-import createError from 'http-errors';
 import { ObjectId } from 'mongodb';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
@@ -76,7 +75,7 @@ router.get('/passage-note-tags', async (req, res, next) => {
       passageNoteTag.noteCount = await countTagNotes(passageNoteTag);
     }
 
-    return res.send(passageNoteTags);
+    return res.send({ data: passageNoteTags });
   }
   catch (error) {
     next(error);
@@ -112,7 +111,7 @@ router.get('/passage-note-tags/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
     }
 
     const { PassageNoteTag } = await useMongooseModels();
@@ -120,10 +119,10 @@ router.get('/passage-note-tags/:id', async (req, res, next) => {
 
     const passageNoteTag = await PassageNoteTag.findOne({ owner: currentUser._id, _id: id });
     if (!passageNoteTag) {
-      return next(createError(404, 'Not Found'));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
     passageNoteTag.noteCount = await countTagNotes(passageNoteTag);
-    res.send(passageNoteTag.toJSON());
+    res.send({ data: passageNoteTag.toJSON() });
   }
   catch (error) {
     next(error);
@@ -175,7 +174,7 @@ router.post('/passage-note-tags', async (req, res, next) => {
       await passageNoteTag.validate();
     }
     catch (error) {
-      return next(createError(400, error.message));
+      return res.status(400).send({ error: { error: { message: error.message } } });
     }
     try {
       await passageNoteTag.save();
@@ -183,17 +182,13 @@ router.post('/passage-note-tags', async (req, res, next) => {
     catch (error) {
       // Check if this is a duplicate key error (index violation)
       if (error.code === 11000) {
-        return res.status(422).send({
-          errors: {
-            label: 'A tag with this label already exists',
-          },
-        });
+        return res.status(422).send({ error: { error: { message: 'A tag with this label already exists' } } });
       }
       throw error;
     }
 
     passageNoteTag.noteCount = 0;
-    res.send(passageNoteTag.toJSON());
+    res.send({ data: passageNoteTag.toJSON() });
   }
   catch (error) {
     next(error);
@@ -245,7 +240,7 @@ router.put('/passage-note-tags/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
     }
 
     const { PassageNoteTag } = await useMongooseModels();
@@ -254,7 +249,7 @@ router.put('/passage-note-tags/:id', async (req, res, next) => {
 
     const passageNoteTag = await PassageNoteTag.findOne({ owner: currentUser._id, _id: id });
     if (!passageNoteTag) {
-      return next(createError(404, 'Not Found'));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
     if (label) { passageNoteTag.label = label; }
@@ -264,12 +259,12 @@ router.put('/passage-note-tags/:id', async (req, res, next) => {
       await passageNoteTag.validate();
     }
     catch (error) {
-      return next(createError(400, error.message));
+      return res.status(400).send({ error: { error: { message: error.message } } });
     }
 
     await passageNoteTag.save();
 
-    res.send(passageNoteTag.toJSON());
+    res.send({ data: passageNoteTag.toJSON() });
   }
   catch (error) {
     next(error);
@@ -303,7 +298,7 @@ router.delete('/passage-note-tags/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
     }
 
     const { PassageNoteTag } = await useMongooseModels();
@@ -311,10 +306,10 @@ router.delete('/passage-note-tags/:id', async (req, res, next) => {
 
     const result = await PassageNoteTag.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
-      return next(createError(404, 'Not Found'));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
-    res.send(result.deletedCount);
+    res.send({ data: result.deletedCount } );
   }
   catch (error) {
     next(error);

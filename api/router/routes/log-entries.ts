@@ -1,5 +1,4 @@
 import express from 'express';
-import createError from 'http-errors';
 import { ObjectId } from 'mongodb';
 import { SimpleDate } from '@mybiblelog/shared';
 import authCurrentUser from '../helpers/authCurrentUser';
@@ -78,30 +77,30 @@ router.get('/log-entries', async (req, res, next) => {
     const { startDate, endDate } = req.query as { startDate: string; endDate: string };
 
     if (startDate && !SimpleDate.validateString(startDate)) {
-      return next(createError(400, 'Invalid startDate'));
+      return res.status(400).send({ error: { error: { message: 'Invalid startDate' } } });
     }
 
     if (endDate && !SimpleDate.validateString(endDate)) {
-      return next(createError(400, 'Invalid endDate'));
+      return res.status(400).send({ error: { error: { message: 'Invalid endDate' } } });
     }
 
     if (!startDate && !endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id });
-      return res.send(logEntries);
+      return res.send({ data: logEntries });
     }
 
     if (startDate && !endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate } });
-      return res.send(logEntries);
+      return res.send({ data: logEntries });
     }
 
     if (!startDate && endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $lte: endDate } });
-      return res.send(logEntries);
+      return res.send({ data: logEntries });
     }
 
     const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate, $lte: endDate } });
-    return res.send(logEntries);
+    return res.send({ data: logEntries });
   }
   catch (error) {
     next(error);
@@ -137,7 +136,7 @@ router.get('/log-entries/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
     }
 
     const { LogEntry } = await useMongooseModels();
@@ -145,9 +144,9 @@ router.get('/log-entries/:id', async (req, res, next) => {
 
     const logEntry = await LogEntry.findOne({ owner: currentUser._id, _id: id });
     if (!logEntry) {
-      return next(createError(404, 'Not Found'));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.send(logEntry.toJSON());
+    res.send({ data: logEntry.toJSON() });
   }
   catch (error) {
     next(error);
@@ -199,11 +198,11 @@ router.post('/log-entries', async (req, res, next) => {
       await logEntry.validate();
     }
     catch (error) {
-      return next(createError(400, 'Invalid log entry'));
+      return res.status(400).send({ error: { error: { message: 'Invalid log entry' } } });
     }
     await logEntry.save();
 
-    res.send(logEntry.toJSON());
+    res.send({ data: logEntry.toJSON() });
   }
   catch (error) {
     next(error);
@@ -253,7 +252,7 @@ router.put('/log-entries/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
     }
 
     const { LogEntry } = await useMongooseModels();
@@ -262,7 +261,7 @@ router.put('/log-entries/:id', async (req, res, next) => {
 
     const logEntry = await LogEntry.findOne({ owner: currentUser._id, _id: id });
     if (!logEntry) {
-      return next(createError(404, 'Not Found'));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
     if (date) { logEntry.date = date; }
@@ -273,11 +272,11 @@ router.put('/log-entries/:id', async (req, res, next) => {
       await logEntry.validate();
     }
     catch (error) {
-      return next(createError(400, 'Invalid log entry'));
+      return res.status(400).send({ error: { error: { message: 'Invalid log entry' } } });
     }
     await logEntry.save();
 
-    res.send(logEntry.toJSON());
+    res.send({ data: logEntry.toJSON() });
   }
   catch (error) {
     next(error);
@@ -309,7 +308,7 @@ router.delete('/log-entries/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
     }
 
     const { LogEntry } = await useMongooseModels();
@@ -317,10 +316,10 @@ router.delete('/log-entries/:id', async (req, res, next) => {
 
     const result = await LogEntry.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
-      return next(createError(404, 'Not Found'));
+      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
-    res.send(result.deletedCount);
+    res.send({ data: result.deletedCount });
   }
   catch (error) {
     next(error);
