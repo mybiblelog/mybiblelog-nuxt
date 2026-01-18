@@ -730,7 +730,7 @@ router.get('/passage-notes/count/books', async (req, res, next) => {
       },
     ]);
 
-    res.send(result[0]);
+    res.send({ data: result[0] });
   }
   catch (error) {
     next(error);

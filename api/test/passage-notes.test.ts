@@ -805,12 +805,14 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes/count/books')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(typeof response.body).toBe('object');
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(typeof response.body.data).toBe('object');
         // Check that all Bible books are present in the response
-        expect(response.body).toHaveProperty('1');
-        expect(response.body).toHaveProperty('66');
+        expect(response.body.data).toHaveProperty('1');
+        expect(response.body.data).toHaveProperty('66');
         // Check that all values are numbers
-        Object.values(response.body).forEach((value) => {
+        Object.values(response.body.data).forEach((value) => {
           expect(typeof value).toBe('number');
         });
       }
@@ -856,9 +858,11 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes/count/books')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body[1]).toBe(2); // 2 notes in Genesis
-        expect(response.body[2]).toBe(1); // 1 note in Exodus
-        expect(response.body[66]).toBe(0); // 0 notes in Revelation
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data[1]).toEqual(2); // 2 notes in Genesis
+        expect(response.body.data[2]).toEqual(1); // 1 note in Exodus
+        expect(response.body.data[66]).toEqual(0); // 0 notes in Revelation
       }
       finally {
         await deleteTestUser(testUser);
@@ -887,8 +891,10 @@ describe('passage-notes.test.js', () => {
           .get('/api/passage-notes/count/books')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body[1]).toBe(1); // Note counted in Genesis
-        expect(response.body[2]).toBe(1); // Note counted in Exodus
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data[1]).toEqual(1); // Note counted in Genesis
+        expect(response.body.data[2]).toEqual(1); // Note counted in Exodus
       }
       finally {
         await deleteTestUser(testUser);
