@@ -116,7 +116,7 @@ describe('admin.test.js', () => {
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('error');
         expect(response.body).not.toHaveProperty('data');
-        expect(response.body.error.error.message).toBe('You cannot delete your own admin account');
+        expect(response.body.error.code).toBe('invalid_request');
       }
       finally {
         await deleteTestUser(admin);

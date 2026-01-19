@@ -4,7 +4,7 @@ import config from '../../config';
 import rateLimit from '../helpers/rateLimit';
 import authCurrentUser, { AUTH_COOKIE_NAME, setAuthTokenCookie } from '../helpers/authCurrentUser';
 import googleOauth2 from '../helpers/google-oauth2';
-import { I18nError, makeI18nError } from '../helpers/i18n-error';
+import { ApiErrorCode, ApiErrorDetailCode } from '../helpers/error-codes';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import useEmailService from '../../services/email/email-service';
 import checkTestBypass from '../helpers/checkTestBypass';
@@ -89,8 +89,8 @@ const router = express.Router();
 router.get('/auth/user', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req, { optional: true });
-    if (!currentUser) { return res.json({ data: { user: null } } as ApiResponse); }
-    return res.json({ data: { user: currentUser.toAuthJSON() } } as ApiResponse);
+    if (!currentUser) { return res.json({ data: { user: null } } satisfies ApiResponse); }
+    return res.json({ data: { user: currentUser.toAuthJSON() } } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -167,28 +167,28 @@ router.post('/auth/login', async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email) {
-    return res.status(422).json({ error: { errors: { email: makeI18nError(I18nError.Required, 'email') } } });
+    return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.Required, field: 'email' }] } } satisfies ApiResponse);
   }
 
   if (!password) {
-    return res.status(422).json({ error: { errors: { password: makeI18nError(I18nError.Required, 'password') } } });
+    return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.Required, field: 'password' }] } } satisfies ApiResponse);
   }
 
   const { User } = await useMongooseModels();
   const user = await User.findOne({ email });
   if (!user) {
     // definitely invalid email, but not giving that away
-    return res.status(422).json({ error: { errors: { _form: makeI18nError(I18nError.InvalidLogin, '_form') } } });
+    return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.InvalidLogin, field: null }] } } satisfies ApiResponse);
   }
 
   const passwordValid = await user.authenticate(password);
   if (!passwordValid) {
     // definitely invalid password, but not giving that away
-    return res.status(422).json({ error: { errors: { _form: makeI18nError(I18nError.InvalidLogin, '_form') } } });
+    return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.InvalidLogin, field: null }] } } satisfies ApiResponse);
   }
   const bypass = checkTestBypass(req);
   if (requireEmailVerification && !isEmailVerified(user) && !bypass) {
-    return res.status(422).json({ error: { errors: { _form: makeI18nError(I18nError.VerifyEmail, '_form', { email: user.email }) } } });
+    return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.VerifyEmail, field: null, properties: { email: user.email } }] } } satisfies ApiResponse);
   }
   const userData = user.toAuthJSON();
   const token = user.generateJWT();
@@ -198,7 +198,7 @@ router.post('/auth/login', async (req, res, next) => {
       token,
       user: userData,
     },
-  } as ApiResponse);
+  } satisfies ApiResponse);
 });
 
 /**
@@ -230,7 +230,7 @@ router.post('/auth/logout', async (req, res, next) => {
   try {
     await authCurrentUser(req);
     res.clearCookie(AUTH_COOKIE_NAME);
-    return res.json({ data: true } as ApiResponse);
+    return res.json({ data: true } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -325,13 +325,17 @@ router.post('/auth/register', async (req, res, next) => {
 
     await user.save();
 
-    res.json({ data: { success: true } } as ApiResponse);
+    res.json({ data: { success: true } } satisfies ApiResponse);
 
     // Send a verification email
     const emailService = await useEmailService();
     emailService.sendUserEmailVerification(email, user.emailVerificationCode, locale);
   }
   catch (err) {
+    // Specifically handle the case where the email is already in use
+    if (err.name === 'ValidationError' && err.errors.email && err.errors.email.kind === 'unique') {
+      return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.EmailInUse, field: 'email' }] } } satisfies ApiResponse);
+    }
     next(err);
   }
 });
@@ -368,7 +372,7 @@ router.post('/auth/register', async (req, res, next) => {
  */
 router.get('/auth/oauth2/google/url', (req, res, next) => {
   const { url, state } = googleOauth2.getGoogleLoginUrl();
-  res.json({ data: { url, state } } as ApiResponse);
+  res.json({ data: { url, state } } satisfies ApiResponse);
 });
 
 /**
@@ -426,8 +430,8 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     // Verify state parameter to prevent CSRF attacks
     if (!state || !googleOauth2.verifyState(state)) {
       return res.status(400).json({
-        error: { errors: { _form: makeI18nError(I18nError.InvalidRequest, '_form') } },
-      });
+        error: { code: ApiErrorCode.InvalidRequest },
+      } satisfies ApiResponse);
     }
 
     const { User } = await useMongooseModels();
@@ -444,8 +448,8 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     // Only accept verified Google emails
     if (verified_email !== true) {
       return res.status(400).json({
-        error: { errors: { _form: makeI18nError(I18nError.EmailNotVerified, '_form') } },
-      });
+        error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.EmailNotVerified, field: null }] },
+      } satisfies ApiResponse);
     }
 
     const existingUser = await User.findOne({ email });
@@ -458,7 +462,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
 
       const token = existingUser.generateJWT();
       setAuthTokenCookie(res, token);
-      return res.json({ data: { token } } as ApiResponse);
+      return res.json({ data: { token } } satisfies ApiResponse);
     }
 
     // Create new user account
@@ -474,7 +478,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     await user.save();
     const token = user.generateJWT();
     setAuthTokenCookie(res, token);
-    res.json({ data: { token } } as ApiResponse);
+    res.json({ data: { token } } satisfies ApiResponse);
   }
   catch (err) {
     next(err);
@@ -526,14 +530,14 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   const { User } = await useMongooseModels();
   const user = await User.findOne({ emailVerificationCode });
   if (!user) {
-    return res.status(404).json({ error: {} });
+    return res.status(404).json({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
   }
 
   // Verify the code and check expiration
   if (!user.verifyEmailVerificationCode(emailVerificationCode)) {
     return res.status(400).json({
-      error: { errors: { _form: makeI18nError(I18nError.VerificationCodeExpired, '_form') } },
-    });
+      error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.VerificationCodeExpired, field: null }] },
+    } satisfies ApiResponse);
   }
 
   // Mark the user's email as verified by setting the verification code to null
@@ -544,7 +548,7 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ data: { token } } as ApiResponse);
+  res.json({ data: { token } } satisfies ApiResponse);
 });
 
 /**
@@ -585,16 +589,17 @@ router.put('/auth/change-password', async (req, res, next) => {
     if (!passwordValid) {
       return res.status(status.BAD_REQUEST).send({
         error: {
-          currentPassword: makeI18nError(I18nError.PasswordIncorrect, 'currentPassword'),
+          code: ApiErrorCode.ValidationError,
+          errors: [{ code: ApiErrorDetailCode.PasswordIncorrect, field: 'currentPassword' }],
         },
-      });
+      } satisfies ApiResponse);
     }
 
     // Set new password
     currentUser.password = newPassword;
     try {
       await currentUser.save();
-      res.json({ data: status.OK } as ApiResponse);
+      res.json({ data: status.OK } satisfies ApiResponse);
     }
     catch (err) {
       // Any 'password' validation errors should be seen on the 'newPassword' field
@@ -648,19 +653,19 @@ router.post('/auth/change-email', async (req, res, next) => {
 
     // disallow newEmail to be current email
     if (newEmail === currentUser.email) {
-      return res.status(422).json({ error: { errors: { newEmail: makeI18nError(I18nError.NewEmailRequired, 'newEmail') } } });
+      return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.NewEmailRequired, field: 'newEmail' }] } } satisfies ApiResponse);
     }
 
     // disallow newEmail to be an email currently in use by another user
     const existingUserWithEmail = await User.findOne({ email: newEmail });
     if (existingUserWithEmail) {
-      return res.status(422).json({ error: { errors: { newEmail: makeI18nError(I18nError.EmailInUse, 'newEmail') } } });
+      return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.EmailInUse, field: 'newEmail' }] } } satisfies ApiResponse);
     }
 
     // confirm password
     const passwordValid = await currentUser.authenticate(password);
     if (!passwordValid) {
-      return res.status(422).json({ error: { errors: { password: makeI18nError(I18nError.PasswordIncorrect, 'password') } } });
+      return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.PasswordIncorrect, field: 'password' }] } } satisfies ApiResponse);
     }
 
     // have the new email confirmation expire in 1 hour
@@ -672,7 +677,7 @@ router.post('/auth/change-email', async (req, res, next) => {
     if (authBypass && currentUser.newEmailVerificationCode) {
       responseData.newEmailVerificationCode = currentUser.newEmailVerificationCode;
     }
-    res.json({ data: responseData } as ApiResponse);
+    res.json({ data: responseData } satisfies ApiResponse);
 
     // send an email update confirmation code
     const emailService = await useEmailService();
@@ -715,7 +720,7 @@ router.get('/auth/change-email', async (req, res, next) => {
           newEmail: currentUser.newEmail,
           expires: currentUser.newEmailVerificationExpires,
         },
-      } as ApiResponse);
+      } satisfies ApiResponse);
     }
 
     return res.json({
@@ -723,7 +728,7 @@ router.get('/auth/change-email', async (req, res, next) => {
         newEmail: null,
         expires: null,
       },
-    } as ApiResponse);
+    } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -760,10 +765,10 @@ router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next
         newEmail: user.newEmail,
         expires: user.newEmailVerificationExpires,
       },
-    } as ApiResponse);
+    } satisfies ApiResponse);
   }
 
-  return res.json({ data: null } as ApiResponse);
+  return res.json({ data: null } satisfies ApiResponse);
 });
 
 /**
@@ -789,14 +794,14 @@ router.delete('/auth/change-email', async (req, res, next) => {
     if (currentUser.newEmail) {
       currentUser.disableEmailUpdate();
       await currentUser.save();
-      return res.json({ data: true } as ApiResponse);
+      return res.json({ data: true } satisfies ApiResponse);
     }
 
-    return res.json({ data: false } as ApiResponse);
+    return res.json({ data: false } satisfies ApiResponse);
   }
   catch (err) {
     console.log(err);
-    return res.json({ data: false } as ApiResponse);
+    return res.json({ data: false } satisfies ApiResponse);
   }
 });
 
@@ -846,14 +851,14 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   const { User } = await useMongooseModels();
   const user = await User.findOne({ newEmailVerificationCode });
   if (!user) {
-    return res.status(404).json({ error: {} });
+    return res.status(404).json({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
   }
 
   // Verify the code and check expiration
   if (!user.verifyNewEmailVerificationCode(newEmailVerificationCode)) {
     return res.status(400).json({
-      error: makeI18nError(I18nError.VerificationCodeExpired),
-    });
+      error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.VerificationCodeExpired, field: null }] },
+    } satisfies ApiResponse);
   }
 
   const { newEmail } = user;
@@ -865,7 +870,7 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   // happened to request to change their email to that address first.
   const existingUserWithEmail = await User.findOne({ email: newEmail });
   if (existingUserWithEmail) {
-    return res.status(422).json({ error: makeI18nError(I18nError.EmailInUse) });
+    return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.EmailInUse, field: null }] } } satisfies ApiResponse);
   }
 
   // Keep track of the user's current (now old) email address.
@@ -880,7 +885,7 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ data: { token } } as ApiResponse);
+  res.json({ data: { token } } satisfies ApiResponse);
 });
 
 /**
@@ -917,7 +922,7 @@ router.post('/auth/reset-password', async (req, res) => {
   const { User } = await useMongooseModels();
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(422).json({ error: { errors: { email: makeI18nError(I18nError.AccountNotFound, 'email') } } });
+    return res.status(422).json({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.AccountNotFound, field: 'email' }] } } satisfies ApiResponse);
   }
   // have the password reset expire in 1 hour
   user.enablePasswordReset();
@@ -928,7 +933,7 @@ router.post('/auth/reset-password', async (req, res) => {
   if (authBypass && user.passwordResetCode) {
     responseData.passwordResetCode = user.passwordResetCode;
   }
-  res.json({ data: responseData } as ApiResponse);
+  res.json({ data: responseData } satisfies ApiResponse);
 
   // send password reset code via email
   const emailService = await useEmailService();
@@ -963,10 +968,10 @@ router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, nex
   const { User } = await useMongooseModels();
   const user = await User.findOne({ passwordResetCode });
   if (user) {
-    return res.json({ data: { valid: true } } as ApiResponse);
+    return res.json({ data: { valid: true } } satisfies ApiResponse);
   }
   else {
-    return res.json({ data: { valid: false } } as ApiResponse);
+    return res.json({ data: { valid: false } } satisfies ApiResponse);
   }
 });
 
@@ -1030,15 +1035,15 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   const user = await User.findOne({ passwordResetCode });
   if (!user) {
     return res.status(status.BAD_REQUEST).send({
-      error: { errors: { _form: makeI18nError(I18nError.InvalidRequest, '_form') } },
-    });
+      error: { code: ApiErrorCode.InvalidRequest },
+    } satisfies ApiResponse);
   }
 
   // Ensure the password reset is not expired
   if (!user.verifyPasswordResetCode(passwordResetCode)) {
     return res.status(status.BAD_REQUEST).send({
-      error: { errors: { _form: makeI18nError(I18nError.PasswordResetLinkExpired, '_form') } },
-    });
+      error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.PasswordResetLinkExpired, field: null }] },
+    } satisfies ApiResponse);
   }
 
   // Set new password and disable the password reset link
@@ -1057,7 +1062,7 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ data: { token } } as ApiResponse);
+  res.json({ data: { token } } satisfies ApiResponse);
 });
 
 export default router;

@@ -1,6 +1,7 @@
 import express from 'express';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
+import { ApiErrorCode } from '../helpers/error-codes';
 import { type ApiResponse } from '../helpers/response';
 
 const router = express.Router();
@@ -90,7 +91,7 @@ router.get('/reminders/daily-reminder', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     const reminder = await getUserReminder(currentUser);
-    return res.json({ data: reminder.toJSON() } as ApiResponse);
+    return res.json({ data: reminder.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -148,7 +149,7 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
       }
     });
     await reminder.save();
-    res.json({ data: reminder.toJSON() } as ApiResponse);
+    res.json({ data: reminder.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -189,18 +190,18 @@ router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next)
 
   const reminder = await DailyReminder.findOne({ unsubscribeCode: code });
   if (!reminder) {
-    return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+    return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
   }
 
   const user = await User.findOne({ _id: reminder.owner });
   if (!user) {
-    return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+    return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
   }
 
   reminder.active = false;
   await reminder.save();
 
-  return res.json({ data: { email: user.email } } as ApiResponse);
+  return res.json({ data: { email: user.email } } satisfies ApiResponse);
 });
 
 export default router;

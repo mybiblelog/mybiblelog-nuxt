@@ -4,6 +4,7 @@ import { SimpleDate } from '@mybiblelog/shared';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { Types } from 'mongoose';
+import { ApiErrorCode, ApiErrorDetailCode } from '../helpers/error-codes';
 import { type ApiResponse } from '../helpers/response';
 
 const router = express.Router();
@@ -78,30 +79,30 @@ router.get('/log-entries', async (req, res, next) => {
     const { startDate, endDate } = req.query as { startDate: string; endDate: string };
 
     if (startDate && !SimpleDate.validateString(startDate)) {
-      return res.status(400).send({ error: { error: { message: 'Invalid startDate' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'startDate' }] } } satisfies ApiResponse);
     }
 
     if (endDate && !SimpleDate.validateString(endDate)) {
-      return res.status(400).send({ error: { error: { message: 'Invalid endDate' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'endDate' }] } } satisfies ApiResponse);
     }
 
     if (!startDate && !endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id });
-      return res.json({ data: logEntries } as ApiResponse);
+      return res.json({ data: logEntries } satisfies ApiResponse);
     }
 
     if (startDate && !endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate } });
-      return res.json({ data: logEntries } as ApiResponse);
+      return res.json({ data: logEntries } satisfies ApiResponse);
     }
 
     if (!startDate && endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $lte: endDate } });
-      return res.json({ data: logEntries } as ApiResponse);
+      return res.json({ data: logEntries } satisfies ApiResponse);
     }
 
     const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate, $lte: endDate } });
-    return res.json({ data: logEntries } as ApiResponse);
+    return res.json({ data: logEntries } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -137,7 +138,7 @@ router.get('/log-entries/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
     }
 
     const { LogEntry } = await useMongooseModels();
@@ -145,9 +146,9 @@ router.get('/log-entries/:id', async (req, res, next) => {
 
     const logEntry = await LogEntry.findOne({ owner: currentUser._id, _id: id });
     if (!logEntry) {
-      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
     }
-    res.json({ data: logEntry.toJSON() } as ApiResponse);
+    res.json({ data: logEntry.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -199,11 +200,11 @@ router.post('/log-entries', async (req, res, next) => {
       await logEntry.validate();
     }
     catch (error) {
-      return res.status(400).send({ error: { error: { message: 'Invalid log entry' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.ValidationError } } satisfies ApiResponse);
     }
     await logEntry.save();
 
-    res.json({ data: logEntry.toJSON() } as ApiResponse);
+    res.json({ data: logEntry.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -253,7 +254,7 @@ router.put('/log-entries/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
     }
 
     const { LogEntry } = await useMongooseModels();
@@ -262,7 +263,7 @@ router.put('/log-entries/:id', async (req, res, next) => {
 
     const logEntry = await LogEntry.findOne({ owner: currentUser._id, _id: id });
     if (!logEntry) {
-      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
     }
 
     if (date) { logEntry.date = date; }
@@ -273,11 +274,11 @@ router.put('/log-entries/:id', async (req, res, next) => {
       await logEntry.validate();
     }
     catch (error) {
-      return res.status(400).send({ error: { error: { message: 'Invalid log entry' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.ValidationError } } satisfies ApiResponse);
     }
     await logEntry.save();
 
-    res.json({ data: logEntry.toJSON() } as ApiResponse);
+    res.json({ data: logEntry.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -309,7 +310,7 @@ router.delete('/log-entries/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
     }
 
     const { LogEntry } = await useMongooseModels();
@@ -317,10 +318,10 @@ router.delete('/log-entries/:id', async (req, res, next) => {
 
     const result = await LogEntry.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
-      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
     }
 
-    res.json({ data: result.deletedCount } as ApiResponse);
+    res.json({ data: result.deletedCount } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

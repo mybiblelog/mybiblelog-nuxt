@@ -1,6 +1,7 @@
 import { type Request, type Response, type NextFunction } from 'express';
-import { I18nError, makeI18nError } from '../helpers/i18n-error';
+import { ApiErrorCode, ApiErrorDetailCode } from '../helpers/error-codes';
 import { Error } from 'mongoose';
+import { ApiErrorDetail, ApiError, ApiResponse } from '../helpers/response';
 
 // Maps mongoose validation errors to i18n keys
 const MongooseErrorKinds = {
@@ -14,19 +15,30 @@ const MongooseErrorKinds = {
 
 // A reference for which additional properties are available to help translate specific errors
 const ErrorMap = {
-  [MongooseErrorKinds.REQUIRED]: I18nError.Required,
-  [MongooseErrorKinds.NOT_VALID]: I18nError.NotValid,
-  [MongooseErrorKinds.UNIQUE]: I18nError.Unique,
-  [MongooseErrorKinds.MIN_LENGTH]: I18nError.MinLength, // err.properties.minlength
-  [MongooseErrorKinds.MAX_LENGTH]: I18nError.MaxLength, // err.properties.maxlength
-  [MongooseErrorKinds.DEFAULT]: I18nError.Review,
+  [MongooseErrorKinds.REQUIRED]: ApiErrorDetailCode.Required,
+  [MongooseErrorKinds.NOT_VALID]: ApiErrorDetailCode.NotValid,
+  [MongooseErrorKinds.UNIQUE]: ApiErrorDetailCode.Unique,
+  [MongooseErrorKinds.MIN_LENGTH]: ApiErrorDetailCode.MinLength, // err.properties.minlength
+  [MongooseErrorKinds.MAX_LENGTH]: ApiErrorDetailCode.MaxLength, // err.properties.maxlength
+  [MongooseErrorKinds.DEFAULT]: ApiErrorDetailCode.Review,
 };
+
+// A reference for which error detail properties from Mongoose will be included in the API error response
+const ErrorPropertiesMap = {
+  [MongooseErrorKinds.REQUIRED]: [],
+  [MongooseErrorKinds.NOT_VALID]: [],
+  [MongooseErrorKinds.UNIQUE]: [],
+  [MongooseErrorKinds.MIN_LENGTH]: ['minlength'],
+  [MongooseErrorKinds.MAX_LENGTH]: ['maxlength'],
+  [MongooseErrorKinds.DEFAULT]: [],
+}
 
 const mongooseErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   if (!(err instanceof Error.ValidationError)) {
     return next(err);
   }
-  const errors: Record<string, ReturnType<typeof makeI18nError>> = {};
+
+  const errors: ApiErrorDetail[] = [];
   for (const field in err.errors) {
     const validatorError = err.errors[field];
 
@@ -34,11 +46,26 @@ const mongooseErrorHandler = (err: any, req: Request, res: Response, next: NextF
     if (!(validatorError instanceof Error.ValidatorError)) {
       continue;
     }
-    const { kind, properties } = validatorError;
-    const i18nErrorKind = ErrorMap[kind] || ErrorMap[MongooseErrorKinds.DEFAULT] as string;
-    errors[field] = makeI18nError(i18nErrorKind, field, properties);
+    const { kind, properties: mongooseErrorProperties } = validatorError;
+    const errorCode = ErrorMap[kind] || ErrorMap[MongooseErrorKinds.DEFAULT] as string;
+
+    // Map Mongoose error properties to API error properties,
+    // ensuring only relevant properties are included.
+    const allowedErrorProperties = ErrorPropertiesMap[kind] || [];
+    const properties: Record<string, any> = {};
+    for (const prop of allowedErrorProperties) {
+      properties[prop] = mongooseErrorProperties[prop];
+    }
+
+    errors.push({ code: errorCode, field, properties });
   }
-  return res.status(422).json({ errors });
+
+  const error: ApiError = {
+    code: ApiErrorCode.ValidationError,
+    errors,
+  };
+
+  return res.status(422).json({ error } satisfies ApiResponse);
 };
 
 export default mongooseErrorHandler;

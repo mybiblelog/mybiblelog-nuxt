@@ -1,15 +1,18 @@
+import { ApiErrorCode, ApiErrorDetailCode } from './error-codes';
+
 /**
  * Represents a field-level error.
  */
 export type ApiErrorDetail = {
   /**
-   * Optional field name for field-level errors.
+   * Field name for field-level errors.
+   * Set to `null` for top-level errors.
    */
-  field?: string;
+  field: string | null;
   /**
    * Machine-readable i18n-friendly code.
    */
-  code: string;
+  code: typeof ApiErrorDetailCode[keyof typeof ApiErrorDetailCode];
   /**
    * Optional metadata for the error. This can be used to pass additional information to the error.
    */
@@ -23,7 +26,7 @@ export type ApiError = {
   /**
    * Top-level error code.
    */
-  code: string;
+  code: typeof ApiErrorCode[keyof typeof ApiErrorCode];
   /**
    * Optional array of field errors.
    */

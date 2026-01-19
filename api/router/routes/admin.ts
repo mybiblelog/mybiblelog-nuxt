@@ -6,6 +6,7 @@ import authCurrentUser, { setAuthTokenCookie } from '../helpers/authCurrentUser'
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import deleteAccount from '../helpers/deleteAccount';
 import { IUser } from '../../mongoose/schemas/User';
+import { ApiErrorCode } from '../helpers/error-codes';
 import { type ApiResponse } from '../helpers/response';
 
 dayjs.extend(utc);
@@ -162,7 +163,7 @@ router.get('/admin/feedback', async (req, res, next) => {
       .find()
       .sort({ createdAt: -1 })
       .exec();
-    res.json({ data: feedback } as ApiResponse);
+    res.json({ data: feedback } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -210,7 +211,7 @@ router.get('/admin/reports/user-engagement/past-week', async (req, res, next) =>
   try {
     await authCurrentUser(req, { adminOnly: true });
     const engagementData = await getPastWeekEngagement();
-    res.json({ data: engagementData } as ApiResponse);
+    res.json({ data: engagementData } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -367,7 +368,7 @@ router.get('/admin/users', async (req, res, next) => {
     const query = validateQuery(req.query);
 
     if (!query) {
-      return res.status(400).send({ error: { error: { message: 'Invalid query parameters' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest } } satisfies ApiResponse);
     }
 
     const filterQuery: QueryFilter<IUser> = {}; // all users
@@ -418,7 +419,7 @@ router.get('/admin/users', async (req, res, next) => {
       },
     };
 
-    return res.json({ data: users, meta } as ApiResponse);
+    return res.json({ data: users, meta } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -465,9 +466,9 @@ router.get('/admin/users/:email', async (req, res, next) => {
       .select({ email: 1 })
       .exec();
     if (!user) {
-      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
     }
-    res.json({ data: user } as ApiResponse);
+    res.json({ data: user } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -527,12 +528,12 @@ router.get('/admin/users/:email/login', async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
     }
 
     const token = user.generateJWT();
     setAuthTokenCookie(res, token);
-    res.json({ data: { token } } as ApiResponse);
+    res.json({ data: { token } } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -574,14 +575,16 @@ router.delete('/admin/users/:email', async (req, res, next) => {
 
     // Prevent admin from deleting their own account
     if (currentUser.email === email) {
-      return res.status(400).send({ error: { error: { message: 'You cannot delete your own admin account' } } });
+      // FIXME: see if we use this error on the frontend, and if so, add detail:
+      // FIXME: admin_cannot_delete_own_account "You cannot delete your own admin account"
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest } } satisfies ApiResponse);
     }
 
     const success = await deleteAccount(email);
     if (!success) {
-      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
     }
-    res.json({ data: 1 } as ApiResponse);
+    res.json({ data: 1 } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

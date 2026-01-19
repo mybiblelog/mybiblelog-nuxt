@@ -26,13 +26,9 @@ describe('Auth routes', () => {
     expect(res.headers['set-cookie']).toBeUndefined();
     expect(res.body).toHaveProperty('error');
     expect(res.body).not.toHaveProperty('data');
-    expect(res.body.error).toHaveProperty('errors');
-    expect(res.body.error.errors).toEqual({
-      _form: {
-        code: 'api_error.invalid_login',
-        field: '_form',
-        properties: {},
-      },
+    expect(res.body.error).toEqual({
+      code: 'validation_error',
+      errors: [{ field: null, code: 'invalid_login' }],
     });
   });
 
@@ -133,19 +129,11 @@ describe('Auth routes', () => {
           locale: 'en',
         });
       expect(response.status).toBe(422);
-      expect(response.body.errors).toEqual({
-        email: {
-          field: 'email',
-          code: 'api_error.review',
-          properties: {
-            length: 13,
-            message: 'is invalid',
-            path: 'email',
-            regexp: {},
-            type: 'regexp',
-            value: 'invalid-email',
-          },
-        },
+      expect(response.body).toHaveProperty('error');
+      expect(response.body).not.toHaveProperty('data');
+      expect(response.body.error).toEqual({
+        code: 'validation_error',
+        errors: [{ field: 'email', code: 'review', properties: {} }],
       });
     });
 
@@ -169,18 +157,11 @@ describe('Auth routes', () => {
 
       // Assert
       expect(response.statusCode).toBe(422);
-      expect(response.body.errors).toEqual({
-        email: {
-          code: 'api_error.unique',
-          field: 'email',
-          properties: {
-            length: 42,
-            message: `Error, expected \`email\` to be unique. Value: \`${truncatedEmail(testUser.email)}\``,
-            path: 'email',
-            type: 'unique',
-            value: truncatedEmail(testUser.email),
-          },
-        },
+      expect(response.body).toHaveProperty('error');
+      expect(response.body).not.toHaveProperty('data');
+      expect(response.body.error).toEqual({
+        code: 'validation_error',
+        errors: [{ field: 'email', code: 'email_in_use' }],
       });
 
       // Cleanup
@@ -199,19 +180,13 @@ describe('Auth routes', () => {
           locale: 'en',
         });
       expect(response.status).toBe(422);
-      expect(response.body.errors).toEqual({
-        password: {
+      expect(response.body.error).toEqual({
+        code: 'validation_error',
+        errors: [{
           field: 'password',
-          code: 'api_error.min_length',
-          properties: {
-            length: 3,
-            message: 'Path `password` (`123`, length 3) is shorter than the minimum allowed length (8).',
-            minlength: 8,
-            path: 'password',
-            type: 'minlength',
-            value: '123',
-          },
-        },
+          code: 'min_length',
+          properties: { minlength: 8 },
+        }],
       });
     });
 
@@ -350,7 +325,8 @@ describe('Auth routes', () => {
       expect(response.body).toHaveProperty('error');
       expect(response.body).not.toHaveProperty('data');
       expect(response.body.error).toEqual({
-        currentPassword: { field: 'currentPassword', code: 'api_error.password_incorrect', properties: {} }
+        code: 'validation_error',
+        errors: [{ field: 'currentPassword', code: 'password_incorrect' }],
       });
 
       // Cleanup
@@ -404,8 +380,10 @@ describe('Auth routes', () => {
       expect(response.statusCode).toBe(422);
       expect(response.body).toHaveProperty('error');
       expect(response.body).not.toHaveProperty('data');
-      expect(response.body.error).toHaveProperty('errors');
-      expect(response.body.error.errors).toHaveProperty('email');
+      expect(response.body.error).toEqual({
+        code: 'validation_error',
+        errors: [{ field: 'email', code: 'account_not_found' }],
+      });
     });
   });
 
@@ -451,7 +429,7 @@ describe('Auth routes', () => {
       expect(res.statusCode).toBe(400);
       expect(res.body).toHaveProperty('error');
       expect(res.body).not.toHaveProperty('data');
-      expect(res.body.error).toHaveProperty('errors');
+      expect(res.body.error.code).toBe('invalid_request');
     });
 
     // Note: A full test that verifies token and cookie would require mocking

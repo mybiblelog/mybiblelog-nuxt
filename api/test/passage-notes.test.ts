@@ -317,9 +317,7 @@ describe('passage-notes.test.js', () => {
           expect(response.status).toBe(400);
           expect(response.body).toHaveProperty('error');
           expect(response.body).not.toHaveProperty('data');
-          expect(response.body.error).toEqual({
-            error: { message: 'Invalid passage note' },
-          });
+          expect(response.body.error.code).toBe('validation_error');
         }
         finally {
           await deleteTestUser(testUser);
@@ -342,9 +340,7 @@ describe('passage-notes.test.js', () => {
           expect(response.status).toBe(400);
           expect(response.body).toHaveProperty('error');
           expect(response.body).not.toHaveProperty('data');
-          expect(response.body.error).toEqual({
-            error: { message: 'Invalid passage note' },
-          });
+          expect(response.body.error.code).toBe('validation_error');
         }
         finally {
           await deleteTestUser(testUser);
@@ -367,9 +363,7 @@ describe('passage-notes.test.js', () => {
           expect(response.status).toBe(400);
           expect(response.body).toHaveProperty('error');
           expect(response.body).not.toHaveProperty('data');
-          expect(response.body.error).toEqual({
-            error: { message: 'Invalid passage note' },
-          });
+          expect(response.body.error.code).toBe('validation_error');
         }
         finally {
           await deleteTestUser(testUser);
@@ -387,9 +381,7 @@ describe('passage-notes.test.js', () => {
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('error');
         expect(response.body).not.toHaveProperty('data');
-        expect(response.body.error).toEqual({
-          error: { message: 'Invalid passage note' },
-        });
+        expect(response.body.error.code).toBe('validation_error');
       }
       finally {
         await deleteTestUser(testUser);
@@ -411,9 +403,7 @@ describe('passage-notes.test.js', () => {
 
       // Assert
       expect(response.statusCode).toBe(400);
-      expect(response.body.error).toEqual({
-        error: { message: 'Invalid passage note' },
-      });
+      expect(response.body.error.code).toBe('validation_error');
 
       // Cleanup
       await deleteTestUser(testUser);
@@ -438,9 +428,7 @@ describe('passage-notes.test.js', () => {
 
       // Assert
       expect(response.statusCode).toBe(400);
-      expect(response.body.error).toEqual({
-        error: { message: 'Invalid passage note' },
-      });
+      expect(response.body.error.code).toBe('validation_error');
 
       // Cleanup
       await deleteTestUser(testUser);

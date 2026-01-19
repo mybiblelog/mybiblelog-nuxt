@@ -6,6 +6,7 @@ import useMongooseModels from '../../mongoose/useMongooseModels';
 
 import { QueryFilter, Types } from 'mongoose';
 import { IPassageNote } from '../../mongoose/schemas/PassageNote';
+import { ApiErrorCode, ApiErrorDetailCode } from '../helpers/error-codes';
 import { type ApiResponse } from '../helpers/response';
 const router = express.Router();
 
@@ -314,7 +315,7 @@ router.get('/passage-notes', async (req, res, next) => {
     const query = validateQuery(req.query);
 
     if (!query) {
-      return res.status(400).send({ error: 'Invalid query parameters' });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest } } satisfies ApiResponse);
     }
 
     const filterQuery: QueryFilter<IPassageNote> = {
@@ -399,7 +400,7 @@ router.get('/passage-notes', async (req, res, next) => {
       },
     };
 
-    return res.json(response as ApiResponse);
+    return res.json(response satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -435,7 +436,7 @@ router.get('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -443,9 +444,9 @@ router.get('/passage-notes/:id', async (req, res, next) => {
 
     const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
-      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
     }
-    res.json({ data: passageNote.toJSON() } as ApiResponse);
+    res.json({ data: passageNote.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -502,7 +503,7 @@ router.post('/passage-notes', async (req, res, next) => {
     // validate that all tags exist
     const tagsValid = await validateTags(passageNote.tags);
     if (!tagsValid) {
-      return res.status(409).send({ error: { error: { message: 'Cannot Create' } } });
+      return res.status(409).send({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'tags' }] } } satisfies ApiResponse);
     }
 
     passageNote.owner = new Types.ObjectId(currentUser._id);
@@ -510,11 +511,11 @@ router.post('/passage-notes', async (req, res, next) => {
       await passageNote.validate();
     }
     catch (error) {
-      return res.status(400).send({ error: { error: { message: 'Invalid passage note' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.ValidationError } } satisfies ApiResponse);
     }
     await passageNote.save();
 
-    res.json({ data: passageNote.toJSON() } as ApiResponse);
+    res.json({ data: passageNote.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -572,7 +573,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -581,7 +582,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
 
     const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
-      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
     }
 
     if (content) { passageNote.content = content; }
@@ -590,7 +591,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
       // validate that all tags exist
       const tagsValid = await validateTags(tags);
       if (!tagsValid) {
-        return res.status(409).send({ error: { error: { message: 'Cannot Update' } } });
+        return res.status(409).send({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'tags' }] } } satisfies ApiResponse);
       }
       passageNote.tags = tags;
     }
@@ -598,11 +599,11 @@ router.put('/passage-notes/:id', async (req, res, next) => {
       await passageNote.validate();
     }
     catch (error) {
-      return res.status(400).send({ error: { error: { message: 'Invalid passage note' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.ValidationError } } satisfies ApiResponse);
     }
     await passageNote.save();
 
-    res.json({ data: passageNote.toJSON() } as ApiResponse);
+    res.json({ data: passageNote.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -634,7 +635,7 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { error: { message: 'Invalid ID format' } } });
+      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -642,10 +643,10 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
 
     const result = await PassageNote.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
-      return res.status(404).send({ error: { error: { message: 'Not Found' } } });
+      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
     }
 
-    res.json({ data: result.deletedCount } as ApiResponse);
+    res.json({ data: result.deletedCount } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -731,7 +732,7 @@ router.get('/passage-notes/count/books', async (req, res, next) => {
       },
     ]);
 
-    res.json({ data: result[0] } as ApiResponse);
+    res.json({ data: result[0] } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

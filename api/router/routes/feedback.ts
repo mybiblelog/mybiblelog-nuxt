@@ -1,7 +1,7 @@
 import express from 'express';
 import status from 'http-status';
 import authCurrentUser from '../helpers/authCurrentUser';
-import { I18nError, makeI18nError } from '../helpers/i18n-error';
+import { ApiErrorCode } from '../helpers/error-codes';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { type ApiResponse } from '../helpers/response';
 
@@ -102,7 +102,7 @@ router.post('/feedback', async (req, res, next) => {
       if (recentFeedbackCount >= 5) {
         return res
           .status(status.TOO_MANY_REQUESTS)
-          .json({ error: { _form: makeI18nError(I18nError.TooManyRequests, '_form') } });
+          .json({ error: { code: ApiErrorCode.TooManyRequests } } satisfies ApiResponse);
       }
     }
 
@@ -120,7 +120,7 @@ router.post('/feedback', async (req, res, next) => {
     });
 
     await feedback.save();
-    res.status(status.CREATED).send({ data: feedback.toJSON() } as ApiResponse);
+    res.status(status.CREATED).send({ data: feedback.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

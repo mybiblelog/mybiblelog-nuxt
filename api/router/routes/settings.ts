@@ -1,6 +1,7 @@
 import express from 'express';
 import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import deleteAccount from '../helpers/deleteAccount';
+import { ApiErrorCode } from '../helpers/error-codes';
 import { type ApiResponse } from '../helpers/response';
 
 const router = express.Router();
@@ -47,9 +48,9 @@ router.get('/settings', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     if (!currentUser) {
-      return res.status(401).send({ error: { error: { message: 'Unauthorized' } } });
+      return res.status(401).send({ error: { code: ApiErrorCode.Unauthenticated } } satisfies ApiResponse);
     }
-    res.json({ data: currentUser.settings } as ApiResponse);
+    res.json({ data: currentUser.settings } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -93,7 +94,7 @@ router.put('/settings', async (req, res, next) => {
       }
     });
     await currentUser.save();
-    return res.json({ data: currentUser.settings } as ApiResponse);
+    return res.json({ data: currentUser.settings } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -117,11 +118,11 @@ router.put('/settings/delete-account', async (req, res, next) => {
     const currentUser = await authCurrentUser(req);
     const success = await deleteAccount(currentUser.email);
     if (!success) {
-      return res.status(500).send({ error: { error: { message: 'Failed to delete account' } } });
+      return res.status(500).send({ error: { code: ApiErrorCode.InternalServerError } } satisfies ApiResponse);
     }
     // clear the auth cookie on account deletion
     res.clearCookie(AUTH_COOKIE_NAME);
-    return res.json({ data: 1 } as ApiResponse);
+    return res.json({ data: 1 } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

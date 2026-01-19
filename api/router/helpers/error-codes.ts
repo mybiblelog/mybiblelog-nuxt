@@ -1,11 +1,28 @@
 /**
- * Represents all possible errors that can be thrown by the API.
+ * Represents all possible top-level errors that can be thrown by the API.
  * These codes are used to map to i18n keys for translation.
  *
  * Keep in sync with locales/locale.d.ts
  * @enum {string}
  */
-export const I18nError = {
+export const ApiErrorCode = {
+  ValidationError: 'validation_error', // 400
+  InvalidRequest: 'invalid_request', // 400
+  Unauthenticated: 'unauthenticated', // 401
+  Unauthorized: 'unauthorized', // 403
+  NotFound: 'not_found', // 404
+  TooManyRequests: 'too_many_requests', // 429
+  InternalServerError: 'internal_server_error', // 500
+};
+
+/**
+ * Represents all possible detail errors that can be thrown by the API.
+ * These codes are used to map to i18n keys for translation.
+ *
+ * Keep in sync with locales/locale.d.ts
+ * @enum {string}
+ */
+export const ApiErrorDetailCode = {
   // Request Input Validation Errors
   // (these come from mongoose validation errors)
   Required: 'required',
@@ -24,20 +41,6 @@ export const I18nError = {
   PasswordIncorrect: 'password_incorrect',
   AccountNotFound: 'account_not_found',
   PasswordResetLinkExpired: 'password_reset_link_expired',
-  TooManyRequests: 'too_many_requests', // 429
-  InvalidRequest: 'invalid_request',
   EmailNotVerified: 'email_not_verified',
   VerificationCodeExpired: 'verification_code_expired',
 };
-
-/**
- * Creates an error that can be thrown by the API and translated on the frontend.
- * @param {I18nError} code
- * @param {string} field
- * @param {object} properties
- */
-export const makeI18nError = (code: string, field?: string, properties: Record<string, unknown> = {}) => ({
-  code: `api_error.${code}`, // prefix for i18n key
-  field,
-  properties,
-});

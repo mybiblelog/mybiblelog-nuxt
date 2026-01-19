@@ -281,7 +281,9 @@ describe('passage-note-tags.test.js', () => {
         expect(response2.status).toBe(422);
         expect(response2.body).toHaveProperty('error');
         expect(response2.body).not.toHaveProperty('data');
-        expect(response2.body.error.error).toBeDefined();
+        expect(response2.body.error.code).toBe('validation_error');
+        expect(response2.body.error.errors).toBeDefined();
+        expect(Array.isArray(response2.body.error.errors)).toBe(true);
 
         // Verify only one tag exists
         const tags = await requestApi
