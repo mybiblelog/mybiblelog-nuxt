@@ -66,11 +66,20 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/LogEntry'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/LogEntry'
  *       400:
  *         description: Invalid date format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/log-entries', async (req, res, next) => {
   try {
@@ -130,9 +139,24 @@ router.get('/log-entries', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/LogEntry'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/LogEntry'
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Log entry not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/log-entries/:id', async (req, res, next) => {
   try {
@@ -187,7 +211,18 @@ router.get('/log-entries/:id', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/LogEntry'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/LogEntry'
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/log-entries', async (req, res, next) => {
   try {
@@ -246,9 +281,24 @@ router.post('/log-entries', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/LogEntry'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/LogEntry'
+ *       400:
+ *         description: Invalid ID format or validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Log entry not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/log-entries/:id', async (req, res, next) => {
   try {
@@ -303,8 +353,28 @@ router.put('/log-entries/:id', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Log entry deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: Number of deleted entries (1)
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Log entry not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.delete('/log-entries/:id', async (req, res, next) => {
   try {

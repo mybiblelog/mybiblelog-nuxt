@@ -68,15 +68,21 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: Feedback submitted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Feedback'
  *       429:
  *         description: Too many requests
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: object
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 
 // POST feedback form submission

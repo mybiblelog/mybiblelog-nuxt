@@ -306,7 +306,35 @@ const validateQuery = (query) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNoteList'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/PassageNote'
+ *                 meta:
+ *                   type: object
+ *                   properties:
+ *                     pagination:
+ *                       type: object
+ *                       properties:
+ *                         offset:
+ *                           type: number
+ *                           description: The offset of the results
+ *                         limit:
+ *                           type: number
+ *                           description: The maximum number of results returned
+ *                         size:
+ *                           type: number
+ *                           description: The total number of results available
+ *       400:
+ *         description: Invalid request parameters
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/passage-notes', async (req, res, next) => {
   try {
@@ -428,9 +456,24 @@ router.get('/passage-notes', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNote'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/PassageNote'
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Passage note not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/passage-notes/:id', async (req, res, next) => {
   try {
@@ -490,9 +533,24 @@ router.get('/passage-notes/:id', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNote'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/PassageNote'
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       409:
  *         description: Cannot create note (invalid tags)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/passage-notes', async (req, res, next) => {
   try {
@@ -563,11 +621,30 @@ router.post('/passage-notes', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNote'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/PassageNote'
+ *       400:
+ *         description: Invalid ID format or validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Passage note not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       409:
  *         description: Cannot update note (invalid tags)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/passage-notes/:id', async (req, res, next) => {
   try {
@@ -628,8 +705,28 @@ router.put('/passage-notes/:id', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Passage note deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: Number of deleted notes (1)
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Passage note not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.delete('/passage-notes/:id', async (req, res, next) => {
   try {
@@ -668,9 +765,14 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
- *               additionalProperties:
- *                 type: number
- *               description: Object with Bible book codes as keys and note counts as values
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   additionalProperties:
+ *                     type: number
+ *                   description: Object with Bible book codes as keys and note counts as values
  */
 // GET passage note book counts
 router.get('/passage-notes/count/books', async (req, res, next) => {

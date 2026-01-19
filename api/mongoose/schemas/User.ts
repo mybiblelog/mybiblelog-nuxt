@@ -6,67 +6,6 @@ import jwt from 'jsonwebtoken';
 import config from '../../config';
 import { UserSettingsSchema } from './UserSettings';
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     User:
- *       type: object
- *       required:
- *         - email
- *       properties:
- *         _id:
- *           type: string
- *           description: The auto-generated ID of the user
- *         email:
- *           type: string
- *           description: The user's email address
- *         isAdmin:
- *           type: boolean
- *           description: Whether the user is an admin
- *         password:
- *           type: string
- *           description: The user's hashed password
- *         googleId:
- *           type: string
- *           description: The user's Google ID (if using Google OAuth)
- *         emailVerificationCode:
- *           type: string
- *           description: Code for verifying the user's email
- *         newEmail:
- *           type: string
- *           description: New email address for email change process
- *         newEmailVerificationCode:
- *           type: string
- *           description: Code for verifying the new email
- *         newEmailVerificationExpires:
- *           type: string
- *           format: date-time
- *           description: Expiration time for the new email verification code
- *         oldEmails:
- *           type: array
- *           items:
- *             type: string
- *           description: List of previous email addresses
- *         passwordResetCode:
- *           type: string
- *           description: Code for resetting the password
- *         passwordResetExpires:
- *           type: string
- *           format: date-time
- *           description: Expiration time for the password reset code
- *         settings:
- *           $ref: '#/components/schemas/UserSettings'
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: The date and time when the user was created
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           description: The date and time when the user was last updated
- */
-
 const SALT_WORK_FACTOR = 10;
 
 export const UserSchema = new mongoose.Schema({

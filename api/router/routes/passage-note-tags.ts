@@ -63,9 +63,14 @@ const countTagNotes = async (tag) => {
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/PassageNoteTag'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/PassageNoteTag'
  */
 router.get('/passage-note-tags', async (req, res, next) => {
   try {
@@ -105,9 +110,24 @@ router.get('/passage-note-tags', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNoteTag'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/PassageNoteTag'
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Passage note tag not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/passage-note-tags/:id', async (req, res, next) => {
   try {
@@ -164,7 +184,24 @@ router.get('/passage-note-tags/:id', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNoteTag'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/PassageNoteTag'
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
+ *       422:
+ *         description: Validation error (e.g., duplicate label)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/passage-note-tags', async (req, res, next) => {
   try {
@@ -234,9 +271,24 @@ router.post('/passage-note-tags', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNoteTag'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/PassageNoteTag'
+ *       400:
+ *         description: Invalid ID format or validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Passage note tag not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/passage-note-tags/:id', async (req, res, next) => {
   try {
@@ -291,10 +343,28 @@ router.put('/passage-note-tags/:id', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Passage note tag deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: Number of deleted tags (1)
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Passage note tag not found
- *       409:
- *         description: Cannot delete tag (tag is in use)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.delete('/passage-note-tags/:id', async (req, res, next) => {
   try {

@@ -78,12 +78,13 @@ const swaggerDefinition = {
 };
 
 // Options for the swagger docs
+// Paths are relative to the api directory (where the server runs from)
 const options = {
   swaggerDefinition,
   // Paths to files containing OpenAPI definitions
   apis: [
-    './api/router/routes/*.js',
-    './api/mongoose/models/*.js',
+    './router/routes/*.ts',
+    './mongoose/schemas/*.ts',
   ],
 };
 

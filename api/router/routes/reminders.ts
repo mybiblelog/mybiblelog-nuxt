@@ -85,7 +85,12 @@ const getUserReminder = async (currentUser) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/DailyReminder'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/DailyReminder'
  */
 router.get('/reminders/daily-reminder', async (req, res, next) => {
   try {
@@ -131,7 +136,12 @@ router.get('/reminders/daily-reminder', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/DailyReminder'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/DailyReminder'
  */
 router.put('/reminders/daily-reminder', async (req, res, next) => {
   try {
@@ -176,13 +186,21 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 error:
- *                   type: boolean
- *                   description: Whether there was an error
- *                 email:
- *                   type: string
- *                   description: The email of the user who was unsubscribed
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     email:
+ *                       type: string
+ *                       description: The email of the user who was unsubscribed
+ *       404:
+ *         description: Reminder or user not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next) => {
   const { code } = req.params;

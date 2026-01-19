@@ -42,7 +42,18 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/UserSettings'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/UserSettings'
+ *       401:
+ *         description: Unauthorized - User is not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/settings', async (req, res, next) => {
   try {
@@ -77,6 +88,15 @@ router.get('/settings', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/UserSettings'
  */
 router.put('/settings', async (req, res, next) => {
   try {
@@ -112,6 +132,22 @@ router.put('/settings', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Account deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: Number of deleted accounts (1)
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/settings/delete-account', async (req, res, next) => {
   try {

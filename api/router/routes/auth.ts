@@ -50,21 +50,50 @@ const router = express.Router();
  *       required:
  *         - email
  *       properties:
- *         _id:
- *           type: string
- *           description: The auto-generated ID of the user
+ *         hasLocalAccount:
+ *           type: boolean
+ *           description: Whether the user has a local password account (as opposed to only OAuth)
  *         email:
  *           type: string
- *           description: The user's email
- *         emailVerified:
+ *           description: The user's email address
+ *         isAdmin:
  *           type: boolean
- *           description: Whether the user's email has been verified
- *         token:
+ *           description: Whether the user has admin privileges
+ *     ApiErrorDetail:
+ *       type: object
+ *       properties:
+ *         field:
  *           type: string
- *           description: JWT token for authentication
- *         settings:
+ *           nullable: true
+ *           description: Field name for field-level errors, or null for top-level errors
+ *         code:
+ *           type: string
+ *           description: Machine-readable i18n-friendly error code
+ *         properties:
  *           type: object
- *           description: User settings
+ *           additionalProperties: true
+ *           description: Optional metadata for the error
+ *     ApiError:
+ *       type: object
+ *       required:
+ *         - code
+ *       properties:
+ *         code:
+ *           type: string
+ *           description: Top-level error code
+ *           enum: [validation_error, invalid_request, unauthenticated, unauthorized, not_found, too_many_requests, internal_server_error]
+ *         errors:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/ApiErrorDetail'
+ *           description: Optional array of field errors
+ *     ApiErrorResponse:
+ *       type: object
+ *       required:
+ *         - error
+ *       properties:
+ *         error:
+ *           $ref: '#/components/schemas/ApiError'
  */
 
 /**
@@ -82,9 +111,16 @@ const router = express.Router();
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 user:
- *                   $ref: '#/components/schemas/User'
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     user:
+ *                       $ref: '#/components/schemas/User'
+ *                       nullable: true
+ *                       description: User object if authenticated, null otherwise
  */
 router.get('/auth/user', async (req, res, next) => {
   try {
@@ -141,21 +177,23 @@ router.get('/auth/user', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
- *                 user:
- *                   $ref: '#/components/schemas/User'
- *       401:
- *         description: Invalid credentials
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
+ *                     user:
+ *                       $ref: '#/components/schemas/User'
+ *       422:
+ *         description: Invalid credentials or validation error
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 errors:
- *                   type: object
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/login', async (req, res, next) => {
   // Rate limiting for login attempts
@@ -225,6 +263,16 @@ router.post('/auth/login', async (req, res, next) => {
  *             schema:
  *               type: string
  *               example: auth_token=; HttpOnly; Secure; Max-Age=0
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: boolean
+ *                   description: Success indicator (true)
  */
 router.post('/auth/logout', async (req, res, next) => {
   try {
@@ -274,22 +322,21 @@ router.post('/auth/logout', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 success:
- *                   type: string
- *                   description: Success message
- *                 emailVerificationCode:
- *                   type: string
- *                   description: Email verification code (only returned when test bypass header is present)
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     success:
+ *                       type: boolean
+ *                       description: Success indicator (true)
  *       422:
  *         description: Validation error (e.g., email already in use, invalid email format)
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 errors:
- *                   type: object
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/register', async (req, res, next) => {
   // If the request is coming from a test, bypass restrictions
@@ -365,10 +412,18 @@ router.post('/auth/register', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 url:
- *                   type: string
- *                   description: URL to redirect the user to for Google authentication
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     url:
+ *                       type: string
+ *                       description: URL to redirect the user to for Google authentication
+ *                     state:
+ *                       type: string
+ *                       description: State parameter for CSRF protection
  */
 router.get('/auth/oauth2/google/url', (req, res, next) => {
   const { url, state } = googleOauth2.getGoogleLoginUrl();
@@ -414,14 +469,27 @@ router.get('/auth/oauth2/google/url', (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
- *                 user:
- *                   $ref: '#/components/schemas/User'
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
  *       400:
  *         description: Invalid code or OAuth2 error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
+ *       422:
+ *         description: Validation error (e.g., email not verified)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/auth/oauth2/google/verify', async (req, res, next) => {
   await rateLimit(req, { maxRequests: 10, windowMs: 60 * 1000 }); // 10 attempts per minute
@@ -519,12 +587,27 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
+ *       400:
+ *         description: Verification code expired
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Verification code not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   // Rate limiting for email verification
@@ -584,8 +667,22 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
  *     responses:
  *       200:
  *         description: Password changed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: HTTP status code (200)
  *       400:
  *         description: Current password is incorrect
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/auth/change-password', async (req, res, next) => {
   // Rate limiting for password change attempts
@@ -653,8 +750,25 @@ router.put('/auth/change-password', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Email change process initiated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     success:
+ *                       type: boolean
+ *                       description: Success indicator (true)
  *       422:
  *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/change-email', async (req, res, next) => {
   // If the request is coming from a test, bypass restrictions
@@ -720,12 +834,21 @@ router.post('/auth/change-email', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 newEmail:
- *                   type: string
- *                 expires:
- *                   type: string
- *                   format: date-time
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     newEmail:
+ *                       type: string
+ *                       nullable: true
+ *                       description: The new email address, or null if no change is pending
+ *                     expires:
+ *                       type: string
+ *                       format: date-time
+ *                       nullable: true
+ *                       description: Expiration date of the email change request, or null if no change is pending
  */
 router.get('/auth/change-email', async (req, res, next) => {
   try {
@@ -767,9 +890,24 @@ router.get('/auth/change-email', async (req, res, next) => {
  *         description: The new email verification code
  *     responses:
  *       200:
- *         description: Email change request found
- *       404:
- *         description: Email change request not found
+ *         description: Email change request found or not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   nullable: true
+ *                   properties:
+ *                     newEmail:
+ *                       type: string
+ *                     expires:
+ *                       type: string
+ *                       format: date-time
+ *                   description: Email change request data if found, null otherwise
  */
 router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next) => {
   // Rate limiting to prevent enumeration of email change verification codes
@@ -808,7 +946,13 @@ router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next
  *         content:
  *           application/json:
  *             schema:
- *               type: boolean
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: boolean
+ *                   description: True if cancellation was successful, false if no change was pending
  */
 router.delete('/auth/change-email', async (req, res, next) => {
   try {
@@ -859,14 +1003,33 @@ router.delete('/auth/change-email', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
+ *       400:
+ *         description: Verification code expired
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Email verification code not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       422:
  *         description: Email already in use
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, next) => {
   // Rate limiting for email change completion
@@ -937,8 +1100,25 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
  *     responses:
  *       200:
  *         description: Password reset process initiated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     success:
+ *                       type: boolean
+ *                       description: Success indicator (true)
  *       422:
  *         description: Account not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/reset-password', async (req, res) => {
   // Rate limiting for password reset requests
@@ -988,7 +1168,16 @@ router.post('/auth/reset-password', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               type: boolean
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     valid:
+ *                       type: boolean
+ *                       description: Whether the password reset code is valid
  */
 router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, next) => {
   // Rate limiting to prevent enumeration of password reset codes
@@ -1052,14 +1241,21 @@ router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, nex
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
  *       400:
- *         description: Password reset link expired
- *       400:
- *         description: Password reset link not valid
+ *         description: Password reset link expired or not valid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) => {
   // Rate limiting for password reset completion
