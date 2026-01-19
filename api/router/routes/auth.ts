@@ -424,6 +424,8 @@ router.get('/auth/oauth2/google/url', (req, res, next) => {
  *         description: Invalid code or OAuth2 error
  */
 router.get('/auth/oauth2/google/verify', async (req, res, next) => {
+  await rateLimit(req, { maxRequests: 10, windowMs: 60 * 1000 }); // 10 attempts per minute
+
   try {
     const { code, state, locale } = req.query;
 
@@ -525,6 +527,12 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
  *         description: Verification code not found
  */
 router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
+  // Rate limiting for email verification
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 20, windowMs: 60 * 60 * 1000 }); // 20 attempts per hour
+  }
+
   const { emailVerificationCode } = req.params;
   // Find the user (if not found, error)
   const { User } = await useMongooseModels();
@@ -580,6 +588,12 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
  *         description: Current password is incorrect
  */
 router.put('/auth/change-password', async (req, res, next) => {
+  // Rate limiting for password change attempts
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 10, windowMs: 60 * 60 * 1000 }); // 10 attempts per hour
+  }
+
   try {
     const currentUser = await authCurrentUser(req);
     const { currentPassword, newPassword } = req.body;
@@ -645,6 +659,9 @@ router.put('/auth/change-password', async (req, res, next) => {
 router.post('/auth/change-email', async (req, res, next) => {
   // If the request is coming from a test, bypass restrictions
   const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 5, windowMs: 60 * 60 * 1000 }); // 5 attempts per hour
+  }
 
   try {
     const { User } = await useMongooseModels();
@@ -755,6 +772,12 @@ router.get('/auth/change-email', async (req, res, next) => {
  *         description: Email change request not found
  */
 router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next) => {
+  // Rate limiting to prevent enumeration of email change verification codes
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 20, windowMs: 60 * 60 * 1000 }); // 20 attempts per hour
+  }
+
   const { newEmailVerificationCode } = req.params;
   const { User } = await useMongooseModels();
   const user = await User.findOne({ newEmailVerificationCode });
@@ -846,6 +869,12 @@ router.delete('/auth/change-email', async (req, res, next) => {
  *         description: Email already in use
  */
 router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, next) => {
+  // Rate limiting for email change completion
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 5, windowMs: 60 * 60 * 1000 }); // 5 attempts per hour
+  }
+
   const { newEmailVerificationCode } = req.params;
   // Find the user (if not found, error)
   const { User } = await useMongooseModels();
@@ -962,6 +991,12 @@ router.post('/auth/reset-password', async (req, res) => {
  *               type: boolean
  */
 router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, next) => {
+  // Rate limiting to prevent enumeration of password reset codes
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 20, windowMs: 60 * 60 * 1000 }); // 20 attempts per hour
+  }
+
   const { passwordResetCode } = req.params;
 
   // Look for the user to determine if reset code is valid
@@ -1027,6 +1062,12 @@ router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, nex
  *         description: Password reset link not valid
  */
 router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) => {
+  // Rate limiting for password reset completion
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 5, windowMs: 60 * 60 * 1000 }); // 5 attempts per hour
+  }
+
   const { passwordResetCode } = req.params;
   const { newPassword } = req.body;
 
