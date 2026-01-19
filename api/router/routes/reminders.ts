@@ -90,7 +90,7 @@ router.get('/reminders/daily-reminder', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     const reminder = await getUserReminder(currentUser);
-    return res.send({ data: reminder.toJSON() } as ApiResponse);
+    return res.json({ data: reminder.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -148,7 +148,7 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
       }
     });
     await reminder.save();
-    res.send({ data: reminder.toJSON() } as ApiResponse);
+    res.json({ data: reminder.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -200,7 +200,7 @@ router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next)
   reminder.active = false;
   await reminder.save();
 
-  return res.send({ data: { email: user.email } } as ApiResponse);
+  return res.json({ data: { email: user.email } } as ApiResponse);
 });
 
 export default router;

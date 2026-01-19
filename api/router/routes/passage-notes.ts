@@ -399,7 +399,7 @@ router.get('/passage-notes', async (req, res, next) => {
       },
     };
 
-    return res.send(response as ApiResponse);
+    return res.json(response as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -445,7 +445,7 @@ router.get('/passage-notes/:id', async (req, res, next) => {
     if (!passageNote) {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.send({ data: passageNote.toJSON() } as ApiResponse);
+    res.json({ data: passageNote.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -514,7 +514,7 @@ router.post('/passage-notes', async (req, res, next) => {
     }
     await passageNote.save();
 
-    res.send({ data: passageNote.toJSON() } as ApiResponse);
+    res.json({ data: passageNote.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -602,7 +602,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
     }
     await passageNote.save();
 
-    res.send({ data: passageNote.toJSON() } as ApiResponse);
+    res.json({ data: passageNote.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -645,7 +645,7 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
-    res.send({ data: result.deletedCount } as ApiResponse);
+    res.json({ data: result.deletedCount } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -731,7 +731,7 @@ router.get('/passage-notes/count/books', async (req, res, next) => {
       },
     ]);
 
-    res.send({ data: result[0] } as ApiResponse);
+    res.json({ data: result[0] } as ApiResponse);
   }
   catch (error) {
     next(error);

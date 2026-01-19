@@ -29,7 +29,7 @@ describe('Auth routes', () => {
     expect(res.body.error).toHaveProperty('errors');
     expect(res.body.error.errors).toEqual({
       _form: {
-        kind: 'api_error.invalid_login',
+        code: 'api_error.invalid_login',
         field: '_form',
         properties: {},
       },
@@ -136,7 +136,7 @@ describe('Auth routes', () => {
       expect(response.body.errors).toEqual({
         email: {
           field: 'email',
-          kind: 'api_error.review',
+          code: 'api_error.review',
           properties: {
             length: 13,
             message: 'is invalid',
@@ -171,7 +171,7 @@ describe('Auth routes', () => {
       expect(response.statusCode).toBe(422);
       expect(response.body.errors).toEqual({
         email: {
-          kind: 'api_error.unique',
+          code: 'api_error.unique',
           field: 'email',
           properties: {
             length: 42,
@@ -202,7 +202,7 @@ describe('Auth routes', () => {
       expect(response.body.errors).toEqual({
         password: {
           field: 'password',
-          kind: 'api_error.min_length',
+          code: 'api_error.min_length',
           properties: {
             length: 3,
             message: 'Path `password` (`123`, length 3) is shorter than the minimum allowed length (8).',
@@ -350,7 +350,7 @@ describe('Auth routes', () => {
       expect(response.body).toHaveProperty('error');
       expect(response.body).not.toHaveProperty('data');
       expect(response.body.error).toEqual({
-        currentPassword: { field: 'currentPassword', kind: 'api_error.password_incorrect', properties: {} }
+        currentPassword: { field: 'currentPassword', code: 'api_error.password_incorrect', properties: {} }
       });
 
       // Cleanup

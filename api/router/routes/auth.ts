@@ -368,7 +368,7 @@ router.post('/auth/register', async (req, res, next) => {
  */
 router.get('/auth/oauth2/google/url', (req, res, next) => {
   const { url, state } = googleOauth2.getGoogleLoginUrl();
-  res.send({ data: { url, state } } as ApiResponse);
+  res.json({ data: { url, state } } as ApiResponse);
 });
 
 /**
@@ -458,7 +458,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
 
       const token = existingUser.generateJWT();
       setAuthTokenCookie(res, token);
-      return res.send({ data: { token } } as ApiResponse);
+      return res.json({ data: { token } } as ApiResponse);
     }
 
     // Create new user account
@@ -474,7 +474,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     await user.save();
     const token = user.generateJWT();
     setAuthTokenCookie(res, token);
-    res.send({ data: { token } } as ApiResponse);
+    res.json({ data: { token } } as ApiResponse);
   }
   catch (err) {
     next(err);
@@ -526,7 +526,7 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   const { User } = await useMongooseModels();
   const user = await User.findOne({ emailVerificationCode });
   if (!user) {
-    return res.sendStatus(404);
+    return res.status(404).json({ error: {} });
   }
 
   // Verify the code and check expiration
@@ -594,7 +594,7 @@ router.put('/auth/change-password', async (req, res, next) => {
     currentUser.password = newPassword;
     try {
       await currentUser.save();
-      res.send({ data: status.OK } as ApiResponse);
+      res.json({ data: status.OK } as ApiResponse);
     }
     catch (err) {
       // Any 'password' validation errors should be seen on the 'newPassword' field
@@ -672,7 +672,7 @@ router.post('/auth/change-email', async (req, res, next) => {
     if (authBypass && currentUser.newEmailVerificationCode) {
       responseData.newEmailVerificationCode = currentUser.newEmailVerificationCode;
     }
-    res.send({ data: responseData } as ApiResponse);
+    res.json({ data: responseData } as ApiResponse);
 
     // send an email update confirmation code
     const emailService = await useEmailService();
@@ -710,7 +710,7 @@ router.get('/auth/change-email', async (req, res, next) => {
     const currentUser = await authCurrentUser(req);
 
     if (currentUser.newEmail) {
-      return res.send({
+      return res.json({
         data: {
           newEmail: currentUser.newEmail,
           expires: currentUser.newEmailVerificationExpires,
@@ -718,7 +718,7 @@ router.get('/auth/change-email', async (req, res, next) => {
       } as ApiResponse);
     }
 
-    return res.send({
+    return res.json({
       data: {
         newEmail: null,
         expires: null,
@@ -755,7 +755,7 @@ router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next
   const user = await User.findOne({ newEmailVerificationCode });
 
   if (user) {
-    return res.send({
+    return res.json({
       data: {
         newEmail: user.newEmail,
         expires: user.newEmailVerificationExpires,
@@ -763,7 +763,7 @@ router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next
     } as ApiResponse);
   }
 
-  return res.send({ data: null } as ApiResponse);
+  return res.json({ data: null } as ApiResponse);
 });
 
 /**
@@ -789,14 +789,14 @@ router.delete('/auth/change-email', async (req, res, next) => {
     if (currentUser.newEmail) {
       currentUser.disableEmailUpdate();
       await currentUser.save();
-      return res.send({ data: true } as ApiResponse);
+      return res.json({ data: true } as ApiResponse);
     }
 
-    return res.send({ data: false } as ApiResponse);
+    return res.json({ data: false } as ApiResponse);
   }
   catch (err) {
     console.log(err);
-    return res.send({ data: false } as ApiResponse);
+    return res.json({ data: false } as ApiResponse);
   }
 });
 
@@ -846,7 +846,7 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   const { User } = await useMongooseModels();
   const user = await User.findOne({ newEmailVerificationCode });
   if (!user) {
-    return res.sendStatus(404);
+    return res.status(404).json({ error: {} });
   }
 
   // Verify the code and check expiration
@@ -928,7 +928,7 @@ router.post('/auth/reset-password', async (req, res) => {
   if (authBypass && user.passwordResetCode) {
     responseData.passwordResetCode = user.passwordResetCode;
   }
-  res.send({ data: responseData } as ApiResponse);
+  res.json({ data: responseData } as ApiResponse);
 
   // send password reset code via email
   const emailService = await useEmailService();

@@ -162,7 +162,7 @@ router.get('/admin/feedback', async (req, res, next) => {
       .find()
       .sort({ createdAt: -1 })
       .exec();
-    res.send({ data: feedback } as ApiResponse);
+    res.json({ data: feedback } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -210,7 +210,7 @@ router.get('/admin/reports/user-engagement/past-week', async (req, res, next) =>
   try {
     await authCurrentUser(req, { adminOnly: true });
     const engagementData = await getPastWeekEngagement();
-    res.send({ data: engagementData } as ApiResponse);
+    res.json({ data: engagementData } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -418,7 +418,7 @@ router.get('/admin/users', async (req, res, next) => {
       },
     };
 
-    return res.send({ data: users, meta } as ApiResponse);
+    return res.json({ data: users, meta } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -467,7 +467,7 @@ router.get('/admin/users/:email', async (req, res, next) => {
     if (!user) {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.send({ data: user } as ApiResponse);
+    res.json({ data: user } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -581,7 +581,7 @@ router.delete('/admin/users/:email', async (req, res, next) => {
     if (!success) {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.send({ data: 1 } as ApiResponse);
+    res.json({ data: 1 } as ApiResponse);
   }
   catch (error) {
     next(error);

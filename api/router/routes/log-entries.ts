@@ -87,21 +87,21 @@ router.get('/log-entries', async (req, res, next) => {
 
     if (!startDate && !endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id });
-      return res.send({ data: logEntries } as ApiResponse);
+      return res.json({ data: logEntries } as ApiResponse);
     }
 
     if (startDate && !endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate } });
-      return res.send({ data: logEntries } as ApiResponse);
+      return res.json({ data: logEntries } as ApiResponse);
     }
 
     if (!startDate && endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $lte: endDate } });
-      return res.send({ data: logEntries } as ApiResponse);
+      return res.json({ data: logEntries } as ApiResponse);
     }
 
     const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate, $lte: endDate } });
-    return res.send({ data: logEntries } as ApiResponse);
+    return res.json({ data: logEntries } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -147,7 +147,7 @@ router.get('/log-entries/:id', async (req, res, next) => {
     if (!logEntry) {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.send({ data: logEntry.toJSON() } as ApiResponse);
+    res.json({ data: logEntry.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -203,7 +203,7 @@ router.post('/log-entries', async (req, res, next) => {
     }
     await logEntry.save();
 
-    res.send({ data: logEntry.toJSON() } as ApiResponse);
+    res.json({ data: logEntry.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -277,7 +277,7 @@ router.put('/log-entries/:id', async (req, res, next) => {
     }
     await logEntry.save();
 
-    res.send({ data: logEntry.toJSON() } as ApiResponse);
+    res.json({ data: logEntry.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -320,7 +320,7 @@ router.delete('/log-entries/:id', async (req, res, next) => {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
-    res.send({ data: result.deletedCount } as ApiResponse);
+    res.json({ data: result.deletedCount } as ApiResponse);
   }
   catch (error) {
     next(error);

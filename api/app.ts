@@ -97,7 +97,7 @@ const buildApp = (): express.Application => {
     // Serve Swagger JSON
     app.get('/api-docs.json', (req, res) => {
       res.setHeader('Content-Type', 'application/json');
-      res.send(swaggerSpec);
+      res.json(swaggerSpec);
     });
   }
 

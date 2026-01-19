@@ -93,7 +93,7 @@ router.put('/settings', async (req, res, next) => {
       }
     });
     await currentUser.save();
-    return res.send({ data: currentUser.settings } as ApiResponse);
+    return res.json({ data: currentUser.settings } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -121,7 +121,7 @@ router.put('/settings/delete-account', async (req, res, next) => {
     }
     // clear the auth cookie on account deletion
     res.clearCookie(AUTH_COOKIE_NAME);
-    return res.send({ data: 1 } as ApiResponse);
+    return res.json({ data: 1 } as ApiResponse);
   }
   catch (error) {
     next(error);
