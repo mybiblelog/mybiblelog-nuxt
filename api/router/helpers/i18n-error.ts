@@ -7,6 +7,7 @@
  */
 export const I18nError = {
   // Request Input Validation Errors
+  // (these come from mongoose validation errors)
   Required: 'required',
   NotValid: 'not_valid',
   Unique: 'unique',
@@ -31,12 +32,12 @@ export const I18nError = {
 
 /**
  * Creates an error that can be thrown by the API and translated on the frontend.
- * @param {I18nError} kind
+ * @param {I18nError} code
  * @param {string} field
  * @param {object} properties
  */
-export const makeI18nError = (kind: string, field?: string, properties: Record<string, unknown> = {}) => ({
-  kind: `api_error.${kind}`, // prefix for i18n key
+export const makeI18nError = (code: string, field?: string, properties: Record<string, unknown> = {}) => ({
+  code: `api_error.${code}`, // prefix for i18n key
   field,
   properties,
 });

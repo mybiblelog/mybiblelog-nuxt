@@ -1,6 +1,7 @@
 import express from 'express';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
+import { type ApiResponse } from '../helpers/response';
 
 const router = express.Router();
 
@@ -89,7 +90,7 @@ router.get('/reminders/daily-reminder', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     const reminder = await getUserReminder(currentUser);
-    return res.send({ data: reminder.toJSON() });
+    return res.send({ data: reminder.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -147,7 +148,7 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
       }
     });
     await reminder.save();
-    res.send({ data: reminder.toJSON() });
+    res.send({ data: reminder.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -199,7 +200,7 @@ router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next)
   reminder.active = false;
   await reminder.save();
 
-  return res.send({ data: { email: user.email } });
+  return res.send({ data: { email: user.email } } as ApiResponse);
 });
 
 export default router;

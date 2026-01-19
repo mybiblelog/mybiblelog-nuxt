@@ -6,6 +6,7 @@ import authCurrentUser, { setAuthTokenCookie } from '../helpers/authCurrentUser'
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import deleteAccount from '../helpers/deleteAccount';
 import { IUser } from '../../mongoose/schemas/User';
+import { type ApiResponse } from '../helpers/response';
 
 dayjs.extend(utc);
 
@@ -161,7 +162,7 @@ router.get('/admin/feedback', async (req, res, next) => {
       .find()
       .sort({ createdAt: -1 })
       .exec();
-    res.send({ data: feedback });
+    res.send({ data: feedback } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -209,7 +210,7 @@ router.get('/admin/reports/user-engagement/past-week', async (req, res, next) =>
   try {
     await authCurrentUser(req, { adminOnly: true });
     const engagementData = await getPastWeekEngagement();
-    res.send({ data: engagementData });
+    res.send({ data: engagementData } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -417,7 +418,7 @@ router.get('/admin/users', async (req, res, next) => {
       },
     };
 
-    return res.send({ data: users, meta });
+    return res.send({ data: users, meta } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -466,7 +467,7 @@ router.get('/admin/users/:email', async (req, res, next) => {
     if (!user) {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.send({ data: user });
+    res.send({ data: user } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -531,7 +532,7 @@ router.get('/admin/users/:email/login', async (req, res, next) => {
 
     const token = user.generateJWT();
     setAuthTokenCookie(res, token);
-    res.json({ data: { token } });
+    res.json({ data: { token } } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -580,7 +581,7 @@ router.delete('/admin/users/:email', async (req, res, next) => {
     if (!success) {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.send({ data: 1 });
+    res.send({ data: 1 } as ApiResponse);
   }
   catch (error) {
     next(error);

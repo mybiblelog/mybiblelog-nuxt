@@ -3,6 +3,7 @@ import status from 'http-status';
 import authCurrentUser from '../helpers/authCurrentUser';
 import { I18nError, makeI18nError } from '../helpers/i18n-error';
 import useMongooseModels from '../../mongoose/useMongooseModels';
+import { type ApiResponse } from '../helpers/response';
 
 const router = express.Router();
 
@@ -119,7 +120,7 @@ router.post('/feedback', async (req, res, next) => {
     });
 
     await feedback.save();
-    res.status(status.CREATED).send({ data: feedback.toJSON() });
+    res.status(status.CREATED).send({ data: feedback.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);

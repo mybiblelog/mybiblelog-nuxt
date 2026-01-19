@@ -1,6 +1,7 @@
 import express from 'express';
 import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import deleteAccount from '../helpers/deleteAccount';
+import { type ApiResponse } from '../helpers/response';
 
 const router = express.Router();
 
@@ -48,7 +49,7 @@ router.get('/settings', async (req, res, next) => {
     if (!currentUser) {
       return res.status(401).send({ error: { error: { message: 'Unauthorized' } } });
     }
-    res.json({ data: currentUser.settings });
+    res.json({ data: currentUser.settings } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -92,7 +93,7 @@ router.put('/settings', async (req, res, next) => {
       }
     });
     await currentUser.save();
-    return res.send({ data: currentUser.settings });
+    return res.send({ data: currentUser.settings } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -120,7 +121,7 @@ router.put('/settings/delete-account', async (req, res, next) => {
     }
     // clear the auth cookie on account deletion
     res.clearCookie(AUTH_COOKIE_NAME);
-    return res.send({ data: 1 });
+    return res.send({ data: 1 } as ApiResponse);
   }
   catch (error) {
     next(error);

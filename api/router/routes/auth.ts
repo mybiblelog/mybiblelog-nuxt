@@ -11,6 +11,7 @@ import checkTestBypass from '../helpers/checkTestBypass';
 import UserSettings from '../../mongoose/schemas/UserSettings';
 import { isEmailVerified } from '../../mongoose/schemas/User';
 import { LocaleCode } from '@mybiblelog/shared';
+import { type ApiResponse } from '../helpers/response';
 
 const { requireEmailVerification } = config;
 
@@ -88,8 +89,8 @@ const router = express.Router();
 router.get('/auth/user', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req, { optional: true });
-    if (!currentUser) { return res.json({ data: { user: null } }); }
-    return res.json({ data: { user: currentUser.toAuthJSON() } });
+    if (!currentUser) { return res.json({ data: { user: null } } as ApiResponse); }
+    return res.json({ data: { user: currentUser.toAuthJSON() } } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -197,7 +198,7 @@ router.post('/auth/login', async (req, res, next) => {
       token,
       user: userData,
     },
-  });
+  } as ApiResponse);
 });
 
 /**
@@ -229,7 +230,7 @@ router.post('/auth/logout', async (req, res, next) => {
   try {
     await authCurrentUser(req);
     res.clearCookie(AUTH_COOKIE_NAME);
-    return res.json({ data: true });
+    return res.json({ data: true } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -324,7 +325,7 @@ router.post('/auth/register', async (req, res, next) => {
 
     await user.save();
 
-    res.json({ data: { success: true } });
+    res.json({ data: { success: true } } as ApiResponse);
 
     // Send a verification email
     const emailService = await useEmailService();
@@ -367,7 +368,7 @@ router.post('/auth/register', async (req, res, next) => {
  */
 router.get('/auth/oauth2/google/url', (req, res, next) => {
   const { url, state } = googleOauth2.getGoogleLoginUrl();
-  res.send({ data: { url, state } });
+  res.send({ data: { url, state } } as ApiResponse);
 });
 
 /**
@@ -457,7 +458,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
 
       const token = existingUser.generateJWT();
       setAuthTokenCookie(res, token);
-      return res.send({ data: { token } });
+      return res.send({ data: { token } } as ApiResponse);
     }
 
     // Create new user account
@@ -473,7 +474,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     await user.save();
     const token = user.generateJWT();
     setAuthTokenCookie(res, token);
-    res.send({ data: { token } });
+    res.send({ data: { token } } as ApiResponse);
   }
   catch (err) {
     next(err);
@@ -543,7 +544,7 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ data: { token } });
+  res.json({ data: { token } } as ApiResponse);
 });
 
 /**
@@ -593,7 +594,7 @@ router.put('/auth/change-password', async (req, res, next) => {
     currentUser.password = newPassword;
     try {
       await currentUser.save();
-      res.send({ data: status.OK });
+      res.send({ data: status.OK } as ApiResponse);
     }
     catch (err) {
       // Any 'password' validation errors should be seen on the 'newPassword' field
@@ -671,7 +672,7 @@ router.post('/auth/change-email', async (req, res, next) => {
     if (authBypass && currentUser.newEmailVerificationCode) {
       responseData.newEmailVerificationCode = currentUser.newEmailVerificationCode;
     }
-    res.send({ data: responseData });
+    res.send({ data: responseData } as ApiResponse);
 
     // send an email update confirmation code
     const emailService = await useEmailService();
@@ -714,7 +715,7 @@ router.get('/auth/change-email', async (req, res, next) => {
           newEmail: currentUser.newEmail,
           expires: currentUser.newEmailVerificationExpires,
         },
-      });
+      } as ApiResponse);
     }
 
     return res.send({
@@ -722,7 +723,7 @@ router.get('/auth/change-email', async (req, res, next) => {
         newEmail: null,
         expires: null,
       },
-    });
+    } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -759,10 +760,10 @@ router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next
         newEmail: user.newEmail,
         expires: user.newEmailVerificationExpires,
       },
-    });
+    } as ApiResponse);
   }
 
-  return res.send({ data: null });
+  return res.send({ data: null } as ApiResponse);
 });
 
 /**
@@ -788,14 +789,14 @@ router.delete('/auth/change-email', async (req, res, next) => {
     if (currentUser.newEmail) {
       currentUser.disableEmailUpdate();
       await currentUser.save();
-      return res.send({ data: true });
+      return res.send({ data: true } as ApiResponse);
     }
 
-    return res.send({ data: false });
+    return res.send({ data: false } as ApiResponse);
   }
   catch (err) {
     console.log(err);
-    return res.send({ data: false });
+    return res.send({ data: false } as ApiResponse);
   }
 });
 
@@ -879,7 +880,7 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ data: { token } });
+  res.json({ data: { token } } as ApiResponse);
 });
 
 /**
@@ -927,7 +928,7 @@ router.post('/auth/reset-password', async (req, res) => {
   if (authBypass && user.passwordResetCode) {
     responseData.passwordResetCode = user.passwordResetCode;
   }
-  res.send({ data: responseData });
+  res.send({ data: responseData } as ApiResponse);
 
   // send password reset code via email
   const emailService = await useEmailService();
@@ -962,10 +963,10 @@ router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, nex
   const { User } = await useMongooseModels();
   const user = await User.findOne({ passwordResetCode });
   if (user) {
-    return res.json({ data: { valid: true } });
+    return res.json({ data: { valid: true } } as ApiResponse);
   }
   else {
-    return res.json({ data: { valid: false } });
+    return res.json({ data: { valid: false } } as ApiResponse);
   }
 });
 
@@ -1056,7 +1057,7 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ data: { token } });
+  res.json({ data: { token } } as ApiResponse);
 });
 
 export default router;

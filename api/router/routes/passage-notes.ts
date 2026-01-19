@@ -6,6 +6,7 @@ import useMongooseModels from '../../mongoose/useMongooseModels';
 
 import { QueryFilter, Types } from 'mongoose';
 import { IPassageNote } from '../../mongoose/schemas/PassageNote';
+import { type ApiResponse } from '../helpers/response';
 const router = express.Router();
 
 /**
@@ -398,7 +399,7 @@ router.get('/passage-notes', async (req, res, next) => {
       },
     };
 
-    return res.send(response);
+    return res.send(response as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -444,7 +445,7 @@ router.get('/passage-notes/:id', async (req, res, next) => {
     if (!passageNote) {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
-    res.send({ data: passageNote.toJSON() });
+    res.send({ data: passageNote.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -513,7 +514,7 @@ router.post('/passage-notes', async (req, res, next) => {
     }
     await passageNote.save();
 
-    res.send({ data: passageNote.toJSON() });
+    res.send({ data: passageNote.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -601,7 +602,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
     }
     await passageNote.save();
 
-    res.send({ data: passageNote.toJSON() });
+    res.send({ data: passageNote.toJSON() } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -644,7 +645,7 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
       return res.status(404).send({ error: { error: { message: 'Not Found' } } });
     }
 
-    res.send({ data: result.deletedCount });
+    res.send({ data: result.deletedCount } as ApiResponse);
   }
   catch (error) {
     next(error);
@@ -730,7 +731,7 @@ router.get('/passage-notes/count/books', async (req, res, next) => {
       },
     ]);
 
-    res.send({ data: result[0] });
+    res.send({ data: result[0] } as ApiResponse);
   }
   catch (error) {
     next(error);
