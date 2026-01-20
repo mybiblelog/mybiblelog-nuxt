@@ -43,4 +43,7 @@ export const ApiErrorDetailCode = {
   PasswordResetLinkExpired: 'password_reset_link_expired',
   EmailNotVerified: 'email_not_verified',
   VerificationCodeExpired: 'verification_code_expired',
+
+  // Development Errors (only to be send in non-production environments)
+  DevelopmentError: 'development_error',
 };
