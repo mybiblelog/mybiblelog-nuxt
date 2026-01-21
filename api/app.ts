@@ -1,4 +1,3 @@
-import createError from 'http-errors';
 import express from 'express';
 import compression from 'compression';
 import cors from 'cors';
@@ -10,8 +9,10 @@ import swaggerSpec from './config/swagger';
 import config from './config';
 import apiRouter from './router/router';
 import mongooseErrorHandler from './router/middleware/mongoose-error-handler';
-import { ApiError, ApiResponse } from './router/helpers/response';
-import { ApiErrorCode, ApiErrorDetailCode } from 'router/helpers/error-codes';
+import { ApiResponse } from './router/response';
+import { AppError } from 'router/errors/app-error';
+import { InternalError } from 'router/errors/internal-error';
+import { NotFoundError } from 'router/errors/http-errors';
 
 const isProduction = config.nodeEnv === 'production';
 const isTesting = config.nodeEnv === 'test';
@@ -108,37 +109,27 @@ const buildApp = (): express.Application => {
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
-    next(createError(404));
+    next(new NotFoundError());
   });
 
-  // Handle recognized Mongoose errors
+  // Handle recognized Mongoose validation errors
   app.use(mongooseErrorHandler);
 
-  // apiRouter error handler
-  // will not leak stacktrace to user in production
+  // Handle any other errors
   const apiRouterErrorHandler = (err, req, res, next) => {
-    const error: ApiError = {
-      code: ApiErrorCode.InternalServerError,
-      errors: [],
+    const error =
+      err instanceof AppError
+      ? err
+      : new InternalError();
+
+    const body: ApiResponse = {
+      error: {
+        code: error.code,
+        errors: error.details,
+      },
     };
 
-    if (!isProduction && !isTesting) {
-      console.log(err.stack);
-
-      if (err instanceof Error) {
-        error.errors?.push({
-          field: null,
-          code: ApiErrorDetailCode.DevelopmentError,
-          properties: {
-            message: err.message,
-          },
-        });
-      }
-    }
-
-    res
-      .status(err.status || 500)
-      .json({ error } satisfies ApiResponse);
+    res.status(error.status).json(body satisfies ApiResponse);
   };
 
   app.use(apiRouterErrorHandler);

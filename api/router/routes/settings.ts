@@ -1,8 +1,8 @@
 import express from 'express';
 import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import deleteAccount from '../helpers/deleteAccount';
-import { ApiErrorCode } from '../helpers/error-codes';
-import { type ApiResponse } from '../helpers/response';
+import { ApiErrorCode } from '../errors/error-codes';
+import { type ApiResponse } from '../response';
 
 const router = express.Router();
 

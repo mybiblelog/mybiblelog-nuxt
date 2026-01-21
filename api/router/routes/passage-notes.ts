@@ -6,8 +6,8 @@ import useMongooseModels from '../../mongoose/useMongooseModels';
 
 import { QueryFilter, Types } from 'mongoose';
 import { IPassageNote } from '../../mongoose/schemas/PassageNote';
-import { ApiErrorCode, ApiErrorDetailCode } from '../helpers/error-codes';
-import { type ApiResponse } from '../helpers/response';
+import { ApiErrorCode, ApiErrorDetailCode } from '../errors/error-codes';
+import { type ApiResponse } from '../response';
 const router = express.Router();
 
 /**

@@ -278,7 +278,7 @@ describe('passage-note-tags.test.js', () => {
           .post('/api/passage-note-tags')
           .set('Authorization', `Bearer ${testUser.token}`)
           .send(tag1);
-        expect(response2.status).toBe(422);
+        expect(response2.status).toBe(400);
         expect(response2.body).toHaveProperty('error');
         expect(response2.body).not.toHaveProperty('data');
         expect(response2.body.error.code).toBe('validation_error');

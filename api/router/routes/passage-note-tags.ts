@@ -3,8 +3,9 @@ import { ObjectId } from 'mongodb';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { Types } from 'mongoose';
-import { ApiErrorCode, ApiErrorDetailCode } from '../helpers/error-codes';
-import { type ApiResponse } from '../helpers/response';
+import { ApiErrorCode, ApiErrorDetailCode } from '../errors/error-codes';
+import { type ApiResponse } from '../response';
+import { ValidationError } from 'router/errors/validation-errors';
 
 const router = express.Router();
 
@@ -196,7 +197,7 @@ router.get('/passage-note-tags/:id', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ApiErrorResponse'
- *       422:
+ *       400:
  *         description: Validation error (e.g., duplicate label)
  *         content:
  *           application/json:
@@ -213,7 +214,7 @@ router.post('/passage-note-tags', async (req, res, next) => {
       await passageNoteTag.validate();
     }
     catch (error) {
-      return res.status(400).send({ error: { code: ApiErrorCode.ValidationError } } satisfies ApiResponse);
+      throw new ValidationError();
     }
     try {
       await passageNoteTag.save();
@@ -221,7 +222,7 @@ router.post('/passage-note-tags', async (req, res, next) => {
     catch (error) {
       // Check if this is a duplicate key error (index violation)
       if (error.code === 11000) {
-        return res.status(422).send({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.Unique, field: 'label' }] } } satisfies ApiResponse);
+        throw new ValidationError([{ code: ApiErrorDetailCode.Unique, field: 'label' }]);
       }
       throw error;
     }

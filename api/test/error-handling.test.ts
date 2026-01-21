@@ -7,9 +7,8 @@ describe('Error Handling', () => {
       const response = await requestApi.get('/api/non-existent-route');
       expect(response.status).toBe(404);
       expect(response.body).toEqual({
-        errors: {
-          error: { message: 'Not Found' },
-          message: 'Not Found',
+        error: {
+          code: 'not_found',
         },
       });
     });

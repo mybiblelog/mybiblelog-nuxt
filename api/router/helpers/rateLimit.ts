@@ -1,6 +1,5 @@
-import createError from 'http-errors';
-import status from 'http-status';
 import { type Request } from 'express';
+import { TooManyRequestsError } from 'router/errors/http-errors';
 
 const defaultReqIdentifierFn = (req: Request): string => {
   return req.ip || 'unknown';
@@ -64,7 +63,7 @@ const rateLimit = (
 
   // check if the limit is exceeded before adding the current request
   if (rateLimitStore[key].length >= maxRequests) {
-    throw createError(status.TOO_MANY_REQUESTS, 'Rate limit exceeded');
+    throw new TooManyRequestsError();
   }
 
   // add the current time to the rate limit store for this key

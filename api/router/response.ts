@@ -1,4 +1,4 @@
-import { ApiErrorCode, ApiErrorDetailCode } from './error-codes';
+import { type ApiErrorCode, type ApiErrorDetailCode } from './errors/error-codes';
 
 /**
  * Represents a field-level error.
@@ -12,7 +12,7 @@ export type ApiErrorDetail = {
   /**
    * Machine-readable i18n-friendly code.
    */
-  code: typeof ApiErrorDetailCode[keyof typeof ApiErrorDetailCode];
+  code: ApiErrorDetailCode;
   /**
    * Optional metadata for the error. This can be used to pass additional information to the error.
    */
@@ -26,7 +26,7 @@ export type ApiError = {
   /**
    * Top-level error code.
    */
-  code: typeof ApiErrorCode[keyof typeof ApiErrorCode];
+  code: ApiErrorCode;
   /**
    * Optional array of field errors.
    */

@@ -1,8 +1,8 @@
 import express from 'express';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
-import { ApiErrorCode } from '../helpers/error-codes';
-import { type ApiResponse } from '../helpers/response';
+import { ApiErrorCode } from '../errors/error-codes';
+import { type ApiResponse } from '../response';
 
 const router = express.Router();
 

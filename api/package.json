@@ -34,8 +34,6 @@
     "express": "^5.1.0",
     "form-data": "^4.0.4",
     "helmet": "^8.1.0",
-    "http-errors": "^2.0.0",
-    "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^9.0.0",
     "mongoose-unique-validator": "^5.0.1",

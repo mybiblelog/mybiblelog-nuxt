@@ -1,11 +1,10 @@
-import createError from 'http-errors';
 import jwt from 'jsonwebtoken';
-import status from 'http-status';
 import config from '../../config';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { type Request, type Response } from 'express';
 
 import type { UserDoc } from '../../mongoose/schemas/User';
+import { UnauthenticatedError, UnauthorizedError } from '../errors/http-errors';
 
 export const AUTH_COOKIE_NAME = 'auth_token';
 export const AUTH_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30; // 30 days
@@ -52,7 +51,7 @@ async function authCurrentUser(req: Request, { optional = false, adminOnly = fal
   const token = getTokenFromHeader(req);
   if (!token) {
     if (!optional) {
-      throw createError(status.UNAUTHORIZED);
+      throw new UnauthenticatedError();
     }
     return null;
   }
@@ -70,7 +69,7 @@ async function authCurrentUser(req: Request, { optional = false, adminOnly = fal
   }
   catch (err) {
     if (!optional) {
-      throw createError(status.UNAUTHORIZED);
+      throw new UnauthenticatedError();
     }
     return null;
   }
@@ -79,10 +78,10 @@ async function authCurrentUser(req: Request, { optional = false, adminOnly = fal
   if (!user) {
     // We throw an error even when optional because the token is expired
     // and the client will need to re-authenticate. (Or the account was deleted.)
-    throw createError(status.UNAUTHORIZED);
+    throw new UnauthenticatedError();
   }
   if (adminOnly && !user.isAdmin) {
-    throw createError(status.FORBIDDEN);
+    throw new UnauthorizedError();
   }
   return user;
 }

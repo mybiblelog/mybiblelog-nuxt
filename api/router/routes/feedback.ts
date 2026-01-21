@@ -1,9 +1,8 @@
 import express from 'express';
-import status from 'http-status';
 import authCurrentUser from '../helpers/authCurrentUser';
-import { ApiErrorCode } from '../helpers/error-codes';
 import useMongooseModels from '../../mongoose/useMongooseModels';
-import { type ApiResponse } from '../helpers/response';
+import { type ApiResponse } from '../response';
+import { TooManyRequestsError } from 'router/errors/http-errors';
 
 const router = express.Router();
 
@@ -98,6 +97,7 @@ router.post('/feedback', async (req, res, next) => {
     // If the user isn't authenticated, get recent feedback from the same
     // IP address and block the attempt if there are too many
     if (!currentUser) {
+      // FIXME: using the `rateLimit` helper here would save DB queries and reduce code duplication
       const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
       const recentFeedbackCount = await Feedback
         .countDocuments({
@@ -106,9 +106,7 @@ router.post('/feedback', async (req, res, next) => {
         });
 
       if (recentFeedbackCount >= 5) {
-        return res
-          .status(status.TOO_MANY_REQUESTS)
-          .json({ error: { code: ApiErrorCode.TooManyRequests } } satisfies ApiResponse);
+        throw new TooManyRequestsError();
       }
     }
 
@@ -126,7 +124,7 @@ router.post('/feedback', async (req, res, next) => {
     });
 
     await feedback.save();
-    res.status(status.CREATED).send({ data: feedback.toJSON() } satisfies ApiResponse);
+    res.status(201).send({ data: feedback.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

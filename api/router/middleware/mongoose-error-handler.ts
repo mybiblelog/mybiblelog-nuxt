@@ -1,7 +1,8 @@
 import { type Request, type Response, type NextFunction } from 'express';
-import { ApiErrorCode, ApiErrorDetailCode } from '../helpers/error-codes';
+import { ApiErrorCode, ApiErrorDetailCode } from '../errors/error-codes';
 import { Error } from 'mongoose';
-import { ApiErrorDetail, ApiError, ApiResponse } from '../helpers/response';
+import { ApiErrorDetail, ApiError, ApiResponse } from '../response';
+import { ValidationError } from 'router/errors/validation-errors';
 
 // Maps mongoose validation errors to i18n keys
 const MongooseErrorKinds = {
@@ -60,12 +61,7 @@ const mongooseErrorHandler = (err: any, req: Request, res: Response, next: NextF
     errors.push({ code: errorCode, field, properties });
   }
 
-  const error: ApiError = {
-    code: ApiErrorCode.ValidationError,
-    errors,
-  };
-
-  return res.status(422).json({ error } satisfies ApiResponse);
+  throw new ValidationError(errors);
 };
 
 export default mongooseErrorHandler;

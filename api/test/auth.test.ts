@@ -22,12 +22,12 @@ describe('Auth routes', () => {
       });
 
     // Assert
-    expect(res.statusCode).toBe(422);
+    expect(res.statusCode).toBe(403);
     expect(res.headers['set-cookie']).toBeUndefined();
     expect(res.body).toHaveProperty('error');
     expect(res.body).not.toHaveProperty('data');
     expect(res.body.error).toEqual({
-      code: 'validation_error',
+      code: 'unauthorized',
       errors: [{ field: null, code: 'invalid_login' }],
     });
   });
@@ -128,7 +128,7 @@ describe('Auth routes', () => {
           name: 'Test User',
           locale: 'en',
         });
-      expect(response.status).toBe(422);
+      expect(response.status).toBe(400);
       expect(response.body).toHaveProperty('error');
       expect(response.body).not.toHaveProperty('data');
       expect(response.body.error).toEqual({
@@ -138,9 +138,6 @@ describe('Auth routes', () => {
     });
 
     it('error if email already in use', async () => {
-      // Helper function to truncate email for error message
-      const truncatedEmail = (email: string) => email.substring(0, 30) + '...';
-
       // Arrange
       const testUser = await createTestUser();
 
@@ -156,7 +153,7 @@ describe('Auth routes', () => {
         });
 
       // Assert
-      expect(response.statusCode).toBe(422);
+      expect(response.statusCode).toBe(400);
       expect(response.body).toHaveProperty('error');
       expect(response.body).not.toHaveProperty('data');
       expect(response.body.error).toEqual({
@@ -179,7 +176,7 @@ describe('Auth routes', () => {
           name: 'Test User',
           locale: 'en',
         });
-      expect(response.status).toBe(422);
+      expect(response.status).toBe(400);
       expect(response.body.error).toEqual({
         code: 'validation_error',
         errors: [{
@@ -216,9 +213,10 @@ describe('Auth routes', () => {
       }
 
       expect(response.status).toBe(429); // Too Many Requests
-      expect(response.body).toHaveProperty('errors');
-      expect(response.body.errors).toHaveProperty('error');
-      expect(response.body.errors.error.message).toContain('Rate limit exceeded');
+      expect(response.body).toHaveProperty('error');
+      expect(response.body.error).toEqual({
+        code: 'too_many_requests',
+      });
 
       for (const testUser of testUsers) {
         await deleteTestUser(testUser);
@@ -370,18 +368,18 @@ describe('Auth routes', () => {
       await deleteTestUser(testUser);
     });
 
-    it('returns 422 for invalid email', async () => {
+    it('returns 404 for invalid email (no account found)', async () => {
       const response = await requestApi
         .post('/api/auth/reset-password')
         .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
         .send({
           email: 'invalid-email'
         });
-      expect(response.statusCode).toBe(422);
+      expect(response.statusCode).toBe(404);
       expect(response.body).toHaveProperty('error');
       expect(response.body).not.toHaveProperty('data');
       expect(response.body.error).toEqual({
-        code: 'validation_error',
+        code: 'not_found',
         errors: [{ field: 'email', code: 'account_not_found' }],
       });
     });
@@ -392,7 +390,12 @@ describe('Auth routes', () => {
       const res = await requestApi
         .post('/api/auth/reset-password/invalid-code-12345')
         .send({ newPassword: 'newpassword123' });
-      expect(res.statusCode).toBe(400);
+      expect(res.statusCode).toBe(404);
+      expect(res.body).toHaveProperty('error');
+      expect(res.body).not.toHaveProperty('data');
+      expect(res.body.error).toEqual({
+        code: 'not_found',
+      });
     });
 
     it('returns a token with cookie when reset code is valid', async () => {

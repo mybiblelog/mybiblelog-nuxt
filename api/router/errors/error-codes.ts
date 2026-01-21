@@ -15,6 +15,8 @@ export const ApiErrorCode = {
   InternalServerError: 'internal_server_error', // 500
 };
 
+export type ApiErrorCode = typeof ApiErrorCode[keyof typeof ApiErrorCode];
+
 /**
  * Represents all possible detail errors that can be thrown by the API.
  * These codes are used to map to i18n keys for translation.
@@ -43,7 +45,6 @@ export const ApiErrorDetailCode = {
   PasswordResetLinkExpired: 'password_reset_link_expired',
   EmailNotVerified: 'email_not_verified',
   VerificationCodeExpired: 'verification_code_expired',
-
-  // Development Errors (only to be send in non-production environments)
-  DevelopmentError: 'development_error',
 };
+
+export type ApiErrorDetailCode = typeof ApiErrorDetailCode[keyof typeof ApiErrorDetailCode];

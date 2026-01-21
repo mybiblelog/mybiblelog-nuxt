@@ -4,8 +4,8 @@ import { SimpleDate } from '@mybiblelog/shared';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { Types } from 'mongoose';
-import { ApiErrorCode, ApiErrorDetailCode } from '../helpers/error-codes';
-import { type ApiResponse } from '../helpers/response';
+import { ApiErrorCode, ApiErrorDetailCode } from '../errors/error-codes';
+import { type ApiResponse } from '../response';
 
 const router = express.Router();
 

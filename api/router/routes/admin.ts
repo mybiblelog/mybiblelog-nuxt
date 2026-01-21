@@ -6,8 +6,8 @@ import authCurrentUser, { setAuthTokenCookie } from '../helpers/authCurrentUser'
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import deleteAccount from '../helpers/deleteAccount';
 import { IUser } from '../../mongoose/schemas/User';
-import { ApiErrorCode } from '../helpers/error-codes';
-import { type ApiResponse } from '../helpers/response';
+import { ApiErrorCode } from '../errors/error-codes';
+import { type ApiResponse } from '../response';
 
 dayjs.extend(utc);
 
