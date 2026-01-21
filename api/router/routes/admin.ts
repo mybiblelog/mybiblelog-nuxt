@@ -8,6 +8,7 @@ import deleteAccount from '../helpers/deleteAccount';
 import { IUser } from '../../mongoose/schemas/User';
 import { type ApiResponse } from '../response';
 import { InvalidRequestError, NotFoundError } from '../errors/http-errors';
+import { ApiErrorDetailCode } from 'router/errors/error-codes';
 
 dayjs.extend(utc);
 
@@ -736,9 +737,7 @@ router.delete('/admin/users/:email', async (req, res, next) => {
 
     // Prevent admin from deleting their own account
     if (currentUser.email === email) {
-      // FIXME: see if we use this error on the frontend, and if so, add detail:
-      // FIXME: admin_cannot_delete_own_account "You cannot delete your own admin account"
-      throw new InvalidRequestError();
+      throw new InvalidRequestError([{ code: ApiErrorDetailCode.AdminCannotDeleteOwnAccount, field: null }]);
     }
 
     const success = await deleteAccount(email);

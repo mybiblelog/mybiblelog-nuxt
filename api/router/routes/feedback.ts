@@ -3,6 +3,7 @@ import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { type ApiResponse } from '../response';
 import { TooManyRequestsError } from 'router/errors/http-errors';
+import rateLimit from 'router/helpers/rateLimit';
 
 const router = express.Router();
 
@@ -86,6 +87,8 @@ const router = express.Router();
 
 // POST feedback form submission
 router.post('/feedback', async (req, res, next) => {
+  await rateLimit(req, { maxRequests: 5, windowMs: 60 * 1000 });
+
   try {
     // Use IP address to mitigate spam
     const ip = req.ip;
@@ -93,22 +96,6 @@ router.post('/feedback', async (req, res, next) => {
     // Get current user (optional)
     const { Feedback } = await useMongooseModels();
     const currentUser = await authCurrentUser(req, { optional: true });
-
-    // If the user isn't authenticated, get recent feedback from the same
-    // IP address and block the attempt if there are too many
-    if (!currentUser) {
-      // FIXME: using the `rateLimit` helper here would save DB queries and reduce code duplication
-      const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
-      const recentFeedbackCount = await Feedback
-        .countDocuments({
-          ip,
-          createdAt: { $gt: fiveMinutesAgo },
-        });
-
-      if (recentFeedbackCount >= 5) {
-        throw new TooManyRequestsError();
-      }
-    }
 
     // If the user is logged in, we can associate the feedback with their account
     const owner = currentUser?._id || null;
