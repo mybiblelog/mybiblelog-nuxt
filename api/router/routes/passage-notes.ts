@@ -6,8 +6,10 @@ import useMongooseModels from '../../mongoose/useMongooseModels';
 
 import { QueryFilter, Types } from 'mongoose';
 import { IPassageNote } from '../../mongoose/schemas/PassageNote';
-import { ApiErrorCode, ApiErrorDetailCode } from '../errors/error-codes';
+import { ApiErrorDetailCode } from '../errors/error-codes';
 import { type ApiResponse } from '../response';
+import { ValidationError } from '../errors/validation-errors';
+import { InvalidRequestError, NotFoundError } from '../errors/http-errors';
 const router = express.Router();
 
 /**
@@ -343,7 +345,7 @@ router.get('/passage-notes', async (req, res, next) => {
     const query = validateQuery(req.query);
 
     if (!query) {
-      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest } } satisfies ApiResponse);
+      throw new InvalidRequestError();
     }
 
     const filterQuery: QueryFilter<IPassageNote> = {
@@ -479,7 +481,7 @@ router.get('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -487,7 +489,7 @@ router.get('/passage-notes/:id', async (req, res, next) => {
 
     const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
-      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+      throw new NotFoundError();
     }
     res.json({ data: passageNote.toJSON() } satisfies ApiResponse);
   }
@@ -561,7 +563,7 @@ router.post('/passage-notes', async (req, res, next) => {
     // validate that all tags exist
     const tagsValid = await validateTags(passageNote.tags);
     if (!tagsValid) {
-      return res.status(409).send({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'tags' }] } } satisfies ApiResponse);
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'tags' }]);
     }
 
     passageNote.owner = new Types.ObjectId(currentUser._id);
@@ -569,7 +571,7 @@ router.post('/passage-notes', async (req, res, next) => {
       await passageNote.validate();
     }
     catch (error) {
-      return res.status(400).send({ error: { code: ApiErrorCode.ValidationError } } satisfies ApiResponse);
+      throw new ValidationError();
     }
     await passageNote.save();
 
@@ -650,7 +652,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -659,7 +661,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
 
     const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
-      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+      throw new NotFoundError();
     }
 
     if (content) { passageNote.content = content; }
@@ -668,7 +670,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
       // validate that all tags exist
       const tagsValid = await validateTags(tags);
       if (!tagsValid) {
-        return res.status(409).send({ error: { code: ApiErrorCode.ValidationError, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'tags' }] } } satisfies ApiResponse);
+        throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'tags' }]);
       }
       passageNote.tags = tags;
     }
@@ -676,7 +678,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
       await passageNote.validate();
     }
     catch (error) {
-      return res.status(400).send({ error: { code: ApiErrorCode.ValidationError } } satisfies ApiResponse);
+      throw new ValidationError();
     }
     await passageNote.save();
 
@@ -732,7 +734,7 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -740,7 +742,7 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
 
     const result = await PassageNote.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
-      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+      throw new NotFoundError();
     }
 
     res.json({ data: result.deletedCount } satisfies ApiResponse);

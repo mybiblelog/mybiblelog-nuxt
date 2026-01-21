@@ -3,9 +3,10 @@ import { ObjectId } from 'mongodb';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { Types } from 'mongoose';
-import { ApiErrorCode, ApiErrorDetailCode } from '../errors/error-codes';
+import { ApiErrorDetailCode } from '../errors/error-codes';
 import { type ApiResponse } from '../response';
-import { ValidationError } from 'router/errors/validation-errors';
+import { ValidationError } from '../errors/validation-errors';
+import { NotFoundError } from '../errors/http-errors';
 
 const router = express.Router();
 
@@ -134,7 +135,7 @@ router.get('/passage-note-tags/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { PassageNoteTag } = await useMongooseModels();
@@ -142,7 +143,7 @@ router.get('/passage-note-tags/:id', async (req, res, next) => {
 
     const passageNoteTag = await PassageNoteTag.findOne({ owner: currentUser._id, _id: id });
     if (!passageNoteTag) {
-      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+      throw new NotFoundError();
     }
     passageNoteTag.noteCount = await countTagNotes(passageNoteTag);
     res.json({ data: passageNoteTag.toJSON() } satisfies ApiResponse);
@@ -192,13 +193,7 @@ router.get('/passage-note-tags/:id', async (req, res, next) => {
  *                 data:
  *                   $ref: '#/components/schemas/PassageNoteTag'
  *       400:
- *         description: Validation error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ApiErrorResponse'
- *       400:
- *         description: Validation error (e.g., duplicate label)
+ *         description: Validation error (e.g., duplicate label, invalid format)
  *         content:
  *           application/json:
  *             schema:
@@ -295,7 +290,7 @@ router.put('/passage-note-tags/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { PassageNoteTag } = await useMongooseModels();
@@ -304,7 +299,7 @@ router.put('/passage-note-tags/:id', async (req, res, next) => {
 
     const passageNoteTag = await PassageNoteTag.findOne({ owner: currentUser._id, _id: id });
     if (!passageNoteTag) {
-      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+      throw new NotFoundError();
     }
 
     if (label) { passageNoteTag.label = label; }
@@ -314,7 +309,7 @@ router.put('/passage-note-tags/:id', async (req, res, next) => {
       await passageNoteTag.validate();
     }
     catch (error) {
-      return res.status(400).send({ error: { code: ApiErrorCode.ValidationError } } satisfies ApiResponse);
+      throw new ValidationError();
     }
 
     await passageNoteTag.save();
@@ -371,7 +366,7 @@ router.delete('/passage-note-tags/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest, errors: [{ code: ApiErrorDetailCode.NotValid, field: 'id' }] } } satisfies ApiResponse);
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { PassageNoteTag } = await useMongooseModels();
@@ -379,7 +374,7 @@ router.delete('/passage-note-tags/:id', async (req, res, next) => {
 
     const result = await PassageNoteTag.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
-      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+      throw new NotFoundError();
     }
 
     res.json({ data: result.deletedCount } satisfies ApiResponse);

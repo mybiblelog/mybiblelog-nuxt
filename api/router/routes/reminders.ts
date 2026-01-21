@@ -1,8 +1,8 @@
 import express from 'express';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
-import { ApiErrorCode } from '../errors/error-codes';
 import { type ApiResponse } from '../response';
+import { NotFoundError } from '../errors/http-errors';
 
 const router = express.Router();
 
@@ -208,12 +208,12 @@ router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next)
 
   const reminder = await DailyReminder.findOne({ unsubscribeCode: code });
   if (!reminder) {
-    return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+    throw new NotFoundError();
   }
 
   const user = await User.findOne({ _id: reminder.owner });
   if (!user) {
-    return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+    throw new NotFoundError();
   }
 
   reminder.active = false;

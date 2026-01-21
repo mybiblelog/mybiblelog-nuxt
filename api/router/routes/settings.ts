@@ -1,8 +1,9 @@
 import express from 'express';
 import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import deleteAccount from '../helpers/deleteAccount';
-import { ApiErrorCode } from '../errors/error-codes';
 import { type ApiResponse } from '../response';
+import { UnauthenticatedError } from '../errors/http-errors';
+import { InternalError } from '../errors/internal-error';
 
 const router = express.Router();
 
@@ -59,7 +60,7 @@ router.get('/settings', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     if (!currentUser) {
-      return res.status(401).send({ error: { code: ApiErrorCode.Unauthenticated } } satisfies ApiResponse);
+      throw new UnauthenticatedError();
     }
     res.json({ data: currentUser.settings } satisfies ApiResponse);
   }
@@ -154,7 +155,7 @@ router.put('/settings/delete-account', async (req, res, next) => {
     const currentUser = await authCurrentUser(req);
     const success = await deleteAccount(currentUser.email);
     if (!success) {
-      return res.status(500).send({ error: { code: ApiErrorCode.InternalServerError } } satisfies ApiResponse);
+      throw new InternalError();
     }
     // clear the auth cookie on account deletion
     res.clearCookie(AUTH_COOKIE_NAME);

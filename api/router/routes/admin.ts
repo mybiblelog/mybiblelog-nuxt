@@ -6,8 +6,8 @@ import authCurrentUser, { setAuthTokenCookie } from '../helpers/authCurrentUser'
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import deleteAccount from '../helpers/deleteAccount';
 import { IUser } from '../../mongoose/schemas/User';
-import { ApiErrorCode } from '../errors/error-codes';
 import { type ApiResponse } from '../response';
+import { InvalidRequestError, NotFoundError } from '../errors/http-errors';
 
 dayjs.extend(utc);
 
@@ -462,7 +462,7 @@ router.get('/admin/users', async (req, res, next) => {
     const query = validateQuery(req.query);
 
     if (!query) {
-      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest } } satisfies ApiResponse);
+      throw new InvalidRequestError();
     }
 
     const filterQuery: QueryFilter<IUser> = {}; // all users
@@ -584,7 +584,7 @@ router.get('/admin/users/:email', async (req, res, next) => {
       .select({ email: 1 })
       .exec();
     if (!user) {
-      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+      throw new NotFoundError();
     }
     res.json({ data: user } satisfies ApiResponse);
   }
@@ -663,7 +663,7 @@ router.get('/admin/users/:email/login', async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+      throw new NotFoundError();
     }
 
     const token = user.generateJWT();
@@ -738,12 +738,12 @@ router.delete('/admin/users/:email', async (req, res, next) => {
     if (currentUser.email === email) {
       // FIXME: see if we use this error on the frontend, and if so, add detail:
       // FIXME: admin_cannot_delete_own_account "You cannot delete your own admin account"
-      return res.status(400).send({ error: { code: ApiErrorCode.InvalidRequest } } satisfies ApiResponse);
+      throw new InvalidRequestError();
     }
 
     const success = await deleteAccount(email);
     if (!success) {
-      return res.status(404).send({ error: { code: ApiErrorCode.NotFound } } satisfies ApiResponse);
+      throw new NotFoundError();
     }
     res.json({ data: 1 } satisfies ApiResponse);
   }

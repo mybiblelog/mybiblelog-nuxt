@@ -481,13 +481,7 @@ router.get('/auth/oauth2/google/url', (req, res, next) => {
  *                       type: string
  *                       description: Token for authentication
  *       400:
- *         description: Invalid code or OAuth2 error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ApiErrorResponse'
- *       400:
- *         description: Validation error (e.g., email not verified)
+ *         description: Invalid code, OAuth2 error, or validation error (e.g., email not verified)
  *         content:
  *           application/json:
  *             schema:
@@ -1006,19 +1000,13 @@ router.delete('/auth/change-email', async (req, res, next) => {
  *                       type: string
  *                       description: Token for authentication
  *       400:
- *         description: Verification code expired
+ *         description: Verification code expired or email already in use
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Email verification code not found
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ApiErrorResponse'
- *       400:
- *         description: Email already in use
  *         content:
  *           application/json:
  *             schema:
