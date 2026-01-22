@@ -62,6 +62,7 @@ const config: NuxtConfig = {
     '~/plugins/gtag.client.js',
     '~/plugins/translate-api.js',
     '~/plugins/nuxt-client-init.client.js',
+    '~/plugins/http.js',
   ],
   /*
   ** Nuxt.js dev-modules

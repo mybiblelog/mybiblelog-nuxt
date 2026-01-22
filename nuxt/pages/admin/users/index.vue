@@ -234,11 +234,9 @@ export default {
           }
           const responseData = await response.json();
           const {
-            // limit,
-            // offset,
-            results: users,
             size,
-          } = responseData;
+          } = responseData.meta.pagination;
+          const users = responseData.data;
 
           this.users = users;
           this.totalUsers = size;

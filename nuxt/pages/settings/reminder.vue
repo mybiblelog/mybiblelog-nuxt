@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import mapFormErrors from '~/helpers/map-form-errors';
+
 export default {
   name: 'ReminderSettingsPage',
   middleware: ['auth'],
@@ -49,7 +51,8 @@ export default {
         Authorization: app.ssrToken ? `Bearer ${app.ssrToken}` : undefined,
       },
     });
-    const reminder = await response.json();
+    const responseData = await response.json();
+    const reminder = responseData.data;
     const {
       hour,
       minute,
@@ -114,8 +117,14 @@ export default {
           });
         }
         else {
-          const errorData = await response.json();
-          Object.assign(this.reminderErrors, errorData.response?.data?.errors || {});
+          const responseData = await response.json();
+          if (responseData.error) {
+            const errorsObj = mapFormErrors(responseData.error);
+            Object.assign(this.reminderErrors, errorsObj);
+          }
+          else {
+            this.reminderErrors._form = this.$t('messaging.an_unknown_error_occurred');
+          }
         }
       }
       catch (err) {

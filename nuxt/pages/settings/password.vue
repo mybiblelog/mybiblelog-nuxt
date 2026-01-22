@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import mapFormErrors from '~/helpers/map-form-errors';
+
 export default {
   name: 'PasswordSettingsPage',
   middleware: ['auth'],
@@ -113,7 +115,7 @@ export default {
 
       try {
         const response = await fetch('/api/auth/change-password', {
-          method: 'POST',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -133,8 +135,14 @@ export default {
         }
         else {
           // Display form errors from the server
-          const errorData = await response.json();
-          Object.assign(this.changePasswordErrors, errorData.response?.data?.errors || {});
+          const responseData = await response.json();
+          if (responseData.error) {
+            const errorsObj = mapFormErrors(responseData.error);
+            Object.assign(this.changePasswordErrors, errorsObj);
+          }
+          else {
+            this.changePasswordErrors._form = this.$t('an_unknown_error_occurred');
+          }
         }
       }
       catch (err) {

@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import mapFormErrors from '~/helpers/map-form-errors';
+
 export default {
   name: 'ResetPasswordPage',
   middleware: ['auth'],
@@ -89,8 +91,8 @@ export default {
     if (!response.ok) {
       this.passwordResetCodeValid = false;
     }
-    const data = await response.json();
-    this.passwordResetCodeValid = data.valid;
+    const responseData = await response.json();
+    this.passwordResetCodeValid = responseData.data.valid;
   },
   methods: {
     resetChangePasswordErrors() {
@@ -122,10 +124,10 @@ export default {
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        const errors = data.errors;
-        if (errors) {
-          Object.assign(this.changePasswordErrors, errors);
+        const responseData = await response.json();
+        if (responseData.error) {
+          const errorsObj = mapFormErrors(responseData.error);
+          Object.assign(this.changePasswordErrors, errorsObj);
         }
         else {
           this.changePasswordErrors._form = this.$t('an_unknown_error_occurred');

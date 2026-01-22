@@ -3,6 +3,8 @@ export type Translation = {
   my_bible_log: string;
   api_error: {
     // Request Input Validation Errors
+    unknown_error: string;
+    validation_error: string;
     required: string;
     is_invalid: string;
     unique: string;

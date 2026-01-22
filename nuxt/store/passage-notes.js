@@ -132,17 +132,14 @@ export const actions = {
       url.searchParams.set('offset', state.query.offset);
     }
 
-    const response = await fetch(url.toString(), {
-      credentials: 'include',
-    });
-    const responseData = await response.json();
+    const responseData = await this.$http.get('/api/passage-notes' + url.search);
 
     const {
       offset,
       limit,
       size,
-      results,
-    } = responseData;
+    } = responseData.meta.pagination;
+    const results = responseData.data;
     commit(SET_PASSAGE_NOTES, results);
     commit(SET_PASSAGE_NOTE_PAGINATION, {
       limit,
@@ -153,41 +150,18 @@ export const actions = {
     commit(SET_PASSAGE_NOTES_LOADING, false);
   },
   async createPassageNote({ commit, dispatch, rootState }, newPassageNote) {
-    const url = new URL('/api/passage-notes', this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newPassageNote),
-    });
-    const data = await response.json();
+    const { data } = await this.$http.post('/api/passage-notes', newPassageNote);
     if (!data) { return null; }
     return data;
   },
   async updatePassageNote({ commit, dispatch, rootState }, passageNoteUpdate) {
     const { id } = passageNoteUpdate;
-    const url = new URL(`/api/passage-notes/${id}`, this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      method: 'PUT',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(passageNoteUpdate),
-    });
-    const data = await response.json();
+    const { data } = await this.$http.put(`/api/passage-notes/${id}`, passageNoteUpdate);
     if (!data) { return null; }
     return data;
   },
   async deletePassageNote({ commit, dispatch, rootState }, passageNoteId) {
-    const url = new URL(`/api/passage-notes/${passageNoteId}`, this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      method: 'DELETE',
-      credentials: 'include',
-    });
-    const data = await response.json();
+    const { data } = await this.$http.delete(`/api/passage-notes/${passageNoteId}`);
     if (data) {
       await dispatch('loadPassageNotesPage');
       return true;

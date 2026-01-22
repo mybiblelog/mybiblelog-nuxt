@@ -45,13 +45,15 @@ export default {
 
     const response = await fetch(`/api/auth/verify-email/${emailVerificationCode}`);
     if (!response.ok) {
-      const data = await response.json();
-      const errors = data.errors;
-      if (errors) {
-        Object.assign(this.verificationErrors, errors);
+      const responseData = await response.json();
+      const errors = responseData.error?.errors;
+      if (errors && errors.length > 0) {
+        // Convert array of errors to a single error message
+        const firstError = errors[0];
+        this.error = this.$terr(firstError);
       }
       else {
-        this.verificationErrors._form = this.$t('an_unknown_error_occurred');
+        this.error = this.$t('an_unknown_error_occurred');
       }
       return;
     }

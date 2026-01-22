@@ -75,8 +75,8 @@ export default {
         Authorization: app.ssrToken ? `Bearer ${app.ssrToken}` : undefined,
       },
     });
-    const data = await response.json();
-    const { startPage, locale } = data;
+    const responseData = await response.json();
+    const { startPage, locale } = responseData.data;
 
     if (startPage !== 'start') {
       // Mapping these individually allows URLs to change separately

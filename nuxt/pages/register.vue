@@ -60,6 +60,7 @@
 
 <script>
 import InfoLink from '@/components/InfoLink';
+import mapFormErrors from '~/helpers/map-form-errors';
 
 export default {
   name: 'RegisterPage',
@@ -103,9 +104,14 @@ export default {
         body: JSON.stringify({ email, password, locale }),
       });
       if (!response.ok) {
-        const data = await response.json();
+        const responseData = await response.json();
         const unknownError = { _form: 'An unknown error occurred.' };
-        this.errors = data.errors || unknownError;
+        if (responseData.error) {
+          this.errors = mapFormErrors(responseData.error) || unknownError;
+        }
+        else {
+          this.errors = unknownError;
+        }
         return;
       }
 
@@ -113,14 +119,15 @@ export default {
 
       // if email verification is not required, log the user in:
       if (!this.requireEmailVerification) {
-        const { success, error } = await this.$store.dispatch('auth/login', {
-          email: this.email,
-          password: this.password,
-        });
-
-        if (!success) {
-          const unknownError = { _form: 'An unknown error occurred.' };
-          this.errors = error || unknownError;
+        try {
+          await this.$store.dispatch('auth/login', {
+            email: this.email,
+            password: this.password,
+          });
+        }
+        catch (error) {
+          const formErrors = mapFormErrors(error);
+          this.errors = formErrors;
           return;
         }
 

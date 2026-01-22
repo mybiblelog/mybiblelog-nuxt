@@ -139,7 +139,8 @@ export default {
       if (!tagsResponse.ok) {
         throw new Error('Failed to load tags');
       }
-      const tags = await tagsResponse.json();
+      const tagsResponseData = await tagsResponse.json();
+      const tags = tagsResponseData.data;
       const notes = await this.loadAllNotes();
 
       const noteTexts = notes.map(note => this.generateNoteText(note, tags));
@@ -171,7 +172,8 @@ export default {
       if (!tagsResponse.ok) {
         throw new Error('Failed to load tags');
       }
-      const tags = await tagsResponse.json();
+      const tagsResponseData = await tagsResponse.json();
+      const tags = tagsResponseData.data;
       const notes = await this.loadAllNotes();
       this.notesExportJsonFileContent = JSON.stringify({ notes, tags });
     },
@@ -192,10 +194,11 @@ export default {
         if (!response.ok) {
           throw new Error('Failed to load notes');
         }
+        const responseData = await response.json();
         const {
-          results,
           size,
-        } = await response.json();
+        } = responseData.meta.pagination;
+        const results = responseData.data;
         if (allNotes.length < size) {
           allNotes.push(...results);
           offset += 10;

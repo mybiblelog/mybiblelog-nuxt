@@ -104,7 +104,8 @@ export default {
     })
       .then(async (response) => {
         if (response.ok) {
-          this.bookNotesCounts = await response.json();
+          const responseData = await response.json();
+          this.bookNotesCounts = responseData.data;
           for (let i = 1, l = Bible.getBookCount(); i <= l; i++) {
             if (this.bookNotesCounts[i] > 0) {
               this.anyBooksHaveNotes = true;

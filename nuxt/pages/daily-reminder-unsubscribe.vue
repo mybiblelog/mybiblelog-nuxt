@@ -72,8 +72,8 @@ export default {
       })
         .then(async (response) => {
           if (response.status === 200) {
-            const data = await response.json();
-            if (data.error) {
+            const responseData = await response.json();
+            if (responseData.error) {
               // if the server can't unsubscribe with this code,
               // it will return an error message explaining why
               this.error = [
@@ -85,7 +85,7 @@ export default {
             else {
               // if there was no error returned, the unsubscribe was successful
               this.complete = true;
-              this.email = data.email;
+              this.email = responseData.data.email;
             }
           }
         })

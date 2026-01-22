@@ -71,7 +71,8 @@ export default {
         if (!response.ok) {
           throw new Error('Failed to load engagement data');
         }
-        this.engagementData = await response.json();
+        const responseData = await response.json();
+        this.engagementData = responseData.data;
       }
       catch (err) {
         await this.$store.dispatch('dialog/alert', {

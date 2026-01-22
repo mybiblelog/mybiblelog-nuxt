@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import mapFormErrors from '~/helpers/map-form-errors';
+
 export default {
   name: 'FeedbackForm',
   data() {
@@ -84,9 +86,9 @@ export default {
           }),
         });
         if (!response.ok) {
-          const errorData = await response.json();
+          const responseData = await response.json();
           const error = new Error('Failed to submit feedback');
-          error.response = { data: errorData };
+          error.response = { data: responseData };
           throw error;
         }
 
@@ -103,7 +105,13 @@ export default {
       }
       catch (err) {
         const unknownError = { _form: this.$t('messaging.unknown_error') };
-        this.errors = err.response?.data?.errors || unknownError;
+        const errorData = err.response?.data;
+        if (errorData?.error) {
+          this.errors = mapFormErrors(errorData.error) || unknownError;
+        }
+        else {
+          this.errors = unknownError;
+        }
       }
     },
   },

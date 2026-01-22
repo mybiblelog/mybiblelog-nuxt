@@ -4,6 +4,8 @@ const locales: Locales = {
   en: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'An unknown error occurred',
+      validation_error: 'There was an error with your request',
       required: 'A {field} is required',
       is_invalid: 'Please enter a valid {field}',
       unique: 'This {field} is already in use',
@@ -33,6 +35,8 @@ const locales: Locales = {
   es: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Ocurrió un error desconocido',
+      validation_error: 'Hubo un error con su solicitud',
       required: 'Se requiere un {field}',
       is_invalid: 'Por favor ingrese un {field} válido',
       unique: 'Este {field} ya está en uso',
@@ -62,6 +66,8 @@ const locales: Locales = {
   de: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Ein unbekannter Fehler ist aufgetreten',
+      validation_error: 'Es gab einen Fehler mit Ihrer Anfrage',
       required: 'Ein {field} ist erforderlich',
       is_invalid: 'Bitte geben Sie ein gültiges {field} ein',
       unique: 'Dieses {field} ist bereits in Verwendung',
@@ -91,6 +97,8 @@ const locales: Locales = {
   fr: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Une erreur inconnue est survenue',
+      validation_error: 'Il y a eu une erreur avec votre requête',
       required: 'Un(e) {field} est requis(e)',
       is_invalid: 'Veuillez entrer un(e) {field} valide',
       unique: 'Ce(tte) {field} est déjà utilisé(e)',
@@ -120,6 +128,8 @@ const locales: Locales = {
   pt: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Ocorreu um erro desconhecido',
+      validation_error: 'Houve um erro com sua solicitação',
       required: 'Um(a) {field} é obrigatório',
       is_invalid: 'Por favor, insira um(a) {field} válido',
       unique: 'Este(a) {field} já está em uso',
@@ -149,6 +159,8 @@ const locales: Locales = {
   uk: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Виникла невідома помилка',
+      validation_error: 'Виникла помилка з вашим запитом',
       required: 'Поле {field} обов\'язкове',
       is_invalid: 'Будь ласка, введіть дійсну {field}',
       unique: 'Це {field} вже використовується',

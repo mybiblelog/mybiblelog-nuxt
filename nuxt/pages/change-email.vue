@@ -63,7 +63,8 @@ export default {
       if (!response.ok) {
         throw new Error('Failed to get change email request');
       }
-      changeEmailRequest = await response.json();
+      const responseData = await response.json();
+      changeEmailRequest = responseData.data;
     }
     catch (err) {
       // If there is no open email change request (404), redirect to the settings page
@@ -90,8 +91,8 @@ export default {
         credentials: 'include',
       });
       if (!response.ok) {
-        const errorData = await response.json();
-        this.serverError = errorData.error;
+        const responseData = await response.json();
+        this.serverError = responseData.error;
         this.busy = false;
         return;
       }

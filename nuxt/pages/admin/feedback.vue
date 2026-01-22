@@ -77,7 +77,8 @@ export default {
       if (!response.ok) {
         throw new Error('Failed to load feedbacks');
       }
-      this.feedbacks = await response.json();
+      const responseData = await response.json();
+      this.feedbacks = responseData.data;
     },
     feedbackKindClass(kind) {
       return {

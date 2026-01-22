@@ -74,6 +74,8 @@
 </template>
 
 <script>
+import mapFormErrors from '~/helpers/map-form-errors';
+
 export default {
   name: 'EmailSettingsPage',
   middleware: ['auth'],
@@ -135,7 +137,8 @@ export default {
           credentials: 'include',
           cache: 'no-store',
         });
-        const data = await response.json();
+        const responseData = await response.json();
+        const data = responseData.data;
         if (data.newEmail) {
           // no `newEmail` means there is no email change request in progress
           this.currentChangeEmailRequest = data;
@@ -184,8 +187,14 @@ export default {
         }
         else {
           // Display form errors from the server
-          const errorData = await response.json();
-          Object.assign(this.changeEmailErrors, errorData.response?.data?.errors || {});
+          const responseData = await response.json();
+          if (responseData.error) {
+            const errorsObj = mapFormErrors(responseData.error);
+            Object.assign(this.changeEmailErrors, errorsObj);
+          }
+          else {
+            this.changeEmailErrors._form = this.$t('messaging.an_unknown_error_occurred');
+          }
         }
       }
       catch (err) {
@@ -208,7 +217,8 @@ export default {
         if (!response.ok) {
           throw new Error('Failed to cancel request');
         }
-        const data = await response.json();
+        const responseData = await response.json();
+        const data = responseData.data;
         if (data === true) {
           this.currentChangeEmailRequest = null;
           await this.$store.dispatch('dialog/alert', {

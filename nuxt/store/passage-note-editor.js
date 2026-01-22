@@ -1,3 +1,6 @@
+import { ApiError, UnknownApiError } from '@/helpers/api-error';
+import mapFormErrors from '@/helpers/map-form-errors';
+
 import {
   OPEN_PASSAGE_NOTE_EDITOR,
   CLOSE_PASSAGE_NOTE_EDITOR,
@@ -103,10 +106,14 @@ export const actions = {
       return null;
     }
     catch (err) {
-      const unknownError = { _form: 'An unknown error occurred' };
-      const errors = err.response?.data?.errors || unknownError;
-      commit(SET_PASSAGE_NOTE_EDITOR_ERRORS, errors);
-      throw err;
+      if (err instanceof ApiError) {
+        const formErrors = mapFormErrors(err);
+        commit(SET_PASSAGE_NOTE_EDITOR_ERRORS, formErrors);
+      }
+      else {
+        const formErrors = mapFormErrors(new UnknownApiError());
+        commit(SET_PASSAGE_NOTE_EDITOR_ERRORS, formErrors);
+      }
     }
   },
 };

@@ -62,6 +62,8 @@
 <script>
 import GoogleLoginButton from '@/components/forms/GoogleLoginButton.vue';
 import InfoLink from '@/components/InfoLink';
+import mapFormErrors from '~/helpers/map-form-errors';
+
 export default {
   name: 'LoginPage',
   components: {
@@ -73,8 +75,8 @@ export default {
     let googleOauth2Url = null;
     try {
       const googleUrlResponse = await fetch(`${$config.siteUrl}/api/auth/oauth2/google/url`);
-      const data = await googleUrlResponse.json();
-      googleOauth2Url = data.url;
+      const responseData = await googleUrlResponse.json();
+      googleOauth2Url = responseData.data.url;
     }
     catch (error) {
       console.error('Failed to get Google OAuth2 URL:', error);
@@ -121,20 +123,20 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const { success, error } = await this.$store.dispatch('auth/login', {
-        email: this.email,
-        password: this.password,
-      });
-
-      if (!success) {
-        const unknownError = { _form: 'An unknown error occurred.' };
-        this.errors = error || unknownError;
+      try {
+        await this.$store.dispatch('auth/login', {
+          email: this.email,
+          password: this.password,
+        });
+      }
+      catch (error) {
+        const formErrors = mapFormErrors(error);
+        this.errors = formErrors;
         this.failedLoginAttempt = true;
+        return;
       }
-      else {
-        const targetPath = this.localePath('/start', this.$i18n.locale);
-        this.$router.push(targetPath);
-      }
+
+      this.$router.push(this.localePath('/start', this.$i18n.locale));
     },
     async sendPasswordReset() {
       if (!this.email) {
@@ -150,9 +152,14 @@ export default {
         body: JSON.stringify({ email: this.email }),
       });
       if (!response.ok) {
-        const data = await response.json();
+        const responseData = await response.json();
         const unknownError = { _form: 'An unknown error occurred.' };
-        this.errors = data.errors || unknownError;
+        if (responseData.error) {
+          this.errors = mapFormErrors(responseData.error) || unknownError;
+        }
+        else {
+          this.errors = unknownError;
+        }
         return;
       }
       this.passwordResetSubmitted = true;
