@@ -1,5 +1,5 @@
 import { LocaleCode } from "@shared/dist/i18n";
-import config from "../../config";
+import config from "../../../config";
 
 const baseUrl = config.siteUrl;
 

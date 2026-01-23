@@ -6,10 +6,11 @@ import authCurrentUser, { AUTH_COOKIE_NAME, setAuthTokenCookie } from '../helper
 import googleOauth2 from '../helpers/google-oauth2';
 import { I18nError, makeI18nError } from '../helpers/i18n-error';
 import useMongooseModels from '../../mongoose/useMongooseModels';
-import useSimpleEmailService from '../../services/simple-email.service';
+import useEmailService from '../../services/email/email-service';
 import checkTestBypass from '../helpers/checkTestBypass';
 import UserSettings from '../../mongoose/schemas/UserSettings';
 import { isEmailVerified } from '../../mongoose/schemas/User';
+import { LocaleCode } from '@mybiblelog/shared';
 
 const { requireEmailVerification } = config;
 
@@ -324,8 +325,8 @@ router.post('/auth/register', async (req, res, next) => {
     res.json({ success: true });
 
     // Send a verification email
-    const simpleEmailService = await useSimpleEmailService();
-    simpleEmailService.sendUserEmailVerification(email, user.emailVerificationCode, locale);
+    const emailService = await useEmailService();
+    emailService.sendUserEmailVerification(email, user.emailVerificationCode, locale);
   }
   catch (err) {
     next(err);
@@ -671,8 +672,8 @@ router.post('/auth/change-email', async (req, res, next) => {
     res.send(response);
 
     // send an email update confirmation code
-    const simpleEmailService = await useSimpleEmailService();
-    simpleEmailService.sendEmailUpdateLink(currentUser.email, newEmail, currentUser.newEmailVerificationCode, currentUser.settings.locale);
+    const emailService = await useEmailService();
+    emailService.sendEmailUpdateLink(currentUser.email, newEmail, currentUser.newEmailVerificationCode, currentUser.settings.locale as LocaleCode);
   }
   catch (error) {
     next(error);
@@ -921,8 +922,8 @@ router.post('/auth/reset-password', async (req, res) => {
   res.send(response);
 
   // send password reset code via email
-  const simpleEmailService = await useSimpleEmailService();
-  simpleEmailService.sendUserPasswordResetLink(user.email, user.passwordResetCode, user.settings.locale);
+  const emailService = await useEmailService();
+  emailService.sendUserPasswordResetLink(user.email, user.passwordResetCode, user.settings.locale as LocaleCode);
 });
 
 /**

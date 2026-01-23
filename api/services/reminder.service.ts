@@ -3,8 +3,8 @@ import path from 'node:path';
 import config from '../config';
 import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../mongoose/useMongooseModels';
-import renderDailyReminderEmail from './email-templates/daily-reminder';
-import { EmailService } from './email.service';
+import renderDailyReminderEmail from './email/email-templates/daily-reminder';
+import { EmailService } from './email/email-service';
 
 const baseUrl = config.siteUrl;
 
@@ -90,7 +90,7 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
     const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.unsubscribeCode}`;
 
     // Load brand logo asset
-    const brandLogoAssetPath = path.resolve(__dirname, 'email-assets', 'brand.png');
+    const brandLogoAssetPath = path.resolve(__dirname, 'email', 'assets', 'brand.png');
 
     const { subject, html } = renderDailyReminderEmail({
       siteLink,
@@ -124,7 +124,7 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
     await reminder.save();
 
     // Send email after database is updated
-    await emailService.sendEmail(email);
+    await emailService.send(email);
   };
 
   const triggerReminders = async () => {

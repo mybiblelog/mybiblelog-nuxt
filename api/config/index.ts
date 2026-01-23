@@ -25,10 +25,7 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(10, 'JWT_SECRET must be at least 10 characters long'),
   REQUIRE_EMAIL_VERIFICATION: booleanStringDefaultingToTrue,
   EMAIL_SENDING_DOMAIN: z.string(),
-  AWS_ACCESS_KEY_ID: z.string(),
-  AWS_SECRET_ACCESS_KEY: z.string(),
-  AWS_SES_REGION: z.string(),
-  MAILGUN_API_KEY: z.string(),
+  RESEND_API_KEY: z.string(),
   MONGODB_URI: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
@@ -50,14 +47,7 @@ const config = {
   jwtSecret: result.data.NODE_ENV === 'production' ? result.data.JWT_SECRET : 'secret',
   requireEmailVerification: result.data.REQUIRE_EMAIL_VERIFICATION !== false,
   emailSendingDomain: result.data.EMAIL_SENDING_DOMAIN,
-  aws: {
-    accessKeyId: result.data.AWS_ACCESS_KEY_ID,
-    secretAccessKey: result.data.AWS_SECRET_ACCESS_KEY,
-    sesRegion: result.data.AWS_SES_REGION,
-  },
-  mailgun: {
-    apiKey: result.data.MAILGUN_API_KEY,
-  },
+  resendApiKey: result.data.RESEND_API_KEY,
   mongo: {
     uri: result.data.MONGODB_URI,
   },
