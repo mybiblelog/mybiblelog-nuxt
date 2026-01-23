@@ -1,6 +1,21 @@
 import { expect, test } from '@jest/globals';
 import Bible from './bible';
 
+/**
+ * Deeply freezes an object, making it immutable.
+ * Used to ensure that tests do not mutate the objects they are given.
+ */
+const deepFreeze = <T>(object: T): T => {
+  if (typeof object !== 'object' || object === null) {
+    return object;
+  }
+  Object.freeze(object);
+  Object.keys(object).forEach(key => {
+    deepFreeze(object[key]);
+  });
+  return object;
+};
+
 test('loads Bible book data', () => {
   const bibleBooks = Bible.getBooks();
   expect(bibleBooks.length).toBe(66);
@@ -271,7 +286,8 @@ test('can count total number of verses in non-overlapping ranges', () => {
     startVerseId: Bible.makeVerseId(1, 2, 10),
     endVerseId: Bible.makeVerseId(1, 2, 25),
   };
-  const result = Bible.countUniqueRangeVerses([genesisRange1, genesisRange2]);
+  const ranges = deepFreeze([genesisRange1, genesisRange2]);
+  const result = Bible.countUniqueRangeVerses(ranges);
   expect(result).toBe(31);
 });
 
@@ -284,7 +300,8 @@ test('can count total number of verses in overlapping ranges', () => {
     startVerseId: Bible.makeVerseId(1, 2, 1),
     endVerseId: Bible.makeVerseId(1, 2, 25),
   };
-  const result = Bible.countUniqueRangeVerses([genesisRange1, genesisRange2]);
+  const ranges = deepFreeze([genesisRange1, genesisRange2]);
+  const result = Bible.countUniqueRangeVerses(ranges);
   expect(result).toBe(56);
 });
 
@@ -301,7 +318,7 @@ test('can count only verses from ranges in given book', () => {
     startVerseId: Bible.makeVerseId(2, 1, 1),
     endVerseId: Bible.makeVerseId(2, 1, 17),
   };
-  const ranges = [genesisRange1, exodusRange, genesisRange2];
+  const ranges = deepFreeze([genesisRange1, exodusRange, genesisRange2]);
   const genesisResult = Bible.countUniqueBookRangeVerses(1, ranges);
   const exodusResult = Bible.countUniqueBookRangeVerses(2, ranges);
   expect(genesisResult).toBe(56);
@@ -335,12 +352,12 @@ test('can count only range verses from given chapter', () => {
     endVerseId: Bible.makeVerseId(1, 2, 17), // 17 verses in ch 2
   };
 
-  const overlapPreviousResult = Bible.countUniqueBookChapterRangeVerses(1, 2, [overlapPreviousChapter]);
-  const overlapNextResult = Bible.countUniqueBookChapterRangeVerses(1, 2, [overlapNextChapter]);
-  const overlapSurroundingResult = Bible.countUniqueBookChapterRangeVerses(1, 2, [overlapSurroundingChapters]);
-  const entirelyPreviousResult = Bible.countUniqueBookChapterRangeVerses(1, 2, [entirelyPreviousChapter]);
-  const entirelyNextResult = Bible.countUniqueBookChapterRangeVerses(1, 2, [entirelyNextChapter]);
-  const entirelyThisResult = Bible.countUniqueBookChapterRangeVerses(1, 2, [entirelyThisChapter]);
+  const overlapPreviousResult = Bible.countUniqueBookChapterRangeVerses(1, 2, deepFreeze([overlapPreviousChapter]));
+  const overlapNextResult = Bible.countUniqueBookChapterRangeVerses(1, 2, deepFreeze([overlapNextChapter]));
+  const overlapSurroundingResult = Bible.countUniqueBookChapterRangeVerses(1, 2, deepFreeze([overlapSurroundingChapters]));
+  const entirelyPreviousResult = Bible.countUniqueBookChapterRangeVerses(1, 2, deepFreeze([entirelyPreviousChapter]));
+  const entirelyNextResult = Bible.countUniqueBookChapterRangeVerses(1, 2, deepFreeze([entirelyNextChapter]));
+  const entirelyThisResult = Bible.countUniqueBookChapterRangeVerses(1, 2, deepFreeze([entirelyThisChapter]));
 
   expect(overlapPreviousResult).toBe(20);
   expect(overlapNextResult).toBe(5);
@@ -368,7 +385,7 @@ test('can filter ranges by book', () => {
     startVerseId: Bible.makeVerseId(4, 1, 16),
     endVerseId: Bible.makeVerseId(4, 3, 10),
   };
-  const ranges = [inBook1, outOfBook1, inBook2, outOfBook2];
+  const ranges = deepFreeze([inBook1, outOfBook1, inBook2, outOfBook2]);
   const result = Bible.filterRangesByBook(bookIndex, ranges);
   expect(result.length).toBe(2);
 });
@@ -392,7 +409,7 @@ test('can filter ranges by book and chapter', () => {
     startVerseId: Bible.makeVerseId(5, 4, 10),
     endVerseId: Bible.makeVerseId(5, 4, 12),
   };
-  const ranges = [leadsOutOfChapter, isOutOfChapter, leadsIntoChapter, isInChapter];
+  const ranges = deepFreeze([leadsOutOfChapter, isOutOfChapter, leadsIntoChapter, isInChapter]);
   const result = Bible.filterRangesByBookChapter(bookIndex, chapterIndex, ranges);
   expect(result.length).toBe(3);
 });
@@ -401,22 +418,22 @@ test('can crop ranges to include only verses in given chapter', () => {
   const bookIndex = 5;
   const chapterIndex = 4;
 
-  const leadsOutOfChapter = {
+  const leadsOutOfChapter = deepFreeze({
     startVerseId: Bible.makeVerseId(5, 4, 16),
     endVerseId: Bible.makeVerseId(5, 5, 20),
-  };
-  const leadsIntoChapter = {
+  });
+  const leadsIntoChapter = deepFreeze({
     startVerseId: Bible.makeVerseId(5, 3, 5),
     endVerseId: Bible.makeVerseId(5, 4, 1),
-  };
-  const isInChapter = {
+  });
+  const isInChapter = deepFreeze({
     startVerseId: Bible.makeVerseId(5, 4, 10),
     endVerseId: Bible.makeVerseId(5, 4, 12),
-  };
-  const leadsInAndOutOfChapter = {
+  });
+  const leadsInAndOutOfChapter = deepFreeze({
     startVerseId: Bible.makeVerseId(5, 3, 10),
     endVerseId: Bible.makeVerseId(5, 5, 12),
-  };
+  });
 
   const leadsOutOfChapterResult =
     Bible.cropRangeToBookChapter(bookIndex, chapterIndex, leadsOutOfChapter);
@@ -452,7 +469,8 @@ test('can consolidate overlapping ranges', () => {
     startVerseId: Bible.makeVerseId(1, 2, 20),
     endVerseId: Bible.makeVerseId(1, 3, 10),
   };
-  const result = Bible.consolidateRanges([overlap1, overlap2]);
+  const overlappingRanges = deepFreeze([overlap1, overlap2]);
+  const result = Bible.consolidateRanges(overlappingRanges);
   expect(result.length).toBe(1);
   expect(result[0].startVerseId).toBe(overlap1.startVerseId);
   expect(result[0].endVerseId).toBe(overlap2.endVerseId);
@@ -467,7 +485,8 @@ test('will not consolidate disconnected ranges', () => {
     startVerseId: Bible.makeVerseId(1, 1, 18),
     endVerseId: Bible.makeVerseId(1, 1, 25),
   };
-  const result = Bible.consolidateRanges([disconnected1, disconnected2]);
+  const disconnectedRanges = deepFreeze([disconnected1, disconnected2]);
+  const result = Bible.consolidateRanges(disconnectedRanges);
   expect(result.length).toBe(2);
   expect(result[0].endVerseId).toBe(disconnected1.endVerseId);
   expect(result[1].startVerseId).toBe(disconnected2.startVerseId);
@@ -482,7 +501,8 @@ test('can consolidate consecutive ranges', () => {
     startVerseId: Bible.makeVerseId(1, 1, 17),
     endVerseId: Bible.makeVerseId(1, 1, 25),
   };
-  const result = Bible.consolidateRanges([connected1, connected2]);
+  const connectedRanges = deepFreeze([connected1, connected2]);
+  const result = Bible.consolidateRanges(connectedRanges);
   expect(result.length).toBe(1);
   expect(result[0].startVerseId).toBe(connected1.startVerseId);
   expect(result[0].endVerseId).toBe(connected2.endVerseId);
@@ -497,7 +517,8 @@ test('can consolidate ranges across chapters', () => {
     startVerseId: Bible.makeVerseId(1, 2, 1),
     endVerseId: Bible.makeVerseId(1, 2, 25),
   };
-  const result = Bible.consolidateRanges([connected1, connected2]);
+  const connectedRanges = deepFreeze([connected1, connected2]);
+  const result = Bible.consolidateRanges(connectedRanges);
   expect(result.length).toBe(1);
   expect(result[0].startVerseId).toBe(connected1.startVerseId);
   expect(result[0].endVerseId).toBe(connected2.endVerseId);
@@ -512,7 +533,8 @@ test('will not consolidate ranges across books', () => {
     startVerseId: Bible.makeVerseId(2, 1, 1),
     endVerseId: Bible.makeVerseId(2, 1, 22),
   };
-  const result = Bible.consolidateRanges([disconnected1, disconnected2]);
+  const disconnectedRanges = deepFreeze([disconnected1, disconnected2]);
+  const result = Bible.consolidateRanges(disconnectedRanges);
   expect(result.length).toBe(2);
   expect(result[0].endVerseId).toBe(disconnected1.endVerseId);
   expect(result[1].startVerseId).toBe(disconnected2.startVerseId);
@@ -527,7 +549,8 @@ test('can consolidate identical ranges', () => {
     startVerseId: Bible.makeVerseId(1, 1, 10),
     endVerseId: Bible.makeVerseId(1, 1, 16),
   };
-  const result = Bible.consolidateRanges([identical1, identical2]);
+  const identicalRanges = deepFreeze([identical1, identical2]);
+  const result = Bible.consolidateRanges(identicalRanges);
   expect(result.length).toBe(1);
   expect(result[0].startVerseId).toBe(identical1.startVerseId);
   expect(result[0].endVerseId).toBe(identical1.endVerseId);
@@ -542,7 +565,8 @@ test('can consolidate nested ranges', () => {
     startVerseId: Bible.makeVerseId(1, 1, 12),
     endVerseId: Bible.makeVerseId(1, 1, 14),
   };
-  const result = Bible.consolidateRanges([outerRange, innerRange]);
+  const nestedRanges = deepFreeze([outerRange, innerRange]);
+  const result = Bible.consolidateRanges(nestedRanges);
   expect(result.length).toBe(1);
   expect(result[0].startVerseId).toBe(outerRange.startVerseId);
   expect(result[0].endVerseId).toBe(outerRange.endVerseId);
@@ -561,11 +585,8 @@ test('can safely consolidate ranges at the beginning of a book', () => {
     startVerseId: Bible.makeVerseId(2, 2, 1),
     endVerseId: Bible.makeVerseId(2, 2, 25),
   };
-  const result = Bible.consolidateRanges([
-    endNoConsolidate,
-    startConsolidate1,
-    startConsolidate2,
-  ]);
+  const ranges = deepFreeze([endNoConsolidate, startConsolidate1, startConsolidate2]);
+  const result = Bible.consolidateRanges(ranges);
   expect(result.length).toBe(2);
   expect(result[0].startVerseId).toBe(endNoConsolidate.startVerseId);
   expect(result[0].endVerseId).toBe(endNoConsolidate.endVerseId);
@@ -586,11 +607,8 @@ test('can safely consolidate ranges at the end of a book', () => {
     startVerseId: Bible.makeVerseId(2, 1, 1),
     endVerseId: Bible.makeVerseId(2, 1, 22),
   };
-  const result = Bible.consolidateRanges([
-    endConsolidate1,
-    endConsolidate2,
-    startNoConsolidate,
-  ]);
+  const ranges = deepFreeze([endConsolidate1, endConsolidate2, startNoConsolidate]);
+  const result = Bible.consolidateRanges(ranges);
   expect(result.length).toBe(2);
   expect(result[0].startVerseId).toBe(endConsolidate1.startVerseId);
   expect(result[0].endVerseId).toBe(endConsolidate2.endVerseId);
@@ -663,13 +681,13 @@ test('can get previous verseId through entire Bible', () => {
 
 test('can generate read/unread segments from ranges in a given book', () => {
   const bookIndex = 1;
-  const ranges = [{
+  const ranges = deepFreeze([{
     startVerseId: Bible.makeVerseId(1, 2, 20),
     endVerseId: Bible.makeVerseId(1, 3, 10),
   }, {
     startVerseId: Bible.makeVerseId(1, 5, 1),
     endVerseId: Bible.makeVerseId(1, 10, 5),
-  }];
+  }]);
   const result = Bible.generateBookSegments(bookIndex, ranges);
   expect(result.length).toBe(5); // before, [range 0], between, [range 1], after
   expect(result[0].verseCount).toBe(50);
@@ -687,10 +705,10 @@ test('can generate read/unread segments from ranges in a given book', () => {
 test('can generate read/unread segments from ranges in a given chapter', () => {
   const bookIndex = 1;
   const chapterIndex = 2;
-  const ranges = [{
+  const ranges = deepFreeze([{
     startVerseId: Bible.makeVerseId(1, 2, 10),
     endVerseId: Bible.makeVerseId(1, 2, 15),
-  }];
+  }]);
   const result = Bible.generateBookChapterSegments(bookIndex, chapterIndex, ranges);
   expect(result.length).toBe(3); // before, [range 0], after
   expect(result[0].verseCount).toBe(9);
@@ -710,7 +728,7 @@ test('can generate read/unread segments from ranges across the whole Bible', () 
     startVerseId: Bible.makeVerseId(61, 1, 13),
     endVerseId: Bible.makeVerseId(61, 1, 17),
   };
-  const ranges = [range1Peter, range2Peter];
+  const ranges = deepFreeze([range1Peter, range2Peter]);
   const result = Bible.generateBibleSegments(ranges);
   expect(result.length).toBe(70); // 66 books + 2 extra ranges per split book
 
