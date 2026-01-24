@@ -292,7 +292,7 @@ const countUniqueRangeVerses = (ranges: ReadonlyArray<Readonly<VerseRange>>): nu
   const sortedIndices = createSortedIndices(ranges, Bible.compareRanges);
 
   let totalVerses = 0;
-  let lastRange: VerseRange | null = null;
+  let lastRange: Readonly<VerseRange> | null = null;
   for (const index of sortedIndices) {
     const range = ranges[index];
     if (!lastRange) {
@@ -300,7 +300,7 @@ const countUniqueRangeVerses = (ranges: ReadonlyArray<Readonly<VerseRange>>): nu
     }
     else if (range.startVerseId <= lastRange.endVerseId) {
       if (range.endVerseId > lastRange.endVerseId) {
-        lastRange.endVerseId = range.endVerseId;
+        lastRange = { ...lastRange, endVerseId: range.endVerseId };
       }
     }
     else {
@@ -352,7 +352,7 @@ const filterRangesByBookChapter = (bookIndex: number, chapterIndex: number, rang
  * Crops a range's start and end verse IDs to the first and last verse IDs
  * for a given book chapter.
  */
-const cropRangeToBookChapter = (bookIndex: number, chapterIndex: number, range: VerseRange): VerseRange => {
+const cropRangeToBookChapter = (bookIndex: number, chapterIndex: number, range: Readonly<VerseRange>): VerseRange => {
   const startVerse = Bible.parseVerseId(range.startVerseId);
   const endVerse = Bible.parseVerseId(range.endVerseId);
   if (startVerse.chapter < chapterIndex) {
