@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { ApiError } from '~/helpers/api-error';
+
 export default {
   name: 'ReminderUnsubscribePage',
   data() {
@@ -64,34 +66,24 @@ export default {
     this.unsubscribe();
   },
   methods: {
-    unsubscribe() {
-      const unsubscribeUrl = `/api/reminders/daily-reminder/unsubscribe/${this.reminderUnsubscribeCode}`;
-      fetch(unsubscribeUrl, {
-        method: 'PUT',
-        credentials: 'include',
-      })
-        .then(async (response) => {
-          if (response.status === 200) {
-            const data = await response.json();
-            if (data.error) {
-              // if the server can't unsubscribe with this code,
-              // it will return an error message explaining why
-              this.error = [
-                this.$t('server_error.p1'),
-                this.$t('server_error.p2'),
-                this.$t('server_error.p3'),
-              ].join(' ');
-            }
-            else {
-              // if there was no error returned, the unsubscribe was successful
-              this.complete = true;
-              this.email = data.email;
-            }
-          }
-        })
-        .catch(() => {
+    async unsubscribe() {
+      try {
+        const { data } = await this.$http.put(`/api/reminders/daily-reminder/unsubscribe/${this.reminderUnsubscribeCode}`);
+        this.complete = true;
+        this.email = data.email;
+      }
+      catch (err) {
+        if (err instanceof ApiError) {
+          this.error = [
+            this.$t('server_error.p1'),
+            this.$t('server_error.p2'),
+            this.$t('server_error.p3'),
+          ].join(' ');
+        }
+        else {
           this.error = this.$t('there_was_an_error');
-        });
+        }
+      }
     },
   },
   auth: false,

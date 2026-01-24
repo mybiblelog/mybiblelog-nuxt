@@ -156,7 +156,7 @@ export default {
     "new": "novos | novos"
   },
   "uk": {
-    "verse": "верс | верси",
+    "verse": "верс | віршів",
     "all": "всі | всі",
     "new": "новий | нові"
   }

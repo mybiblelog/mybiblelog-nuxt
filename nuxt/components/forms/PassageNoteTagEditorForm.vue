@@ -2,7 +2,7 @@
   <form @submit.prevent="handleSubmit">
     <div v-if="errors._form" class="help is-danger">
       <div class="help is-danger">
-        {{ errors._form }}
+        {{ $terr(errors._form) }}
       </div>
     </div>
     <div class="field">

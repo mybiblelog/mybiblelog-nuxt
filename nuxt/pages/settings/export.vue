@@ -48,6 +48,8 @@ import { mapState } from 'vuex';
 import * as csv from 'csv';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
+import { UnknownApiError } from '~/helpers/api-error';
+import mapFormErrors from '~/helpers/map-form-errors';
 
 const delimiter = ',';
 
@@ -126,20 +128,20 @@ export default {
     },
     async downloadNotesTextFile() {
       if (!this.notesExportTextFileContent.length) {
-        await this.generateTextDownloadFromNotes();
+        try {
+          await this.generateTextDownloadFromNotes();
+        }
+        catch (err) {
+          this.$store.dispatch('toast/add', { type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
+          return;
+        }
       }
       const today = dayjs().format('YYYY-MM-DD');
       const filename = this.$t('notes_download.text_filename', { today });
       this.generateDownload(filename, this.notesExportTextFileContent);
     },
     async generateTextDownloadFromNotes() {
-      const tagsResponse = await fetch('/api/passage-note-tags', {
-        credentials: 'include',
-      });
-      if (!tagsResponse.ok) {
-        throw new Error('Failed to load tags');
-      }
-      const tags = await tagsResponse.json();
+      const { data: tags } = await this.$http.get('/api/passage-note-tags');
       const notes = await this.loadAllNotes();
 
       const noteTexts = notes.map(note => this.generateNoteText(note, tags));
@@ -158,20 +160,20 @@ export default {
     },
     async downloadNotesJsonFile() {
       if (!this.notesExportJsonFileContent.length) {
-        await this.generateJsonDownloadFromNotes();
+        try {
+          await this.generateJsonDownloadFromNotes();
+        }
+        catch (err) {
+          this.$store.dispatch('toast/add', { type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
+          return;
+        }
       }
       const today = dayjs().format('YYYY-MM-DD');
       const filename = this.$t('notes_download.json_filename', { today });
       this.generateDownload(filename, this.notesExportJsonFileContent);
     },
     async generateJsonDownloadFromNotes() {
-      const tagsResponse = await fetch('/api/passage-note-tags', {
-        credentials: 'include',
-      });
-      if (!tagsResponse.ok) {
-        throw new Error('Failed to load tags');
-      }
-      const tags = await tagsResponse.json();
+      const { data: tags } = await this.$http.get('/api/passage-note-tags');
       const notes = await this.loadAllNotes();
       this.notesExportJsonFileContent = JSON.stringify({ notes, tags });
     },
@@ -184,18 +186,8 @@ export default {
       let done = false;
       let offset = 0;
       do {
-        const url = new URL('/api/passage-notes', this.$config.siteUrl);
-        url.searchParams.set('offset', offset);
-        const response = await fetch(url, {
-          credentials: 'include',
-        });
-        if (!response.ok) {
-          throw new Error('Failed to load notes');
-        }
-        const {
-          results,
-          size,
-        } = await response.json();
+        const { data: results, meta } = await this.$http.get(`/api/passage-notes?offset=${offset}`);
+        const { size } = meta.pagination;
         if (allNotes.length < size) {
           allNotes.push(...results);
           offset += 10;

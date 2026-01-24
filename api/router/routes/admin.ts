@@ -1,5 +1,4 @@
 import express from 'express';
-import createError from 'http-errors';
 import { type QueryFilter } from 'mongoose';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -7,6 +6,9 @@ import authCurrentUser, { setAuthTokenCookie } from '../helpers/authCurrentUser'
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import deleteAccount from '../helpers/deleteAccount';
 import { IUser } from '../../mongoose/schemas/User';
+import { type ApiResponse } from '../response';
+import { InvalidRequestError, NotFoundError } from '../errors/http-errors';
+import { ApiErrorDetailCode } from '../errors/error-codes';
 
 dayjs.extend(utc);
 
@@ -129,6 +131,52 @@ const getPastWeekEngagement = async () => {
   return engagementData;
 };
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     AdminUser:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated ID of the user
+ *         email:
+ *           type: string
+ *           description: The user's email address
+ *         isAdmin:
+ *           type: boolean
+ *           description: Whether the user has admin privileges
+ *         settings:
+ *           $ref: '#/components/schemas/UserSettings'
+ *         googleId:
+ *           type: string
+ *           nullable: true
+ *           description: The user's Google ID (if using Google OAuth)
+ *         newEmail:
+ *           type: string
+ *           nullable: true
+ *           description: New email address for email change process
+ *         oldEmails:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: List of previous email addresses
+ *         emailVerificationExpires:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ *           description: Expiration time for email verification
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: The date and time when the user was created
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: The date and time when the user was last updated
+ */
+
 const router = express.Router();
 
 /**
@@ -145,13 +193,26 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Feedback'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Feedback'
  *       401:
  *         description: Unauthorized - User is not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       403:
  *         description: Forbidden - User is not an admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 // GET all feedback
 router.get('/admin/feedback', async (req, res, next) => {
@@ -162,7 +223,7 @@ router.get('/admin/feedback', async (req, res, next) => {
       .find()
       .sort({ createdAt: -1 })
       .exec();
-    res.send(feedback);
+    res.json({ data: feedback } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -183,34 +244,47 @@ router.get('/admin/feedback', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   date:
- *                     type: string
- *                     format: date
- *                     description: Date of the engagement data
- *                   newUserAccounts:
- *                     type: number
- *                     description: Number of new user accounts created on this date
- *                   usersWithLogEntry:
- *                     type: number
- *                     description: Number of users who created log entries on this date
- *                   usersWithNote:
- *                     type: number
- *                     description: Number of users who created notes on this date
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       date:
+ *                         type: string
+ *                         format: date
+ *                         description: Date of the engagement data
+ *                       newUserAccounts:
+ *                         type: number
+ *                         description: Number of new user accounts created on this date
+ *                       usersWithLogEntry:
+ *                         type: number
+ *                         description: Number of users who created log entries on this date
+ *                       usersWithNote:
+ *                         type: number
+ *                         description: Number of users who created notes on this date
  *       401:
  *         description: Unauthorized - User is not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       403:
  *         description: Forbidden - User is not an admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 // GET past week user engagement report
 router.get('/admin/reports/user-engagement/past-week', async (req, res, next) => {
   try {
     await authCurrentUser(req, { adminOnly: true });
     const engagementData = await getPastWeekEngagement();
-    res.send(engagementData);
+    res.json({ data: engagementData } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -340,24 +414,46 @@ const validateQuery = (query: {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 offset:
- *                   type: number
- *                   description: The offset of the results
- *                 limit:
- *                   type: number
- *                   description: The maximum number of results returned
- *                 size:
- *                   type: number
- *                   description: The total number of results available
- *                 results:
+ *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/User'
+ *                     $ref: '#/components/schemas/AdminUser'
+ *                 meta:
+ *                   type: object
+ *                   properties:
+ *                     pagination:
+ *                       type: object
+ *                       properties:
+ *                         offset:
+ *                           type: number
+ *                           description: The offset of the results
+ *                         limit:
+ *                           type: number
+ *                           description: The maximum number of results returned
+ *                         size:
+ *                           type: number
+ *                           description: The total number of results available
+ *       400:
+ *         description: Invalid request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       401:
  *         description: Unauthorized - User is not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       403:
  *         description: Forbidden - User is not an admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 // GET list users
 router.get('/admin/users', async (req, res, next) => {
@@ -367,7 +463,7 @@ router.get('/admin/users', async (req, res, next) => {
     const query = validateQuery(req.query);
 
     if (!query) {
-      return next(createError(400, 'Invalid query parameters'));
+      throw new InvalidRequestError();
     }
 
     const filterQuery: QueryFilter<IUser> = {}; // all users
@@ -410,14 +506,15 @@ router.get('/admin/users', async (req, res, next) => {
     // Count the total number of results for all applied filters
     const totalResultCount = await User.countDocuments(filterQuery);
 
-    const response = {
-      offset: query.offset,
-      limit: query.limit,
-      size: totalResultCount,
-      results: users,
+    const meta = {
+      pagination: {
+        offset: query.offset,
+        limit: query.limit,
+        size: totalResultCount,
+      },
     };
 
-    return res.send(response);
+    return res.json({ data: users, meta } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -445,13 +542,37 @@ router.get('/admin/users', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       description: The auto-generated ID of the user
+ *                     email:
+ *                       type: string
+ *                       description: The user's email address
  *       401:
  *         description: Unauthorized - User is not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       403:
  *         description: Forbidden - User is not an admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 // GET a user
 router.get('/admin/users/:email', async (req, res, next) => {
@@ -463,8 +584,10 @@ router.get('/admin/users/:email', async (req, res, next) => {
       .findOne({ email })
       .select({ email: 1 })
       .exec();
-    if (!user) { return next(createError(404)); }
-    res.send(user);
+    if (!user) {
+      throw new NotFoundError();
+    }
+    res.json({ data: user } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -504,16 +627,33 @@ router.get('/admin/users/:email', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
  *       401:
  *         description: Unauthorized - User is not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       403:
  *         description: Forbidden - User is not an admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 // GET a JWT to login as a user
 router.get('/admin/users/:email/login', async (req, res, next) => {
@@ -524,12 +664,12 @@ router.get('/admin/users/:email/login', async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return next(createError(404));
+      throw new NotFoundError();
     }
 
     const token = user.generateJWT();
     setAuthTokenCookie(res, token);
-    res.json({ token });
+    res.json({ data: { token } } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -554,14 +694,40 @@ router.get('/admin/users/:email/login', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: User deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: Number of deleted users (1)
  *       400:
  *         description: Bad Request - Cannot delete your own admin account
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       401:
  *         description: Unauthorized - User is not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       403:
  *         description: Forbidden - User is not an admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 // DELETE a user
 router.delete('/admin/users/:email', async (req, res, next) => {
@@ -571,14 +737,14 @@ router.delete('/admin/users/:email', async (req, res, next) => {
 
     // Prevent admin from deleting their own account
     if (currentUser.email === email) {
-      return next(createError(400, 'You cannot delete your own admin account'));
+      throw new InvalidRequestError([{ code: ApiErrorDetailCode.AdminCannotDeleteOwnAccount, field: null }]);
     }
 
     const success = await deleteAccount(email);
     if (!success) {
-      return next(createError(404));
+      throw new NotFoundError();
     }
-    res.sendStatus(200);
+    res.json({ data: 1 } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

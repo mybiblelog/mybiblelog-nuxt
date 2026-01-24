@@ -114,8 +114,9 @@ describe('admin.test.js', () => {
           .delete(`/api/admin/users/${admin.email}`)
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(400);
-        expect(response.body.errors).toBeDefined();
-        expect(response.body.errors.message).toBe('You cannot delete your own admin account');
+        expect(response.body).toHaveProperty('error');
+        expect(response.body).not.toHaveProperty('data');
+        expect(response.body.error.code).toBe('invalid_request');
       }
       finally {
         await deleteTestUser(admin);
@@ -137,12 +138,17 @@ describe('admin.test.js', () => {
           .delete(`/api/admin/users/${testUser.email}`)
           .set('Authorization', `Bearer ${admin.token}`);
         expect(deleteResponse.status).toBe(200);
+        expect(deleteResponse.body).toHaveProperty('data');
+        expect(deleteResponse.body).not.toHaveProperty('error');
+        expect(deleteResponse.body.data).toBe(1);
 
         // Verify the user no longer exists
         const getDeletedUserResponse = await requestApi
           .get(`/api/admin/users/${testUser.email}`)
           .set('Authorization', `Bearer ${admin.token}`);
         expect(getDeletedUserResponse.status).toBe(404);
+        expect(getDeletedUserResponse.body).toHaveProperty('error');
+        expect(getDeletedUserResponse.body).not.toHaveProperty('data');
       }
       finally {
         await deleteTestUser(admin);
@@ -158,12 +164,14 @@ describe('admin.test.js', () => {
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(Array.isArray(response.body)).toBe(true);
-        expect(response.body.length).toBe(7); // Last 7 days
-        expect(response.body[0]).toHaveProperty('date');
-        expect(response.body[0]).toHaveProperty('newUserAccounts');
-        expect(response.body[0]).toHaveProperty('usersWithLogEntry');
-        expect(response.body[0]).toHaveProperty('usersWithNote');
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
+        expect(response.body.data.length).toBe(7); // Last 7 days
+        expect(response.body.data[0]).toHaveProperty('date');
+        expect(response.body.data[0]).toHaveProperty('newUserAccounts');
+        expect(response.body.data[0]).toHaveProperty('usersWithLogEntry');
+        expect(response.body.data[0]).toHaveProperty('usersWithNote');
       }
       finally {
         await deleteTestUser(admin);
@@ -179,7 +187,7 @@ describe('admin.test.js', () => {
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
         const today = dayjs().format('YYYY-MM-DD');
-        const initialCount = initialResponse.body.find(d => d.date === today).usersWithLogEntry;
+        const initialCount = initialResponse.body.data.find(d => d.date === today).usersWithLogEntry;
 
         // Add a log entry
         await requestApi
@@ -195,7 +203,7 @@ describe('admin.test.js', () => {
         const updatedResponse = await requestApi
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
-        const updatedCount = updatedResponse.body.find(d => d.date === today).usersWithLogEntry;
+        const updatedCount = updatedResponse.body.data.find(d => d.date === today).usersWithLogEntry;
 
         expect(updatedCount).toBe(initialCount + 1);
       }
@@ -214,7 +222,7 @@ describe('admin.test.js', () => {
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
         const yesterday = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
-        const initialCount = initialResponse.body.find(d => d.date === yesterday).usersWithLogEntry;
+        const initialCount = initialResponse.body.data.find(d => d.date === yesterday).usersWithLogEntry;
 
         // Add a log entry
         await requestApi
@@ -230,7 +238,7 @@ describe('admin.test.js', () => {
         const updatedResponse = await requestApi
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
-        const updatedCount = updatedResponse.body.find(d => d.date === yesterday).usersWithLogEntry;
+        const updatedCount = updatedResponse.body.data.find(d => d.date === yesterday).usersWithLogEntry;
 
         expect(updatedCount).toBe(initialCount + 1);
       }
@@ -249,7 +257,7 @@ describe('admin.test.js', () => {
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
         const today = dayjs().format('YYYY-MM-DD');
-        const initialCount = initialResponse.body.find(d => d.date === today).usersWithLogEntry;
+        const initialCount = initialResponse.body.data.find(d => d.date === today).usersWithLogEntry;
 
         // Add two log entries
         await requestApi
@@ -274,7 +282,7 @@ describe('admin.test.js', () => {
         const updatedResponse = await requestApi
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
-        const updatedCount = updatedResponse.body.find(d => d.date === today).usersWithLogEntry;
+        const updatedCount = updatedResponse.body.data.find(d => d.date === today).usersWithLogEntry;
 
         expect(updatedCount).toBe(initialCount + 1);
       }
@@ -309,7 +317,7 @@ describe('admin.test.js', () => {
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
 
-        expect(updatedResponse.body).toEqual(initialResponse.body);
+        expect(updatedResponse.body.data).toEqual(initialResponse.body.data);
       }
       finally {
         await deleteTestUser(testUser);
@@ -326,7 +334,7 @@ describe('admin.test.js', () => {
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
         const today = dayjs().format('YYYY-MM-DD');
-        const initialCount = initialResponse.body.find(d => d.date === today).usersWithNote;
+        const initialCount = initialResponse.body.data.find(d => d.date === today).usersWithNote;
 
         // Add a note
         await requestApi
@@ -341,7 +349,7 @@ describe('admin.test.js', () => {
         const updatedResponse = await requestApi
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
-        const updatedCount = updatedResponse.body.find(d => d.date === today).usersWithNote;
+        const updatedCount = updatedResponse.body.data.find(d => d.date === today).usersWithNote;
 
         expect(updatedCount).toBe(initialCount + 1);
       }
@@ -360,7 +368,7 @@ describe('admin.test.js', () => {
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
         const today = dayjs().format('YYYY-MM-DD');
-        const initialCount = initialResponse.body.find(d => d.date === today).usersWithNote;
+        const initialCount = initialResponse.body.data.find(d => d.date === today).usersWithNote;
 
         // Add two notes
         await requestApi
@@ -383,7 +391,7 @@ describe('admin.test.js', () => {
         const updatedResponse = await requestApi
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
-        const updatedCount = updatedResponse.body.find(d => d.date === today).usersWithNote;
+        const updatedCount = updatedResponse.body.data.find(d => d.date === today).usersWithNote;
 
         expect(updatedCount).toBe(initialCount + 1);
       }
@@ -402,7 +410,7 @@ describe('admin.test.js', () => {
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
         const today = dayjs().format('YYYY-MM-DD');
-        const initialCount = initialResponse.body.find(d => d.date === today).newUserAccounts;
+        const initialCount = initialResponse.body.data.find(d => d.date === today).newUserAccounts;
 
         // Create a new user
         testUser = await createTestUser();
@@ -411,7 +419,7 @@ describe('admin.test.js', () => {
         const updatedResponse = await requestApi
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
-        const updatedCount = updatedResponse.body.find(d => d.date === today).newUserAccounts;
+        const updatedCount = updatedResponse.body.data.find(d => d.date === today).newUserAccounts;
 
         expect(updatedCount).toBe(initialCount + 1);
       }
@@ -430,7 +438,7 @@ describe('admin.test.js', () => {
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
         const today = dayjs().format('YYYY-MM-DD');
-        const initialCount = initialResponse.body.find(d => d.date === today).newUserAccounts;
+        const initialCount = initialResponse.body.data.find(d => d.date === today).newUserAccounts;
 
         // Delete the user
         await requestApi
@@ -441,7 +449,7 @@ describe('admin.test.js', () => {
         const updatedResponse = await requestApi
           .get('/api/admin/reports/user-engagement/past-week')
           .set('Authorization', `Bearer ${admin.token}`);
-        const updatedCount = updatedResponse.body.find(d => d.date === today).newUserAccounts;
+        const updatedCount = updatedResponse.body.data.find(d => d.date === today).newUserAccounts;
 
         expect(updatedCount).toBe(initialCount - 1);
       }
@@ -460,14 +468,17 @@ describe('admin.test.js', () => {
           .get('/api/admin/users')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('results');
-        expect(response.body).toHaveProperty('offset');
-        expect(response.body).toHaveProperty('limit');
-        expect(response.body).toHaveProperty('size');
-        expect(Array.isArray(response.body.results)).toBe(true);
-        expect(response.body.results.length).toBeGreaterThan(0);
-        expect(response.body.results[0]).toHaveProperty('email');
-        expect(response.body.results[0]).toHaveProperty('createdAt');
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).toHaveProperty('meta');
+        expect(response.body).not.toHaveProperty('error');
+        expect(Array.isArray(response.body.data)).toBe(true);
+        expect(response.body.data.length).toBeGreaterThan(0);
+        expect(response.body.data[0]).toHaveProperty('email');
+        expect(response.body.data[0]).toHaveProperty('createdAt');
+        expect(response.body.meta).toHaveProperty('pagination');
+        expect(response.body.meta.pagination).toHaveProperty('offset');
+        expect(response.body.meta.pagination).toHaveProperty('limit');
+        expect(response.body.meta.pagination).toHaveProperty('size');
       }
       finally {
         await deleteTestUser(testUser);
@@ -483,8 +494,10 @@ describe('admin.test.js', () => {
           .get(`/api/admin/users?searchText=${testUser.email}`)
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBe(1);
-        expect(response.body.results[0].email).toBe(testUser.email);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.length).toBe(1);
+        expect(response.body.data[0].email).toBe(testUser.email);
       }
       finally {
         await deleteTestUser(testUser);
@@ -501,8 +514,10 @@ describe('admin.test.js', () => {
           .get('/api/admin/users?sortOn=email&sortDirection=ascending')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBeGreaterThan(1);
-        const emails = response.body.results.map(user => user.email);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.length).toBeGreaterThan(1);
+        const emails = response.body.data.map(user => user.email);
         const sortedEmails = [...emails].sort();
         expect(emails).toEqual(sortedEmails);
       }
@@ -522,8 +537,10 @@ describe('admin.test.js', () => {
           .get('/api/admin/users?sortOn=email&sortDirection=descending')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBeGreaterThan(1);
-        const emails = response.body.results.map(user => user.email);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.length).toBeGreaterThan(1);
+        const emails = response.body.data.map(user => user.email);
         const sortedEmails = [...emails].sort().reverse();
         expect(emails).toEqual(sortedEmails);
       }
@@ -543,8 +560,10 @@ describe('admin.test.js', () => {
           .get('/api/admin/users?sortOn=createdAt&sortDirection=ascending')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBeGreaterThan(1);
-        const createdAt = response.body.results.map(user => user.createdAt);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.length).toBeGreaterThan(1);
+        const createdAt = response.body.data.map(user => user.createdAt);
         const sortedCreatedAt = [...createdAt].sort();
         expect(createdAt).toEqual(sortedCreatedAt);
       }
@@ -564,8 +583,10 @@ describe('admin.test.js', () => {
           .get('/api/admin/users?sortOn=createdAt&sortDirection=descending')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBeGreaterThan(1);
-        const createdAt = response.body.results.map(user => user.createdAt);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.length).toBeGreaterThan(1);
+        const createdAt = response.body.data.map(user => user.createdAt);
         const sortedCreatedAt = [...createdAt].sort().reverse();
         expect(createdAt).toEqual(sortedCreatedAt);
       }
@@ -585,7 +606,9 @@ describe('admin.test.js', () => {
           .get('/api/admin/users?limit=1')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body.results.length).toBe(1);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data.length).toBe(1);
       }
       finally {
         await deleteTestUser(testUser1);
@@ -604,16 +627,20 @@ describe('admin.test.js', () => {
           .get('/api/admin/users')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        const initialResults = response.body.results;
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        const initialResults = response.body.data;
 
         // Get offset results
         const updatedResponse = await requestApi
           .get('/api/admin/users?offset=1')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(updatedResponse.status).toBe(200);
+        expect(updatedResponse.body).toHaveProperty('data');
+        expect(updatedResponse.body).not.toHaveProperty('error');
 
         // Expect to skip the first user
-        expect(updatedResponse.body.results[0].email).toBe(initialResults[1].email);
+        expect(updatedResponse.body.data[0].email).toBe(initialResults[1].email);
       }
       finally {
         await deleteTestUser(testUser1);
@@ -631,8 +658,10 @@ describe('admin.test.js', () => {
           .get('/api/admin/users?size=true')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('size');
-        size = response.body.size;
+        expect(response.body).toHaveProperty('meta');
+        expect(response.body.meta).toHaveProperty('pagination');
+        expect(response.body.meta.pagination).toHaveProperty('size');
+        size = response.body.meta.pagination.size;
 
         // Create a new user
         testUser = await createTestUser();
@@ -642,8 +671,10 @@ describe('admin.test.js', () => {
           .get('/api/admin/users?size=true')
           .set('Authorization', `Bearer ${admin.token}`);
         expect(updatedResponse.status).toBe(200);
-        expect(updatedResponse.body).toHaveProperty('size');
-        expect(updatedResponse.body.size).toBe(size + 1);
+        expect(updatedResponse.body).toHaveProperty('meta');
+        expect(updatedResponse.body.meta).toHaveProperty('pagination');
+        expect(updatedResponse.body.meta.pagination).toHaveProperty('size');
+        expect(updatedResponse.body.meta.pagination.size).toBe(size + 1);
       }
       finally {
         await deleteTestUser(testUser);
@@ -680,8 +711,10 @@ describe('admin.test.js', () => {
           .get(`/api/admin/users/${testUser.email}`)
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('email');
-        expect(response.body.email).toBe(testUser.email);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data).toHaveProperty('email');
+        expect(response.body.data.email).toBe(testUser.email);
       }
       finally {
         await deleteTestUser(testUser);
@@ -718,22 +751,26 @@ describe('admin.test.js', () => {
           .get(`/api/admin/users/${testUser.email}/login`)
           .set('Authorization', `Bearer ${admin.token}`);
         expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
         // expect token in response body
-        expect(response.body).toHaveProperty('token');
-        expect(typeof response.body.token).toBe('string');
+        expect(response.body.data).toHaveProperty('token');
+        expect(typeof response.body.data.token).toBe('string');
         // expect cookie to be set in header
         expect(response.headers['set-cookie']).toBeDefined();
         expect(response.headers['set-cookie']?.[0]).toContain('auth_token=');
 
         // Verify the token can be used to perform authenticated requests
-        const token = response.body.token;
+        const token = response.body.data.token;
         const userResponse = await requestApi
           .get('/api/auth/user')
           .set('Authorization', `Bearer ${token}`);
         expect(userResponse.status).toBe(200);
-        expect(userResponse.body).toHaveProperty('user');
-        expect(userResponse.body.user).not.toBeNull();
-        expect(userResponse.body.user.email).toBe(testUser.email);
+        expect(userResponse.body).toHaveProperty('data');
+        expect(userResponse.body).not.toHaveProperty('error');
+        expect(userResponse.body.data).toHaveProperty('user');
+        expect(userResponse.body.data.user).not.toBeNull();
+        expect(userResponse.body.data.user.email).toBe(testUser.email);
       }
       finally {
         await deleteTestUser(testUser);

@@ -30,59 +30,29 @@ export const mutations = {
 };
 
 export const actions = {
-  async loadPassageNoteTags({ commit, rootState }) {
+  async loadPassageNoteTags({ commit }) {
     // Check for cached data to give an immediate visual response
     let passageNoteTags = BrowserCache.get(PASSAGE_NOTE_TAGS_CACHE_KEY);
     if (passageNoteTags) {
       BrowserCache.set(PASSAGE_NOTE_TAGS_CACHE_KEY, passageNoteTags, PASSAGE_NOTE_TAGS_CACHE_MINUTES);
     }
-    const url = new URL('/api/passage-note-tags', this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      credentials: 'include',
-      headers: {
-        Authorization: this.app?.ssrToken ? `Bearer ${this.app.ssrToken}` : undefined,
-      },
-    });
-    passageNoteTags = await response.json();
+    const { data: passageNoteTagsData } = await this.$http.get('/api/passage-note-tags');
+    passageNoteTags = passageNoteTagsData;
     commit(SET_PASSAGE_NOTE_TAGS, passageNoteTags);
   },
-  async createPassageNoteTag({ commit, dispatch, rootState }, { label, color, description }) {
-    const url = new URL('/api/passage-note-tags', this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ label, color, description }),
-    });
-    const data = await response.json();
-    if (!data) { return null; }
-    commit(ADD_PASSAGE_NOTE_TAG, data);
-    return data;
+  async createPassageNoteTag({ commit }, { label, color, description }) {
+    const { data: result } = await this.$http.post('/api/passage-note-tags', { label, color, description });
+    commit(ADD_PASSAGE_NOTE_TAG, result);
+    return result;
   },
-  async updatePassageNoteTag({ commit, dispatch, rootState }, { id, label, color, description }) {
-    const url = new URL(`/api/passage-note-tags/${id}`, this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      method: 'PUT',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id, label, color, description }),
-    });
-    const data = await response.json();
+  async updatePassageNoteTag({ commit }, { id, label, color, description }) {
+    const { data } = await this.$http.put(`/api/passage-note-tags/${id}`, { id, label, color, description });
     if (!data) { return null; }
     commit(UPDATE_PASSAGE_NOTE_TAG, data);
     return data;
   },
-  async deletePassageNoteTag({ commit, dispatch, rootState }, passageNoteTagId) {
-    const url = new URL(`/api/passage-note-tags/${passageNoteTagId}`, this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      method: 'DELETE',
-      credentials: 'include',
-    });
-    const data = await response.json();
+  async deletePassageNoteTag({ commit }, passageNoteTagId) {
+    const { data } = await this.$http.delete(`/api/passage-note-tags/${passageNoteTagId}`);
     if (data) {
       commit(REMOVE_PASSAGE_NOTE_TAG, passageNoteTagId);
       return true;

@@ -2,44 +2,6 @@ import mongoose from 'mongoose';
 
 import { Bible, SimpleDate } from '@mybiblelog/shared';
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     LogEntry:
- *       type: object
- *       required:
- *         - owner
- *         - date
- *         - startVerseId
- *         - endVerseId
- *       properties:
- *         _id:
- *           type: string
- *           description: The auto-generated ID of the log entry
- *         owner:
- *           type: string
- *           description: The ID of the user who owns this log entry
- *         date:
- *           type: string
- *           format: date
- *           description: The date of the log entry
- *         startVerseId:
- *           type: number
- *           description: The ID of the starting verse
- *         endVerseId:
- *           type: number
- *           description: The ID of the ending verse
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: The date and time when the log entry was created
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           description: The date and time when the log entry was last updated
- */
-
 export const LogEntrySchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,

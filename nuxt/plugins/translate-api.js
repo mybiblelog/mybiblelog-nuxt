@@ -7,15 +7,12 @@ export default ({ app }, inject) => {
       return error;
     }
 
-    // FIXME: The "field" is redundant since it is only accessed in the template, where it is already known.
-    //        Removing `field` would simplify things.
-    //        It would need to be removed here and in every `makeI18nError` call.
-    const { field, kind, properties: errorProperties } = error;
+    const { field, code, properties: errorProperties } = error;
 
     // Any component can provide additional context, such as the already-translated field name for a form input.
     // For example: $terr(error, { field: $t('label') })
     // This prevents the English word "label" from being used in other translations.
-    const result = app.i18n.t(kind, { field, ...errorProperties, ...componentProperties });
+    const result = app.i18n.t(`api_error.${code}`, { field, ...errorProperties, ...componentProperties });
     return result;
   };
 

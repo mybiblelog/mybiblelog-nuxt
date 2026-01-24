@@ -60,6 +60,8 @@
 
 <script>
 import InfoLink from '@/components/InfoLink';
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
+import mapFormErrors from '~/helpers/map-form-errors';
 
 export default {
   name: 'RegisterPage',
@@ -95,17 +97,11 @@ export default {
       const { email, password } = this;
       const locale = this.$i18n.locale;
 
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, locale }),
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        const unknownError = { _form: 'An unknown error occurred.' };
-        this.errors = data.errors || unknownError;
+      try {
+        await this.$http.post('/api/auth/register', { email, password, locale });
+      }
+      catch (err) {
+        this.errors = (err instanceof ApiError ? mapFormErrors(err) : null) || mapFormErrors(new UnknownApiError());
         return;
       }
 
@@ -113,14 +109,19 @@ export default {
 
       // if email verification is not required, log the user in:
       if (!this.requireEmailVerification) {
-        const { success, error } = await this.$store.dispatch('auth/login', {
-          email: this.email,
-          password: this.password,
-        });
-
-        if (!success) {
-          const unknownError = { _form: 'An unknown error occurred.' };
-          this.errors = error || unknownError;
+        try {
+          await this.$store.dispatch('auth/login', {
+            email: this.email,
+            password: this.password,
+          });
+        }
+        catch (error) {
+          if (error instanceof ApiError) {
+            this.errors = mapFormErrors(error);
+          }
+          else {
+            this.errors = mapFormErrors(new UnknownApiError());
+          }
           return;
         }
 

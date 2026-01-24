@@ -30,60 +30,29 @@ export const mutations = {
 export const actions = {
   async login({ commit }, { email, password }) {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        const { token, ...user } = data;
-        commit(SET_USER, user);
-        return { success: true, error: null };
-      }
-      else {
-        commit(SET_USER, null);
-        return { success: false, error: data.errors };
-      }
+      const { data: responseData } = await this.$http.post('/api/auth/login', { email, password });
+      const { token, ...user } = responseData;
+      commit(SET_USER, user);
     }
     catch (error) {
-      return { success: false, error: error.message };
+      commit(SET_USER, null);
+      throw error;
     }
   },
   async fetchServerUser({ commit }) {
-    const url = new URL('/api/auth/user', this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      headers: {
-        Authorization: `Bearer ${this.app.ssrToken}`,
-      },
-    });
-    const data = await response.json();
-    const { user } = data;
+    const { data: { user } } = await this.$http.get('/api/auth/user');
     delete user?.token;
     commit(SET_USER, user);
   },
   async refreshUser({ commit }) {
-    const url = new URL('/api/auth/user', this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      credentials: 'include',
-    });
-    const data = await response.json();
-    const { user } = data;
+    const { data: user } = await this.$http.get('/api/auth/user');
     delete user?.token;
     commit(SET_USER, user);
   },
   async logout({ commit }) {
     try {
       // Send API request to delete token from HttpOnly cookie
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      await this.$http.post('/api/auth/logout');
     }
     catch (error) {
       // This is expected to fail after account deletion

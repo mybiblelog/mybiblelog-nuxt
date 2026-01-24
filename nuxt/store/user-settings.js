@@ -78,22 +78,14 @@ export const actions = {
       if (preferredBibleApp) {
         localStorage.setItem(LocalStorageKeys.PREFERRED_BIBLE_APP, preferredBibleApp);
       }
-      const url = new URL('/api/settings', this.$config.siteUrl);
-      await fetch(url.toString(), {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
+      await this.$http.put('/api/settings', {
+        settings: {
+          lookBackDate,
+          dailyVerseCountGoal,
+          preferredBibleVersion,
+          startPage,
+          locale,
         },
-        body: JSON.stringify({
-          settings: {
-            lookBackDate,
-            dailyVerseCountGoal,
-            preferredBibleVersion,
-            startPage,
-            locale,
-          },
-        }),
       });
       commit(SET_USER_SETTINGS, {
         lookBackDate,
@@ -114,14 +106,7 @@ export const actions = {
     await dispatch('loadServerSettings');
   },
   async loadServerSettings({ commit, rootState }) {
-    const url = new URL('/api/settings', this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      credentials: 'include',
-      headers: {
-        Authorization: this.app?.ssrToken ? `Bearer ${this.app.ssrToken}` : undefined,
-      },
-    });
-    const data = await response.json();
+    const { data } = await this.$http.get('/api/settings');
     const {
       lookBackDate,
       dailyVerseCountGoal,

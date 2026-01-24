@@ -57,14 +57,7 @@ export const mutations = {
 
 export const actions = {
   async loadLogEntries({ commit }) {
-    const url = new URL('/api/log-entries', this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      credentials: 'include',
-      headers: {
-        Authorization: this.app?.ssrToken ? `Bearer ${this.app.ssrToken}` : undefined,
-      },
-    });
-    const data = await response.json();
+    const { data } = await this.$http.get('/api/log-entries');
     commit(SET_LOG_ENTRIES, data);
   },
   async createLogEntry({ commit, dispatch, getters }, { date, startVerseId, endVerseId }) {
@@ -76,16 +69,11 @@ export const actions = {
     const wasBookComplete = isBookComplete(bookIndex, currentLogEntries);
     const wasBibleComplete = isBibleComplete(currentLogEntries);
 
-    const response = await fetch(new URL('/api/log-entries', this.$config.siteUrl), {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ date, startVerseId, endVerseId }),
+    const { data } = await this.$http.post('/api/log-entries', {
+      date,
+      startVerseId,
+      endVerseId,
     });
-    const data = await response.json();
-    if (!data) { return null; }
     commit(ADD_LOG_ENTRY, data);
 
     // Check completion after adding the entry
@@ -119,17 +107,11 @@ export const actions = {
     const wasBookComplete = isBookComplete(bookIndex, currentLogEntries);
     const wasBibleComplete = isBibleComplete(currentLogEntries);
 
-    const url = new URL(`/api/log-entries/${id}`, this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      method: 'PUT',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id, date, startVerseId, endVerseId }),
+    const { data } = await this.$http.put(`/api/log-entries/${id}`, {
+      date,
+      startVerseId,
+      endVerseId,
     });
-    const data = await response.json();
-    if (!data) { return null; }
     commit(UPDATE_LOG_ENTRY, data);
 
     // Check completion after updating the entry
@@ -155,12 +137,7 @@ export const actions = {
     return data;
   },
   async deleteLogEntry({ commit, dispatch, state }, logEntryId) {
-    const url = new URL(`/api/log-entries/${logEntryId}`, this.$config.siteUrl);
-    const response = await fetch(url.toString(), {
-      method: 'DELETE',
-      credentials: 'include',
-    });
-    const data = await response.json();
+    const { data } = await this.$http.delete(`/api/log-entries/${logEntryId}`);
     if (data) {
       // find the deleted log entry and get its date for efficient cache updating
       const logEntry = state.logEntries.find(logEntry => logEntry.id === logEntryId);

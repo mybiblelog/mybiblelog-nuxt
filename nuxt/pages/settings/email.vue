@@ -74,6 +74,9 @@
 </template>
 
 <script>
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
+import mapFormErrors from '~/helpers/map-form-errors';
+
 export default {
   name: 'EmailSettingsPage',
   middleware: ['auth'],
@@ -131,18 +134,17 @@ export default {
     // Checks if there is an email change request in progress
     async checkChangeEmailRequestState() {
       try {
-        const response = await fetch('/api/auth/change-email', {
-          credentials: 'include',
-          cache: 'no-store',
-        });
-        const data = await response.json();
-        if (data.newEmail) {
+        const { data } = await this.$http.get('/api/auth/change-email');
+        if (data?.newEmail) {
           // no `newEmail` means there is no email change request in progress
           this.currentChangeEmailRequest = data;
         }
         else {
           this.currentChangeEmailRequest = null;
         }
+      }
+      catch {
+        this.currentChangeEmailRequest = null;
       }
       finally {
         this.checkingForEmailChangeRequest = false;
@@ -159,37 +161,28 @@ export default {
 
       if (!password.length) {
         this.changeEmailErrors.password = this.$t('messaging.enter_your_current_password');
+        this.formBusy = false;
         return;
       }
 
       try {
-        const response = await fetch('/api/auth/change-email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            password,
-            newEmail,
-          }),
+        await this.$http.post('/api/auth/change-email', {
+          password,
+          newEmail,
         });
-
-        if (response.ok) {
-          this.resetChangeEmailForm();
-          this.$store.dispatch('toast/add', {
-            type: 'success',
-            text: this.$t('messaging.confirmation_link_sent'),
-          });
-        }
-        else {
-          // Display form errors from the server
-          const errorData = await response.json();
-          Object.assign(this.changeEmailErrors, errorData.response?.data?.errors || {});
-        }
+        this.resetChangeEmailForm();
+        this.$store.dispatch('toast/add', {
+          type: 'success',
+          text: this.$t('messaging.confirmation_link_sent'),
+        });
       }
       catch (err) {
-        this.changeEmailErrors._form = this.$t('messaging.an_unknown_error_occurred');
+        if (err instanceof ApiError) {
+          Object.assign(this.changeEmailErrors, mapFormErrors(err));
+        }
+        else {
+          Object.assign(this.changeEmailErrors, mapFormErrors(new UnknownApiError()));
+        }
       }
       finally {
       // Re-enable the form
@@ -201,14 +194,7 @@ export default {
     async cancelChangeEmailRequest() {
       this.formBusy = true;
       try {
-        const response = await fetch('/api/auth/change-email', {
-          method: 'DELETE',
-          credentials: 'include',
-        });
-        if (!response.ok) {
-          throw new Error('Failed to cancel request');
-        }
-        const data = await response.json();
+        const { data } = await this.$http.delete('/api/auth/change-email');
         if (data === true) {
           this.currentChangeEmailRequest = null;
           await this.$store.dispatch('dialog/alert', {

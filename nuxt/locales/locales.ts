@@ -4,12 +4,16 @@ const locales: Locales = {
   en: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'An unknown error occurred',
+      validation_error: 'There was an error with your request',
       required: 'A {field} is required',
       is_invalid: 'Please enter a valid {field}',
       unique: 'This {field} is already in use',
       min_length: 'Must be {minlength} or more characters',
       max_length: 'Must be {maxlength} or fewer characters',
       review: 'Please review.',
+
+      not_found: 'Not found',
 
       invalid_login: 'Email or password is incorrect',
       verify_email: 'Please check {email} to verify your email first',
@@ -33,12 +37,16 @@ const locales: Locales = {
   es: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Ocurrió un error desconocido',
+      validation_error: 'Hubo un error con su solicitud',
       required: 'Se requiere un {field}',
       is_invalid: 'Por favor ingrese un {field} válido',
       unique: 'Este {field} ya está en uso',
       min_length: 'Debe tener {minlength} o más caracteres',
       max_length: 'Debe tener {maxlength} o menos caracteres',
       review: 'Por favor revise.',
+
+      not_found: 'No encontrado',
 
       invalid_login: 'El correo electrónico o la contraseña son incorrectos',
       verify_email: 'Por favor revise {email} para verificar su correo electrónico primero',
@@ -62,12 +70,16 @@ const locales: Locales = {
   de: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Ein unbekannter Fehler ist aufgetreten',
+      validation_error: 'Es gab einen Fehler mit Ihrer Anfrage',
       required: 'Ein {field} ist erforderlich',
       is_invalid: 'Bitte geben Sie ein gültiges {field} ein',
       unique: 'Dieses {field} ist bereits in Verwendung',
       min_length: 'Muss {minlength} oder mehr Zeichen haben',
       max_length: 'Muss {maxlength} oder weniger Zeichen haben',
       review: 'Bitte überprüfen Sie.',
+
+      not_found: 'Nicht gefunden',
 
       invalid_login: 'Email oder Passwort ist falsch',
       verify_email: 'Bitte überprüfen Sie {email} zuerst, um Ihre Email zu bestätigen',
@@ -91,12 +103,16 @@ const locales: Locales = {
   fr: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Une erreur inconnue est survenue',
+      validation_error: 'Il y a eu une erreur avec votre requête',
       required: 'Un(e) {field} est requis(e)',
       is_invalid: 'Veuillez entrer un(e) {field} valide',
       unique: 'Ce(tte) {field} est déjà utilisé(e)',
       min_length: 'Doit contenir {minlength} caractères ou plus',
       max_length: 'Doit contenir {maxlength} caractères ou moins',
       review: 'Veuillez revoir.',
+
+      not_found: 'Non trouvé',
 
       invalid_login: 'Email ou mot de passe incorrect',
       verify_email: 'Veuillez vérifier {email} pour vérifier votre adresse email d\'abord',
@@ -120,12 +136,16 @@ const locales: Locales = {
   pt: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Ocorreu um erro desconhecido',
+      validation_error: 'Houve um erro com sua solicitação',
       required: 'Um(a) {field} é obrigatório',
       is_invalid: 'Por favor, insira um(a) {field} válido',
       unique: 'Este(a) {field} já está em uso',
       min_length: 'Deve ter {minlength} ou mais caracteres',
       max_length: 'Deve ter {maxlength} ou menos caracteres',
       review: 'Por favor, revise.',
+
+      not_found: 'Não encontrado',
 
       invalid_login: 'Email ou senha incorretos',
       verify_email: 'Por favor, verifique {email} para confirmar seu email primeiro',
@@ -149,12 +169,16 @@ const locales: Locales = {
   uk: {
     my_bible_log: 'My Bible Log',
     api_error: {
+      unknown_error: 'Виникла невідома помилка',
+      validation_error: 'Виникла помилка з вашим запитом',
       required: 'Поле {field} обов\'язкове',
       is_invalid: 'Будь ласка, введіть дійсну {field}',
       unique: 'Це {field} вже використовується',
       min_length: 'Має бути {minlength} або більше символів',
       max_length: 'Має бути {maxlength} або менше символів',
       review: 'Будь ласка, перегляньте.',
+
+      not_found: 'Не знайдено',
 
       invalid_login: 'Електронна пошта або пароль невірні',
       verify_email: 'Будь ласка, перевірте {email}, щоб спочатку підтвердити свою електронну пошту',

@@ -4,7 +4,11 @@ export const EmailSchema = new mongoose.Schema({
   from: { type: String, required: true },
   to: { type: String, required: true },
   replyTo: { type: String },
-  headers: { type: Object },
+  headers: {
+    type: Map,
+    of: String,
+    default: {},
+  },
   subject: { type: String, required: true },
   text: { type: String },
   html: { type: String },

@@ -221,33 +221,21 @@ export default {
         url.searchParams.set('offset', this.offset);
       }
 
-      return url.toString();
+      return url.pathname + (url.search || '');
     },
-    loadUsers() {
-      const url = this.buildUsersRequestUrl();
-      fetch(url, {
-        credentials: 'include',
-      })
-        .then(async (response) => {
-          if (!response.ok) {
-            throw new Error('Failed to load users');
-          }
-          const responseData = await response.json();
-          const {
-            // limit,
-            // offset,
-            results: users,
-            size,
-          } = responseData;
-
-          this.users = users;
-          this.totalUsers = size;
-        })
-        .catch((error) => {
-          console.error('Error loading users:', error);
-          this.users = [];
-          this.loadError = true;
-        });
+    async loadUsers() {
+      const path = this.buildUsersRequestUrl();
+      try {
+        const { data: users, meta } = await this.$http.get(path);
+        const { size } = meta.pagination;
+        this.users = users;
+        this.totalUsers = size;
+      }
+      catch (error) {
+        console.error('Error loading users:', error);
+        this.users = [];
+        this.loadError = true;
+      }
     },
     toggleSort(column) {
       if (this.sortOn !== column) {
@@ -280,13 +268,7 @@ export default {
         return;
       }
       try {
-        const response = await fetch(`/api/admin/users/${email}`, {
-          method: 'DELETE',
-          credentials: 'include',
-        });
-        if (!response.ok) {
-          throw new Error('Failed to delete user');
-        }
+        await this.$http.delete(`/api/admin/users/${email}`);
         this.selectedUser = null;
         this.loadUsers();
       }
@@ -315,12 +297,7 @@ export default {
         // Clear any cached data from admin account session
         sessionStorage.clear();
 
-        const response = await fetch(`/api/admin/users/${this.selectedUser.email}/login`, {
-          credentials: 'include',
-        });
-        if (!response.ok) {
-          throw new Error('Unable to sign in as user.');
-        }
+        await this.$http.get(`/api/admin/users/${this.selectedUser.email}/login`);
         // Instead of relying on the store to reload user and data,
         // fully reload the page to ensure the new user is logged in and data is refreshed.
         window.location.href = '/start';

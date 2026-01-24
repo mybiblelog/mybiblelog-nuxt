@@ -17,15 +17,17 @@ describe('settings.test.js', () => {
           .get('/api/settings')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('dailyVerseCountGoal');
-        expect(response.body).toHaveProperty('lookBackDate');
-        expect(response.body).toHaveProperty('preferredBibleVersion');
-        expect(response.body).toHaveProperty('startPage');
-        expect(response.body).toHaveProperty('locale');
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data).toHaveProperty('dailyVerseCountGoal');
+        expect(response.body.data).toHaveProperty('lookBackDate');
+        expect(response.body.data).toHaveProperty('preferredBibleVersion');
+        expect(response.body.data).toHaveProperty('startPage');
+        expect(response.body.data).toHaveProperty('locale');
 
         // verify lookBackDate is in correct format
-        expect(typeof response.body.lookBackDate).toBe('string');
-        expect(response.body.lookBackDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+        expect(typeof response.body.data.lookBackDate).toBe('string');
+        expect(response.body.data.lookBackDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       }
       finally {
         await deleteTestUser(testUser);
@@ -48,7 +50,7 @@ describe('settings.test.js', () => {
         const getResponse = await requestApi
           .get('/api/settings')
           .set('Authorization', `Bearer ${testUser.token}`);
-        const originalGoal = getResponse.body.dailyVerseCountGoal;
+        const originalGoal = getResponse.body.data.dailyVerseCountGoal;
 
         // Update just the dailyVerseCountGoal
         const newGoal = originalGoal + 10;
@@ -57,12 +59,14 @@ describe('settings.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ settings: { dailyVerseCountGoal: newGoal } });
         expect(putResponse.status).toBe(200);
+        expect(putResponse.body).toHaveProperty('data');
+        expect(putResponse.body).not.toHaveProperty('error');
 
         // Verify the change
         const verifyResponse = await requestApi
           .get('/api/settings')
           .set('Authorization', `Bearer ${testUser.token}`);
-        expect(verifyResponse.body.dailyVerseCountGoal).toBe(newGoal);
+        expect(verifyResponse.body.data.dailyVerseCountGoal).toBe(newGoal);
       }
       finally {
         await deleteTestUser(testUser);
@@ -84,12 +88,14 @@ describe('settings.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ settings: newSettings });
         expect(putResponse.status).toBe(200);
+        expect(putResponse.body).toHaveProperty('data');
+        expect(putResponse.body).not.toHaveProperty('error');
 
         // Verify all changes
         const verifyResponse = await requestApi
           .get('/api/settings')
           .set('Authorization', `Bearer ${testUser.token}`);
-        expect(verifyResponse.body).toMatchObject(newSettings);
+        expect(verifyResponse.body.data).toMatchObject(newSettings);
       }
       finally {
         await deleteTestUser(testUser);
@@ -103,7 +109,7 @@ describe('settings.test.js', () => {
         const getResponse = await requestApi
           .get('/api/settings')
           .set('Authorization', `Bearer ${testUser.token}`);
-        const originalSettings = { ...getResponse.body };
+        const originalSettings = { ...getResponse.body.data };
 
         // Update with some undefined values
         const putResponse = await requestApi
@@ -111,43 +117,19 @@ describe('settings.test.js', () => {
           .set('Authorization', `Bearer ${testUser.token}`)
           .send({ settings: { dailyVerseCountGoal: 100, lookBackDate: undefined } });
         expect(putResponse.status).toBe(200);
+        expect(putResponse.body).toHaveProperty('data');
+        expect(putResponse.body).not.toHaveProperty('error');
 
         // Verify only the defined setting changed
         const verifyResponse = await requestApi
           .get('/api/settings')
           .set('Authorization', `Bearer ${testUser.token}`);
-        expect(verifyResponse.body.dailyVerseCountGoal).toBe(100);
-        expect(verifyResponse.body.lookBackDate).toBe(originalSettings.lookBackDate);
+        expect(verifyResponse.body.data.dailyVerseCountGoal).toBe(100);
+        expect(verifyResponse.body.data.lookBackDate).toBe(originalSettings.lookBackDate);
       }
       finally {
         await deleteTestUser(testUser);
       }
-    });
-  });
-
-  describe('PUT /api/settings/change-password', () => {
-    test('Incorrect password for password change', async () => {
-      // Arrange
-      const testUser = await createTestUser();
-
-      // Act
-      const response = await requestApi
-        .put('/api/settings/change-password')
-        .set('Authorization', `Bearer ${testUser.token}`)
-        .send({
-          currentPassword: 'wrongpassword',
-          newPassword: 'newpassword123',
-        });
-
-      // Assert
-      expect(response.statusCode).toBe(404);
-      expect(response.body.errors).toEqual({
-        error: { message: 'Not Found' },
-        message: 'Not Found',
-      });
-
-      // Cleanup
-      await deleteTestUser(testUser);
     });
   });
 
@@ -165,6 +147,9 @@ describe('settings.test.js', () => {
           .put('/api/settings/delete-account')
           .set('Authorization', `Bearer ${testUser.token}`);
         expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data).toBe(1);
         // expect cookie to be cleared in header
         expect(response.headers['set-cookie']).toBeDefined();
         expect(response.headers['set-cookie']?.[0]).toContain(`${AUTH_COOKIE_NAME}=;`);

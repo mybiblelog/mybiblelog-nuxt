@@ -23,13 +23,14 @@ const init = async () => {
   const { Email } = await useMongooseModels();
 
   const sendFn = async (params: SendEmailParams): Promise<void> => {
-    let status = 'pending';
+    let status: 'pending' | 'sent' | 'failed' | 'log_only' = 'pending';
 
     // only send email in production
     if (config.nodeEnv === "production") {
       try {
         await sendEmail(params);
         status = 'sent';
+        console.log('Email sent successfully');
       }
       catch (error) {
         status = 'failed';
@@ -37,6 +38,7 @@ const init = async () => {
       }
     } else {
       status = 'log_only';
+      console.log('Email logged successfully');
     }
 
     // record email, but do not block with `await`

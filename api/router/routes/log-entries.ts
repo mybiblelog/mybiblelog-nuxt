@@ -1,10 +1,13 @@
 import express from 'express';
-import createError from 'http-errors';
 import { ObjectId } from 'mongodb';
 import { SimpleDate } from '@mybiblelog/shared';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { Types } from 'mongoose';
+import { ApiErrorDetailCode } from '../errors/error-codes';
+import { type ApiResponse } from '../response';
+import { ValidationError } from '../errors/validation-errors';
+import { NotFoundError } from '../errors/http-errors';
 
 const router = express.Router();
 
@@ -65,11 +68,20 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/LogEntry'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/LogEntry'
  *       400:
  *         description: Invalid date format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/log-entries', async (req, res, next) => {
   try {
@@ -78,30 +90,30 @@ router.get('/log-entries', async (req, res, next) => {
     const { startDate, endDate } = req.query as { startDate: string; endDate: string };
 
     if (startDate && !SimpleDate.validateString(startDate)) {
-      return next(createError(400, 'Invalid startDate'));
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'startDate' }]);
     }
 
     if (endDate && !SimpleDate.validateString(endDate)) {
-      return next(createError(400, 'Invalid endDate'));
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'endDate' }]);
     }
 
     if (!startDate && !endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id });
-      return res.send(logEntries);
+      return res.json({ data: logEntries } satisfies ApiResponse);
     }
 
     if (startDate && !endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate } });
-      return res.send(logEntries);
+      return res.json({ data: logEntries } satisfies ApiResponse);
     }
 
     if (!startDate && endDate) {
       const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $lte: endDate } });
-      return res.send(logEntries);
+      return res.json({ data: logEntries } satisfies ApiResponse);
     }
 
     const logEntries = await LogEntry.find({ owner: currentUser._id, date: { $gte: startDate, $lte: endDate } });
-    return res.send(logEntries);
+    return res.json({ data: logEntries } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -129,15 +141,30 @@ router.get('/log-entries', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/LogEntry'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/LogEntry'
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Log entry not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/log-entries/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { LogEntry } = await useMongooseModels();
@@ -145,9 +172,9 @@ router.get('/log-entries/:id', async (req, res, next) => {
 
     const logEntry = await LogEntry.findOne({ owner: currentUser._id, _id: id });
     if (!logEntry) {
-      return next(createError(404, 'Not Found'));
+      throw new NotFoundError();
     }
-    res.send(logEntry.toJSON());
+    res.json({ data: logEntry.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -186,7 +213,18 @@ router.get('/log-entries/:id', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/LogEntry'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/LogEntry'
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/log-entries', async (req, res, next) => {
   try {
@@ -199,11 +237,11 @@ router.post('/log-entries', async (req, res, next) => {
       await logEntry.validate();
     }
     catch (error) {
-      return next(createError(400, 'Invalid log entry'));
+      throw new ValidationError();
     }
     await logEntry.save();
 
-    res.send(logEntry.toJSON());
+    res.json({ data: logEntry.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -245,15 +283,30 @@ router.post('/log-entries', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/LogEntry'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/LogEntry'
+ *       400:
+ *         description: Invalid ID format or validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Log entry not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/log-entries/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { LogEntry } = await useMongooseModels();
@@ -262,7 +315,7 @@ router.put('/log-entries/:id', async (req, res, next) => {
 
     const logEntry = await LogEntry.findOne({ owner: currentUser._id, _id: id });
     if (!logEntry) {
-      return next(createError(404, 'Not Found'));
+      throw new NotFoundError();
     }
 
     if (date) { logEntry.date = date; }
@@ -273,11 +326,11 @@ router.put('/log-entries/:id', async (req, res, next) => {
       await logEntry.validate();
     }
     catch (error) {
-      return next(createError(400, 'Invalid log entry'));
+      throw new ValidationError();
     }
     await logEntry.save();
 
-    res.send(logEntry.toJSON());
+    res.json({ data: logEntry.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -302,14 +355,34 @@ router.put('/log-entries/:id', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Log entry deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: Number of deleted entries (1)
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Log entry not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.delete('/log-entries/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { LogEntry } = await useMongooseModels();
@@ -317,10 +390,10 @@ router.delete('/log-entries/:id', async (req, res, next) => {
 
     const result = await LogEntry.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
-      return next(createError(404, 'Not Found'));
+      throw new NotFoundError();
     }
 
-    res.send(result.deletedCount);
+    res.json({ data: result.deletedCount } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

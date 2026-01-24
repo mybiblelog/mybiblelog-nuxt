@@ -1,6 +1,8 @@
 import express from 'express';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
+import { type ApiResponse } from '../response';
+import { NotFoundError } from '../errors/http-errors';
 
 const router = express.Router();
 
@@ -83,13 +85,18 @@ const getUserReminder = async (currentUser) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/DailyReminder'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/DailyReminder'
  */
 router.get('/reminders/daily-reminder', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     const reminder = await getUserReminder(currentUser);
-    return res.send(reminder.toJSON());
+    return res.json({ data: reminder.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -129,7 +136,12 @@ router.get('/reminders/daily-reminder', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/DailyReminder'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/DailyReminder'
  */
 router.put('/reminders/daily-reminder', async (req, res, next) => {
   try {
@@ -147,7 +159,7 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
       }
     });
     await reminder.save();
-    res.send(reminder.toJSON());
+    res.json({ data: reminder.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -174,13 +186,21 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 error:
- *                   type: boolean
- *                   description: Whether there was an error
- *                 email:
- *                   type: string
- *                   description: The email of the user who was unsubscribed
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     email:
+ *                       type: string
+ *                       description: The email of the user who was unsubscribed
+ *       404:
+ *         description: Reminder or user not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next) => {
   const { code } = req.params;
@@ -188,25 +208,18 @@ router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next)
 
   const reminder = await DailyReminder.findOne({ unsubscribeCode: code });
   if (!reminder) {
-    return res.send({
-      error: true,
-    });
+    throw new NotFoundError();
   }
 
   const user = await User.findOne({ _id: reminder.owner });
   if (!user) {
-    return res.send({
-      error: true,
-    });
+    throw new NotFoundError();
   }
 
   reminder.active = false;
   await reminder.save();
 
-  return res.send({
-    error: false,
-    email: user.email,
-  });
+  return res.json({ data: { email: user.email } } satisfies ApiResponse);
 });
 
 export default router;

@@ -1,8 +1,8 @@
 import express from 'express';
-import status from 'http-status';
-import createError from 'http-errors';
 import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import deleteAccount from '../helpers/deleteAccount';
+import { type ApiResponse } from '../response';
+import { InternalError } from '../errors/internal-error';
 
 const router = express.Router();
 
@@ -42,15 +42,23 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/UserSettings'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/UserSettings'
+ *       401:
+ *         description: Unauthorized - User is not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/settings', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
-    if (!currentUser) {
-      return next(createError(401, 'Unauthorized'));
-    }
-    res.json(currentUser.settings);
+    res.json({ data: currentUser.settings } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -77,6 +85,15 @@ router.get('/settings', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Settings updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/UserSettings'
  */
 router.put('/settings', async (req, res, next) => {
   try {
@@ -94,7 +111,7 @@ router.put('/settings', async (req, res, next) => {
       }
     });
     await currentUser.save();
-    return res.sendStatus(status.OK);
+    return res.json({ data: currentUser.settings } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -112,17 +129,33 @@ router.put('/settings', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Account deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: Number of deleted accounts (1)
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/settings/delete-account', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
     const success = await deleteAccount(currentUser.email);
     if (!success) {
-      return next(createError(500, 'Failed to delete account'));
+      throw new InternalError();
     }
     // clear the auth cookie on account deletion
     res.clearCookie(AUTH_COOKIE_NAME);
-    return res.sendStatus(status.OK);
+    return res.json({ data: 1 } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

@@ -1,52 +1,6 @@
 import mongoose from 'mongoose';
 import crypto from 'node:crypto';
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     DailyReminder:
- *       type: object
- *       required:
- *         - owner
- *         - hour
- *         - minute
- *         - timezoneOffset
- *       properties:
- *         _id:
- *           type: string
- *           description: The auto-generated ID of the reminder
- *         owner:
- *           type: string
- *           description: The ID of the user who owns this reminder
- *         hour:
- *           type: number
- *           description: The hour of the day for the reminder (0-23) in UTC
- *         minute:
- *           type: number
- *           description: The minute of the hour for the reminder (0-59) in UTC
- *         timezoneOffset:
- *           type: number
- *           description: The timezone offset in minutes
- *         active:
- *           type: boolean
- *           description: Whether the reminder is active
- *         unsubscribeCode:
- *           type: string
- *           description: A unique code for unsubscribing from the reminder
- *         nextOccurrence:
- *           type: number
- *           description: The timestamp of the next occurrence of the reminder
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: The date and time when the reminder was created
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           description: The date and time when the reminder was last updated
- */
-
 export const DailyReminderSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,

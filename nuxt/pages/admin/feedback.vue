@@ -71,13 +71,14 @@ export default {
   methods: {
     dayjs,
     async loadFeedbacks() {
-      const response = await fetch('/api/admin/feedback', {
-        credentials: 'include',
-      });
-      if (!response.ok) {
-        throw new Error('Failed to load feedbacks');
+      try {
+        const { data: feedbacks } = await this.$http.get('/api/admin/feedback');
+        this.feedbacks = feedbacks;
       }
-      this.feedbacks = await response.json();
+      catch (err) {
+        console.error('Failed to load feedbacks:', err);
+        this.feedbacks = [];
+      }
     },
     feedbackKindClass(kind) {
       return {

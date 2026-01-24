@@ -1,8 +1,8 @@
 import express from 'express';
-import status from 'http-status';
 import authCurrentUser from '../helpers/authCurrentUser';
-import { I18nError, makeI18nError } from '../helpers/i18n-error';
 import useMongooseModels from '../../mongoose/useMongooseModels';
+import { type ApiResponse } from '../response';
+import rateLimit from '../helpers/rateLimit';
 
 const router = express.Router();
 
@@ -67,19 +67,27 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: Feedback submitted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Feedback'
  *       429:
  *         description: Too many requests
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 errors:
- *                   type: object
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 
 // POST feedback form submission
 router.post('/feedback', async (req, res, next) => {
+  await rateLimit(req, { maxRequests: 5, windowMs: 60 * 1000 });
+
   try {
     // Use IP address to mitigate spam
     const ip = req.ip;
@@ -87,23 +95,6 @@ router.post('/feedback', async (req, res, next) => {
     // Get current user (optional)
     const { Feedback } = await useMongooseModels();
     const currentUser = await authCurrentUser(req, { optional: true });
-
-    // If the user isn't authenticated, get recent feedback from the same
-    // IP address and block the attempt if there are too many
-    if (!currentUser) {
-      const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
-      const recentFeedbackCount = await Feedback
-        .countDocuments({
-          ip,
-          createdAt: { $gt: fiveMinutesAgo },
-        });
-
-      if (recentFeedbackCount >= 5) {
-        return res
-          .status(status.TOO_MANY_REQUESTS)
-          .json({ errors: { _form: makeI18nError(I18nError.TooManyRequests, '_form') } });
-      }
-    }
 
     // If the user is logged in, we can associate the feedback with their account
     const owner = currentUser?._id || null;
@@ -119,7 +110,7 @@ router.post('/feedback', async (req, res, next) => {
     });
 
     await feedback.save();
-    res.sendStatus(status.CREATED);
+    res.status(201).send({ data: feedback.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

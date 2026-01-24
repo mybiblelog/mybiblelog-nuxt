@@ -1,5 +1,6 @@
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
+import mapFormErrors from '~/helpers/map-form-errors';
 
 import {
   OPEN_LOG_ENTRY_EDITOR,
@@ -238,8 +239,14 @@ export const actions = {
     }
     catch (err) {
       const unknownError = { _form: 'An unknown error occurred' };
-      const errors = err.response?.data?.errors || unknownError;
-      commit(SET_LOG_ENTRY_EDITOR_ERRORS, errors);
+      const errorData = err.response?.data?.error;
+      if (errorData) {
+        const errors = mapFormErrors(errorData) || unknownError;
+        commit(SET_LOG_ENTRY_EDITOR_ERRORS, errors);
+      }
+      else {
+        commit(SET_LOG_ENTRY_EDITOR_ERRORS, unknownError);
+      }
       throw err;
     }
   },

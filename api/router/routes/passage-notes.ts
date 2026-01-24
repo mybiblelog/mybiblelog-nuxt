@@ -1,12 +1,14 @@
 import express from 'express';
-import createError from 'http-errors';
 import { ObjectId } from 'mongodb';
 import authCurrentUser from '../helpers/authCurrentUser';
 import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../../mongoose/useMongooseModels';
-
 import { QueryFilter, Types } from 'mongoose';
 import { IPassageNote } from '../../mongoose/schemas/PassageNote';
+import { ApiErrorDetailCode } from '../errors/error-codes';
+import { type ApiResponse } from '../response';
+import { ValidationError } from '../errors/validation-errors';
+import { InvalidRequestError, NotFoundError } from '../errors/http-errors';
 const router = express.Router();
 
 /**
@@ -305,7 +307,35 @@ const validateQuery = (query) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNoteList'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/PassageNote'
+ *                 meta:
+ *                   type: object
+ *                   properties:
+ *                     pagination:
+ *                       type: object
+ *                       properties:
+ *                         offset:
+ *                           type: number
+ *                           description: The offset of the results
+ *                         limit:
+ *                           type: number
+ *                           description: The maximum number of results returned
+ *                         size:
+ *                           type: number
+ *                           description: The total number of results available
+ *       400:
+ *         description: Invalid request parameters
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/passage-notes', async (req, res, next) => {
   try {
@@ -314,7 +344,7 @@ router.get('/passage-notes', async (req, res, next) => {
     const query = validateQuery(req.query);
 
     if (!query) {
-      return res.status(400).send({ error: 'Invalid query parameters' });
+      throw new InvalidRequestError();
     }
 
     const filterQuery: QueryFilter<IPassageNote> = {
@@ -389,13 +419,17 @@ router.get('/passage-notes', async (req, res, next) => {
     const totalResultCount = await PassageNote.countDocuments(filterQuery);
 
     const response = {
-      offset: query.offset,
-      limit: query.limit,
-      size: totalResultCount,
-      results: passageNotes,
+      data: passageNotes,
+      meta: {
+        pagination: {
+          offset: query.offset,
+          limit: query.limit,
+          size: totalResultCount,
+        },
+      },
     };
 
-    return res.send(response);
+    return res.json(response satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -423,15 +457,30 @@ router.get('/passage-notes', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNote'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/PassageNote'
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Passage note not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -439,9 +488,9 @@ router.get('/passage-notes/:id', async (req, res, next) => {
 
     const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
-      return next(createError(404, 'Not Found'));
+      throw new NotFoundError();
     }
-    res.send(passageNote.toJSON());
+    res.json({ data: passageNote.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -485,9 +534,24 @@ router.get('/passage-notes/:id', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNote'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/PassageNote'
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       409:
  *         description: Cannot create note (invalid tags)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/passage-notes', async (req, res, next) => {
   try {
@@ -498,7 +562,7 @@ router.post('/passage-notes', async (req, res, next) => {
     // validate that all tags exist
     const tagsValid = await validateTags(passageNote.tags);
     if (!tagsValid) {
-      return next(createError(409, 'Cannot Create'));
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'tags' }]);
     }
 
     passageNote.owner = new Types.ObjectId(currentUser._id);
@@ -506,11 +570,11 @@ router.post('/passage-notes', async (req, res, next) => {
       await passageNote.validate();
     }
     catch (error) {
-      return next(createError(400, 'Invalid passage note'));
+      throw new ValidationError();
     }
     await passageNote.save();
 
-    res.send(passageNote.toJSON());
+    res.json({ data: passageNote.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -558,17 +622,36 @@ router.post('/passage-notes', async (req, res, next) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PassageNote'
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/PassageNote'
+ *       400:
+ *         description: Invalid ID format or validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Passage note not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       409:
  *         description: Cannot update note (invalid tags)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.put('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -577,7 +660,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
 
     const passageNote = await PassageNote.findOne({ owner: currentUser._id, _id: id });
     if (!passageNote) {
-      return next(createError(404, 'Not Found'));
+      throw new NotFoundError();
     }
 
     if (content) { passageNote.content = content; }
@@ -586,7 +669,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
       // validate that all tags exist
       const tagsValid = await validateTags(tags);
       if (!tagsValid) {
-        return next(createError(409, 'Cannot Update'));
+        throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'tags' }]);
       }
       passageNote.tags = tags;
     }
@@ -594,11 +677,11 @@ router.put('/passage-notes/:id', async (req, res, next) => {
       await passageNote.validate();
     }
     catch (error) {
-      return next(createError(400, 'Invalid passage note'));
+      throw new ValidationError();
     }
     await passageNote.save();
 
-    res.send(passageNote.toJSON());
+    res.json({ data: passageNote.toJSON() } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -623,14 +706,34 @@ router.put('/passage-notes/:id', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Passage note deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: Number of deleted notes (1)
+ *       400:
+ *         description: Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Passage note not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.delete('/passage-notes/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
-      return next(createError(400, 'Invalid ID format'));
+      throw new ValidationError([{ code: ApiErrorDetailCode.NotValid, field: 'id' }]);
     }
 
     const { PassageNote } = await useMongooseModels();
@@ -638,10 +741,10 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
 
     const result = await PassageNote.deleteOne({ owner: currentUser._id, _id: id });
     if (result.deletedCount === 0) {
-      return next(createError(404, 'Not Found'));
+      throw new NotFoundError();
     }
 
-    res.send(result.deletedCount);
+    res.json({ data: result.deletedCount } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -663,9 +766,14 @@ router.delete('/passage-notes/:id', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
- *               additionalProperties:
- *                 type: number
- *               description: Object with Bible book codes as keys and note counts as values
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   additionalProperties:
+ *                     type: number
+ *                   description: Object with Bible book codes as keys and note counts as values
  */
 // GET passage note book counts
 router.get('/passage-notes/count/books', async (req, res, next) => {
@@ -727,7 +835,7 @@ router.get('/passage-notes/count/books', async (req, res, next) => {
       },
     ]);
 
-    res.send(result[0]);
+    res.json({ data: result[0] } satisfies ApiResponse);
   }
   catch (error) {
     next(error);

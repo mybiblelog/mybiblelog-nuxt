@@ -20,11 +20,13 @@ describe('Reminders routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(200);
-    expect(res.body).toHaveProperty('id');
-    expect(res.body).toHaveProperty('hour');
-    expect(res.body).toHaveProperty('minute');
-    expect(res.body).toHaveProperty('timezoneOffset');
-    expect(res.body).toHaveProperty('active');
+    expect(res.body).toHaveProperty('data');
+    expect(res.body).not.toHaveProperty('error');
+    expect(res.body.data).toHaveProperty('id');
+    expect(res.body.data).toHaveProperty('hour');
+    expect(res.body.data).toHaveProperty('minute');
+    expect(res.body.data).toHaveProperty('timezoneOffset');
+    expect(res.body.data).toHaveProperty('active');
   });
 
   test('PUT /api/reminders/daily-reminder (update single property)', async () => {
@@ -38,7 +40,9 @@ describe('Reminders routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(200);
-    expect(res.body.hour).toBe(9);
+    expect(res.body).toHaveProperty('data');
+    expect(res.body).not.toHaveProperty('error');
+    expect(res.body.data.hour).toBe(9);
   });
 
   test('PUT /api/reminders/daily-reminder (update multiple properties)', async () => {
@@ -55,10 +59,12 @@ describe('Reminders routes', () => {
 
     // Assert
     expect(res.statusCode).toBe(200);
-    expect(res.body.hour).toBe(10);
-    expect(res.body.minute).toBe(30);
-    expect(res.body.timezoneOffset).toBe(-420);
-    expect(res.body.active).toBe(true);
+    expect(res.body).toHaveProperty('data');
+    expect(res.body).not.toHaveProperty('error');
+    expect(res.body.data.hour).toBe(10);
+    expect(res.body.data.minute).toBe(30);
+    expect(res.body.data.timezoneOffset).toBe(-420);
+    expect(res.body.data.active).toBe(true);
   });
 });
 

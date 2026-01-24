@@ -1,16 +1,18 @@
 import express from 'express';
-import status from 'http-status';
 import config from '../../config';
 import rateLimit from '../helpers/rateLimit';
 import authCurrentUser, { AUTH_COOKIE_NAME, setAuthTokenCookie } from '../helpers/authCurrentUser';
 import googleOauth2 from '../helpers/google-oauth2';
-import { I18nError, makeI18nError } from '../helpers/i18n-error';
+import { ApiErrorDetailCode } from '../errors/error-codes';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import useEmailService from '../../services/email/email-service';
 import checkTestBypass from '../helpers/checkTestBypass';
 import UserSettings from '../../mongoose/schemas/UserSettings';
 import { isEmailVerified } from '../../mongoose/schemas/User';
 import { LocaleCode } from '@mybiblelog/shared';
+import { type ApiResponse } from '../response';
+import { ValidationError } from '../errors/validation-errors';
+import { InvalidRequestError, UnauthorizedError, NotFoundError } from '../errors/http-errors';
 
 const { requireEmailVerification } = config;
 
@@ -49,21 +51,50 @@ const router = express.Router();
  *       required:
  *         - email
  *       properties:
- *         _id:
- *           type: string
- *           description: The auto-generated ID of the user
+ *         hasLocalAccount:
+ *           type: boolean
+ *           description: Whether the user has a local password account (as opposed to only OAuth)
  *         email:
  *           type: string
- *           description: The user's email
- *         emailVerified:
+ *           description: The user's email address
+ *         isAdmin:
  *           type: boolean
- *           description: Whether the user's email has been verified
- *         token:
+ *           description: Whether the user has admin privileges
+ *     ApiErrorDetail:
+ *       type: object
+ *       properties:
+ *         field:
  *           type: string
- *           description: JWT token for authentication
- *         settings:
+ *           nullable: true
+ *           description: Field name for field-level errors, or null for top-level errors
+ *         code:
+ *           type: string
+ *           description: Machine-readable i18n-friendly error code
+ *         properties:
  *           type: object
- *           description: User settings
+ *           additionalProperties: true
+ *           description: Optional metadata for the error
+ *     ApiError:
+ *       type: object
+ *       required:
+ *         - code
+ *       properties:
+ *         code:
+ *           type: string
+ *           description: Top-level error code
+ *           enum: [validation_error, invalid_request, unauthenticated, unauthorized, not_found, too_many_requests, internal_server_error]
+ *         errors:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/ApiErrorDetail'
+ *           description: Optional array of field errors
+ *     ApiErrorResponse:
+ *       type: object
+ *       required:
+ *         - error
+ *       properties:
+ *         error:
+ *           $ref: '#/components/schemas/ApiError'
  */
 
 /**
@@ -81,15 +112,22 @@ const router = express.Router();
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 user:
- *                   $ref: '#/components/schemas/User'
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     user:
+ *                       $ref: '#/components/schemas/User'
+ *                       nullable: true
+ *                       description: User object if authenticated, null otherwise
  */
 router.get('/auth/user', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req, { optional: true });
-    if (!currentUser) { return res.json({ user: null }); }
-    return res.json({ user: currentUser.toAuthJSON() });
+    if (!currentUser) { return res.json({ data: { user: null } } satisfies ApiResponse); }
+    return res.json({ data: { user: currentUser.toAuthJSON() } } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -140,21 +178,23 @@ router.get('/auth/user', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
- *                 user:
- *                   $ref: '#/components/schemas/User'
- *       401:
- *         description: Invalid credentials
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
+ *                     user:
+ *                       $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid credentials or validation error
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 errors:
- *                   type: object
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/login', async (req, res, next) => {
   // Rate limiting for login attempts
@@ -166,36 +206,38 @@ router.post('/auth/login', async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email) {
-    return res.status(422).json({ errors: { email: makeI18nError(I18nError.Required, 'email') } });
+    throw new ValidationError([{ code: ApiErrorDetailCode.Required, field: 'email' }]);
   }
 
   if (!password) {
-    return res.status(422).json({ errors: { password: makeI18nError(I18nError.Required, 'password') } });
+    throw new ValidationError([{ code: ApiErrorDetailCode.Required, field: 'password' }]);
   }
 
   const { User } = await useMongooseModels();
   const user = await User.findOne({ email });
   if (!user) {
     // definitely invalid email, but not giving that away
-    return res.status(422).json({ errors: { _form: makeI18nError(I18nError.InvalidLogin, '_form') } });
+    throw new UnauthorizedError([{ code: ApiErrorDetailCode.InvalidLogin, field: null }]);
   }
 
   const passwordValid = await user.authenticate(password);
   if (!passwordValid) {
     // definitely invalid password, but not giving that away
-    return res.status(422).json({ errors: { _form: makeI18nError(I18nError.InvalidLogin, '_form') } });
+    throw new UnauthorizedError([{ code: ApiErrorDetailCode.InvalidLogin, field: null }]);
   }
   const bypass = checkTestBypass(req);
   if (requireEmailVerification && !isEmailVerified(user) && !bypass) {
-    return res.status(422).json({ errors: { _form: makeI18nError(I18nError.VerifyEmail, '_form', { email: user.email }) } });
+    throw new UnauthorizedError([{ code: ApiErrorDetailCode.VerifyEmail, field: null, properties: { email: user.email } }]);
   }
   const userData = user.toAuthJSON();
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
   return res.json({
-    token,
-    user: userData,
-  });
+    data: {
+      token,
+      user: userData,
+    },
+  } satisfies ApiResponse);
 });
 
 /**
@@ -222,12 +264,22 @@ router.post('/auth/login', async (req, res, next) => {
  *             schema:
  *               type: string
  *               example: auth_token=; HttpOnly; Secure; Max-Age=0
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: boolean
+ *                   description: Success indicator (true)
  */
 router.post('/auth/logout', async (req, res, next) => {
   try {
     await authCurrentUser(req);
     res.clearCookie(AUTH_COOKIE_NAME);
-    return res.json(true);
+    return res.json({ data: true } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -271,22 +323,21 @@ router.post('/auth/logout', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 success:
- *                   type: string
- *                   description: Success message
- *                 emailVerificationCode:
- *                   type: string
- *                   description: Email verification code (only returned when test bypass header is present)
- *       422:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     success:
+ *                       type: boolean
+ *                       description: Success indicator (true)
+ *       400:
  *         description: Validation error (e.g., email already in use, invalid email format)
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 errors:
- *                   type: object
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/register', async (req, res, next) => {
   // If the request is coming from a test, bypass restrictions
@@ -322,13 +373,17 @@ router.post('/auth/register', async (req, res, next) => {
 
     await user.save();
 
-    res.json({ success: true });
+    res.json({ data: { success: true } } satisfies ApiResponse);
 
     // Send a verification email
     const emailService = await useEmailService();
     emailService.sendUserEmailVerification(email, user.emailVerificationCode, locale);
   }
   catch (err) {
+    // Specifically handle the case where the email is already in use
+    if (err.name === 'ValidationError' && err.errors.email && err.errors.email.kind === 'unique') {
+      throw new ValidationError([{ code: ApiErrorDetailCode.EmailInUse, field: 'email' }]);
+    }
     next(err);
   }
 });
@@ -358,14 +413,22 @@ router.post('/auth/register', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 url:
- *                   type: string
- *                   description: URL to redirect the user to for Google authentication
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     url:
+ *                       type: string
+ *                       description: URL to redirect the user to for Google authentication
+ *                     state:
+ *                       type: string
+ *                       description: State parameter for CSRF protection
  */
 router.get('/auth/oauth2/google/url', (req, res, next) => {
   const { url, state } = googleOauth2.getGoogleLoginUrl();
-  res.send({ url, state });
+  res.json({ data: { url, state } } satisfies ApiResponse);
 });
 
 /**
@@ -407,24 +470,31 @@ router.get('/auth/oauth2/google/url', (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
- *                 user:
- *                   $ref: '#/components/schemas/User'
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
  *       400:
- *         description: Invalid code or OAuth2 error
+ *         description: Invalid code, OAuth2 error, or validation error (e.g., email not verified)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/auth/oauth2/google/verify', async (req, res, next) => {
+  await rateLimit(req, { maxRequests: 10, windowMs: 60 * 1000 }); // 10 attempts per minute
+
   try {
     const { code, state, locale } = req.query;
 
     // Verify state parameter to prevent CSRF attacks
     if (!state || !googleOauth2.verifyState(state)) {
-      return res.status(400).json({
-        errors: { _form: makeI18nError(I18nError.InvalidRequest, '_form') },
-      });
+      throw new InvalidRequestError();
     }
 
     const { User } = await useMongooseModels();
@@ -440,9 +510,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
 
     // Only accept verified Google emails
     if (verified_email !== true) {
-      return res.status(400).json({
-        errors: { _form: makeI18nError(I18nError.EmailNotVerified, '_form') },
-      });
+      throw new ValidationError([{ code: ApiErrorDetailCode.EmailNotVerified, field: null }]);
     }
 
     const existingUser = await User.findOne({ email });
@@ -455,7 +523,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
 
       const token = existingUser.generateJWT();
       setAuthTokenCookie(res, token);
-      return res.send({ token });
+      return res.json({ data: { token } } satisfies ApiResponse);
     }
 
     // Create new user account
@@ -471,7 +539,7 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
     await user.save();
     const token = user.generateJWT();
     setAuthTokenCookie(res, token);
-    res.send({ token });
+    res.json({ data: { token } } satisfies ApiResponse);
   }
   catch (err) {
     next(err);
@@ -510,27 +578,46 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
+ *       400:
+ *         description: Verification code expired
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Verification code not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
+  // Rate limiting for email verification
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 20, windowMs: 60 * 60 * 1000 }); // 20 attempts per hour
+  }
+
   const { emailVerificationCode } = req.params;
   // Find the user (if not found, error)
   const { User } = await useMongooseModels();
   const user = await User.findOne({ emailVerificationCode });
   if (!user) {
-    return res.sendStatus(404);
+    throw new NotFoundError();
   }
 
   // Verify the code and check expiration
   if (!user.verifyEmailVerificationCode(emailVerificationCode)) {
-    return res.status(400).json({
-      errors: { _form: makeI18nError(I18nError.VerificationCodeExpired, '_form') },
-    });
+    throw new ValidationError([{ code: ApiErrorDetailCode.VerificationCodeExpired, field: null }]);
   }
 
   // Mark the user's email as verified by setting the verification code to null
@@ -541,13 +628,13 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ token });
+  res.json({ data: { token } } satisfies ApiResponse);
 });
 
 /**
  * @swagger
  * /auth/change-password:
- *   post:
+ *   put:
  *     summary: Change user password
  *     tags: [Authentication]
  *     security:
@@ -569,10 +656,30 @@ router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
  *     responses:
  *       200:
  *         description: Password changed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: number
+ *                   description: HTTP status code (200)
  *       400:
  *         description: Current password is incorrect
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
-router.post('/auth/change-password', async (req, res, next) => {
+router.put('/auth/change-password', async (req, res, next) => {
+  // Rate limiting for password change attempts
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 10, windowMs: 60 * 60 * 1000 }); // 10 attempts per hour
+  }
+
   try {
     const currentUser = await authCurrentUser(req);
     const { currentPassword, newPassword } = req.body;
@@ -580,25 +687,23 @@ router.post('/auth/change-password', async (req, res, next) => {
     // If the user's password is invalid, throw error
     const passwordValid = await currentUser.authenticate(currentPassword);
     if (!passwordValid) {
-      return res.status(status.BAD_REQUEST).send({
-        errors: {
-          currentPassword: makeI18nError(I18nError.PasswordIncorrect, 'currentPassword'),
-        },
-      });
+      throw new ValidationError([{ code: ApiErrorDetailCode.PasswordIncorrect, field: 'currentPassword' }]);
     }
 
     // Set new password
     currentUser.password = newPassword;
     try {
       await currentUser.save();
-      res.send(status.OK);
+      res.json({ data: { success: true } } satisfies ApiResponse);
     }
     catch (err) {
       // Any 'password' validation errors should be seen on the 'newPassword' field
-      if (err.name === 'ValidationError' && err.errors.password) {
-        err.errors.newPassword = err.errors.password;
+      // The 'password' errors come from Mongoose validation of a new password,
+      // but the input field is 'newPassword'
+      if (err instanceof ValidationError) {
+        throw new ValidationError(err.details?.map(detail => ({ ...detail, field: detail.field === 'password' ? 'newPassword' : detail.field })));
       }
-      return next(err);
+      throw err;
     }
   }
   catch (error) {
@@ -631,12 +736,32 @@ router.post('/auth/change-password', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Email change process initiated successfully
- *       422:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     success:
+ *                       type: boolean
+ *                       description: Success indicator (true)
+ *       400:
  *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/change-email', async (req, res, next) => {
   // If the request is coming from a test, bypass restrictions
   const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 5, windowMs: 60 * 60 * 1000 }); // 5 attempts per hour
+  }
 
   try {
     const { User } = await useMongooseModels();
@@ -645,19 +770,19 @@ router.post('/auth/change-email', async (req, res, next) => {
 
     // disallow newEmail to be current email
     if (newEmail === currentUser.email) {
-      return res.status(422).json({ errors: { newEmail: makeI18nError(I18nError.NewEmailRequired, 'newEmail') } });
+      throw new ValidationError([{ code: ApiErrorDetailCode.NewEmailRequired, field: 'newEmail' }]);
     }
 
     // disallow newEmail to be an email currently in use by another user
     const existingUserWithEmail = await User.findOne({ email: newEmail });
     if (existingUserWithEmail) {
-      return res.status(422).json({ errors: { newEmail: makeI18nError(I18nError.EmailInUse, 'newEmail') } });
+      throw new ValidationError([{ code: ApiErrorDetailCode.EmailInUse, field: 'newEmail' }]);
     }
 
     // confirm password
     const passwordValid = await currentUser.authenticate(password);
     if (!passwordValid) {
-      return res.status(422).json({ errors: { password: makeI18nError(I18nError.PasswordIncorrect, 'password') } });
+      throw new ValidationError([{ code: ApiErrorDetailCode.PasswordIncorrect, field: 'password' }]);
     }
 
     // have the new email confirmation expire in 1 hour
@@ -665,11 +790,11 @@ router.post('/auth/change-email', async (req, res, next) => {
     await currentUser.save();
 
     // send success response
-    const response: { success: boolean; newEmailVerificationCode?: string } = { success: true };
+    const responseData: { success: boolean; newEmailVerificationCode?: string } = { success: true };
     if (authBypass && currentUser.newEmailVerificationCode) {
-      response.newEmailVerificationCode = currentUser.newEmailVerificationCode;
+      responseData.newEmailVerificationCode = currentUser.newEmailVerificationCode;
     }
-    res.send(response);
+    res.json({ data: responseData } satisfies ApiResponse);
 
     // send an email update confirmation code
     const emailService = await useEmailService();
@@ -695,28 +820,41 @@ router.post('/auth/change-email', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 newEmail:
- *                   type: string
- *                 expires:
- *                   type: string
- *                   format: date-time
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     newEmail:
+ *                       type: string
+ *                       nullable: true
+ *                       description: The new email address, or null if no change is pending
+ *                     expires:
+ *                       type: string
+ *                       format: date-time
+ *                       nullable: true
+ *                       description: Expiration date of the email change request, or null if no change is pending
  */
 router.get('/auth/change-email', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
 
     if (currentUser.newEmail) {
-      return res.send({
-        newEmail: currentUser.newEmail,
-        expires: currentUser.newEmailVerificationExpires,
-      });
+      return res.json({
+        data: {
+          newEmail: currentUser.newEmail,
+          expires: currentUser.newEmailVerificationExpires,
+        },
+      } satisfies ApiResponse);
     }
 
-    return res.send({
-      newEmail: null,
-      expires: null,
-    });
+    return res.json({
+      data: {
+        newEmail: null,
+        expires: null,
+      },
+    } satisfies ApiResponse);
   }
   catch (error) {
     next(error);
@@ -738,23 +876,46 @@ router.get('/auth/change-email', async (req, res, next) => {
  *         description: The new email verification code
  *     responses:
  *       200:
- *         description: Email change request found
- *       404:
- *         description: Email change request not found
+ *         description: Email change request found or not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   nullable: true
+ *                   properties:
+ *                     newEmail:
+ *                       type: string
+ *                     expires:
+ *                       type: string
+ *                       format: date-time
+ *                   description: Email change request data if found, null otherwise
  */
 router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next) => {
+  // Rate limiting to prevent enumeration of email change verification codes
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 20, windowMs: 60 * 60 * 1000 }); // 20 attempts per hour
+  }
+
   const { newEmailVerificationCode } = req.params;
   const { User } = await useMongooseModels();
   const user = await User.findOne({ newEmailVerificationCode });
 
   if (user) {
-    return res.send({
-      newEmail: user.newEmail,
-      expires: user.newEmailVerificationExpires,
-    });
+    return res.json({
+      data: {
+        newEmail: user.newEmail,
+        expires: user.newEmailVerificationExpires,
+      },
+    } satisfies ApiResponse);
   }
 
-  return res.send(null);
+  return res.json({ data: null } satisfies ApiResponse);
 });
 
 /**
@@ -771,7 +932,13 @@ router.get('/auth/change-email/:newEmailVerificationCode', async (req, res, next
  *         content:
  *           application/json:
  *             schema:
- *               type: boolean
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: boolean
+ *                   description: True if cancellation was successful, false if no change was pending
  */
 router.delete('/auth/change-email', async (req, res, next) => {
   try {
@@ -780,14 +947,14 @@ router.delete('/auth/change-email', async (req, res, next) => {
     if (currentUser.newEmail) {
       currentUser.disableEmailUpdate();
       await currentUser.save();
-      return res.send(true);
+      return res.json({ data: true } satisfies ApiResponse);
     }
 
-    return res.send(false);
+    return res.json({ data: false } satisfies ApiResponse);
   }
   catch (err) {
     console.log(err);
-    return res.send(false);
+    return res.json({ data: false } satisfies ApiResponse);
   }
 });
 
@@ -822,29 +989,46 @@ router.delete('/auth/change-email', async (req, res, next) => {
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
+ *       400:
+ *         description: Verification code expired or email already in use
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  *       404:
  *         description: Email verification code not found
- *       422:
- *         description: Email already in use
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, next) => {
+  // Rate limiting for email change completion
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 5, windowMs: 60 * 60 * 1000 }); // 5 attempts per hour
+  }
+
   const { newEmailVerificationCode } = req.params;
   // Find the user (if not found, error)
   const { User } = await useMongooseModels();
   const user = await User.findOne({ newEmailVerificationCode });
   if (!user) {
-    return res.sendStatus(404);
+    throw new NotFoundError();
   }
 
   // Verify the code and check expiration
   if (!user.verifyNewEmailVerificationCode(newEmailVerificationCode)) {
-    return res.status(400).json({
-      error: makeI18nError(I18nError.VerificationCodeExpired),
-    });
+    throw new ValidationError([{ code: ApiErrorDetailCode.VerificationCodeExpired, field: null }]);
   }
 
   const { newEmail } = user;
@@ -856,7 +1040,7 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   // happened to request to change their email to that address first.
   const existingUserWithEmail = await User.findOne({ email: newEmail });
   if (existingUserWithEmail) {
-    return res.status(422).json({ error: makeI18nError(I18nError.EmailInUse) });
+    throw new ValidationError([{ code: ApiErrorDetailCode.EmailInUse, field: null }]);
   }
 
   // Keep track of the user's current (now old) email address.
@@ -871,7 +1055,7 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ token });
+  res.json({ data: { token } } satisfies ApiResponse);
 });
 
 /**
@@ -894,8 +1078,25 @@ router.post('/auth/change-email/:newEmailVerificationCode', async (req, res, nex
  *     responses:
  *       200:
  *         description: Password reset process initiated successfully
- *       422:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     success:
+ *                       type: boolean
+ *                       description: Success indicator (true)
+ *       400:
  *         description: Account not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/reset-password', async (req, res) => {
   // Rate limiting for password reset requests
@@ -908,18 +1109,18 @@ router.post('/auth/reset-password', async (req, res) => {
   const { User } = await useMongooseModels();
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(422).json({ errors: { email: makeI18nError(I18nError.AccountNotFound, 'email') } });
+    throw new NotFoundError([{ code: ApiErrorDetailCode.AccountNotFound, field: 'email' }]);
   }
   // have the password reset expire in 1 hour
   user.enablePasswordReset();
   await user.save();
 
   // send success response, but don't `return` here so the email can be sent
-  const response: { success: boolean; passwordResetCode?: string } = { success: true };
+  const responseData: { success: boolean; passwordResetCode?: string } = { success: true };
   if (authBypass && user.passwordResetCode) {
-    response.passwordResetCode = user.passwordResetCode;
+    responseData.passwordResetCode = user.passwordResetCode;
   }
-  res.send(response);
+  res.json({ data: responseData } satisfies ApiResponse);
 
   // send password reset code via email
   const emailService = await useEmailService();
@@ -945,19 +1146,34 @@ router.post('/auth/reset-password', async (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               type: boolean
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     valid:
+ *                       type: boolean
+ *                       description: Whether the password reset code is valid
  */
 router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, next) => {
+  // Rate limiting to prevent enumeration of password reset codes
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 20, windowMs: 60 * 60 * 1000 }); // 20 attempts per hour
+  }
+
   const { passwordResetCode } = req.params;
 
   // Look for the user to determine if reset code is valid
   const { User } = await useMongooseModels();
   const user = await User.findOne({ passwordResetCode });
   if (user) {
-    return res.json({ valid: true });
+    return res.json({ data: { valid: true } } satisfies ApiResponse);
   }
   else {
-    return res.json({ valid: false });
+    return res.json({ data: { valid: false } } satisfies ApiResponse);
   }
 });
 
@@ -1003,16 +1219,29 @@ router.get('/auth/reset-password/:passwordResetCode/valid', async (req, res, nex
  *           application/json:
  *             schema:
  *               type: object
+ *               required:
+ *                 - data
  *               properties:
- *                 token:
- *                   type: string
- *                   description: Token for authentication
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       description: Token for authentication
  *       400:
- *         description: Password reset link expired
- *       400:
- *         description: Password reset link not valid
+ *         description: Password reset link expired or not valid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
  */
 router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) => {
+  // Rate limiting for password reset completion
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 5, windowMs: 60 * 60 * 1000 }); // 5 attempts per hour
+  }
+
   const { passwordResetCode } = req.params;
   const { newPassword } = req.body;
 
@@ -1020,16 +1249,12 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   const { User } = await useMongooseModels();
   const user = await User.findOne({ passwordResetCode });
   if (!user) {
-    return res.status(status.BAD_REQUEST).send({
-      errors: { _form: makeI18nError(I18nError.InvalidRequest, '_form') },
-    });
+    throw new NotFoundError();
   }
 
   // Ensure the password reset is not expired
   if (!user.verifyPasswordResetCode(passwordResetCode)) {
-    return res.status(status.BAD_REQUEST).send({
-      errors: { _form: makeI18nError(I18nError.PasswordResetLinkExpired, '_form') },
-    });
+    throw new ValidationError([{ code: ApiErrorDetailCode.PasswordResetLinkExpired, field: null }]);
   }
 
   // Set new password and disable the password reset link
@@ -1039,16 +1264,15 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
     await user.save();
   }
   catch (err) {
-    // Any 'password' validation errors should be seen on the 'newPassword' field
-    if (err.name === 'ValidationError' && err.errors.password) {
-      err.errors.newPassword = err.errors.password;
+    if (err instanceof ValidationError) {
+      throw new ValidationError(err.details?.map(detail => ({ ...detail, field: detail.field === 'password' ? 'newPassword' : detail.field })));
     }
-    return next(err);
+    throw err;
   }
   // Send a JWT back for auto-login
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
-  res.json({ token });
+  res.json({ data: { token } } satisfies ApiResponse);
 });
 
 export default router;
