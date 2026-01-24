@@ -1,7 +1,7 @@
 // import nodemailer from "nodemailer";
 // import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 // import config from "../../../config";
-// import { SendMail } from "../sender";
+// import { SendMail } from "../email-types";
 
 // const accessKeyId = config.aws.accessKeyId;
 // const secretAccessKey = config.aws.secretAccessKey;

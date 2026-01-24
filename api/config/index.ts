@@ -25,6 +25,7 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(10, 'JWT_SECRET must be at least 10 characters long'),
   REQUIRE_EMAIL_VERIFICATION: booleanStringDefaultingToTrue,
   EMAIL_SENDING_DOMAIN: z.string(),
+  EMAIL_UNSUBSCRIBE_ADDRESS: z.email(),
   RESEND_API_KEY: z.string(),
   MONGODB_URI: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
@@ -47,6 +48,7 @@ const config = {
   jwtSecret: result.data.NODE_ENV === 'production' ? result.data.JWT_SECRET : 'secret',
   requireEmailVerification: result.data.REQUIRE_EMAIL_VERIFICATION !== false,
   emailSendingDomain: result.data.EMAIL_SENDING_DOMAIN,
+  emailUnsubscribeAddress: result.data.EMAIL_UNSUBSCRIBE_ADDRESS,
   resendApiKey: result.data.RESEND_API_KEY,
   mongo: {
     uri: result.data.MONGODB_URI,

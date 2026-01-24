@@ -1,14 +1,17 @@
 import { Resend } from 'resend';
-import { SendMail } from '../sender';
+import { SendMail } from '../email-types';
 import config from '../../../config';
 
 const resend = new Resend(config.resendApiKey);
 
-const sendEmail: SendMail = async ({ from, to, subject, attachments = [], ...rest }) => {
+const sendEmail: SendMail = async ({ from, to, replyTo, subject, headers = {}, attachments = [], ...rest }) => {
   const { data, error } = await resend.emails.send({
     from,
     to,
+    replyTo,
     subject,
+    headers,
+    attachments,
     ...rest,
   });
 
@@ -16,7 +19,7 @@ const sendEmail: SendMail = async ({ from, to, subject, attachments = [], ...res
     throw error;
   }
 
-  return true;
+  return data;
 };
 
 export default sendEmail;

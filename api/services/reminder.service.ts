@@ -89,6 +89,14 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
     const settingsLink = `${getLocaleBaseUrl(locale)}/settings/reminder`;
     const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.unsubscribeCode}`;
 
+    // Build an unsubscribe email address that includes the unsubscribe code
+    // This can be send to a Cloudflare email worker to unsubscribe the user
+    let unsubscribeEmail = '';
+    if (config.emailUnsubscribeAddress) {
+      const [address, domain] = config.emailUnsubscribeAddress.split('@');
+      unsubscribeEmail = `${address}+${reminder.unsubscribeCode}@${domain}`;
+    }
+
     // Load brand logo asset
     const brandLogoAssetPath = path.resolve(__dirname, 'email', 'assets', 'brand.png');
 
@@ -101,15 +109,28 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
       locale,
     });
 
+    let listUnsubscribeHeader = '';
+    if (unsubscribeEmail) {
+      listUnsubscribeHeader = `<mailto:${unsubscribeEmail}>, <${unsubscribeLink}>`;
+    }
+    else {
+      listUnsubscribeHeader = `<${unsubscribeLink}>`;
+    }
+
     return {
-      from: `noreply@${config.emailSendingDomain}`,
+      from: `My Bible Log <team@${config.emailSendingDomain}>`,
       to: user.email,
+      headers: {
+        // RFC 2369 compliant List-Unsubscribe header
+        "List-Unsubscribe": listUnsubscribeHeader,
+        "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+      },
       subject,
       html,
       attachments: [{
         filename: 'brand.png',
-        content: fs.createReadStream(brandLogoAssetPath),
-        cid: 'logo@mybiblelog',
+        content: fs.readFileSync(brandLogoAssetPath),
+        contentId: 'logo@mybiblelog',
       }],
     };
   };

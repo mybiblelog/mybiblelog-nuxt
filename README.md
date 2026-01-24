@@ -64,6 +64,10 @@ REQUIRE_EMAIL_VERIFICATION=xxxxxxxxxx
 # Custom "FROM" domain for email sending
 EMAIL_SENDING_DOMAIN=xxxxxxxxxx
 
+# Email address to receive your unsubscribe links
+# See reminder.service.ts for usage
+EMAIL_UNSUBSCRIBE_ADDRESS=xxxxx@xxxxx.xxxxx
+
 # Resend API key - only needed if developing/using email features
 # (pre-login email verification, reminder emails, password reset)
 RESEND_API_KEY=xxxxxxxxxx

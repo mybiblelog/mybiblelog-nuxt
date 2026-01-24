@@ -1,18 +1,19 @@
-
 import useMongooseModels from "../../mongoose/useMongooseModels";
 import { LocaleCode } from "@mybiblelog/shared";
 import renderEmailVerification from "./email-templates/email-verification";
 import renderPasswordResetLink from "./email-templates/password-reset-link";
 import renderEmailUpdate from "./email-templates/email-update";
 
-import { SendEmailParams } from "./sender";
-import sendEmail from './email-senders/resend';
+import { QueueEmailParams, SendEmailParams } from "./email-types";
+import sendEmail from "./email-senders/resend";
+import { createQueue } from "./email-queue";
 import config from "../../config";
 
-const domain = config.emailSendingDomain;
+const defaultFromEmailAddress = `My Bible Log <team@${config.emailSendingDomain}>`;
+const defaultReplyToEmailAddress = `My Bible Log <team@${config.emailSendingDomain}>`;
 
 export type EmailService = {
-  send: (params: SendEmailParams) => Promise<boolean>;
+  send: (params: QueueEmailParams) => void;
   sendUserEmailVerification: (email: string, emailVerificationCode: string, locale: LocaleCode) => Promise<void>;
   sendUserPasswordResetLink: (email: string, passwordResetLink: string, locale: LocaleCode) => Promise<void>;
   sendEmailUpdateLink: (currentEmail: string, newEmail: string, newEmailVerificationCode: string, locale: LocaleCode) => Promise<void>;
@@ -21,26 +22,42 @@ export type EmailService = {
 const init = async () => {
   const { Email } = await useMongooseModels();
 
-  const send = async ({ from, to, subject, attachments = [], ...rest }: SendEmailParams) => {
-    from = from || `My Bible Log <noreply@${domain}>`;
-    let success = false;
+  const sendFn = async (params: SendEmailParams): Promise<void> => {
+    let status = 'pending';
 
     // only send email in production
-    if (config.nodeEnv === 'production') {
-      success = await sendEmail({ from, to, subject, attachments, ...rest });
+    if (config.nodeEnv === "production") {
+      try {
+        await sendEmail(params);
+        status = 'sent';
+      }
+      catch (error) {
+        status = 'failed';
+        console.error('Email failed:', error);
+      }
+    } else {
+      status = 'log_only';
     }
 
     // record email, but do not block with `await`
-    Email.create({ from, to, subject, ...rest, success });
+    const { attachments, ...forRecord } = params;
+    Email.create({ ...forRecord, status });
+  };
 
-    return success;
+  const { enqueue } = createQueue<SendEmailParams>(sendFn);
+
+  const queueEmail = (params: QueueEmailParams): void => {
+    const from = params.from || defaultFromEmailAddress;
+    const replyTo = params.replyTo || defaultReplyToEmailAddress;
+    const normalized: SendEmailParams = { ...params, from, replyTo };
+    enqueue(normalized);
   };
 
   const sendUserEmailVerification = async (email, emailVerificationCode, locale: LocaleCode = 'en') => {
     const { subject, html } = renderEmailVerification({ locale, emailVerificationCode });
 
-    await send({
-      from: `noreply@${domain}`,
+    await queueEmail({
+      from: defaultFromEmailAddress,
       to: email,
       subject,
       html,
@@ -50,8 +67,8 @@ const init = async () => {
   const sendUserPasswordResetLink = async (email, passwordResetLink, locale: LocaleCode = 'en') => {
     const { subject, html } = renderPasswordResetLink({ locale, passwordResetLink });
 
-    await send({
-      from: `noreply@${domain}`,
+    await queueEmail({
+      from: defaultFromEmailAddress,
       to: email,
       subject,
       html,
@@ -61,8 +78,8 @@ const init = async () => {
   const sendEmailUpdateLink = async (currentEmail, newEmail, newEmailVerificationCode, locale: LocaleCode = 'en') => {
     const { subject, html } = renderEmailUpdate({ locale, currentEmail, newEmail, newEmailVerificationCode });
 
-    await send({
-      from: `noreply@${domain}`,
+    await queueEmail({
+      from: defaultFromEmailAddress,
       to: newEmail,
       subject,
       html,
@@ -71,7 +88,7 @@ const init = async () => {
   };
 
   return {
-    send,
+    send: queueEmail,
     sendUserEmailVerification,
     sendUserPasswordResetLink,
     sendEmailUpdateLink,

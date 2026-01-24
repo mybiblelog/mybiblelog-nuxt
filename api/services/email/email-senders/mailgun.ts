@@ -5,7 +5,7 @@
 // const apiKey = config.mailgun.apiKey;
 // const domain = config.emailSendingDomain;
 
-// import { SendMail } from '../sender';
+// import { SendMail } from '../email-types';
 
 // const mailgun = new Mailgun(formData);
 // const client = mailgun.client({
