@@ -17,7 +17,7 @@ export function createQueue<T>(sendFn: (job: T) => Promise<void>): { enqueue: (j
 
       try {
         await sendFn(job);
-        console.log('Email sent successfully');
+        console.log('Email queued successfully');
       } catch (err) {
         if (err.statusCode === 429) {
           console.warn('Email provider throttled — retrying in 2s');
