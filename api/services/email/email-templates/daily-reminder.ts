@@ -1,3 +1,5 @@
+import { LocaleCode } from "@shared/dist/i18n";
+
 const translations = {
   de: {
     my_bible_log: 'My Bible Log',
@@ -5,6 +7,7 @@ const translations = {
     you_can_update_preferences: settingsLink => `Sie können Ihre Erinnerungseinstellungen <a href="${settingsLink}">hier</a> aktualisieren.`,
     open_my_bible_log: 'My Bible Log öffnen',
     most_recent_log_entries: 'Letzte Einträge im Journal',
+    no_log_entries_found: 'Keine Einträge im Journal gefunden. Zeit, loszulegen!',
     date: 'Datum',
     passage: 'Passage',
     unsubscribe: 'Abonnement abbestellen',
@@ -15,6 +18,7 @@ const translations = {
     you_can_update_preferences: settingsLink => `You can update your reminder preferences <a href="${settingsLink}">here</a>.`,
     open_my_bible_log: 'Open My Bible Log',
     most_recent_log_entries: 'Most Recent Log Entries',
+    no_log_entries_found: 'No log entries found. Time to start reading!',
     date: 'Date',
     passage: 'Passage',
     unsubscribe: 'Unsubscribe',
@@ -25,6 +29,7 @@ const translations = {
     you_can_update_preferences: settingsLink => `Puedes actualizar tus preferencias de recordatorio <a href="${settingsLink}">aquí</a>.`,
     open_my_bible_log: 'Abrir My Bible Log',
     most_recent_log_entries: 'Entradas más recientes del registro',
+    no_log_entries_found: 'No se encontraron entradas en el registro. ¡Tiempo de empezar a leer!',
     date: 'Fecha',
     passage: 'Pasaje',
     unsubscribe: 'Cancelar suscripción',
@@ -35,6 +40,7 @@ const translations = {
     you_can_update_preferences: settingsLink => `Vous pouvez modifier vos préférences de rappel <a href="${settingsLink}">ici</a>.`,
     open_my_bible_log: 'Ouvrir My Bible Log',
     most_recent_log_entries: 'Dernières entrées du journal',
+    no_log_entries_found: 'Aucune entrée trouvée dans le journal. Il est temps de commencer à lire!',
     date: 'Date',
     passage: 'Passage',
     unsubscribe: 'Se désabonner',
@@ -45,6 +51,7 @@ const translations = {
     you_can_update_preferences: settingsLink => `Você pode atualizar suas preferências de lembrete <a href="${settingsLink}">aqui</a>.`,
     open_my_bible_log: 'Abrir My Bible Log',
     most_recent_log_entries: 'Entradas mais recentes do registro',
+    no_log_entries_found: 'Nenhuma entrada encontrada no registro. É hora de começar a ler!',
     date: 'Data',
     passage: 'Passagem',
     unsubscribe: 'Cancelar inscrição',
@@ -55,6 +62,7 @@ const translations = {
     you_can_update_preferences: settingsLink => `Ви можете змінити налаштування нагадувань <a href="${settingsLink}">тут</a>.`,
     open_my_bible_log: 'Відкрити My Bible Log',
     most_recent_log_entries: 'Останні записи в журналі',
+    no_log_entries_found: 'Немає записів в журналі. Час почати читати!',
     date: 'Дата',
     passage: 'Пасаж',
     unsubscribe: 'Відписатися',
@@ -146,7 +154,7 @@ const renderBody = ({
           <td class="gray" width="*"></td>
           <td class="title-box content-area" width="500px">
             <h1></h1>
-              <img class="brand" alt="" src="cid:brand.png" width="50" height="50">
+              <img class="brand" alt="" src="cid:logo@mybiblelog" width="50" height="50">
               ${t.my_bible_log}
             </h1>
           </td>
@@ -174,12 +182,16 @@ const renderBody = ({
                   </tr>
                 </thead>
                 <tbody>
-                  ${recentLogEntries.map(logEntry => (`
-                    <tr>
-                      <td>${logEntry.displayDate}</td>
-                      <td>${logEntry.passage}</td>
-                    </tr>
-                  `)).join('')}
+                  ${recentLogEntries.length > 0 ? (
+                    recentLogEntries.map(logEntry => (`
+                      <tr>
+                        <td>${logEntry.displayDate}</td>
+                        <td>${logEntry.passage}</td>
+                      </tr>
+                    `)).join('')
+                  ) : (
+                    `<tr><td colspan="2">${t.no_log_entries_found}</td></tr>`
+                  )}
                 </tbody>
               </table>
             </p>
@@ -200,23 +212,51 @@ const renderBody = ({
   </body>`
 );
 
+type RenderDailyReminderEmailParams = {
+  siteLink: string;
+  settingsLink: string;
+  unsubscribeLink: string;
+  recentLogEntries: any[];
+  emailDate: Date;
+  locale: LocaleCode;
+};
+
 const render = ({
   siteLink,
   settingsLink,
   unsubscribeLink,
   recentLogEntries,
+  emailDate,
   locale,
-}) => (
-  `<html>
-  ${renderHead()}
-  ${renderBody({
-    siteLink,
-    settingsLink,
-    unsubscribeLink,
-    recentLogEntries,
-    t: translations[locale],
-  })}
-  </html>`
-);
+}: RenderDailyReminderEmailParams) => {
+  const dateFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
+  const subjectDate = new Intl.DateTimeFormat(locale, dateFormatOptions).format(emailDate);
+
+  const subject = {
+    de: `My Bible Log Erinnerung für ${subjectDate}`,
+    en: `My Bible Log Reminder for ${subjectDate}`,
+    es: `Recordatorio de My Bible Log para ${subjectDate}`,
+    fr: `Rappel de My Bible Log pour le ${subjectDate}`,
+    pt: `Lembrete do My Bible Log para ${subjectDate}`,
+    uk: `Нагадування My Bible Log для ${subjectDate}`,
+  }[locale];
+
+  const html = (
+    `<html>
+    ${renderHead()}
+    ${renderBody({
+      siteLink,
+      settingsLink,
+      unsubscribeLink,
+      recentLogEntries,
+      t: translations[locale],
+    })}
+    </html>`
+  );
+  return {
+    subject,
+    html,
+  };
+};
 
 export default render;

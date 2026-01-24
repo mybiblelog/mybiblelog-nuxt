@@ -3,8 +3,8 @@ import path from 'node:path';
 import config from '../config';
 import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../mongoose/useMongooseModels';
-import useMailgunService from './mailgun.service';
-import renderEmail from './email-templates/daily-reminder.template';
+import renderDailyReminderEmail from './email/email-templates/daily-reminder';
+import { EmailService } from './email/email-service';
 
 const baseUrl = config.siteUrl;
 
@@ -13,9 +13,8 @@ const getLocaleBaseUrl = (locale) => {
   return baseUrl + localePathSegment;
 };
 
-const init = async () => {
+const init = async ({ emailService }: { emailService: EmailService }) => {
   const { DailyReminder, User, LogEntry } = await useMongooseModels();
-  const mailgunService = await useMailgunService();
 
   const getRecentLogEntries = async (user) => {
     const { locale } = user.settings;
@@ -86,40 +85,53 @@ const init = async () => {
       emailDate.setTime(utcNow.valueOf() + dayMs);
     }
 
-    const dateFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
-    const subjectDate = new Intl.DateTimeFormat(locale, dateFormatOptions).format(emailDate);
-
-    const subject = {
-      de: `My Bible Log Erinnerung für ${subjectDate}`,
-      en: `My Bible Log Reminder for ${subjectDate}`,
-      es: `Recordatorio de My Bible Log para ${subjectDate}`,
-      fr: `Rappel de My Bible Log pour le ${subjectDate}`,
-      pt: `Lembrete do My Bible Log para ${subjectDate}`,
-      uk: `Нагадування My Bible Log для ${subjectDate}`,
-    }[locale];
-
     const siteLink = `${getLocaleBaseUrl(locale)}/start`;
     const settingsLink = `${getLocaleBaseUrl(locale)}/settings/reminder`;
     const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.unsubscribeCode}`;
 
-    // Load brand logo asset
-    const brand = fs.createReadStream(
-      path.resolve(__dirname, 'email-assets', 'brand.png'),
-    );
+    // Build an unsubscribe email address that includes the unsubscribe code
+    // This can be send to a Cloudflare email worker to unsubscribe the user
+    let unsubscribeEmail = '';
+    if (config.emailUnsubscribeAddress) {
+      const [address, domain] = config.emailUnsubscribeAddress.split('@');
+      unsubscribeEmail = `${address}+${reminder.unsubscribeCode}@${domain}`;
+    }
 
-    const html = renderEmail({
+    // Load brand logo asset
+    const brandLogoAssetPath = path.resolve(__dirname, 'email', 'assets', 'brand.png');
+
+    const { subject, html } = renderDailyReminderEmail({
       siteLink,
       settingsLink,
       unsubscribeLink,
       recentLogEntries,
+      emailDate,
       locale,
     });
 
+    let listUnsubscribeHeader = '';
+    if (unsubscribeEmail) {
+      listUnsubscribeHeader = `<mailto:${unsubscribeEmail}>, <${unsubscribeLink}>`;
+    }
+    else {
+      listUnsubscribeHeader = `<${unsubscribeLink}>`;
+    }
+
     return {
+      from: `My Bible Log <team@${config.emailSendingDomain}>`,
       to: user.email,
+      headers: {
+        // RFC 2369 compliant List-Unsubscribe header
+        "List-Unsubscribe": listUnsubscribeHeader,
+        "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+      },
       subject,
       html,
-      inline: [brand],
+      attachments: [{
+        filename: 'brand.png',
+        content: fs.readFileSync(brandLogoAssetPath),
+        contentId: 'logo@mybiblelog',
+      }],
     };
   };
 
@@ -133,7 +145,7 @@ const init = async () => {
     await reminder.save();
 
     // Send email after database is updated
-    await mailgunService.sendEmail(email);
+    await emailService.send(email);
   };
 
   const triggerReminders = async () => {

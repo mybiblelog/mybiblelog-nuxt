@@ -77,7 +77,7 @@ export const DailyReminderSchema = new mongoose.Schema({
   },
   unsubscribeCode: {
     type: String,
-    default: () => crypto.randomBytes(64).toString('hex'),
+    default: () => crypto.randomBytes(16).toString('base64url'),
   },
   nextOccurrence: {
     type: Number,
@@ -123,7 +123,7 @@ DailyReminderSchema.pre('save', async function () {
   // If the daily reminder was just activated,
   // re-calculate an unsubscribe code
   if (this.isModified('active') && this.active) {
-    this.unsubscribeCode = crypto.randomBytes(64).toString('hex');
+    this.unsubscribeCode = crypto.randomBytes(16).toString('base64url');
   }
 });
 

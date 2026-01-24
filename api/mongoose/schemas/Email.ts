@@ -3,10 +3,12 @@ import mongoose from 'mongoose';
 export const EmailSchema = new mongoose.Schema({
   from: { type: String, required: true },
   to: { type: String, required: true },
+  replyTo: { type: String },
+  headers: { type: Object },
   subject: { type: String, required: true },
   text: { type: String },
   html: { type: String },
-  success: { type: Boolean, required: true },
+  status: { type: String, enum: ['pending', 'sent', 'failed', 'log_only'], default: 'pending' },
 }, { timestamps: true });
 
 EmailSchema.pre('validate', async function () {

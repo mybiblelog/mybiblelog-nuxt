@@ -7,6 +7,7 @@ import config from './config';
 import useMongooseModels from './mongoose/useMongooseModels';
 import initReminderService from './services/reminder.service';
 import buildApp from './app';
+import useEmailService from './services/email/email-service';
 
 // Normalize a port into a number, string, or false.
 const normalizePort = (val: string) => {
@@ -60,7 +61,8 @@ const port = normalizePort(config.apiPort || '8080');
 const startServer = async () => {
   // make sure mongoose is connected
   useMongooseModels();
-  await initReminderService();
+  const emailService = await useEmailService();
+  await initReminderService({ emailService });
   const app = buildApp();
 
   app.set('port', port);
