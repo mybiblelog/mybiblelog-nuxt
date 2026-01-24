@@ -227,7 +227,7 @@ export default {
   },
   "uk": {
     "page_title": "Календар",
-    "verse": "верс | верси",
+    "verse": "верс | віршів",
     "open_bible": "Читати в Біблії",
     "take_note": "Записати",
     "edit": "Редагувати",
