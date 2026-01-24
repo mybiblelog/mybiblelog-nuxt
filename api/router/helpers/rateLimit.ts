@@ -1,5 +1,5 @@
 import { type Request } from 'express';
-import { TooManyRequestsError } from 'router/errors/http-errors';
+import { TooManyRequestsError } from '../errors/http-errors';
 
 const defaultReqIdentifierFn = (req: Request): string => {
   return req.ip || 'unknown';

@@ -11,9 +11,8 @@ import UserSettings from '../../mongoose/schemas/UserSettings';
 import { isEmailVerified } from '../../mongoose/schemas/User';
 import { LocaleCode } from '@mybiblelog/shared';
 import { type ApiResponse } from '../response';
-import { ValidationError } from 'router/errors/validation-errors';
-import { InvalidRequestError, NotFoundError } from 'router/errors/http-errors';
-import { UnauthorizedError } from 'router/errors/http-errors';
+import { ValidationError } from '../errors/validation-errors';
+import { InvalidRequestError, UnauthorizedError, NotFoundError } from '../errors/http-errors';
 
 const { requireEmailVerification } = config;
 

@@ -2,7 +2,6 @@ import express from 'express';
 import authCurrentUser, { AUTH_COOKIE_NAME } from '../helpers/authCurrentUser';
 import deleteAccount from '../helpers/deleteAccount';
 import { type ApiResponse } from '../response';
-import { UnauthenticatedError } from '../errors/http-errors';
 import { InternalError } from '../errors/internal-error';
 
 const router = express.Router();

@@ -8,7 +8,7 @@ import deleteAccount from '../helpers/deleteAccount';
 import { IUser } from '../../mongoose/schemas/User';
 import { type ApiResponse } from '../response';
 import { InvalidRequestError, NotFoundError } from '../errors/http-errors';
-import { ApiErrorDetailCode } from 'router/errors/error-codes';
+import { ApiErrorDetailCode } from '../errors/error-codes';
 
 dayjs.extend(utc);
 

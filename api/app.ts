@@ -10,9 +10,9 @@ import config from './config';
 import apiRouter from './router/router';
 import mongooseErrorHandler from './router/middleware/mongoose-error-handler';
 import { ApiResponse } from './router/response';
-import { AppError } from 'router/errors/app-error';
-import { InternalError } from 'router/errors/internal-error';
-import { NotFoundError } from 'router/errors/http-errors';
+import { AppError } from './router/errors/app-error';
+import { InternalError } from './router/errors/internal-error';
+import { NotFoundError } from './router/errors/http-errors';
 
 const isProduction = config.nodeEnv === 'production';
 const isTesting = config.nodeEnv === 'test';

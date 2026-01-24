@@ -2,8 +2,7 @@ import express from 'express';
 import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { type ApiResponse } from '../response';
-import { TooManyRequestsError } from 'router/errors/http-errors';
-import rateLimit from 'router/helpers/rateLimit';
+import rateLimit from '../helpers/rateLimit';
 
 const router = express.Router();
 
