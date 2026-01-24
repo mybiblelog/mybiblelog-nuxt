@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 
 export default {
@@ -73,24 +74,11 @@ export default {
     async submitFeedback() {
       this.errors = {};
       try {
-        const response = await fetch('/api/feedback', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            email: this.form.email,
-            kind: this.form.kind,
-            message: this.form.message,
-          }),
+        await this.$http.post('/api/feedback', {
+          email: this.form.email,
+          kind: this.form.kind,
+          message: this.form.message,
         });
-        if (!response.ok) {
-          const responseData = await response.json();
-          const error = new Error('Failed to submit feedback');
-          error.response = { data: responseData };
-          throw error;
-        }
 
         // Clear the form
         this.form.kind = 'bug';
@@ -104,14 +92,7 @@ export default {
         this.$emit('success');
       }
       catch (err) {
-        const unknownError = { _form: this.$t('messaging.unknown_error') };
-        const errorData = err.response?.data;
-        if (errorData?.error) {
-          this.errors = mapFormErrors(errorData.error) || unknownError;
-        }
-        else {
-          this.errors = unknownError;
-        }
+        this.errors = (err instanceof ApiError ? mapFormErrors(err) : null) || mapFormErrors(new UnknownApiError());
       }
     },
   },

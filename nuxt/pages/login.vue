@@ -62,6 +62,7 @@
 <script>
 import GoogleLoginButton from '@/components/forms/GoogleLoginButton.vue';
 import InfoLink from '@/components/InfoLink';
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 
 export default {
@@ -71,12 +72,11 @@ export default {
     InfoLink,
   },
   middleware: ['auth'],
-  async asyncData({ $config }) {
+  async asyncData({ app }) {
     let googleOauth2Url = null;
     try {
-      const googleUrlResponse = await fetch(`${$config.siteUrl}/api/auth/oauth2/google/url`);
-      const responseData = await googleUrlResponse.json();
-      googleOauth2Url = responseData.data.url;
+      const { data } = await app.$http.get('/api/auth/oauth2/google/url');
+      googleOauth2Url = data.url;
     }
     catch (error) {
       console.error('Failed to get Google OAuth2 URL:', error);
@@ -130,8 +130,12 @@ export default {
         });
       }
       catch (error) {
-        const formErrors = mapFormErrors(error);
-        this.errors = formErrors;
+        if (error instanceof ApiError) {
+          this.errors = mapFormErrors(error);
+        }
+        else {
+          this.errors = mapFormErrors(new UnknownApiError());
+        }
         this.failedLoginAttempt = true;
         return;
       }
@@ -140,29 +144,16 @@ export default {
     },
     async sendPasswordReset() {
       if (!this.email) {
-        this.errors.email = 'Your email address is required.';
+        this.errors.email = this.$t('your_email_address_is_required');
         return;
       }
-      const response = await fetch(`${this.$config.siteUrl}/api/auth/reset-password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          credentials: 'include',
-        },
-        body: JSON.stringify({ email: this.email }),
-      });
-      if (!response.ok) {
-        const responseData = await response.json();
-        const unknownError = { _form: 'An unknown error occurred.' };
-        if (responseData.error) {
-          this.errors = mapFormErrors(responseData.error) || unknownError;
-        }
-        else {
-          this.errors = unknownError;
-        }
-        return;
+      try {
+        await this.$http.post('/api/auth/reset-password', { email: this.email });
+        this.passwordResetSubmitted = true;
       }
-      this.passwordResetSubmitted = true;
+      catch (err) {
+        this.errors = (err instanceof ApiError ? mapFormErrors(err) : null) || mapFormErrors(new UnknownApiError());
+      }
     },
   },
   meta: {
@@ -178,6 +169,7 @@ export default {
 <i18n lang="json">
 {
   "de": {
+    "your_email_address_is_required": "Ihre E-Mail-Adresse ist erforderlich.",
     "sign_in": "Anmelden",
     "need_an_account": "Benötigen Sie ein Konto?",
     "password_reset_link_sent": "Ein Link zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse gesendet.",
@@ -186,6 +178,7 @@ export default {
     "forgot_your_password": "Passwort vergessen? Setzen Sie es per E-Mail zurück."
   },
   "en": {
+    "your_email_address_is_required": "Your email address is required.",
     "sign_in": "Sign In",
     "need_an_account": "Need an account?",
     "password_reset_link_sent": "A password reset link has been sent to your email address.",
@@ -194,6 +187,7 @@ export default {
     "forgot_your_password": "Forgot your password? Reset it via email."
   },
   "es": {
+    "your_email_address_is_required": "Su dirección de correo electrónico es obligatoria.",
     "sign_in": "Iniciar sesión",
     "need_an_account": "¿Necesitas una cuenta?",
     "password_reset_link_sent": "Se ha enviado un enlace de restablecimiento de contraseña a su dirección de correo electrónico.",
@@ -202,6 +196,7 @@ export default {
     "forgot_your_password": "¿Olvidaste tu contraseña? Restablézcalo por correo electrónico."
   },
   "fr": {
+    "your_email_address_is_required": "Votre adresse e-mail est requise.",
     "sign_in": "Se connecter",
     "need_an_account": "Besoin d'un compte?",
     "password_reset_link_sent": "Un lien de réinitialisation de mot de passe a été envoyé à votre adresse e-mail.",
@@ -210,6 +205,7 @@ export default {
     "forgot_your_password": "Mot de passe oublié ? Réinitialisez-le via e-mail."
   },
   "pt": {
+    "your_email_address_is_required": "Seu endereço de e-mail é obrigatório.",
     "sign_in": "Entrar",
     "need_an_account": "Precisa de uma conta?",
     "password_reset_link_sent": "Um link de redefinição de senha foi enviado para o seu endereço de email.",
@@ -218,6 +214,7 @@ export default {
     "forgot_your_password": "Esqueceu sua senha? Redefina-a via email."
   },
   "uk": {
+    "your_email_address_is_required": "Ваша електронна адреса обов'язкова.",
     "sign_in": "Увійти",
     "need_an_account": "Потрібен обліковий запис?",
     "password_reset_link_sent": "Посилання на скидання пароля було надіслано на вашу електронну адресу.",

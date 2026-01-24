@@ -19,7 +19,7 @@
         <div class="content">
           <p>{{ $t('there_was_an_error_changing_your_email_address') }}</p>
           <p v-if="serverError">
-            {{ serverError }}
+            {{ $terr(serverError) }}
           </p>
           <p>{{ $t('please_go_to_your_settings_and_try_changing_your_email_address_again') }}</p>
         </div>
@@ -29,6 +29,9 @@
 </template>
 
 <script>
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
+import mapFormErrors from '~/helpers/map-form-errors';
+
 export default {
   name: 'ChangeEmailPage',
   data() {
@@ -57,14 +60,8 @@ export default {
     // Determine if change email code is valid
     let changeEmailRequest;
     try {
-      const response = await fetch(`/api/auth/change-email/${newEmailVerificationCode}`, {
-        credentials: 'include',
-      });
-      if (!response.ok) {
-        throw new Error('Failed to get change email request');
-      }
-      const responseData = await response.json();
-      changeEmailRequest = responseData.data;
+      const { data } = await this.$http.get(`/api/auth/change-email/${newEmailVerificationCode}`);
+      changeEmailRequest = data;
     }
     catch (err) {
       // If there is no open email change request (404), redirect to the settings page
@@ -83,22 +80,15 @@ export default {
 
     // Submit change email code to finalize the update
     try {
-      const response = await fetch(`/api/auth/change-email/${newEmailVerificationCode}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
-      if (!response.ok) {
-        const responseData = await response.json();
-        this.serverError = responseData.error;
-        this.busy = false;
-        return;
-      }
+      await this.$http.post(`/api/auth/change-email/${newEmailVerificationCode}`);
     }
     catch (err) {
-      this.serverError = this.$t('an_unknown_error_occurred');
+      if (err instanceof ApiError && err.errors?.length) {
+        this.serverError = this.$terr(err.errors[0]);
+      }
+      else {
+        this.serverError = mapFormErrors(new UnknownApiError())._form;
+      }
       this.busy = false;
       return;
     }

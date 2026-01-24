@@ -81,18 +81,12 @@ export default {
   },
   methods: {
     async deleteAccount() {
-      const response = await fetch('/api/settings/delete-account', {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (response.ok) {
+      try {
+        await this.$http.put('/api/settings/delete-account');
         await this.$store.dispatch('auth/logout');
         this.$router.push(this.localePath('/login', this.$i18n.locale));
       }
-      else {
+      catch (err) {
         this.$store.dispatch('toast/add', {
           type: 'error',
           text: this.$t('unable_to_delete'),

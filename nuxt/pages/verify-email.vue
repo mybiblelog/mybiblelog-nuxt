@@ -5,7 +5,7 @@
         {{ $t('verifying_email') }}
       </h1>
       <p v-if="error">
-        {{ error }}
+        {{ $terr(error) }}
       </p>
       <p v-else>
         {{ $t('one_moment_please') }}
@@ -16,6 +16,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
+import mapFormErrors from '~/helpers/map-form-errors';
 
 export default {
   name: 'VerifyEmailPage',
@@ -43,24 +45,21 @@ export default {
       return;
     }
 
-    const response = await fetch(`/api/auth/verify-email/${emailVerificationCode}`);
-    if (!response.ok) {
-      const responseData = await response.json();
-      const errors = responseData.error?.errors;
-      if (errors && errors.length > 0) {
-        // Convert array of errors to a single error message
-        const firstError = errors[0];
-        this.error = this.$terr(firstError);
+    try {
+      await this.$http.get(`/api/auth/verify-email/${emailVerificationCode}`);
+      // If successful, automatically log the user in
+      await this.$store.dispatch('auth/refreshUser');
+      await this.$router.push(this.localePath('/start'));
+    }
+    catch (err) {
+      if (err instanceof ApiError) {
+        const formErrors = mapFormErrors(err);
+        this.error = formErrors._form;
       }
       else {
-        this.error = this.$t('an_unknown_error_occurred');
+        this.error = mapFormErrors(new UnknownApiError())._form;
       }
-      return;
     }
-
-    // If successful, automatically log the user in
-    await this.$store.dispatch('auth/refreshUser');
-    await this.$router.push(this.localePath('/start'));
   },
   meta: {
     auth: 'guest',

@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 
 export default {
@@ -105,48 +106,34 @@ export default {
 
       if (!currentPassword.length) {
         this.changePasswordErrors.currentPassword = this.$t('enter_current_password');
+        this.formBusy = false;
         return;
       }
 
       if (confirmNewPassword !== newPassword) {
         this.changePasswordErrors.confirmNewPassword = this.$t('passwords_must_match');
+        this.formBusy = false;
         return;
       }
 
       try {
-        const response = await fetch('/api/auth/change-password', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            currentPassword,
-            newPassword,
-          }),
+        await this.$http.put('/api/auth/change-password', {
+          currentPassword,
+          newPassword,
         });
-
-        if (response.ok) {
-          this.resetChangePasswordForm();
-          this.$store.dispatch('toast/add', {
-            type: 'success',
-            text: this.$t('password_changed_successfully'),
-          });
-        }
-        else {
-          // Display form errors from the server
-          const responseData = await response.json();
-          if (responseData.error) {
-            const errorsObj = mapFormErrors(responseData.error);
-            Object.assign(this.changePasswordErrors, errorsObj);
-          }
-          else {
-            this.changePasswordErrors._form = this.$t('an_unknown_error_occurred');
-          }
-        }
+        this.resetChangePasswordForm();
+        this.$store.dispatch('toast/add', {
+          type: 'success',
+          text: this.$t('password_changed_successfully'),
+        });
       }
       catch (err) {
-        this.changePasswordErrors._form = this.$t('an_unknown_error_occurred');
+        if (err instanceof ApiError) {
+          Object.assign(this.changePasswordErrors, mapFormErrors(err));
+        }
+        else {
+          Object.assign(this.changePasswordErrors, mapFormErrors(new UnknownApiError()));
+        }
       }
       finally {
         this.formBusy = false;

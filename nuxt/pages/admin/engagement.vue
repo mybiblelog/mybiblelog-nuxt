@@ -65,14 +65,8 @@ export default {
   methods: {
     async loadData() {
       try {
-        const response = await fetch(`/api/admin/reports/user-engagement/past-week`, {
-          credentials: 'include',
-        });
-        if (!response.ok) {
-          throw new Error('Failed to load engagement data');
-        }
-        const responseData = await response.json();
-        this.engagementData = responseData.data;
+        const { data: engagementData } = await this.$http.get('/api/admin/reports/user-engagement/past-week');
+        this.engagementData = engagementData;
       }
       catch (err) {
         await this.$store.dispatch('dialog/alert', {

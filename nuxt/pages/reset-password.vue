@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 
 export default {
@@ -87,12 +88,13 @@ export default {
     this.passwordResetCode = passwordResetCode;
 
     // Determine if password reset code is valid
-    const response = await fetch(`/api/auth/reset-password/${this.passwordResetCode}/valid`);
-    if (!response.ok) {
+    try {
+      const { data } = await this.$http.get(`/api/auth/reset-password/${this.passwordResetCode}/valid`);
+      this.passwordResetCodeValid = data.valid;
+    }
+    catch {
       this.passwordResetCodeValid = false;
     }
-    const responseData = await response.json();
-    this.passwordResetCodeValid = responseData.data.valid;
   },
   methods: {
     resetChangePasswordErrors() {
@@ -112,33 +114,27 @@ export default {
 
       if (confirmNewPassword !== newPassword) {
         this.changePasswordErrors.confirmNewPassword = this.$t('passwords_must_match');
-        return;
-      }
-
-      const response = await fetch(`/api/auth/reset-password/${this.passwordResetCode}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ newPassword }),
-      });
-
-      if (!response.ok) {
-        const responseData = await response.json();
-        if (responseData.error) {
-          const errorsObj = mapFormErrors(responseData.error);
-          Object.assign(this.changePasswordErrors, errorsObj);
-        }
-        else {
-          this.changePasswordErrors._form = this.$t('an_unknown_error_occurred');
-        }
         this.formBusy = false;
         return;
       }
 
-      // If successful, automatically log the user in
-      await this.$store.dispatch('auth/refreshUser');
-      await this.$router.push(this.localePath('/start'));
+      try {
+        await this.$http.post(`/api/auth/reset-password/${this.passwordResetCode}`, { newPassword });
+        // If successful, automatically log the user in
+        await this.$store.dispatch('auth/refreshUser');
+        await this.$router.push(this.localePath('/start'));
+      }
+      catch (err) {
+        if (err instanceof ApiError) {
+          Object.assign(this.changePasswordErrors, mapFormErrors(err));
+        }
+        else {
+          Object.assign(this.changePasswordErrors, mapFormErrors(new UnknownApiError()));
+        }
+      }
+      finally {
+        this.formBusy = false;
+      }
     },
   },
   meta: {

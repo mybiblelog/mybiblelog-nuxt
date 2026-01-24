@@ -39,13 +39,7 @@ export default {
         const loginLocale = localStorage.getItem('login_language');
         const userLocale = loginLocale || defaultLocale;
 
-        const response = await fetch(`/api/auth/oauth2/google/verify?code=${code}&state=${state}&locale=${userLocale}`, {
-          credentials: 'include',
-        });
-
-        if (!response.ok) {
-          throw new Error('Google OAuth verification failed');
-        }
+        await this.$http.get(`/api/auth/oauth2/google/verify?code=${code}&state=${state}&locale=${userLocale}`);
 
         // Reload user now that auth cookie should be set
         await this.$store.dispatch('auth/refreshUser');

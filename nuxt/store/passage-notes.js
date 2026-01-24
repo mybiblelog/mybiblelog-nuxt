@@ -132,14 +132,12 @@ export const actions = {
       url.searchParams.set('offset', state.query.offset);
     }
 
-    const responseData = await this.$http.get('/api/passage-notes' + url.search);
-
+    const { data: results, meta } = await this.$http.get('/api/passage-notes' + url.search);
     const {
       offset,
       limit,
       size,
-    } = responseData.meta.pagination;
-    const results = responseData.data;
+    } = meta.pagination;
     commit(SET_PASSAGE_NOTES, results);
     commit(SET_PASSAGE_NOTE_PAGINATION, {
       limit,

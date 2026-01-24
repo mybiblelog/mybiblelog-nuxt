@@ -26,5 +26,7 @@ export class ApiError extends Error {
 }
 
 export class UnknownApiError extends ApiError {
-  code = 'unknown_error';
+  constructor() {
+    super({ code: 'unknown_error', errors: [] });
+  }
 }

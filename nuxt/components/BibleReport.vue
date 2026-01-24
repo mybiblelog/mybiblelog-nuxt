@@ -98,23 +98,20 @@ export default {
       return segments;
     },
   },
-  mounted() {
-    fetch('/api/passage-notes/count/books', {
-      credentials: 'include',
-    })
-      .then(async (response) => {
-        if (response.ok) {
-          const responseData = await response.json();
-          this.bookNotesCounts = responseData.data;
-          for (let i = 1, l = Bible.getBookCount(); i <= l; i++) {
-            if (this.bookNotesCounts[i] > 0) {
-              this.anyBooksHaveNotes = true;
-              break;
-            }
-          }
+  async mounted() {
+    try {
+      const { data: bookNotesCounts } = await this.$http.get('/api/passage-notes/count/books');
+      this.bookNotesCounts = bookNotesCounts;
+      for (let i = 1, l = Bible.getBookCount(); i <= l; i++) {
+        if (this.bookNotesCounts[i] > 0) {
+          this.anyBooksHaveNotes = true;
+          break;
         }
-      })
-      .catch();
+      }
+    }
+    catch {
+      // Leave bookNotesCounts as {} on error
+    }
   },
   methods: {
     bookReport(bookIndex) {

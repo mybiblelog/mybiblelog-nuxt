@@ -13,6 +13,8 @@ const locales: Locales = {
       max_length: 'Must be {maxlength} or fewer characters',
       review: 'Please review.',
 
+      not_found: 'Not found',
+
       invalid_login: 'Email or password is incorrect',
       verify_email: 'Please check {email} to verify your email first',
       new_email_required: 'New email cannot be the same as current email',
@@ -43,6 +45,8 @@ const locales: Locales = {
       min_length: 'Debe tener {minlength} o más caracteres',
       max_length: 'Debe tener {maxlength} o menos caracteres',
       review: 'Por favor revise.',
+
+      not_found: 'No encontrado',
 
       invalid_login: 'El correo electrónico o la contraseña son incorrectos',
       verify_email: 'Por favor revise {email} para verificar su correo electrónico primero',
@@ -75,6 +79,8 @@ const locales: Locales = {
       max_length: 'Muss {maxlength} oder weniger Zeichen haben',
       review: 'Bitte überprüfen Sie.',
 
+      not_found: 'Nicht gefunden',
+
       invalid_login: 'Email oder Passwort ist falsch',
       verify_email: 'Bitte überprüfen Sie {email} zuerst, um Ihre Email zu bestätigen',
       new_email_required: 'Die neue Email kann nicht die gleiche wie die aktuelle Email sein',
@@ -105,6 +111,8 @@ const locales: Locales = {
       min_length: 'Doit contenir {minlength} caractères ou plus',
       max_length: 'Doit contenir {maxlength} caractères ou moins',
       review: 'Veuillez revoir.',
+
+      not_found: 'Non trouvé',
 
       invalid_login: 'Email ou mot de passe incorrect',
       verify_email: 'Veuillez vérifier {email} pour vérifier votre adresse email d\'abord',
@@ -137,6 +145,8 @@ const locales: Locales = {
       max_length: 'Deve ter {maxlength} ou menos caracteres',
       review: 'Por favor, revise.',
 
+      not_found: 'Não encontrado',
+
       invalid_login: 'Email ou senha incorretos',
       verify_email: 'Por favor, verifique {email} para confirmar seu email primeiro',
       new_email_required: 'O novo email não pode ser o mesmo que o email atual',
@@ -167,6 +177,8 @@ const locales: Locales = {
       min_length: 'Має бути {minlength} або більше символів',
       max_length: 'Має бути {maxlength} або менше символів',
       review: 'Будь ласка, перегляньте.',
+
+      not_found: 'Не знайдено',
 
       invalid_login: 'Електронна пошта або пароль невірні',
       verify_email: 'Будь ласка, перевірте {email}, щоб спочатку підтвердити свою електронну пошту',

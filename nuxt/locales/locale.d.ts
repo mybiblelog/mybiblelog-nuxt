@@ -12,6 +12,8 @@ export type Translation = {
     max_length: string;
     review: string;
 
+    not_found: string;
+
     // Custom Errors
     invalid_login: string;
     verify_email: string;

@@ -60,6 +60,7 @@
 
 <script>
 import InfoLink from '@/components/InfoLink';
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 
 export default {
@@ -96,22 +97,11 @@ export default {
       const { email, password } = this;
       const locale = this.$i18n.locale;
 
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, locale }),
-      });
-      if (!response.ok) {
-        const responseData = await response.json();
-        const unknownError = { _form: 'An unknown error occurred.' };
-        if (responseData.error) {
-          this.errors = mapFormErrors(responseData.error) || unknownError;
-        }
-        else {
-          this.errors = unknownError;
-        }
+      try {
+        await this.$http.post('/api/auth/register', { email, password, locale });
+      }
+      catch (err) {
+        this.errors = (err instanceof ApiError ? mapFormErrors(err) : null) || mapFormErrors(new UnknownApiError());
         return;
       }
 
@@ -126,8 +116,12 @@ export default {
           });
         }
         catch (error) {
-          const formErrors = mapFormErrors(error);
-          this.errors = formErrors;
+          if (error instanceof ApiError) {
+            this.errors = mapFormErrors(error);
+          }
+          else {
+            this.errors = mapFormErrors(new UnknownApiError());
+          }
           return;
         }
 

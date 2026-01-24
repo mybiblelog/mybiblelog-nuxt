@@ -67,30 +67,27 @@ export default {
   middleware: ['auth'],
   async asyncData({ app, redirect }) {
     // Redirect to the user's preferred start page if they have one
-    const url = new URL(app.$config.siteUrl); // from nuxt.config.js
-    url.pathname = '/api/settings';
-    const response = await fetch(url.toString(), {
-      credentials: 'include',
-      headers: {
-        Authorization: app.ssrToken ? `Bearer ${app.ssrToken}` : undefined,
-      },
-    });
-    const responseData = await response.json();
-    const { startPage, locale } = responseData.data;
+    try {
+      const { data } = await app.$http.get('/api/settings');
+      const { startPage, locale } = data;
 
-    if (startPage !== 'start') {
-      // Mapping these individually allows URLs to change separately
-      // from the start page names in user settings
-      const redirectPath = {
-        today: '/today',
-        books: '/books',
-        checklist: '/checklist',
-        calendar: '/calendar',
-        notes: '/notes',
-      }[startPage];
-      if (redirectPath) {
-        return redirect(app.localePath(redirectPath, locale));
+      if (startPage !== 'start') {
+        // Mapping these individually allows URLs to change separately
+        // from the start page names in user settings
+        const redirectPath = {
+          today: '/today',
+          books: '/books',
+          checklist: '/checklist',
+          calendar: '/calendar',
+          notes: '/notes',
+        }[startPage];
+        if (redirectPath) {
+          return redirect(app.localePath(redirectPath, locale));
+        }
       }
+    }
+    catch {
+      // If settings fail to load, show the start page
     }
 
     return {};

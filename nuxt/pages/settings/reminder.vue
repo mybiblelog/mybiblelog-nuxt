@@ -38,21 +38,14 @@
 </template>
 
 <script>
+import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 
 export default {
   name: 'ReminderSettingsPage',
   middleware: ['auth'],
   async asyncData({ app }) {
-    const url = new URL('/api/reminders/daily-reminder', app.$config.siteUrl).toString();
-    const response = await fetch(url, {
-      credentials: 'include',
-      headers: {
-        Authorization: app.ssrToken ? `Bearer ${app.ssrToken}` : undefined,
-      },
-    });
-    const responseData = await response.json();
-    const reminder = responseData.data;
+    const { data: reminder } = await app.$http.get('/api/reminders/daily-reminder');
     const {
       hour,
       minute,
@@ -90,45 +83,31 @@ export default {
       const hourMinuteRE = /(\d+):(\d+)/;
       if (!hourMinuteRE.test(time)) {
         this.reminderErrors._form = this.$t('messaging.please_choose_a_time');
+        this.formBusy = false;
         return;
       }
       const [, hour, minute] = hourMinuteRE.exec(time);
       const timezoneOffset = new Date().getTimezoneOffset();
 
       try {
-        const response = await fetch('/api/reminders/daily-reminder', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            hour,
-            minute,
-            timezoneOffset,
-            active,
-          }),
+        await this.$http.put('/api/reminders/daily-reminder', {
+          hour,
+          minute,
+          timezoneOffset,
+          active,
         });
-
-        if (response.ok) {
-          this.$store.dispatch('toast/add', {
-            type: 'success',
-            text: this.$t('messaging.reminder_settings_updated_successfully'),
-          });
-        }
-        else {
-          const responseData = await response.json();
-          if (responseData.error) {
-            const errorsObj = mapFormErrors(responseData.error);
-            Object.assign(this.reminderErrors, errorsObj);
-          }
-          else {
-            this.reminderErrors._form = this.$t('messaging.an_unknown_error_occurred');
-          }
-        }
+        this.$store.dispatch('toast/add', {
+          type: 'success',
+          text: this.$t('messaging.reminder_settings_updated_successfully'),
+        });
       }
       catch (err) {
-        this.reminderErrors._form = this.$t('messaging.an_unknown_error_occurred');
+        if (err instanceof ApiError) {
+          Object.assign(this.reminderErrors, mapFormErrors(err));
+        }
+        else {
+          Object.assign(this.reminderErrors, mapFormErrors(new UnknownApiError()));
+        }
       }
       finally {
         this.formBusy = false;

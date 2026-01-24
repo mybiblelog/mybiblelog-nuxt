@@ -19,7 +19,7 @@
 const mapFormErrors = (error) => {
   const formErrors = {};
   if (!error.errors?.length) {
-    formErrors._form = error.code;
+    formErrors._form = { code: error.code };
   }
   return error.errors?.reduce((acc, err) => {
     if (err.field) {
