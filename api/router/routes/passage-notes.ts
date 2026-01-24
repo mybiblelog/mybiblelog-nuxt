@@ -3,7 +3,6 @@ import { ObjectId } from 'mongodb';
 import authCurrentUser from '../helpers/authCurrentUser';
 import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../../mongoose/useMongooseModels';
-
 import { QueryFilter, Types } from 'mongoose';
 import { IPassageNote } from '../../mongoose/schemas/PassageNote';
 import { ApiErrorDetailCode } from '../errors/error-codes';

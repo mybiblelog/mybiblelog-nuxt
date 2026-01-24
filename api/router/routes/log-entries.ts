@@ -7,7 +7,7 @@ import { Types } from 'mongoose';
 import { ApiErrorDetailCode } from '../errors/error-codes';
 import { type ApiResponse } from '../response';
 import { ValidationError } from '../errors/validation-errors';
-import { InvalidRequestError, NotFoundError } from '../errors/http-errors';
+import { NotFoundError } from '../errors/http-errors';
 
 const router = express.Router();
 

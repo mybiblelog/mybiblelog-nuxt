@@ -40,7 +40,7 @@ export const actions = {
     }
   },
   async fetchServerUser({ commit }) {
-    const { data: user } = await this.$http.get('/api/auth/user');
+    const { data: { user } } = await this.$http.get('/api/auth/user');
     delete user?.token;
     commit(SET_USER, user);
   },
