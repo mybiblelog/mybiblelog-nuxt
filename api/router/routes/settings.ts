@@ -59,9 +59,6 @@ const router = express.Router();
 router.get('/settings', async (req, res, next) => {
   try {
     const currentUser = await authCurrentUser(req);
-    if (!currentUser) {
-      throw new UnauthenticatedError();
-    }
     res.json({ data: currentUser.settings } satisfies ApiResponse);
   }
   catch (error) {
