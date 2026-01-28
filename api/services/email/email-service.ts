@@ -1,13 +1,13 @@
-import useMongooseModels from "../../mongoose/useMongooseModels";
-import { LocaleCode } from "@mybiblelog/shared";
-import renderEmailVerification from "./email-templates/email-verification";
-import renderPasswordResetLink from "./email-templates/password-reset-link";
-import renderEmailUpdate from "./email-templates/email-update";
+import useMongooseModels from '../../mongoose/useMongooseModels';
+import { LocaleCode } from '@mybiblelog/shared';
+import renderEmailVerification from './email-templates/email-verification';
+import renderPasswordResetLink from './email-templates/password-reset-link';
+import renderEmailUpdate from './email-templates/email-update';
 
-import { QueueEmailParams, SendEmailParams } from "./email-types";
-import sendEmail from "./email-senders/resend";
-import { createQueue } from "./email-queue";
-import config from "../../config";
+import { QueueEmailParams, SendEmailParams } from './email-types';
+import sendEmail from './email-senders/resend';
+import { createQueue } from './email-queue';
+import config from '../../config';
 
 const defaultFromEmailAddress = `My Bible Log <team@${config.emailSendingDomain}>`;
 const defaultReplyToEmailAddress = `My Bible Log <team@${config.emailSendingDomain}>`;
@@ -26,7 +26,7 @@ const init = async () => {
     let status: 'pending' | 'sent' | 'failed' | 'log_only' = 'pending';
 
     // only send email in production
-    if (config.nodeEnv === "production") {
+    if (config.nodeEnv === 'production') {
       try {
         await sendEmail(params);
         status = 'sent';
@@ -36,7 +36,8 @@ const init = async () => {
         status = 'failed';
         console.error('Email failed:', error);
       }
-    } else {
+    }
+    else {
       status = 'log_only';
       console.log('Email logged successfully');
     }

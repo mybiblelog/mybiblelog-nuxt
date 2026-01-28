@@ -20,7 +20,7 @@ export const PassageNoteTagSchema = new mongoose.Schema({
         // require a hexadecimal color value like #FFF or #0099ff
         return /^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/.test(value);
       },
-      message: props => `${props.value} is not a valid hexadecimal color`,
+      message: (props) => `${props.value} is not a valid hexadecimal color`,
     },
   },
   description: {

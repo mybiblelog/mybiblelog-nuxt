@@ -15,9 +15,9 @@ export default function(context, inject) {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: this.ssrToken ?
-            `Bearer ${this.ssrToken}` :
-            undefined,
+          Authorization: this.ssrToken
+            ? `Bearer ${this.ssrToken}`
+            : undefined,
         },
       };
     }

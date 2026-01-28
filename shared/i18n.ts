@@ -21,10 +21,10 @@ export const defaultLocale: LocaleCode = 'en';
 
 // Helper function to get locale codes
 export const getLocaleCodes = (): LocaleCode[] => {
-  return locales.map(locale => locale.code);
+  return locales.map((locale) => locale.code);
 };
 
 // Helper function to check if a locale code is valid
 export const isValidLocaleCode = (code: string): code is LocaleCode => {
-  return locales.some(locale => locale.code === code);
+  return locales.some((locale) => locale.code === code);
 };

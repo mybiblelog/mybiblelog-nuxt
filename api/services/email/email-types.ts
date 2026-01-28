@@ -1,5 +1,3 @@
-import fs from 'node:fs';
-
 type Attachment = {
   content: string | Buffer<ArrayBufferLike>;
   filename: string;

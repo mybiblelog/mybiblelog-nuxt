@@ -4,18 +4,18 @@ import z from 'zod';
 
 // Detect if we're running compiled JS or TS source
 const isCompiled = __dirname.includes('dist');
-const envPath = isCompiled
+const envPath = isCompiled ?
   // (root)/api/dist/config -> (root)/.env
-  ? path.resolve(__dirname, '../../../.env')
+  path.resolve(__dirname, '../../../.env') :
   // (root)/api/config -> (root)/.env
-  : path.resolve(__dirname, '../../.env');
+  path.resolve(__dirname, '../../.env');
 
 dotenv.config({
   path: envPath,
   quiet: true,
 });
 
-const booleanStringDefaultingToTrue = z.enum(['true', 'false']).transform(val => val !== 'false');
+const booleanStringDefaultingToTrue = z.enum(['true', 'false']).transform((val) => val !== 'false');
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),

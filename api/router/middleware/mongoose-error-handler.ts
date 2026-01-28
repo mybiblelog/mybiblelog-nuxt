@@ -32,7 +32,7 @@ const ErrorPropertiesMap = {
   [MongooseErrorKinds.MIN_LENGTH]: ['minlength'],
   [MongooseErrorKinds.MAX_LENGTH]: ['maxlength'],
   [MongooseErrorKinds.DEFAULT]: [],
-}
+};
 
 const mongooseErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   if (!(err instanceof Error.ValidationError)) {

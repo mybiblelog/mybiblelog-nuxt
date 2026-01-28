@@ -10,7 +10,7 @@ const deepFreeze = <T>(object: T): T => {
     return object;
   }
   Object.freeze(object);
-  Object.keys(object).forEach(key => {
+  Object.keys(object).forEach((key) => {
     deepFreeze(object[key]);
   });
   return object;

@@ -13,7 +13,7 @@ export const LogEntrySchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: SimpleDate.validateString,
-      message: props => `${props.value} is not a valid date string`,
+      message: (props) => `${props.value} is not a valid date string`,
     },
   },
   startVerseId: {
@@ -21,7 +21,7 @@ export const LogEntrySchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: Bible.verseExists,
-      message: props => `${props.value} is not a valid verse`,
+      message: (props) => `${props.value} is not a valid verse`,
     },
   },
   endVerseId: {
@@ -29,7 +29,7 @@ export const LogEntrySchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: Bible.verseExists,
-      message: props => `${props.value} is not a valid verse`,
+      message: (props) => `${props.value} is not a valid verse`,
     },
   },
 }, {
@@ -42,7 +42,7 @@ export const LogEntrySchema = new mongoose.Schema({
   },
 });
 
-LogEntrySchema.pre('validate', async function () {
+LogEntrySchema.pre('validate', async function() {
   if (!Bible.validateRange(this.startVerseId, this.endVerseId)) {
     throw new Error('Invalid Verse Range');
   }

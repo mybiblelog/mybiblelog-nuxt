@@ -13,6 +13,8 @@
     "test:serial": "jest --runInBand ./test",
     "test:watch": "jest --watch ./test",
     "type-check": "tsc --noEmit",
+    "lint": "eslint --ext .ts,.js .",
+    "lint:fix": "eslint --ext .ts,.js . --fix",
     "script:seed": "ts-node ./scripts/seed.ts",
     "script:backup": "ts-node ./scripts/backup.ts",
     "script:delete-test-users": "ts-node ./scripts/delete-test-users.ts",

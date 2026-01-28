@@ -110,9 +110,9 @@ export default {
       );
 
       // Cover first day of the month being sunday (firstDayOfTheMonthWeekday === 0)
-      const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday ?
-        firstDayOfTheMonthWeekday - 1 :
-        6;
+      const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday
+        ? firstDayOfTheMonthWeekday - 1
+        : 6;
 
       const previousMonthLastMondayDayOfMonth = dayjs(
         this.currentMonthDays[0].date,
@@ -139,9 +139,9 @@ export default {
 
       const nextMonth = dayjs(`${this.year}-${this.month}-01`).add(1, 'month');
 
-      const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday ?
-        7 - lastDayOfTheMonthWeekday :
-        lastDayOfTheMonthWeekday;
+      const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday
+        ? 7 - lastDayOfTheMonthWeekday
+        : lastDayOfTheMonthWeekday;
 
       return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
         return {
