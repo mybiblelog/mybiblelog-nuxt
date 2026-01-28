@@ -122,8 +122,8 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
       to: user.email,
       headers: {
         // RFC 2369 compliant List-Unsubscribe header
-        "List-Unsubscribe": listUnsubscribeHeader,
-        "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+        'List-Unsubscribe': listUnsubscribeHeader,
+        'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
       },
       subject,
       html,

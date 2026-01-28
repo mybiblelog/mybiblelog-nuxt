@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  async asyncData({ $content, params, redirect, app, error }) {
+  async asyncData({ $content, params, redirect, app }) {
     try {
       // If slug is empty, redirect to overview
       if (!params.slug) {

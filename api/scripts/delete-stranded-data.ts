@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import mongoose from 'mongoose';
 import useMongooseModels, { closeConnection } from '../mongoose/useMongooseModels';
 

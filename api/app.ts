@@ -15,7 +15,6 @@ import { InternalError } from './router/errors/internal-error';
 import { NotFoundError } from './router/errors/http-errors';
 
 const isProduction = config.nodeEnv === 'production';
-const isTesting = config.nodeEnv === 'test';
 
 const buildApp = (): express.Application => {
   const app = express();
@@ -118,9 +117,9 @@ const buildApp = (): express.Application => {
   // Handle any other errors
   const apiRouterErrorHandler = (err, req, res, next) => {
     const error =
-      err instanceof AppError
-      ? err
-      : new InternalError();
+      err instanceof AppError ?
+        err :
+        new InternalError();
 
     const body: ApiResponse = {
       error: {

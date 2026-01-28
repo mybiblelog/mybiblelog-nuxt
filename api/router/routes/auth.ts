@@ -701,7 +701,7 @@ router.put('/auth/change-password', async (req, res, next) => {
       // The 'password' errors come from Mongoose validation of a new password,
       // but the input field is 'newPassword'
       if (err instanceof ValidationError) {
-        throw new ValidationError(err.details?.map(detail => ({ ...detail, field: detail.field === 'password' ? 'newPassword' : detail.field })));
+        throw new ValidationError(err.details?.map((detail) => ({ ...detail, field: detail.field === 'password' ? 'newPassword' : detail.field })));
       }
       throw err;
     }
@@ -1265,7 +1265,7 @@ router.post('/auth/reset-password/:passwordResetCode', async (req, res, next) =>
   }
   catch (err) {
     if (err instanceof ValidationError) {
-      throw new ValidationError(err.details?.map(detail => ({ ...detail, field: detail.field === 'password' ? 'newPassword' : detail.field })));
+      throw new ValidationError(err.details?.map((detail) => ({ ...detail, field: detail.field === 'password' ? 'newPassword' : detail.field })));
     }
     throw err;
   }

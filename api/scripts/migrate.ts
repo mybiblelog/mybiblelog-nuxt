@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 // This is an evergreen migration script, meant to update MongoDB data to the latest schema.
 
 import { SimpleDate } from '@shared/dist';
