@@ -663,7 +663,7 @@ router.put('/passage-notes/:id', async (req, res, next) => {
       throw new NotFoundError();
     }
 
-    if (content) { passageNote.content = content; }
+    if (typeof content === 'string') { passageNote.content = content; }
     if (passages) { passageNote.passages = passages; }
     if (tags) {
       // validate that all tags exist

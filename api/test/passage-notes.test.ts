@@ -332,10 +332,6 @@ describe('passage-notes.test.js', () => {
             .set('Authorization', `Bearer ${testUser.token}`)
             .send({
               content: 'a'.repeat(3001), // Exceeds max length
-              passages: [{
-                startVerseId: 1,
-                endVerseId: 1,
-              }],
             });
           expect(response.status).toBe(400);
           expect(response.body).toHaveProperty('error');
@@ -369,85 +365,40 @@ describe('passage-notes.test.js', () => {
           await deleteTestUser(testUser);
         }
       });
-    });
 
-    it('error if invalid passage verse range', async () => {
-      const testUser = await createTestUser();
-      try {
-        const response = await requestApi
-          .post('/api/passage-notes')
-          .set('Authorization', `Bearer ${testUser.token}`)
-          .send(invalidPassageNote);
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('error');
-        expect(response.body).not.toHaveProperty('data');
-        expect(response.body.error.code).toBe('validation_error');
-      }
-      finally {
-        await deleteTestUser(testUser);
-      }
-    });
+      it('error if invalid passage verse range', async () => {
+        const testUser = await createTestUser();
+        try {
+          const response = await requestApi
+            .post('/api/passage-notes')
+            .set('Authorization', `Bearer ${testUser.token}`)
+            .send(invalidPassageNote);
+          expect(response.status).toBe(400);
+          expect(response.body).toHaveProperty('error');
+          expect(response.body).not.toHaveProperty('data');
+          expect(response.body.error.code).toBe('validation_error');
+        }
+        finally {
+          await deleteTestUser(testUser);
+        }
+      });
 
-    test('Error if missing required fields', async () => {
-      // Arrange
-      const testUser = await createTestUser();
-      const invalidData = {
-        // Missing required fields
-      };
-
-      // Act
-      const response = await requestApi
-        .post('/api/passage-notes')
-        .set('Authorization', `Bearer ${testUser.token}`)
-        .send(invalidData);
-
-      // Assert
-      expect(response.statusCode).toBe(400);
-      expect(response.body.error.code).toBe('validation_error');
-
-      // Cleanup
-      await deleteTestUser(testUser);
-    });
-
-    test('Error if content exceeds max length', async () => {
-      // Arrange
-      const testUser = await createTestUser();
-      const invalidData = {
-        content: 'a'.repeat(3001), // Exceeds max length
-        passages: [{
-          startVerseId: 'invalid',
-          endVerseId: 'invalid',
-        }],
-      };
-
-      // Act
-      const response = await requestApi
-        .post('/api/passage-notes')
-        .set('Authorization', `Bearer ${testUser.token}`)
-        .send(invalidData);
-
-      // Assert
-      expect(response.statusCode).toBe(400);
-      expect(response.body.error.code).toBe('validation_error');
-
-      // Cleanup
-      await deleteTestUser(testUser);
-    });
-
-    it('error if passages array is empty and content is empty', async () => {
-      const testUser = await createTestUser();
-      try {
-        const response = await requestApi
-          .post('/api/passage-notes')
-          .set('Authorization', `Bearer ${testUser.token}`)
-          .send({ passages: [], content: '' });
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('error');
-        expect(response.body).not.toHaveProperty('data');
-      }
-      finally {
-        await deleteTestUser(testUser);
-      }
+      it('error if passages array is empty and content is empty', async () => {
+        const testUser = await createTestUser();
+        try {
+          const response = await requestApi
+            .post('/api/passage-notes')
+            .set('Authorization', `Bearer ${testUser.token}`)
+            .send({ passages: [], content: '' });
+          expect(response.status).toBe(400);
+          expect(response.body).toHaveProperty('error');
+          expect(response.body).not.toHaveProperty('data');
+          expect(response.body.error.code).toBe('validation_error');
+        }
+        finally {
+          await deleteTestUser(testUser);
+        }
+      });
     });
 
     it('can create note with just passages', async () => {
@@ -622,6 +573,42 @@ describe('passage-notes.test.js', () => {
         expect(response.body).toHaveProperty('data');
         expect(response.body).not.toHaveProperty('error');
         expect(response.body.data.content).toBe(passageNote2.content);
+      }
+      finally {
+        await deleteTestUser(testUser);
+      }
+    });
+
+    it('can set content to empty string', async () => {
+      const testUser = await createTestUser();
+      try {
+        // Create tags first
+        await createPassageNoteTags(testUser, [tag1]);
+
+        // Create a note first
+        const createResponse = await requestApi
+          .post('/api/passage-notes')
+          .set('Authorization', `Bearer ${testUser.token}`)
+          .send(passageNote1);
+
+        // Update content to empty string (should not be ignored)
+        const updateResponse = await requestApi
+          .put(`/api/passage-notes/${createResponse.body.data.id}`)
+          .set('Authorization', `Bearer ${testUser.token}`)
+          .send({ content: '' });
+        expect(updateResponse.status).toBe(200);
+        expect(updateResponse.body).toHaveProperty('data');
+        expect(updateResponse.body).not.toHaveProperty('error');
+        expect(updateResponse.body.data.content).toBe('');
+
+        // Ensure persisted
+        const getResponse = await requestApi
+          .get(`/api/passage-notes/${createResponse.body.data.id}`)
+          .set('Authorization', `Bearer ${testUser.token}`);
+        expect(getResponse.status).toBe(200);
+        expect(getResponse.body).toHaveProperty('data');
+        expect(getResponse.body).not.toHaveProperty('error');
+        expect(getResponse.body.data.content).toBe('');
       }
       finally {
         await deleteTestUser(testUser);
