@@ -654,7 +654,6 @@ const displayVerseRange = (startVerseId: number, endVerseId: number, lang: strin
   range += bookName;
   if (!start.chapter) { return range; }
   const chapterCount = Bible.getBookChapterCount(start.book);
-  if (chapterCount === 1) { return range; }
 
   // If the range covers the whole book, return only book name
   if (start.chapter === 1 && start.verse && start.verse === 1) {

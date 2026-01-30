@@ -760,6 +760,34 @@ test('can output human readable verse range', () => {
   expect(result).toBe('Deuteronomy 1:13-4:18');
 });
 
+test('can display verse range covering entire chapter', () => {
+  const startVerseId = Bible.makeVerseId(1, 3, 1);
+  const endVerseId = Bible.makeVerseId(1, 3, 24);
+  const result = Bible.displayVerseRange(startVerseId, endVerseId);
+  expect(result).toBe('Genesis 3');
+});
+
+test('can correctly display verse range covering entire book', () => {
+  const startVerseId = Bible.makeVerseId(1, 1, 1);
+  const endVerseId = Bible.makeVerseId(1, 50, 26);
+  const result = Bible.displayVerseRange(startVerseId, endVerseId);
+  expect(result).toBe('Genesis');
+});
+
+test('can display verse range covering entire book with only one chapter', () => {
+  const startVerseId = Bible.makeVerseId(65, 1, 1);
+  const endVerseId = Bible.makeVerseId(65, 1, 25);
+  const result = Bible.displayVerseRange(startVerseId, endVerseId);
+  expect(result).toBe('Jude');
+});
+
+test('can display verse range within a single-chapter book', () => {
+  const startVerseId = Bible.makeVerseId(65, 1, 3);
+  const endVerseId = Bible.makeVerseId(65, 1, 8);
+  const result = Bible.displayVerseRange(startVerseId, endVerseId);
+  expect(result).toBe('Jude 1:3-8');
+});
+
 test('can parse human readable verse range (passage)', () => {
   const passage1 = 'Deuteronomy 1:13-4:18';
   const passage2 = 'Genesis 1:1-1:10';
