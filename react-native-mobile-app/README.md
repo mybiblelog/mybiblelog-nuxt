@@ -16,6 +16,25 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npx expo start
    ```
 
+## Environment / build-time config
+
+This app supports build-time configuration via `EXPO_PUBLIC_*` environment variables.
+
+- **API base URL**: `EXPO_PUBLIC_API_BASE_URL`
+- **Config accessor**: `src/config.ts` exports `API_BASE_URL`
+
+Example (local dev):
+
+```bash
+EXPO_PUBLIC_API_BASE_URL=http://localhost:3000 npx expo start
+```
+
+You can also copy `.env.example` to `.env` and edit it (Expo will pick up `EXPO_PUBLIC_*` vars):
+
+```bash
+cp .env.example .env
+```
+
 In the output, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
