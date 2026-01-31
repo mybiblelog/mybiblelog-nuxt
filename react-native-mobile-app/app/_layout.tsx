@@ -3,15 +3,18 @@ import { LocaleProvider, useT } from "@/src/i18n/LocaleProvider";
 import { ThemeProvider, useTheme } from "@/src/theme/ThemeProvider";
 import { AuthProvider } from "@/src/auth/AuthProvider";
 import { LogEntriesProvider } from "@/src/log-entries/LogEntriesProvider";
+import { UserSettingsProvider } from "@/src/settings/UserSettingsProvider";
 
 export default function RootLayout() {
   return (
     <LocaleProvider>
       <ThemeProvider>
         <AuthProvider>
-          <LogEntriesProvider>
-            <RootStack />
-          </LogEntriesProvider>
+          <UserSettingsProvider>
+            <LogEntriesProvider>
+              <RootStack />
+            </LogEntriesProvider>
+          </UserSettingsProvider>
         </AuthProvider>
       </ThemeProvider>
     </LocaleProvider>
