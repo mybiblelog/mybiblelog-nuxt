@@ -37,7 +37,12 @@ export function LogEntryRow({
   );
   const displayDate = useMemo(() => formatDisplayDate(entry.date), [entry.date]);
   return (
-    <View style={[styles.row, { backgroundColor: colors.surfaceAlt }]}>
+    <View
+      style={[
+        styles.row,
+        { backgroundColor: colors.surface, borderColor: colors.border },
+      ]}
+    >
       <View style={styles.rowMain}>
         <Text style={[styles.rowRange, { color: colors.text }]}>{range}</Text>
         <Text style={[styles.rowDate, { color: colors.mutedText }]}>
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 12,
     borderRadius: 12,
-    backgroundColor: "rgba(0,0,0,0.06)",
+    borderWidth: StyleSheet.hairlineWidth,
   },
   rowMain: {
     flex: 1,

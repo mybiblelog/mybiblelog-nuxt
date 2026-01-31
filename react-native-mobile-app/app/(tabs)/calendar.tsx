@@ -305,6 +305,7 @@ export default function Calendar() {
                         marginRight: dayCellMetrics.gap,
                         marginBottom: dayCellMetrics.gap,
                         backgroundColor: d.isCurrentMonth ? colors.surface : colors.surfaceAlt,
+                        borderColor: colors.border,
                       },
                     ]}
                   >
@@ -312,14 +313,14 @@ export default function Calendar() {
                       style={[
                         styles.dayNumberCircle,
                         isToday && { backgroundColor: colors.border },
-                        isSelected && { backgroundColor: "#09f" },
+                        isSelected && { backgroundColor: colors.primary },
                       ]}
                     >
                       <Text
                         style={[
                           styles.dayNumber,
                           { color: d.isCurrentMonth ? colors.text : colors.mutedText },
-                          isSelected && { color: "#fff" },
+                          isSelected && { color: colors.onPrimary },
                         ]}
                       >
                         {dayNum}
@@ -330,21 +331,28 @@ export default function Calendar() {
                       <Ionicons
                         name="star"
                         size={16}
-                        color={showGoldStar ? "#ffd700" : "#0077bb"}
+                        color={showGoldStar ? "#ffd700" : colors.secondary}
                         style={styles.dayStar}
                       />
                     )}
 
                     {d.isCurrentMonth && (
-                      <View style={styles.dayProgressTrack}>
+                      <View
+                        style={[styles.dayProgressTrack, { backgroundColor: colors.border }]}
+                      >
                         <View
                           style={[
                             styles.dayProgressFill,
                             styles.dayProgressFillSecondary,
-                            { width: `${secondaryPct}%` },
+                            { width: `${secondaryPct}%`, backgroundColor: colors.secondary },
                           ]}
                         />
-                        <View style={[styles.dayProgressFill, { width: `${primaryPct}%` }]} />
+                        <View
+                          style={[
+                            styles.dayProgressFill,
+                            { width: `${primaryPct}%`, backgroundColor: colors.primary },
+                          ]}
+                        />
                       </View>
                     )}
                   </Pressable>
@@ -352,7 +360,7 @@ export default function Calendar() {
               })}
             </View>
 
-            <View style={styles.entryHeader}>
+            <View style={[styles.entryHeader, { borderBottomColor: colors.primary }]}>
               <View style={{ flex: 1 }}>
                 <Text style={[styles.entryDateText, { color: colors.text }]}>{selectedDayDisplay}</Text>
                 <Text style={[styles.entryVerseCount, { color: colors.mutedText }]}>
@@ -509,7 +517,6 @@ const styles = StyleSheet.create({
   dayCell: {
     position: "relative",
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "rgba(0,0,0,0.06)",
     padding: 5,
   },
   dayNumberCircle: {
@@ -534,7 +541,6 @@ const styles = StyleSheet.create({
     right: 2,
     bottom: 2,
     height: 5,
-    backgroundColor: "#000",
     borderRadius: 3,
     overflow: "hidden",
   },
@@ -543,14 +549,11 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     bottom: 0,
-    backgroundColor: "#09f",
   },
   dayProgressFillSecondary: {
-    backgroundColor: "#0077bb",
   },
   entryHeader: {
     borderBottomWidth: 2,
-    borderBottomColor: "#09f",
     marginHorizontal: 16,
     paddingTop: 12,
     paddingBottom: 10,

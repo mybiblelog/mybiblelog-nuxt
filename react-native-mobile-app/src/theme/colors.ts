@@ -1,3 +1,5 @@
+import { brand } from "./brand";
+
 export type ColorSchemeName = "light" | "dark";
 
 export type ThemeColors = {
@@ -8,6 +10,9 @@ export type ThemeColors = {
   mutedText: string;
   border: string;
   primary: string;
+  secondary: string;
+  tertiary: string;
+  success: string;
   onPrimary: string;
   destructive: string;
   onDestructive: string;
@@ -23,7 +28,10 @@ export const colorsByScheme: Record<ColorSchemeName, ThemeColors> = {
     text: "#111111",
     mutedText: "rgba(0,0,0,0.65)",
     border: "rgba(0,0,0,0.15)",
-    primary: "#000000",
+    primary: brand.primary,
+    secondary: brand.secondary,
+    tertiary: brand.tertiary,
+    success: brand.success,
     onPrimary: "#ffffff",
     destructive: "#b00020",
     onDestructive: "#ffffff",
@@ -37,8 +45,11 @@ export const colorsByScheme: Record<ColorSchemeName, ThemeColors> = {
     text: "#f5f5f7",
     mutedText: "rgba(245,245,247,0.70)",
     border: "rgba(245,245,247,0.18)",
-    primary: "#f5f5f7",
-    onPrimary: "#0b0b0f",
+    primary: brand.primary,
+    secondary: brand.secondary,
+    tertiary: brand.tertiary,
+    success: brand.success,
+    onPrimary: "#ffffff",
     destructive: "#ff5a6a",
     onDestructive: "#0b0b0f",
     backdrop: "rgba(0,0,0,0.55)",
