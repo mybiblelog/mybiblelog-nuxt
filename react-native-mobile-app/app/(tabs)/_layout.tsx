@@ -20,16 +20,34 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t("start_tab_title"),
+          title: "Today",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" color={color} size={size} />
+            <Ionicons name="today-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="bible"
+        options={{
+          title: "Bible",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="book-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="calendar"
+        options={{
+          title: "Calendar",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="calendar-outline" color={color} size={size} />
           ),
         }}
       />
       <Tabs.Screen
         name="log"
         options={{
-          title: t("log_tab_title"),
+          title: "Log",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="list-outline" color={color} size={size} />
           ),
@@ -38,7 +56,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: t("settings_tab_title"),
+          title: "Settings",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings-outline" color={color} size={size} />
           ),
