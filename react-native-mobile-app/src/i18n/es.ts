@@ -92,5 +92,14 @@ export const es = {
   connectivity_online: "En línea",
   connectivity_offline: "Sin conexión",
   connectivity_unknown: "Desconocido",
+
+  settings_section_account: "Cuenta",
+  settings_section_account_subtitle: "Inicio de sesión y conectividad",
+  settings_section_reading: "Lectura",
+  settings_section_reading_subtitle: "Preferencias de lectura",
+  settings_section_appearance: "Apariencia",
+  settings_section_appearance_subtitle: "Tema y visualización",
+  settings_section_language: "Idioma",
+  settings_section_language_subtitle: "Elige tu idioma",
 } as const;
 
