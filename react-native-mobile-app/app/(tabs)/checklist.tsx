@@ -249,7 +249,7 @@ export default function Checklist() {
     }
   }
 
-  const completeColor = "#0c0";
+  const completeColor = colors.success;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
