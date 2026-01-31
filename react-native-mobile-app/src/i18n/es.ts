@@ -68,7 +68,7 @@ export const es = {
   login_button: "Iniciar sesión",
   auth_invalid_credentials: "Correo o contraseña incorrectos.",
   auth_generic_error: "Algo salió mal. Inténtalo de nuevo.",
-  auth_mock_hint: "Login simulado: test@example.com / test",
+  auth_login_hint: "Inicia sesión con la misma cuenta que usas en la web.",
 
   // log entry editor (mirrors Nuxt)
   preview_passage: "Vista previa del pasaje",

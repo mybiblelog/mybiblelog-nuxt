@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "start:dev": "EXPO_PUBLIC_API_BASE_URL=http://localhost:3000 expo start",
+    "start:dev": "EXPO_PUBLIC_API_BASE_URL=http://localhost:8080 expo start",
     "start:staging": "EXPO_PUBLIC_API_BASE_URL=https://staging.example.com expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
+    "web": "EXPO_PUBLIC_API_BASE_URL=http://localhost:8080 expo start --web",
     "lint": "expo lint"
   },
   "dependencies": {

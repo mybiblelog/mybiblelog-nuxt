@@ -67,7 +67,7 @@ export const en = {
   login_button: "Login",
   auth_invalid_credentials: "Invalid email or password.",
   auth_generic_error: "Something went wrong. Please try again.",
-  auth_mock_hint: "Mock login: test@example.com / test",
+  auth_login_hint: "Sign in with the same account you use on the web app.",
 
   // log entry editor (mirrors Nuxt)
   preview_passage: "Preview passage",

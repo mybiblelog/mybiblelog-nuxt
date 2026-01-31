@@ -17,8 +17,8 @@ export default function Login() {
   const { colors } = useTheme();
   const { login } = useAuth();
 
-  const [email, setEmail] = useState("test@example.com");
-  const [password, setPassword] = useState("test");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -106,7 +106,7 @@ export default function Login() {
       </Pressable>
 
       <Text style={[styles.hint, { color: colors.mutedText }]}>
-        {t("auth_mock_hint")}
+        {t("auth_login_hint")}
       </Text>
     </View>
   );
