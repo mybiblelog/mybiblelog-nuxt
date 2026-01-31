@@ -108,5 +108,8 @@ export const en = {
   settings_reading_preferred_bible_app_title: "Preferred Bible App",
   settings_reading_local_only_notice:
     "Sign in to sync these settings to your account. (Preferred Bible App is device-only.)",
+
+  settings_saved_successfully: "Saved.",
+  settings_save_invalid: "Please check the value and try again.",
 } as const;
 

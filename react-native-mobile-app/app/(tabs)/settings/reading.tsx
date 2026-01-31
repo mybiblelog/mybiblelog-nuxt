@@ -4,6 +4,7 @@ import { SelectSheet } from "@/src/components/SelectSheet";
 import { useT } from "@/src/i18n/LocaleProvider";
 import { useUserSettings } from "@/src/settings/UserSettingsProvider";
 import { useTheme } from "@/src/theme/ThemeProvider";
+import { useToast } from "@/src/toast/ToastProvider";
 import { BibleApps, BibleVersions } from "@mybiblelog/shared";
 import {
   ActivityIndicator,
@@ -20,6 +21,7 @@ export default function ReadingSettings() {
   const { colors } = useTheme();
   const { state: authState } = useAuth();
   const { state: settingsState, setLocalSettings, updateServerSettings } = useUserSettings();
+  const { showToast } = useToast();
 
   const [bibleVersionOpen, setBibleVersionOpen] = useState(false);
   const [bibleAppOpen, setBibleAppOpen] = useState(false);
@@ -79,37 +81,59 @@ export default function ReadingSettings() {
 
   async function saveDailyGoal() {
     const value = settings.dailyVerseCountGoal;
-    if (!Number.isFinite(value) || value < 1 || value > 1111) return;
+    if (!Number.isFinite(value) || value < 1 || value > 1111) {
+      showToast({ type: "error", message: t("settings_save_invalid") });
+      return;
+    }
     if (canUseServer) {
       const ok = await updateServerSettings({ dailyVerseCountGoal: value });
-      if (ok) return;
+      if (ok) {
+        showToast({ type: "success", message: t("settings_saved_successfully") });
+        return;
+      }
     }
     await setLocalSettings({ dailyVerseCountGoal: value });
+    showToast({ type: "success", message: t("settings_saved_successfully") });
   }
 
   async function saveLookBackDate() {
     const value = settings.lookBackDate;
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      showToast({ type: "error", message: t("settings_save_invalid") });
+      return;
+    }
     if (canUseServer) {
       const ok = await updateServerSettings({ lookBackDate: value });
-      if (ok) return;
+      if (ok) {
+        showToast({ type: "success", message: t("settings_saved_successfully") });
+        return;
+      }
     }
     await setLocalSettings({ lookBackDate: value });
+    showToast({ type: "success", message: t("settings_saved_successfully") });
   }
 
   async function savePreferredBibleVersion() {
     const value = settings.preferredBibleVersion;
-    if (!value) return;
+    if (!value) {
+      showToast({ type: "error", message: t("settings_save_invalid") });
+      return;
+    }
     if (canUseServer) {
       const ok = await updateServerSettings({ preferredBibleVersion: value });
-      if (ok) return;
+      if (ok) {
+        showToast({ type: "success", message: t("settings_saved_successfully") });
+        return;
+      }
     }
     await setLocalSettings({ preferredBibleVersion: value });
+    showToast({ type: "success", message: t("settings_saved_successfully") });
   }
 
   async function savePreferredBibleApp() {
     // Device-only (API does not currently store this).
     await setLocalSettings({ preferredBibleApp: settings.preferredBibleApp });
+    showToast({ type: "success", message: t("settings_saved_successfully") });
   }
 
   return (
