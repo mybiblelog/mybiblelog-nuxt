@@ -101,5 +101,13 @@ export const es = {
   settings_section_appearance_subtitle: "Tema y visualización",
   settings_section_language: "Idioma",
   settings_section_language_subtitle: "Elige tu idioma",
+
+  settings_select_option: "Seleccionar una opción",
+  settings_reading_daily_goal_title: "Meta de Versículos Diarios",
+  settings_reading_look_back_date_title: "Fecha de Revisión",
+  settings_reading_preferred_bible_version_title: "Versión de la Biblia Preferida",
+  settings_reading_preferred_bible_app_title: "Aplicación de Biblia Preferida",
+  settings_reading_local_only_notice:
+    "Inicia sesión para sincronizar estos ajustes con tu cuenta. (La app preferida es solo de este dispositivo.)",
 } as const;
 
