@@ -91,5 +91,14 @@ export const en = {
   connectivity_online: "Online",
   connectivity_offline: "Offline",
   connectivity_unknown: "Unknown",
+
+  settings_section_account: "Account",
+  settings_section_account_subtitle: "Login and connectivity",
+  settings_section_reading: "Reading",
+  settings_section_reading_subtitle: "Reading preferences",
+  settings_section_appearance: "Appearance",
+  settings_section_appearance_subtitle: "Theme and display",
+  settings_section_language: "Language",
+  settings_section_language_subtitle: "Choose your language",
 } as const;
 
