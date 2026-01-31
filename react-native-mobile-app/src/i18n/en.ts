@@ -113,5 +113,10 @@ export const en = {
 
   settings_saved_successfully: "Saved.",
   settings_save_invalid: "Please check the value and try again.",
+
+  calendar_today: "Today",
+  calendar_no_entries: "No Entries",
+  calendar_verses: "verses",
+  calendar_open_bible_failed: "Unable to open Bible app.",
 } as const;
 

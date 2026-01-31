@@ -22,6 +22,11 @@ type Props = {
   title: string;
   submitLabel: string;
   initialEntry?: LogEntry;
+  /**
+   * Optional date preset for "new entry" flows. Format: YYYY-MM-DD.
+   * Ignored when `initialEntry` is provided.
+   */
+  presetDate?: string;
   onClose: () => void;
   onSubmit: (entry: LogEntry) => void;
 };
@@ -31,6 +36,7 @@ export function LogEntryEditorModal({
   title,
   submitLabel,
   initialEntry,
+  presetDate,
   onClose,
   onSubmit,
 }: Props) {
@@ -84,7 +90,8 @@ export function LogEntryEditorModal({
     const wasVisible = isRendered;
 
     if (visible && !wasVisible) {
-      reset(initialEntry ?? undefined);
+      const init = initialEntry ?? (presetDate ? ({ date: presetDate } as any) : undefined);
+      reset(init);
       markClean();
       setIsRendered(true);
       backdropOpacity.setValue(0);
@@ -136,6 +143,7 @@ export function LogEntryEditorModal({
     initialEntry,
     isRendered,
     markClean,
+    presetDate,
     reset,
     sheetTranslateY,
     visible,
