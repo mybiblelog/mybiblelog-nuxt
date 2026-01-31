@@ -106,4 +106,3 @@ export async function savePendingLogEntryMutations(
     console.warn("Failed to save log entry mutations", err);
   }
 }
-

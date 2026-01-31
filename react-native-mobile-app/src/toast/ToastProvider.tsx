@@ -3,7 +3,7 @@ import { createContext, useContext, useMemo, useRef, useState } from "react";
 import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@/src/theme/ThemeProvider";
 
-export type ToastType = "success" | "error";
+export type ToastType = "success" | "error" | "info";
 
 export type Toast = {
   id: string;
@@ -71,13 +71,31 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               onPress={hideToast}
               style={[
                 styles.toast,
-                {
-                  backgroundColor:
-                    toast.type === "success" ? colors.primary : colors.destructive,
-                },
+                toast.type === "info"
+                  ? {
+                      backgroundColor: colors.surface,
+                      borderColor: colors.border,
+                      borderWidth: StyleSheet.hairlineWidth,
+                    }
+                  : {
+                      backgroundColor:
+                        toast.type === "success" ? colors.primary : colors.destructive,
+                    },
               ]}
             >
-              <Text style={[styles.toastText, { color: colors.onPrimary }]}>
+              <Text
+                style={[
+                  styles.toastText,
+                  {
+                    color:
+                      toast.type === "error"
+                        ? colors.onDestructive
+                        : toast.type === "info"
+                          ? colors.text
+                          : colors.onPrimary,
+                  },
+                ]}
+              >
                 {toast.message}
               </Text>
             </Pressable>
