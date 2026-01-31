@@ -118,5 +118,12 @@ export const en = {
   calendar_no_entries: "No Entries",
   calendar_verses: "verses",
   calendar_open_bible_failed: "Unable to open Bible app.",
+
+  chapter_checklist: "Chapter Checklist",
+  loading: "Loading...",
+  logged_before_today:
+    "This chapter was logged before today. You can edit previous log entries on the Calendar page.",
+  unable_to_mark_complete: "Unable to mark the chapter complete.",
+  unable_to_mark_incomplete: "Unable to mark the chapter incomplete.",
 } as const;
 

@@ -119,5 +119,12 @@ export const es = {
   calendar_no_entries: "No hay entradas",
   calendar_verses: "versículos",
   calendar_open_bible_failed: "No se pudo abrir la Biblia.",
+
+  chapter_checklist: "Lista de capítulos",
+  loading: "Cargando...",
+  logged_before_today:
+    "Este capítulo se registró antes de hoy. Puedes editar entradas anteriores en la página del Calendario.",
+  unable_to_mark_complete: "No se puede marcar el capítulo como completo.",
+  unable_to_mark_incomplete: "No se puede marcar el capítulo como incompleto.",
 } as const;
 
