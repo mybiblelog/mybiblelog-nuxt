@@ -4,9 +4,8 @@ import { LogEntryEditorModal } from "@/src/components/LogEntryEditorModal";
 import { LogEntryMenu } from "@/src/components/LogEntryMenu";
 import { LogEntryRow } from "@/src/components/LogEntryRow";
 import { useT } from "@/src/i18n/LocaleProvider";
-import { loadLogEntries, saveLogEntries } from "@/src/storage/logEntries";
 import { useTheme } from "@/src/theme/ThemeProvider";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -15,6 +14,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { useLogEntries } from "@/src/log-entries/LogEntriesProvider";
 
 // const LOG_ENTRIES: LogEntry[] = [
 //   { startVerseId: 1001001, endVerseId: 1001005, date: "2026-01-10" },
@@ -25,8 +25,6 @@ import {
 export default function Log() {
   const t = useT();
   const { colors } = useTheme();
-  const [entries, setEntries] = useState<LogEntry[]>([]);
-  const [hasLoaded, setHasLoaded] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [menuIndex, setMenuIndex] = useState<number | null>(null);
@@ -34,36 +32,22 @@ export default function Log() {
     null
   );
 
+  const { state: logState, createEntry, updateEntry, deleteEntry } = useLogEntries();
+
+  const entries = useMemo(() => {
+    if (logState.status !== "ready") return [];
+    return logState.entries;
+  }, [logState]);
+
+  // Reset selection indices if entries list changes underneath us (e.g. after API reload).
+  // Must be declared before any early returns to keep hook order stable.
   useEffect(() => {
-    let isMounted = true;
+    if (menuIndex !== null && !entries[menuIndex]) setMenuIndex(null);
+    if (editingIndex !== null && !entries[editingIndex]) setEditingIndex(null);
+    if (confirmDeleteIndex !== null && !entries[confirmDeleteIndex]) setConfirmDeleteIndex(null);
+  }, [confirmDeleteIndex, editingIndex, entries, menuIndex]);
 
-    (async () => {
-      const stored = await loadLogEntries();
-      if (!isMounted) return;
-
-      // Note: stored can legitimately be an empty array.
-      setEntries(stored ?? []);
-      // else {
-      //   // FIXME: for development only
-      //   // First run (or cleared storage): keep defaults and persist them once.
-      //   setEntries(LOG_ENTRIES);
-      //   void saveLogEntries(LOG_ENTRIES);
-      // }
-
-      setHasLoaded(true);
-    })();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!hasLoaded) return;
-    void saveLogEntries(entries);
-  }, [entries, hasLoaded]);
-
-  if (!hasLoaded) {
+  if (logState.status !== "ready") {
     return (
       <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
         <ActivityIndicator color={colors.primary} />
@@ -90,6 +74,12 @@ export default function Log() {
     setMenuIndex(index);
   }
 
+  const selectedEntryForEdit: LogEntry | undefined =
+    editingIndex !== null ? entries[editingIndex] : undefined;
+
+  const selectedEntryForDelete: LogEntry | undefined =
+    confirmDeleteIndex !== null ? entries[confirmDeleteIndex] : undefined;
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
@@ -111,9 +101,7 @@ export default function Log() {
           styles.listContent,
           entries.length === 0 && styles.listContentEmpty,
         ]}
-        keyExtractor={(item) =>
-          `${item.date}-${item.startVerseId}-${item.endVerseId}`
-        }
+        keyExtractor={(item) => item.clientId ?? item.id ?? `${item.date}-${item.startVerseId}-${item.endVerseId}`}
         renderItem={({ item, index }) => (
           <LogEntryRow entry={item} onPressMenu={() => openEntryMenu(index)} />
         )}
@@ -143,19 +131,22 @@ export default function Log() {
         onClose={closeAdd}
         title={t("add_log_entry_title")}
         submitLabel={t("save")}
-        onSubmit={(entry) => setEntries((prev) => [entry, ...prev])}
+        onSubmit={(entry) => {
+          void createEntry(entry);
+        }}
       />
 
       <LogEntryEditorModal
-        visible={editingIndex !== null && entries[editingIndex] !== undefined}
+        visible={editingIndex !== null && selectedEntryForEdit !== undefined}
         onClose={closeEdit}
         title={t("edit_log_entry_title")}
         submitLabel={t("save")}
-        initialEntry={editingIndex !== null ? entries[editingIndex] : undefined}
+        initialEntry={selectedEntryForEdit}
         onSubmit={(entry) => {
-          setEntries((prev) =>
-            prev.map((e, i) => (i === editingIndex ? entry : e))
-          );
+          if (editingIndex === null) return;
+          const existing = entries[editingIndex];
+          if (!existing?.clientId) return;
+          void updateEntry(existing.clientId, entry);
           setEditingIndex(null);
         }}
       />
@@ -175,8 +166,7 @@ export default function Log() {
 
       <ConfirmDialog
         visible={
-          confirmDeleteIndex !== null &&
-          entries[confirmDeleteIndex] !== undefined
+          confirmDeleteIndex !== null && selectedEntryForDelete !== undefined
         }
         title={t("delete_confirm_title")}
         message={t("delete_confirm_message")}
@@ -185,9 +175,10 @@ export default function Log() {
         onCancel={() => setConfirmDeleteIndex(null)}
         onConfirm={() => {
           if (confirmDeleteIndex === null) return;
-          setEntries((prev) =>
-            prev.filter((_, i) => i !== confirmDeleteIndex)
-          );
+          const existing = entries[confirmDeleteIndex];
+          if (existing?.clientId) {
+            void deleteEntry(existing.clientId);
+          }
           setConfirmDeleteIndex(null);
         }}
       />

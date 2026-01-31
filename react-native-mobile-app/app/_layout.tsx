@@ -2,13 +2,16 @@ import { Stack } from "expo-router";
 import { LocaleProvider, useT } from "@/src/i18n/LocaleProvider";
 import { ThemeProvider, useTheme } from "@/src/theme/ThemeProvider";
 import { AuthProvider } from "@/src/auth/AuthProvider";
+import { LogEntriesProvider } from "@/src/log-entries/LogEntriesProvider";
 
 export default function RootLayout() {
   return (
     <LocaleProvider>
       <ThemeProvider>
         <AuthProvider>
-          <RootStack />
+          <LogEntriesProvider>
+            <RootStack />
+          </LogEntriesProvider>
         </AuthProvider>
       </ThemeProvider>
     </LocaleProvider>
