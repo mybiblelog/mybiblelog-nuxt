@@ -32,6 +32,7 @@ export const en = {
   menu_edit: "Edit",
   menu_delete: "Delete",
   menu_open_in_bible: "Open in Bible",
+  menu_log_reading: "Log reading",
 
   delete_confirm_title: "Delete log entry?",
   delete_confirm_message: "This cannot be undone.",
