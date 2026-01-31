@@ -6,6 +6,20 @@ import { Bible } from "@mybiblelog/shared";
 import { useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+function formatDisplayDate(date: string): string {
+  // Input is `YYYY-MM-DD`. Parse without timezone shifts.
+  const parts = date.split("-").map((p) => Number(p));
+  if (parts.length !== 3 || parts.some((n) => !Number.isFinite(n))) return date;
+  const [year, month, day] = parts;
+  const d = new Date(year, month - 1, day);
+  if (Number.isNaN(d.getTime())) return date;
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(d);
+}
+
 export function LogEntryRow({
   entry,
   onPressMenu,
@@ -19,12 +33,13 @@ export function LogEntryRow({
     () => Bible.displayVerseRange(entry.startVerseId, entry.endVerseId, locale),
     [entry.endVerseId, entry.startVerseId, locale]
   );
+  const displayDate = useMemo(() => formatDisplayDate(entry.date), [entry.date]);
   return (
     <View style={[styles.row, { backgroundColor: colors.surfaceAlt }]}>
       <View style={styles.rowMain}>
-        <Text style={[styles.rowDate, { color: colors.text }]}>{entry.date}</Text>
-        <Text style={[styles.rowRange, { color: colors.mutedText }]}>
-          {range}
+        <Text style={[styles.rowRange, { color: colors.text }]}>{range}</Text>
+        <Text style={[styles.rowDate, { color: colors.mutedText }]}>
+          {displayDate}
         </Text>
       </View>
 
@@ -50,13 +65,14 @@ const styles = StyleSheet.create({
     paddingRight: 8,
   },
   rowDate: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 4,
+    fontSize: 13,
+    fontWeight: "700",
+    opacity: 0.85,
   },
   rowRange: {
-    fontSize: 14,
-    opacity: 0.85,
+    fontSize: 16,
+    fontWeight: "800",
+    marginBottom: 4,
   },
   menuButton: {
     width: 36,
