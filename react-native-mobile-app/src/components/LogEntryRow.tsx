@@ -23,9 +23,11 @@ function formatDisplayDate(date: string): string {
 export function LogEntryRow({
   entry,
   onPressMenu,
+  meta,
 }: {
   entry: LogEntry;
   onPressMenu: () => void;
+  meta?: string;
 }) {
   const { locale } = useLocale();
   const { colors } = useTheme();
@@ -41,6 +43,9 @@ export function LogEntryRow({
         <Text style={[styles.rowDate, { color: colors.mutedText }]}>
           {displayDate}
         </Text>
+        {!!meta && (
+          <Text style={[styles.rowMeta, { color: colors.mutedText }]}>{meta}</Text>
+        )}
       </View>
 
       <Pressable style={styles.menuButton} onPress={onPressMenu} hitSlop={10}>
@@ -73,6 +78,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "800",
     marginBottom: 4,
+  },
+  rowMeta: {
+    marginTop: 4,
+    fontSize: 12,
+    fontWeight: "700",
+    opacity: 0.8,
   },
   menuButton: {
     width: 36,
