@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import { useT } from "@/src/i18n/LocaleProvider";
 import { useTheme } from "@/src/theme/ThemeProvider";
 
-export default function Index() {
+export default function Calendar() {
   const { colors } = useTheme();
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Today</Text>
+      <Text style={[styles.title, { color: colors.text }]}>Calendar</Text>
     </View>
   );
 }
