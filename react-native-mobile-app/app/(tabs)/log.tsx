@@ -5,6 +5,9 @@ import { LogEntryMenu } from "@/src/components/LogEntryMenu";
 import { LogEntryRow } from "@/src/components/LogEntryRow";
 import { useT } from "@/src/i18n/LocaleProvider";
 import { useTheme } from "@/src/theme/ThemeProvider";
+import { useToast } from "@/src/toast/ToastProvider";
+import { openPassageInBible } from "@/src/bible/openInBible";
+import { useUserSettings } from "@/src/settings/UserSettingsProvider";
 import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -25,6 +28,8 @@ import { useLogEntries } from "@/src/log-entries/LogEntriesProvider";
 export default function Log() {
   const t = useT();
   const { colors } = useTheme();
+  const { showToast } = useToast();
+  const { state: settingsState } = useUserSettings();
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [menuIndex, setMenuIndex] = useState<number | null>(null);
@@ -154,6 +159,20 @@ export default function Log() {
       <LogEntryMenu
         visible={menuIndex !== null && entries[menuIndex] !== undefined}
         onClose={() => setMenuIndex(null)}
+        onOpenInBible={() => {
+          if (menuIndex === null) return;
+          const entry = entries[menuIndex];
+          if (!entry) return;
+          void (async () => {
+            const ok = await openPassageInBible(entry.startVerseId, {
+              preferredBibleApp: settingsState.status === "ready" ? settingsState.settings.preferredBibleApp : undefined,
+              preferredBibleVersion: settingsState.status === "ready" ? settingsState.settings.preferredBibleVersion : undefined,
+            });
+            if (!ok) {
+              showToast({ type: "error", message: "Unable to open Bible app." });
+            }
+          })();
+        }}
         onEdit={() => {
           if (menuIndex === null) return;
           setEditingIndex(menuIndex);

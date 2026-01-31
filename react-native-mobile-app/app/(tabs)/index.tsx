@@ -8,6 +8,8 @@ import { LogEntryRow } from "@/src/components/LogEntryRow";
 import { useLogEntries } from "@/src/log-entries/LogEntriesProvider";
 import { useUserSettings } from "@/src/settings/UserSettingsProvider";
 import { useTheme } from "@/src/theme/ThemeProvider";
+import { openPassageInBible } from "@/src/bible/openInBible";
+import { useToast } from "@/src/toast/ToastProvider";
 import { Bible } from "@mybiblelog/shared";
 import {
   ActivityIndicator,
@@ -39,6 +41,7 @@ export default function Index() {
   const { colors } = useTheme();
   const { state: logState, createEntry, updateEntry, deleteEntry } = useLogEntries();
   const { state: settingsState } = useUserSettings();
+  const { showToast } = useToast();
 
   const today = useMemo(() => dayjs().format("YYYY-MM-DD"), []);
   const todayDisplay = useMemo(() => formatLongDate(today), [today]);
@@ -233,6 +236,20 @@ export default function Index() {
       <LogEntryMenu
         visible={menuIndex !== null && todayEntries[menuIndex] !== undefined}
         onClose={() => setMenuIndex(null)}
+        onOpenInBible={() => {
+          if (menuIndex === null) return;
+          const entry = todayEntries[menuIndex];
+          if (!entry) return;
+          void (async () => {
+            const ok = await openPassageInBible(entry.startVerseId, {
+              preferredBibleApp: settingsState.status === "ready" ? settingsState.settings.preferredBibleApp : undefined,
+              preferredBibleVersion: settingsState.status === "ready" ? settingsState.settings.preferredBibleVersion : undefined,
+            });
+            if (!ok) {
+              showToast({ type: "error", message: "Unable to open Bible app." });
+            }
+          })();
+        }}
         onEdit={() => {
           if (menuIndex === null) return;
           setEditingIndex(menuIndex);
