@@ -109,5 +109,8 @@ export const es = {
   settings_reading_preferred_bible_app_title: "Aplicación de Biblia Preferida",
   settings_reading_local_only_notice:
     "Inicia sesión para sincronizar estos ajustes con tu cuenta. (La app preferida es solo de este dispositivo.)",
+
+  settings_saved_successfully: "Guardado.",
+  settings_save_invalid: "Revisa el valor e inténtalo de nuevo.",
 } as const;
 
