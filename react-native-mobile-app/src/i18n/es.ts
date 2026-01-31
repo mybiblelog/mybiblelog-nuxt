@@ -31,6 +31,7 @@ export const es = {
 
   menu_edit: "Editar",
   menu_delete: "Eliminar",
+  menu_open_in_bible: "Abrir en la Biblia",
 
   delete_confirm_title: "¿Eliminar registro?",
   delete_confirm_message: "Esta acción no se puede deshacer.",

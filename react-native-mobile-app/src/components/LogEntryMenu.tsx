@@ -14,11 +14,12 @@ import {
 type Props = {
   visible: boolean;
   onClose: () => void;
+  onOpenInBible?: () => void;
   onEdit: () => void;
   onDelete: () => void;
 };
 
-export function LogEntryMenu({ visible, onClose, onEdit, onDelete }: Props) {
+export function LogEntryMenu({ visible, onClose, onOpenInBible, onEdit, onDelete }: Props) {
   const t = useT();
   const { colors } = useTheme();
   const [isRendered, setIsRendered] = useState(false);
@@ -86,6 +87,24 @@ export function LogEntryMenu({ visible, onClose, onEdit, onDelete }: Props) {
 
         <Animated.View style={{ transform: [{ translateY: sheetTranslateY }] }}>
           <View style={[styles.sheet, { backgroundColor: colors.surface }]}>
+            {!!onOpenInBible && (
+              <>
+                <Pressable
+                  style={styles.item}
+                  onPress={() => {
+                    onClose();
+                    onOpenInBible();
+                  }}
+                >
+                  <Text style={[styles.itemText, { color: colors.text }]}>
+                    {t("menu_open_in_bible")}
+                  </Text>
+                </Pressable>
+
+                <View style={[styles.divider, { backgroundColor: colors.border }]} />
+              </>
+            )}
+
             <Pressable
               style={styles.item}
               onPress={() => {
