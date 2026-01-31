@@ -114,5 +114,10 @@ export const es = {
 
   settings_saved_successfully: "Guardado.",
   settings_save_invalid: "Revisa el valor e inténtalo de nuevo.",
+
+  calendar_today: "Hoy",
+  calendar_no_entries: "No hay entradas",
+  calendar_verses: "versículos",
+  calendar_open_bible_failed: "No se pudo abrir la Biblia.",
 } as const;
 
