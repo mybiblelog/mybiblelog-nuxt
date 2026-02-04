@@ -3,7 +3,9 @@ const path = require("path");
 
 const config = getDefaultConfig(__dirname);
 
-// FIXME: figure out why this is needed and what it does
+// This file sets up the Metro bundler to use the shared package,
+// configuring where to find the shared package and how to resolve dependencies.
+// It also watches the shared package for changes and rebuilds the app automatically.
 
 // Allow importing from the local ../shared package (file:../shared).
 config.watchFolders = [path.resolve(__dirname, "../shared")];

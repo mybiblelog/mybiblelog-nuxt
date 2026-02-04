@@ -16,6 +16,14 @@ dotenv.config({
 });
 
 const booleanStringDefaultingToTrue = z.enum(['true', 'false']).transform((val) => val !== 'false');
+const emptyStringToUndefined = z.preprocess(
+  (val) => (typeof val === 'string' && val.trim() === '' ? undefined : val),
+  z.string().optional()
+);
+const emptyStringUrlToUndefined = z.preprocess(
+  (val) => (typeof val === 'string' && val.trim() === '' ? undefined : val),
+  z.string().url().optional()
+);
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
@@ -31,6 +39,13 @@ const envSchema = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   GOOGLE_REDIRECT: z.string(),
+  // React Native app support / force-upgrade controls
+  MOBILE_IOS_MIN_VERSION: z.string().default('0.0.0'),
+  MOBILE_ANDROID_MIN_VERSION: z.string().default('0.0.0'),
+  MOBILE_IOS_LATEST_VERSION: emptyStringToUndefined,
+  MOBILE_ANDROID_LATEST_VERSION: emptyStringToUndefined,
+  MOBILE_IOS_STORE_URL: emptyStringUrlToUndefined,
+  MOBILE_ANDROID_STORE_URL: emptyStringUrlToUndefined,
 });
 
 const result = envSchema.safeParse(process.env);
@@ -57,6 +72,20 @@ const config = {
     clientId: result.data.GOOGLE_CLIENT_ID,
     clientSecret: result.data.GOOGLE_CLIENT_SECRET,
     redirectUri: result.data.GOOGLE_REDIRECT,
+  },
+  mobileApp: {
+    minVersion: {
+      ios: result.data.MOBILE_IOS_MIN_VERSION,
+      android: result.data.MOBILE_ANDROID_MIN_VERSION,
+    },
+    latestVersion: {
+      ios: result.data.MOBILE_IOS_LATEST_VERSION,
+      android: result.data.MOBILE_ANDROID_LATEST_VERSION,
+    },
+    storeUrl: {
+      ios: result.data.MOBILE_IOS_STORE_URL,
+      android: result.data.MOBILE_ANDROID_STORE_URL,
+    },
   },
 };
 

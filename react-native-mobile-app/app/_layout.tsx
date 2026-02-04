@@ -5,6 +5,7 @@ import { AuthProvider } from "@/src/auth/AuthProvider";
 import { LogEntriesProvider } from "@/src/log-entries/LogEntriesProvider";
 import { UserSettingsProvider } from "@/src/settings/UserSettingsProvider";
 import { ToastProvider } from "@/src/toast/ToastProvider";
+import { UpgradeGate } from "@/src/upgrade/UpgradeGate";
 
 export default function RootLayout() {
   return (
@@ -14,7 +15,9 @@ export default function RootLayout() {
           <AuthProvider>
             <UserSettingsProvider>
               <LogEntriesProvider>
-                <RootStack />
+                <UpgradeGate>
+                  <RootStack />
+                </UpgradeGate>
               </LogEntriesProvider>
             </UserSettingsProvider>
           </AuthProvider>
@@ -31,6 +34,7 @@ function RootStack() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="upgrade-required" />
       <Stack.Screen
         name="login"
         options={{

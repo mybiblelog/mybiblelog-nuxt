@@ -9,6 +9,7 @@ import { useLogEntries } from "@/src/log-entries/LogEntriesProvider";
 import { useUserSettings } from "@/src/settings/UserSettingsProvider";
 import { useTheme } from "@/src/theme/ThemeProvider";
 import { openPassageInBible } from "@/src/bible/openInBible";
+import { useLocale, useT } from "@/src/i18n/LocaleProvider";
 import { useToast } from "@/src/toast/ToastProvider";
 import { Bible } from "@mybiblelog/shared";
 import {
@@ -20,13 +21,13 @@ import {
   View,
 } from "react-native";
 
-function formatLongDate(date: string): string {
+function formatLongDateLocale(date: string, locale: string): string {
   const parts = date.split("-").map((p) => Number(p));
   if (parts.length !== 3 || parts.some((n) => !Number.isFinite(n))) return date;
   const [year, month, day] = parts;
   const d = new Date(year, month - 1, day);
   if (Number.isNaN(d.getTime())) return date;
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(locale, {
     month: "long",
     day: "numeric",
     year: "numeric",
@@ -42,9 +43,11 @@ export default function Index() {
   const { state: logState, createEntry, updateEntry, deleteEntry } = useLogEntries();
   const { state: settingsState } = useUserSettings();
   const { showToast } = useToast();
+  const t = useT();
+  const { locale } = useLocale();
 
   const today = useMemo(() => dayjs().format("YYYY-MM-DD"), []);
-  const todayDisplay = useMemo(() => formatLongDate(today), [today]);
+  const todayDisplay = useMemo(() => formatLongDateLocale(today, locale), [locale, today]);
 
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -134,7 +137,7 @@ export default function Index() {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.title, { color: colors.text }]}>Today</Text>
+          <Text style={[styles.title, { color: colors.text }]}>{t("today_title")}</Text>
           <Text style={[styles.subtitle, { color: colors.mutedText }]}>
             {todayDisplay}
           </Text>
@@ -144,19 +147,27 @@ export default function Index() {
           onPress={() => setIsAddOpen(true)}
           hitSlop={8}
         >
-          <Text style={[styles.addButtonText, { color: colors.onPrimary }]}>Add</Text>
+          <Text style={[styles.addButtonText, { color: colors.onPrimary }]}>{t("add")}</Text>
         </Pressable>
       </View>
 
       <View style={[styles.progressCard, { backgroundColor: colors.surfaceAlt }]}>
         <View style={styles.progressTopRow}>
           <Text style={[styles.progressLabel, { color: colors.text }]}>
-            Daily goal
+            {t("today_daily_goal")}
           </Text>
           <Text style={[styles.progressMeta, { color: colors.mutedText }]}>
-            {goal > 0
-              ? `${progressPct}% • ${versesReadToday} / ${goal} verses`
-              : `${versesReadToday} verses`}
+            {goal > 0 ?
+              t("today_progress_meta_with_goal", {
+                pct: progressPct,
+                read: versesReadToday,
+                goal,
+                verses: t("verses_lowercase"),
+              }) :
+              t("today_progress_meta_no_goal", {
+                read: versesReadToday,
+                verses: t("verses_lowercase"),
+              })}
           </Text>
         </View>
         <View style={[styles.progressTrack, { backgroundColor: colors.border }]}>
@@ -182,7 +193,10 @@ export default function Index() {
             meta={(() => {
               const stats = perEntryVerseStats.get(entryKey(item));
               if (!stats) return undefined;
-              return `${stats.newSinceLookBack} new • ${stats.total} total verses`;
+              return t("today_entry_meta", {
+                new: stats.newSinceLookBack,
+                total: stats.total,
+              });
             })()}
             onPressMenu={() => setMenuIndex(index)}
           />
@@ -191,17 +205,17 @@ export default function Index() {
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Text style={[styles.emptyTitle, { color: colors.text }]}>
-              No entries yet
+              {t("today_empty_title")}
             </Text>
             <Text style={[styles.emptyText, { color: colors.mutedText }]}>
-              Add what you read today to track your progress.
+              {t("today_empty_text")}
             </Text>
             <Pressable
               style={[styles.emptyCta, { backgroundColor: colors.primary }]}
               onPress={() => setIsAddOpen(true)}
             >
               <Text style={[styles.emptyCtaText, { color: colors.onPrimary }]}>
-                Add
+                {t("add")}
               </Text>
             </Pressable>
           </View>
@@ -211,8 +225,8 @@ export default function Index() {
       <LogEntryEditorModal
         visible={isAddOpen}
         onClose={() => setIsAddOpen(false)}
-        title="Add Log Entry"
-        submitLabel="Save"
+        title={t("add_log_entry_title")}
+        submitLabel={t("save")}
         onSubmit={(entry) => {
           void createEntry({ ...entry, date: today });
         }}
@@ -221,8 +235,8 @@ export default function Index() {
       <LogEntryEditorModal
         visible={editingIndex !== null && todayEntries[editingIndex] !== undefined}
         onClose={() => setEditingIndex(null)}
-        title="Edit Log Entry"
-        submitLabel="Save"
+        title={t("edit_log_entry_title")}
+        submitLabel={t("save")}
         initialEntry={editingIndex !== null ? todayEntries[editingIndex] : undefined}
         onSubmit={(entry) => {
           if (editingIndex === null) return;
@@ -246,7 +260,7 @@ export default function Index() {
               preferredBibleVersion: settingsState.status === "ready" ? settingsState.settings.preferredBibleVersion : undefined,
             });
             if (!ok) {
-              showToast({ type: "error", message: "Unable to open Bible app." });
+              showToast({ type: "error", message: t("calendar_open_bible_failed") });
             }
           })();
         }}
@@ -262,10 +276,10 @@ export default function Index() {
 
       <ConfirmDialog
         visible={confirmDeleteIndex !== null && todayEntries[confirmDeleteIndex] !== undefined}
-        title="Delete log entry?"
-        message="This cannot be undone."
-        confirmLabel="Delete"
-        cancelLabel="Cancel"
+        title={t("delete_confirm_title")}
+        message={t("delete_confirm_message")}
+        confirmLabel={t("menu_delete")}
+        cancelLabel={t("cancel")}
         onCancel={() => setConfirmDeleteIndex(null)}
         onConfirm={() => {
           if (confirmDeleteIndex === null) return;

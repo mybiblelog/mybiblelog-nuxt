@@ -86,13 +86,21 @@ OPENAI_API_KEY=xxxxxxxxxx
 # Test Data
 TEST_SITE_URL=http://localhost:3000 # for e2e tests
 TEST_BYPASS_SECRET=xxxxxxxxxx # for api tests (do NOT set in prod)
+
+# React Native app support / force-upgrade controls
+MOBILE_IOS_MIN_VERSION=0.0.0
+MOBILE_ANDROID_MIN_VERSION=0.0.0
+MOBILE_IOS_LATEST_VERSION=x.x.x
+MOBILE_ANDROID_LATEST_VERSION=x.x.x
+MOBILE_IOS_STORE_URL=https://apps.apple.com/us/app/xxxxxxxxxx/idxxxxxxxxxx
+MOBILE_ANDROID_STORE_URL=https://play.google.com/store/apps/details?id=xxxxxxxxxx
 ```
 
 For deployment to Heroku, ensure these env vars are set before pushing:
 
 ```bash
-$ heroku config:set HOST=0.0.0.0
-$ heroku config:set NODE_ENV=production
+heroku config:set HOST=0.0.0.0
+heroku config:set NODE_ENV=production
 ```
 
 ## Testing

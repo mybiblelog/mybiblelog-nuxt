@@ -2,12 +2,28 @@ export const es = {
   start_tab_title: "Inicio",
   log_tab_title: "Registro",
   settings_tab_title: "Ajustes",
+  tab_today: "Hoy",
+  tab_bible: "Biblia",
+  tab_calendar: "Calendario",
+  tab_checklist: "Lista",
 
   start_title: "Inicio",
   start_subtitle: "Usa las pestañas de abajo para navegar.",
 
   log_title: "Registro",
   add: "Agregar",
+
+  today_title: "Hoy",
+  today_daily_goal: "Meta diaria",
+  verses_lowercase: "versículos",
+  today_progress_meta_with_goal: "%{pct}% • %{read} / %{goal} %{verses}",
+  today_progress_meta_no_goal: "%{read} %{verses}",
+  today_empty_title: "Todavía no hay entradas",
+  today_empty_text: "Agrega lo que leíste hoy para seguir tu progreso.",
+  today_entry_meta: "%{new} nuevos • %{total} versículos en total",
+
+  bible_books_title: "Libros de la Biblia",
+  bible_book_title: "Libro",
 
   loading_log_entries: "Cargando registros…",
 
@@ -71,6 +87,15 @@ export const es = {
   auth_invalid_credentials: "Correo o contraseña incorrectos.",
   auth_generic_error: "Algo salió mal. Inténtalo de nuevo.",
   auth_login_hint: "Inicia sesión con la misma cuenta que usas en la web.",
+
+  upgrade_required_title: "Actualización requerida",
+  upgrade_required_message:
+    "Se requiere una versión más nueva de la app para seguir usando el servicio.",
+  upgrade_required_details:
+    "Versión actual: %{current} • Mínimo compatible: %{min}",
+  upgrade_required_button: "Actualizar app",
+  upgrade_required_no_store_url:
+    "Actualiza la app desde App Store / Play Store.",
 
   // log entry editor (mirrors Nuxt)
   preview_passage: "Vista previa del pasaje",

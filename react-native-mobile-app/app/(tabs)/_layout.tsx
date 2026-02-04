@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { Tabs, router } from "expo-router";
 import { useT } from "@/src/i18n/LocaleProvider";
 import { useTheme } from "@/src/theme/ThemeProvider";
 
@@ -20,7 +20,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Today",
+          title: t("tab_today"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="today-outline" color={color} size={size} />
           ),
@@ -29,16 +29,24 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="bible"
         options={{
-          title: "Bible",
+          title: t("tab_bible"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="book-outline" color={color} size={size} />
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            // Always route to the top-level Bible Books page for this tab.
+            // (By default, the tab preserves the last nested stack screen.)
+            e.preventDefault();
+            router.navigate("/bible");
+          },
         }}
       />
       <Tabs.Screen
         name="calendar"
         options={{
-          title: "Calendar",
+          title: t("tab_calendar"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar-outline" color={color} size={size} />
           ),
@@ -47,7 +55,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="checklist"
         options={{
-          title: "Checklist",
+          title: t("tab_checklist"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="checkbox-outline" color={color} size={size} />
           ),
@@ -56,7 +64,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="log"
         options={{
-          title: "Log",
+          title: t("log_tab_title"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="list-outline" color={color} size={size} />
           ),
@@ -65,7 +73,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
+          title: t("settings_tab_title"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings-outline" color={color} size={size} />
           ),

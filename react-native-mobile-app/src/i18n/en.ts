@@ -2,12 +2,28 @@ export const en = {
   start_tab_title: "Start",
   log_tab_title: "Log",
   settings_tab_title: "Settings",
+  tab_today: "Today",
+  tab_bible: "Bible",
+  tab_calendar: "Calendar",
+  tab_checklist: "Checklist",
 
   start_title: "Start",
   start_subtitle: "Use the tabs below to navigate.",
 
   log_title: "Log",
   add: "Add",
+
+  today_title: "Today",
+  today_daily_goal: "Daily goal",
+  verses_lowercase: "verses",
+  today_progress_meta_with_goal: "%{pct}% • %{read} / %{goal} %{verses}",
+  today_progress_meta_no_goal: "%{read} %{verses}",
+  today_empty_title: "No entries yet",
+  today_empty_text: "Add what you read today to track your progress.",
+  today_entry_meta: "%{new} new • %{total} total verses",
+
+  bible_books_title: "Bible Books",
+  bible_book_title: "Book",
 
   loading_log_entries: "Loading log entries…",
 
@@ -70,6 +86,14 @@ export const en = {
   auth_invalid_credentials: "Invalid email or password.",
   auth_generic_error: "Something went wrong. Please try again.",
   auth_login_hint: "Sign in with the same account you use on the web app.",
+
+  upgrade_required_title: "Update required",
+  upgrade_required_message:
+    "A newer version of the app is required to continue using the service.",
+  upgrade_required_details: "Current version: %{current} • Minimum supported: %{min}",
+  upgrade_required_button: "Update app",
+  upgrade_required_no_store_url:
+    "Please update the app from the App Store / Play Store.",
 
   // log entry editor (mirrors Nuxt)
   preview_passage: "Preview passage",
