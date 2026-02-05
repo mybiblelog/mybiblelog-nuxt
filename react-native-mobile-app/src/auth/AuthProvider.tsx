@@ -26,6 +26,7 @@ type LoginResult =
 type AuthContextValue = {
   state: AuthState;
   login: (email: string, password: string) => Promise<LoginResult>;
+  loginWithGoogleIdToken: (idToken: string, locale?: string) => Promise<LoginResult>;
   logout: () => Promise<void>;
 };
 
@@ -46,6 +47,8 @@ type ApiLoginOkResponse = {
     };
   };
 };
+
+type ApiGoogleIdTokenLoginOkResponse = ApiLoginOkResponse;
 
 async function loginApi(email: string, password: string): Promise<LoginResult & { session?: AuthSession }> {
   try {
@@ -97,6 +100,47 @@ async function loginApi(email: string, password: string): Promise<LoginResult & 
   }
 }
 
+async function loginWithGoogleIdTokenApi(
+  idToken: string,
+  locale?: string
+): Promise<LoginResult & { session?: AuthSession }> {
+  try {
+    const res = await fetch(`${getApiBaseUrl()}/auth/oauth2/google/id-token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ idToken, locale }),
+    });
+
+    if (!res.ok) {
+      if (res.status === 401 || res.status === 403) {
+        return { ok: false, error: { code: "unauthorized" } };
+      }
+      return { ok: false, error: { code: "unauthorized" } };
+    }
+
+    const json = (await res.json()) as ApiGoogleIdTokenLoginOkResponse;
+    const token = json?.data?.token;
+    const userEmail = json?.data?.user?.email;
+
+    if (typeof token !== "string" || token.length === 0 || typeof userEmail !== "string") {
+      return { ok: false, error: { code: "unauthorized" } };
+    }
+
+    return {
+      ok: true,
+      session: {
+        token,
+        user: { email: userEmail },
+      },
+    };
+  } catch {
+    return { ok: false, error: { code: "unauthorized" } };
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AuthState>({ status: "loading" });
 
@@ -118,6 +162,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       state,
       login: async (email, password) => {
         const result = await loginApi(email, password);
+        if (result.ok && result.session) {
+          await saveAuthSession(result.session);
+          setState({ status: "authenticated", session: result.session });
+          return { ok: true };
+        }
+        return { ok: false, error: { code: "unauthorized" } };
+      },
+      loginWithGoogleIdToken: async (idToken, locale) => {
+        const result = await loginWithGoogleIdTokenApi(idToken, locale);
         if (result.ok && result.session) {
           await saveAuthSession(result.session);
           setState({ status: "authenticated", session: result.session });

@@ -37,6 +37,9 @@ const envSchema = z.object({
   RESEND_API_KEY: z.string(),
   MONGODB_URI: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
+  // Comma-separated list of additional Google OAuth client IDs that are allowed
+  // to mint Google ID tokens for this backend (useful for mobile clients).
+  GOOGLE_ALLOWED_CLIENT_IDS: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string(),
   GOOGLE_REDIRECT: z.string(),
   // React Native app support / force-upgrade controls
@@ -70,6 +73,12 @@ const config = {
   },
   google: {
     clientId: result.data.GOOGLE_CLIENT_ID,
+    allowedClientIds: [
+      result.data.GOOGLE_CLIENT_ID,
+      ...(result.data.GOOGLE_ALLOWED_CLIENT_IDS
+        ? result.data.GOOGLE_ALLOWED_CLIENT_IDS.split(',').map((s) => s.trim()).filter(Boolean)
+        : []),
+    ],
     clientSecret: result.data.GOOGLE_CLIENT_SECRET,
     redirectUri: result.data.GOOGLE_REDIRECT,
   },

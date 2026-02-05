@@ -87,6 +87,7 @@ export const es = {
   auth_invalid_credentials: "Correo o contraseña incorrectos.",
   auth_generic_error: "Algo salió mal. Inténtalo de nuevo.",
   auth_login_hint: "Inicia sesión con la misma cuenta que usas en la web.",
+  login_with_google: "Continuar con Google",
 
   upgrade_required_title: "Actualización requerida",
   upgrade_required_message:

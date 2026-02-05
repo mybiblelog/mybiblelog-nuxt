@@ -86,6 +86,7 @@ export const en = {
   auth_invalid_credentials: "Invalid email or password.",
   auth_generic_error: "Something went wrong. Please try again.",
   auth_login_hint: "Sign in with the same account you use on the web app.",
+  login_with_google: "Continue with Google",
 
   upgrade_required_title: "Update required",
   upgrade_required_message:

@@ -1,17 +1,18 @@
 {
   "expo": {
-    "name": "react-native-mobile-app",
-    "slug": "react-native-mobile-app",
+    "name": "Bible Log",
+    "slug": "my-bible-log",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "reactnativemobileapp",
+    "scheme": "biblelog",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.mybiblelog.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -43,6 +44,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "apiBaseUrl": "http://localhost:8080",
+      "router": {},
+      "eas": {
+        "projectId": "0914f446-c79f-44be-85c0-7a465a0073a8"
+      }
     }
   }
 }

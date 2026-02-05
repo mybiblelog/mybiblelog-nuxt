@@ -95,9 +95,7 @@ export async function loadPendingLogEntryMutations(): Promise<PendingLogEntryMut
     console.warn("Failed to load log entry mutations", err);
     return [];
   }
-}
-
-export async function savePendingLogEntryMutations(
+}export async function savePendingLogEntryMutations(
   mutations: PendingLogEntryMutation[]
 ): Promise<void> {
   try {

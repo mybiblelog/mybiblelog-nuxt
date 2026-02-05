@@ -21,7 +21,35 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 This app supports build-time configuration via `EXPO_PUBLIC_*` environment variables.
 
 - **API base URL**: `EXPO_PUBLIC_API_BASE_URL`
+- **Google Sign-In (Expo Go)**: `EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID`
+- **Google Sign-In (web)**: `EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID` (use a **Web application** OAuth client in Google Cloud Console)
 - **Config accessor**: `src/config.ts` exports `API_BASE_URL`
+
+### Google Sign-In on web: fixing `redirect_uri_mismatch`
+
+When you sign in with Google on web, Google must allow the redirect URI your app uses. Add it in [Google Cloud Console](https://console.cloud.google.com/) → **APIs & Services** → **Credentials** → open your **Web application** OAuth 2.0 client → **Authorized redirect URIs** → **Add URI**.
+
+To see the exact URI your app uses: run the app on web, open the browser **Developer Console** (F12 → Console). On the Login screen you’ll see a log like:
+
+`[Google Sign-In] Add this exact URL to ... Authorized redirect URIs: https://localhost:8081`
+
+Add that **exact** URL (including port and path if present). For local dev it’s often `http://localhost:8081` or `https://localhost:8081` (port can vary). For production, add your real origin (e.g. `https://yourapp.com`).
+
+### Google Sign-In on web: COOP console messages
+
+After signing in with Google on web you may see console messages like `Cross-Origin-Opener-Policy policy would block the window.closed call`. These come from the browser’s security rules when the auth popup redirects back; the OAuth flow still completes. You can ignore them. If login fails, the usual cause is the API base URL (see below).
+
+### API connection (e.g. `net::ERR_CONNECTION_REFUSED`)
+
+The app sends requests to the URL in `EXPO_PUBLIC_API_BASE_URL` (or the default). If you see `POST ... net::ERR_CONNECTION_REFUSED`:
+
+- **Default** is `http://localhost:3000` (for use with Nuxt dev, which proxies `/api` to the backend).
+- If you run the **API server by itself** (e.g. from the `api` folder on port 8080), set in `.env`:  
+  `EXPO_PUBLIC_API_BASE_URL=http://localhost:8080`  
+  or run:  
+  `EXPO_PUBLIC_API_BASE_URL=http://localhost:8080 npx expo start --web`.
+
+Restart the Expo dev server after changing `.env`.
 
 Example (local dev):
 
@@ -34,6 +62,8 @@ You can also copy `.env.example` to `.env` and edit it (Expo will pick up `EXPO_
 ```bash
 cp .env.example .env
 ```
+
+**Important:** The `.env` file must live in the **project root** (same folder as `package.json`). Expo does not load `.env` from `src/` or other subfolders, so if your Google or API vars are undefined, move `.env` to the root and restart the dev server.
 
 In the output, you'll find options to open the app in a
 
