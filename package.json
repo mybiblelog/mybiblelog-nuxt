@@ -10,7 +10,8 @@
   "workspaces": [
     "api",
     "nuxt",
-    "shared"
+    "shared",
+    "react-native-mobile-app"
   ],
   "engines": {
     "node": "24.2.0"
@@ -86,5 +87,10 @@
     "jest": "^29.7.0",
     "openai": "^4.54.0",
     "ts-jest": "^29.2.0"
+  },
+  "overrides": {
+    "mongoose-unique-validator": {
+      "mongoose": "^9.1.6"
+    }
   }
 }
