@@ -1,12 +1,12 @@
 {
   "name": "mybiblelog",
   "version": "1.0.0",
+  "private": true,
   "description": "A web app for tracking personal Bible reading, built with Nuxt.",
   "author": {
     "name": "Aaron Smith",
     "url": "https://github.com/AaronSmithX"
   },
-  "private": true,
   "workspaces": [
     "api",
     "nuxt",
@@ -17,6 +17,7 @@
     "node": "24.2.0"
   },
   "scripts": {
+    "eas-build-pre-install": "npm install -w shared -w react-native-mobile-app && npm run build -w shared",
     "dev": "npm-run-all --parallel dev:api dev:nuxt",
     "dev:api": "npm run --prefix api dev:ts",
     "dev:nuxt": "npm run --prefix nuxt dev",
@@ -26,7 +27,7 @@
     "build": "npm run build --prefix api && npm run build --prefix nuxt",
     "heroku-prebuild": "npm install && npm install --include=dev --prefix shared && npm install --prefix nuxt && npm install --prefix api",
     "heroku-postbuild": "npm run build",
-    "clean": "rm -rf node_modules api/node_modules nuxt/node_modules shared/node_modules api/dist .nuxt nuxt/.nuxt shared/dist",
+    "clean": "rm -rf node_modules && npm run clean --prefix api && npm run clean --prefix nuxt && npm run clean --prefix shared && npm run clean --prefix react-native-mobile-app",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .js,.ts,.vue --ignore-path .gitignore . --fix",
     "test": "jest",
@@ -39,7 +40,8 @@
     "script:backup": "npm run --prefix api script:backup",
     "script:delete-test-users": "npm run --prefix api script:delete-test-users",
     "script:delete-stranded-data": "npm run --prefix api script:delete-stranded-data",
-    "script:migrate": "npm run --prefix api script:migrate"
+    "script:migrate": "npm run --prefix api script:migrate",
+    "eas:build:android:dev": "cd react-native-mobile-app && npx eas-cli build --profile development --platform android"
   },
   "jest": {
     "testEnvironment": "node",

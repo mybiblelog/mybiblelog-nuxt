@@ -1,6 +1,7 @@
 {
   "name": "mybiblelog-client",
   "version": "1.0.0",
+  "private": true,
   "description": "My Bible Log Nuxt.js Web App",
   "license": "MIT",
   "author": "Aaron Smith",
@@ -9,6 +10,7 @@
     "dev": "cross-env NODE_ENV=development nuxt2 dev",
     "start": "cross-env NODE_ENV=production nuxt2 start",
     "build": "nuxt2 build",
+    "clean": "rm -rf node_modules .nuxt",
     "lint": "eslint --ext .ts,.js,.vue .",
     "lint:fix": "eslint --ext .ts,.js,.vue . --fix"
   },

@@ -1,4 +1,8 @@
 import { useAuth } from "@/src/auth/AuthProvider";
+import {
+  GOOGLE_EXPO_CLIENT_ID,
+  GOOGLE_WEB_CLIENT_ID,
+} from "@/src/config";
 import { useT } from "@/src/i18n/LocaleProvider";
 import { useTheme } from "@/src/theme/ThemeProvider";
 import { router } from "expo-router";
@@ -34,10 +38,8 @@ export default function Login() {
   const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: process.env.EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID,
-    webClientId:
-      process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID ??
-      process.env.EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID,
+    clientId: GOOGLE_EXPO_CLIENT_ID,
+    webClientId: GOOGLE_WEB_CLIENT_ID,
     scopes: ["profile", "email"],
     responseType: "id_token",
   });

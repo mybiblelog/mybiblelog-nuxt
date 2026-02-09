@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mybiblelog.app"
     },
     "android": {
       "package": "com.mybiblelog.app",
@@ -46,7 +47,6 @@
       "reactCompiler": true
     },
     "extra": {
-      "apiBaseUrl": "http://localhost:8080",
       "router": {},
       "eas": {
         "projectId": "0914f446-c79f-44be-85c0-7a465a0073a8"
