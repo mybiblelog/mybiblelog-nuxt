@@ -11,13 +11,13 @@
     "api",
     "nuxt",
     "shared",
-    "react-native-mobile-app"
+    "mobile"
   ],
   "engines": {
     "node": "24.2.0"
   },
   "scripts": {
-    "eas-build-pre-install": "npm install -w shared -w react-native-mobile-app && npm run build -w shared",
+    "eas-build-pre-install": "npm install -w shared -w mobile && npm run build -w shared",
     "dev": "npm-run-all --parallel dev:api dev:nuxt",
     "dev:api": "npm run -w api dev:ts",
     "dev:nuxt": "npm run -w nuxt dev",
@@ -27,7 +27,7 @@
     "build": "npm run build -w api && npm run build -w nuxt",
     "heroku-prebuild": "npm install && npm install --include=dev -w shared && npm install -w nuxt && npm install -w api",
     "heroku-postbuild": "npm run build",
-    "clean": "rm -rf node_modules && npm run clean -w api && npm run clean -w nuxt && npm run clean -w shared && npm run clean -w react-native-mobile-app",
+    "clean": "rm -rf node_modules && npm run clean -w api && npm run clean -w nuxt && npm run clean -w shared && npm run clean -w mobile",
     "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .js,.ts,.vue --ignore-path .gitignore . --fix",
     "test": "jest",
@@ -41,7 +41,7 @@
     "script:delete-test-users": "npm run -w api script:delete-test-users",
     "script:delete-stranded-data": "npm run -w api script:delete-stranded-data",
     "script:migrate": "npm run -w api script:migrate",
-    "eas:build:android:dev": "cd react-native-mobile-app && npx eas-cli build --profile development --platform android"
+    "eas:build:android:dev": "cd mobile && npx eas-cli build --profile development --platform android"
   },
   "jest": {
     "testEnvironment": "node",

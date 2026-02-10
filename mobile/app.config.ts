@@ -7,7 +7,7 @@ dotenv.config({
 });
 
 // Expo/Metro automatically loads .env from the project root (same directory as this file).
-// Place your .env file at: react-native-mobile-app/.env
+// Place your .env file at: mobile/.env
 
 // FIXME: this validation should probably live in config.ts instead:
 // - this file is loaded by `expo config` before uploading files to EAS
