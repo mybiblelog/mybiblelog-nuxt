@@ -21,23 +21,14 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 This app supports build-time configuration via `EXPO_PUBLIC_*` environment variables.
 
 - **API base URL**: `EXPO_PUBLIC_API_BASE_URL`
-- **Google Sign-In (Expo Go)**: `EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID`
-- **Google Sign-In (web)**: `EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID` (use a **Web application** OAuth client in Google Cloud Console)
 - **Config accessor**: `src/config.ts` exports `API_BASE_URL`
 
-### Google Sign-In on web: fixing `redirect_uri_mismatch`
+### OAuth login (PKCE)
 
-When you sign in with Google on web, Google must allow the redirect URI your app uses. Add it in [Google Cloud Console](https://console.cloud.google.com/) → **APIs & Services** → **Credentials** → open your **Web application** OAuth 2.0 client → **Authorized redirect URIs** → **Add URI**.
+Mobile login uses the backend OAuth endpoints:
 
-To see the exact URI your app uses: run the app on web, open the browser **Developer Console** (F12 → Console). On the Login screen you’ll see a log like:
-
-`[Google Sign-In] Add this exact URL to ... Authorized redirect URIs: https://localhost:8081`
-
-Add that **exact** URL (including port and path if present). For local dev it’s often `http://localhost:8081` or `https://localhost:8081` (port can vary). For production, add your real origin (e.g. `https://yourapp.com`).
-
-### Google Sign-In on web: COOP console messages
-
-After signing in with Google on web you may see console messages like `Cross-Origin-Opener-Policy policy would block the window.closed call`. These come from the browser’s security rules when the auth popup redirects back; the OAuth flow still completes. You can ignore them. If login fails, the usual cause is the API base URL (see below).
+- `GET /api/oauth/authorize` (opens web login UI if needed)
+- `POST /api/oauth/token` (exchanges code for JWT)
 
 ### API connection (e.g. `net::ERR_CONNECTION_REFUSED`)
 
@@ -63,7 +54,7 @@ You can also copy `.env.example` to `.env` and edit it (Expo will pick up `EXPO_
 cp .env.example .env
 ```
 
-**Important:** The `.env` file must live in the **project root** (same folder as `package.json`). Expo does not load `.env` from `src/` or other subfolders, so if your Google or API vars are undefined, move `.env` to the root and restart the dev server.
+**Important:** The `.env` file must live in the **project root** (same folder as `package.json`). Expo does not load `.env` from `src/` or other subfolders.
 
 In the output, you'll find options to open the app in a
 
@@ -73,6 +64,45 @@ In the output, you'll find options to open the app in a
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Android Debug Bridge: `localhost`
+
+When using the Android emulator, `localhost` URLs typically resolve to the emulated Android device rather than the host computer.
+
+Instead, ADB maps `10.0.2.2` to the `localhost` of the computer.
+
+This causes problems for testing OAuth locally, as all OAuth URLS and redirects would need to be configured with `10.0.2.2` as the host. This behavior only applies:
+
+- on Android (not iOS or web)
+- running locally in development
+
+Ideally, all client platforms would have parity and be as similar as possible to a production setup.
+
+To tell Android Debug Bridge to resolve `localhost` port URLs to the host computer, first start the emulator, then use these commands:
+
+```bash
+adb reverse tcp:8080 tcp:8080
+adb reverse tcp:3000 tcp:3000
+```
+
+Run the command once per port.
+
+## Android Chrome Debugging
+
+First enable remote debugging in the emulator:
+
+- Open "Settings"
+- Go to "About emulated device"
+- Tap "Build number" 7 times
+- Go to "Settings" then "System" then "Developer options"
+- Enable USB debugging
+
+To open Chrome DevTools for the emulator:
+
+- Open chrome://inspect/#devices in desktop Chrome
+- Open a tab in Chrome on the emulator to debug it on desktop
+
+You may need to run `adb devices` to get the device to show up.
 
 ## Get a fresh project
 

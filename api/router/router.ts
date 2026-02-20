@@ -1,6 +1,7 @@
 import express from 'express';
 
 import authRouter from './routes/auth';
+import oauthRouter from './routes/oauth';
 import settingsRouter from './routes/settings';
 import adminRouter from './routes/admin';
 import logEntriesRouter from './routes/log-entries';
@@ -14,6 +15,7 @@ import mobileAppRouter from './routes/mobile-app';
 const apiRouter = express.Router();
 
 apiRouter.use(authRouter);
+apiRouter.use(oauthRouter);
 apiRouter.use(settingsRouter);
 apiRouter.use(adminRouter);
 apiRouter.use(logEntriesRouter);

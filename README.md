@@ -77,6 +77,15 @@ GOOGLE_CLIENT_ID=xxxxxxxxxx.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=xxxxxxxxxx
 GOOGLE_REDIRECT=http://xxxxxxxxxx:xxxx/google-login
 
+# OAuth (mobile app) — Authorization Code + PKCE
+# Used by the Expo app to obtain a JWT via:
+# - GET  /api/oauth/authorize (browser-based; uses web login session)
+# - POST /api/oauth/token     (PKCE code exchange)
+#
+# Redirect URIs can be exact values or simple prefix wildcards (suffix "*"), e.g. "exp://*"
+OAUTH_MOBILE_CLIENT_ID=mobile
+OAUTH_MOBILE_REDIRECT_URIS=biblelog://oauth,exp://*,http://localhost:8081/oauth
+
 # Google Analytics ID (only needed if verifying GA connection)
 GA_MEASUREMENT_ID=G-xxxxxxxxxx
 

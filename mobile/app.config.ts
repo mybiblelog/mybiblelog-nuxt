@@ -18,7 +18,6 @@ dotenv.config({
 
 const requiredEnvVars = [
   "EXPO_PUBLIC_API_BASE_URL",
-  "EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID",
 ] as const;
 
 const missing = requiredEnvVars.filter(
@@ -32,16 +31,11 @@ if (missing.length > 0) {
 }
 
 const apiBaseUrl = process.env.EXPO_PUBLIC_API_BASE_URL!;
-const googleExpoClientId = process.env.EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID!;
-const googleWebClientId =
-  process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID?.trim() || googleExpoClientId;
 
 export default ({ config }: { config: ExpoConfig }): ExpoConfig => ({
   ...config,
   extra: {
     ...config.extra,
     apiBaseUrl,
-    googleExpoClientId,
-    googleWebClientId,
   },
 });

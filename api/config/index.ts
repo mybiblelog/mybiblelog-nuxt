@@ -42,6 +42,12 @@ const envSchema = z.object({
   GOOGLE_ALLOWED_CLIENT_IDS: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string(),
   GOOGLE_REDIRECT: z.string(),
+  // OAuth 2.1 (Auth Code + PKCE) support for mobile app
+  // - Client ID is a logical identifier, not a secret
+  // - Redirect URIs should be exact values, comma-separated
+  OAUTH_MOBILE_CLIENT_ID: z.string().default('mobile'),
+  // Supports exact values and simple prefix wildcards (suffix "*"), e.g. "exp://*"
+  OAUTH_MOBILE_REDIRECT_URIS: z.string().default('biblelog://oauth,exp://*,http://localhost:8081/oauth'),
   // React Native app support / force-upgrade controls
   MOBILE_IOS_MIN_VERSION: z.string().default('0.0.0'),
   MOBILE_ANDROID_MIN_VERSION: z.string().default('0.0.0'),
@@ -81,6 +87,10 @@ const config = {
     ],
     clientSecret: result.data.GOOGLE_CLIENT_SECRET,
     redirectUri: result.data.GOOGLE_REDIRECT,
+  },
+  oauth: {
+    mobileClientId: result.data.OAUTH_MOBILE_CLIENT_ID,
+    mobileRedirectUris: result.data.OAUTH_MOBILE_REDIRECT_URIS.split(',').map((s) => s.trim()).filter(Boolean),
   },
   mobileApp: {
     minVersion: {

@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { LOGIN_REDIRECT_TO_KEY } from '~/helpers/local-storage-keys';
+
 export default {
   name: 'GoogleLoginPage',
   middleware: ['auth'],
@@ -44,7 +46,15 @@ export default {
         // Reload user now that auth cookie should be set
         await this.$store.dispatch('auth/refreshUser');
 
-        // Redirect to the user's preferred locale.
+        const redirectTo = localStorage.getItem(LOGIN_REDIRECT_TO_KEY);
+        const isSafeRedirectTo = typeof redirectTo === 'string' && redirectTo.startsWith('/') && !redirectTo.startsWith('//');
+        if (isSafeRedirectTo) {
+          localStorage.removeItem(LOGIN_REDIRECT_TO_KEY);
+          window.location.assign(redirectTo);
+          return;
+        }
+
+        // Default: redirect to the user's preferred locale.
         const redirectUrl = this.localePath('/start', userLocale);
         await this.$router.push(redirectUrl);
       }

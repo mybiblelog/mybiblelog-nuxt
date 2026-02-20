@@ -6,6 +6,9 @@ import { LogEntriesProvider } from "@/src/log-entries/LogEntriesProvider";
 import { UserSettingsProvider } from "@/src/settings/UserSettingsProvider";
 import { ToastProvider } from "@/src/toast/ToastProvider";
 import { UpgradeGate } from "@/src/upgrade/UpgradeGate";
+import * as WebBrowser from "expo-web-browser";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function RootLayout() {
   return (

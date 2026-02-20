@@ -19,125 +19,37 @@ type AuthState =
   | { status: "unauthenticated" }
   | { status: "authenticated"; session: AuthSession };
 
-type LoginResult =
-  | { ok: true }
-  | { ok: false; error: { code: "unauthorized" } };
-
 type AuthContextValue = {
   state: AuthState;
-  login: (email: string, password: string) => Promise<LoginResult>;
-  loginWithGoogleIdToken: (idToken: string, locale?: string) => Promise<LoginResult>;
+  finishOAuthLogin: (accessToken: string) => Promise<{ ok: true } | { ok: false }>;
   logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-type ApiErrorResponse = {
-  error?: {
-    code?: string;
-    errors?: Array<{ code?: string; field?: string | null; properties?: Record<string, unknown> }>;
-  };
-};
-
-type ApiLoginOkResponse = {
+type ApiCurrentUserOkResponse = {
   data?: {
-    token?: string;
     user?: {
       email?: string;
-    };
+    } | null;
   };
 };
 
-type ApiGoogleIdTokenLoginOkResponse = ApiLoginOkResponse;
-
-async function loginApi(email: string, password: string): Promise<LoginResult & { session?: AuthSession }> {
+async function fetchCurrentUserEmail(accessToken: string): Promise<string | null> {
   try {
-    const res = await fetch(`${getApiBaseUrl()}/auth/login`, {
-      method: "POST",
+    const res = await fetch(`${getApiBaseUrl()}/auth/user`, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ email, password }),
     });
-
-    if (!res.ok) {
-      // The API uses 403 ("unauthorized") for invalid login attempts.
-      if (res.status === 401 || res.status === 403) {
-        return { ok: false, error: { code: "unauthorized" } };
-      }
-
-      // Best-effort parsing, but don't depend on backend shape.
-      try {
-        const body = (await res.json()) as ApiErrorResponse;
-        if (body?.error?.code === "unauthorized" || body?.error?.code === "unauthenticated") {
-          return { ok: false, error: { code: "unauthorized" } };
-        }
-      } catch {
-        // ignore
-      }
-      return { ok: false, error: { code: "unauthorized" } };
-    }
-
-    const json = (await res.json()) as ApiLoginOkResponse;
-    const token = json?.data?.token;
-    const userEmail = json?.data?.user?.email;
-
-    if (typeof token !== "string" || token.length === 0 || typeof userEmail !== "string") {
-      return { ok: false, error: { code: "unauthorized" } };
-    }
-
-    return {
-      ok: true,
-      session: {
-        token,
-        user: { email: userEmail },
-      },
-    };
+    if (!res.ok) return null;
+    const json = (await res.json()) as ApiCurrentUserOkResponse;
+    const email = json?.data?.user?.email;
+    return typeof email === "string" && email.length > 0 ? email : null;
   } catch {
-    // Network / parsing errors
-    return { ok: false, error: { code: "unauthorized" } };
-  }
-}
-
-async function loginWithGoogleIdTokenApi(
-  idToken: string,
-  locale?: string
-): Promise<LoginResult & { session?: AuthSession }> {
-  try {
-    const res = await fetch(`${getApiBaseUrl()}/auth/oauth2/google/id-token`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ idToken, locale }),
-    });
-
-    if (!res.ok) {
-      if (res.status === 401 || res.status === 403) {
-        return { ok: false, error: { code: "unauthorized" } };
-      }
-      return { ok: false, error: { code: "unauthorized" } };
-    }
-
-    const json = (await res.json()) as ApiGoogleIdTokenLoginOkResponse;
-    const token = json?.data?.token;
-    const userEmail = json?.data?.user?.email;
-
-    if (typeof token !== "string" || token.length === 0 || typeof userEmail !== "string") {
-      return { ok: false, error: { code: "unauthorized" } };
-    }
-
-    return {
-      ok: true,
-      session: {
-        token,
-        user: { email: userEmail },
-      },
-    };
-  } catch {
-    return { ok: false, error: { code: "unauthorized" } };
+    return null;
   }
 }
 
@@ -160,23 +72,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo<AuthContextValue>(
     () => ({
       state,
-      login: async (email, password) => {
-        const result = await loginApi(email, password);
-        if (result.ok && result.session) {
-          await saveAuthSession(result.session);
-          setState({ status: "authenticated", session: result.session });
-          return { ok: true };
-        }
-        return { ok: false, error: { code: "unauthorized" } };
-      },
-      loginWithGoogleIdToken: async (idToken, locale) => {
-        const result = await loginWithGoogleIdTokenApi(idToken, locale);
-        if (result.ok && result.session) {
-          await saveAuthSession(result.session);
-          setState({ status: "authenticated", session: result.session });
-          return { ok: true };
-        }
-        return { ok: false, error: { code: "unauthorized" } };
+      finishOAuthLogin: async (accessToken) => {
+        if (typeof accessToken !== "string" || accessToken.length === 0) return { ok: false };
+        const email = await fetchCurrentUserEmail(accessToken);
+        if (!email) return { ok: false };
+        const session: AuthSession = { token: accessToken, user: { email } };
+        await saveAuthSession(session);
+        setState({ status: "authenticated", session });
+        return { ok: true };
       },
       logout: async () => {
         try {

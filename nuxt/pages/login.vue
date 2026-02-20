@@ -64,6 +64,7 @@ import GoogleLoginButton from '@/components/forms/GoogleLoginButton.vue';
 import InfoLink from '@/components/InfoLink';
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { LOGIN_REDIRECT_TO_KEY } from '~/helpers/local-storage-keys';
 
 export default {
   name: 'LoginPage',
@@ -120,8 +121,20 @@ export default {
   },
   mounted() {
     localStorage.setItem('login_language', this.$i18n.locale);
+    const redirectTo = this.$route?.query?.redirect_to;
+    if (typeof redirectTo === 'string' && redirectTo.length > 0) {
+      // Used by /google-login after the OAuth redirect round-trip
+      localStorage.setItem(LOGIN_REDIRECT_TO_KEY, redirectTo);
+    }
+    else {
+      localStorage.removeItem(LOGIN_REDIRECT_TO_KEY);
+    }
   },
   methods: {
+    isSafeRedirectTo(redirectTo) {
+      // Prevent open redirects. Our API sets redirect_to to a relative URL like "/api/oauth/authorize?...".
+      return typeof redirectTo === 'string' && redirectTo.startsWith('/') && !redirectTo.startsWith('//');
+    },
     async onSubmit() {
       try {
         await this.$store.dispatch('auth/login', {
@@ -137,6 +150,13 @@ export default {
           this.errors = mapFormErrors(new UnknownApiError());
         }
         this.failedLoginAttempt = true;
+        return;
+      }
+
+      const redirectTo = this.$route?.query?.redirect_to || localStorage.getItem(LOGIN_REDIRECT_TO_KEY);
+      if (this.isSafeRedirectTo(redirectTo)) {
+        localStorage.removeItem(LOGIN_REDIRECT_TO_KEY);
+        window.location.assign(redirectTo);
         return;
       }
 
