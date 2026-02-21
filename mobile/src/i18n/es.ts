@@ -84,6 +84,7 @@ export const es = {
   auth_email: "Correo electrónico",
   auth_password: "Contraseña",
   login_button: "Iniciar sesión",
+  login_sign_in_again_as: "Iniciar sesión de nuevo como %{email}",
   auth_invalid_credentials: "Correo o contraseña incorrectos.",
   auth_generic_error: "Algo salió mal. Inténtalo de nuevo.",
   auth_login_hint: "Inicia sesión con la misma cuenta que usas en la web.",

@@ -6,17 +6,21 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useNetInfo } from "@react-native-community/netinfo";
 import {
   type AuthSession,
   clearAuthSession,
+  clearLastLoggedInEmail,
   loadAuthSession,
+  loadLastLoggedInEmail,
   saveAuthSession,
+  saveLastLoggedInEmail,
 } from "./authStorage";
 import { getApiBaseUrl } from "../api/apiBase";
 
 type AuthState =
   | { status: "loading" }
-  | { status: "unauthenticated" }
+  | { status: "unauthenticated"; lastLoggedInEmail?: string | null }
   | { status: "authenticated"; session: AuthSession };
 
 type AuthContextValue = {
@@ -34,6 +38,10 @@ type ApiCurrentUserOkResponse = {
     } | null;
   };
 };
+
+function computeIsOnline(netInfo: ReturnType<typeof useNetInfo>): boolean | null {
+  return netInfo.isInternetReachable === null ? netInfo.isConnected : netInfo.isInternetReachable;
+}
 
 async function fetchCurrentUserEmail(accessToken: string): Promise<string | null> {
   try {
@@ -53,21 +61,65 @@ async function fetchCurrentUserEmail(accessToken: string): Promise<string | null
   }
 }
 
+/**
+ * Validate token when online. Returns true if valid, false if invalid (e.g. 401).
+ * Network errors are treated as "assume valid" (fail gracefully).
+ */
+async function validateStoredToken(token: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${getApiBaseUrl()}/auth/user`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.ok;
+  } catch {
+    return true;
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const netInfo = useNetInfo();
+  const isOnline = computeIsOnline(netInfo);
   const [state, setState] = useState<AuthState>({ status: "loading" });
 
   useEffect(() => {
     let isMounted = true;
     (async () => {
-      const session = await loadAuthSession();
+      const [session, lastEmail] = await Promise.all([
+        loadAuthSession(),
+        loadLastLoggedInEmail(),
+      ]);
       if (!isMounted) return;
-      if (session) setState({ status: "authenticated", session });
-      else setState({ status: "unauthenticated" });
+
+      if (!session) {
+        setState({ status: "unauthenticated", lastLoggedInEmail: lastEmail ?? undefined });
+        return;
+      }
+
+      if (isOnline !== true) {
+        setState({ status: "authenticated", session });
+        return;
+      }
+
+      const valid = await validateStoredToken(session.token);
+      if (!isMounted) return;
+
+      if (!valid) {
+        await clearAuthSession();
+        await saveLastLoggedInEmail(session.user.email);
+        setState({ status: "unauthenticated", lastLoggedInEmail: session.user.email });
+        return;
+      }
+
+      setState({ status: "authenticated", session });
     })();
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [isOnline]);
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -77,6 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const email = await fetchCurrentUserEmail(accessToken);
         if (!email) return { ok: false };
         const session: AuthSession = { token: accessToken, user: { email } };
+        await clearLastLoggedInEmail();
         await saveAuthSession(session);
         setState({ status: "authenticated", session });
         return { ok: true };
@@ -96,6 +149,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           // ignore logout network errors; local logout still proceeds
         }
         await clearAuthSession();
+        await clearLastLoggedInEmail();
         setState({ status: "unauthenticated" });
       },
     }),

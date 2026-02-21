@@ -83,6 +83,7 @@ export const en = {
   auth_email: "Email",
   auth_password: "Password",
   login_button: "Login",
+  login_sign_in_again_as: "Sign in again as %{email}",
   auth_invalid_credentials: "Invalid email or password.",
   auth_generic_error: "Something went wrong. Please try again.",
   auth_login_hint: "Sign in with the same account you use on the web app.",

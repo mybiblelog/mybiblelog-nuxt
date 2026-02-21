@@ -17,7 +17,9 @@ import { savePendingOAuth } from "@/src/auth/pendingOAuth";
 export default function Login() {
   const t = useT();
   const { colors } = useTheme();
-  const { finishOAuthLogin } = useAuth();
+  const { state: authState, finishOAuthLogin } = useAuth();
+  const lastEmail =
+    authState.status === "unauthenticated" ? authState.lastLoggedInEmail ?? null : null;
 
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -122,6 +124,11 @@ export default function Login() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.text }]}>{t("login_title")}</Text>
+      {lastEmail ? (
+        <Text style={[styles.subtitle, { color: colors.mutedText }]}>
+          {t("login_sign_in_again_as", { email: lastEmail })}
+        </Text>
+      ) : null}
 
       {!!error && <Text style={[styles.error, { color: colors.destructive }]}>{error}</Text>}
 
@@ -155,6 +162,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "800",
+    marginBottom: 14,
+  },
+  subtitle: {
+    fontSize: 15,
+    opacity: 0.85,
     marginBottom: 14,
   },
   error: {
