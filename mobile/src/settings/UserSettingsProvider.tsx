@@ -95,6 +95,8 @@ export function UserSettingsProvider({ children }: { children: ReactNode }) {
           setState((prev) => (prev.status === "ready" ? { ...prev, settings: next } : prev));
           await saveLocalUserSettings(next);
         }
+      } catch {
+        // Network or API error: keep local settings, fail gracefully
       } finally {
         setState((prev) =>
           prev.status === "ready" ? { ...prev, isRefreshingFromServer: false } : prev

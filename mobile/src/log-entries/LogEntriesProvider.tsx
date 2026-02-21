@@ -172,19 +172,23 @@ export function LogEntriesProvider({ children }: { children: ReactNode }) {
   async function reloadFromApi(): Promise<void> {
     if (authState.status !== "authenticated") return;
     if (isOnline !== true) return;
-    await withReady(async () => {
-      const remote = await getLogEntries(authState.session.token);
-      const stored = remote
-        .map((e) => toStored(e, e.id ?? undefined))
-        // Prefer newest first (matches existing UI add-to-front behavior)
-        .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
-      setState((prev) =>
-        prev.status === "ready"
-          ? { ...prev, entries: stored }
-          : prev
-      );
-      await saveLogEntries(stored);
-    });
+    try {
+      await withReady(async () => {
+        const remote = await getLogEntries(authState.session.token);
+        const stored = remote
+          .map((e) => toStored(e, e.id ?? undefined))
+          // Prefer newest first (matches existing UI add-to-front behavior)
+          .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+        setState((prev) =>
+          prev.status === "ready"
+            ? { ...prev, entries: stored }
+            : prev
+        );
+        await saveLogEntries(stored);
+      });
+    } catch {
+      // Network or API error: keep current local state, fail gracefully
+    }
   }
 
   async function syncNow(): Promise<void> {
@@ -262,6 +266,8 @@ export function LogEntriesProvider({ children }: { children: ReactNode }) {
         if (remaining.length === 0) {
           await reloadFromApi();
         }
+      } catch {
+        // Network or API error: keep local state, fail gracefully
       } finally {
         setState((prev) => (prev.status === "ready" ? { ...prev, isSyncing: false } : prev));
         syncInFlightRef.current = null;

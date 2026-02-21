@@ -56,30 +56,35 @@ export function UpgradeGate({ children }: { children: ReactNode }) {
     let isMounted = true;
 
     (async () => {
-      const cached = await loadCachedUnsupported();
-      if (isMounted && cached) {
-        setState({ status: "unsupported", support: cached });
+      try {
+        const cached = await loadCachedUnsupported();
+        if (isMounted && cached) {
+          setState({ status: "unsupported", support: cached });
+        }
+
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 4000);
+        const fresh = await fetchAppSupportStatus({ signal: controller.signal });
+        clearTimeout(timer);
+
+        if (!isMounted) return;
+
+        if (fresh?.forceUpgrade) {
+          setState({ status: "unsupported", support: fresh });
+          await saveCached(fresh);
+          return;
+        }
+
+        // If we successfully confirmed support, clear any old cached block.
+        if (fresh?.supported) {
+          await clearCached();
+        }
+
+        setState({ status: "supported" });
+      } catch {
+        // Network or other error: fail gracefully, allow app to run
+        if (isMounted) setState({ status: "supported" });
       }
-
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 4000);
-      const fresh = await fetchAppSupportStatus({ signal: controller.signal });
-      clearTimeout(timer);
-
-      if (!isMounted) return;
-
-      if (fresh?.forceUpgrade) {
-        setState({ status: "unsupported", support: fresh });
-        await saveCached(fresh);
-        return;
-      }
-
-      // If we successfully confirmed support, clear any old cached block.
-      if (fresh?.supported) {
-        await clearCached();
-      }
-
-      setState({ status: "supported" });
     })();
 
     return () => {
