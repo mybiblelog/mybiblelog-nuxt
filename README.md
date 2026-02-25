@@ -36,6 +36,57 @@ $ npm run build
 $ npm run start
 ```
 
+## Debugging (VS Code / Cursor)
+
+Debug launch configs live in `.vscode/launch.json`.
+
+- Debug Nuxt Dev: Run **Debug Nuxt Dev** (F5)
+- Debug Nuxt Prod: first run `npm run build --prefix nuxt`, then Run **Debug Nuxt Prod** (F5)
+- Debug API Server (Prod): first run `npm run build --prefix api`, then Run **Debug API Server (Prod)** (F5)
+
+### Chrome DevTools (attach to Nuxt SSR Node process)
+
+These Nuxt debug configs expose the Node inspector on fixed ports:
+
+- **Dev**: `localhost:9229`
+- **Prod**: `localhost:9230`
+
+One-time Chrome setup:
+
+1. Open `chrome://inspect`
+2. Click **Configure…**
+3. Add `localhost:9229` and `localhost:9230`
+
+Attach (Dev):
+
+1. Run **Debug Nuxt Dev** (F5)
+2. Open `chrome://inspect`
+3. Under **Remote Target** (Node process), click **inspect**
+
+Attach (Prod):
+
+1. Run **Debug Nuxt Prod** (F5)
+2. Open `chrome://inspect`
+3. Under **Remote Target** (Node process), click **inspect**
+
+### Chrome DevTools (attach to API Node process)
+
+The API prod debug config exposes the Node inspector on:
+
+- **Prod**: `localhost:9240`
+
+One-time Chrome setup (if not already added):
+
+1. Open `chrome://inspect`
+2. Click **Configure…**
+3. Add `localhost:9240`
+
+Attach (API Prod):
+
+1. Run **Debug API Server (Prod)** (F5)
+2. Open `chrome://inspect`
+3. Under **Remote Target** (Node process), click **inspect**
+
 ## Environment Variables
 
 In development, create a `.env` file at the root of the project:

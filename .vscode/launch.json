@@ -2,7 +2,55 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug API Server",
+      "name": "Debug Nuxt Dev",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/nuxt",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--inspect=9229"],
+      "program": "${workspaceFolder}/node_modules/nuxt/bin/nuxt.js",
+      "args": ["dev"],
+      "console": "integratedTerminal",
+      "env": {
+        "PORT": "3000",
+        "NODE_ENV": "development"
+      },
+      "internalConsoleOptions": "neverOpen",
+      "restart": true,
+      "autoAttachChildProcesses": true,
+      "skipFiles": ["<node_internals>/**"],
+      "resolveSourceMapLocations": ["${workspaceFolder}/nuxt/**", "!**/node_modules/**"],
+      "outFiles": [
+        "${workspaceFolder}/nuxt/.nuxt/**/*.js",
+        "${workspaceFolder}/nuxt/.nuxt/**/*.mjs"
+      ]
+    },
+    {
+      "name": "Debug Nuxt Prod",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/nuxt",
+      "env": {
+        "PORT": "3000",
+        "NODE_ENV": "production"
+      },
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--inspect=9230"],
+      "program": "${workspaceFolder}/node_modules/nuxt/bin/nuxt.js",
+      "args": ["start"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "restart": false,
+      "autoAttachChildProcesses": true,
+      "skipFiles": ["<node_internals>/**"],
+      "resolveSourceMapLocations": ["${workspaceFolder}/nuxt/**", "!**/node_modules/**"],
+      "outFiles": [
+        "${workspaceFolder}/nuxt/.nuxt/**/*.js",
+        "${workspaceFolder}/nuxt/.nuxt/**/*.mjs"
+      ]
+    },
+    {
+      "name": "Debug API Server (Dev)",
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/node_modules/.bin/ts-node",
@@ -14,11 +62,32 @@
       "runtimeArgs": ["--inspect"],
       "console": "integratedTerminal",
       "restart": true,
-      "protocol": "inspector",
       "skipFiles": ["<node_internals>/**"],
       "resolveSourceMapLocations": [
         "${workspaceFolder}/**",
         "!**/node_modules/**"
+      ]
+    },
+    {
+      "name": "Debug API Server (Prod)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/api",
+      "program": "${workspaceFolder}/api/dist/server.js",
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "runtimeArgs": ["--inspect=9240"],
+      "console": "integratedTerminal",
+      "restart": false,
+      "skipFiles": ["<node_internals>/**"],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/api/**",
+        "${workspaceFolder}/shared/**",
+        "!**/node_modules/**"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/api/dist/**/*.js"
       ]
     },
     {
