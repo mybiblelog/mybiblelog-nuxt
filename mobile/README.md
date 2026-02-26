@@ -1,6 +1,6 @@
-# Welcome to your Expo app 👋
+# Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an [Expo](https://expo.dev) project.
 
 ## Get started
 
@@ -104,26 +104,59 @@ To open Chrome DevTools for the emulator:
 
 You may need to run `adb devices` to get the device to show up.
 
-## Get a fresh project
+## Clearing Cookies in Chrome
 
-When you're ready, run:
+During the OAuth flow the mobile app opens the web app in Chrome to authenticate. This sets cookies on the web app that are specifically within the Chrome app on the Android emulator.
+
+To clear them efficiently, use this command:
 
 ```bash
-npm run reset-project
+adb shell pm clear com.android.chrome
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+This instantly deletes cookies, sessions, cache, and local storage.
+
+Afterward, Chrome will restart like a fresh install.
+
+## Standalone Android APK (preview / UAT build)
+
+To create a **standalone** Android build that testers can install directly on a device (no Expo Go, no dev server) - e.g. for UAT or internal testing - use EAS Build with the **preview** profile. This produces an APK that can be downloaded and sideloaded.
+
+### Prerequisites
+
+- [EAS CLI](https://docs.expo.dev/build/setup/#install-the-eas-cli): `npm install -g eas-cli`
+- Log in: `eas login` (Expo account)
+- Build-time config: `EXPO_PUBLIC_API_BASE_URL` must be set for the build (e.g. your staging or UAT API URL). Set it via [EAS Secrets](https://docs.expo.dev/build-reference/variables/#using-secrets) or in your local `.env` when running the build (see below).
+
+### Create the APK
+
+From the `mobile` directory:
+
+```bash
+# Optional: set API URL for this build (otherwise use EAS Secrets or .env)
+EXPO_PUBLIC_API_BASE_URL=https://your-uat-api.example.com eas build --platform android --profile preview
+```
+
+Or with env from `.env` (ensure `EXPO_PUBLIC_API_BASE_URL` is set there):
+
+```bash
+eas build --platform android --profile preview
+```
+
+The build runs on Expo’s servers. When it finishes:
+
+1. Open the build page (link printed in the terminal, or [expo.dev](https://expo.dev) → your project → Builds).
+2. In the **Build artifact** section, use **Download** to get the APK, or **Install** to install directly on a connected device.
+
+Share the build page link or the APK file with testers so they can install it on their Android devices (allow “Install from unknown sources” if prompted).
+
+### Profile details
+
+The **preview** profile in `eas.json` uses `distribution: "internal"` and `android.buildType: "apk"`, so you get a single APK suitable for direct install, without submitting to the Play Store.
 
 ## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
+To learn more about developing with Expo, look at the following resources:
 
 - [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
 - [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
