@@ -22,7 +22,7 @@ const emptyStringToUndefined = z.preprocess(
 );
 const emptyStringUrlToUndefined = z.preprocess(
   (val) => (typeof val === 'string' && val.trim() === '' ? undefined : val),
-  z.string().url().optional()
+  z.url().optional()
 );
 
 const envSchema = z.object({
