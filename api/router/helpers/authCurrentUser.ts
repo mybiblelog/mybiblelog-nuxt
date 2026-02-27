@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import config from '../../config';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { type Request, type Response } from 'express';
+import { parseCookieHeader } from './parseCookieHeader';
 
 import type { UserDoc } from '../../mongoose/schemas/User';
 import { UnauthenticatedError, UnauthorizedError } from '../errors/http-errors';
@@ -24,15 +25,21 @@ export const setAuthTokenCookie = (res: Response, token: string) => {
 };
 
 const getTokenFromHeader = (req: Request): string | null => {
-  const [tokenType, token] = req.headers.authorization?.split(' ') || [];
-  if (token && (tokenType === 'Token' || tokenType === 'Bearer')) {
-    return token;
+  const authorizationHeader = req.headers.authorization;
+  if (authorizationHeader) {
+    const [tokenType, token] = authorizationHeader.split(' ');
+    if (token && (tokenType === 'Token' || tokenType === 'Bearer')) {
+      return token;
+    }
   }
-  // eslint-disable-next-line dot-notation
-  if (req.headers.cookie?.includes(`${AUTH_COOKIE_NAME}=`)) {
-    return req.headers.cookie.split(`${AUTH_COOKIE_NAME}=`)[1]?.split(';')[0] || null;
+
+  const cookieHeader = req.headers.cookie;
+  if (!cookieHeader) {
+    return null;
   }
-  return null;
+
+  const cookies = parseCookieHeader(cookieHeader);
+  return cookies[AUTH_COOKIE_NAME] || null;
 };
 
 async function authCurrentUser(
