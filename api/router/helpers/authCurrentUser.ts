@@ -16,6 +16,7 @@ export const setAuthTokenCookie = (res: Response, token: string) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: AUTH_COOKIE_MAX_AGE,
+    sameSite: 'strict',
   });
 };
 
