@@ -46,7 +46,7 @@ export default {
     }
 
     try {
-      await this.$http.get(`/api/auth/verify-email/${emailVerificationCode}`);
+      await this.$http.post(`/api/auth/verify-email`, { code: emailVerificationCode });
       // If successful, automatically log the user in
       await this.$store.dispatch('auth/refreshUser');
       await this.$router.push(this.localePath('/start'));

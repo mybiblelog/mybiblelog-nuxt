@@ -268,10 +268,11 @@ describe('Auth routes', () => {
     });
   });
 
-  describe('GET /api/auth/verify-email/:emailVerificationCode', () => {
+  describe('POST /api/auth/verify-email', () => {
     it('returns 404 for invalid verification code', async () => {
       const res = await requestApi
-        .get('/api/auth/verify-email/invalid-code-12345');
+        .post('/api/auth/verify-email')
+        .send({ code: 'invalid-code-12345' });
       expect(res.statusCode).toBe(404);
     });
 
@@ -290,7 +291,8 @@ describe('Auth routes', () => {
       expect(registerResponse.statusCode).toBe(200);
 
       const res = await requestApi
-        .get(`/api/auth/verify-email/${testEmailVerificationCode}`);
+        .post(`/api/auth/verify-email`)
+        .send({ code: testEmailVerificationCode });
       expect(res.statusCode).toBe(200);
       expect(res.body).toHaveProperty('data');
       expect(res.body).not.toHaveProperty('error');
@@ -425,10 +427,11 @@ describe('Auth routes', () => {
     });
   });
 
-  describe('GET /api/auth/oauth2/google/verify', () => {
+  describe('POST /api/auth/oauth2/google/verify', () => {
     it('returns 400 for invalid state parameter', async () => {
       const res = await requestApi
-        .get('/api/auth/oauth2/google/verify?code=test-code&state=invalid-state');
+        .post('/api/auth/oauth2/google/verify')
+        .send({ code: 'test-code', state: 'invalid-state' });
       expect(res.statusCode).toBe(400);
       expect(res.body).toHaveProperty('error');
       expect(res.body).not.toHaveProperty('data');
