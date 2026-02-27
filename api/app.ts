@@ -12,9 +12,10 @@ import mongooseErrorHandler from './router/middleware/mongoose-error-handler';
 import { ApiResponse } from './router/response';
 import { AppError } from './router/errors/app-error';
 import { InternalError } from './router/errors/internal-error';
-import { NotFoundError } from './router/errors/http-errors';
+import { NotFoundError, UnauthorizedError } from './router/errors/http-errors';
 
 const isProduction = config.nodeEnv === 'production';
+const allowedOrigin = new URL(config.siteUrl).origin;
 
 const buildApp = (): express.Application => {
   const app = express();
@@ -74,6 +75,36 @@ const buildApp = (): express.Application => {
   if (!isProduction) {
     app.use(errorhandler());
   }
+
+  // Origin-based CSRF protection:
+  // Reject state-changing requests when an Origin header is present
+  // and does not match our configured site URL.
+  app.use((req, res, next) => {
+    const method = req.method?.toUpperCase();
+    if (method !== 'POST' && method !== 'PUT' && method !== 'PATCH' && method !== 'DELETE') {
+      return next();
+    }
+
+    const originHeader = req.headers.origin;
+    const origin = Array.isArray(originHeader) ? originHeader[0] : originHeader;
+    if (!origin) {
+      return next();
+    }
+
+    let requestOrigin: string;
+    try {
+      requestOrigin = new URL(origin).origin;
+    }
+    catch {
+      throw new UnauthorizedError();
+    }
+
+    if (requestOrigin !== allowedOrigin) {
+      throw new UnauthorizedError();
+    }
+
+    return next();
+  });
 
   // Trust security claims of proxy in front of app
   app.set('trust proxy', true);
