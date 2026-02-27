@@ -108,7 +108,11 @@ export const UserSchema = new mongoose.Schema({
         hasLocalAccount: Boolean(this.password),
         isAdmin: this.isAdmin,
         exp: Math.round(exp.getTime() / 1000),
-      }, config.jwtSecret);
+      }, config.jwtSecret, {
+        algorithm: 'HS256',
+        issuer: new URL(config.siteUrl).origin,
+        audience: new URL(config.siteUrl).origin,
+      });
     },
     toAuthJSON() {
       return {

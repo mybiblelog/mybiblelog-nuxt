@@ -9,7 +9,10 @@ import { UnauthenticatedError, UnauthorizedError } from '../errors/http-errors';
 export const AUTH_COOKIE_NAME = 'auth_token';
 export const AUTH_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30; // 30 days
 
-const { jwtSecret } = config;
+const { jwtSecret, siteUrl } = config;
+const jwtIssuer = new URL(siteUrl).origin;
+const jwtAudience = jwtIssuer;
+const jwtAlgorithms: jwt.Algorithm[] = ['HS256'];
 
 export const setAuthTokenCookie = (res: Response, token: string) => {
   res.cookie(AUTH_COOKIE_NAME, token, {
@@ -60,7 +63,11 @@ async function authCurrentUser(req: Request, { optional = false, adminOnly = fal
   let payload;
   try {
     payload = await new Promise((resolve, reject) => {
-      jwt.verify(token, jwtSecret, (err, payload) => {
+      jwt.verify(token, jwtSecret, {
+        algorithms: jwtAlgorithms,
+        issuer: jwtIssuer,
+        audience: jwtAudience,
+      }, (err, payload) => {
         if (err) {
           return reject(err);
         }
@@ -75,7 +82,22 @@ async function authCurrentUser(req: Request, { optional = false, adminOnly = fal
     return null;
   }
 
-  const user: UserDoc | null = await User.findById(payload.id);
+  if (typeof payload !== 'object' || payload === null || !('id' in payload)) {
+    if (!optional) {
+      throw new UnauthenticatedError();
+    }
+    return null;
+  }
+
+  const userId = (payload as { id?: unknown }).id;
+  if (typeof userId !== 'string' && typeof userId !== 'number') {
+    if (!optional) {
+      throw new UnauthenticatedError();
+    }
+    return null;
+  }
+
+  const user: UserDoc | null = await User.findById(userId);
   if (!user) {
     // We throw an error even when optional because the token is expired
     // and the client will need to re-authenticate. (Or the account was deleted.)
