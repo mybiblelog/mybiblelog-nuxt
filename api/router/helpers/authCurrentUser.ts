@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import config from '../../config';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { type Request, type Response } from 'express';
+import { parseCookieHeader } from './parseCookieHeader';
 
 import type { UserDoc } from '../../mongoose/schemas/User';
 import { UnauthenticatedError, UnauthorizedError } from '../errors/http-errors';
@@ -9,26 +10,36 @@ import { UnauthenticatedError, UnauthorizedError } from '../errors/http-errors';
 export const AUTH_COOKIE_NAME = 'auth_token';
 export const AUTH_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30; // 30 days
 
-const { jwtSecret } = config;
+const { jwtSecret, siteUrl } = config;
+const jwtIssuer = new URL(siteUrl).origin;
+const jwtAudience = jwtIssuer;
+const jwtAlgorithms: jwt.Algorithm[] = ['HS256'];
 
 export const setAuthTokenCookie = (res: Response, token: string) => {
   res.cookie(AUTH_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: AUTH_COOKIE_MAX_AGE,
+    sameSite: 'strict',
   });
 };
 
 const getTokenFromHeader = (req: Request): string | null => {
-  const [tokenType, token] = req.headers.authorization?.split(' ') || [];
-  if (token && (tokenType === 'Token' || tokenType === 'Bearer')) {
-    return token;
+  const authorizationHeader = req.headers.authorization;
+  if (authorizationHeader) {
+    const [tokenType, token] = authorizationHeader.split(' ');
+    if (token && (tokenType === 'Token' || tokenType === 'Bearer')) {
+      return token;
+    }
   }
-  // eslint-disable-next-line dot-notation
-  if (req.headers.cookie?.includes(`${AUTH_COOKIE_NAME}=`)) {
-    return req.headers.cookie.split(`${AUTH_COOKIE_NAME}=`)[1]?.split(';')[0] || null;
+
+  const cookieHeader = req.headers.cookie;
+  if (!cookieHeader) {
+    return null;
   }
-  return null;
+
+  const cookies = parseCookieHeader(cookieHeader);
+  return cookies[AUTH_COOKIE_NAME] || null;
 };
 
 async function authCurrentUser(
@@ -59,7 +70,11 @@ async function authCurrentUser(req: Request, { optional = false, adminOnly = fal
   let payload;
   try {
     payload = await new Promise((resolve, reject) => {
-      jwt.verify(token, jwtSecret, (err, payload) => {
+      jwt.verify(token, jwtSecret, {
+        algorithms: jwtAlgorithms,
+        issuer: jwtIssuer,
+        audience: jwtAudience,
+      }, (err, payload) => {
         if (err) {
           return reject(err);
         }
@@ -74,7 +89,22 @@ async function authCurrentUser(req: Request, { optional = false, adminOnly = fal
     return null;
   }
 
-  const user: UserDoc | null = await User.findById(payload.id);
+  if (typeof payload !== 'object' || payload === null || !('id' in payload)) {
+    if (!optional) {
+      throw new UnauthenticatedError();
+    }
+    return null;
+  }
+
+  const userId = (payload as { id?: unknown }).id;
+  if (typeof userId !== 'string' && typeof userId !== 'number') {
+    if (!optional) {
+      throw new UnauthenticatedError();
+    }
+    return null;
+  }
+
+  const user: UserDoc | null = await User.findById(userId);
   if (!user) {
     // We throw an error even when optional because the token is expired
     // and the client will need to re-authenticate. (Or the account was deleted.)

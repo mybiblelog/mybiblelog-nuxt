@@ -434,7 +434,7 @@ router.get('/auth/oauth2/google/url', (req, res, next) => {
 /**
  * @swagger
  * /auth/oauth2/google/verify:
- *   get:
+ *   post:
  *     summary: Verify Google OAuth2 code
  *     description: |
  *       Verifies the code returned by Google OAuth2 and returns a JWT token.
@@ -445,13 +445,25 @@ router.get('/auth/oauth2/google/url', (req, res, next) => {
  *       the Google ID will be linked to their account.
  *     tags: [Authentication]
  *     security: []
- *     parameters:
- *       - in: query
- *         name: code
- *         schema:
- *           type: string
- *         required: true
- *         description: The code returned by Google OAuth2
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - code
+ *               - state
+ *             properties:
+ *               code:
+ *                 type: string
+ *                 description: The code returned by Google OAuth2
+ *               state:
+ *                 type: string
+ *                 description: State parameter for CSRF protection
+ *               locale:
+ *                 type: string
+ *                 description: Optional locale to save as user settings for new users
  *     responses:
  *       200:
  *         description: Google OAuth2 verification successful
@@ -486,11 +498,11 @@ router.get('/auth/oauth2/google/url', (req, res, next) => {
  *             schema:
  *               $ref: '#/components/schemas/ApiErrorResponse'
  */
-router.get('/auth/oauth2/google/verify', async (req, res, next) => {
+router.post('/auth/oauth2/google/verify', async (req, res, next) => {
   await rateLimit(req, { maxRequests: 10, windowMs: 60 * 1000 }); // 10 attempts per minute
 
   try {
-    const { code, state, locale } = req.query;
+    const { code, state, locale } = req.body;
 
     // Verify state parameter to prevent CSRF attacks
     if (!state || !googleOauth2.verifyState(state)) {
@@ -549,8 +561,8 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
 
 /**
  * @swagger
- * /auth/verify-email/{emailVerificationCode}:
- *   get:
+ * /auth/verify-email:
+ *   post:
  *     summary: Verify email via link
  *     tags: [Authentication]
  *     parameters:
@@ -600,14 +612,14 @@ router.get('/auth/oauth2/google/verify', async (req, res, next) => {
  *             schema:
  *               $ref: '#/components/schemas/ApiErrorResponse'
  */
-router.get('/auth/verify-email/:emailVerificationCode', async (req, res) => {
+router.post('/auth/verify-email', async (req, res) => {
   // Rate limiting for email verification
   const authBypass = checkTestBypass(req);
   if (!authBypass) {
     await rateLimit(req, { maxRequests: 20, windowMs: 60 * 60 * 1000 }); // 20 attempts per hour
   }
 
-  const { emailVerificationCode } = req.params;
+  const { code: emailVerificationCode } = req.body;
   // Find the user (if not found, error)
   const { User } = await useMongooseModels();
   const user = await User.findOne({ emailVerificationCode });
