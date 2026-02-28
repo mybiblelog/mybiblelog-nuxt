@@ -1,6 +1,7 @@
 {
   "name": "mybiblelog-api",
   "version": "1.0.0",
+  "private": true,
   "description": "My Bible Log API",
   "main": "server.ts",
   "scripts": {
@@ -15,6 +16,7 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint --ext .ts,.js .",
     "lint:fix": "eslint --ext .ts,.js . --fix",
+    "clean": "rm -rf node_modules dist",
     "script:seed": "ts-node ./scripts/seed.ts",
     "script:backup": "ts-node ./scripts/backup.ts",
     "script:delete-test-users": "ts-node ./scripts/delete-test-users.ts",
