@@ -11,14 +11,15 @@ export default function(context, inject) {
     }
 
     get defaultOptions() {
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+      if (this.ssrToken) {
+        headers.Authorization = `Bearer ${this.ssrToken}`;
+      }
       return {
         credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: this.ssrToken
-            ? `Bearer ${this.ssrToken}`
-            : undefined,
-        },
+        headers,
       };
     }
 

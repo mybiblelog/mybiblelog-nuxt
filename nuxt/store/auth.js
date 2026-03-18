@@ -30,8 +30,7 @@ export const mutations = {
 export const actions = {
   async login({ commit }, { email, password }) {
     try {
-      const { data: responseData } = await this.$http.post('/api/auth/login', { email, password });
-      const { token, ...user } = responseData;
+      const { data: { user } } = await this.$http.post('/api/auth/login', { email, password });
       commit(SET_USER, user);
     }
     catch (error) {
@@ -39,14 +38,8 @@ export const actions = {
       throw error;
     }
   },
-  async fetchServerUser({ commit }) {
-    const { data: { user } } = await this.$http.get('/api/auth/user');
-    delete user?.token;
-    commit(SET_USER, user);
-  },
   async refreshUser({ commit }) {
-    const { data: user } = await this.$http.get('/api/auth/user');
-    delete user?.token;
+    const { data: { user } } = await this.$http.get('/api/auth/user');
     commit(SET_USER, user);
   },
   async logout({ commit }) {
