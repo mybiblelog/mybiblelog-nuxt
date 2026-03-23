@@ -39,6 +39,7 @@ export default {
   }
 
   &.fade-enter-active,
+  &.fade-appear-active,
   &.fade-leave-active {
     .modal-card {
       transition: $transition-modal;
@@ -46,6 +47,7 @@ export default {
   }
 
   &.fade-enter,
+  &.fade-appear,
   &.fade-leave-to {
     .modal-card {
       transform: $modal-scale;
