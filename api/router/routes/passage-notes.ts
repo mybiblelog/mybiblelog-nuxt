@@ -792,8 +792,12 @@ router.get('/passage-notes/count/books', async (req, res, next) => {
       facetQuery[bibleOrder] = [
         {
           $match: {
-            'passages.startVerseId': { $gte: firstVerseId },
-            'passages.endVerseId': { $lte: lastVerseId },
+            passages: {
+              $elemMatch: {
+                startVerseId: { $gte: firstVerseId },
+                endVerseId: { $lte: lastVerseId },
+              },
+            },
           },
         },
         {
@@ -819,12 +823,6 @@ router.get('/passage-notes/count/books', async (req, res, next) => {
       {
         $match: {
           owner: currentUser._id,
-        },
-      },
-      {
-        $unwind: {
-          path: '$passages',
-          preserveNullAndEmptyArrays: false,
         },
       },
       {
