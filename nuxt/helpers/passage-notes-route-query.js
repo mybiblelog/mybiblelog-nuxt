@@ -12,8 +12,9 @@ const DEFAULT_PASSAGE_NOTES_QUERY = {
 };
 
 function asStringArray(value) {
-  if (value === null) { return []; }
+  if (value === null || value === undefined) { return []; }
   if (Array.isArray(value)) { return value.map(v => `${v}`); }
+  if (`${value}`.trim() === '') { return []; }
   return [`${value}`];
 }
 
