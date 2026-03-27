@@ -25,7 +25,7 @@
         </button>
       </div>
 
-      <div class="columns notes-page__columns">
+      <div class="columns">
         <aside class="column is-4 notes-page__sidebar">
           <div class="box notes-page__query-manager-box">
             <div class="notes-page__query-manager-header">
@@ -46,9 +46,6 @@
         </aside>
 
         <section class="column notes-page__content">
-          <div class="query-summary content">
-            <p>{{ querySummary }}</p>
-          </div>
           <div>
             <template v-if="loading">
               <div class="passage-note">
@@ -65,6 +62,59 @@
               </div>
             </template>
             <template v-else>
+              <div class="notes-page__results-bar">
+                <div class="level is-marginless">
+                  <div class="level-left">
+                    <div class="level-item notes-page__results-summary">
+                      {{ querySummary }}
+                    </div>
+                  </div>
+
+                  <div v-if="pagerTotalPages > 1" class="level-right">
+                    <div class="level-item">
+                      <div class="field has-addons is-marginless" role="group" :aria-label="$t('pagination.label')">
+                        <p class="control">
+                          <button
+                            class="button is-small is-light"
+                            type="button"
+                            :disabled="pagerPage <= 1"
+                            :aria-label="$t('pagination.prev')"
+                            @click="onPageChanged(pagerPage - 1)"
+                          >
+                            <caret-left-icon width="10px" height="18px" fill="currentColor" />
+                          </button>
+                        </p>
+
+                        <div class="control">
+                          <div class="select is-small">
+                            <select
+                              :value="pagerPage"
+                              :aria-label="$t('pagination.page')"
+                              @change="onPageChanged(Number($event.target.value))"
+                            >
+                              <option v-for="p in pagerTotalPages" :key="p" :value="p">
+                                {{ $t('pagination.page') }} {{ p }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <p class="control">
+                          <button
+                            class="button is-small is-light"
+                            type="button"
+                            :disabled="pagerPage >= pagerTotalPages"
+                            :aria-label="$t('pagination.next')"
+                            @click="onPageChanged(pagerPage + 1)"
+                          >
+                            <caret-right-icon width="10px" height="18px" fill="currentColor" />
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <passage-note
                 v-for="note in passageNotes"
                 :key="note.id"
@@ -72,7 +122,6 @@
                 :actions="actionsForNote(note)"
                 :get-reading-url="getReadingUrl"
               />
-              <pagination-controls v-if="pagination.totalPages > 1" :total-pages="pagination.totalPages" :current-page="pagination.page" @pagechanged="onPageChanged" />
             </template>
           </div>
         </section>
@@ -101,8 +150,8 @@ import { decodePassageNotesRouteQuery, encodePassageNotesQueryToRoute } from '@/
 import PassageNote from '@/components/PassageNote';
 import PassageNotesQueryManager from '@/components/notes/PassageNotesQueryManager';
 import AppModal from '@/components/popups/AppModal';
-import PaginationControls from '@/components/PaginationControls';
 import InfoLink from '@/components/InfoLink';
+import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
 
 export default {
@@ -111,8 +160,8 @@ export default {
     PassageNote,
     PassageNotesQueryManager,
     AppModal,
-    PaginationControls,
     InfoLink,
+    CaretLeftIcon,
     CaretRightIcon,
   },
   middleware: ['auth'],
@@ -135,6 +184,12 @@ export default {
       pagination: state => state['passage-notes'].pagination,
       passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
     }),
+    pagerPage() {
+      return Number((this.pagination && this.pagination.page) || 1);
+    },
+    pagerTotalPages() {
+      return Math.max(1, Number((this.pagination && this.pagination.totalPages) || 1));
+    },
     hasAppliedViewOptions() {
       const q = this.query || {};
       const hasSearchText = !!(q.searchText && String(q.searchText).trim().length);
@@ -262,8 +317,10 @@ export default {
       }
     },
     onPageChanged(newPage) {
+      const clampedPage = Math.min(Math.max(Number(newPage || 1), 1), this.pagerTotalPages);
+      if (clampedPage === this.pagerPage) { return; }
       const limit = this.pagination.limit || (this.query && this.query.limit) || 10;
-      const offset = (newPage - 1) * limit;
+      const offset = (clampedPage - 1) * limit;
       this.pushNotesQuery({ ...this.query, offset, limit });
     },
   },
@@ -296,10 +353,6 @@ export default {
   @media (min-width: $breakpoint) {
     display: none;
   }
-}
-
-.notes-page__columns {
-  margin-top: 0.5rem;
 }
 
 .notes-page__sidebar {
@@ -345,11 +398,26 @@ export default {
   opacity: 0;
 }
 
-.query-summary {
-  background: #efefef;
-  padding: 0.5em 1em;
-  margin: 0.5em 0;
-  border-radius: 0.25em;
+.notes-page__results-bar {
+  position: sticky;
+  top: calc(#{$header-height} + 0.5rem - 1px);
+  z-index: 10;
+
+  background: white;
+  padding: 0.5rem 1rem;
+  margin-left:  -0.5rem;
+  margin-right:  -0.5rem;
+  border-bottom: 1px solid #eee;
+
+}
+
+.notes-page__results-summary {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.notes-page__results-bar :deep(.level-item) {
+  justify-content: flex-start;
 }
 
 </style>
@@ -360,6 +428,12 @@ export default {
     "notes": "Notizen",
     "tags": "Tags",
     "new": "Neu",
+    "pagination": {
+      "label": "Seitennavigation",
+      "prev": "Zurück",
+      "next": "Weiter",
+      "page": "Seite"
+    },
     "query_manager": {
       "open": "Ansichtsoptionen",
       "title": "Ansichtsoptionen",
@@ -397,6 +471,12 @@ export default {
     "notes": "Notes",
     "tags": "Tags",
     "new": "New",
+    "pagination": {
+      "label": "Pagination",
+      "prev": "Prev",
+      "next": "Next",
+      "page": "Page"
+    },
     "query_manager": {
       "open": "View Options",
       "title": "View Options",
@@ -434,6 +514,12 @@ export default {
     "notes": "Notas",
     "tags": "Etiquetas",
     "new": "Nuevo",
+    "pagination": {
+      "label": "Paginación",
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "page": "Página"
+    },
     "query_manager": {
       "open": "Opciones de vista",
       "title": "Opciones de vista",
@@ -471,6 +557,12 @@ export default {
     "notes": "Notes",
     "tags": "Tags",
     "new": "New",
+    "pagination": {
+      "label": "Pagination",
+      "prev": "Précédent",
+      "next": "Suivant",
+      "page": "Page"
+    },
     "query_manager": {
       "open": "Options d’affichage",
       "title": "Options d’affichage",
@@ -508,6 +600,12 @@ export default {
     "notes": "Notas",
     "tags": "Tags",
     "new": "Novo",
+    "pagination": {
+      "label": "Paginação",
+      "prev": "Anterior",
+      "next": "Próximo",
+      "page": "Página"
+    },
     "query_manager": {
       "open": "Opções de visualização",
       "title": "Opções de visualização",
@@ -545,6 +643,12 @@ export default {
     "notes": "Нотатки",
     "tags": "Теги",
     "new": "Нове",
+    "pagination": {
+      "label": "Навігація сторінками",
+      "prev": "Попередня",
+      "next": "Наступна",
+      "page": "Сторінка"
+    },
     "query_manager": {
       "open": "Параметри перегляду",
       "title": "Параметри перегляду",

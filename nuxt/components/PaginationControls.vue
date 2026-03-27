@@ -1,31 +1,38 @@
 <template>
-  <ul class="pagination">
-    <li>
-      <button class="button is-small is-light" type="button" :disabled="isInFirstPage" @click="onClickFirstPage">
+  <nav class="pagination" role="navigation" aria-label="Pagination">
+    <div class="pagination__side pagination__side--left">
+      <button class="button is-small is-light" type="button" :disabled="isInFirstPage" :aria-label="$t('first')" @click="onClickFirstPage">
         {{ $t('first') }}
       </button>
-    </li>
-    <li>
-      <button class="button is-small is-light" type="button" :disabled="isInFirstPage" @click="onClickPreviousPage">
+      <button class="button is-small is-light" type="button" :disabled="isInFirstPage" :aria-label="$t('prev')" @click="onClickPreviousPage">
         {{ $t('prev') }}
       </button>
-    </li>
-    <li v-for="page in pages" :key="page.number" class="pagination-item">
-      <button class="button is-small is-light" type="button" :disabled="page.isDisabled" :class="{ 'is-dark': isPageActive(page.number) }" @click="onClickPage(page.number)">
+    </div>
+
+    <div class="pagination__numbers" aria-label="Pages">
+      <button
+        v-for="page in pages"
+        :key="page.number"
+        class="button is-small is-light pagination__number-button"
+        type="button"
+        :disabled="page.isDisabled"
+        :class="{ 'is-dark': isPageActive(page.number) }"
+        :aria-current="isPageActive(page.number) ? 'page' : null"
+        @click="onClickPage(page.number)"
+      >
         {{ page.number }}
       </button>
-    </li>
-    <li>
-      <button class="button is-small is-light" type="button" :disabled="isInLastPage" @click="onClickNextPage">
+    </div>
+
+    <div class="pagination__side pagination__side--right">
+      <button class="button is-small is-light" type="button" :disabled="isInLastPage" :aria-label="$t('next')" @click="onClickNextPage">
         {{ $t('next') }}
       </button>
-    </li>
-    <li>
-      <button class="button is-small is-light" type="button" :disabled="isInLastPage" @click="onClickLastPage">
+      <button class="button is-small is-light" type="button" :disabled="isInLastPage" :aria-label="$t('last')" @click="onClickLastPage">
         {{ $t('last') }}
       </button>
-    </li>
-  </ul>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -108,12 +115,54 @@ export default {
 
 <style lang="scss" scoped>
 .pagination {
-  list-style-type: none;
   margin: 1rem 0;
+  padding: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.75rem;
+
+  @media (min-width: 480px) {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    column-gap: 1rem;
+  }
 }
 
-.pagination-item {
-  display: inline-block;
+.pagination__side {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pagination__side--left {
+  justify-content: center;
+
+  @media (min-width: 480px) {
+    justify-content: flex-start;
+  }
+}
+
+.pagination__side--right {
+  justify-content: center;
+
+  @media (min-width: 480px) {
+    justify-content: flex-end;
+  }
+}
+
+.pagination__numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem; /* tighter for number buttons */
+}
+
+.pagination__number-button {
+  min-width: 2.25rem; /* consistent tap target width for numbers */
 }
 </style>
 
