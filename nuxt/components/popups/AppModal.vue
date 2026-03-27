@@ -6,7 +6,7 @@
         <p class="modal-card-title">
           {{ title }}
         </p>
-        <button class="delete" aria-label="close" @click="close" />
+        <button class="delete" type="button" aria-label="close" @click.prevent="close" />
       </header>
       <section class="modal-card-body">
         <slot name="content" />
