@@ -36,6 +36,7 @@
 
 <script>
 import { Bible } from '@mybiblelog/shared';
+import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import SegmentBar from '@/components/SegmentBar';
 import StarIcon from '@/components/svg/StarIcon';
 import InfoLink from '@/components/InfoLink';
@@ -141,12 +142,13 @@ export default {
       // Same as in _book.vue
       const bookStartVerseId = Bible.getFirstBookVerseId(bookIndex);
       const bookEndVerseId = Bible.getLastBookVerseId(bookIndex);
-      this.$store.dispatch('passage-notes/stageQuery', {
+      const query = encodePassageNotesQueryToRoute({
         filterPassageStartVerseId: bookStartVerseId,
         filterPassageEndVerseId: bookEndVerseId,
         filterPassageMatching: 'exclusive',
+        offset: 0,
       });
-      this.$router.push(this.localePath('/notes'));
+      this.$router.push({ path: this.localePath('/notes'), query });
     },
   },
 };

@@ -100,6 +100,7 @@
 <script>
 import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
+import { decodePassageNotesRouteQuery, encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import PassageNote from '@/components/PassageNote';
 import PassageNoteTagPill from '@/components/PassageNoteTagPill';
 import PassageNotesQueryManager from '@/components/notes/PassageNotesQueryManager';
@@ -123,7 +124,7 @@ export default {
   data() {
     return {
       showQueryManagerModal: false,
-      queryLimit: 10, // TODO: change when a pagination component emits an event
+      lastAppliedNotesRouteQueryKey: null,
     };
   },
   head() {
@@ -151,7 +152,8 @@ export default {
     },
     querySummary() {
       const pageLength = this.passageNotes.length;
-      const first = (this.pagination.page - 1) * 10 + 1;
+      const limit = this.pagination.limit || (this.query && this.query.limit) || 10;
+      const first = (this.pagination.page - 1) * limit + 1;
       const last = first + pageLength - 1;
       const total = this.pagination.size;
 
@@ -231,6 +233,17 @@ export default {
     },
   },
   watch: {
+    '$route.query': {
+      deep: true,
+      immediate: true,
+      async handler() {
+        const decoded = decodePassageNotesRouteQuery(this.$route.query);
+        const key = JSON.stringify(decoded);
+        if (key === this.lastAppliedNotesRouteQueryKey) { return; }
+        this.lastAppliedNotesRouteQueryKey = key;
+        await this.$store.dispatch('passage-notes/resetQuery', decoded);
+      },
+    },
     pagination() {
       // AFTER new page data loads, causing a pagination update, smooth scroll to top
       // Avoids a jarring page length change from doing this too soon
@@ -238,10 +251,15 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('passage-notes/resetQuery');
     this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
   },
   methods: {
+    pushNotesQuery(nextQuery, { replace = false } = {}) {
+      const path = this.localePath('/notes');
+      const query = encodePassageNotesQueryToRoute(nextQuery);
+      const nav = { path, query };
+      return replace ? this.$router.replace(nav) : this.$router.push(nav);
+    },
     getReadingUrl(bookIndex, chapterIndex) {
       return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
     },
@@ -273,7 +291,7 @@ export default {
       mgr.confirmAndReset();
     },
     async applyQueryManager(update) {
-      await this.$store.dispatch('passage-notes/updateQuery', { ...update, offset: 0 });
+      await this.pushNotesQuery({ ...this.query, ...update, offset: 0 });
       if (this.showQueryManagerModal) {
         this.closeQueryManagerModal();
       }
@@ -299,9 +317,9 @@ export default {
       }
     },
     onPageChanged(newPage) {
-      const limit = this.queryLimit;
+      const limit = this.pagination.limit || (this.query && this.query.limit) || 10;
       const offset = (newPage - 1) * limit;
-      this.$store.dispatch('passage-notes/updateQuery', { offset, limit });
+      this.pushNotesQuery({ ...this.query, offset, limit });
     },
   },
 };

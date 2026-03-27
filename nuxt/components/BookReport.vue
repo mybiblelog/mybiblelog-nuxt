@@ -55,6 +55,7 @@
 <script>
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
+import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import ChapterReport from '@/components/ChapterReport';
 import SegmentBar from '@/components/SegmentBar';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
@@ -165,11 +166,12 @@ export default {
       const startVerseId = Bible.makeVerseId(bookIndex, chapterIndex, 1);
       const endVerseId = Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount);
 
-      this.$store.dispatch('passage-notes/stageQuery', {
+      const query = encodePassageNotesQueryToRoute({
         filterPassageStartVerseId: startVerseId,
         filterPassageEndVerseId: endVerseId,
+        offset: 0,
       });
-      this.$router.push(this.localePath('/notes'));
+      this.$router.push({ path: this.localePath('/notes'), query });
     },
   },
 };

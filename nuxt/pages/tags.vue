@@ -87,6 +87,7 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 import { displayDateTime, displayTimeSince } from '@mybiblelog/shared';
+import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import HyperlinkedText from '@/components/HyperlinkedText';
 import InfoLink from '@/components/InfoLink';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
@@ -139,8 +140,8 @@ export default {
       return displayTimeSince(date, this.$i18n.locale);
     },
     viewTagNotes(tag) {
-      this.$store.dispatch('passage-notes/stageQuery', { filterTags: [tag.id] });
-      this.$router.push(this.localePath('/notes'));
+      const query = encodePassageNotesQueryToRoute({ filterTags: [tag.id], offset: 0 });
+      this.$router.push({ path: this.localePath('/notes'), query });
     },
     openPassageNoteTagEditor(passageNoteTag = null) {
       this.$store.dispatch('passage-note-tag-editor/openEditor', passageNoteTag);

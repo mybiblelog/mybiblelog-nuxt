@@ -129,6 +129,7 @@
 import { mapGetters, mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
+import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import BusyBar from '@/components/BusyBar';
 import DoubleProgressBar from '@/components/DoubleProgressBar';
 import LogEntry from '@/components/LogEntry';
@@ -219,8 +220,7 @@ export default {
     await this.$store.dispatch('reading-suggestions/refreshReadingSuggestions');
     this.loadingReadingSuggestions = false;
     // Load the 3 most recent notes using the passage-notes store
-    await this.$store.dispatch('passage-notes/resetQuery');
-    await this.$store.dispatch('passage-notes/updateQuery', {
+    await this.$store.dispatch('passage-notes/resetQuery', {
       limit: 3,
       offset: 0,
       sortOn: 'createdAt',
@@ -330,11 +330,12 @@ export default {
     },
     viewNotesForPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      this.$store.dispatch('passage-notes/stageQuery', {
+      const query = encodePassageNotesQueryToRoute({
         filterPassageStartVerseId: startVerseId,
         filterPassageEndVerseId: endVerseId,
+        offset: 0,
       });
-      this.$router.push(this.localePath('/notes'));
+      this.$router.push({ path: this.localePath('/notes'), query });
     },
     actionsForRecentNote(note) {
       return [
