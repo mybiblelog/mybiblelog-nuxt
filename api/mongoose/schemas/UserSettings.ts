@@ -5,6 +5,15 @@ const siteLocales = getLocaleCodes();
 
 export const StartPages = ['start', 'today', 'books', 'checklist', 'calendar', 'notes'] as const;
 
+export const PassageNoteTagSortOrders = [
+  'label:ascending',
+  'createdAt:descending',
+  'createdAt:ascending',
+  'noteCount:descending',
+  'noteCount:ascending',
+  'color:hue',
+] as const;
+
 /**
  * @swagger
  * components:
@@ -25,6 +34,9 @@ export const StartPages = ['start', 'today', 'books', 'checklist', 'calendar', '
  *         startPage:
  *           type: string
  *           description: The user's preferred start page
+ *         passageNoteTagSortOrder:
+ *           type: string
+ *           description: The user's preferred sort order for passage note tags
  *         locale:
  *           type: string
  *           description: The user's preferred locale
@@ -66,6 +78,15 @@ export const UserSettingsSchema = new Schema({
     validate: {
       validator: (page: string) => StartPages.includes(page as (typeof StartPages)[number]),
       message: (props: { value: string }) => `${props.value} is not a valid start page`,
+    },
+  },
+  passageNoteTagSortOrder: {
+    type: String,
+    required: true,
+    default: 'label:ascending',
+    validate: {
+      validator: (sortOrder: string) => PassageNoteTagSortOrders.includes(sortOrder as (typeof PassageNoteTagSortOrders)[number]),
+      message: (props: { value: string }) => `${props.value} is not a valid tag sort order`,
     },
   },
   locale: {

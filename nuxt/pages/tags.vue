@@ -16,6 +16,37 @@
           </button>
         </div>
       </header>
+      <div class="tag-sort-row">
+        <div class="field has-addons">
+          <div class="control">
+            <span class="button is-static">{{ $t('sort_by') }}</span>
+          </div>
+          <div class="control">
+            <div class="select">
+              <select v-model="sortOrder">
+                <option value="label:ascending">
+                  {{ $t('sort_az') }}
+                </option>
+                <option value="createdAt:descending">
+                  {{ $t('sort_newest_first') }}
+                </option>
+                <option value="createdAt:ascending">
+                  {{ $t('sort_oldest_first') }}
+                </option>
+                <option value="noteCount:descending">
+                  {{ $t('sort_most_notes') }}
+                </option>
+                <option value="noteCount:ascending">
+                  {{ $t('sort_fewest_notes') }}
+                </option>
+                <option value="color:hue">
+                  {{ $t('sort_color') }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
       <div>
         <div v-for="tag in passageNoteTags" :key="tag.id" class="tag-line">
           <div>
@@ -26,16 +57,21 @@
               <hyperlinked-text :text="tag.description" />
             </div>
           </div>
-          <div class="buttons is-right">
-            <button class="button is-small" @click="viewTagNotes(tag)">
-              {{ $t('notes_count', { count: tag.noteCount }) }}
-            </button>
-            <button class="button is-small" @click="openPassageNoteTagEditor(tag)">
-              {{ $t('edit') }}
-            </button>
-            <button class="button is-small" @click="deletePassageNoteTag(tag.id)">
-              {{ $t('delete') }}
-            </button>
+          <div class="tag-footer">
+            <div v-if="displayTagTimeSince(tag)" class="tag-footer--created">
+              <span class="has-text-grey is-size-7" :title="displayTagDateTime(tag)">{{ $t('created') }} {{ displayTagTimeSince(tag) }}</span>
+            </div>
+            <div class="buttons is-right tag-footer--buttons">
+              <button class="button is-small" @click="viewTagNotes(tag)">
+                {{ $t('notes_count', { count: tag.noteCount }) }}
+              </button>
+              <button class="button is-small" @click="openPassageNoteTagEditor(tag)">
+                {{ $t('edit') }}
+              </button>
+              <button class="button is-small" @click="deletePassageNoteTag(tag.id)">
+                {{ $t('delete') }}
+              </button>
+            </div>
           </div>
         </div>
         <div v-if="!passageNoteTags.length" class="tag-line">
@@ -49,7 +85,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
+import { displayDateTime, displayTimeSince } from '@mybiblelog/shared';
 import HyperlinkedText from '@/components/HyperlinkedText';
 import InfoLink from '@/components/InfoLink';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
@@ -71,11 +108,36 @@ export default {
     ...mapState({
       passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
     }),
+    ...mapGetters('passage-note-tags', [
+      'tagCreatedAtMs',
+    ]),
+    sortOrder: {
+      get() {
+        return this.$store.state['passage-note-tags'].sortOrder;
+      },
+      set(value) {
+        this.$store.dispatch('passage-note-tags/setPassageNoteTagSortOrder', { sortOrder: value, persist: true });
+      },
+    },
   },
   mounted() {
     this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
   },
   methods: {
+    tagCreatedAtDate(tag) {
+      const ms = this.tagCreatedAtMs(tag);
+      return ms ? new Date(ms) : null;
+    },
+    displayTagDateTime(tag) {
+      const date = this.tagCreatedAtDate(tag);
+      if (!date) { return ''; }
+      return displayDateTime(date, this.$i18n.locale);
+    },
+    displayTagTimeSince(tag) {
+      const date = this.tagCreatedAtDate(tag);
+      if (!date) { return ''; }
+      return displayTimeSince(date, this.$i18n.locale);
+    },
     viewTagNotes(tag) {
       this.$store.dispatch('passage-notes/stageQuery', { filterTags: [tag.id] });
       this.$router.push(this.localePath('/notes'));
@@ -113,6 +175,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tag-sort-row {
+  margin: 0.25rem 0 1rem;
+}
 .tag-line {
   display: flex;
   flex-direction: column;
@@ -121,6 +186,40 @@ export default {
   margin: 1rem -0.5rem;
   border-radius: 0.25rem;
   box-shadow: 0 1px 7px #999;
+}
+.tag-footer {
+  margin-top: 0.25rem;
+  padding: 0 0.5rem;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "created buttons";
+  align-items: center;
+  gap: 0.5rem;
+}
+.tag-footer--created {
+  grid-area: created;
+  justify-self: start;
+}
+.tag-footer--buttons {
+  grid-area: buttons;
+  justify-self: end;
+  margin-bottom: 0;
+}
+.tag-footer--buttons.buttons {
+  margin-bottom: 0;
+}
+
+@media (max-width: 520px) {
+  .tag-footer {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "buttons"
+      "created";
+  }
+  .tag-footer--created {
+    justify-self: end;
+  }
 }
 .passage-note-tag {
   color: #fff;
@@ -147,6 +246,14 @@ export default {
     "edit": "Bearbeiten",
     "delete": "Löschen",
     "no_tags": "Keine Notiz-Tags",
+    "sort_by": "Sortieren",
+    "sort_az": "A-Z",
+    "sort_newest_first": "Neueste zuerst",
+    "sort_oldest_first": "Älteste zuerst",
+    "sort_most_notes": "Meiste Notizen",
+    "sort_fewest_notes": "Wenigste Notizen",
+    "sort_color": "Farbe",
+    "created": "Erstellt",
     "label": "Label",
     "color": "Farbe",
     "description": "Beschreibung",
@@ -168,6 +275,14 @@ export default {
     "edit": "Edit",
     "delete": "Delete",
     "no_tags": "No Tags",
+    "sort_by": "Sort",
+    "sort_az": "A-Z",
+    "sort_newest_first": "Newest First",
+    "sort_oldest_first": "Oldest First",
+    "sort_most_notes": "Most Notes",
+    "sort_fewest_notes": "Fewest Notes",
+    "sort_color": "Color",
+    "created": "Created",
     "label": "Label",
     "color": "Color",
     "description": "Description",
@@ -189,6 +304,14 @@ export default {
     "edit": "Editar",
     "delete": "Eliminar",
     "no_tags": "No hay etiquetas",
+    "sort_by": "Ordenar",
+    "sort_az": "A-Z",
+    "sort_newest_first": "Más nuevas primero",
+    "sort_oldest_first": "Más antiguas primero",
+    "sort_most_notes": "Más notas",
+    "sort_fewest_notes": "Menos notas",
+    "sort_color": "Color",
+    "created": "Creado",
     "label": "Etiqueta",
     "color": "Color",
     "description": "Descripción",
@@ -210,6 +333,14 @@ export default {
     "edit": "Éditer",
     "delete": "Supprimer",
     "no_tags": "Pas d'étiquettes",
+    "sort_by": "Trier",
+    "sort_az": "A-Z",
+    "sort_newest_first": "Plus récentes d’abord",
+    "sort_oldest_first": "Plus anciennes d’abord",
+    "sort_most_notes": "Le plus de notes",
+    "sort_fewest_notes": "Le moins de notes",
+    "sort_color": "Couleur",
+    "created": "Créé",
     "label": "Étiquette",
     "color": "Couleur",
     "description": "Description",
@@ -231,6 +362,14 @@ export default {
     "edit": "Editar",
     "delete": "Apagar",
     "no_tags": "Sem Marcadores",
+    "sort_by": "Ordenar",
+    "sort_az": "A-Z",
+    "sort_newest_first": "Mais recentes primeiro",
+    "sort_oldest_first": "Mais antigas primeiro",
+    "sort_most_notes": "Mais notas",
+    "sort_fewest_notes": "Menos notas",
+    "sort_color": "Cor",
+    "created": "Criado",
     "label": "Nome",
     "color": "Cor",
     "description": "Descrição",
@@ -252,6 +391,14 @@ export default {
     "edit": "Редагувати",
     "delete": "Видалити",
     "no_tags": "Немає тегів",
+    "sort_by": "Сортувати",
+    "sort_az": "A-Z",
+    "sort_newest_first": "Найновіші спочатку",
+    "sort_oldest_first": "Найстаріші спочатку",
+    "sort_most_notes": "Найбільше нотаток",
+    "sort_fewest_notes": "Найменше нотаток",
+    "sort_color": "Колір",
+    "created": "Створено",
     "label": "Мітка",
     "color": "Колір",
     "description": "Опис",
