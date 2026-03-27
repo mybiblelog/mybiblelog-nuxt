@@ -24,6 +24,28 @@ export default {
   props: {
     title: { type: String, default: '' },
   },
+  /**
+   * This modal is rendered into the body of the document, rather than into the DOM of the parent component.
+   * This is a workaround for the fact that we cannot use the teleport component in Vue 2.
+   * In Vue 3 we will be able to use the teleport component to achieve this,
+   * but for now we need to manually append and remove the modal from the body.
+   * This frees the component from any ancestor stacking context, avoiding z-index conflicts.
+   * Specifically, this was needed to break the component out of a `sticky` stacking context.
+   */
+  mounted() {
+    // (remove in Vue 3 and use teleport component instead)
+    if (typeof document === 'undefined') { return; }
+    if (this.$el && this.$el.parentNode !== document.body) {
+      document.body.appendChild(this.$el);
+    }
+  },
+  beforeDestroy() {
+    // (remove in Vue 3 and use teleport component instead)
+    if (typeof document === 'undefined') { return; }
+    if (this.$el && this.$el.parentNode === document.body) {
+      document.body.removeChild(this.$el);
+    }
+  },
   methods: {
     close() {
       this.$emit('close');
