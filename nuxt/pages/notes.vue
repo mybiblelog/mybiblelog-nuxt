@@ -48,9 +48,6 @@
         <section class="column notes-page__content">
           <div class="query-summary content">
             <p>{{ querySummary }}</p>
-            <div v-if="query.filterTags.length" class="query-summary--tag-filters">
-              <passage-note-tag-pill v-for="tag in populatedTags(query.filterTags)" :key="tag.id" :tag="tag" />
-            </div>
           </div>
           <div>
             <template v-if="loading">
@@ -102,7 +99,6 @@ import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import { decodePassageNotesRouteQuery, encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import PassageNote from '@/components/PassageNote';
-import PassageNoteTagPill from '@/components/PassageNoteTagPill';
 import PassageNotesQueryManager from '@/components/notes/PassageNotesQueryManager';
 import AppModal from '@/components/popups/AppModal';
 import PaginationControls from '@/components/PaginationControls';
@@ -113,7 +109,6 @@ export default {
   name: 'NotesListPage',
   components: {
     PassageNote,
-    PassageNoteTagPill,
     PassageNotesQueryManager,
     AppModal,
     PaginationControls,
@@ -150,86 +145,42 @@ export default {
 
       return hasSearchText || hasTagFilters || hasTagMatchingOverride || hasPassageFilter || hasSortOverride;
     },
+    hasAppliedFilters() {
+      const q = this.query || {};
+      const hasSearchText = !!(q.searchText && String(q.searchText).trim().length);
+      const hasTagFilters = Array.isArray(q.filterTags) && q.filterTags.length > 0;
+      const hasPassageFilter = !!(q.filterPassageStartVerseId && q.filterPassageEndVerseId);
+      const isOnlyUntagged = (q.filterTagMatching === 'exact') && (!Array.isArray(q.filterTags) || q.filterTags.length === 0);
+      return hasSearchText || hasTagFilters || hasPassageFilter || isOnlyUntagged;
+    },
     querySummary() {
-      const pageLength = this.passageNotes.length;
-      const limit = this.pagination.limit || (this.query && this.query.limit) || 10;
-      const first = (this.pagination.page - 1) * limit + 1;
-      const last = first + pageLength - 1;
-      const total = this.pagination.size;
+      const pagination = this.pagination || {};
+      const q = this.query || {};
 
-      let prefix = 'Showing';
-      let bearings = 'notes';
-      let hasHave = 'have';
+      const total = Number(pagination.size || 0);
+      const page = Number(pagination.page || 1);
+      const limit = Number(pagination.limit || q.limit || 10);
+      const pageLength = Array.isArray(this.passageNotes) ? this.passageNotes.length : 0;
+
+      const noun = this.hasAppliedFilters ? 'results' : 'notes';
+
       if (!total) {
-        prefix = 'There are no';
-      }
-      else if (total === 1) {
-        bearings = 'the only note';
-        hasHave = 'has';
-      }
-      else if (total <= this.pagination.limit) {
-        if (total === 2) {
-          bearings = `both notes`;
-        }
-        else {
-          bearings = `all ${total} notes`;
-        }
-      }
-      else {
-        bearings = `${first} - ${last} of ${total} notes`;
+        return this.$t(`query_summary.none.${noun}`);
       }
 
-      const matchMatches = hasHave === 'have' ? 'match' : 'matches';
-      let matchQuery = '';
-      if (this.query.searchText) {
-        matchQuery = `${matchMatches} the search "${this.query.searchText}"`;
+      if (total <= limit) {
+        return this.$tc(`query_summary.showing_all.${noun}`, total, {
+          total: this.$n(total, 'grouped'),
+        });
       }
 
-      if (this.query.filterPassageStartVerseId) {
-        const passageString = Bible.displayVerseRange(this.query.filterPassageStartVerseId, this.query.filterPassageEndVerseId);
-        let inclusiveExclusive;
-        if (this.query.filterPassageMatching === 'inclusive') {
-          if (hasHave === 'has') {
-            inclusiveExclusive = 'overlaps';
-          }
-          else {
-            inclusiveExclusive = 'overlap';
-          }
-        }
-        if (this.query.filterPassageMatching === 'exclusive') {
-          if (hasHave === 'has') {
-            inclusiveExclusive = 'is within';
-          }
-          else {
-            inclusiveExclusive = 'are within';
-          }
-        }
-        matchQuery += `${inclusiveExclusive} ${passageString}`;
-      }
-
-      if (this.query.filterTags.length) {
-        if (matchQuery) {
-          matchQuery += ' and ';
-        }
-        const summaryMap = {
-          any: `${prefix} ${bearings} that ${matchQuery} ${hasHave} at least one of these tags:`,
-          all: `${prefix} ${bearings} that ${matchQuery} ${hasHave} all of these tags:`,
-          exact: `${prefix} ${bearings} that ${matchQuery} ${hasHave} this exact combination of tags:`,
-        };
-        return summaryMap[this.query.filterTagMatching];
-      }
-      else {
-        if (this.query.filterTagMatching === 'exact') {
-          if (matchQuery) {
-            matchQuery += ' and ';
-          }
-          return `${prefix} ${bearings} that ${matchQuery} ${hasHave} no tags.`;
-        }
-        if (matchQuery) {
-          return `${prefix} ${bearings} that ${matchQuery}.`;
-        }
-        return `${prefix} ${bearings}.`;
-      }
+      const first = (page - 1) * limit + 1;
+      const last = Math.min(first + Math.max(pageLength, 1) - 1, total);
+      return this.$tc(`query_summary.showing_range.${noun}`, total, {
+        first: this.$n(first, 'grouped'),
+        last: this.$n(last, 'grouped'),
+        total: this.$n(total, 'grouped'),
+      });
     },
   },
   watch: {
@@ -265,12 +216,6 @@ export default {
     },
     displayVerseRange(startVerseId, endVerseId) {
       return Bible.displayVerseRange(startVerseId, endVerseId, this.$i18n.locale);
-    },
-    populatedTags(tagIds) {
-      if (!this.passageNoteTags || !this.passageNoteTags.length) {
-        return tagIds.map(id => ({ id, label: 'Loading', color: '#333' }));
-      }
-      return tagIds.map(id => this.passageNoteTags.find(tag => tag.id === id)).filter(Boolean);
     },
     actionsForNote(note) {
       return [
@@ -407,11 +352,6 @@ export default {
   border-radius: 0.25em;
 }
 
-.query-summary--tag-filters {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 </style>
 
 <i18n lang="json">
@@ -437,6 +377,20 @@ export default {
     "messaging": {
       "are_you_sure_delete_note": "Möchten Sie diese Notiz wirklich löschen?",
       "note_could_not_be_deleted": "Die Notiz konnte nicht gelöscht werden."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "Keine Notizen",
+        "results": "Keine Ergebnisse"
+      },
+      "showing_all": {
+        "notes": "Zeige {total} Notiz | Zeige {total} Notizen",
+        "results": "Zeige {total} Ergebnis | Zeige {total} Ergebnisse"
+      },
+      "showing_range": {
+        "notes": "Zeige {first}–{last} von {total} gesamten Notiz | Zeige {first}–{last} von {total} gesamten Notizen",
+        "results": "Zeige {first}–{last} von {total} gesamten Ergebnis | Zeige {first}–{last} von {total} gesamten Ergebnissen"
+      }
     }
   },
   "en": {
@@ -460,6 +414,20 @@ export default {
     "messaging": {
       "are_you_sure_delete_note": "Are you sure you want to delete this note?",
       "note_could_not_be_deleted": "The note could not be deleted."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "No notes",
+        "results": "No results"
+      },
+      "showing_all": {
+        "notes": "Showing {total} note | Showing {total} notes",
+        "results": "Showing {total} result | Showing {total} results"
+      },
+      "showing_range": {
+        "notes": "Showing {first}–{last} of {total} total note | Showing {first}–{last} of {total} total notes",
+        "results": "Showing {first}–{last} of {total} total result | Showing {first}–{last} of {total} total results"
+      }
     }
   },
   "es": {
@@ -483,6 +451,20 @@ export default {
     "messaging": {
       "are_you_sure_delete_note": "¿Estás seguro de que quieres eliminar esta nota?",
       "note_could_not_be_deleted": "La nota no se pudo eliminar."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "No hay notas",
+        "results": "Sin resultados"
+      },
+      "showing_all": {
+        "notes": "Mostrando {total} nota | Mostrando {total} notas",
+        "results": "Mostrando {total} resultado | Mostrando {total} resultados"
+      },
+      "showing_range": {
+        "notes": "Mostrando {first}–{last} de {total} nota en total | Mostrando {first}–{last} de {total} notas en total",
+        "results": "Mostrando {first}–{last} de {total} resultado en total | Mostrando {first}–{last} de {total} resultados en total"
+      }
     }
   },
   "fr": {
@@ -506,6 +488,20 @@ export default {
     "messaging": {
       "are_you_sure_delete_note": "Êtes-vous sûr de vouloir supprimer cette note ?",
       "note_could_not_be_deleted": "La note n'a pas pu être supprimée."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "Aucune note",
+        "results": "Aucun résultat"
+      },
+      "showing_all": {
+        "notes": "{total} note affichée | {total} notes affichées",
+        "results": "{total} résultat affiché | {total} résultats affichés"
+      },
+      "showing_range": {
+        "notes": "{first}–{last} sur {total} note au total affichée | {first}–{last} sur {total} notes au total affichées",
+        "results": "{first}–{last} sur {total} résultat au total affiché | {first}–{last} sur {total} résultats au total affichés"
+      }
     }
   },
   "pt": {
@@ -529,6 +525,20 @@ export default {
     "messaging": {
       "are_you_sure_delete_note": "Tem certeza de que deseja excluir esta nota?",
       "note_could_not_be_deleted": "A nota não pôde ser excluída."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "Nenhuma nota",
+        "results": "Nenhum resultado"
+      },
+      "showing_all": {
+        "notes": "Mostrando {total} nota | Mostrando {total} notas",
+        "results": "Mostrando {total} resultado | Mostrando {total} resultados"
+      },
+      "showing_range": {
+        "notes": "Mostrando {first}–{last} de {total} nota no total | Mostrando {first}–{last} de {total} notas no total",
+        "results": "Mostrando {first}–{last} de {total} resultado no total | Mostrando {first}–{last} de {total} resultados no total"
+      }
     }
   },
   "uk": {
@@ -552,6 +562,20 @@ export default {
     "messaging": {
       "are_you_sure_delete_note": "Ви впевнені, що хочете видалити цю нотатку?",
       "note_could_not_be_deleted": "Нотатку не вдалося видалити."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "Немає нотаток",
+        "results": "Немає результатів"
+      },
+      "showing_all": {
+        "notes": "Показано {total} нотатку | Показано {total} нотатки | Показано {total} нотаток",
+        "results": "Показано {total} результат | Показано {total} результати | Показано {total} результатів"
+      },
+      "showing_range": {
+        "notes": "Показано {first}–{last} із {total} нотатки загалом | Показано {first}–{last} із {total} нотаток загалом | Показано {first}–{last} із {total} нотаток загалом",
+        "results": "Показано {first}–{last} із {total} результату загалом | Показано {first}–{last} із {total} результатів загалом | Показано {first}–{last} із {total} результатів загалом"
+      }
     }
   }
 }
