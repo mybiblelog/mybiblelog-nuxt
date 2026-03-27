@@ -8,7 +8,9 @@
         </p>
         <button class="delete" type="button" aria-label="close" @click.prevent="close" />
       </header>
-      <section class="modal-card-body">
+      <section
+        class="modal-card-body"
+      >
         <slot name="content" />
       </section>
       <footer v-if="$slots.footer" class="modal-card-foot">
@@ -58,6 +60,13 @@ export default {
 .modal {
   .modal-card {
     padding: 0 1rem;
+  }
+
+  .modal-card-body {
+    &:last-child {
+      border-bottom-left-radius: $modal-card-border-radius;
+      border-bottom-right-radius: $modal-card-border-radius;
+    }
   }
 
   &.fade-enter-active,
