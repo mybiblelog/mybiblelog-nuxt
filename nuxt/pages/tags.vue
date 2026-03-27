@@ -195,7 +195,7 @@ export default {
   grid-template-columns: 1fr auto;
   grid-template-areas: "created buttons";
   align-items: center;
-  gap: 0.5rem;
+  gap: 0 0.5rem;
 }
 .tag-footer--created {
   grid-area: created;
