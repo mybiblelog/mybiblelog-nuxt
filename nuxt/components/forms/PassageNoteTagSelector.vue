@@ -1,16 +1,20 @@
 <template>
   <div class="passage-note-tag-selector">
-    <label
-      v-for="tag in selectorTags"
-      :key="tag.id"
-      class="passage-note-tag-option"
-      :class="{ 'passage-note-tag-option--selected': tag.selected }"
-      :style="passageNoteTagStyle(tag)"
-    >
-      <input v-model="tag.selected" type="checkbox" @change="checkboxChanged">
-      <span class="passage-note-tag-option__label">{{ tag.label }}</span>
-    </label>
-    <em v-if="!selectorTags.length">{{ $t('create_a_tag_to_select_it_here') }}</em>
+    <div class="passage-note-tag-selector__grid">
+      <label
+        v-for="tag in selectorTags"
+        :key="tag.id"
+        class="passage-note-tag-option"
+        :class="{ 'passage-note-tag-option--selected': tag.selected }"
+        :style="passageNoteTagStyle(tag)"
+      >
+        <input v-model="tag.selected" type="checkbox" @change="checkboxChanged">
+        <span class="passage-note-tag-option__label">{{ tag.label }}</span>
+      </label>
+      <em v-if="!selectorTags.length" class="passage-note-tag-selector__empty">
+        {{ $t('create_a_tag_to_select_it_here') }}
+      </em>
+    </div>
   </div>
 </template>
 
@@ -55,10 +59,27 @@ export default {
 
 <style lang="scss" scoped>
 .passage-note-tag-selector {
+  /* stylelint-disable-next-line property-no-unknown */
+  container-type: inline-size;
+  max-width: 100%;
+}
+
+.passage-note-tag-selector__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.25rem;
   max-width: 100%;
+}
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@container (max-width: 300px) {
+  .passage-note-tag-selector__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.passage-note-tag-selector__empty {
+  grid-column: 1 / -1;
 }
 .passage-note-tag-option {
   display: flex;
