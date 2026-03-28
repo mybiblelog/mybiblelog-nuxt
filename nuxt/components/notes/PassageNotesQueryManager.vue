@@ -77,21 +77,7 @@
 
       <div class="field">
         <label class="label">{{ $t('passage') }}</label>
-        <div class="passage-notes-query-manager__passage-row">
-          <passage-selector
-            :key="passageSelectorKey"
-            :populate-with="passageSelectorPopulateWith"
-            @change="({ startVerseId, endVerseId }) => setDraft({ filterPassageStartVerseId: startVerseId, filterPassageEndVerseId: endVerseId })"
-          />
-          <button
-            v-if="hasSelectedPassage"
-            class="button is-light passage-notes-query-manager__clear-button"
-            type="button"
-            @click="clearDraftPassage"
-          >
-            {{ $t('clear') }}
-          </button>
-        </div>
+        <verse-input v-model="passageRangeModel" :multi-verse="true" />
       </div>
 
       <div v-if="hasSelectedPassage" class="field">
@@ -172,7 +158,7 @@
 </template>
 
 <script>
-import PassageSelector from '@/components/forms/PassageSelector';
+import VerseInput from '@/components/forms/VerseInput';
 import PassageNotesTagFilterModal from '@/components/popups/PassageNotesTagFilterModal';
 
 const DEFAULT_DRAFT = {
@@ -211,7 +197,7 @@ function deepEqualManaged(a, b) {
 export default {
   name: 'PassageNotesQueryManager',
   components: {
-    PassageSelector,
+    VerseInput,
     PassageNotesTagFilterModal,
   },
   props: {
@@ -229,7 +215,6 @@ export default {
     return {
       baseline,
       draft: pickManagedQuery(this.appliedQuery),
-      passageSelectorKey: 0,
       showTagFilterModal: false,
     };
   },
@@ -249,6 +234,24 @@ export default {
     },
     hasSelectedPassage() {
       return !!(this.draft.filterPassageStartVerseId && this.draft.filterPassageEndVerseId);
+    },
+    passageRangeModel: {
+      get() {
+        const startVerseId = Number(this.draft.filterPassageStartVerseId || 0);
+        const endVerseId = Number(this.draft.filterPassageEndVerseId || 0);
+        if (!startVerseId || !endVerseId) { return null; }
+        return { startVerseId, endVerseId };
+      },
+      set(range) {
+        if (!range) {
+          this.setDraft({ filterPassageStartVerseId: 0, filterPassageEndVerseId: 0 });
+          return;
+        }
+        this.setDraft({
+          filterPassageStartVerseId: Number(range.startVerseId),
+          filterPassageEndVerseId: Number(range.endVerseId),
+        });
+      },
     },
     onlyUntaggedNotes: {
       get() {
@@ -275,16 +278,6 @@ export default {
         this.setDraft({ sortOn, sortDirection });
       },
     },
-    passageSelectorPopulateWith() {
-      if (this.draft.filterPassageStartVerseId && this.draft.filterPassageEndVerseId) {
-        return {
-          empty: false,
-          startVerseId: this.draft.filterPassageStartVerseId,
-          endVerseId: this.draft.filterPassageEndVerseId,
-        };
-      }
-      return { empty: true };
-    },
   },
   watch: {
     appliedQuery: {
@@ -293,7 +286,6 @@ export default {
         if (this.isDirty) { return; }
         this.baseline = pickManagedQuery(nextAppliedQuery);
         this.draft = pickManagedQuery(nextAppliedQuery);
-        this.passageSelectorKey += 1;
       },
     },
   },
@@ -322,7 +314,6 @@ export default {
     resetDraftToApplied() {
       this.baseline = pickManagedQuery(this.appliedQuery);
       this.draft = pickManagedQuery(this.appliedQuery);
-      this.passageSelectorKey += 1;
     },
     async confirmAndReset() {
       const confirmed = await this.$store.dispatch('dialog/confirm', {
@@ -333,15 +324,7 @@ export default {
       const update = pickManagedQuery(JSON.parse(JSON.stringify(DEFAULT_DRAFT)));
       this.baseline = pickManagedQuery(update);
       this.draft = pickManagedQuery(update);
-      this.passageSelectorKey += 1;
       this.$emit('apply', update);
-    },
-    clearDraftPassage() {
-      this.setDraft({
-        filterPassageStartVerseId: 0,
-        filterPassageEndVerseId: 0,
-      });
-      this.passageSelectorKey += 1;
     },
     applyDraft() {
       const update = pickManagedQuery(this.draft);
@@ -407,13 +390,6 @@ export default {
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
-}
-
-.passage-notes-query-manager__clear-button {
-  font-size: 0.85rem;
-  padding: 0.3rem 0.55rem;
-  line-height: 1.2;
-  white-space: nowrap;
 }
 
 .passage-notes-query-manager__radio-option {
