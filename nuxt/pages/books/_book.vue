@@ -1,6 +1,12 @@
 <template>
   <div class="content-column">
-    <book-report :log-entries="logEntries" :book-index="bookIndex" @exit-book-report="viewBibleReport" @view-book-notes="viewBookNotes(bookIndex)" />
+    <book-report
+      :log-entries="logEntries"
+      :book-index="bookIndex"
+      @exit-book-report="viewBibleReport"
+      @view-book-notes="viewBookNotes(bookIndex)"
+      @view-book-log="viewBookLog(bookIndex)"
+    />
   </div>
 </template>
 
@@ -8,6 +14,7 @@
 import { mapGetters } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
+import { encodeLogEntriesQueryToRoute } from '@/helpers/log-entries-route-query';
 import BookReport from '@/components/BookReport';
 
 export default {
@@ -51,6 +58,16 @@ export default {
         offset: 0,
       });
       this.$router.push({ path: this.localePath('/notes'), query });
+    },
+    viewBookLog(bookIndex) {
+      const bookStartVerseId = Bible.getFirstBookVerseId(bookIndex);
+      const bookEndVerseId = Bible.getLastBookVerseId(bookIndex);
+      const query = encodeLogEntriesQueryToRoute({
+        filterPassageStartVerseId: bookStartVerseId,
+        filterPassageEndVerseId: bookEndVerseId,
+        offset: 0,
+      });
+      this.$router.push({ path: this.localePath('/log'), query });
     },
   },
 };
