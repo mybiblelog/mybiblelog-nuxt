@@ -17,11 +17,29 @@
 
       <div class="field">
         <label class="label">{{ $t('tag_filters') }}</label>
-        <passage-note-tag-selector
-          :passage-note-tags="passageNoteTags"
-          :selected-tag-ids="draft.filterTags"
-          @change="onTagIdsChange"
-        />
+        <div v-if="hasSelectedTags" class="passage-notes-query-manager__selected-tags">
+          <span
+            v-for="tag in selectedTags"
+            :key="tag.id"
+            class="passage-notes-query-manager__selected-tag"
+            :style="{ '--tag-color': tag?.color || '#999' }"
+          >
+            {{ tag.label || tag.id }}
+          </span>
+        </div>
+        <div class="passage-notes-query-manager__tag-actions">
+          <button class="button is-light" type="button" @click="openTagFilterModal">
+            {{ $t('tag_select.choose') }}
+          </button>
+          <button
+            v-if="hasSelectedTags"
+            class="button is-light"
+            type="button"
+            @click="clearTagSelection"
+          >
+            {{ $t('tag_select.clear') }}
+          </button>
+        </div>
       </div>
 
       <div v-if="!hasSelectedTags" class="field">
@@ -112,6 +130,8 @@
         </div>
       </div>
 
+      <hr class="passage-notes-query-manager__divider">
+
       <div class="field">
         <label class="label">{{ $t('page_size') }}</label>
         <div class="control">
@@ -140,12 +160,20 @@
         </button>
       </div>
     </div>
+
+    <passage-notes-tag-filter-modal
+      :open="showTagFilterModal"
+      :passage-note-tags="passageNoteTags"
+      :selected-tag-ids="draft.filterTags"
+      @change="onTagIdsChange"
+      @close="closeTagFilterModal"
+    />
   </div>
 </template>
 
 <script>
-import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
 import PassageSelector from '@/components/forms/PassageSelector';
+import PassageNotesTagFilterModal from '@/components/popups/PassageNotesTagFilterModal';
 
 const DEFAULT_DRAFT = {
   limit: 10,
@@ -183,8 +211,8 @@ function deepEqualManaged(a, b) {
 export default {
   name: 'PassageNotesQueryManager',
   components: {
-    PassageNoteTagSelector,
     PassageSelector,
+    PassageNotesTagFilterModal,
   },
   props: {
     appliedQuery: {
@@ -202,6 +230,7 @@ export default {
       baseline,
       draft: pickManagedQuery(this.appliedQuery),
       passageSelectorKey: 0,
+      showTagFilterModal: false,
     };
   },
   computed: {
@@ -210,6 +239,13 @@ export default {
     },
     hasSelectedTags() {
       return Array.isArray(this.draft.filterTags) && this.draft.filterTags.length > 0;
+    },
+    selectedTags() {
+      const selectedIds = Array.isArray(this.draft.filterTags) ? this.draft.filterTags : [];
+      const byId = new Map((this.passageNoteTags || []).map(t => [t.id, t]));
+      return selectedIds
+        .map(id => byId.get(id) || { id, label: `${id}`, color: '#999' })
+        .filter(Boolean);
     },
     hasSelectedPassage() {
       return !!(this.draft.filterPassageStartVerseId && this.draft.filterPassageEndVerseId);
@@ -265,6 +301,15 @@ export default {
     setDraft(update) {
       this.draft = { ...this.draft, ...update };
     },
+    openTagFilterModal() {
+      this.showTagFilterModal = true;
+    },
+    closeTagFilterModal() {
+      this.showTagFilterModal = false;
+    },
+    clearTagSelection() {
+      this.setDraft({ filterTags: [], filterTagMatching: 'any' });
+    },
     onTagIdsChange(tagIds) {
       const nextTagIds = Array.isArray(tagIds) ? tagIds : [];
       const hadNoTags = !Array.isArray(this.draft.filterTags) || this.draft.filterTags.length === 0;
@@ -315,6 +360,40 @@ export default {
 <style lang="scss" scoped>
 .passage-notes-query-manager__divider {
   margin: 1rem 0;
+}
+
+.passage-notes-query-manager__tag-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.passage-notes-query-manager__selected-tags {
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.passage-notes-query-manager__selected-tag {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+
+  font-size: 0.85rem;
+  line-height: 1.2;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+
+  color: #363636;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-left: 0.25rem solid var(--tag-color);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .passage-notes-query-manager__actions {
@@ -373,13 +452,17 @@ export default {
     "reset_confirm": "Möchten Sie die Such-/Filter-/Sortiereinstellungen wirklich zurücksetzen?",
     "search_text": "Suchtext",
     "search_placeholder": "Text eingeben…",
-    "tag_filters": "Tag-Filter",
+    "tag_filters": "Nach Tags filtern",
+    "tag_select": {
+      "choose": "Tags auswählen…",
+      "clear": "Tags löschen"
+    },
     "tag_only_untagged": "Nur ungetaggte Notizen",
     "tag_match": "Übereinstimmung",
     "tag_match_any": "Beliebig",
     "tag_match_all": "Alle",
     "tag_match_exact": "Exakt",
-    "passage": "Passage",
+    "passage": "Nach Passage filtern",
     "clear": "Löschen",
     "passage_match": "Übereinstimmung",
     "passage_match_inclusive": "Inklusiv",
@@ -399,13 +482,17 @@ export default {
     "reset_confirm": "Are you sure you want to reset search/filter/sort settings?",
     "search_text": "Search Text",
     "search_placeholder": "Enter text…",
-    "tag_filters": "Tag Filters",
+    "tag_filters": "Filter by Tags",
+    "tag_select": {
+      "choose": "Choose tags…",
+      "clear": "Clear tags"
+    },
     "tag_only_untagged": "Only untagged notes",
     "tag_match": "Match",
     "tag_match_any": "Any",
     "tag_match_all": "All",
     "tag_match_exact": "Exact",
-    "passage": "Passage",
+    "passage": "Filter by Passage",
     "clear": "Clear",
     "passage_match": "Match",
     "passage_match_inclusive": "Inclusive",
@@ -415,7 +502,7 @@ export default {
     "sort": "Sort",
     "sort_newest_first": "Newest First",
     "sort_oldest_first": "Oldest First",
-    "page_size": "Page size",
+    "page_size": "Page Size",
     "apply": "Apply",
     "cancel": "Cancel"
   },
@@ -425,13 +512,17 @@ export default {
     "reset_confirm": "¿Está seguro de que desea restablecer la búsqueda / filtros / orden?",
     "search_text": "Texto de búsqueda",
     "search_placeholder": "Ingrese texto…",
-    "tag_filters": "Filtros de etiquetas",
+    "tag_filters": "Filtrar por etiquetas",
+    "tag_select": {
+      "choose": "Elegir etiquetas…",
+      "clear": "Limpiar etiquetas"
+    },
     "tag_only_untagged": "Solo notas sin etiquetas",
     "tag_match": "Partido",
     "tag_match_any": "Cualquier",
     "tag_match_all": "Todas",
     "tag_match_exact": "Exacto",
-    "passage": "Pasaje",
+    "passage": "Filtrar por pasaje",
     "clear": "Limpiar",
     "passage_match": "Partido",
     "passage_match_inclusive": "Inclusivo",
@@ -451,13 +542,17 @@ export default {
     "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser la recherche / les filtres / le tri ?",
     "search_text": "Rechercher un texte",
     "search_placeholder": "Entrez le texte…",
-    "tag_filters": "Filtres de tag",
+    "tag_filters": "Filtrer par tags",
+    "tag_select": {
+      "choose": "Choisir des étiquettes…",
+      "clear": "Effacer les étiquettes"
+    },
     "tag_only_untagged": "Uniquement les notes sans tags",
     "tag_match": "Correspondance",
     "tag_match_any": "Tous",
     "tag_match_all": "Tout",
     "tag_match_exact": "Exact",
-    "passage": "Passage",
+    "passage": "Filtrer par passage",
     "clear": "Effacer",
     "passage_match": "Correspondance",
     "passage_match_inclusive": "Inclusif",
@@ -477,13 +572,17 @@ export default {
     "reset_confirm": "Tem certeza de que deseja reiniciar as configurações de busca / filtro / ordenação?",
     "search_text": "Pesquisar Texto",
     "search_placeholder": "Digite o texto…",
-    "tag_filters": "Filtros de Tag",
+    "tag_filters": "Filtrar por tags",
+    "tag_select": {
+      "choose": "Escolher tags…",
+      "clear": "Limpar tags"
+    },
     "tag_only_untagged": "Apenas notas sem tags",
     "tag_match": "Corresponder",
     "tag_match_any": "Qualquer",
     "tag_match_all": "Tudo",
     "tag_match_exact": "Exato",
-    "passage": "Passagem",
+    "passage": "Filtrar por passagem",
     "clear": "Limpar",
     "passage_match": "Corresponder",
     "passage_match_inclusive": "Inclusivo",
@@ -503,13 +602,17 @@ export default {
     "reset_confirm": "Ви впевнені, що хочете скинути налаштування пошуку / фільтра / сортування?",
     "search_text": "Текст для пошуку",
     "search_placeholder": "Введіть текст…",
-    "tag_filters": "Фільтри за тегами",
+    "tag_filters": "Фільтрувати за тегами",
+    "tag_select": {
+      "choose": "Вибрати теги…",
+      "clear": "Очистити теги"
+    },
     "tag_only_untagged": "Лише нотатки без тегів",
     "tag_match": "Співпадіння",
     "tag_match_any": "Будь-який",
     "tag_match_all": "Всі",
     "tag_match_exact": "Точний",
-    "passage": "Вірш",
+    "passage": "Фільтрувати за уривком",
     "clear": "Очистити",
     "passage_match": "Співпадіння",
     "passage_match_inclusive": "Включно",

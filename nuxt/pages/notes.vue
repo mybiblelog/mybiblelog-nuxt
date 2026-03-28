@@ -28,10 +28,7 @@
       <div class="columns">
         <aside class="column is-4 notes-page__sidebar">
           <div class="box notes-page__query-manager-box">
-            <div class="notes-page__query-manager-header">
-              <div class="notes-page__query-manager-title">
-                {{ $t('query_manager.title') }}
-              </div>
+            <div class="notes-page__query-manager-actions">
               <button v-if="hasAppliedViewOptions" class="button is-light is-small" type="button" @click="resetViewOptions">
                 {{ $t('query_manager.reset') }}
               </button>
@@ -371,16 +368,12 @@ export default {
   padding: 1rem;
 }
 
-.notes-page__query-manager-header {
+.notes-page__query-manager-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.75rem;
   margin-bottom: 1rem;
-}
-
-.notes-page__query-manager-title {
-  font-weight: 600;
 }
 
 .fade-enter-active,
@@ -446,7 +439,7 @@ export default {
       "page": "Seite"
     },
     "query_manager": {
-      "open": "Ansichtsoptionen",
+      "open": "Suchen | Filtern | Sortieren",
       "title": "Ansichtsoptionen",
       "reset": "Zurücksetzen",
       "reset_button": "Ansichtsoptionen zurücksetzen"
@@ -489,7 +482,7 @@ export default {
       "page": "Page"
     },
     "query_manager": {
-      "open": "View Options",
+      "open": "Search | Filter | Sort",
       "title": "View Options",
       "reset": "Reset",
       "reset_button": "Reset View Options"
@@ -532,7 +525,7 @@ export default {
       "page": "Página"
     },
     "query_manager": {
-      "open": "Opciones de vista",
+      "open": "Buscar | Filtrar | Ordenar",
       "title": "Opciones de vista",
       "reset": "Restablecer",
       "reset_button": "Restablecer opciones de vista"
@@ -575,7 +568,7 @@ export default {
       "page": "Page"
     },
     "query_manager": {
-      "open": "Options d’affichage",
+      "open": "Rechercher | Filtrer | Trier",
       "title": "Options d’affichage",
       "reset": "Réinitialiser",
       "reset_button": "Réinitialiser les options d’affichage"
@@ -618,7 +611,7 @@ export default {
       "page": "Página"
     },
     "query_manager": {
-      "open": "Opções de visualização",
+      "open": "Buscar | Filtrar | Ordenar",
       "title": "Opções de visualização",
       "reset": "Reiniciar",
       "reset_button": "Reiniciar opções de visualização"
@@ -661,7 +654,7 @@ export default {
       "page": "Сторінка"
     },
     "query_manager": {
-      "open": "Параметри перегляду",
+      "open": "Пошук | Фільтр | Сортування",
       "title": "Параметри перегляду",
       "reset": "Скинути",
       "reset_button": "Скинути параметри перегляду"
