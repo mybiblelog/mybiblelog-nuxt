@@ -112,6 +112,25 @@
         </div>
       </div>
 
+      <div class="field">
+        <label class="label">{{ $t('page_size') }}</label>
+        <div class="control">
+          <div class="select">
+            <select :value="draft.limit" @change="setDraft({ limit: Number($event.target.value) })">
+              <option :value="10">
+                10
+              </option>
+              <option :value="20">
+                20
+              </option>
+              <option :value="50">
+                50
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <div class="passage-notes-query-manager__actions">
         <button class="button is-primary" type="button" :disabled="!isDirty" @click="applyDraft">
           {{ $t('apply') }}
@@ -129,6 +148,7 @@ import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
 import PassageSelector from '@/components/forms/PassageSelector';
 
 const DEFAULT_DRAFT = {
+  limit: 10,
   sortOn: 'createdAt',
   sortDirection: 'descending',
   filterTags: [],
@@ -142,6 +162,7 @@ const DEFAULT_DRAFT = {
 function pickManagedQuery(query) {
   const q = query || {};
   return {
+    limit: q.limit ?? DEFAULT_DRAFT.limit,
     sortOn: q.sortOn ?? DEFAULT_DRAFT.sortOn,
     sortDirection: q.sortDirection ?? DEFAULT_DRAFT.sortDirection,
     filterTags: Array.isArray(q.filterTags) ? [...q.filterTags] : [...DEFAULT_DRAFT.filterTags],
@@ -368,6 +389,7 @@ export default {
     "sort": "Sortieren",
     "sort_newest_first": "Neueste zuerst",
     "sort_oldest_first": "Älteste zuerst",
+    "page_size": "Seitengröße",
     "apply": "Anwenden",
     "cancel": "Abbrechen"
   },
@@ -393,6 +415,7 @@ export default {
     "sort": "Sort",
     "sort_newest_first": "Newest First",
     "sort_oldest_first": "Oldest First",
+    "page_size": "Page size",
     "apply": "Apply",
     "cancel": "Cancel"
   },
@@ -418,6 +441,7 @@ export default {
     "sort": "Ordenar",
     "sort_newest_first": "Más reciente primero",
     "sort_oldest_first": "Más antiguo primero",
+    "page_size": "Tamaño de página",
     "apply": "Aplicar",
     "cancel": "Cancelar"
   },
@@ -443,6 +467,7 @@ export default {
     "sort": "Trier",
     "sort_newest_first": "Le plus récent d'abord",
     "sort_oldest_first": "Plus ancien en premier",
+    "page_size": "Taille de page",
     "apply": "Appliquer",
     "cancel": "Annuler"
   },
@@ -468,6 +493,7 @@ export default {
     "sort": "Ordenar",
     "sort_newest_first": "Mais Recentes Primeiro",
     "sort_oldest_first": "Mais Antigos Primeiro",
+    "page_size": "Tamanho da página",
     "apply": "Aplicar",
     "cancel": "Cancelar"
   },
@@ -493,6 +519,7 @@ export default {
     "sort": "Сортувати",
     "sort_newest_first": "Спочатку нові",
     "sort_oldest_first": "Спочатку старі",
+    "page_size": "Розмір сторінки",
     "apply": "Застосувати",
     "cancel": "Скасувати"
   }

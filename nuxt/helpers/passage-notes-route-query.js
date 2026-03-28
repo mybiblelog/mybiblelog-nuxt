@@ -11,11 +11,17 @@ const DEFAULT_PASSAGE_NOTES_QUERY = {
   filterPassageMatching: 'inclusive', // 'inclusive' | 'exclusive'
 };
 
+const MAX_PAGE_SIZE = 50;
+
 function asStringArray(value) {
   if (value === null || value === undefined) { return []; }
   if (Array.isArray(value)) { return value.map(v => `${v}`); }
   if (`${value}`.trim() === '') { return []; }
   return [`${value}`];
+}
+
+function clamp(n, min, max) {
+  return Math.min(Math.max(n, min), max);
 }
 
 function parseIntOr(value, fallback) {
@@ -42,7 +48,7 @@ export function decodePassageNotesRouteQuery(routeQuery = {}) {
   const filterPassageEndVerseId = parseIntOr(routeQuery.filterPassageEndVerseId, DEFAULT_PASSAGE_NOTES_QUERY.filterPassageEndVerseId);
 
   return {
-    limit: Math.max(1, parseIntOr(routeQuery.limit, DEFAULT_PASSAGE_NOTES_QUERY.limit)),
+    limit: clamp(parseIntOr(routeQuery.limit, DEFAULT_PASSAGE_NOTES_QUERY.limit), 1, MAX_PAGE_SIZE),
     offset: Math.max(0, parseIntOr(routeQuery.offset, DEFAULT_PASSAGE_NOTES_QUERY.offset)),
     sortOn: `${routeQuery.sortOn ?? DEFAULT_PASSAGE_NOTES_QUERY.sortOn}`,
     sortDirection: pickEnum(routeQuery.sortDirection, ['ascending', 'descending'], DEFAULT_PASSAGE_NOTES_QUERY.sortDirection),
@@ -64,7 +70,7 @@ export function decodePassageNotesRouteQuery(routeQuery = {}) {
 export function encodePassageNotesQueryToRoute(query = {}) {
   const merged = { ...DEFAULT_PASSAGE_NOTES_QUERY, ...(query || {}) };
   const normalized = {
-    limit: Math.max(1, parseIntOr(merged.limit, DEFAULT_PASSAGE_NOTES_QUERY.limit)),
+    limit: clamp(parseIntOr(merged.limit, DEFAULT_PASSAGE_NOTES_QUERY.limit), 1, MAX_PAGE_SIZE),
     offset: Math.max(0, parseIntOr(merged.offset, DEFAULT_PASSAGE_NOTES_QUERY.offset)),
     sortOn: `${merged.sortOn ?? DEFAULT_PASSAGE_NOTES_QUERY.sortOn}`,
     sortDirection: pickEnum(merged.sortDirection, ['ascending', 'descending'], DEFAULT_PASSAGE_NOTES_QUERY.sortDirection),

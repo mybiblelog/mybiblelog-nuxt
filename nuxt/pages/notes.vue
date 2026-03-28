@@ -55,63 +55,57 @@
               </div>
             </template>
             <template v-else-if="!passageNotes.length">
-              <div class="passage-note">
-                <div class="passage-note--content has-text-centered">
+              <div class="has-background-light p-5">
+                <div class="has-text-centered">
                   {{ $t('results.no_results') }}
                 </div>
               </div>
             </template>
             <template v-else>
               <div class="notes-page__results-bar">
-                <div class="level is-marginless">
-                  <div class="level-left">
-                    <div class="level-item notes-page__results-summary">
-                      {{ querySummary }}
-                    </div>
-                  </div>
+                <div class="notes-page__results-summary">
+                  {{ querySummary }}
+                </div>
 
-                  <div v-if="pagerTotalPages > 1" class="level-right">
-                    <div class="level-item">
-                      <div class="field has-addons is-marginless" role="group" :aria-label="$t('pagination.label')">
-                        <p class="control">
-                          <button
-                            class="button is-small is-light"
-                            type="button"
-                            :disabled="pagerPage <= 1"
-                            :aria-label="$t('pagination.prev')"
-                            @click="onPageChanged(pagerPage - 1)"
-                          >
-                            <caret-left-icon width="10px" height="18px" fill="currentColor" />
-                          </button>
-                        </p>
+                <div v-if="pagerTotalPages > 1" class="notes-page__results-pager">
+                  <div class="field has-addons is-marginless" role="group" :aria-label="$t('pagination.label')">
+                    <p class="control">
+                      <button
+                        class="button is-small is-light"
+                        type="button"
+                        :disabled="pagerPage <= 1"
+                        :aria-label="$t('pagination.prev')"
+                        @click="onPageChanged(pagerPage - 1)"
+                      >
+                        <caret-left-icon width="10px" height="18px" fill="currentColor" />
+                      </button>
+                    </p>
 
-                        <div class="control">
-                          <div class="select is-small">
-                            <select
-                              :value="pagerPage"
-                              :aria-label="$t('pagination.page')"
-                              @change="onPageChanged(Number($event.target.value))"
-                            >
-                              <option v-for="p in pagerTotalPages" :key="p" :value="p">
-                                {{ $t('pagination.page') }} {{ p }}
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <p class="control">
-                          <button
-                            class="button is-small is-light"
-                            type="button"
-                            :disabled="pagerPage >= pagerTotalPages"
-                            :aria-label="$t('pagination.next')"
-                            @click="onPageChanged(pagerPage + 1)"
-                          >
-                            <caret-right-icon width="10px" height="18px" fill="currentColor" />
-                          </button>
-                        </p>
+                    <div class="control">
+                      <div class="select is-small">
+                        <select
+                          :value="pagerPage"
+                          :aria-label="$t('pagination.page')"
+                          @change="onPageChanged(Number($event.target.value))"
+                        >
+                          <option v-for="p in pagerTotalPages" :key="p" :value="p">
+                            {{ $t('pagination.page') }} {{ p }}
+                          </option>
+                        </select>
                       </div>
                     </div>
+
+                    <p class="control">
+                      <button
+                        class="button is-small is-light"
+                        type="button"
+                        :disabled="pagerPage >= pagerTotalPages"
+                        :aria-label="$t('pagination.next')"
+                        @click="onPageChanged(pagerPage + 1)"
+                      >
+                        <caret-right-icon width="10px" height="18px" fill="currentColor" />
+                      </button>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -197,8 +191,9 @@ export default {
       const hasTagMatchingOverride = q.filterTagMatching && q.filterTagMatching !== 'any';
       const hasPassageFilter = !!(q.filterPassageStartVerseId && q.filterPassageEndVerseId);
       const hasSortOverride = (q.sortOn && q.sortOn !== 'createdAt') || (q.sortDirection && q.sortDirection !== 'descending');
+      const hasPageSizeOverride = Number(q.limit || 10) !== 10;
 
-      return hasSearchText || hasTagFilters || hasTagMatchingOverride || hasPassageFilter || hasSortOverride;
+      return hasSearchText || hasTagFilters || hasTagMatchingOverride || hasPassageFilter || hasSortOverride || hasPageSizeOverride;
     },
     hasAppliedFilters() {
       const q = this.query || {};
@@ -409,6 +404,17 @@ export default {
   margin-right:  -0.5rem;
   border-bottom: 1px solid #eee;
 
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem; /* tighter row gap on small screens */
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
 }
 
 .notes-page__results-summary {
@@ -416,8 +422,13 @@ export default {
   word-break: break-word;
 }
 
-.notes-page__results-bar :deep(.level-item) {
+.notes-page__results-pager {
+  display: flex;
   justify-content: flex-start;
+
+  @media (min-width: 600px) {
+    justify-content: flex-end;
+  }
 }
 
 </style>
