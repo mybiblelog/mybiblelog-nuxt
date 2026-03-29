@@ -19,6 +19,7 @@
 import { Bible } from '@mybiblelog/shared';
 import SegmentBar from '@/components/SegmentBar';
 import StarIcon from '@/components/svg/StarIcon';
+import { useActionSheetStore } from '~/stores/action-sheet';
 
 export default {
   components: {
@@ -66,7 +67,8 @@ export default {
   },
   methods: {
     openActionSheet() {
-      this.$store.dispatch('action-sheet/openSheet', {
+      const actionSheetStore = useActionSheetStore(this.$pinia);
+      actionSheetStore.openSheet({
         title: this.sheetTitle,
         actions: this.actions,
       });
