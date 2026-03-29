@@ -59,6 +59,7 @@ const config: NuxtConfig = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/pinia.js',
     '~/plugins/gtag.client.js',
     '~/plugins/translate-api.js',
     '~/plugins/nuxt-client-init.client.js',
@@ -121,7 +122,14 @@ const config: NuxtConfig = {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-      // Webpack alias removed - now using npm workspace package
+      // Ensure Pinia's ESM dependency (`vue-demi`) resolves correctly in Nuxt 2's
+      // server build, which can otherwise prefer CJS entrypoints.
+      if (config.resolve?.alias) {
+        // Vue 2's CJS entrypoint doesn't support named ESM imports (e.g. `computed`).
+        // Pinia + vue-demi expect ESM-style exports.
+        config.resolve.alias['vue$'] = 'vue/dist/vue.runtime.esm.js';
+        config.resolve.alias['vue-demi'] = 'vue-demi/lib/index.mjs';
+      }
     },
     loaders: {
       scss: {
