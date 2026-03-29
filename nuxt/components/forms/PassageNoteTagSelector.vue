@@ -1,9 +1,20 @@
 <template>
   <div class="passage-note-tag-selector">
-    <label v-for="tag in selectorTags" :key="tag.id" class="passage-note-tag-option" :style="passageNoteTagStyle(tag)">
-      <input v-model="tag.selected" type="checkbox" @change="checkboxChanged">{{ tag.label }}
-    </label>
-    <em v-if="!selectorTags.length">{{ $t('create_a_tag_to_select_it_here') }}</em>
+    <div class="passage-note-tag-selector__grid">
+      <label
+        v-for="tag in selectorTags"
+        :key="tag.id"
+        class="passage-note-tag-option"
+        :class="{ 'passage-note-tag-option--selected': tag.selected }"
+        :style="passageNoteTagStyle(tag)"
+      >
+        <input v-model="tag.selected" type="checkbox" @change="checkboxChanged">
+        <span class="passage-note-tag-option__label">{{ tag.label }}</span>
+      </label>
+      <em v-if="!selectorTags.length" class="passage-note-tag-selector__empty">
+        {{ $t('create_a_tag_to_select_it_here') }}
+      </em>
+    </div>
   </div>
 </template>
 
@@ -33,7 +44,7 @@ export default {
   methods: {
     passageNoteTagStyle(tag) {
       return {
-        'background-color': tag.color,
+        '--tag-color': tag?.color || '#999',
       };
     },
     checkboxChanged() {
@@ -48,24 +59,63 @@ export default {
 
 <style lang="scss" scoped>
 .passage-note-tag-selector {
+  /* stylelint-disable-next-line property-no-unknown */
+  container-type: inline-size;
+  max-width: 100%;
+}
+
+.passage-note-tag-selector__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem;
+  max-width: 100%;
+}
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@container (max-width: 300px) {
+  .passage-note-tag-selector__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.passage-note-tag-selector__empty {
+  grid-column: 1 / -1;
 }
 .passage-note-tag-option {
   display: flex;
   align-items: center;
-  color: #fff;
-  text-shadow: 0 0 2px #000, 1px 1px 0 rgba(0,0,0,0.5);
-  padding: 0.25rem 0.5rem;
+  gap: 0.35rem;
+  cursor: pointer;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  color: #363636;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-left: 0.35rem solid var(--tag-color);
+  padding: 0.25rem 0.6rem;
   border-radius: 0.25rem;
-  margin-right: 0.25rem;
-  margin-bottom: 0.25rem;
-  white-space: nowrap;
-  overflow-x: hidden;
+
+  -webkit-user-select: none;
+  user-select: none;
 
   input[type='checkbox'] {
-    margin-right: 0.25rem;
+    flex: 0 0 auto;
   }
+}
+
+.passage-note-tag-option__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.passage-note-tag-option--selected {
+  background: rgba(238, 238, 238, 1);
 }
 </style>
 

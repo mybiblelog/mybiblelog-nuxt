@@ -21,6 +21,7 @@ export const state = () => ({
     dailyVerseCountGoal: 0,
     preferredBibleApp: DEFAULT_BIBLE_APP,
     preferredBibleVersion: DEFAULT_BIBLE_VERSION,
+    passageNoteTagSortOrder: 'label:ascending',
     locale: 'en',
   },
 });
@@ -40,6 +41,7 @@ export const mutations = {
     preferredBibleApp,
     preferredBibleVersion,
     startPage,
+    passageNoteTagSortOrder,
     locale,
   }) {
     if (lookBackDate) {
@@ -57,6 +59,9 @@ export const mutations = {
     if (startPage) {
       state.settings.startPage = startPage;
     }
+    if (passageNoteTagSortOrder) {
+      state.settings.passageNoteTagSortOrder = passageNoteTagSortOrder;
+    }
     if (locale) {
       state.settings.locale = locale;
     }
@@ -70,6 +75,7 @@ export const actions = {
     preferredBibleApp,
     preferredBibleVersion,
     startPage,
+    passageNoteTagSortOrder,
     locale,
   }) {
     try {
@@ -84,6 +90,7 @@ export const actions = {
           dailyVerseCountGoal,
           preferredBibleVersion,
           startPage,
+          passageNoteTagSortOrder,
           locale,
         },
       });
@@ -93,6 +100,7 @@ export const actions = {
         preferredBibleApp,
         preferredBibleVersion,
         startPage,
+        passageNoteTagSortOrder,
         locale,
       });
       return true;
@@ -112,6 +120,7 @@ export const actions = {
       dailyVerseCountGoal,
       preferredBibleVersion,
       startPage,
+      passageNoteTagSortOrder,
       locale,
     } = data;
     commit(SET_USER_SETTINGS, {
@@ -119,8 +128,13 @@ export const actions = {
       dailyVerseCountGoal,
       preferredBibleVersion,
       startPage,
+      passageNoteTagSortOrder,
       locale,
     });
+
+    if (passageNoteTagSortOrder) {
+      await this.dispatch('passage-note-tags/setPassageNoteTagSortOrder', { sortOrder: passageNoteTagSortOrder, persist: false });
+    }
   },
   loadClientSettings({ commit }) {
     let preferredBibleApp = DEFAULT_BIBLE_APP;

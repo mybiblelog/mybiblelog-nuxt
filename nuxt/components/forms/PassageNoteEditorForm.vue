@@ -2,7 +2,7 @@
   <form @submit.prevent="handleSubmit">
     <div v-if="errors._form" class="help is-danger">
       <div class="help is-danger">
-        {{ errors._form }}
+        {{ $terr(errors._form) }}
       </div>
     </div>
     <div class="field passages-title">
@@ -57,7 +57,32 @@
     </div>
     <div class="field">
       <label class="label">{{ $t('tags') }}</label>
-      <passage-note-tag-selector :passage-note-tags="passageNoteTags" :selected-tag-ids="passageNote.tags" @change="updateSelectedTags" />
+      <div class="passage-note-editor-tags">
+        <div class="passage-note-editor-tags__selected">
+          <passage-note-tag-pill
+            v-for="tag in selectedTags"
+            :key="tag.id"
+            :tag="tag"
+          />
+          <em v-if="!selectedTags.length" class="passage-note-editor-tags__none">
+            {{ $t('no_tags_selected') }}
+          </em>
+        </div>
+        <div class="passage-note-editor-tags__actions">
+          <button class="button is-small" type="button" @click.prevent="openManageTags">
+            {{ $t('manage_tags') }}
+          </button>
+        </div>
+      </div>
+      <passage-note-manage-tags-modal
+        v-if="showManageTagsModal"
+        :open="showManageTagsModal"
+        :passage-note-tags="passageNoteTags"
+        :selected-tag-ids="draftSelectedTagIds"
+        @change="draftSelectedTagIds = $event"
+        @done="applyManageTags"
+        @cancel="closeManageTags"
+      />
     </div>
     <!-- ensures property will be computed because it is accessed-->
     <p hidden="hidden">
@@ -70,13 +95,15 @@
 import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import PassageSelector from '@/components/forms/PassageSelector';
-import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
+import PassageNoteTagPill from '@/components/PassageNoteTagPill';
+import PassageNoteManageTagsModal from '@/components/popups/PassageNoteManageTagsModal';
 
 export default {
   name: 'PassageNoteEditorForm',
   components: {
     PassageSelector,
-    PassageNoteTagSelector,
+    PassageNoteTagPill,
+    PassageNoteManageTagsModal,
   },
   props: {
     passageNoteTags: {
@@ -89,6 +116,8 @@ export default {
       editingPassage: -1, // index of passage being edited
       editingPassageOriginalValue: null, // original value of passage being edited
       editingNewPassage: false, // if editor passage has not been saved yet
+      showManageTagsModal: false,
+      draftSelectedTagIds: [],
     };
   },
   computed: {
@@ -96,6 +125,13 @@ export default {
       passageNote: state => state.passageNote,
       errors: state => state.errors,
     }),
+    selectedTags() {
+      const tagIds = this.passageNote?.tags ?? [];
+      if (!this.passageNoteTags?.length) {
+        return tagIds.map(id => ({ id, label: this.$t('loading'), color: '#333' }));
+      }
+      return tagIds.map(id => this.passageNoteTags.find(tag => tag.id === id)).filter(Boolean);
+    },
     isValid() {
       let valid = true;
       if (this.editingPassage > -1) {
@@ -204,6 +240,17 @@ export default {
       updatedPassageNote.tags = tags;
       this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
     },
+    openManageTags() {
+      this.draftSelectedTagIds = JSON.parse(JSON.stringify(this.passageNote?.tags ?? []));
+      this.showManageTagsModal = true;
+    },
+    closeManageTags() {
+      this.showManageTagsModal = false;
+    },
+    applyManageTags(tagIds) {
+      this.updateSelectedTags(tagIds);
+      this.closeManageTags();
+    },
     handleSubmit() {
       this.$store.dispatch('passage-note-editor/savePassageNote');
     },
@@ -240,6 +287,24 @@ export default {
     margin: 0.25rem 0;
   }
 }
+.passage-note-editor-tags {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.passage-note-editor-tags__selected {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1;
+}
+.passage-note-editor-tags__actions {
+  flex-shrink: 0;
+}
+.passage-note-editor-tags__none {
+  opacity: 0.8;
+}
 </style>
 
 <i18n lang="json">
@@ -253,6 +318,9 @@ export default {
     "no_passages": "Noch keine Passagen hinzugefügt",
     "content": "Inhalt",
     "tags": "Tags",
+    "manage_tags": "Tags auswählen",
+    "no_tags_selected": "Keine Tags ausgewählt",
+    "loading": "Laden",
     "characters": "Zeichen",
     "are_you_sure": "Sind Sie sicher, dass Sie diese Passage entfernen möchten?"
   },
@@ -265,6 +333,9 @@ export default {
     "no_passages": "No passages added yet",
     "content": "Content",
     "tags": "Tags",
+    "manage_tags": "Choose Tags",
+    "no_tags_selected": "No tags selected",
+    "loading": "Loading",
     "characters": "characters",
     "are_you_sure": "Are you sure you want to remove this passage?"
   },
@@ -277,6 +348,9 @@ export default {
     "no_passages": "No hay pasajes",
     "content": "Contenido",
     "tags": "Etiquetas",
+    "manage_tags": "Elegir etiquetas",
+    "no_tags_selected": "No hay etiquetas seleccionadas",
+    "loading": "Cargando",
     "characters": "caracteres",
     "are_you_sure": "¿Estás seguro de que quieres eliminar este pasaje?"
   },
@@ -289,6 +363,9 @@ export default {
     "no_passages": "Aucun passage",
     "content": "Contenu",
     "tags": "Étiquettes",
+    "manage_tags": "Choisir des étiquettes",
+    "no_tags_selected": "Aucune étiquette sélectionnée",
+    "loading": "Chargement",
     "characters": "caractères",
     "are_you_sure": "Êtes-vous sûr de vouloir supprimer ce passage ?"
   },
@@ -301,6 +378,9 @@ export default {
     "no_passages": "Nenhuma passagem adicionada ainda",
     "content": "Conteúdo",
     "tags": "Tags",
+    "manage_tags": "Escolher Tags",
+    "no_tags_selected": "Nenhuma tag selecionada",
+    "loading": "Carregando",
     "characters": "caracteres",
     "are_you_sure": "Tem certeza de que deseja remover esta passagem?"
   },
@@ -313,6 +393,9 @@ export default {
     "no_passages": "Немає пасажів",
     "content": "Зміст",
     "tags": "Теги",
+    "manage_tags": "Вибрати теги",
+    "no_tags_selected": "Теги не вибрані",
+    "loading": "Завантаження",
     "characters": "символи",
     "are_you_sure": "Ви впевнені, що хочете видалити цей пасаж?"
   }

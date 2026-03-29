@@ -7,6 +7,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
+import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import BookReport from '@/components/BookReport';
 
 export default {
@@ -43,12 +44,13 @@ export default {
       // Same as in BibleReport.vue
       const bookStartVerseId = Bible.getFirstBookVerseId(bookIndex);
       const bookEndVerseId = Bible.getLastBookVerseId(bookIndex);
-      this.$store.dispatch('passage-notes/stageQuery', {
+      const query = encodePassageNotesQueryToRoute({
         filterPassageStartVerseId: bookStartVerseId,
         filterPassageEndVerseId: bookEndVerseId,
         filterPassageMatching: 'exclusive',
+        offset: 0,
       });
-      this.$router.push(this.localePath('/notes'));
+      this.$router.push({ path: this.localePath('/notes'), query });
     },
   },
 };

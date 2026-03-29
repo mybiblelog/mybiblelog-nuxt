@@ -844,6 +844,39 @@ describe('passage-notes.test.js', () => {
       }
     });
 
+    it('does not double-count a note with multiple passages in the same book', async () => {
+      const testUser = await createTestUser();
+      try {
+        // Create tags first
+        await createPassageNoteTags(testUser, [tag1]);
+
+        // One note with two passages in Genesis
+        await requestApi
+          .post('/api/passage-notes')
+          .set('Authorization', `Bearer ${testUser.token}`)
+          .send({
+            passages: [
+              { startVerseId: 101001001, endVerseId: 101001005 }, // Genesis 1:1-5
+              { startVerseId: 101001006, endVerseId: 101001010 }, // Genesis 1:6-10
+            ],
+            content: 'Test note with two Genesis passages',
+          });
+
+        const response = await requestApi
+          .get('/api/passage-notes/count/books')
+          .set('Authorization', `Bearer ${testUser.token}`);
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('data');
+        expect(response.body).not.toHaveProperty('error');
+        expect(response.body.data[1]).toEqual(1); // 1 note in Genesis (not 2 passages)
+        expect(response.body.data[2]).toEqual(0); // 0 notes in Exodus
+      }
+      finally {
+        await deleteTestUser(testUser);
+      }
+    });
+
     it('handles notes spanning multiple books', async () => {
       const testUser = await createTestUser();
       try {

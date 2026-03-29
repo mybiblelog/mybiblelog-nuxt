@@ -104,6 +104,7 @@ router.put('/settings', async (req, res, next) => {
       'lookBackDate',
       'preferredBibleVersion',
       'startPage',
+      'passageNoteTagSortOrder',
       'locale',
     ].forEach((property) => {
       if (typeof settings[property] !== 'undefined') {

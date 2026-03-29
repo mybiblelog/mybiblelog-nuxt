@@ -1,7 +1,6 @@
 import { set as vueSet } from 'vue';
 import {
   SET_PASSAGE_NOTES_QUERY,
-  SET_PASSAGE_NOTES_STAGED_QUERY,
   SET_PASSAGE_NOTES_LOADING,
   SET_PASSAGE_NOTES,
   SET_PASSAGE_NOTE_PAGINATION,
@@ -27,9 +26,6 @@ export const state = () => ({
   activePassageNote: null,
   // the parameters used to load the current page of notes
   query: JSON.parse(JSON.stringify(initialQuery)),
-  // a query to be applied when the query would otherwise be reset
-  // allows other pages to open the notes page with a specific query in place
-  stagedQuery: null,
   // the current page of passage notes - listing data only, not full content
   // loaded from server w/ pagination, sort, search query, etc. in request
   passageNotes: [],
@@ -64,11 +60,8 @@ export const mutations = {
     // If properties were updated but offset was not one of them,
     // reset offset to zero so the updated results display from the beginning
     if (Object.keys(queryUpdate).length && queryUpdate.offset === undefined) {
-      vueSet(state.query, 'offset', queryUpdate.offset);
+      vueSet(state.query, 'offset', 0);
     }
-  },
-  [SET_PASSAGE_NOTES_STAGED_QUERY](state, queryUpdate) {
-    state.stagedQuery = queryUpdate;
   },
   [SET_PASSAGE_NOTES_LOADING](state, loading) {
     state.loading = loading;
@@ -82,11 +75,10 @@ export const mutations = {
 };
 
 export const actions = {
-  async resetQuery({ state, commit, dispatch }) {
+  async resetQuery({ commit, dispatch }, queryOverride = null) {
     commit(SET_PASSAGE_NOTES_QUERY, JSON.parse(JSON.stringify(initialQuery)));
-    if (state.stagedQuery) {
-      commit(SET_PASSAGE_NOTES_QUERY, state.stagedQuery);
-      commit(SET_PASSAGE_NOTES_STAGED_QUERY, null);
+    if (queryOverride) {
+      commit(SET_PASSAGE_NOTES_QUERY, queryOverride);
     }
     await dispatch('loadPassageNotesPage');
   },
@@ -94,10 +86,7 @@ export const actions = {
     commit(SET_PASSAGE_NOTES_QUERY, queryUpdate);
     await dispatch('loadPassageNotesPage');
   },
-  stageQuery({ commit }, queryUpdate) {
-    commit(SET_PASSAGE_NOTES_STAGED_QUERY, queryUpdate);
-  },
-  async loadPassageNotesPage({ commit, state, rootState }) {
+  async loadPassageNotesPage({ commit, state }) {
     commit(SET_PASSAGE_NOTES_LOADING, true);
     // Build the request URL
     const url = new URL('/api/passage-notes', this.$config.siteUrl);
@@ -147,18 +136,18 @@ export const actions = {
     });
     commit(SET_PASSAGE_NOTES_LOADING, false);
   },
-  async createPassageNote({ commit, dispatch, rootState }, newPassageNote) {
+  async createPassageNote(_ctx, newPassageNote) {
     const { data } = await this.$http.post('/api/passage-notes', newPassageNote);
     if (!data) { return null; }
     return data;
   },
-  async updatePassageNote({ commit, dispatch, rootState }, passageNoteUpdate) {
+  async updatePassageNote(_ctx, passageNoteUpdate) {
     const { id } = passageNoteUpdate;
     const { data } = await this.$http.put(`/api/passage-notes/${id}`, passageNoteUpdate);
     if (!data) { return null; }
     return data;
   },
-  async deletePassageNote({ commit, dispatch, rootState }, passageNoteId) {
+  async deletePassageNote({ dispatch }, passageNoteId) {
     const { data } = await this.$http.delete(`/api/passage-notes/${passageNoteId}`);
     if (data) {
       await dispatch('loadPassageNotesPage');
