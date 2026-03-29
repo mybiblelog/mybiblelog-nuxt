@@ -1,0 +1,604 @@
+<template>
+  <div class="verse-input">
+    <div class="field has-addons verse-input__field">
+      <div class="control is-expanded verse-input__input-control">
+        <input
+          :value="localText"
+          class="input verse-input__input"
+          type="text"
+          :placeholder="placeholder"
+          :class="{ 'is-danger': showInvalid }"
+          :style="inputStyle"
+          @input="onTextInput"
+          @focus="onFocus"
+          @blur="onBlurNormalize"
+        >
+
+        <button
+          v-if="hasText"
+          class="delete is-small verse-input__clear"
+          type="button"
+          :aria-label="$t('aria_clear')"
+          @click="clear"
+        />
+      </div>
+
+      <div class="control">
+        <button
+          class="button verse-input__pick-button"
+          type="button"
+          :aria-label="$t('aria_pick')"
+          @click="openPicker"
+        >
+          {{ $t('pick') }}
+        </button>
+      </div>
+    </div>
+
+    <p v-if="showInvalid" class="help is-danger verse-input__help">
+      {{ invalidHelpText }}
+    </p>
+
+    <!-- Single-verse picker flow -->
+    <app-modal v-if="singleSelectionTarget" :title="singleModalTitle" @close="closeSinglePicker">
+      <template slot="content">
+        <template v-if="singleSelectionTarget === SINGLE_SELECTION.BOOK">
+          <div class="book-selector-controls">
+            <div class="button-group">
+              <button
+                type="button"
+                class="button-group--button button-group--button-left"
+                :class="{ active: selectedTestament === 'old' }"
+                @click="selectedTestament = 'old'"
+              >
+                {{ $t('old_testament_short') }}
+              </button>
+              <button
+                type="button"
+                class="button-group--button button-group--button-right"
+                :class="{ active: selectedTestament === 'new' }"
+                @click="selectedTestament = 'new'"
+              >
+                {{ $t('new_testament_short') }}
+              </button>
+            </div>
+            <div class="button-group">
+              <button
+                type="button"
+                class="button-group--button button-group--button-left"
+                :class="{ active: bookSortOrder === 'numerical' }"
+                @click="bookSortOrder = 'numerical'"
+              >
+                123
+              </button>
+              <button
+                type="button"
+                class="button-group--button button-group--button-right"
+                :class="{ active: bookSortOrder === 'alphabetical' }"
+                @click="bookSortOrder = 'alphabetical'"
+              >
+                ABC
+              </button>
+            </div>
+          </div>
+          <grid-selector :options="filteredBookOptions" :columns="2" @selection="selectSingleBook" />
+        </template>
+
+        <tap-range-selector
+          v-if="singleSelectionTarget === SINGLE_SELECTION.CHAPTER"
+          :min="1"
+          :max="singleChapterMax"
+          :multi="false"
+          :columns="8"
+          @selection="selectSingleChapter"
+        />
+
+        <tap-range-selector
+          v-if="singleSelectionTarget === SINGLE_SELECTION.VERSE"
+          :min="1"
+          :max="singleVerseMax"
+          :multi="false"
+          :columns="8"
+          @selection="selectSingleVerse"
+        />
+      </template>
+    </app-modal>
+
+    <!-- Multi-verse picker (reuses PassageSelector’s modal flow) -->
+    <passage-selector
+      v-if="multiVerse"
+      :key="passageSelectorKey"
+      ref="passageSelector"
+      class="verse-input__hidden-passage-selector"
+      :populate-with="passageSelectorPopulateWith"
+      @change="onPassageSelectorChange"
+    />
+  </div>
+</template>
+
+<script>
+import { Bible } from '@mybiblelog/shared';
+import AppModal from '@/components/popups/AppModal';
+import GridSelector from '@/components/forms/GridSelector';
+import TapRangeSelector from '@/components/forms/TapRangeSelector';
+import PassageSelector from '@/components/forms/PassageSelector';
+
+const SINGLE_SELECTION = {
+  BOOK: 'BOOK',
+  CHAPTER: 'CHAPTER',
+  VERSE: 'VERSE',
+};
+
+export default {
+  name: 'VerseInput',
+  components: {
+    AppModal,
+    GridSelector,
+    TapRangeSelector,
+    PassageSelector,
+  },
+  props: {
+    // v-model value: { startVerseId, endVerseId } | null
+    value: { type: Object, default: null },
+    multiVerse: { type: Boolean, default: false },
+  },
+  data() {
+    return {
+      SINGLE_SELECTION,
+      localText: '',
+      isEditing: false,
+
+      books: [],
+      bookOptions: [],
+      selectedTestament: 'old',
+      bookSortOrder: 'numerical',
+
+      singleSelectionTarget: null,
+      singleSelected: {
+        book: 0,
+        chapter: 0,
+        verse: 0,
+      },
+
+      passageSelectorKey: 0,
+      passageSelectorPopulateWith: { empty: true },
+    };
+  },
+  computed: {
+    locale() {
+      return this.$i18n?.locale || 'en';
+    },
+    exampleSingle() {
+      // John 3:16
+      const verseId = Bible.makeVerseId(43, 3, 16);
+      return Bible.displayVerseRange(verseId, verseId, this.locale);
+    },
+    exampleMultiPrimary() {
+      // John 3:16-18
+      const startVerseId = Bible.makeVerseId(43, 3, 16);
+      const endVerseId = Bible.makeVerseId(43, 3, 18);
+      return Bible.displayVerseRange(startVerseId, endVerseId, this.locale);
+    },
+    exampleMultiSecondary() {
+      // Acts 2 - 4 (whole chapters)
+      const startVerseId = Bible.makeVerseId(44, 2, 1);
+      const endVerse = Bible.getChapterVerseCount(44, 4);
+      const endVerseId = Bible.makeVerseId(44, 4, endVerse);
+      return Bible.displayVerseRange(startVerseId, endVerseId, this.locale);
+    },
+    placeholder() {
+      const prefix = this.$t('example_prefix');
+      const example = this.multiVerse ? this.exampleMultiPrimary : this.exampleSingle;
+      return `${prefix} ${example}`;
+    },
+    valueRange() {
+      const v = this.value;
+      if (!v) { return null; }
+      const startVerseId = Number(v.startVerseId);
+      const endVerseId = Number(v.endVerseId);
+      if (!Number.isFinite(startVerseId) || !Number.isFinite(endVerseId)) { return null; }
+      return { startVerseId, endVerseId };
+    },
+    hasText() {
+      return !!(this.localText && String(this.localText).trim().length);
+    },
+    parsedRangeFromText() {
+      const raw = String(this.localText || '').trim();
+      if (!raw) { return null; }
+      try {
+        const range = Bible.parseVerseRange(raw, this.locale);
+        return range || null;
+      }
+      catch (e) {
+        return null;
+      }
+    },
+    isValid() {
+      if (!this.hasText) { return true; }
+      if (!this.parsedRangeFromText) { return false; }
+      if (this.multiVerse) { return true; }
+      return this.parsedRangeFromText.startVerseId === this.parsedRangeFromText.endVerseId;
+    },
+    showInvalid() {
+      return this.hasText && !this.isValid;
+    },
+    invalidHelpText() {
+      return this.multiVerse
+        ? this.$t('invalid_multi', { example1: this.exampleMultiPrimary, example2: this.exampleMultiSecondary })
+        : this.$t('invalid_single', { example: this.exampleSingle });
+    },
+    inputStyle() {
+      // Space for the clear (delete) button rendered inside the input
+      return this.hasText ? { paddingRight: '2.25rem' } : {};
+    },
+    singleModalTitle() {
+      switch (this.singleSelectionTarget) {
+      case SINGLE_SELECTION.BOOK:
+        return this.$t('select_book');
+      case SINGLE_SELECTION.CHAPTER:
+        return this.$t('select_chapter');
+      case SINGLE_SELECTION.VERSE:
+        return this.$t('select_verse');
+      default:
+        return '';
+      }
+    },
+    filteredBookOptions() {
+      let filtered = this.bookOptions.filter((book) => {
+        const bookData = this.books.find(b => b.bibleOrder === book.value);
+        if (!bookData) { return false; }
+        if (this.selectedTestament === 'old') {
+          return !bookData.newTestament;
+        }
+        return bookData.newTestament;
+      });
+
+      if (this.bookSortOrder === 'alphabetical') {
+        filtered = [...filtered].sort((a, b) => {
+          const stripLeadingNumbers = str => str.replace(/^\d+\s*/, '').trim();
+          const aLabel = stripLeadingNumbers(a.label);
+          const bLabel = stripLeadingNumbers(b.label);
+          return aLabel.localeCompare(bLabel, this.locale);
+        });
+      }
+      else {
+        filtered = [...filtered].sort((a, b) => a.value - b.value);
+      }
+
+      return filtered;
+    },
+    singleChapterMax() {
+      if (!this.singleSelected.book) { return 1; }
+      return Bible.getBookChapterCount(this.singleSelected.book);
+    },
+    singleVerseMax() {
+      if (!this.singleSelected.book || !this.singleSelected.chapter) { return 1; }
+      return Bible.getChapterVerseCount(this.singleSelected.book, this.singleSelected.chapter);
+    },
+  },
+  watch: {
+    value: {
+      immediate: true,
+      handler(next) {
+        if (this.isEditing) { return; }
+        const range = next && typeof next === 'object' ? this.valueRange : null;
+        if (!range) {
+          this.localText = '';
+          return;
+        }
+        this.localText = Bible.displayVerseRange(range.startVerseId, range.endVerseId, this.locale);
+      },
+    },
+    locale() {
+      if (!this.books?.length) { return; }
+      this.bookOptions = this.books.map(book => ({
+        label: Bible.getBookName(book.bibleOrder, this.locale),
+        value: book.bibleOrder,
+      }));
+      if (!this.isEditing && this.valueRange) {
+        this.localText = Bible.displayVerseRange(this.valueRange.startVerseId, this.valueRange.endVerseId, this.locale);
+      }
+    },
+  },
+  mounted() {
+    this.books = Bible.getBooks();
+    this.bookOptions = this.books.map(book => ({
+      label: Bible.getBookName(book.bibleOrder, this.locale),
+      value: book.bibleOrder,
+    }));
+  },
+  methods: {
+    emitRange(rangeOrNull) {
+      this.$emit('input', rangeOrNull);
+    },
+    onTextInput(e) {
+      this.localText = e?.target?.value ?? '';
+
+      if (!this.hasText) {
+        this.emitRange(null);
+        return;
+      }
+
+      if (!this.isValid || !this.parsedRangeFromText) {
+        // Keep the current model value unchanged while the user types invalid text.
+        return;
+      }
+
+      const { startVerseId, endVerseId } = this.parsedRangeFromText;
+      if (!this.multiVerse && startVerseId !== endVerseId) { return; }
+      this.emitRange({ startVerseId, endVerseId });
+    },
+    onFocus() {
+      this.isEditing = true;
+    },
+    clear() {
+      this.localText = '';
+      this.isEditing = false;
+      this.emitRange(null);
+    },
+    onBlurNormalize() {
+      this.isEditing = false;
+      if (!this.isValid || !this.parsedRangeFromText) { return; }
+      const { startVerseId, endVerseId } = this.parsedRangeFromText;
+      this.localText = Bible.displayVerseRange(startVerseId, endVerseId, this.locale);
+    },
+    openPicker() {
+      if (this.multiVerse) {
+        this.openMultiPicker();
+      }
+      else {
+        this.openSinglePicker();
+      }
+    },
+
+    // ---- Single verse picker ----
+    openSinglePicker() {
+      this.resetSingleSelection();
+
+      const range = this.valueRange;
+      if (range && range.startVerseId === range.endVerseId) {
+        const parsed = Bible.parseVerseId(range.startVerseId);
+        this.singleSelected.book = parsed.book;
+        this.singleSelected.chapter = parsed.chapter;
+        this.singleSelected.verse = parsed.verse;
+      }
+
+      this.singleSelectionTarget = SINGLE_SELECTION.BOOK;
+    },
+    closeSinglePicker() {
+      this.singleSelectionTarget = null;
+    },
+    resetSingleSelection() {
+      this.singleSelected = { book: 0, chapter: 0, verse: 0 };
+    },
+    selectSingleBook(bookIndex) {
+      this.singleSelected.book = bookIndex;
+      const chapterCount = Bible.getBookChapterCount(bookIndex);
+      if (chapterCount === 1) {
+        this.singleSelected.chapter = 1;
+        this.singleSelectionTarget = SINGLE_SELECTION.VERSE;
+      }
+      else {
+        this.singleSelectionTarget = SINGLE_SELECTION.CHAPTER;
+      }
+    },
+    selectSingleChapter({ from, to }) {
+      this.singleSelected.chapter = to || from;
+      const verseCount = Bible.getChapterVerseCount(this.singleSelected.book, this.singleSelected.chapter);
+      if (verseCount === 1) {
+        this.singleSelected.verse = 1;
+        this.finalizeSingleSelection();
+      }
+      else {
+        this.singleSelectionTarget = SINGLE_SELECTION.VERSE;
+      }
+    },
+    selectSingleVerse({ from, to }) {
+      this.singleSelected.verse = to || from;
+      this.finalizeSingleSelection();
+    },
+    finalizeSingleSelection() {
+      const { book, chapter, verse } = this.singleSelected;
+      if (!book || !chapter || !verse) { return; }
+      const verseId = Bible.makeVerseId(book, chapter, verse);
+      const display = Bible.displayVerseRange(verseId, verseId, this.locale);
+      this.localText = display;
+      this.isEditing = false;
+      this.emitRange({ startVerseId: verseId, endVerseId: verseId });
+      this.closeSinglePicker();
+    },
+
+    // ---- Multi verse picker (PassageSelector) ----
+    openMultiPicker() {
+      const range = this.valueRange || this.parsedRangeFromText;
+      this.passageSelectorPopulateWith = range ? { ...range } : { empty: true };
+      this.passageSelectorKey += 1;
+      this.$nextTick(() => {
+        const selector = this.$refs.passageSelector;
+        if (selector && typeof selector.openSelectBook === 'function') {
+          selector.openSelectBook();
+        }
+      });
+    },
+    onPassageSelectorChange({ startVerseId, endVerseId }) {
+      const display = Bible.displayVerseRange(startVerseId, endVerseId, this.locale);
+      this.localText = display;
+      this.isEditing = false;
+      this.emitRange({ startVerseId, endVerseId });
+    },
+  },
+};
+</script>
+
+<i18n lang="json">
+{
+  "de": {
+    "example_prefix": "z.B.",
+    "invalid_single": "Gib einen einzelnen Vers ein, z.B. „{example}“.",
+    "invalid_multi": "Ungültige Referenz. Versuche „{example1}“ oder „{example2}“.",
+    "select_book": "Wähle Buch",
+    "select_chapter": "Wähle Kapitel",
+    "select_verse": "Wähle Vers",
+    "pick": "Auswählen",
+    "aria_clear": "Leeren",
+    "aria_pick": "Vers auswählen",
+    "old_testament_short": "AT",
+    "new_testament_short": "NT"
+  },
+  "en": {
+    "example_prefix": "e.g.",
+    "invalid_single": "Enter a single verse like “{example}”.",
+    "invalid_multi": "Invalid reference. Try “{example1}” or “{example2}”.",
+    "select_book": "Select Book",
+    "select_chapter": "Select Chapter",
+    "select_verse": "Select Verse",
+    "pick": "Pick",
+    "aria_clear": "Clear",
+    "aria_pick": "Pick verse",
+    "old_testament_short": "OT",
+    "new_testament_short": "NT"
+  },
+  "es": {
+    "example_prefix": "p. ej.",
+    "invalid_single": "Introduce un solo versículo, por ejemplo “{example}”.",
+    "invalid_multi": "Referencia inválida. Prueba “{example1}” o “{example2}”.",
+    "select_book": "Seleccionar Libro",
+    "select_chapter": "Seleccionar Capítulo",
+    "select_verse": "Seleccionar Versículo",
+    "pick": "Elegir",
+    "aria_clear": "Borrar",
+    "aria_pick": "Elegir versículo",
+    "old_testament_short": "AT",
+    "new_testament_short": "NT"
+  },
+  "fr": {
+    "example_prefix": "p. ex.",
+    "invalid_single": "Saisissez un seul verset, par exemple « {example} ».",
+    "invalid_multi": "Référence invalide. Essayez « {example1} » ou « {example2} ».",
+    "select_book": "Sélectionner le livre",
+    "select_chapter": "Sélectionner le chapitre",
+    "select_verse": "Sélectionner le verset",
+    "pick": "Choisir",
+    "aria_clear": "Effacer",
+    "aria_pick": "Choisir un verset",
+    "old_testament_short": "AT",
+    "new_testament_short": "NT"
+  },
+  "pt": {
+    "example_prefix": "ex.",
+    "invalid_single": "Digite um único versículo, por exemplo “{example}”.",
+    "invalid_multi": "Referência inválida. Tente “{example1}” ou “{example2}”.",
+    "select_book": "Selecionar Livro",
+    "select_chapter": "Selecionar Capítulo",
+    "select_verse": "Selecionar Versículo",
+    "pick": "Selecionar",
+    "aria_clear": "Limpar",
+    "aria_pick": "Selecionar versículo",
+    "old_testament_short": "AT",
+    "new_testament_short": "NT"
+  },
+  "uk": {
+    "example_prefix": "напр.",
+    "invalid_single": "Введіть один вірш, наприклад “{example}”.",
+    "invalid_multi": "Некоректне посилання. Спробуйте “{example1}” або “{example2}”.",
+    "select_book": "Виберіть книгу",
+    "select_chapter": "Виберіть розділ",
+    "select_verse": "Виберіть вірш",
+    "pick": "Вибрати",
+    "aria_clear": "Очистити",
+    "aria_pick": "Вибрати вірш",
+    "old_testament_short": "СТ",
+    "new_testament_short": "НЗ"
+  }
+}
+</i18n>
+
+<style lang="scss" scoped>
+.verse-input__field {
+  margin-bottom: 0;
+}
+
+.verse-input__input-control {
+  position: relative;
+  overflow: visible;
+}
+
+.verse-input__input {
+  position: relative;
+  z-index: 1;
+}
+
+.verse-input__clear {
+  position: absolute;
+  top: 50%;
+  right: 0.65rem;
+  transform: translateY(-50%);
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.verse-input__help {
+  margin-top: 0.35rem;
+}
+
+.verse-input__pick-button {
+  white-space: nowrap;
+}
+
+.verse-input__hidden-passage-selector {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Copied styling conventions from PassageSelector (kept local) */
+.book-selector-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+}
+
+.button-group {
+  display: flex;
+}
+
+.button-group--button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 0.9rem;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: #09f;
+    background: #f0f8ff;
+  }
+
+  &.active {
+    background: #09f;
+    color: #fff;
+    border-color: #09f;
+  }
+
+  &.button-group--button-left {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: none;
+  }
+
+  &.button-group--button-right {
+    border-left: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+</style>
