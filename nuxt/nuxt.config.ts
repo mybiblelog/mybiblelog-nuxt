@@ -71,6 +71,10 @@ const config: NuxtConfig = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
+    // Doc: https://typescript.nuxtjs.org/guide/introduction
+    // This is needed to enable TypeScript support in Nuxt 2,
+    // even beyond what Nuxt Bridge provides.
+    '@nuxt/typescript-build',
     // Doc: https://pwa.nuxtjs.org/
     '@nuxtjs/pwa',
   ],
@@ -127,6 +131,7 @@ const config: NuxtConfig = {
       if (config.resolve?.alias) {
         // Vue 2's CJS entrypoint doesn't support named ESM imports (e.g. `computed`).
         // Pinia + vue-demi expect ESM-style exports.
+        // eslint-disable-next-line dot-notation
         config.resolve.alias['vue$'] = 'vue/dist/vue.runtime.esm.js';
         config.resolve.alias['vue-demi'] = 'vue-demi/lib/index.mjs';
       }

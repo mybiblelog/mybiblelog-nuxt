@@ -1,21 +1,26 @@
 import { defineStore } from 'pinia';
 
+export type DemoState = {
+  count: number;
+  name: string;
+};
+
 export const useDemoStore = defineStore('demo', {
-  state: () => ({
+  state: (): DemoState => ({
     count: 0,
     name: 'Pinia (Nuxt 2)',
   }),
   getters: {
-    doubleCount: state => state.count * 2,
+    doubleCount: (state): number => state.count * 2,
   },
   actions: {
-    increment() {
+    increment(): void {
       this.count += 1;
     },
-    reset() {
+    reset(): void {
       this.count = 0;
     },
-    setName(name) {
+    setName(name: string): void {
       this.name = name;
     },
   },
