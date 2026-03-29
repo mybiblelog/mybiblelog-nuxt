@@ -1,6 +1,7 @@
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useDialogStore } from '~/stores/dialog';
 
 import {
   OPEN_LOG_ENTRY_EDITOR,
@@ -90,7 +91,8 @@ export const actions = {
       const isDirty = currentValue !== state.cleanFormValue;
       if (isDirty) {
         const message = confirmMessage || 'Are you sure you want to close without saving?';
-        const confirmed = await dispatch('dialog/confirm', { message }, { root: true });
+        const dialogStore = useDialogStore(this.$pinia);
+        const confirmed = await dialogStore.confirm({ message });
         if (!confirmed) {
           return false;
         }

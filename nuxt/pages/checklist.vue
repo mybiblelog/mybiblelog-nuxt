@@ -56,6 +56,7 @@ import CheckMarkIcon from '@/components/svg/CheckMarkIcon';
 import CaretDownIcon from '@/components/svg/CaretDownIcon';
 import SpinnerIcon from '@/components/svg/SpinnerIcon';
 import InfoLink from '@/components/InfoLink';
+import { useToastStore } from '~/stores/toast';
 const CHAPTER_CHECKLIST_CACHE_KEY = 'chapterChecklist';
 const CHAPTER_CHECKLIST_CACHE_MINUTES = 60;
 
@@ -186,6 +187,7 @@ export default {
       if (this.busyChapter) {
         return;
       }
+      const toastStore = useToastStore(this.$pinia);
       this.busyChapter = `${bookIndex}.${chapterIndex}`;
 
       const date = dayjs().format('YYYY-MM-DD');
@@ -205,14 +207,14 @@ export default {
             await this.getBookReports();
           }
           else {
-            this.$store.dispatch('toast/add', {
+            toastStore.add({
               type: 'error',
               text: this.$t('unable_to_mark_incomplete'),
             });
           }
         }
         else {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'info',
             text: this.$t('logged_before_today'),
           });
@@ -225,7 +227,7 @@ export default {
           await this.getBookReports();
         }
         else {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'error',
             text: this.$t('unable_to_mark_complete'),
           });

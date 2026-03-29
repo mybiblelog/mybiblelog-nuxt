@@ -91,6 +91,8 @@ import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-qu
 import HyperlinkedText from '@/components/HyperlinkedText';
 import InfoLink from '@/components/InfoLink';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
 
 export default {
   name: 'NoteTagsListPage',
@@ -147,20 +149,18 @@ export default {
       this.$store.dispatch('passage-note-tag-editor/openEditor', passageNoteTag);
     },
     async deletePassageNoteTag(id) {
+      const dialogStore = useDialogStore(this.$pinia);
+      const toastStore = useToastStore(this.$pinia);
       if (this.passageNoteTags.find(tag => tag.id === id).noteCount > 0) {
-        await this.$store.dispatch('dialog/alert', {
-          message: this.$t('cannot_delete_tag_in_use'),
-        });
+        await dialogStore.alert({ message: this.$t('cannot_delete_tag_in_use') });
         return;
       }
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('confirm_delete_tag'),
-      });
+      const confirmed = await dialogStore.confirm({ message: this.$t('confirm_delete_tag') });
       if (!confirmed) { return; }
 
       const success = await this.$store.dispatch('passage-note-tags/deletePassageNoteTag', id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('tag_not_deleted'),
         });

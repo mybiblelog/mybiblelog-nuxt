@@ -101,6 +101,7 @@
 
 <script>
 import { BibleApps, BibleVersions } from '@mybiblelog/shared';
+import { useToastStore } from '~/stores/toast';
 
 const bibleVersionNames = {
   [BibleVersions.NASB2020]: 'New American Standard Bible (NASB)',
@@ -195,7 +196,8 @@ export default {
       const { dailyVerseCountGoal } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { dailyVerseCountGoal });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore(this.$pinia);
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.daily_verse_count_goal_saved_successfully'),
         });
@@ -208,7 +210,8 @@ export default {
       const { lookBackDate } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { lookBackDate });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore(this.$pinia);
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.look_back_date_saved_successfully'),
         });
@@ -221,7 +224,8 @@ export default {
       const { preferredBibleVersion } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { preferredBibleVersion });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore(this.$pinia);
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.preferred_bible_version_saved_successfully'),
         });
@@ -234,7 +238,8 @@ export default {
       const { preferredBibleApp } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { preferredBibleApp });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore(this.$pinia);
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.preferred_bible_app_saved_successfully'),
         });

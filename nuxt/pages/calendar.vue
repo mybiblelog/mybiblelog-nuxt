@@ -33,6 +33,8 @@ import { Bible, displayDate } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import CalendarMonth from '@/components/calendar/CalendarMonth';
 import LogEntry from '@/components/LogEntry';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
 
 export default {
   name: 'CalendarPage',
@@ -105,13 +107,13 @@ export default {
       return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
     },
     async deleteEntry(id) {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('are_you_sure'),
-      });
+      const dialogStore = useDialogStore(this.$pinia);
+      const toastStore = useToastStore(this.$pinia);
+      const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure') });
       if (!confirmed) { return; }
       const success = await this.$store.dispatch('log-entries/deleteLogEntry', id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('could_not_delete'),
         });

@@ -97,6 +97,7 @@ import { Bible } from '@mybiblelog/shared';
 import PassageSelector from '@/components/forms/PassageSelector';
 import PassageNoteTagPill from '@/components/PassageNoteTagPill';
 import PassageNoteManageTagsModal from '@/components/popups/PassageNoteManageTagsModal';
+import { useDialogStore } from '~/stores/dialog';
 
 export default {
   name: 'PassageNoteEditorForm',
@@ -214,9 +215,8 @@ export default {
     async removePassage(index) {
       // only require confirmation if the passage is already valid (new or existing)
       if (!this.editingNewPassage) {
-        const confirmed = await this.$store.dispatch('dialog/confirm', {
-          message: this.$t('are_you_sure'),
-        });
+        const dialogStore = useDialogStore(this.$pinia);
+        const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure') });
         if (!confirmed) {
           return;
         }

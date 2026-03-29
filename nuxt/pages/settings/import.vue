@@ -63,6 +63,7 @@
 import { mapState } from 'vuex';
 import * as csv from 'csv';
 import { Bible, SimpleDate, displayDate } from '@mybiblelog/shared';
+import { useToastStore } from '~/stores/toast';
 
 const delimiter = ',';
 
@@ -199,6 +200,7 @@ export default {
       }
     },
     async uploadCSVFilesChange(event) {
+      const toastStore = useToastStore(this.$pinia);
       const files = event.target.files;
       if (!files.length) { return; }
 
@@ -206,7 +208,7 @@ export default {
       this.importLogEntries = [];
       for (const file of files) {
         if (file.type && !file.type.includes('csv')) {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'error',
             text: this.$t('messaging.file_not_a_csv', { filename: file.name, filetype: file.type }),
           });
@@ -222,7 +224,7 @@ export default {
           })
           .then(fileLogEntries => this.importLogEntries.push(...fileLogEntries))
           .catch(() => {
-            this.$store.dispatch('toast/add', {
+            toastStore.add({
               type: 'error',
               text: this.$t('messaging.unable_to_parse_file', { filename: file.name }),
             });
@@ -231,7 +233,7 @@ export default {
 
       // Ensure there were valid entries
       if (!this.importLogEntries.length) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('messaging.unable_to_parse_any_log_entries'),
         });
@@ -240,7 +242,7 @@ export default {
 
       await this.createLogEntries()
         .then(() => {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'success',
             text: this.$t('messaging.successfully_processed_log_entries', { count: this.importLogEntries.length }),
           });
@@ -250,15 +252,16 @@ export default {
           }
         })
         .catch(() => {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'error',
             text: this.$t('messaging.there_was_a_problem_creating_the_log_entries'),
           });
         });
     },
     async updateLookBackDate() {
+      const toastStore = useToastStore(this.$pinia);
       await this.$store.dispatch('user-settings/updateSettings', { lookBackDate: this.earliestLogEntryDate });
-      this.$store.dispatch('toast/add', {
+      toastStore.add({
         type: 'success',
         text: this.$t('messaging.look_back_date_updated_successfully'),
       });

@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { useToastStore } from '~/stores/toast';
+
 export default {
   name: 'DeleteAccountPage',
   middleware: ['auth'],
@@ -81,13 +83,14 @@ export default {
   },
   methods: {
     async deleteAccount() {
+      const toastStore = useToastStore(this.$pinia);
       try {
         await this.$http.put('/api/settings/delete-account');
         await this.$store.dispatch('auth/logout');
         this.$router.push(this.localePath('/login', this.$i18n.locale));
       }
       catch (err) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('unable_to_delete'),
         });

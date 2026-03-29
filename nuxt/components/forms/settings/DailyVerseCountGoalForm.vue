@@ -122,6 +122,7 @@
 
 <script>
 import * as dayjs from 'dayjs';
+import { useToastStore } from '~/stores/toast';
 
 const TOTAL_BIBLE_VERSES = 31102;
 
@@ -339,7 +340,8 @@ export default {
 
       if (success) {
         if (this.showToast) {
-          this.$store.dispatch('toast/add', {
+          const toastStore = useToastStore(this.$pinia);
+          toastStore.add({
             type: 'success',
             text: this.$t('messaging.daily_verse_count_goal_saved_successfully'),
           });

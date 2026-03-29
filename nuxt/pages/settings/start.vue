@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { useToastStore } from '~/stores/toast';
+
 export default {
   name: 'StartPageSettingsPage',
   middleware: ['auth'],
@@ -72,7 +74,8 @@ export default {
       const { startPage } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { startPage });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore(this.$pinia);
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.preferred_start_page_saved_successfully'),
         });

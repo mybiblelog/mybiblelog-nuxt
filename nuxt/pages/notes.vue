@@ -145,6 +145,8 @@ import AppModal from '@/components/popups/AppModal';
 import InfoLink from '@/components/InfoLink';
 import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
 
 export default {
   name: 'NotesListPage',
@@ -296,14 +298,14 @@ export default {
       this.$store.dispatch('passage-note-editor/openEditor', noteToEdit);
     },
     async deletePassageNote(id) {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('messaging.are_you_sure_delete_note'),
-      });
+      const dialogStore = useDialogStore(this.$pinia);
+      const toastStore = useToastStore(this.$pinia);
+      const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
       if (!confirmed) { return; }
 
       const success = await this.$store.dispatch('passage-notes/deletePassageNote', id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('messaging.note_could_not_be_deleted'),
         });

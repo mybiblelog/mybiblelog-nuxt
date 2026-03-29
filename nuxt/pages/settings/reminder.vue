@@ -40,6 +40,7 @@
 <script>
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useToastStore } from '~/stores/toast';
 
 export default {
   name: 'ReminderSettingsPage',
@@ -96,7 +97,8 @@ export default {
           timezoneOffset,
           active,
         });
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore(this.$pinia);
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.reminder_settings_updated_successfully'),
         });

@@ -13,17 +13,21 @@
 </template>
 
 <script>
+import { useToastStore } from '~/stores/toast';
 
 export default {
   name: 'AppToaster',
   computed: {
+    toastStore() {
+      return useToastStore(this.$pinia);
+    },
     messages() {
-      return this.$store.state.toast.messages;
+      return this.toastStore.messages;
     },
   },
   methods: {
     closeToast(id) {
-      this.$store.dispatch('toast/close', id);
+      this.toastStore.close(id);
     },
     messageClass(type) {
       switch (type) {

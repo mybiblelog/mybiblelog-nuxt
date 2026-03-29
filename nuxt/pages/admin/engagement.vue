@@ -39,6 +39,7 @@
 
 <script>
 import { displayDate } from '@mybiblelog/shared';
+import { useDialogStore } from '~/stores/dialog';
 
 export default {
   name: 'AdminEngagementPage',
@@ -69,9 +70,8 @@ export default {
         this.engagementData = engagementData;
       }
       catch (err) {
-        await this.$store.dispatch('dialog/alert', {
-          message: 'Error loading engagement data.',
-        });
+        const dialogStore = useDialogStore(this.$pinia);
+        await dialogStore.alert({ message: 'Error loading engagement data.' });
       }
       this.loading = false;
     },

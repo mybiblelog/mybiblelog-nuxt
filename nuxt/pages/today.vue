@@ -135,6 +135,8 @@ import DoubleProgressBar from '@/components/DoubleProgressBar';
 import LogEntry from '@/components/LogEntry';
 import InfoLink from '@/components/InfoLink';
 import PassageNote from '@/components/PassageNote';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
 
 export default {
   name: 'TodayPage',
@@ -274,13 +276,13 @@ export default {
       };
     },
     async deleteEntry(id) {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('are_you_sure_you_want_to_delete_this_entry'),
-      });
+      const dialogStore = useDialogStore(this.$pinia);
+      const toastStore = useToastStore(this.$pinia);
+      const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure_you_want_to_delete_this_entry') });
       if (!confirmed) { return; }
       const success = await this.$store.dispatch('log-entries/deleteLogEntry', id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('the_log_entry_could_not_be_deleted'),
         });
@@ -350,14 +352,14 @@ export default {
       this.$store.dispatch('passage-note-editor/openEditor', noteToEdit);
     },
     async deletePassageNote(id) {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('messaging.are_you_sure_delete_note'),
-      });
+      const dialogStore = useDialogStore(this.$pinia);
+      const toastStore = useToastStore(this.$pinia);
+      const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
       if (!confirmed) { return; }
 
       const success = await this.$store.dispatch('passage-notes/deletePassageNote', id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('messaging.note_could_not_be_deleted'),
         });

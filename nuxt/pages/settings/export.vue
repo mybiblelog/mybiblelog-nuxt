@@ -50,6 +50,7 @@ import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import { UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useToastStore } from '~/stores/toast';
 
 const delimiter = ',';
 
@@ -132,7 +133,8 @@ export default {
           await this.generateTextDownloadFromNotes();
         }
         catch (err) {
-          this.$store.dispatch('toast/add', { type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
+          const toastStore = useToastStore(this.$pinia);
+          toastStore.add({ type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
           return;
         }
       }
@@ -164,7 +166,8 @@ export default {
           await this.generateJsonDownloadFromNotes();
         }
         catch (err) {
-          this.$store.dispatch('toast/add', { type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
+          const toastStore = useToastStore(this.$pinia);
+          toastStore.add({ type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
           return;
         }
       }

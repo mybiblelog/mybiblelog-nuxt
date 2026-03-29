@@ -48,6 +48,7 @@
 <script>
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useToastStore } from '~/stores/toast';
 
 export default {
   name: 'PasswordSettingsPage',
@@ -122,7 +123,8 @@ export default {
           newPassword,
         });
         this.resetChangePasswordForm();
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore(this.$pinia);
+        toastStore.add({
           type: 'success',
           text: this.$t('password_changed_successfully'),
         });

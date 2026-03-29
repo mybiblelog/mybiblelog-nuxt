@@ -57,6 +57,7 @@
 <script>
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useDialogStore } from '~/stores/dialog';
 
 export default {
   name: 'FeedbackForm',
@@ -84,9 +85,8 @@ export default {
         this.form.kind = 'bug';
         this.form.message = '';
 
-        await this.$store.dispatch('dialog/alert', {
-          message: this.$t('messaging.feedback_submitted'),
-        });
+        const dialogStore = useDialogStore(this.$pinia);
+        await dialogStore.alert({ message: this.$t('messaging.feedback_submitted') });
 
         // Emit success event so parent can handle (e.g., close modal)
         this.$emit('success');

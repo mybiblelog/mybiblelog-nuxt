@@ -31,6 +31,7 @@
 <script>
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useToastStore } from '~/stores/toast';
 
 export default {
   name: 'ChangeEmailPage',
@@ -94,7 +95,8 @@ export default {
     }
 
     // Display confirmation toast
-    this.$store.dispatch('toast/add', {
+    const toastStore = useToastStore(this.$pinia);
+    toastStore.add({
       type: 'success',
       text: this.$t('your_email_address_was_updated_successfully'),
     });
