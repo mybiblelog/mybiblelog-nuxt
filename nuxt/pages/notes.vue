@@ -17,8 +17,9 @@
         </div>
       </header>
       <div class="notes-page__mobile-query-button">
-        <button class="button is-light is-small" type="button" @click="openQueryManagerModal">
+        <button class="button is-light is-small notes-page__query-button" type="button" @click="openQueryManagerModal">
           {{ $t('query_manager.open') }}
+          <span v-if="hasAppliedViewOptions" class="notes-page__query-badge" aria-hidden="true" />
         </button>
         <button v-if="hasAppliedViewOptions" class="button is-light is-small" type="button" @click="resetViewOptions">
           {{ $t('query_manager.reset_button') }}
@@ -345,6 +346,22 @@ export default {
   @media (min-width: $breakpoint) {
     display: none;
   }
+}
+
+.notes-page__query-button {
+  position: relative;
+  padding-right: 1.25rem; /* room for badge */
+}
+
+.notes-page__query-badge {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #3273dc; /* Bulma primary */
+  box-shadow: 0 0 0 2px white;
 }
 
 .notes-page__sidebar {

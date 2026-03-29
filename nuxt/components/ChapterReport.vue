@@ -50,6 +50,10 @@ export default {
           label: this.$t('view_notes'),
           callback: () => this.viewNotesForChapter(),
         },
+        {
+          label: this.$t('view_reading_log'),
+          callback: () => this.viewReadingLogForChapter(),
+        },
       ];
     },
     sheetTitle() {
@@ -83,6 +87,9 @@ export default {
     },
     viewNotesForChapter() {
       this.$emit('viewNotesForChapter', this.report.bookIndex, this.report.chapterIndex);
+    },
+    viewReadingLogForChapter() {
+      this.$emit('viewReadingLogForChapter', this.report.bookIndex, this.report.chapterIndex);
     },
   },
 };
@@ -156,37 +163,43 @@ export default {
     "open_bible": "Bibel öffnen",
     "log_reading": "Lesen protokollieren",
     "take_note": "Notiz hinzufügen",
-    "view_notes": "Notizen ansehen"
+    "view_notes": "Notizen ansehen",
+    "view_reading_log": "Lesejournal ansehen"
   },
   "en": {
     "open_bible": "Open Bible",
     "log_reading": "Log Reading",
     "take_note": "Take Note",
-    "view_notes": "View Notes"
+    "view_notes": "View Notes",
+    "view_reading_log": "View Reading Log"
   },
   "es": {
     "open_bible": "Abrir en la Biblia",
     "log_reading": "Agregar lectura a registro",
     "take_note": "Tomar nota",
-    "view_notes": "Ver notas"
+    "view_notes": "Ver notas",
+    "view_reading_log": "Ver registro de lectura"
   },
   "fr": {
     "open_bible": "Ouvrir dans la Bible",
     "log_reading": "Ajouter lecture à registre",
     "take_note": "Prendre note",
-    "view_notes": "Voir les notes"
+    "view_notes": "Voir les notes",
+    "view_reading_log": "Voir le journal de lecture"
   },
   "pt": {
     "open_bible": "Ler na Biblia",
     "log_reading": "Adicionar leitura a registro",
     "take_note": "Tomar nota",
-    "view_notes": "Ver notas"
+    "view_notes": "Ver notas",
+    "view_reading_log": "Ver registro de leitura"
   },
   "uk": {
     "open_bible": "Читати в Біблії",
     "log_reading": "Додати читання до журналу",
     "take_note": "Записати",
-    "view_notes": "Переглянути записи"
+    "view_notes": "Переглянути записи",
+    "view_reading_log": "Переглянути журнал читання"
   }
 }
 </i18n>

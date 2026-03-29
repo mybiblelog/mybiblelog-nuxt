@@ -36,6 +36,9 @@
             <nuxt-link class="navbar-item" :to="localePath('/calendar')">
               {{ $t('calendar') }}
             </nuxt-link>
+            <nuxt-link class="navbar-item" :to="localePath('/log')">
+              {{ $t('log') }}
+            </nuxt-link>
             <nuxt-link class="navbar-item" :to="localePath('/notes')">
               {{ $t('notes') }}
             </nuxt-link>
@@ -140,6 +143,7 @@ export default {
     "bible_books": "Bibelbücher",
     "chapter_checklist": "Kapitel Checkliste",
     "calendar": "Kalender",
+    "log": "Journal",
     "notes": "Notizen",
     "about": "Über",
     "settings": "Einstellungen",
@@ -156,6 +160,7 @@ export default {
     "bible_books": "Bible Books",
     "chapter_checklist": "Chapter Checklist",
     "calendar": "Calendar",
+    "log": "Log",
     "notes": "Notes",
     "about": "About",
     "settings": "Settings",
@@ -172,6 +177,7 @@ export default {
     "bible_books": "Libros Bíblicos",
     "chapter_checklist": "Lista de Capítulos",
     "calendar": "Calendario",
+    "log": "Registro",
     "notes": "Notas",
     "about": "Acerca de",
     "settings": "Configuración",
@@ -188,6 +194,7 @@ export default {
     "bible_books": "Livres de la Bible",
     "chapter_checklist": "Liste de Contrôle",
     "calendar": "Calendrier",
+    "log": "Journal",
     "notes": "Notes",
     "about": "À Propos",
     "settings": "Paramètres",
@@ -204,6 +211,7 @@ export default {
     "bible_books": "Livros da Bíblia",
     "chapter_checklist": "Lista de Capítulos",
     "calendar": "Calendário",
+    "log": "Registro",
     "notes": "Notas",
     "about": "Sobre",
     "settings": "Configurações",
@@ -220,6 +228,7 @@ export default {
     "bible_books": "Книги Біблії",
     "chapter_checklist": "Список розділів",
     "calendar": "Календар",
+    "log": "Журнал",
     "notes": "Нотатки",
     "about": "Про нас",
     "settings": "Налаштування",
