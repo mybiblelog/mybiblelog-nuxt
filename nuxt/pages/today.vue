@@ -139,6 +139,7 @@ import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 
 export default {
   name: 'TodayPage',
@@ -333,7 +334,7 @@ export default {
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      this.$store.dispatch('passage-note-editor/openEditor', {
+      usePassageNoteEditorStore(this.$pinia).openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });
@@ -357,7 +358,7 @@ export default {
       // If passageNote has empty: true, open for creating new note
       // Otherwise, open for editing existing note
       const noteToEdit = passageNote.empty ? null : passageNote;
-      this.$store.dispatch('passage-note-editor/openEditor', noteToEdit);
+      usePassageNoteEditorStore(this.$pinia).openEditor(noteToEdit);
     },
     async deletePassageNote(id) {
       const dialogStore = useDialogStore(this.$pinia);

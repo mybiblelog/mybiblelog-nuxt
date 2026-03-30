@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import AppModal from '@/components/popups/AppModal';
 import PassageNoteEditorForm from '@/components/forms/PassageNoteEditorForm';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 
 export default {
   name: 'PassageNoteEditorModal',
@@ -30,16 +30,21 @@ export default {
     PassageNoteEditorForm,
   },
   computed: {
-    ...mapState('passage-note-editor', {
-      open: state => state.open,
-      isValid: state => state.isValid,
-    }),
-    ...mapState('passage-note-tags', {
-      passageNoteTags: state => state.passageNoteTags,
-    }),
+    passageNoteEditorStore() {
+      return usePassageNoteEditorStore(this.$pinia);
+    },
+    open() {
+      return this.passageNoteEditorStore.open;
+    },
+    isValid() {
+      return this.passageNoteEditorStore.isValid;
+    },
+    passageNoteTags() {
+      return this.$store.state['passage-note-tags'].passageNoteTags;
+    },
     modalTitle() {
       // Check if we're editing an existing note or creating a new one
-      const passageNote = this.$store.state['passage-note-editor'].passageNote;
+      const passageNote = this.passageNoteEditorStore.passageNote;
       if (passageNote && passageNote.id) {
         return this.$t('note_editor.edit_note');
       }
@@ -56,13 +61,13 @@ export default {
   },
   methods: {
     handleClose() {
-      this.$store.dispatch('passage-note-editor/closeEditor', {
+      this.passageNoteEditorStore.closeEditor({
         confirmMessage: this.$t('messaging.are_you_sure_close_editor'),
       });
     },
     handleSave() {
       // Trigger form submission
-      this.$store.dispatch('passage-note-editor/savePassageNote');
+      this.passageNoteEditorStore.savePassageNote();
     },
   },
 };

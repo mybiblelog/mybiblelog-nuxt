@@ -63,6 +63,7 @@ import SegmentBar from '@/components/SegmentBar';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 
 const calcPercent = (numerator, denominator) => {
   return Math.floor(numerator / denominator * 100);
@@ -160,7 +161,7 @@ export default {
       const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
       const startVerseId = Bible.makeVerseId(bookIndex, chapterIndex, 1);
       const endVerseId = Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount);
-      this.$store.dispatch('passage-note-editor/openEditor', {
+      usePassageNoteEditorStore(this.$pinia).openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });

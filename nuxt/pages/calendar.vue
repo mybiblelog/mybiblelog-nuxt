@@ -37,6 +37,7 @@ import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 
 export default {
   name: 'CalendarPage',
@@ -149,7 +150,7 @@ export default {
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      this.$store.dispatch('passage-note-editor/openEditor', {
+      usePassageNoteEditorStore(this.$pinia).openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });

@@ -148,6 +148,7 @@ import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 
 function stableCompare(a, b) {
   if (a === b) { return 0; }
@@ -376,7 +377,7 @@ export default {
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      this.$store.dispatch('passage-note-editor/openEditor', {
+      usePassageNoteEditorStore(this.$pinia).openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });

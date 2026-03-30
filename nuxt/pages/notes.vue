@@ -147,6 +147,7 @@ import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 
 export default {
   name: 'NotesListPage',
@@ -295,7 +296,7 @@ export default {
       // If passageNote has empty: true, open for creating new note
       // Otherwise, open for editing existing note
       const noteToEdit = passageNote.empty ? null : passageNote;
-      this.$store.dispatch('passage-note-editor/openEditor', noteToEdit);
+      usePassageNoteEditorStore(this.$pinia).openEditor(noteToEdit);
     },
     async deletePassageNote(id) {
       const dialogStore = useDialogStore(this.$pinia);
