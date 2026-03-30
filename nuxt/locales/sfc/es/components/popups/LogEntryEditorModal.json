@@ -1,0 +1,10 @@
+{
+  "add_entry": "Añadir entrada",
+  "edit_entry": "Editar entrada",
+  "save": "Guardar",
+  "add": "Añadir",
+  "close": "Cerrar",
+  "messaging": {
+    "are_you_sure_close_editor": "¿Estás seguro de que quieres cerrar el editor? Todas las modificaciones no guardadas se perderán."
+  }
+}

@@ -1,0 +1,35 @@
+# Crowdin CLI configuration
+# Docs: https://developer.crowdin.com/configuration-file/
+#
+# Install CLI: npm install -g @crowdin/cli
+# https://www.npmjs.com/package/@crowdin/cli
+#
+# From the repository root:
+#   export CROWDIN_PROJECT_ID="<numeric project id>"
+#   export CROWDIN_PERSONAL_TOKEN="<personal access token>"
+#   crowdin upload sources
+#   crowdin download
+#
+# Do not commit tokens. project_id may be set here instead of env if you prefer.
+
+project_id_env: CROWDIN_PROJECT_ID
+api_token_env: CROWDIN_PERSONAL_TOKEN
+base_path: .
+preserve_hierarchy: true
+
+files:
+  # Shared / global messages (lazy-loaded per locale in nuxt/i18n.config.ts)
+  - source: /nuxt/locales/global/en.json
+    translation: /nuxt/locales/global/%two_letters_code%.json
+    languages_mapping:
+      two_letters_code:
+        # App locale code is `pt` (see shared/i18n.ts); map Crowdin pt-BR → `pt`
+        pt-BR: pt
+
+  # Per-component/page JSON (mirrors nuxt/components/** and nuxt/pages/**)
+  # `**` in translation carries the subpath from the source (Crowdin docs).
+  - source: /nuxt/locales/sfc/en/**/*.json
+    translation: /nuxt/locales/sfc/%two_letters_code%/**/%original_file_name%
+    languages_mapping:
+      two_letters_code:
+        pt-BR: pt

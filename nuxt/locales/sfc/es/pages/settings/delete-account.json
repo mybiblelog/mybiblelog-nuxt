@@ -1,0 +1,19 @@
+{
+  "title": "Eliminar cuenta",
+  "description": "Usted está en control de sus datos. Puede eliminar su cuenta y todos los datos asociados con ella:",
+  "list": {
+    "account": "Esto eliminará permanentemente su cuenta y configuraciones personales.",
+    "log_entries": "Esto eliminará permanentemente sus entradas de registro.",
+    "notes": "Esto eliminará permanentemente sus notas y etiquetas personalizadas.",
+    "export": "Debe exportar sus entradas de registro antes de eliminar su cuenta si desea conservarlas.",
+    "permanent": "Esta acción no se puede revertir."
+  },
+  "understand": {
+    "log_entries": "Entiendo que esto eliminará todos los datos de mi entrada de registro.",
+    "export": "Entiendo que actualmente puedo exportar mis datos de entrada de registro para mi propio uso, lo que no puedo hacer después de eliminar mi cuenta.",
+    "notes": "Entiendo que esto eliminará todas las notas y etiquetas.",
+    "permanent": "Entiendo que la acción es permanente y no se puede revertir."
+  },
+  "delete_my_account": "Eliminar mi cuenta",
+  "unable_to_delete": "No se puede eliminar la cuenta. Por favor, inténtelo de nuevo más tarde."
+}

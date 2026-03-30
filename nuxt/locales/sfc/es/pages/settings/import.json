@@ -1,0 +1,32 @@
+{
+  "import": "Importar",
+  "you_can_import_a_csv": "Puede importar un archivo CSV de registro de lectura a My Bible Log.",
+  "choose_a_file": "Elija un archivo...",
+  "log_import_progress": "Progreso de importación de registro",
+  "date": "Fecha",
+  "passage": "Pasaje",
+  "status": "Estado",
+  "no_log_entries_to_show": "No hay entradas de registro para mostrar.",
+  "log_entry_status": {
+    "invalid": "Inválido",
+    "to_do": "Por Hacer",
+    "checking": "Comprobando",
+    "already_exists": "Ya Existe",
+    "importing_now": "Importando Ahora",
+    "imported": "Importado"
+  },
+  "messaging": {
+    "file_not_a_csv": "El archivo {filename} no está en formato CSV. Es {filetype}.",
+    "unable_to_parse_file": "No se puede analizar el archivo {filename}. Asegúrese de que el formato sea correcto.",
+    "unable_to_parse_any_log_entries": "No se pueden analizar las entradas de registro de los archivos cargados.",
+    "successfully_processed_log_entries": "Se procesaron correctamente {count} entradas de registro.",
+    "there_was_a_problem_creating_the_log_entries": "Hubo un problema al crear las entradas de registro.",
+    "look_back_date_reset_message": {
+      "1": "Su archivo importado incluye entradas de registro anteriores a su Fecha de Retroceso. La mayoría de las páginas ignorarán estas entradas al mostrar su progreso.",
+      "2": "¿Le gustaría actualizar su Fecha de Retroceso a {lookBackDate} para incluir estas entradas?"
+    },
+    "update_look_back_date_yes": "Actualizar Fecha de Retroceso",
+    "update_look_back_date_no": "Mantener Fecha de Retroceso Actual",
+    "look_back_date_updated_successfully": "Fecha de retroceso actualizada correctamente."
+  }
+}

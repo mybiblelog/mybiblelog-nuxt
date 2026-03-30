@@ -1,0 +1,32 @@
+{
+  "import": "Імпорт",
+  "you_can_import_a_csv": "Ви можете імпортувати файл CSV журналу читання до My Bible Log.",
+  "choose_a_file": "Виберіть файл...",
+  "log_import_progress": "Прогрес імпорту журналу",
+  "date": "Дата",
+  "passage": "Пасаж",
+  "status": "Статус",
+  "no_log_entries_to_show": "Немає записів журналу для відображення.",
+  "log_entry_status": {
+    "invalid": "Недійсний",
+    "to_do": "Зробити",
+    "checking": "Перевірка",
+    "already_exists": "Вже існує",
+    "importing_now": "Імпорт зараз",
+    "imported": "Імпортовано"
+  },
+  "messaging": {
+    "file_not_a_csv": "Файл {filename} не у форматі CSV. Це {filetype}.",
+    "unable_to_parse_file": "Не вдалося проаналізувати файл {filename}. Переконайтеся, що формат правильний.",
+    "unable_to_parse_any_log_entries": "Не вдалося проаналізувати жодного запису журналу з завантажених файлів.",
+    "successfully_processed_log_entries": "Успішно оброблено {count} записів журналу.",
+    "there_was_a_problem_creating_the_log_entries": "Виникла проблема при створенні записів журналу.",
+    "look_back_date_reset_message": {
+      "1": "Ваш імпортований файл містить записи журналу до вашої Дати Огляду. Більшість сторінок ігноруватимуть ці записи під час відображення вашого прогресу.",
+      "2": "Чи хочете ви оновити вашу Дату Огляду до {lookBackDate}, щоб включити ці записи?"
+    },
+    "update_look_back_date_yes": "Оновити Дату Огляду",
+    "update_look_back_date_no": "Залишити Поточну Дату Огляду",
+    "look_back_date_updated_successfully": "Дату огляду успішно оновлено."
+  }
+}

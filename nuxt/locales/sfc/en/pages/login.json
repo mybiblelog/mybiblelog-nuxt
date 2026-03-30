@@ -1,0 +1,9 @@
+{
+  "your_email_address_is_required": "Your email address is required.",
+  "sign_in": "Sign In",
+  "need_an_account": "Need an account?",
+  "password_reset_link_sent": "A password reset link has been sent to your email address.",
+  "email": "Email",
+  "password": "Password",
+  "forgot_your_password": "Forgot your password? Reset it via email."
+}

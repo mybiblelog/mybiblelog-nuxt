@@ -148,79 +148,9 @@ export default {
 //
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "reset_password": "Passwort zurücksetzen",
-    "once_you_set_a_new_password_you_will_be_automatically_logged_in": "Sobald Sie ein neues Passwort festgelegt haben, werden Sie automatisch angemeldet.",
-    "new_password": "Neues Passwort",
-    "confirm_new_password": "Neues Passwort bestätigen",
-    "submit": "Absenden",
-    "this_password_reset_link_is_expired": "Dieses Passwort-Wiederherstellungs-Link ist abgelaufen.",
-    "you_can_send_a_new_password_reset_email_from_the_sign_in_page": "Sie können ein neues Passwort-Wiederherstellungs-E-Mail von der Anmeldeseite senden.",
-    "sign_in": "Anmelden",
-    "passwords_must_match": "Passwörter müssen übereinstimmen.",
-    "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten."
-  },
-  "en": {
-    "reset_password": "Reset Password",
-    "once_you_set_a_new_password_you_will_be_automatically_logged_in": "Once you set a new password, you will be automatically logged in.",
-    "new_password": "New Password",
-    "confirm_new_password": "Confirm New Password",
-    "submit": "Submit",
-    "this_password_reset_link_is_expired": "This password reset link is expired.",
-    "you_can_send_a_new_password_reset_email_from_the_sign_in_page": "You can send a new password reset email from the Sign In page.",
-    "sign_in": "Sign In",
-    "passwords_must_match": "Passwords must match.",
-    "an_unknown_error_occurred": "An unknown error occurred."
-  },
-  "es": {
-    "reset_password": "Restablecer la contraseña",
-    "once_you_set_a_new_password_you_will_be_automatically_logged_in": "Una vez que establezca una nueva contraseña, se le iniciará sesión automáticamente.",
-    "new_password": "Nueva contraseña",
-    "confirm_new_password": "Confirmar nueva contraseña",
-    "submit": "Enviar",
-    "this_password_reset_link_is_expired": "Este enlace de restablecimiento de contraseña ha caducado.",
-    "you_can_send_a_new_password_reset_email_from_the_sign_in_page": "Puede enviar un nuevo correo electrónico de restablecimiento de contraseña desde la página de inicio de sesión.",
-    "sign_in": "Iniciar sesión",
-    "passwords_must_match": "Las contraseñas deben coincidir.",
-    "an_unknown_error_occurred": "Ocurrió un error desconocido."
-  },
-  "fr": {
-    "reset_password": "Réinitialiser le mot de passe",
-    "once_you_set_a_new_password_you_will_be_automatically_logged_in": "Une fois que vous avez défini un nouveau mot de passe, vous serez automatiquement connecté.",
-    "new_password": "Nouveau mot de passe",
-    "confirm_new_password": "Confirmer le nouveau mot de passe",
-    "submit": "Soumettre",
-    "this_password_reset_link_is_expired": "Ce lien de réinitialisation de mot de passe a expiré.",
-    "you_can_send_a_new_password_reset_email_from_the_sign_in_page": "Vous pouvez envoyer un nouvel e-mail de réinitialisation de mot de passe depuis la page de connexion.",
-    "sign_in": "Se connecter",
-    "passwords_must_match": "Les mots de passe doivent correspondre.",
-    "an_unknown_error_occurred": "Une erreur inconnue s'est produite."
-  },
-  "pt": {
-    "reset_password": "Redefinir Senha",
-    "once_you_set_a_new_password_you_will_be_automatically_logged_in": "Assim que definir uma nova senha, você será automaticamente conectado.",
-    "new_password": "Nova Senha",
-    "confirm_new_password": "Confirmar Nova Senha",
-    "submit": "Enviar",
-    "this_password_reset_link_is_expired": "Este link de redefinição de senha expirou.",
-    "you_can_send_a_new_password_reset_email_from_the_sign_in_page": "Você pode enviar um novo e-mail de redefinição de senha a partir da página de login.",
-    "sign_in": "Entrar",
-    "passwords_must_match": "As senhas devem coincidir.",
-    "an_unknown_error_occurred": "Ocorreu um erro desconhecido."
-  },
-  "uk": {
-    "reset_password": "Скинути пароль",
-    "once_you_set_a_new_password_you_will_be_automatically_logged_in": "Після встановлення нового пароля ви автоматично увійдете в систему.",
-    "new_password": "Новий пароль",
-    "confirm_new_password": "Підтвердіть новий пароль",
-    "submit": "Надіслати",
-    "this_password_reset_link_is_expired": "Це посилання для скидання пароля застаріло.",
-    "you_can_send_a_new_password_reset_email_from_the_sign_in_page": "Ви можете надіслати новий лист зі скиданням пароля зі сторінки входу.",
-    "sign_in": "Увійти",
-    "passwords_must_match": "Паролі повинні збігатися.",
-    "an_unknown_error_occurred": "Виникла невідома помилка."
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/reset-password.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/reset-password.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/reset-password.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/reset-password.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/reset-password.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/reset-password.json" />

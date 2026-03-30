@@ -1,0 +1,19 @@
+{
+  "reminder": "Lembrete",
+  "info": {
+    "p1a": "Você pode definir um horário para receber um e-mail de lembrete diário.",
+    "p1b": "Você deve marcar a caixa abaixo e salvar suas preferências para começar a receber e-mails.",
+    "p2a": "Se você não deseja mais receber esses e-mails, basta desmarcar a caixa abaixo e salvar suas preferências.",
+    "p2b": "Você também pode clicar no link \"cancelar inscrição\" em um e-mail para cancelar."
+  },
+  "form": {
+    "i_want_to_receive_a_daily_reminder_email": "Desejo receber um e-mail de lembrete diário.",
+    "reminder_time": "Horário do Lembrete",
+    "save_preferences": "Salvar Preferências"
+  },
+  "messaging": {
+    "please_choose_a_time": "Por favor, escolha um horário para receber um lembrete",
+    "reminder_settings_updated_successfully": "Configurações de lembrete atualizadas com sucesso.",
+    "an_unknown_error_occurred": "Ocorreu um erro desconhecido."
+  }
+}

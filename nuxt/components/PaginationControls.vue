@@ -166,43 +166,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "first": "Erste",
-    "prev": "Zurück",
-    "next": "Weiter",
-    "last": "Letzte"
-  },
-  "en": {
-    "first": "First",
-    "prev": "Prev",
-    "next": "Next",
-    "last": "Last"
-  },
-  "es": {
-    "first": "Primero",
-    "prev": "Anterior",
-    "next": "Siguiente",
-    "last": "Último"
-  },
-  "fr": {
-    "first": "Premier",
-    "prev": "Précédent",
-    "next": "Suivant",
-    "last": "Dernier"
-  },
-  "pt": {
-    "first": "Primeiro",
-    "prev": "Anterior",
-    "next": "Próximo",
-    "last": "Último"
-  },
-  "uk": {
-    "first": "Перша",
-    "prev": "Попередня",
-    "next": "Наступна",
-    "last": "Остання"
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/PaginationControls.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/PaginationControls.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/PaginationControls.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/PaginationControls.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/PaginationControls.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/PaginationControls.json" />

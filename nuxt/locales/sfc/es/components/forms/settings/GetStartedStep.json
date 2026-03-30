@@ -1,0 +1,10 @@
+{
+  "start_page": {
+    "get_started": {
+      "title": "Comenzar",
+      "description": "¡Todo está listo! Es hora de comenzar a leer.",
+      "feedback_hint": "Una última cosa: puede proporcionar comentarios, solicitar funciones e informar errores haciendo clic en este botón de comentarios en la esquina inferior derecha.",
+      "button": "Vamos"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "today": "Aujourd'hui",
+  "add_entry": "Ajouter une entrée",
+  "new_verses_read": "{0} / {1} nouveaux versets",
+  "loading": "Chargement...",
+  "edit": "Éditer",
+  "delete": "Supprimer",
+  "take_note": "Prendre note",
+  "view_notes": "Voir les notes",
+  "no_entries": "Pas d'entrées",
+  "reading_suggestions": "Suggestions de Lecture",
+  "suggestions": "Suggestions",
+  "open_bible": "Ouvrir dans la Bible",
+  "log_reading": "Ajouter une lecture",
+  "no_suggestions": "Aucune suggestion",
+  "are_you_sure_you_want_to_delete_this_entry": "Êtes-vous sûr de vouloir supprimer cette entrée?",
+  "the_log_entry_could_not_be_deleted": "L'entrée du journal n'a pas pu être supprimée.",
+  "recent_notes": "Notes Récentes",
+  "no_recent_notes": "Aucune Note",
+  "view_note": "Voir la Note",
+  "new_note": "Nouvelle Note",
+  "view_all_notes": "Voir Toutes les Notes",
+  "note": {
+    "edit": "Éditer",
+    "delete": "Effacer"
+  },
+  "messaging": {
+    "are_you_sure_delete_note": "Êtes-vous sûr de vouloir supprimer cette note ?",
+    "note_could_not_be_deleted": "La note n'a pas pu être supprimée."
+  }
+}

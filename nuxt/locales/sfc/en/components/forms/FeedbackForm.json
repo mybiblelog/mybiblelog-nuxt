@@ -1,0 +1,13 @@
+{
+  "your_email": "Your Email",
+  "what_kind_of_feedback": "What kind of feedback are you submitting?",
+  "bug_report": "Bug Report",
+  "feature_request": "Feature Request",
+  "general_comment": "General Comment",
+  "feedback_details": "Feedback Details",
+  "submit_feedback": "Submit Feedback",
+  "messaging": {
+    "unknown_error": "An unknown error occurred.",
+    "feedback_submitted": "Feedback submitted successfully. Thank you!"
+  }
+}

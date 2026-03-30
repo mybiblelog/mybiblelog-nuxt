@@ -1,0 +1,31 @@
+{
+  "today": "Hoy",
+  "add_entry": "Añadir entrada",
+  "new_verses_read": "{0} / {1} versículos nuevos",
+  "loading": "Cargando...",
+  "edit": "Editar",
+  "delete": "Borrar",
+  "take_note": "Tomar nota",
+  "view_notes": "Ver notas",
+  "no_entries": "No hay entradas",
+  "reading_suggestions": "Sugerencias de Lectura",
+  "suggestions": "Sugerencias",
+  "open_bible": "Abrir en la Biblia",
+  "log_reading": "Agregar lectura",
+  "no_suggestions": "No hay sugerencias",
+  "are_you_sure_you_want_to_delete_this_entry": "¿Estás seguro de que quieres borrar esta entrada?",
+  "the_log_entry_could_not_be_deleted": "No se pudo borrar la entrada del registro.",
+  "recent_notes": "Notas Recientes",
+  "no_recent_notes": "Sin Notas",
+  "view_note": "Ver Nota",
+  "new_note": "Nueva Nota",
+  "view_all_notes": "Ver Todas las Notas",
+  "note": {
+    "edit": "Editar",
+    "delete": "Eliminar"
+  },
+  "messaging": {
+    "are_you_sure_delete_note": "¿Estás seguro de que quieres eliminar esta nota?",
+    "note_could_not_be_deleted": "La nota no se pudo eliminar."
+  }
+}

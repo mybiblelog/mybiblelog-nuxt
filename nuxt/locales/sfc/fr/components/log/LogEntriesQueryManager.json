@@ -1,0 +1,15 @@
+{
+  "title": "Options d’affichage",
+  "reset": "Réinitialiser",
+  "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser la recherche / les filtres / le tri ?",
+  "first_date": "Première date",
+  "last_date": "Dernière date",
+  "passage": "Filtrer par passage",
+  "clear": "Effacer",
+  "sort": "Trier",
+  "sort_newest_first": "Le plus récent d'abord",
+  "sort_oldest_first": "Plus ancien en premier",
+  "page_size": "Taille de page",
+  "apply": "Appliquer",
+  "cancel": "Annuler"
+}

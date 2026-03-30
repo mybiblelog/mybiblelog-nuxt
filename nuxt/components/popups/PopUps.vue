@@ -114,37 +114,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "ok": "OK",
-    "confirm": "Bestätigen",
-    "cancel": "Abbrechen"
-  },
-  "en": {
-    "ok": "OK",
-    "confirm": "Confirm",
-    "cancel": "Cancel"
-  },
-  "es": {
-    "ok": "OK",
-    "confirm": "Confirmar",
-    "cancel": "Cancelar"
-  },
-  "fr": {
-    "ok": "D'accord",
-    "confirm": "Confirmer",
-    "cancel": "Annuler"
-  },
-  "pt": {
-    "ok": "OK",
-    "confirm": "Confirmar",
-    "cancel": "Cancelar"
-  },
-  "uk": {
-    "ok": "OK",
-    "confirm": "Підтвердити",
-    "cancel": "Скасувати"
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/popups/PopUps.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/popups/PopUps.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/popups/PopUps.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/popups/PopUps.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/popups/PopUps.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/popups/PopUps.json" />

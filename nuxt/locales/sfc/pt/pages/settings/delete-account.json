@@ -1,0 +1,19 @@
+{
+  "title": "Apagar Conta",
+  "description": "Você está no controle dos seus dados. Você pode apagar sua conta e todos os dados associados a ela:",
+  "list": {
+    "account": "Isso irá apagar permanentemente sua conta e configurações pessoais.",
+    "log_entries": "Isso irá apagar permanentemente suas entradas de log.",
+    "notes": "Isso irá apagar permanentemente suas notas e tags personalizadas.",
+    "export": "Você precisa exportar suas entradas de log antes de apagar sua conta se deseja mantê-las.",
+    "permanent": "Essa ação não pode ser revertida."
+  },
+  "understand": {
+    "log_entries": "Eu entendo que isso irá apagar todos os dados de minhas entradas de log.",
+    "export": "Eu entendo que posso atualmente exportar meus dados de entrada de log para meu próprio uso, o que não posso fazer após apagar minha conta.",
+    "notes": "Eu entendo que isso irá apagar todas as minhas notas e tags.",
+    "permanent": "Eu entendo que esta ação é permanente e não pode ser revertida."
+  },
+  "delete_my_account": "Excluir Minha Conta",
+  "unable_to_delete": "Não foi possível excluir a conta. Por favor, tente novamente mais tarde."
+}

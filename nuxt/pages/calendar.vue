@@ -190,73 +190,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "page_title": "Kalender",
-    "verse": "Vers | Verse",
-    "open_bible": "Bibel öffnen",
-    "take_note": "Notiz hinzufügen",
-    "edit": "Bearbeiten",
-    "delete": "Löschen",
-    "no_entries": "Keine Einträge",
-    "are_you_sure": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
-    "could_not_delete": "Der Log-Eintrag konnte nicht gelöscht werden."
-  },
-  "en": {
-    "page_title": "Calendar",
-    "verse": "verse | verses",
-    "open_bible": "Open Bible",
-    "take_note": "Take Note",
-    "edit": "Edit",
-    "delete": "Delete",
-    "no_entries": "No Entries",
-    "are_you_sure": "Are you sure you want to delete this entry?",
-    "could_not_delete": "The log entry could not be deleted."
-  },
-  "es": {
-    "page_title": "Calendario",
-    "verse": "versículo | versículos",
-    "open_bible": "Abrir en la Biblia",
-    "take_note": "Tomar nota",
-    "edit": "Editar",
-    "delete": "Borrar",
-    "no_entries": "No hay entradas",
-    "are_you_sure": "¿Estás seguro de que quieres borrar esta entrada?",
-    "could_not_delete": "No se pudo borrar la entrada del registro."
-  },
-  "fr": {
-    "page_title": "Calendrier",
-    "verse": "verset | versets",
-    "open_bible": "Ouvrir dans la Bible",
-    "take_note": "Prendre note",
-    "edit": "Modifier",
-    "delete": "Supprimer",
-    "no_entries": "Aucune entrée",
-    "are_you_sure": "Êtes-vous sûr de vouloir supprimer cette entrée?",
-    "could_not_delete": "L'entrée du journal n'a pas pu être supprimée."
-  },
-  "pt": {
-    "page_title": "Calendário",
-    "verse": "versículo | versículos",
-    "open_bible": "Ler na Biblia",
-    "take_note": "Tomar nota",
-    "edit": "Editar",
-    "delete": "Apagar",
-    "no_entries": "Nenhum registro",
-    "are_you_sure": "Tem certeza de que deseja apagar este registro?",
-    "could_not_delete": "O registro não pôde ser apagado."
-  },
-  "uk": {
-    "page_title": "Календар",
-    "verse": "верс | віршів",
-    "open_bible": "Читати в Біблії",
-    "take_note": "Записати",
-    "edit": "Редагувати",
-    "delete": "Видалити",
-    "no_entries": "Немає записів",
-    "are_you_sure": "Ви впевнені, що хочете видалити цей запис?",
-    "could_not_delete": "Не вдалося видалити запис."
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/calendar.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/calendar.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/calendar.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/calendar.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/calendar.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/calendar.json" />

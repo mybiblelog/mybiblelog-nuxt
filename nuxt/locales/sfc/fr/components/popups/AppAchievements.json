@@ -1,0 +1,13 @@
+{
+  "ok": "D'accord",
+  "achievement": {
+    "book_complete": {
+      "title": "Livre terminé!",
+      "message": "Félicitations! Vous avez terminé {bookName}!"
+    },
+    "bible_complete": {
+      "title": "Bible terminée!",
+      "message": "🎉 Incroyable! Vous avez terminé de lire toute la Bible! 🎉"
+    }
+  }
+}

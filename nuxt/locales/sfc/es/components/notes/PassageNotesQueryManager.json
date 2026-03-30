@@ -1,0 +1,30 @@
+{
+  "title": "Opciones de vista",
+  "reset": "Restablecer",
+  "reset_confirm": "¿Está seguro de que desea restablecer la búsqueda / filtros / orden?",
+  "search_text": "Texto de búsqueda",
+  "search_placeholder": "Ingrese texto…",
+  "tag_filters": "Filtrar por etiquetas",
+  "tag_select": {
+    "choose": "Elegir etiquetas…",
+    "clear": "Limpiar etiquetas"
+  },
+  "tag_only_untagged": "Solo notas sin etiquetas",
+  "tag_match": "Partido",
+  "tag_match_any": "Cualquier",
+  "tag_match_all": "Todas",
+  "tag_match_exact": "Exacto",
+  "passage": "Filtrar por pasaje",
+  "clear": "Limpiar",
+  "passage_match": "Partido",
+  "passage_match_inclusive": "Inclusivo",
+  "passage_match_exclusive": "Exclusivo",
+  "passage_match_inclusive_description": "Coincide con una nota si alguno de sus versículos se superpone a su pasaje de filtro.",
+  "passage_match_exclusive_description": "Coincide con una nota si alguno de sus versículos está dentro de su pasaje de filtro.",
+  "sort": "Ordenar",
+  "sort_newest_first": "Más reciente primero",
+  "sort_oldest_first": "Más antiguo primero",
+  "page_size": "Tamaño de página",
+  "apply": "Aplicar",
+  "cancel": "Cancelar"
+}

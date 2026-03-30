@@ -1,0 +1,18 @@
+{
+  "unsubscribe": "Se désabonner",
+  "success": "Succès ! L'adresse e-mail <strong>{{ email }}</strong> a été désabonnée des e-mails de rappel quotidiens.",
+  "update_preferences": "Mettre à jour les préférences",
+  "client_error": {
+    "title": "Erreur rencontrée lors de la tentative de désabonnement.",
+    "p1": "Le lien de désabonnement qui a été utilisé pour accéder à cette page est probablement expiré.",
+    "p2": "Cela se produit lorsque quelqu'un se désabonne puis se réabonne, créant ainsi un nouvel abonnement.",
+    "p3": "Veuillez suivre le lien de désabonnement dans le courriel le plus récent ou mettre à jour vos préférences."
+  },
+  "server_error": {
+    "p1": "Le lien de désabonnement qui a été utilisé pour accéder à cette page est expiré.",
+    "p2": "Cela se produit lorsque quelqu'un se désabonne puis se réabonne, créant ainsi un nouvel abonnement.",
+    "p3": "Veuillez suivre le lien de désabonnement dans le courriel le plus récent ou vous connecter pour mettre à jour vos préférences."
+  },
+  "unsubscribing_you": "Désabonnement des e-mails de rappel quotidiens en cours...",
+  "there_was_an_error": "Une erreur s'est produite lors du processus de désabonnement."
+}

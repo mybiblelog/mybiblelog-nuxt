@@ -1,0 +1,43 @@
+{
+  "notes": "Notizen",
+  "tags": "Tags",
+  "new": "Neu",
+  "pagination": {
+    "label": "Seitennavigation",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "page": "Seite"
+  },
+  "query_manager": {
+    "open": "Suchen | Filtern | Sortieren",
+    "title": "Ansichtsoptionen",
+    "reset": "Zurücksetzen",
+    "reset_button": "Ansichtsoptionen zurücksetzen"
+  },
+  "results": {
+    "loading": "Laden...",
+    "no_results": "Keine Ergebnisse"
+  },
+  "note": {
+    "edit": "Bearbeiten",
+    "delete": "Löschen"
+  },
+  "messaging": {
+    "are_you_sure_delete_note": "Möchten Sie diese Notiz wirklich löschen?",
+    "note_could_not_be_deleted": "Die Notiz konnte nicht gelöscht werden."
+  },
+  "query_summary": {
+    "none": {
+      "notes": "Keine Notizen",
+      "results": "Keine Ergebnisse"
+    },
+    "showing_all": {
+      "notes": "Zeige {total} Notiz | Zeige {total} Notizen",
+      "results": "Zeige {total} Ergebnis | Zeige {total} Ergebnisse"
+    },
+    "showing_range": {
+      "notes": "Zeige {first}–{last} von {total} gesamten Notiz | Zeige {first}–{last} von {total} gesamten Notizen",
+      "results": "Zeige {first}–{last} von {total} gesamten Ergebnis | Zeige {first}–{last} von {total} gesamten Ergebnissen"
+    }
+  }
+}

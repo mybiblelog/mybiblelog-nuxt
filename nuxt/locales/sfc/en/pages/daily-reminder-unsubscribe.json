@@ -1,0 +1,18 @@
+{
+  "unsubscribe": "Unsubscribe",
+  "success": "Success! The email address <strong>{email}</strong> has been unsubscribed from daily reminder emails.",
+  "update_preferences": "Update Preferences",
+  "client_error": {
+    "title": "Error encountered while trying to unsubscribe.",
+    "p1": "The unsubscribe link that was used to reach this page is probably expired.",
+    "p2": "This happens when someone has unsubscribed then subscribed again, creating a new subscription.",
+    "p3": "Please follow the unsubscribe link in the most recent email or update your preferences."
+  },
+  "server_error": {
+    "p1": "The unsubscribe link that was used to reach this page is expired.",
+    "p2": "This happens when someone has unsubscribed then subscribed again, creating a new subscription.",
+    "p3": "Please follow the unsubscribe link in the most recent email or sign in to update your preferences."
+  },
+  "unsubscribing_you": "Unsubscribing you from daily reminder emails...",
+  "there_was_an_error": "There was an error during the unsubscribe process."
+}

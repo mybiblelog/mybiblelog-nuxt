@@ -1,0 +1,30 @@
+{
+  "title": "Параметри перегляду",
+  "reset": "Скинути",
+  "reset_confirm": "Ви впевнені, що хочете скинути налаштування пошуку / фільтра / сортування?",
+  "search_text": "Текст для пошуку",
+  "search_placeholder": "Введіть текст…",
+  "tag_filters": "Фільтрувати за тегами",
+  "tag_select": {
+    "choose": "Вибрати теги…",
+    "clear": "Очистити теги"
+  },
+  "tag_only_untagged": "Лише нотатки без тегів",
+  "tag_match": "Співпадіння",
+  "tag_match_any": "Будь-який",
+  "tag_match_all": "Всі",
+  "tag_match_exact": "Точний",
+  "passage": "Фільтрувати за уривком",
+  "clear": "Очистити",
+  "passage_match": "Співпадіння",
+  "passage_match_inclusive": "Включно",
+  "passage_match_exclusive": "Виключно",
+  "passage_match_inclusive_description": "Збігається, якщо будь-який її вірш перетинається з вашим фільтрованим уривком.",
+  "passage_match_exclusive_description": "Збігається, якщо будь-який її вірш знаходиться всередині вашого фільтрованого уривка.",
+  "sort": "Сортувати",
+  "sort_newest_first": "Спочатку нові",
+  "sort_oldest_first": "Спочатку старі",
+  "page_size": "Розмір сторінки",
+  "apply": "Застосувати",
+  "cancel": "Скасувати"
+}

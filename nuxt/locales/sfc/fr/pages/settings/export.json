@@ -1,0 +1,39 @@
+{
+  "export": "Export",
+  "you_can_download": "Vous pouvez télécharger vos données dans différents formats.",
+  "reading_log": {
+    "title": "Journal de lecture",
+    "info": {
+      "1": "Vous pouvez exporter vos entrées de journal comme un tableur (fichier CSV).",
+      "2": "Ce fichier peut être importé dans My Bible Log ou ouvert dans un programme de tableur."
+    },
+    "cta": "Exporter le journal de lecture en CSV"
+  },
+  "notes": {
+    "title": "Notes",
+    "info": "Bien que les notes exportées ne puissent pas être importées automatiquement dans My Bible Log, vous pouvez toujours recréer manuellement les notes et les tags."
+  },
+  "notes_text_file": {
+    "title": "Fichier de texte des notes",
+    "info": "Vous pouvez exporter vos notes dans un fichier texte.",
+    "cta": "Exporter le texte des notes"
+  },
+  "notes_json_file": {
+    "title": "Fichier JSON des notes",
+    "info": "Vous avez également la possibilité d'exporter vos notes sous forme de fichier JSON.",
+    "cta": "Exporter les notes en JSON"
+  },
+  "reading_log_download": {
+    "filename": "My_Bible_Log_Reading_Log_Export_{today}.csv"
+  },
+  "notes_download": {
+    "text_filename": "My_Bible_Log_Notes_Export_{today}.txt",
+    "json_filename": "My_Bible_Log_Notes_Export_{today}.json",
+    "title": "Exportation des notes de My Bible Log",
+    "headings": {
+      "notes": "NOTES",
+      "tags": "ÉTIQUETTES",
+      "passages": "PASSAGES"
+    }
+  }
+}

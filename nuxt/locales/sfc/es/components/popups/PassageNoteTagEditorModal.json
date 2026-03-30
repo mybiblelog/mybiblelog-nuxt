@@ -1,0 +1,11 @@
+{
+  "tag_editor": {
+    "edit_tag": "Editar Etiqueta",
+    "add_tag": "Añadir Etiqueta",
+    "save": "Guardar",
+    "close": "Cerrar"
+  },
+  "messaging": {
+    "are_you_sure_close_tag_editor": "¿Estás seguro de que quieres cerrar el editor de etiquetas? Todas las modificaciones no guardadas se perderán."
+  }
+}

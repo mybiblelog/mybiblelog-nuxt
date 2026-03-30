@@ -96,25 +96,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "choose_language": "Sprache wählen"
-  },
-  "en": {
-    "choose_language": "Choose Language"
-  },
-  "es": {
-    "choose_language": "Elige idioma"
-  },
-  "fr": {
-    "choose_language": "Choisissez la langue"
-  },
-  "pt": {
-    "choose_language": "Escolha o Idioma"
-  },
-  "uk": {
-    "choose_language": "Виберіть мову"
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/LanguageSwitcher.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/LanguageSwitcher.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/LanguageSwitcher.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/LanguageSwitcher.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/LanguageSwitcher.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/LanguageSwitcher.json" />

@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "title": "Printable Bible Reading Tracker",
+    "description": "Free printable Bible reading tracker with checkboxes for each chapter of the Bible. Keep track of your progress as you read through the books of the Bible."
+  },
+  "print": "Print",
+  "site_title": "My Bible Log",
+  "site_description": "Free Bible Reading Tracker",
+  "content": {
+    "this_is": "This is a free printable Bible reading tracker with checkboxes for each chapter of the Bible. Use it to track of your progress as you read through the books of the Bible.",
+    "printer_friendly": "This page is printer-friendly. Click the \"Print\" button above to print this page. Only the actual checklist will be printed.",
+    "download_directly": "You can also download the PDF version directly <a target='_blank' href='/downloads/printable-bible-reading-tracker.pdf'>here</a>.",
+    "chapters_in_the_bible": "Chapters in the Bible",
+    "there_are_66_books": "There are 66 books in the Bible, and a total of 1,189 chapters. If you read 3.25 chapters each day (or a total of 23 chapters each week), you can read the entire Bible in one year.",
+    "track_your_progress_online": "Track Your Progress Online",
+    "if_you_would_like": "If you would like to track your Bible reading from your device, check out the free <a href='/'>My Bible Log</a> app and website!"
+  }
+}

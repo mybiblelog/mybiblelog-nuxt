@@ -1,0 +1,13 @@
+{
+  "select_book": "Selecionar Livro",
+  "select_chapters": "Selecionar Capítulo(s)",
+  "select_end_chapter": "Selecionar Capítulo Final",
+  "select_verses": "Selecionar Versículo(s)",
+  "select_start_verse": "Selecionar Versículo Inicial",
+  "select_end_verse": "Selecionar Versículo Final",
+  "click_and_drag_to_select_multiple_chapters": "Clique e arraste para selecionar vários capítulos.",
+  "old_testament": "Antigo Testamento",
+  "new_testament": "Novo Testamento",
+  "select_chapters_note": "Selecione o primeiro e o último capítulo da passagem, ou para um único capítulo, selecione-o duas vezes.",
+  "select_verses_note": "Selecione o primeiro e o último versículo do capítulo, ou para um único versículo, selecione-o duas vezes."
+}

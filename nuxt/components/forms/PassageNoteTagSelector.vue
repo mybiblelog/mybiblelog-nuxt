@@ -119,25 +119,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "create_a_tag_to_select_it_here": "Erstellen Sie ein Tag, um es hier auszuwählen."
-  },
-  "en": {
-    "create_a_tag_to_select_it_here": "Create a tag to select it here."
-  },
-  "es": {
-    "create_a_tag_to_select_it_here": "Crea una etiqueta para seleccionarla aquí."
-  },
-  "fr": {
-    "create_a_tag_to_select_it_here": "Créez une étiquette pour la sélectionner ici."
-  },
-  "pt": {
-    "create_a_tag_to_select_it_here": "Crie uma tag para selecioná-la aqui."
-  },
-  "uk": {
-    "create_a_tag_to_select_it_here": "Створіть тег, щоб вибрати його тут."
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/PassageNoteTagSelector.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/PassageNoteTagSelector.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/PassageNoteTagSelector.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/PassageNoteTagSelector.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/PassageNoteTagSelector.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/PassageNoteTagSelector.json" />

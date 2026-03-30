@@ -1,0 +1,31 @@
+{
+  "my_bible_log": "My Bible Log",
+  "api_error": {
+    "unknown_error": "Виникла невідома помилка",
+    "validation_error": "Виникла помилка з вашим запитом",
+    "required": "Поле {field} обов'язкове",
+    "is_invalid": "Будь ласка, введіть дійсну {field}",
+    "unique": "Це {field} вже використовується",
+    "min_length": "Має бути {minlength} або більше символів",
+    "max_length": "Має бути {maxlength} або менше символів",
+    "review": "Будь ласка, перегляньте.",
+    "not_found": "Не знайдено",
+    "invalid_login": "Електронна пошта або пароль невірні",
+    "verify_email": "Будь ласка, перевірте {email}, щоб спочатку підтвердити свою електронну пошту",
+    "new_email_required": "Нова електронна пошта не може бути такою ж, як поточна електронна пошта",
+    "email_in_use": "Адреса електронної пошти вже використовується",
+    "password_incorrect": "Пароль невірний",
+    "account_not_found": "Обліковий запис не знайдено",
+    "password_reset_link_expired": "Посилання на скидання пароля застаріло",
+    "too_many_requests": "Занадто багато запитів було відправлено за короткий час",
+    "invalid_request": "Недійсний запит",
+    "email_not_verified": "Email не підтверджений",
+    "verification_code_expired": "Код підтвердження застарів"
+  },
+  "reading_suggestion": {
+    "new_testament": "Прочитайте щось нове в Новому Заповіті",
+    "old_testament": "Прочитайте щось нове в Старому Заповіті",
+    "wisdom": "Прочитайте щось нове в книгах Премудрость",
+    "date_you_read_passage": "{display_date} ви читали {passage}"
+  }
+}

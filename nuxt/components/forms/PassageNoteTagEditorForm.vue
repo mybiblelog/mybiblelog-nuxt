@@ -96,37 +96,9 @@ export default {
 //
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "label": "Label",
-    "color": "Farbe",
-    "description": "Beschreibung"
-  },
-  "en": {
-    "label": "Label",
-    "color": "Color",
-    "description": "Description"
-  },
-  "es": {
-    "label": "Etiqueta",
-    "color": "Color",
-    "description": "Descripción"
-  },
-  "fr": {
-    "label": "Étiquette",
-    "color": "Couleur",
-    "description": "Description"
-  },
-  "pt": {
-    "label": "Nome",
-    "color": "Cor",
-    "description": "Descrição"
-  },
-  "uk": {
-    "label": "Мітка",
-    "color": "Колір",
-    "description": "Опис"
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/PassageNoteTagEditorForm.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/PassageNoteTagEditorForm.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/PassageNoteTagEditorForm.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/PassageNoteTagEditorForm.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/PassageNoteTagEditorForm.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/PassageNoteTagEditorForm.json" />

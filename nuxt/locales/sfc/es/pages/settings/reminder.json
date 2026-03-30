@@ -1,0 +1,19 @@
+{
+  "reminder": "Recordatorio",
+  "info": {
+    "p1a": "Puede establecer una hora para recibir un correo electrónico de recordatorio diario.",
+    "p1b": "Debe marcar la casilla de abajo y guardar sus preferencias para comenzar a recibir correos electrónicos.",
+    "p2a": "Si ya no desea recibir estos correos electrónicos, simplemente desmarque la casilla de abajo y guarde sus preferencias.",
+    "p2b": "También puede hacer clic en el enlace \"cancelar suscripción\" en un correo electrónico para cancelar la suscripción."
+  },
+  "form": {
+    "i_want_to_receive_a_daily_reminder_email": "Quiero recibir un correo electrónico de recordatorio diario.",
+    "reminder_time": "Hora del recordatorio",
+    "save_preferences": "Guardar preferencias"
+  },
+  "messaging": {
+    "please_choose_a_time": "Por favor, elija una hora para recibir un recordatorio",
+    "reminder_settings_updated_successfully": "Configuración de recordatorio actualizada correctamente.",
+    "an_unknown_error_occurred": "Ocurrió un error desconocido."
+  }
+}

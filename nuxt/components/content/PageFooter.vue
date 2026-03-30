@@ -146,67 +146,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "en": {
-    "home": "Home",
-    "faq": "FAQ",
-    "give_feedback": "Give Feedback",
-    "contribute": "Contribute",
-    "donate_ko_fi": "Donate via Ko-fi",
-    "code_on_github": "Code on GitHub",
-    "privacy_policy": "Privacy Policy",
-    "terms_and_conditions": "Terms and Conditions"
-  },
-  "de": {
-    "home": "Startseite",
-    "faq": "FAQ",
-    "give_feedback": "Feedback geben",
-    "contribute": "Mitwirken",
-    "donate_ko_fi": "Mitwirken via Ko-fi",
-    "code_on_github": "Code auf GitHub",
-    "privacy_policy": "Datenschutzrichtlinie",
-    "terms_and_conditions": "Nutzungsbedingungen"
-  },
-  "es": {
-    "home": "Inicio",
-    "faq": "FAQ",
-    "give_feedback": "Enviar feedback",
-    "contribute": "Contribuir",
-    "donate_ko_fi": "Donar via Ko-fi",
-    "code_on_github": "Código en GitHub",
-    "privacy_policy": "Política de privacidad",
-    "terms_and_conditions": "Términos y condiciones"
-  },
-  "fr": {
-    "home": "Accueil",
-    "faq": "FAQ",
-    "give_feedback": "Donner un feedback",
-    "contribute": "Contribuer",
-    "donate_ko_fi": "Donner via Ko-fi",
-    "code_on_github": "Code sur GitHub",
-    "privacy_policy": "Politique de confidentialité",
-    "terms_and_conditions": "Conditions d'utilisation"
-  },
-  "pt": {
-    "home": "Início",
-    "faq": "FAQ",
-    "give_feedback": "Enviar feedback",
-    "contribute": "Contribuir",
-    "donate_ko_fi": "Doar via Ko-fi",
-    "code_on_github": "Código em GitHub",
-    "privacy_policy": "Política de privacidade",
-    "terms_and_conditions": "Termos e condições"
-  },
-  "uk": {
-    "home": "Головна",
-    "faq": "FAQ",
-    "give_feedback": "Надіслати відгук",
-    "contribute": "Допомога",
-    "donate_ko_fi": "Зробити подарунок через Ko-fi",
-    "code_on_github": "Код на GitHub",
-    "privacy_policy": "Політика конфіденційності",
-    "terms_and_conditions": "Умови використання"
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/content/PageFooter.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/content/PageFooter.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/content/PageFooter.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/content/PageFooter.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/content/PageFooter.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/content/PageFooter.json" />

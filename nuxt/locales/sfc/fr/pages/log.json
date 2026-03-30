@@ -1,0 +1,43 @@
+{
+  "log": "Journal de lecture",
+  "add_entry": "Ajouter",
+  "pagination": {
+    "label": "Pagination",
+    "prev": "Précédent",
+    "next": "Suivant",
+    "page": "Page"
+  },
+  "query_manager": {
+    "open": "Rechercher | Filtrer | Trier",
+    "title": "Options d’affichage",
+    "reset": "Réinitialiser",
+    "reset_button": "Réinitialiser les options"
+  },
+  "results": {
+    "loading": "Chargement...",
+    "no_results": "Aucun résultat"
+  },
+  "open_bible": "Ouvrir dans la Bible",
+  "take_note": "Prendre note",
+  "view_notes": "Voir les notes",
+  "edit": "Modifier",
+  "delete": "Supprimer",
+  "messaging": {
+    "are_you_sure_delete_entry": "Êtes-vous sûr de vouloir supprimer cette entrée?",
+    "log_entry_could_not_be_deleted": "L’entrée n’a pas pu être supprimée."
+  },
+  "query_summary": {
+    "none": {
+      "entries": "Aucune entrée",
+      "results": "Aucun résultat"
+    },
+    "showing_all": {
+      "entries": "Affichage de {total} entrée | Affichage de {total} entrées",
+      "results": "Affichage de {total} résultat | Affichage de {total} résultats"
+    },
+    "showing_range": {
+      "entries": "Affichage de {first}–{last} sur {total} entrée au total | Affichage de {first}–{last} sur {total} entrées au total",
+      "results": "Affichage de {first}–{last} sur {total} résultat au total | Affichage de {first}–{last} sur {total} résultats au total"
+    }
+  }
+}

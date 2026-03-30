@@ -1,0 +1,31 @@
+{
+  "today": "Heute",
+  "add_entry": "Eintrag hinzufügen",
+  "new_verses_read": "{0} / {1} neue Versetze",
+  "loading": "Lädt...",
+  "edit": "Bearbeiten",
+  "delete": "Löschen",
+  "take_note": "Notiz hinzufügen",
+  "view_notes": "Notizen ansehen",
+  "no_entries": "Keine Einträge",
+  "reading_suggestions": "Lesevorschläge",
+  "suggestions": "Vorschläge",
+  "open_bible": "Bibel öffnen",
+  "log_reading": "Lesung hinzufügen",
+  "no_suggestions": "Keine Vorschläge",
+  "are_you_sure_you_want_to_delete_this_entry": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
+  "the_log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden.",
+  "recent_notes": "Letzte Notizen",
+  "no_recent_notes": "Keine Notizen",
+  "view_note": "Notiz ansehen",
+  "new_note": "Neue Notiz",
+  "view_all_notes": "Alle Notizen ansehen",
+  "note": {
+    "edit": "Bearbeiten",
+    "delete": "Löschen"
+  },
+  "messaging": {
+    "are_you_sure_delete_note": "Möchten Sie diese Notiz wirklich löschen?",
+    "note_could_not_be_deleted": "Die Notiz konnte nicht gelöscht werden."
+  }
+}

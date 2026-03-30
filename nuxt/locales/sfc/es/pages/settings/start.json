@@ -1,0 +1,20 @@
+{
+  "start_page": "Página de inicio",
+  "start": "Inicio",
+  "today": "Hoy",
+  "bible_books": "Libros Bíblicos",
+  "chapter_checklist": "Lista de Capítulos",
+  "calendar": "Calendario",
+  "notes": "Notas",
+  "save": "Guardar",
+  "select_an_option": "Seleccionar una opción",
+  "preferred_start_page": {
+    "info": {
+      "1": "Esta página se mostrará cuando inicie sesión por primera vez en My Bible Log."
+    }
+  },
+  "messaging": {
+    "preferred_start_page_saved_successfully": "Página de inicio preferida guardada con éxito.",
+    "unable_to_save_preferred_start_page": "No se puede guardar."
+  }
+}

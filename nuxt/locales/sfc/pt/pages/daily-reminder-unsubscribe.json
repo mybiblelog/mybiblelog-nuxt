@@ -1,0 +1,18 @@
+{
+  "unsubscribe": "Cancelar a subscrição",
+  "success": "Sucesso! O endereço de e-mail <strong>{email}</strong> foi cancelado dos e-mails de lembrete diários.",
+  "update_preferences": "Atualizar Preferências",
+  "client_error": {
+    "title": "Erro encontrado ao tentar cancelar a subscrição.",
+    "p1": "O link de cancelamento usado para chegar a esta página provavelmente expirou.",
+    "p2": "Isso acontece quando alguém cancela a subscrição e depois se inscreve novamente, criando uma nova subscrição.",
+    "p3": "Por favor, siga o link de cancelamento no e-mail mais recente ou atualize suas preferências."
+  },
+  "server_error": {
+    "p1": "O link de cancelamento usado para chegar a esta página expirou.",
+    "p2": "Isso acontece quando alguém cancela a subscrição e depois se inscreve novamente, criando uma nova subscrição.",
+    "p3": "Por favor, siga o link de cancelamento no e-mail mais recente ou faça login para atualizar suas preferências."
+  },
+  "unsubscribing_you": "Cancelando a sua inscrição nos e-mails de lembrete diário...",
+  "there_was_an_error": "Ocorreu um erro durante o processo de cancelamento."
+}

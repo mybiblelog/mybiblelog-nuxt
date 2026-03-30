@@ -139,67 +139,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "start_page": {
-      "save_and_continue": "Speichern und Fortfahren",
-      "save_and_finish": "Speichern und Fertigstellen",
-      "back": "Zurück",
-      "welcome": {
-        "button": "Meine Einstellungen personalisieren"
-      }
-    }
-  },
-  "en": {
-    "start_page": {
-      "save_and_continue": "Save and Continue",
-      "save_and_finish": "Save and Finish",
-      "back": "Back",
-      "welcome": {
-        "button": "Personalize My Settings"
-      }
-    }
-  },
-  "es": {
-    "start_page": {
-      "save_and_continue": "Guardar y Continuar",
-      "save_and_finish": "Guardar y Finalizar",
-      "back": "Atrás",
-      "welcome": {
-        "button": "Personalizar Mi Configuración"
-      }
-    }
-  },
-  "fr": {
-    "start_page": {
-      "save_and_continue": "Enregistrer et Continuer",
-      "save_and_finish": "Enregistrer et Finir",
-      "back": "Retour",
-      "welcome": {
-        "button": "Personnaliser Mes Paramètres"
-      }
-    }
-  },
-  "pt": {
-    "start_page": {
-      "save_and_continue": "Salvar e Continuar",
-      "save_and_finish": "Salvar e Finalizar",
-      "back": "Voltar",
-      "welcome": {
-        "button": "Personalizar Minhas Configurações"
-      }
-    }
-  },
-  "uk": {
-    "start_page": {
-      "save_and_continue": "Зберегти та Продовжити",
-      "save_and_finish": "Зберегти та Завершити",
-      "back": "Назад",
-      "welcome": {
-        "button": "Персоналізувати Мої Налаштування"
-      }
-    }
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/start.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/start.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/start.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/start.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/start.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/start.json" />

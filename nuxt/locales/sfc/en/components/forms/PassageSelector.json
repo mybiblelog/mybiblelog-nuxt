@@ -1,0 +1,13 @@
+{
+  "select_book": "Select Book",
+  "select_chapters": "Select Chapter(s)",
+  "select_end_chapter": "Select End Chapter",
+  "select_verses": "Select Verse(s)",
+  "select_start_verse": "Select Start Verse",
+  "select_end_verse": "Select End Verse",
+  "click_and_drag_to_select_multiple_chapters": "Click and drag to select multiple chapters.",
+  "old_testament": "Old Testament",
+  "new_testament": "New Testament",
+  "select_chapters_note": "Select the first and last chapter in the passage, or for a single chapter select it twice.",
+  "select_verses_note": "Select the first and last verse in the chapter, or for a single verse select it twice."
+}

@@ -1,0 +1,9 @@
+{
+  "your_email_address_is_required": "Votre adresse e-mail est requise.",
+  "sign_in": "Se connecter",
+  "need_an_account": "Besoin d'un compte?",
+  "password_reset_link_sent": "Un lien de réinitialisation de mot de passe a été envoyé à votre adresse e-mail.",
+  "email": "Email",
+  "password": "Mot de passe",
+  "forgot_your_password": "Mot de passe oublié ? Réinitialisez-le via e-mail."
+}

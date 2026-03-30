@@ -1,0 +1,15 @@
+{
+  "title": "Ansichtsoptionen",
+  "reset": "Zurücksetzen",
+  "reset_confirm": "Möchten Sie die Such-/Filter-/Sortiereinstellungen wirklich zurücksetzen?",
+  "first_date": "Von (Datum)",
+  "last_date": "Bis (Datum)",
+  "passage": "Nach Passage filtern",
+  "clear": "Löschen",
+  "sort": "Sortieren",
+  "sort_newest_first": "Neueste zuerst",
+  "sort_oldest_first": "Älteste zuerst",
+  "page_size": "Seitengröße",
+  "apply": "Anwenden",
+  "cancel": "Abbrechen"
+}

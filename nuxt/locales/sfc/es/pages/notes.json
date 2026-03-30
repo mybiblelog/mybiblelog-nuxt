@@ -1,0 +1,43 @@
+{
+  "notes": "Notas",
+  "tags": "Etiquetas",
+  "new": "Nuevo",
+  "pagination": {
+    "label": "Paginación",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "page": "Página"
+  },
+  "query_manager": {
+    "open": "Buscar | Filtrar | Ordenar",
+    "title": "Opciones de vista",
+    "reset": "Restablecer",
+    "reset_button": "Restablecer opciones de vista"
+  },
+  "results": {
+    "loading": "Cargando...",
+    "no_results": "Sin resultados"
+  },
+  "note": {
+    "edit": "Editar",
+    "delete": "Eliminar"
+  },
+  "messaging": {
+    "are_you_sure_delete_note": "¿Estás seguro de que quieres eliminar esta nota?",
+    "note_could_not_be_deleted": "La nota no se pudo eliminar."
+  },
+  "query_summary": {
+    "none": {
+      "notes": "No hay notas",
+      "results": "Sin resultados"
+    },
+    "showing_all": {
+      "notes": "Mostrando {total} nota | Mostrando {total} notas",
+      "results": "Mostrando {total} resultado | Mostrando {total} resultados"
+    },
+    "showing_range": {
+      "notes": "Mostrando {first}–{last} de {total} nota en total | Mostrando {first}–{last} de {total} notas en total",
+      "results": "Mostrando {first}–{last} de {total} resultado en total | Mostrando {first}–{last} de {total} resultados en total"
+    }
+  }
+}

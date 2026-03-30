@@ -1,0 +1,50 @@
+{
+  "progress": "Progress",
+  "bible_books": "Bible Books",
+  "your_reading_settings": {
+    "title": "Your Reading Settings",
+    "description": "These settings are used to calculate and display your progress.",
+    "update_settings": "Update Settings",
+    "look_back_date": "Look Back Date",
+    "daily_verse_count_goal": "Daily Verse Count Goal"
+  },
+  "your_progress_so_far": {
+    "title": "Your Progress So Far",
+    "total_bible_verses": "Total Bible Verses",
+    "verses_read": "Verses Read",
+    "verses_remaining": "Verses Remaining",
+    "percent_complete": "Percent Complete"
+  },
+  "your_outlook": {
+    "historical": {
+      "title": "Your Historical Outlook",
+      "description": "Based on your reading habits since your <strong>Look Back Date</strong>, how long will it take you to finish the Bible?"
+    },
+    "30_day": {
+      "title": "Your 30-Day Outlook",
+      "description": "Based on your reading habits from the past 30 days, how long will it take you to finish the Bible?"
+    },
+    "7_day": {
+      "title": "Your 7-Day Outlook",
+      "description": "Based on your reading habits from the past 7 days, how long will it take you to finish the Bible?"
+    },
+    "today": {
+      "title": "Today's Outlook",
+      "description": "Based on your reading today, how long will it take you to finish the Bible?"
+    },
+    "days_since_look_back_date": "Days Since <strong>Look Back Date<strong>",
+    "verses_read": "Verses Read",
+    "average_daily_verses_read": "Average Daily Verses Read",
+    "days_to_finish_at_this_rate": "Days to Finish at This Rate",
+    "date_to_finish_at_this_rate": "Date to Finish at This Rate"
+  },
+  "set_a_goal": {
+    "title": "Set a Goal",
+    "description": "Choose a target date to finish reading the Bible and work backwards to see how many verses you will need to read each day.",
+    "goal_finish_date": "Goal Finish Date",
+    "goal_finish_date_error": "Goal date must be in the future.",
+    "days_to_finish_by_goal": "Days to Finish by Goal",
+    "verses_required_each_day": "Verses Required Each Day"
+  },
+  "never": "Never"
+}

@@ -1,0 +1,21 @@
+{
+  "add_entry": "Adicionar Entrada",
+  "edit_entry": "Editar Entrada",
+  "preview_passage": "visualização do trecho",
+  "date": "Data",
+  "save": "Salvar",
+  "add": "Adicionar",
+  "close": "Fechar",
+  "book": "Livro",
+  "choose_book": "Escolher Livro",
+  "start_chapter": "Iniciar Capítulo",
+  "choose_start_chapter": "Escolher Capítulo",
+  "start_verse": "Versículo Inicial",
+  "choose_start_verse": "Escolher Versículo",
+  "end_chapter": "Capítulo Final",
+  "choose_end_chapter": "Escolher Capítulo",
+  "end_verse": "Versículo Final",
+  "choose_end_verse": "Escolher Versículo",
+  "unable_to_add_entry": "Não foi possível adicionar a entrada.",
+  "unable_to_update_entry": "Não foi possível atualizar a entrada."
+}

@@ -1,0 +1,13 @@
+{
+  "example_prefix": "e.g.",
+  "invalid_single": "Enter a single verse like “{example}”.",
+  "invalid_multi": "Invalid reference. Try “{example1}” or “{example2}”.",
+  "select_book": "Select Book",
+  "select_chapter": "Select Chapter",
+  "select_verse": "Select Verse",
+  "pick": "Pick",
+  "aria_clear": "Clear",
+  "aria_pick": "Pick verse",
+  "old_testament_short": "OT",
+  "new_testament_short": "NT"
+}

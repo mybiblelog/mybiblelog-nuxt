@@ -1,0 +1,33 @@
+{
+  "change_email": "Cambiar Correo Electrónico",
+  "checking_current_email_settings": "Comprobando la configuración de correo electrónico actual...",
+  "current_request": {
+    "your_current_email_is": "Su dirección de correo electrónico actual es:",
+    "your_requested_email_is": "Solicitó cambiar su dirección de correo electrónico a:",
+    "check_your_new_email": "Por favor, compruebe su nueva dirección de correo electrónico para confirmar el cambio. Es posible que tenga que actualizar esta página después.",
+    "you_can_cancel": "También puede cancelar su solicitud de cambio de correo electrónico para mantener su correo electrónico actual.",
+    "cancel_request": "Cancelar Solicitud"
+  },
+  "new_request": {
+    "enter_new_email": "Introduzca su nuevo correo electrónico junto con su contraseña actual.",
+    "you_will_receive_an_email": "Recibirá un correo electrónico en la nueva dirección para confirmar el cambio.",
+    "create_password": {
+      "part_1": "Si inicia sesión con Google, es posible que no tenga una contraseña.",
+      "part_2": "Puede crear una contraseña cerrando la sesión y luego yendo a la página de inicio de sesión.",
+      "part_3": "Utilice el enlace \"¿Olvidó su contraseña?\", que le permitirá crear una contraseña."
+    }
+  },
+  "form": {
+    "new_email": "Nuevo Correo Electrónico",
+    "password": "Contraseña Actual",
+    "change_email": "Cambiar Correo Electrónico"
+  },
+  "messaging": {
+    "enter_your_current_password": "Introduzca su contraseña actual.",
+    "confirmation_link_sent": "Se ha enviado un enlace de confirmación a su nueva dirección de correo electrónico. Haga clic en el enlace para terminar de cambiar su correo electrónico.",
+    "an_unknown_error_occurred": "Ocurrió un error desconocido.",
+    "your_request_was_cancelled": "Su solicitud de cambio de correo electrónico fue cancelada.",
+    "unable_to_cancel_request": "No se puede cancelar la solicitud. Es posible que ya esté cumplida.",
+    "something_went_wrong": "Algo salió mal. Por favor, inténtelo de nuevo."
+  }
+}

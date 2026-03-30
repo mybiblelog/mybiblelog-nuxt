@@ -1,0 +1,26 @@
+{
+  "start_page": {
+    "daily_verse_count_goal": {
+      "title": "Meta de Versículos Diarios",
+      "description": "Su Meta de Versículos Diarios es el número de versículos que desea leer cada día. My Bible Log mostrará su progreso hacia este objetivo.",
+      "i_want_to": "Quiero...",
+      "read_in_2_years": "Leer la Biblia en 2 años",
+      "read_in_year": "Leer la Biblia en un año",
+      "read_in_6_months": "Leer la Biblia en 6 meses",
+      "read_by_specific_date": "Leer la Biblia para una fecha específica",
+      "read_at_own_pace": "Leer a mi propio ritmo",
+      "goal_finish_date": "Fecha de Finalización del Objetivo",
+      "finish_on": "Terminar el",
+      "daily_verse_count": "Versículos para leer cada día",
+      "table_verses_in_bible": "Número de versículos en la Biblia",
+      "table_days_until_date": "Número de días hasta la fecha",
+      "table_verses_per_day": "Versículos requeridos por día",
+      "calculated_goal": "Para terminar para su fecha objetivo, necesitará leer {dailyGoal} versículos por día ({days} días).",
+      "change_hint": "Puede cambiar esta configuración en cualquier momento."
+    }
+  },
+  "messaging": {
+    "daily_verse_count_goal_saved_successfully": "Meta de versículos diarios guardada con éxito.",
+    "unable_to_save_daily_verse_count_goal": "No se puede guardar. Por favor ingrese un número entre 1 y 1111."
+  }
+}

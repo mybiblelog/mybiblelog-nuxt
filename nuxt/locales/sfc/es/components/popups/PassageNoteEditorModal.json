@@ -1,0 +1,11 @@
+{
+  "note_editor": {
+    "edit_note": "Editar Nota",
+    "add_note": "Agregar Nota",
+    "save": "Guardar",
+    "close": "Cerrar"
+  },
+  "messaging": {
+    "are_you_sure_close_editor": "¿Estás seguro de que quieres cerrar el editor de notas? Todas las modificaciones no guardadas se perderán."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "add_entry": "Add Entry",
+  "edit_entry": "Edit Entry",
+  "preview_passage": "preview passage",
+  "date": "Date",
+  "save": "Save",
+  "add": "Add",
+  "close": "Close",
+  "book": "Book",
+  "choose_book": "Choose Book",
+  "start_chapter": "Start Chapter",
+  "choose_start_chapter": "Choose Start Chapter",
+  "start_verse": "Start Verse",
+  "choose_start_verse": "Choose Start Verse",
+  "end_chapter": "End Chapter",
+  "choose_end_chapter": "Choose End Chapter",
+  "end_verse": "End Verse",
+  "choose_end_verse": "Choose End Verse",
+  "unable_to_add_entry": "Unable to add entry.",
+  "unable_to_update_entry": "Unable to update entry."
+}

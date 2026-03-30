@@ -1,0 +1,15 @@
+{
+  "title": "View Options",
+  "reset": "Reset",
+  "reset_confirm": "Are you sure you want to reset search/filter/sort settings?",
+  "first_date": "First Date",
+  "last_date": "Last Date",
+  "passage": "Filter by Passage",
+  "clear": "Clear",
+  "sort": "Sort",
+  "sort_newest_first": "Newest First",
+  "sort_oldest_first": "Oldest First",
+  "page_size": "Page Size",
+  "apply": "Apply",
+  "cancel": "Cancel"
+}

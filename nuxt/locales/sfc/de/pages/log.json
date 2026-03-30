@@ -1,0 +1,43 @@
+{
+  "log": "Lesejournal",
+  "add_entry": "Hinzufügen",
+  "pagination": {
+    "label": "Seitennavigation",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "page": "Seite"
+  },
+  "query_manager": {
+    "open": "Suchen | Filtern | Sortieren",
+    "title": "Ansichtsoptionen",
+    "reset": "Zurücksetzen",
+    "reset_button": "Ansichtsoptionen zurücksetzen"
+  },
+  "results": {
+    "loading": "Laden...",
+    "no_results": "Keine Ergebnisse"
+  },
+  "open_bible": "Bibel öffnen",
+  "take_note": "Notiz hinzufügen",
+  "view_notes": "Notizen ansehen",
+  "edit": "Bearbeiten",
+  "delete": "Löschen",
+  "messaging": {
+    "are_you_sure_delete_entry": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
+    "log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden."
+  },
+  "query_summary": {
+    "none": {
+      "entries": "Keine Einträge",
+      "results": "Keine Ergebnisse"
+    },
+    "showing_all": {
+      "entries": "Zeige {total} Eintrag | Zeige {total} Einträge",
+      "results": "Zeige {total} Ergebnis | Zeige {total} Ergebnisse"
+    },
+    "showing_range": {
+      "entries": "Zeige {first}–{last} von {total} gesamten Eintrag | Zeige {first}–{last} von {total} gesamten Einträgen",
+      "results": "Zeige {first}–{last} von {total} gesamten Ergebnis | Zeige {first}–{last} von {total} gesamten Ergebnissen"
+    }
+  }
+}

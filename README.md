@@ -214,13 +214,15 @@ To allow users to sign in with their existing user accounts you will need to fol
 
 ## Internationalization (i18n) Notes
 
+For **Crowdin**, where JSON files live, and how to push/pull translations, see [CROWDIN.md](CROWDIN.md).
+
 ### `$t` and `$terr` Behavior
 
 The `$t` translation helper, provided by the i18n module, is used to translate messages.
 
-It will first look for the given message in the `<i18n>` block of the current component, and will fall back to the global translations registered in `nuxt/nuxt.config.ts` if the local `<i18n>` block is missing that message.
+It will first look for the given message in the **component-scoped** locale messages loaded via `<i18n>` blocks in the current Vue file (each block points at JSON under `nuxt/locales/sfc/<locale>/...`), and will fall back to the **global** translations loaded from `nuxt/locales/global/<locale>.json` via `nuxt/i18n.config.ts` if the scoped messages do not define that key.
 
-Note that since the global locale files are loaded from `nuxt/nuxt.config.ts`, updating them will not trigger a hot reload. The entire app will need to be restarted to see global locale updates.
+Global messages are loaded **lazily** per locale (`lazy: true` in `nuxt/i18n.config.ts`). Updating `nuxt/locales/global/*.json` may not hot-reload in dev; restart the Nuxt dev server if changes do not appear.
 
 The `$terr` helper is a custom function that unwraps server errors. It is defined in `nuxt/plugins/translate-api.ts`.
 
@@ -229,11 +231,11 @@ The `$terr` helper is a custom function that unwraps server errors. It is define
 These are the steps to adding an entirely new locale to the site (along with any relevant helper tools):
 
 1. Add the locale to `shared/i18n.ts` (manual)
-1. Define the locale in `nuxt/i18n.config.js` (manual)
-1. Add the locale to `nuxt/locales/locales.js` (use Cursor)
+1. Add `numberFormats` for the new locale in `nuxt/i18n.config.ts` (manual)
+1. Add `nuxt/locales/global/<code>.json` (copy structure from `en.json`, then translate)
+1. For each `pages` / `components` `.vue` file that declares per-locale `<i18n src="...">` blocks, add the new locale’s block and matching JSON under `nuxt/locales/sfc/<code>/...` (see [CROWDIN.md](CROWDIN.md)); if you use `npm run -w nuxt i18n:migrate-sfc`, update `LOCALES` in `nuxt/scripts/i18n/migrate-sfc-i18n.mjs`
 1. Import the locale for `dayjs` in `shared/date-helpers.ts` (manual)
 1. Add Bible book title translations to `shared/static/bible-books.ts` (\_translate.js)
-1. Each component manages its own translation messages in an `<i18n>` block, so add the locale to all `.vue` files in the `pages` and `components` directories. (\_translate.js)
 1. Email templates manage their own translation messages, so add the locale to each `api/services/email/email-templates/*.ts` file. (use Cursor)
 1. Each locale has its own `nuxt/content` directory with markdown files that back the `/about` and `/policy` pages. (`nuxt/_translate.js`)
 1. Each locale currently has its own printable reading tracker PDF in `nuxt/static/downloads` which is manually listed in the XML sitemap route, `/api/router/routes/sitemap.ts`. (manually "print as PDF", update sitemap route, and update `nuxt/pages/resources/printable-bible-reading-tracker.vue`)

@@ -7,6 +7,7 @@
   "author": "Aaron Smith",
   "type": "commonjs",
   "scripts": {
+    "i18n:migrate-sfc": "node ./scripts/i18n/migrate-sfc-i18n.mjs",
     "dev": "cross-env NODE_ENV=development nuxt2 dev",
     "start": "cross-env NODE_ENV=production nuxt2 start",
     "build": "nuxt2 build",

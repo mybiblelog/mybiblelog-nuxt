@@ -1,0 +1,9 @@
+{
+  "your_email_address_is_required": "Su dirección de correo electrónico es obligatoria.",
+  "sign_in": "Iniciar sesión",
+  "need_an_account": "¿Necesitas una cuenta?",
+  "password_reset_link_sent": "Se ha enviado un enlace de restablecimiento de contraseña a su dirección de correo electrónico.",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "forgot_your_password": "¿Olvidaste tu contraseña? Restablézcalo por correo electrónico."
+}

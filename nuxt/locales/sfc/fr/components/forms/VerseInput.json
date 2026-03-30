@@ -1,0 +1,13 @@
+{
+  "example_prefix": "p. ex.",
+  "invalid_single": "Saisissez un seul verset, par exemple « {example} ».",
+  "invalid_multi": "Référence invalide. Essayez « {example1} » ou « {example2} ».",
+  "select_book": "Sélectionner le livre",
+  "select_chapter": "Sélectionner le chapitre",
+  "select_verse": "Sélectionner le verset",
+  "pick": "Choisir",
+  "aria_clear": "Effacer",
+  "aria_pick": "Choisir un verset",
+  "old_testament_short": "AT",
+  "new_testament_short": "NT"
+}

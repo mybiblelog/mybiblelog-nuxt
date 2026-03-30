@@ -1,0 +1,17 @@
+{
+  "start_page": {
+    "preferred_bible_version": {
+      "title": "Paramètres de la Bible",
+      "translation_label": "Lorsque j'ouvre la Bible depuis My Bible Log, je veux lire cette traduction :",
+      "app_label": "Lorsque j'ouvre un passage depuis My Bible Log, je veux qu'il s'ouvre dans cette application ou ce site web :",
+      "change_hint": "Vous pouvez modifier ces paramètres à tout moment."
+    }
+  },
+  "select_an_option": "Sélectionner une option",
+  "messaging": {
+    "preferred_bible_settings_saved_successfully": "Paramètres de la Bible enregistrés avec succès.",
+    "unable_to_save_preferred_bible_settings": "Impossible d'enregistrer.",
+    "unable_to_save_preferred_bible_version": "Impossible d'enregistrer.",
+    "unable_to_save_preferred_bible_app": "Impossible d'enregistrer."
+  }
+}

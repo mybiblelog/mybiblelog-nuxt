@@ -341,49 +341,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "chapter_checklist": "Kapitelliste",
-    "loading": "Laden...",
-    "logged_before_today": "Dieses Kapitel wurde vor heute protokolliert. Sie können frühere Protokolleinträge auf der Kalenderseite bearbeiten.",
-    "unable_to_mark_complete": "Kann das Kapitel nicht als abgeschlossen markieren.",
-    "unable_to_mark_incomplete": "Kann das Kapitel nicht als unvollständig markieren."
-  },
-  "en": {
-    "chapter_checklist": "Chapter Checklist",
-    "loading": "Loading...",
-    "logged_before_today": "This chapter was logged before today. You can edit previous log entries on the Calendar page.",
-    "unable_to_mark_complete": "Unable to mark the chapter complete.",
-    "unable_to_mark_incomplete": "Unable to mark the chapter incomplete."
-  },
-  "es": {
-    "chapter_checklist": "Lista de capítulos",
-    "loading": "Cargando...",
-    "logged_before_today": "Este capítulo se registró antes de hoy. Puede editar las entradas de registro anteriores en la página del calendario.",
-    "unable_to_mark_complete": "No se puede marcar el capítulo como completo.",
-    "unable_to_mark_incomplete": "No se puede marcar el capítulo como incompleto."
-  },
-  "fr": {
-    "chapter_checklist": "Liste de contrôle",
-    "loading": "Chargement...",
-    "logged_before_today": "Ce chapitre a été enregistré avant aujourd'hui. Vous pouvez modifier les entrées de journal précédentes sur la page du calendrier.",
-    "unable_to_mark_complete": "Impossible de marquer le chapitre comme terminé.",
-    "unable_to_mark_incomplete": "Impossible de marquer le chapitre comme incomplet."
-  },
-  "pt": {
-    "chapter_checklist": "Lista de Capítulos",
-    "loading": "Carregando...",
-    "logged_before_today": "Este capítulo foi registrado antes de hoje. Você pode editar entradas de log anteriores na página do Calendário.",
-    "unable_to_mark_complete": "Não é possível marcar o capítulo como completo.",
-    "unable_to_mark_incomplete": "Não é possível marcar o capítulo como incompleto."
-  },
-  "uk": {
-    "chapter_checklist": "Перелік розділів",
-    "loading": "Завантаження...",
-    "logged_before_today": "Цей розділ був зареєстрований до сьогодні. Ви можете редагувати попередні записи в календарній сторінці.",
-    "unable_to_mark_complete": "Не вдалося позначити розділ як завершений.",
-    "unable_to_mark_incomplete": "Не вдалося позначити розділ як незавершений."
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/checklist.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/checklist.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/checklist.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/checklist.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/checklist.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/checklist.json" />

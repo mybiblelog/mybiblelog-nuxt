@@ -1,0 +1,15 @@
+{
+  "title": "Opções de visualização",
+  "reset": "Reiniciar",
+  "reset_confirm": "Tem certeza de que deseja reiniciar as configurações de busca / filtro / ordenação?",
+  "first_date": "Primeira data",
+  "last_date": "Última data",
+  "passage": "Filtrar por passagem",
+  "clear": "Limpar",
+  "sort": "Ordenar",
+  "sort_newest_first": "Mais Recentes Primeiro",
+  "sort_oldest_first": "Mais Antigos Primeiro",
+  "page_size": "Tamanho da página",
+  "apply": "Aplicar",
+  "cancel": "Cancelar"
+}

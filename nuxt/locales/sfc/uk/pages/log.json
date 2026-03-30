@@ -1,0 +1,43 @@
+{
+  "log": "Журнал читання",
+  "add_entry": "Додати",
+  "pagination": {
+    "label": "Пагінація",
+    "prev": "Назад",
+    "next": "Далі",
+    "page": "Сторінка"
+  },
+  "query_manager": {
+    "open": "Пошук | Фільтр | Сортування",
+    "title": "Параметри перегляду",
+    "reset": "Скинути",
+    "reset_button": "Скинути параметри"
+  },
+  "results": {
+    "loading": "Завантаження...",
+    "no_results": "Немає результатів"
+  },
+  "open_bible": "Читати в Біблії",
+  "take_note": "Записати",
+  "view_notes": "Переглянути нотатки",
+  "edit": "Редагувати",
+  "delete": "Видалити",
+  "messaging": {
+    "are_you_sure_delete_entry": "Ви впевнені, що хочете видалити цей запис?",
+    "log_entry_could_not_be_deleted": "Не вдалося видалити запис."
+  },
+  "query_summary": {
+    "none": {
+      "entries": "Немає записів",
+      "results": "Немає результатів"
+    },
+    "showing_all": {
+      "entries": "Показано {total} запис | Показано {total} записів",
+      "results": "Показано {total} результат | Показано {total} результатів"
+    },
+    "showing_range": {
+      "entries": "Показано {first}–{last} з {total} запису | Показано {first}–{last} з {total} записів",
+      "results": "Показано {first}–{last} з {total} результату | Показано {first}–{last} з {total} результатів"
+    }
+  }
+}

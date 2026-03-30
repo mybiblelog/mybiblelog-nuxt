@@ -1,0 +1,26 @@
+{
+  "start_page": {
+    "daily_verse_count_goal": {
+      "title": "Objectif de nombre de versets quotidiens",
+      "description": "Votre Objectif de nombre de versets quotidiens est le nombre de versets que vous souhaitez lire chaque jour. My Bible Log affichera vos progrès vers cet objectif.",
+      "i_want_to": "Je veux...",
+      "read_in_2_years": "Lire la Bible en 2 ans",
+      "read_in_year": "Lire la Bible en un an",
+      "read_in_6_months": "Lire la Bible en 6 mois",
+      "read_by_specific_date": "Lire la Bible à une date spécifique",
+      "read_at_own_pace": "Lire à mon propre rythme",
+      "goal_finish_date": "Date de fin de l'objectif",
+      "finish_on": "Terminer le",
+      "daily_verse_count": "Versets à lire chaque jour",
+      "table_verses_in_bible": "Nombre de versets dans la Bible",
+      "table_days_until_date": "Nombre de jours jusqu'à la date",
+      "table_verses_per_day": "Versets requis par jour",
+      "calculated_goal": "Pour terminer à votre date cible, vous devrez lire {dailyGoal} versets par jour ({days} jours).",
+      "change_hint": "Vous pouvez modifier ce paramètre à tout moment."
+    }
+  },
+  "messaging": {
+    "daily_verse_count_goal_saved_successfully": "Objectif de nombre de versets quotidiens enregistré avec succès.",
+    "unable_to_save_daily_verse_count_goal": "Impossible d'enregistrer. Veuillez entrer un nombre entre 1 et 1111."
+  }
+}

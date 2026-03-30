@@ -160,49 +160,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "open_bible": "Bibel öffnen",
-    "log_reading": "Lesen protokollieren",
-    "take_note": "Notiz hinzufügen",
-    "view_notes": "Notizen ansehen",
-    "view_reading_log": "Lesejournal ansehen"
-  },
-  "en": {
-    "open_bible": "Open Bible",
-    "log_reading": "Log Reading",
-    "take_note": "Take Note",
-    "view_notes": "View Notes",
-    "view_reading_log": "View Reading Log"
-  },
-  "es": {
-    "open_bible": "Abrir en la Biblia",
-    "log_reading": "Agregar lectura a registro",
-    "take_note": "Tomar nota",
-    "view_notes": "Ver notas",
-    "view_reading_log": "Ver registro de lectura"
-  },
-  "fr": {
-    "open_bible": "Ouvrir dans la Bible",
-    "log_reading": "Ajouter lecture à registre",
-    "take_note": "Prendre note",
-    "view_notes": "Voir les notes",
-    "view_reading_log": "Voir le journal de lecture"
-  },
-  "pt": {
-    "open_bible": "Ler na Biblia",
-    "log_reading": "Adicionar leitura a registro",
-    "take_note": "Tomar nota",
-    "view_notes": "Ver notas",
-    "view_reading_log": "Ver registro de leitura"
-  },
-  "uk": {
-    "open_bible": "Читати в Біблії",
-    "log_reading": "Додати читання до журналу",
-    "take_note": "Записати",
-    "view_notes": "Переглянути записи",
-    "view_reading_log": "Переглянути журнал читання"
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/ChapterReport.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/ChapterReport.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/ChapterReport.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/ChapterReport.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/ChapterReport.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/ChapterReport.json" />

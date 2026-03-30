@@ -1,0 +1,13 @@
+{
+  "your_email": "Votre Adresse E-mail",
+  "what_kind_of_feedback": "Quel type de commentaires soumettez-vous?",
+  "bug_report": "Rapport de Bug",
+  "feature_request": "Demande de Fonctionnalité",
+  "general_comment": "Commentaire Général",
+  "feedback_details": "Détails des Commentaires",
+  "submit_feedback": "Soumettre des Commentaires",
+  "messaging": {
+    "unknown_error": "Une erreur inconnue s'est produite.",
+    "feedback_submitted": "Commentaires soumis avec succès. Merci!"
+  }
+}

@@ -135,25 +135,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "sign_in_with_google": "Mit Google anmelden"
-  },
-  "en": {
-    "sign_in_with_google": "Sign in with Google"
-  },
-  "es": {
-    "sign_in_with_google": "Iniciar sesión con Google"
-  },
-  "fr": {
-    "sign_in_with_google": "Connexion avec Google"
-  },
-  "pt": {
-    "sign_in_with_google": "Entrar com o Google"
-  },
-  "uk": {
-    "sign_in_with_google": "Увійти за допомогою Google"
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/GoogleLoginButton.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/GoogleLoginButton.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/GoogleLoginButton.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/GoogleLoginButton.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/GoogleLoginButton.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/GoogleLoginButton.json" />

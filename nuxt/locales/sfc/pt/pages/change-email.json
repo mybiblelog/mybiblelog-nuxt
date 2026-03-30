@@ -1,0 +1,9 @@
+{
+  "change_email": "Alterar E-mail",
+  "confirming_your_new_email_address": "Confirmando seu novo endereço de e-mail...",
+  "your_email_change_request_has_expired": "Seu pedido de alteração de e-mail expirou.",
+  "please_go_to_your_settings_and_try_changing_your_email_address_again": "Por favor, acesse suas configurações e tente alterar seu endereço de e-mail novamente.",
+  "there_was_an_error_changing_your_email_address": "Houve um erro ao alterar seu endereço de e-mail.",
+  "an_unknown_error_occurred": "Ocorreu um erro desconhecido.",
+  "your_email_address_was_updated_successfully": "Seu endereço de e-mail foi atualizado com sucesso."
+}

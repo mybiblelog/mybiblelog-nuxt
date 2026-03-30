@@ -1,0 +1,47 @@
+{
+  "reading": "Reading",
+  "save": "Save",
+  "select_an_option": "Select an Option",
+  "daily_verse_count_goal": {
+    "title": "Daily Verse Count Goal",
+    "info": {
+      "1": "This is the number of verses you want to read each day.",
+      "2": "If you read {dailyVerseCountGoal} verses a day, you will read the whole Bible in {bibleReadingDays} days."
+    }
+  },
+  "look_back_date": {
+    "title": "Look Back Date",
+    "info": {
+      "1": "My Bible Log will ignore your log entries before this date when counting your progress.",
+      "2": "Log entries before this date still exist, and can be viewed and updated at any time.",
+      "3": "This allows you to restart your Bible reading progress at any time.",
+      "4": "For example, if you just read the entire Bible once, you can set your look back date to today to start reading it again."
+    }
+  },
+  "preferred_bible_version": {
+    "title": "Preferred Bible Version",
+    "info": {
+      "1": "External reading links will open this Bible translation in your preferred reading app."
+    }
+  },
+  "preferred_bible_app": {
+    "title": "Preferred Bible App",
+    "info": {
+      "1": "External reading links will open this website or app."
+    },
+    "callout": {
+      "1": "This setting is saved on this device rather than on your account.",
+      "2": "This means you can use different apps or websites for different devices."
+    }
+  },
+  "messaging": {
+    "daily_verse_count_goal_saved_successfully": "Daily verse count goal saved successfully.",
+    "unable_to_save_daily_verse_count_goal": "Unable to save. Please enter a number between 1 and 1111.",
+    "look_back_date_saved_successfully": "Look back date saved successfully.",
+    "unable_to_save_look_back_date": "Unable to save. Please enter a date no later than tomorrow.",
+    "preferred_bible_version_saved_successfully": "Preferred Bible version saved successfully.",
+    "unable_to_save_preferred_bible_version": "Unable to save.",
+    "preferred_bible_app_saved_successfully": "Preferred Bible app saved successfully for this device.",
+    "unable_to_save_preferred_bible_app": "Unable to save."
+  }
+}

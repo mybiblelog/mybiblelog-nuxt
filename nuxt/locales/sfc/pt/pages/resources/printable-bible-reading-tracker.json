@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "title": "Rastreador de Leitura da Bíblia para Imprimir",
+    "description": "Rastreador de leitura da Bíblia para imprimir gratuitamente com caixas de seleção para cada capítulo da Bíblia. Acompanhe seu progresso enquanto lê os livros da Bíblia."
+  },
+  "print": "Imprimir",
+  "site_title": "My Bible Log",
+  "site_description": "Rastreador de Leitura da Bíblia Gratuito",
+  "content": {
+    "this_is": "Este é um rastreador de leitura da Bíblia para imprimir gratuitamente com caixas de seleção para cada capítulo da Bíblia. Use-o para acompanhar seu progresso enquanto lê os livros da Bíblia.",
+    "printer_friendly": "Esta página é amigável para impressão. Clique no botão \"Imprimir\" acima para imprimir esta página. Apenas a lista de verificação será impressa.",
+    "download_directly": "Você também pode baixar a versão em PDF diretamente <a target='_blank' href='/downloads/rastreador-de-leitura-da-biblia-para-imprimir.pdf'>aqui</a>.",
+    "chapters_in_the_bible": "Capítulos na Bíblia",
+    "there_are_66_books": "Existem 66 livros na Bíblia e um total de 1.189 capítulos. Se você ler 3,25 capítulos por dia (ou um total de 23 capítulos por semana), poderá ler a Bíblia inteira em um ano.",
+    "track_your_progress_online": "Acompanhe seu progresso online",
+    "if_you_would_like": "Se deseja acompanhar sua leitura da Bíblia a partir do seu dispositivo, confira o aplicativo e site gratuito <a href='/'>Meu Registro Bíblico</a>!"
+  }
+}

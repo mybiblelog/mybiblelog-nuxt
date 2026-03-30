@@ -1,0 +1,31 @@
+{
+  "my_bible_log": "My Bible Log",
+  "api_error": {
+    "unknown_error": "An unknown error occurred",
+    "validation_error": "There was an error with your request",
+    "required": "A {field} is required",
+    "is_invalid": "Please enter a valid {field}",
+    "unique": "This {field} is already in use",
+    "min_length": "Must be {minlength} or more characters",
+    "max_length": "Must be {maxlength} or fewer characters",
+    "review": "Please review.",
+    "not_found": "Not found",
+    "invalid_login": "Email or password is incorrect",
+    "verify_email": "Please check {email} to verify your email first",
+    "new_email_required": "New email cannot be the same as current email",
+    "email_in_use": "Email address is already in use",
+    "password_incorrect": "Password is incorrect",
+    "account_not_found": "Account not found",
+    "password_reset_link_expired": "Password reset link has expired",
+    "too_many_requests": "Too many requests were sent in a short amount of time",
+    "invalid_request": "Invalid request",
+    "email_not_verified": "Email not verified",
+    "verification_code_expired": "Verification code has expired"
+  },
+  "reading_suggestion": {
+    "new_testament": "Read something new in the New Testament",
+    "old_testament": "Read something new in the Old Testament",
+    "wisdom": "Read something new in the Wisdom books",
+    "date_you_read_passage": "{display_date} you read {passage}"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "your_email": "Ваша електронна пошта",
+  "what_kind_of_feedback": "Якого роду відгук ви надаєте?",
+  "bug_report": "Звіт про помилку",
+  "feature_request": "Запит функції",
+  "general_comment": "Загальний коментар",
+  "feedback_details": "Деталі відгуку",
+  "submit_feedback": "Надіслати відгук",
+  "messaging": {
+    "unknown_error": "Сталася невідома помилка.",
+    "feedback_submitted": "Відгук успішно надіслано. Дякуємо!"
+  }
+}

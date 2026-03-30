@@ -430,88 +430,12 @@ export default {
 };
 </script>
 
-<i18n lang="json">
-{
-  "de": {
-    "example_prefix": "z.B.",
-    "invalid_single": "Gib einen einzelnen Vers ein, z.B. „{example}“.",
-    "invalid_multi": "Ungültige Referenz. Versuche „{example1}“ oder „{example2}“.",
-    "select_book": "Wähle Buch",
-    "select_chapter": "Wähle Kapitel",
-    "select_verse": "Wähle Vers",
-    "pick": "Auswählen",
-    "aria_clear": "Leeren",
-    "aria_pick": "Vers auswählen",
-    "old_testament_short": "AT",
-    "new_testament_short": "NT"
-  },
-  "en": {
-    "example_prefix": "e.g.",
-    "invalid_single": "Enter a single verse like “{example}”.",
-    "invalid_multi": "Invalid reference. Try “{example1}” or “{example2}”.",
-    "select_book": "Select Book",
-    "select_chapter": "Select Chapter",
-    "select_verse": "Select Verse",
-    "pick": "Pick",
-    "aria_clear": "Clear",
-    "aria_pick": "Pick verse",
-    "old_testament_short": "OT",
-    "new_testament_short": "NT"
-  },
-  "es": {
-    "example_prefix": "p. ej.",
-    "invalid_single": "Introduce un solo versículo, por ejemplo “{example}”.",
-    "invalid_multi": "Referencia inválida. Prueba “{example1}” o “{example2}”.",
-    "select_book": "Seleccionar Libro",
-    "select_chapter": "Seleccionar Capítulo",
-    "select_verse": "Seleccionar Versículo",
-    "pick": "Elegir",
-    "aria_clear": "Borrar",
-    "aria_pick": "Elegir versículo",
-    "old_testament_short": "AT",
-    "new_testament_short": "NT"
-  },
-  "fr": {
-    "example_prefix": "p. ex.",
-    "invalid_single": "Saisissez un seul verset, par exemple « {example} ».",
-    "invalid_multi": "Référence invalide. Essayez « {example1} » ou « {example2} ».",
-    "select_book": "Sélectionner le livre",
-    "select_chapter": "Sélectionner le chapitre",
-    "select_verse": "Sélectionner le verset",
-    "pick": "Choisir",
-    "aria_clear": "Effacer",
-    "aria_pick": "Choisir un verset",
-    "old_testament_short": "AT",
-    "new_testament_short": "NT"
-  },
-  "pt": {
-    "example_prefix": "ex.",
-    "invalid_single": "Digite um único versículo, por exemplo “{example}”.",
-    "invalid_multi": "Referência inválida. Tente “{example1}” ou “{example2}”.",
-    "select_book": "Selecionar Livro",
-    "select_chapter": "Selecionar Capítulo",
-    "select_verse": "Selecionar Versículo",
-    "pick": "Selecionar",
-    "aria_clear": "Limpar",
-    "aria_pick": "Selecionar versículo",
-    "old_testament_short": "AT",
-    "new_testament_short": "NT"
-  },
-  "uk": {
-    "example_prefix": "напр.",
-    "invalid_single": "Введіть один вірш, наприклад “{example}”.",
-    "invalid_multi": "Некоректне посилання. Спробуйте “{example1}” або “{example2}”.",
-    "select_book": "Виберіть книгу",
-    "select_chapter": "Виберіть розділ",
-    "select_verse": "Виберіть вірш",
-    "pick": "Вибрати",
-    "aria_clear": "Очистити",
-    "aria_pick": "Вибрати вірш",
-    "old_testament_short": "СТ",
-    "new_testament_short": "НЗ"
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/VerseInput.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/VerseInput.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/VerseInput.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/VerseInput.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/VerseInput.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/VerseInput.json" />
 
 <style lang="scss" scoped>
 .verse-input__field {

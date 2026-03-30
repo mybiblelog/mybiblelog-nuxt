@@ -1,0 +1,11 @@
+{
+  "account": "Conta",
+  "email": "Email",
+  "change_email": "Alterar Email",
+  "password": "Senha",
+  "you_can_change_your_password_below": "Você pode alterar sua senha abaixo.",
+  "change_password": "Alterar Senha",
+  "delete_account": "Excluir Conta",
+  "you_are_in_control": "Você está no controle dos seus dados. Você pode excluir sua conta e todos os dados associados a ela.",
+  "learn_more": "Saiba Mais"
+}

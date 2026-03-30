@@ -1,0 +1,19 @@
+{
+  "title": "Konto löschen",
+  "description": "Sie haben die Kontrolle über Ihre Daten. Sie können Ihr Konto und alle mit ihm verbundenen Daten löschen:",
+  "list": {
+    "account": "Dies wird Ihr Konto und Ihre persönlichen Einstellungen dauerhaft löschen.",
+    "log_entries": "Dies wird Ihre Einträge im Journal dauerhaft löschen.",
+    "notes": "Dies wird Ihre Notizen und benutzerdefinierten Tags dauerhaft löschen.",
+    "export": "Sie müssen Ihre Einträge im Journal exportieren, bevor Sie Ihr Konto löschen, wenn Sie sie beibehalten möchten.",
+    "permanent": "Diese Aktion kann nicht rückgängig gemacht werden."
+  },
+  "understand": {
+    "log_entries": "Ich verstehe, dass dies alle Daten meiner Einträge im Journal löscht.",
+    "export": "Ich verstehe, dass ich derzeit meine Einträge im Journal für meine eigene Verwendung exportieren kann, was ich nicht nach dem Löschen meines Kontos tun kann.",
+    "notes": "Ich verstehe, dass dies alle meine Notizen und Tags dauerhaft löscht.",
+    "permanent": "Ich verstehe, dass diese Aktion dauerhaft ist und nicht rückgängig gemacht werden kann."
+  },
+  "delete_my_account": "Mein Konto löschen",
+  "unable_to_delete": "Das Konto kann nicht gelöscht werden. Bitte versuchen Sie es später erneut."
+}

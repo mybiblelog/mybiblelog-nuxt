@@ -1,0 +1,50 @@
+{
+  "progress": "Progrès",
+  "bible_books": "Livres de la Bible",
+  "your_reading_settings": {
+    "title": "Vos paramètres de lecture",
+    "description": "Ces paramètres sont utilisés pour calculer et afficher votre progression.",
+    "update_settings": "Mettre à jour les paramètres",
+    "look_back_date": "Date de consultation précédente",
+    "daily_verse_count_goal": "Objectif de versets quotidiens"
+  },
+  "your_progress_so_far": {
+    "title": "Votre progression jusqu'à présent",
+    "total_bible_verses": "Total des versets de la Bible",
+    "verses_read": "Versets lus",
+    "verses_remaining": "Versets Restants",
+    "percent_complete": "Pourcentage Complet"
+  },
+  "your_outlook": {
+    "historical": {
+      "title": "Votre Perspective Historique",
+      "description": "En fonction de vos habitudes de lecture depuis votre <strong>Date de Réflexion</strong>, combien de temps vous faudra-t-il pour finir la Bible?"
+    },
+    "30_day": {
+      "title": "Votre Perspective sur 30 Jours",
+      "description": "En fonction de vos habitudes de lecture des 30 derniers jours, combien de temps vous faudra-t-il pour finir la Bible?"
+    },
+    "7_day": {
+      "title": "Votre Perspective sur 7 Jours",
+      "description": "En fonction de vos habitudes de lecture des 7 derniers jours, combien de temps vous faudra-t-il pour finir la Bible?"
+    },
+    "today": {
+      "title": "Perspective du Jour",
+      "description": "En fonction de votre lecture aujourd'hui, combien de temps vous faudra-t-il pour finir la Bible?"
+    },
+    "days_since_look_back_date": "Jours depuis la <strong>date de réexamen</strong>",
+    "verses_read": "Versets lus",
+    "average_daily_verses_read": "Moyenne des versets lus par jour",
+    "days_to_finish_at_this_rate": "Jours restants à ce rythme",
+    "date_to_finish_at_this_rate": "Date de fin à ce rythme"
+  },
+  "set_a_goal": {
+    "title": "Fixer un objectif",
+    "description": "Choisissez une date cible pour terminer la lecture de la Bible et travaillez en sens inverse pour voir combien de versets vous devrez lire chaque jour.",
+    "goal_finish_date": "Date d'achèvement de l'objectif",
+    "goal_finish_date_error": "La date de l'objectif doit être à l'avenir.",
+    "days_to_finish_by_goal": "Jours pour terminer avant l'objectif",
+    "verses_required_each_day": "Versets requis chaque jour"
+  },
+  "never": "Jamais"
+}

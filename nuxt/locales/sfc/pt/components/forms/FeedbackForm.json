@@ -1,0 +1,13 @@
+{
+  "your_email": "Seu Email",
+  "what_kind_of_feedback": "Que tipo de feedback você está enviando?",
+  "bug_report": "Relatório de Bug",
+  "feature_request": "Solicitação de Recurso",
+  "general_comment": "Comentário Geral",
+  "feedback_details": "Detalhes do Feedback",
+  "submit_feedback": "Enviar Feedback",
+  "messaging": {
+    "unknown_error": "Ocorreu um erro desconhecido.",
+    "feedback_submitted": "Feedback enviado com sucesso. Obrigado!"
+  }
+}

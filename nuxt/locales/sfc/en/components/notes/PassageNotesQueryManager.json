@@ -1,0 +1,30 @@
+{
+  "title": "View Options",
+  "reset": "Reset",
+  "reset_confirm": "Are you sure you want to reset search/filter/sort settings?",
+  "search_text": "Search Text",
+  "search_placeholder": "Enter text…",
+  "tag_filters": "Filter by Tags",
+  "tag_select": {
+    "choose": "Choose tags…",
+    "clear": "Clear tags"
+  },
+  "tag_only_untagged": "Only untagged notes",
+  "tag_match": "Match",
+  "tag_match_any": "Any",
+  "tag_match_all": "All",
+  "tag_match_exact": "Exact",
+  "passage": "Filter by Passage",
+  "clear": "Clear",
+  "passage_match": "Match",
+  "passage_match_inclusive": "Inclusive",
+  "passage_match_exclusive": "Exclusive",
+  "passage_match_inclusive_description": "Matches a note if any of its verses overlap your filter passage.",
+  "passage_match_exclusive_description": "Matches a note if any of its verses are within your filter passage.",
+  "sort": "Sort",
+  "sort_newest_first": "Newest First",
+  "sort_oldest_first": "Oldest First",
+  "page_size": "Page Size",
+  "apply": "Apply",
+  "cancel": "Cancel"
+}

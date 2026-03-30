@@ -1,0 +1,10 @@
+{
+  "start_page": {
+    "get_started": {
+      "title": "Loslegen",
+      "description": "Sie sind fertig eingerichtet! Es ist Zeit, mit dem Lesen zu beginnen.",
+      "feedback_hint": "Eine letzte Sache - Sie können Feedback geben, Funktionen anfordern und Fehler melden, indem Sie auf diese Feedback-Schaltfläche in der unteren rechten Ecke klicken.",
+      "button": "Los geht's"
+    }
+  }
+}

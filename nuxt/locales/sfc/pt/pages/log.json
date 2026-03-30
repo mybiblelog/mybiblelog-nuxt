@@ -1,0 +1,43 @@
+{
+  "log": "Registro de leitura",
+  "add_entry": "Adicionar",
+  "pagination": {
+    "label": "Paginação",
+    "prev": "Anterior",
+    "next": "Próximo",
+    "page": "Página"
+  },
+  "query_manager": {
+    "open": "Buscar | Filtrar | Ordenar",
+    "title": "Opções de visualização",
+    "reset": "Reiniciar",
+    "reset_button": "Reiniciar opções"
+  },
+  "results": {
+    "loading": "Carregando...",
+    "no_results": "Sem resultados"
+  },
+  "open_bible": "Ler na Biblia",
+  "take_note": "Tomar nota",
+  "view_notes": "Ver notas",
+  "edit": "Editar",
+  "delete": "Apagar",
+  "messaging": {
+    "are_you_sure_delete_entry": "Tem certeza de que deseja apagar este registro?",
+    "log_entry_could_not_be_deleted": "Não foi possível apagar este registro."
+  },
+  "query_summary": {
+    "none": {
+      "entries": "Nenhum registro",
+      "results": "Sem resultados"
+    },
+    "showing_all": {
+      "entries": "Mostrando {total} registro | Mostrando {total} registros",
+      "results": "Mostrando {total} resultado | Mostrando {total} resultados"
+    },
+    "showing_range": {
+      "entries": "Mostrando {first}–{last} de {total} registro total | Mostrando {first}–{last} de {total} registros totais",
+      "results": "Mostrando {first}–{last} de {total} resultado total | Mostrando {first}–{last} de {total} resultados totais"
+    }
+  }
+}

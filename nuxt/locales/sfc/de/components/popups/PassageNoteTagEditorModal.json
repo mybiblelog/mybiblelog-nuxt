@@ -1,0 +1,11 @@
+{
+  "tag_editor": {
+    "edit_tag": "Tag bearbeiten",
+    "add_tag": "Tag hinzufügen",
+    "save": "Speichern",
+    "close": "Schließen"
+  },
+  "messaging": {
+    "are_you_sure_close_tag_editor": "Möchten Sie den Tag-Editor wirklich schließen? Alle ungespeicherten Änderungen gehen verloren."
+  }
+}

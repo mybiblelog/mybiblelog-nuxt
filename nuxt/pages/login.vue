@@ -165,61 +165,9 @@ export default {
 //
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "your_email_address_is_required": "Ihre E-Mail-Adresse ist erforderlich.",
-    "sign_in": "Anmelden",
-    "need_an_account": "Benötigen Sie ein Konto?",
-    "password_reset_link_sent": "Ein Link zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse gesendet.",
-    "email": "E-Mail",
-    "password": "Passwort",
-    "forgot_your_password": "Passwort vergessen? Setzen Sie es per E-Mail zurück."
-  },
-  "en": {
-    "your_email_address_is_required": "Your email address is required.",
-    "sign_in": "Sign In",
-    "need_an_account": "Need an account?",
-    "password_reset_link_sent": "A password reset link has been sent to your email address.",
-    "email": "Email",
-    "password": "Password",
-    "forgot_your_password": "Forgot your password? Reset it via email."
-  },
-  "es": {
-    "your_email_address_is_required": "Su dirección de correo electrónico es obligatoria.",
-    "sign_in": "Iniciar sesión",
-    "need_an_account": "¿Necesitas una cuenta?",
-    "password_reset_link_sent": "Se ha enviado un enlace de restablecimiento de contraseña a su dirección de correo electrónico.",
-    "email": "Correo electrónico",
-    "password": "Contraseña",
-    "forgot_your_password": "¿Olvidaste tu contraseña? Restablézcalo por correo electrónico."
-  },
-  "fr": {
-    "your_email_address_is_required": "Votre adresse e-mail est requise.",
-    "sign_in": "Se connecter",
-    "need_an_account": "Besoin d'un compte?",
-    "password_reset_link_sent": "Un lien de réinitialisation de mot de passe a été envoyé à votre adresse e-mail.",
-    "email": "Email",
-    "password": "Mot de passe",
-    "forgot_your_password": "Mot de passe oublié ? Réinitialisez-le via e-mail."
-  },
-  "pt": {
-    "your_email_address_is_required": "Seu endereço de e-mail é obrigatório.",
-    "sign_in": "Entrar",
-    "need_an_account": "Precisa de uma conta?",
-    "password_reset_link_sent": "Um link de redefinição de senha foi enviado para o seu endereço de email.",
-    "email": "E-mail",
-    "password": "Senha",
-    "forgot_your_password": "Esqueceu sua senha? Redefina-a via email."
-  },
-  "uk": {
-    "your_email_address_is_required": "Ваша електронна адреса обов'язкова.",
-    "sign_in": "Увійти",
-    "need_an_account": "Потрібен обліковий запис?",
-    "password_reset_link_sent": "Посилання на скидання пароля було надіслано на вашу електронну адресу.",
-    "email": "Електронна пошта",
-    "password": "Пароль",
-    "forgot_your_password": "Забули пароль? Скиньте його електронною поштою."
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/login.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/login.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/login.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/login.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/login.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/login.json" />

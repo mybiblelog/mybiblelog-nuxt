@@ -1,0 +1,50 @@
+{
+  "progress": "Progreso",
+  "bible_books": "Libros de la Biblia",
+  "your_reading_settings": {
+    "title": "Sus Configuraciones de Lectura",
+    "description": "Estas configuraciones se utilizan para calcular y mostrar su progreso.",
+    "update_settings": "Actualizar Configuraciones",
+    "look_back_date": "Fecha de Revisión",
+    "daily_verse_count_goal": "Meta de Versos Diarios"
+  },
+  "your_progress_so_far": {
+    "title": "Su Progreso Hasta Ahora",
+    "total_bible_verses": "Total de Versos de la Biblia",
+    "verses_read": "Versos Leídos",
+    "verses_remaining": "Versos Restantes",
+    "percent_complete": "Porcentaje Completado"
+  },
+  "your_outlook": {
+    "historical": {
+      "title": "Su Perspectiva Histórica",
+      "description": "Basado en sus hábitos de lectura desde su <strong>Fecha de Revisión</strong>, ¿cuánto tiempo le tomará terminar la Biblia?"
+    },
+    "30_day": {
+      "title": "Su Perspectiva de 30 Días",
+      "description": "Basado en sus hábitos de lectura de los últimos 30 días, ¿cuánto tiempo le tomará terminar la Biblia?"
+    },
+    "7_day": {
+      "title": "Su Perspectiva de 7 Días",
+      "description": "Basado en sus hábitos de lectura de los últimos 7 días, ¿cuánto tiempo le tomará terminar la Biblia?"
+    },
+    "today": {
+      "title": "La Perspectiva de Hoy",
+      "description": "Basado en su lectura de hoy, ¿cuánto tiempo le tomará terminar la Biblia?"
+    },
+    "days_since_look_back_date": "Días Desde <strong>Fecha de Revisión<strong>",
+    "verses_read": "Versos Leídos",
+    "average_daily_verses_read": "Promedio de Versos Leídos Diariamente",
+    "days_to_finish_at_this_rate": "Días para Terminar a Este Ritmo",
+    "date_to_finish_at_this_rate": "Fecha para Terminar a Este Ritmo"
+  },
+  "set_a_goal": {
+    "title": "Establecer una Meta",
+    "description": "Elija una fecha objetivo para terminar de leer la Biblia y trabaje hacia atrás para ver cuántos versos deberá leer cada día.",
+    "goal_finish_date": "Fecha de Finalización de la Meta",
+    "goal_finish_date_error": "La fecha de finalización de la meta debe ser en el futuro.",
+    "days_to_finish_by_goal": "Días para Terminar por Meta",
+    "verses_required_each_day": "Versos Requeridos Cada Día"
+  },
+  "never": "Nunca"
+}

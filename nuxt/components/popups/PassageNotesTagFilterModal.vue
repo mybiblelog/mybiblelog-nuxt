@@ -47,43 +47,9 @@ export default {
 }
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "tag_filters": {
-      "title": "Tags auswählen",
-      "done": "Fertig"
-    }
-  },
-  "en": {
-    "tag_filters": {
-      "title": "Choose Tags",
-      "done": "Done"
-    }
-  },
-  "es": {
-    "tag_filters": {
-      "title": "Elegir etiquetas",
-      "done": "Hecho"
-    }
-  },
-  "fr": {
-    "tag_filters": {
-      "title": "Choisir des étiquettes",
-      "done": "Terminé"
-    }
-  },
-  "pt": {
-    "tag_filters": {
-      "title": "Escolher Tags",
-      "done": "Concluído"
-    }
-  },
-  "uk": {
-    "tag_filters": {
-      "title": "Вибрати теги",
-      "done": "Готово"
-    }
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/popups/PassageNotesTagFilterModal.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/popups/PassageNotesTagFilterModal.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/popups/PassageNotesTagFilterModal.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/popups/PassageNotesTagFilterModal.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/popups/PassageNotesTagFilterModal.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/popups/PassageNotesTagFilterModal.json" />

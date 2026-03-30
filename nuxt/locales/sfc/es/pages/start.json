@@ -1,0 +1,10 @@
+{
+  "start_page": {
+    "save_and_continue": "Guardar y Continuar",
+    "save_and_finish": "Guardar y Finalizar",
+    "back": "Atrás",
+    "welcome": {
+      "button": "Personalizar Mi Configuración"
+    }
+  }
+}

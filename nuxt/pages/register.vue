@@ -138,61 +138,9 @@ export default {
 //
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "sign_up": "Registrieren",
-    "have_an_account": "Haben Sie bereits ein Konto?",
-    "registration_submitted": "Registrierung erfolgreich! Bitte überprüfen Sie Ihre E-Mail für einen Bestätigungslink.",
-    "email": "E-Mail",
-    "password": "Passwort",
-    "have_a_google_account": "Haben Sie ein Google-Konto?",
-    "sign_in_with_google": "Sie können sich mit Google anmelden, ohne ein Passwort zu erstellen! Gehen Sie zur Anmeldeseite, um loszulegen."
-  },
-  "en": {
-    "sign_up": "Sign Up",
-    "have_an_account": "Have an account?",
-    "registration_submitted": "Registration submitted! Please check your email for a verification link.",
-    "email": "Email",
-    "password": "Password",
-    "have_a_google_account": "Have a Google account?",
-    "sign_in_with_google": "You can sign in with Google without creating a password! Go to the Sign In page to get started."
-  },
-  "es": {
-    "sign_up": "Registrarse",
-    "have_an_account": "¿Ya tienes una cuenta?",
-    "registration_submitted": "¡Registro enviado! Por favor, revisa tu correo electrónico para obtener el enlace de verificación.",
-    "email": "Correo electrónico",
-    "password": "Contraseña",
-    "have_a_google_account": "¿Tienes una cuenta de Google?",
-    "sign_in_with_google": "¡Puedes iniciar sesión con Google sin crear una contraseña! ¡Ve a la página de inicio de sesión para comenzar!"
-  },
-  "fr": {
-    "sign_up": "S'inscrire",
-    "have_an_account": "Vous avez un compte?",
-    "registration_submitted": "Inscription soumise! Veuillez vérifier votre e-mail pour un lien de vérification.",
-    "email": "E-mail",
-    "password": "Mot de passe",
-    "have_a_google_account": "Vous avez un compte Google?",
-    "sign_in_with_google": "Vous pouvez vous connecter avec Google sans créer de mot de passe! Rendez-vous sur la page de connexion pour commencer."
-  },
-  "pt": {
-    "sign_up": "Inscrever-se",
-    "have_an_account": "Já tem uma conta?",
-    "registration_submitted": "Inscrição enviada! Por favor, verifique seu e-mail para um link de verificação.",
-    "email": "E-mail",
-    "password": "Senha",
-    "have_a_google_account": "Tem uma conta do Google?",
-    "sign_in_with_google": "Você pode entrar com o Google sem criar uma senha! Acesse a página de Login para começar."
-  },
-  "uk": {
-    "sign_up": "Зареєструватися",
-    "have_an_account": "Вже маєте обліковий запис?",
-    "registration_submitted": "Реєстрація надіслана! Будь ласка, перевірте свою електронну пошту на наявність посилання для підтвердження.",
-    "email": "Електронна пошта",
-    "password": "Пароль",
-    "have_a_google_account": "Маєте обліковий запис Google?",
-    "sign_in_with_google": "Ви можете увійти за допомогою Google без створення пароля! Перейдіть на сторінку входу, щоб почати."
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/register.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/register.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/register.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/register.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/register.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/register.json" />

@@ -1,0 +1,20 @@
+{
+  "start_page": "Start Page",
+  "start": "Start",
+  "today": "Today",
+  "bible_books": "Bible Books",
+  "chapter_checklist": "Chapter Checklist",
+  "calendar": "Calendar",
+  "notes": "Notes",
+  "save": "Save",
+  "select_an_option": "Select an Option",
+  "preferred_start_page": {
+    "info": {
+      "1": "This page will be displayed when you first log in to My Bible Log."
+    }
+  },
+  "messaging": {
+    "preferred_start_page_saved_successfully": "Preferred start page saved successfully.",
+    "unable_to_save_preferred_start_page": "Unable to save."
+  }
+}

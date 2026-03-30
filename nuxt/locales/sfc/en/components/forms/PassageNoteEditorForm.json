@@ -1,0 +1,15 @@
+{
+  "passages": "Passages",
+  "add_passage": "Add Passage",
+  "done": "Done",
+  "cancel": "Cancel",
+  "remove": "Remove",
+  "no_passages": "No passages added yet",
+  "content": "Content",
+  "tags": "Tags",
+  "manage_tags": "Choose Tags",
+  "no_tags_selected": "No tags selected",
+  "loading": "Loading",
+  "characters": "characters",
+  "are_you_sure": "Are you sure you want to remove this passage?"
+}

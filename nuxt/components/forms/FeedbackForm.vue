@@ -110,85 +110,9 @@ export default {
 //
 </style>
 
-<i18n lang="json">
-{
-  "de": {
-    "your_email": "Ihre E-Mail",
-    "what_kind_of_feedback": "Welche Art von Feedback reichen Sie ein?",
-    "bug_report": "Fehlerbericht",
-    "feature_request": "Funktionsanfrage",
-    "general_comment": "Allgemeiner Kommentar",
-    "feedback_details": "Feedback-Details",
-    "submit_feedback": "Feedback einreichen",
-    "messaging": {
-      "unknown_error": "Ein unbekannter Fehler ist aufgetreten.",
-      "feedback_submitted": "Feedback erfolgreich übermittelt. Vielen Dank!"
-    }
-  },
-  "en": {
-    "your_email": "Your Email",
-    "what_kind_of_feedback": "What kind of feedback are you submitting?",
-    "bug_report": "Bug Report",
-    "feature_request": "Feature Request",
-    "general_comment": "General Comment",
-    "feedback_details": "Feedback Details",
-    "submit_feedback": "Submit Feedback",
-    "messaging": {
-      "unknown_error": "An unknown error occurred.",
-      "feedback_submitted": "Feedback submitted successfully. Thank you!"
-    }
-  },
-  "es": {
-    "your_email": "Tu Correo Electrónico",
-    "what_kind_of_feedback": "¿Qué tipo de comentarios estás enviando?",
-    "bug_report": "Informe de Error",
-    "feature_request": "Solicitud de Función",
-    "general_comment": "Comentario General",
-    "feedback_details": "Detalles de los Comentarios",
-    "submit_feedback": "Enviar Comentarios",
-    "messaging": {
-      "unknown_error": "Ocurrió un error desconocido.",
-      "feedback_submitted": "Comentarios enviados con éxito. ¡Gracias!"
-    }
-  },
-  "fr": {
-    "your_email": "Votre Adresse E-mail",
-    "what_kind_of_feedback": "Quel type de commentaires soumettez-vous?",
-    "bug_report": "Rapport de Bug",
-    "feature_request": "Demande de Fonctionnalité",
-    "general_comment": "Commentaire Général",
-    "feedback_details": "Détails des Commentaires",
-    "submit_feedback": "Soumettre des Commentaires",
-    "messaging": {
-      "unknown_error": "Une erreur inconnue s'est produite.",
-      "feedback_submitted": "Commentaires soumis avec succès. Merci!"
-    }
-  },
-  "pt": {
-    "your_email": "Seu Email",
-    "what_kind_of_feedback": "Que tipo de feedback você está enviando?",
-    "bug_report": "Relatório de Bug",
-    "feature_request": "Solicitação de Recurso",
-    "general_comment": "Comentário Geral",
-    "feedback_details": "Detalhes do Feedback",
-    "submit_feedback": "Enviar Feedback",
-    "messaging": {
-      "unknown_error": "Ocorreu um erro desconhecido.",
-      "feedback_submitted": "Feedback enviado com sucesso. Obrigado!"
-    }
-  },
-  "uk": {
-    "your_email": "Ваша електронна пошта",
-    "what_kind_of_feedback": "Якого роду відгук ви надаєте?",
-    "bug_report": "Звіт про помилку",
-    "feature_request": "Запит функції",
-    "general_comment": "Загальний коментар",
-    "feedback_details": "Деталі відгуку",
-    "submit_feedback": "Надіслати відгук",
-    "messaging": {
-      "unknown_error": "Сталася невідома помилка.",
-      "feedback_submitted": "Відгук успішно надіслано. Дякуємо!"
-    }
-  }
-}
-</i18n>
+<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/FeedbackForm.json" />
+<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/FeedbackForm.json" />
+<i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/FeedbackForm.json" />
+<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/FeedbackForm.json" />
+<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/FeedbackForm.json" />
+<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/FeedbackForm.json" />

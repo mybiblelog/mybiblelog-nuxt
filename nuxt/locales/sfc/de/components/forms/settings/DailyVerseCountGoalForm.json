@@ -1,0 +1,26 @@
+{
+  "start_page": {
+    "daily_verse_count_goal": {
+      "title": "Tägliche Verszahl Ziel",
+      "description": "Ihr Tägliches Verszahl-Ziel ist die Anzahl der Verse, die Sie jeden Tag lesen möchten. My Bible Log zeigt Ihnen Ihren Fortschritt zu diesem Ziel.",
+      "i_want_to": "Ich möchte...",
+      "read_in_2_years": "Die Bibel in 2 Jahren lesen",
+      "read_in_year": "Die Bibel in einem Jahr lesen",
+      "read_in_6_months": "Die Bibel in 6 Monaten lesen",
+      "read_by_specific_date": "Die Bibel bis zu einem bestimmten Datum lesen",
+      "read_at_own_pace": "In meinem eigenen Tempo lesen",
+      "goal_finish_date": "Ziel-Fertigstellungsdatum",
+      "finish_on": "Fertig am",
+      "daily_verse_count": "Verse pro Tag zu lesen",
+      "table_verses_in_bible": "Anzahl der Verse in der Bibel",
+      "table_days_until_date": "Anzahl der Tage bis zum Datum",
+      "table_verses_per_day": "Erforderliche Verse pro Tag",
+      "calculated_goal": "Um bis zu Ihrem Zieldatum fertig zu werden, müssen Sie {dailyGoal} Verse pro Tag lesen ({days} Tage).",
+      "change_hint": "Sie können diese Einstellung jederzeit ändern."
+    }
+  },
+  "messaging": {
+    "daily_verse_count_goal_saved_successfully": "Tägliche Verszahl Ziel erfolgreich gespeichert.",
+    "unable_to_save_daily_verse_count_goal": "Nicht gespeichert. Bitte geben Sie eine Zahl zwischen 1 und 1111 ein."
+  }
+}
