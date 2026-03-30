@@ -64,6 +64,7 @@ import GoogleLoginButton from '@/components/forms/GoogleLoginButton.vue';
 import InfoLink from '@/components/InfoLink';
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'LoginPage',
@@ -123,11 +124,9 @@ export default {
   },
   methods: {
     async onSubmit() {
+      const authStore = useAuthStore();
       try {
-        await this.$store.dispatch('auth/login', {
-          email: this.email,
-          password: this.password,
-        });
+        await authStore.login({ email: this.email, password: this.password });
       }
       catch (error) {
         if (error instanceof ApiError) {

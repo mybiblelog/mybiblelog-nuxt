@@ -62,6 +62,7 @@
 import InfoLink from '@/components/InfoLink';
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'RegisterPage',
@@ -109,11 +110,9 @@ export default {
 
       // if email verification is not required, log the user in:
       if (!this.requireEmailVerification) {
+        const authStore = useAuthStore();
         try {
-          await this.$store.dispatch('auth/login', {
-            email: this.email,
-            password: this.password,
-          });
+          await authStore.login({ email: this.email, password: this.password });
         }
         catch (error) {
           if (error instanceof ApiError) {

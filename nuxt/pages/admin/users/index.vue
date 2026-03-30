@@ -132,6 +132,7 @@
 <script>
 import CaretDownIcon from '@/components/svg/CaretDownIcon';
 import { useDialogStore } from '~/stores/dialog';
+import { useAuthStore } from '~/stores/auth';
 
 const SortColumns = {
   email: 'email',
@@ -250,7 +251,7 @@ export default {
     },
     async deleteUser(email) {
       const dialogStore = useDialogStore();
-      if (email === this.$store.state.auth.user.email) {
+      if (email === useAuthStore().user?.email) {
         await dialogStore.alert({ message: 'You cannot delete your own account.' });
         return;
       }

@@ -1,4 +1,5 @@
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { useAuthStore } from '~/stores/auth';
 import { useUserSettingsStore } from '~/stores/user-settings';
 
 export const AUTH_COOKIE_NAME = 'auth_token';
@@ -36,7 +37,8 @@ const parseCookieHeader = (cookieHeader) => {
 };
 
 export const actions = {
-  async nuxtServerInit({ dispatch, state }, { req, app }) {
+  async nuxtServerInit({ dispatch }, { req, app }) {
+    const authStore = useAuthStore(app.pinia);
     const cookieHeader = req.headers?.cookie;
     if (cookieHeader && cookieHeader.includes(`${AUTH_COOKIE_NAME}=`)) {
       const cookies = parseCookieHeader(cookieHeader);
@@ -45,22 +47,23 @@ export const actions = {
         // `app` is not serialized into the HTML response,
         // so it's safe to store the token here for SSR access
         app.ssrToken = token;
-        await dispatch('auth/refreshUser');
+        await authStore.refreshUser();
       }
     }
 
-    if (state.auth.loggedIn) {
+    if (authStore.loggedIn) {
       await dispatch('loadUserData');
     }
   },
-  nuxtClientInit({ dispatch, state }) {
-    if (state.auth.loggedIn) {
+  nuxtClientInit() {
+    const authStore = useAuthStore();
+    if (authStore.loggedIn) {
       // On client side, re-trigger user settings load
       // since some settings are stored in LocalStorage
       useUserSettingsStore().loadClientSettings();
     }
   },
-  async loadUserData({ dispatch }) {
+  async loadUserData() {
     await useLogEntriesStore().loadLogEntries();
     await useUserSettingsStore().loadSettings();
   },

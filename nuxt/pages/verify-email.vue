@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'VerifyEmailPage',
@@ -35,9 +35,6 @@ export default {
       ],
     };
   },
-  computed: {
-    ...mapGetters(['isAuthenticated', 'loggedInUser']),
-  },
   async mounted() {
     const emailVerificationCode = new URL(window.location.href).searchParams.get('code');
     if (!emailVerificationCode) {
@@ -48,7 +45,7 @@ export default {
     try {
       await this.$http.post(`/api/auth/verify-email`, { code: emailVerificationCode });
       // If successful, automatically log the user in
-      await this.$store.dispatch('auth/refreshUser');
+      await useAuthStore().refreshUser();
       await this.$router.push(this.localePath('/start'));
     }
     catch (err) {

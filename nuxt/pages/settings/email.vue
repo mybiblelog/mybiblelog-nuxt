@@ -13,7 +13,7 @@
         <p>
           {{ $t('current_request.your_current_email_is') }}
           <br>
-          <strong>{{ $store.state.auth.user.email }}</strong>
+          <strong>{{ authStore.user?.email }}</strong>
         </p>
         <p>
           {{ $t('current_request.your_requested_email_is') }}
@@ -78,6 +78,7 @@ import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'EmailSettingsPage',
@@ -105,6 +106,11 @@ export default {
         { hid: 'robots', name: 'robots', content: 'noindex' },
       ],
     };
+  },
+  computed: {
+    authStore() {
+      return useAuthStore();
+    },
   },
   async mounted() {
     await this.checkChangeEmailRequestState();

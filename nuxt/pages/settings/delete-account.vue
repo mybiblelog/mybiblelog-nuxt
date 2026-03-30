@@ -49,6 +49,7 @@
 
 <script>
 import { useToastStore } from '~/stores/toast';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'DeleteAccountPage',
@@ -86,8 +87,7 @@ export default {
       const toastStore = useToastStore();
       try {
         await this.$http.put('/api/settings/delete-account');
-        await this.$store.dispatch('auth/logout');
-        this.$router.push(this.localePath('/login', this.$i18n.locale));
+        await useAuthStore().logout();
       }
       catch (err) {
         toastStore.add({

@@ -51,6 +51,7 @@
 <script>
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'ResetPasswordPage',
@@ -121,7 +122,7 @@ export default {
       try {
         await this.$http.post(`/api/auth/reset-password/${this.passwordResetCode}`, { newPassword });
         // If successful, automatically log the user in
-        await this.$store.dispatch('auth/refreshUser');
+        await useAuthStore().refreshUser();
         await this.$router.push(this.localePath('/start'));
       }
       catch (err) {

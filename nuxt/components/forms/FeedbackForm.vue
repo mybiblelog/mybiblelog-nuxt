@@ -8,7 +8,7 @@
     <div class="field">
       <label class="label">{{ $t('your_email') }}</label>
       <div class="control">
-        <input v-model="form.email" class="input" type="email" :placeholder="$t('your_email')" :disabled="$store.state.auth.loggedIn">
+        <input v-model="form.email" class="input" type="email" :placeholder="$t('your_email')" :disabled="authStore.loggedIn">
         <div v-if="errors.email" class="help is-danger">
           {{ $terr(errors.email) }}
         </div>
@@ -58,18 +58,25 @@
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 import { useDialogStore } from '~/stores/dialog';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'FeedbackForm',
   data() {
+    const authStore = useAuthStore();
     return {
       form: {
-        email: this.$store.state.auth.user?.email || '',
+        email: authStore.user?.email || '',
         kind: 'bug',
         message: '',
       },
       errors: {},
     };
+  },
+  computed: {
+    authStore() {
+      return useAuthStore();
+    },
   },
   methods: {
     async submitFeedback() {
