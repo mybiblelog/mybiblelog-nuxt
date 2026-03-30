@@ -140,6 +140,7 @@ import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
+import { useReadingSuggestionsStore } from '~/stores/reading-suggestions';
 
 export default {
   name: 'TodayPage',
@@ -165,16 +166,21 @@ export default {
     logEntriesStore() {
       return useLogEntriesStore();
     },
+    readingSuggestionsStore() {
+      return useReadingSuggestionsStore();
+    },
     logEntries() {
       return this.logEntriesStore.currentLogEntries;
     },
     ...mapState({
       userSettings: state => state['user-settings'].settings,
-      readingSuggestions: state => state['reading-suggestions'].passages,
       passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
       passageNotesLoading: state => state['passage-notes'].loading,
       passageNotes: state => state['passage-notes'].passageNotes,
     }),
+    readingSuggestions() {
+      return this.readingSuggestionsStore.passages;
+    },
     loadingRecentNotes() {
       return this.passageNotesLoading;
     },
@@ -225,7 +231,7 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('loadUserData');
-    await this.$store.dispatch('reading-suggestions/refreshReadingSuggestions');
+    await this.readingSuggestionsStore.refreshReadingSuggestions();
     this.loadingReadingSuggestions = false;
     // Load the 3 most recent notes using the passage-notes store
     await this.$store.dispatch('passage-notes/resetQuery', {

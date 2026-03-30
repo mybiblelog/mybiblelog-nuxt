@@ -7,6 +7,11 @@ const refreshDateVerseCounts = async (date?: string): Promise<void> => {
   useDateVerseCountsStore().cacheDateVerseCounts(date);
 };
 
+const refreshReadingSuggestions = async (): Promise<void> => {
+  const { useReadingSuggestionsStore } = await import('~/stores/reading-suggestions');
+  useReadingSuggestionsStore().refreshReadingSuggestions();
+};
+
 export type LogEntry = {
   id: number | string;
   date: string; // YYYY-MM-DD
@@ -98,10 +103,7 @@ export const useLogEntriesStore = defineStore('log-entries', {
         useAchievementsStore().showBookCompleteAchievement(bookIndex);
       }
 
-      const vuex = this.$vuex;
-      if (vuex) {
-        vuex.dispatch('reading-suggestions/refreshReadingSuggestions', null, { root: true });
-      }
+      await refreshReadingSuggestions();
       refreshDateVerseCounts(date);
 
       return data;
@@ -142,10 +144,7 @@ export const useLogEntriesStore = defineStore('log-entries', {
         useAchievementsStore().showBookCompleteAchievement(bookIndex);
       }
 
-      const vuex = this.$vuex;
-      if (vuex) {
-        vuex.dispatch('reading-suggestions/refreshReadingSuggestions', null, { root: true });
-      }
+      await refreshReadingSuggestions();
       refreshDateVerseCounts(date);
 
       return updated;
@@ -162,10 +161,7 @@ export const useLogEntriesStore = defineStore('log-entries', {
 
       this.logEntries = this.logEntries.filter(le => le.id !== logEntryId);
 
-      const vuex = this.$vuex;
-      if (vuex) {
-        vuex.dispatch('reading-suggestions/refreshReadingSuggestions', null, { root: true });
-      }
+      await refreshReadingSuggestions();
       if (date) {
         refreshDateVerseCounts(date);
       }

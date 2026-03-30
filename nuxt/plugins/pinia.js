@@ -11,6 +11,7 @@ export default function(context, inject) {
   pinia.use(() => ({
     $http: context.$http,
     $vuex: context.store,
+    $i18n: context.app?.i18n,
   }));
 
   // Make Pinia available in Nuxt context/app and as this.$pinia.

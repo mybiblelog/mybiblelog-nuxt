@@ -12,10 +12,16 @@ type HttpClient = {
   delete: <T = unknown>(path: string) => Promise<ApiResponse<T>>;
 };
 
+type I18nLike = {
+  locale: string;
+  t: (key: string, params?: Record<string, unknown>) => string;
+};
+
 declare module 'pinia' {
   export interface PiniaCustomProperties {
     $http: HttpClient;
     $vuex: import('vuex').Store<unknown>;
+    $i18n: I18nLike;
   }
 }
 
