@@ -1,50 +1,60 @@
 import { SimpleDate } from '@mybiblelog/shared';
 
-const DEFAULT_LOG_ENTRIES_QUERY = {
+export type LogEntriesSortDirection = 'ascending' | 'descending';
+
+export type LogEntriesQuery = {
+  limit: number;
+  offset: number;
+  sortDirection: LogEntriesSortDirection;
+  startDate: string; // inclusive; YYYY-MM-DD
+  endDate: string; // inclusive; YYYY-MM-DD
+  filterPassageStartVerseId: number;
+  filterPassageEndVerseId: number;
+};
+
+type RouteQueryLike = Record<string, unknown>;
+type RouteQueryOut = Record<string, string>;
+
+const DEFAULT_LOG_ENTRIES_QUERY: LogEntriesQuery = {
   limit: 10,
   offset: 0,
-  sortDirection: 'descending', // 'ascending' | 'descending'
-  startDate: '', // inclusive; YYYY-MM-DD
-  endDate: '', // inclusive; YYYY-MM-DD
+  sortDirection: 'descending',
+  startDate: '',
+  endDate: '',
   filterPassageStartVerseId: 0,
   filterPassageEndVerseId: 0,
 };
 
 const MAX_PAGE_SIZE = 50;
 
-function clamp(n, min, max) {
+function clamp(n: number, min: number, max: number): number {
   return Math.min(Math.max(n, min), max);
 }
 
-function parseIntOr(value, fallback) {
+function parseIntOr(value: unknown, fallback: number): number {
   const n = typeof value === 'number' ? value : parseInt(`${value}`, 10);
   return Number.isFinite(n) ? n : fallback;
 }
 
-function pickEnum(value, allowed, fallback) {
-  const v = `${value ?? ''}`;
-  return allowed.includes(v) ? v : fallback;
+function pickEnum<T extends string>(value: unknown, allowed: readonly T[], fallback: T): T {
+  const v = `${value ?? ''}` as T;
+  return (allowed as readonly string[]).includes(v) ? v : fallback;
 }
 
-function normalizeDateString(value) {
+function normalizeDateString(value: unknown): string {
   const v = `${value ?? ''}`.trim();
   if (!v) { return ''; }
   return SimpleDate.validateString(v) ? v : '';
 }
 
-/**
- * Decode a vue-router `$route.query` object into a full log-entries query object.
- * @param {Record<string, any>} routeQuery
- * @returns {typeof DEFAULT_LOG_ENTRIES_QUERY}
- */
-export function decodeLogEntriesRouteQuery(routeQuery = {}) {
+export function decodeLogEntriesRouteQuery(routeQuery: RouteQueryLike = {}): LogEntriesQuery {
   const filterPassageStartVerseId = parseIntOr(routeQuery.filterPassageStartVerseId, DEFAULT_LOG_ENTRIES_QUERY.filterPassageStartVerseId);
   const filterPassageEndVerseId = parseIntOr(routeQuery.filterPassageEndVerseId, DEFAULT_LOG_ENTRIES_QUERY.filterPassageEndVerseId);
 
   return {
     limit: clamp(parseIntOr(routeQuery.limit, DEFAULT_LOG_ENTRIES_QUERY.limit), 1, MAX_PAGE_SIZE),
     offset: Math.max(0, parseIntOr(routeQuery.offset, DEFAULT_LOG_ENTRIES_QUERY.offset)),
-    sortDirection: pickEnum(routeQuery.sortDirection, ['ascending', 'descending'], DEFAULT_LOG_ENTRIES_QUERY.sortDirection),
+    sortDirection: pickEnum(routeQuery.sortDirection, ['ascending', 'descending'] as const, DEFAULT_LOG_ENTRIES_QUERY.sortDirection),
     startDate: normalizeDateString(routeQuery.startDate),
     endDate: normalizeDateString(routeQuery.endDate),
     filterPassageStartVerseId: (filterPassageStartVerseId && filterPassageEndVerseId) ? filterPassageStartVerseId : 0,
@@ -52,25 +62,19 @@ export function decodeLogEntriesRouteQuery(routeQuery = {}) {
   };
 }
 
-/**
- * Encode a log-entries query object into a vue-router `query` object.
- * Intended to be fully reproducible (includes sort + paging).
- * @param {Partial<typeof DEFAULT_LOG_ENTRIES_QUERY>} query
- * @returns {Record<string, any>}
- */
-export function encodeLogEntriesQueryToRoute(query = {}) {
-  const merged = { ...DEFAULT_LOG_ENTRIES_QUERY, ...(query || {}) };
-  const normalized = {
+export function encodeLogEntriesQueryToRoute(query: Partial<LogEntriesQuery> = {}): RouteQueryOut {
+  const merged: LogEntriesQuery = { ...DEFAULT_LOG_ENTRIES_QUERY, ...(query || {}) };
+  const normalized: LogEntriesQuery = {
     limit: clamp(parseIntOr(merged.limit, DEFAULT_LOG_ENTRIES_QUERY.limit), 1, MAX_PAGE_SIZE),
     offset: Math.max(0, parseIntOr(merged.offset, DEFAULT_LOG_ENTRIES_QUERY.offset)),
-    sortDirection: pickEnum(merged.sortDirection, ['ascending', 'descending'], DEFAULT_LOG_ENTRIES_QUERY.sortDirection),
+    sortDirection: pickEnum(merged.sortDirection, ['ascending', 'descending'] as const, DEFAULT_LOG_ENTRIES_QUERY.sortDirection),
     startDate: normalizeDateString(merged.startDate),
     endDate: normalizeDateString(merged.endDate),
     filterPassageStartVerseId: parseIntOr(merged.filterPassageStartVerseId, 0),
     filterPassageEndVerseId: parseIntOr(merged.filterPassageEndVerseId, 0),
   };
 
-  const out = {};
+  const out: RouteQueryOut = {};
 
   if (normalized.limit !== DEFAULT_LOG_ENTRIES_QUERY.limit) {
     out.limit = `${normalized.limit}`;
@@ -98,6 +102,6 @@ export function encodeLogEntriesQueryToRoute(query = {}) {
   return out;
 }
 
-export function defaultLogEntriesQuery() {
-  return JSON.parse(JSON.stringify(DEFAULT_LOG_ENTRIES_QUERY));
+export function defaultLogEntriesQuery(): LogEntriesQuery {
+  return JSON.parse(JSON.stringify(DEFAULT_LOG_ENTRIES_QUERY)) as LogEntriesQuery;
 }

@@ -60,12 +60,12 @@ const config: NuxtConfig = {
   */
   plugins: [
     // Ensure `$http` is available before Pinia stores initialize.
-    '~/plugins/http.js',
-    '~/plugins/pinia.js',
+    '~/plugins/http.ts',
+    '~/plugins/pinia.ts',
     '~/plugins/app-init.server.ts',
-    '~/plugins/gtag.client.js',
-    '~/plugins/translate-api.js',
-    '~/plugins/nuxt-client-init.client.js',
+    '~/plugins/gtag.client.ts',
+    '~/plugins/translate-api.ts',
+    '~/plugins/nuxt-client-init.client.ts',
   ],
   /*
   ** Nuxt.js dev-modules
