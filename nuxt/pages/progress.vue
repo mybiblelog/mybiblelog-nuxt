@@ -221,6 +221,7 @@ import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import { useLogEntriesStore } from '~/stores/log-entries';
 import { useDateVerseCountsStore } from '~/stores/date-verse-counts';
 import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   name: 'ProgressPage',
@@ -239,7 +240,7 @@ export default {
     };
   },
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {

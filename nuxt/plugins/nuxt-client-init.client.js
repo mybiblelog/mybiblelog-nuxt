@@ -1,3 +1,5 @@
-export default async (context) => {
-  await context.store.dispatch('nuxtClientInit', context);
+import { useAppInitStore } from '~/stores/app-init';
+
+export default (context) => {
+  useAppInitStore(context.app.pinia).clientInit();
 };

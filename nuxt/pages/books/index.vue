@@ -7,6 +7,7 @@
 <script>
 import BibleReport from '@/components/BibleReport';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   components: {
@@ -14,7 +15,7 @@ export default {
   },
   middleware: ['auth'],
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {

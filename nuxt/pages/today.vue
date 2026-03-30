@@ -143,6 +143,7 @@ import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { useReadingSuggestionsStore } from '~/stores/reading-suggestions';
 import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   name: 'TodayPage',
@@ -244,7 +245,7 @@ export default {
     },
   },
   async mounted() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
     await this.readingSuggestionsStore.refreshReadingSuggestions();
     this.loadingReadingSuggestions = false;
     // Load the 3 most recent notes using the passage-notes store

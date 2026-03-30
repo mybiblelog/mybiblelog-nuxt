@@ -16,6 +16,7 @@ import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-qu
 import { encodeLogEntriesQueryToRoute } from '@/helpers/log-entries-route-query';
 import BookReport from '@/components/BookReport';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   components: {
@@ -44,7 +45,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('loadUserData');
+    useAppInitStore().loadUserData();
   },
   methods: {
     viewBibleReport() {

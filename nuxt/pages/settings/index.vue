@@ -45,6 +45,7 @@
 <script>
 import { useUserSettingsStore } from '~/stores/user-settings';
 import { useAuthStore } from '~/stores/auth';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   name: 'SettingsPage',
@@ -54,7 +55,7 @@ export default {
     };
   },
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {

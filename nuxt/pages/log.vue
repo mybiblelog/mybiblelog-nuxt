@@ -150,6 +150,7 @@ import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAppInitStore } from '~/stores/app-init';
 
 function stableCompare(a, b) {
   if (a === b) { return 0; }
@@ -319,7 +320,7 @@ export default {
     },
     async loadPageData() {
       try {
-        await this.$store.dispatch('loadUserData');
+        await useAppInitStore().loadUserData();
       }
       finally {
         this.loading = false;

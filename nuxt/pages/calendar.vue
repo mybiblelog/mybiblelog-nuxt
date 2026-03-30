@@ -39,6 +39,7 @@ import { useLogEntriesStore } from '~/stores/log-entries';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { useDateVerseCountsStore } from '~/stores/date-verse-counts';
 import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   name: 'CalendarPage',
@@ -54,7 +55,7 @@ export default {
     };
   },
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {
