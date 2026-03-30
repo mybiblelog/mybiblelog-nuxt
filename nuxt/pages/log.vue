@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="log-page">
+    <div class="log-page" :style="pageCssVars">
       <header class="page-header">
         <h2 class="title">
           {{ $t('log') }}
@@ -55,7 +55,7 @@
               </div>
             </template>
             <template v-else>
-              <div class="log-page__results-bar">
+              <div ref="resultsBar" class="log-page__results-bar">
                 <div class="log-page__results-summary">
                   {{ querySummary }}
                 </div>
@@ -105,14 +105,23 @@
 
               <div class="log-page__entries" role="list" data-testid="log-entries">
                 <client-only>
-                  <log-entry
-                    v-for="entry of pagedLogEntries"
-                    :key="entry.id"
-                    role="listitem"
-                    :message="displayDate(entry.date)"
-                    :passage="entry"
-                    :actions="actionsForLogEntry(entry)"
-                  />
+                  <div
+                    v-for="group of pagedLogEntryGroups"
+                    :key="'group-' + group.date"
+                    class="log-page__date-group"
+                    role="group"
+                  >
+                    <div class="log-page__date-heading" role="heading" aria-level="3" data-testid="log-date-heading">
+                      {{ displayDate(group.date) }}
+                    </div>
+                    <log-entry
+                      v-for="entry of group.entries"
+                      :key="entry.id"
+                      role="listitem"
+                      :passage="entry"
+                      :actions="actionsForLogEntry(entry)"
+                    />
+                  </div>
                 </client-only>
               </div>
             </template>
@@ -173,6 +182,9 @@ export default {
       showQueryManagerModal: false,
       lastAppliedLogRouteQueryKey: null,
       query: defaultLogEntriesQuery(),
+      resultsBarHeightPx: 0,
+      resultsBarEl: null,
+      resultsBarObserver: null,
     };
   },
   head() {
@@ -237,24 +249,86 @@ export default {
     resultsSize() {
       return Array.isArray(this.filteredSortedLogEntries) ? this.filteredSortedLogEntries.length : 0;
     },
+    pageCssVars() {
+      return {
+        '--logResultsBarHeight': `${Number(this.resultsBarHeightPx || 0)}px`,
+      };
+    },
     effectiveLimit() {
       return Math.max(1, Number((this.query && this.query.limit) || 10));
     },
+    pageStartOffsets() {
+      const entries = Array.isArray(this.filteredSortedLogEntries) ? this.filteredSortedLogEntries : [];
+      const limit = Math.max(1, Number(this.effectiveLimit || 10));
+
+      if (!entries.length) { return [0]; }
+
+      const starts = [0];
+      let i = 0;
+      let pageCount = 0;
+
+      while (i < entries.length) {
+        const date = entries[i].date;
+        let j = i + 1;
+        while (j < entries.length && entries[j].date === date) { j += 1; }
+
+        const groupSize = j - i;
+        const wouldOverflow = pageCount > 0 && (pageCount + groupSize) > limit;
+        if (wouldOverflow) {
+          starts.push(i);
+          pageCount = 0;
+        }
+
+        pageCount += groupSize;
+        i = j;
+      }
+
+      return starts;
+    },
+    pagerPageIndex() {
+      const starts = Array.isArray(this.pageStartOffsets) ? this.pageStartOffsets : [0];
+      const requested = Math.max(0, Number((this.query && this.query.offset) || 0));
+
+      let idx = 0;
+      for (let i = 0; i < starts.length; i += 1) {
+        if (starts[i] <= requested) { idx = i; }
+        else { break; }
+      }
+      return Math.max(0, Math.min(idx, starts.length - 1));
+    },
     pagerTotalPages() {
-      return Math.max(1, Math.ceil(this.resultsSize / this.effectiveLimit));
+      const starts = Array.isArray(this.pageStartOffsets) ? this.pageStartOffsets : [0];
+      return Math.max(1, starts.length);
     },
     effectiveOffset() {
-      const maxOffset = (this.pagerTotalPages - 1) * this.effectiveLimit;
-      const offset = Math.max(0, Number((this.query && this.query.offset) || 0));
-      return Math.min(offset, maxOffset);
+      const starts = Array.isArray(this.pageStartOffsets) ? this.pageStartOffsets : [0];
+      return Number(starts[this.pagerPageIndex] || 0);
     },
     pagerPage() {
-      return Math.floor(this.effectiveOffset / this.effectiveLimit) + 1;
+      return Number(this.pagerPageIndex) + 1;
     },
     pagedLogEntries() {
-      const offset = this.effectiveOffset;
-      const limit = this.effectiveLimit;
-      return this.filteredSortedLogEntries.slice(offset, offset + limit);
+      const entries = Array.isArray(this.filteredSortedLogEntries) ? this.filteredSortedLogEntries : [];
+      const starts = Array.isArray(this.pageStartOffsets) ? this.pageStartOffsets : [0];
+      const start = Number(starts[this.pagerPageIndex] || 0);
+      const end = Number(starts[this.pagerPageIndex + 1] ?? entries.length);
+      return entries.slice(start, end);
+    },
+    pagedLogEntryGroups() {
+      const entries = Array.isArray(this.pagedLogEntries) ? this.pagedLogEntries : [];
+      if (!entries.length) { return []; }
+
+      const groups = [];
+      let current = null;
+      for (const entry of entries) {
+        const date = entry.date;
+        if (!current || current.date !== date) {
+          current = { date, entries: [] };
+          groups.push(current);
+        }
+        current.entries.push(entry);
+      }
+      return groups;
     },
     querySummary() {
       const total = Number(this.resultsSize || 0);
@@ -308,13 +382,55 @@ export default {
       if (!process.client) { return; }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },
+    loading(nextLoading) {
+      if (nextLoading) { return; }
+      this.$nextTick(() => this.attachResultsBarObserver());
+    },
   },
   async mounted() {
     if (this.loading) {
       await this.loadPageData();
     }
+    this.$nextTick(() => this.attachResultsBarObserver());
+  },
+  beforeDestroy() {
+    this.detachResultsBarObserver();
   },
   methods: {
+    detachResultsBarObserver() {
+      if (this.resultsBarObserver) {
+        try { this.resultsBarObserver.disconnect(); }
+        catch { /* ignore */ }
+      }
+      this.resultsBarObserver = null;
+      this.resultsBarEl = null;
+      this.resultsBarHeightPx = 0;
+    },
+    attachResultsBarObserver() {
+      if (!process.client) { return; }
+      if (typeof ResizeObserver === 'undefined') { return; }
+
+      const el = this.$refs.resultsBar;
+      if (!el) {
+        this.detachResultsBarObserver();
+        return;
+      }
+
+      if (this.resultsBarObserver && this.resultsBarEl === el) { return; }
+
+      this.detachResultsBarObserver();
+      this.resultsBarEl = el;
+
+      this.resultsBarObserver = new ResizeObserver((entries) => {
+        const entry = entries && entries[0];
+        const target = entry && entry.target ? entry.target : null;
+        const height = target ? target.getBoundingClientRect().height : 0;
+        this.resultsBarHeightPx = Math.max(0, Math.ceil(height || 0));
+      });
+
+      this.resultsBarObserver.observe(el);
+      this.resultsBarHeightPx = Math.max(0, Math.ceil(el.getBoundingClientRect().height || 0));
+    },
     displayDate(date) {
       return displayDate(date, this.$i18n.locale);
     },
@@ -353,7 +469,8 @@ export default {
     onPageChanged(newPage) {
       const clampedPage = Math.min(Math.max(Number(newPage || 1), 1), this.pagerTotalPages);
       if (clampedPage === this.pagerPage) { return; }
-      const offset = (clampedPage - 1) * this.effectiveLimit;
+      const starts = Array.isArray(this.pageStartOffsets) ? this.pageStartOffsets : [0];
+      const offset = Number(starts[clampedPage - 1] || 0);
       this.pushLogQuery({ ...this.query, offset, limit: this.effectiveLimit });
     },
     openAddEntryForm() {
@@ -525,6 +642,22 @@ export default {
   @media (min-width: 600px) {
     justify-content: flex-end;
   }
+}
+
+.log-page__date-heading {
+  position: sticky;
+  top: calc(#{$header-height} + 0.5rem + var(--logResultsBarHeight, 0px) - 2px);
+  z-index: 9;
+
+  background: white;
+  border-bottom: 1px solid #eee;
+
+  padding: 0.5rem 0.5rem;
+  margin: 0.75rem -0.5rem 0.25rem;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(54, 54, 54, 0.9);
 }
 </style>
 
