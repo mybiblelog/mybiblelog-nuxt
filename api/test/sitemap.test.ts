@@ -38,8 +38,11 @@ describe('Sitemap routes', () => {
 
     // Check for internationalized routes
     expect(urls.some((url: string) => url.includes('/about/'))).toBe(true);
+    expect(urls.some((url: string) => url.includes('/de/'))).toBe(true);
     expect(urls.some((url: string) => url.includes('/es/'))).toBe(true);
     expect(urls.some((url: string) => url.includes('/fr/'))).toBe(true);
+    expect(urls.some((url: string) => url.includes('/ko/'))).toBe(true);
+    expect(urls.some((url: string) => url.includes('/pt/'))).toBe(true);
     expect(urls.some((url: string) => url.includes('/uk/'))).toBe(true);
   });
 });

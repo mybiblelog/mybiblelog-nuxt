@@ -58,5 +58,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/components/ActionMenuButton.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/components/ActionMenuButton.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/ActionMenuButton.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/ActionMenuButton.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/ActionMenuButton.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/ActionMenuButton.json" />

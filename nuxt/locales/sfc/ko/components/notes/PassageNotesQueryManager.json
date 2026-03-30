@@ -1,0 +1,30 @@
+{
+  "title": "보기 옵션",
+  "reset": "초기화",
+  "reset_confirm": "검색·필터·정렬 설정을 초기화할까요?",
+  "search_text": "검색어",
+  "search_placeholder": "텍스트 입력…",
+  "tag_filters": "태그로 필터",
+  "tag_select": {
+    "choose": "태그 선택…",
+    "clear": "태그 지우기"
+  },
+  "tag_only_untagged": "태그 없는 노트만",
+  "tag_match": "일치",
+  "tag_match_any": "하나라도",
+  "tag_match_all": "모두",
+  "tag_match_exact": "정확히",
+  "passage": "구절로 필터",
+  "clear": "지우기",
+  "passage_match": "일치",
+  "passage_match_inclusive": "포함",
+  "passage_match_exclusive": "범위 안",
+  "passage_match_inclusive_description": "필터 구절과 한 줄이라도 겹치면 노트가 일치합니다.",
+  "passage_match_exclusive_description": "노트의 구절이 필터 구절 범위 안에 있을 때 일치합니다.",
+  "sort": "정렬",
+  "sort_newest_first": "최신순",
+  "sort_oldest_first": "오래된순",
+  "page_size": "페이지 크기",
+  "apply": "적용",
+  "cancel": "취소"
+}

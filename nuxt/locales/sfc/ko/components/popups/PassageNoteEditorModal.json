@@ -1,0 +1,11 @@
+{
+  "note_editor": {
+    "edit_note": "노트 편집",
+    "add_note": "노트 추가",
+    "save": "저장",
+    "close": "닫기"
+  },
+  "messaging": {
+    "are_you_sure_close_editor": "노트 편집기를 닫을까요? 저장하지 않은 변경은 사라집니다."
+  }
+}

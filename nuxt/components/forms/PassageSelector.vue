@@ -536,5 +536,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/PassageSelector.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/PassageSelector.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/PassageSelector.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/forms/PassageSelector.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/PassageSelector.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/PassageSelector.json" />

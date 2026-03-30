@@ -1,0 +1,13 @@
+{
+  "example_prefix": "예:",
+  "invalid_single": "“{example}”처럼 한 절만 입력해 주세요.",
+  "invalid_multi": "잘못된 참조입니다. “{example1}” 또는 “{example2}” 형식을 사용해 보세요.",
+  "select_book": "책 선택",
+  "select_chapter": "장 선택",
+  "select_verse": "절 선택",
+  "pick": "선택",
+  "aria_clear": "지우기",
+  "aria_pick": "절 선택",
+  "old_testament_short": "구약",
+  "new_testament_short": "신약"
+}

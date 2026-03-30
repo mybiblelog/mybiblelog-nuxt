@@ -1,0 +1,20 @@
+{
+  "start_page": "시작 페이지",
+  "start": "시작",
+  "today": "오늘",
+  "bible_books": "성경 책",
+  "chapter_checklist": "장 체크리스트",
+  "calendar": "달력",
+  "notes": "노트",
+  "save": "저장",
+  "select_an_option": "옵션 선택",
+  "preferred_start_page": {
+    "info": {
+      "1": "My Bible Log에 처음 로그인할 때 이 페이지가 표시됩니다."
+    }
+  },
+  "messaging": {
+    "preferred_start_page_saved_successfully": "시작 페이지가 저장되었습니다.",
+    "unable_to_save_preferred_start_page": "저장할 수 없습니다."
+  }
+}

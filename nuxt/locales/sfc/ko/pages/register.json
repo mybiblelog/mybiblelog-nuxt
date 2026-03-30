@@ -1,0 +1,9 @@
+{
+  "sign_up": "가입",
+  "have_an_account": "이미 계정이 있으신가요?",
+  "registration_submitted": "가입이 접수되었습니다. 이메일의 인증 링크를 확인해 주세요.",
+  "email": "이메일",
+  "password": "비밀번호",
+  "have_a_google_account": "Google 계정이 있으신가요?",
+  "sign_in_with_google": "비밀번호 없이 Google로 로그인할 수 있습니다! 로그인 페이지에서 시작하세요."
+}

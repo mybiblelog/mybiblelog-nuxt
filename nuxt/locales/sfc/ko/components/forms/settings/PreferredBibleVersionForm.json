@@ -1,0 +1,17 @@
+{
+  "start_page": {
+    "preferred_bible_version": {
+      "title": "성경 설정",
+      "translation_label": "My Bible Log에서 성경을 열 때 이 번역으로 보고 싶습니다:",
+      "app_label": "My Bible Log에서 구절을 열 때 이 앱 또는 웹사이트에서 열리게 하고 싶습니다:",
+      "change_hint": "이 설정은 언제든지 바꿀 수 있습니다."
+    }
+  },
+  "select_an_option": "옵션 선택",
+  "messaging": {
+    "preferred_bible_settings_saved_successfully": "성경 설정이 저장되었습니다.",
+    "unable_to_save_preferred_bible_settings": "저장할 수 없습니다.",
+    "unable_to_save_preferred_bible_version": "저장할 수 없습니다.",
+    "unable_to_save_preferred_bible_app": "저장할 수 없습니다."
+  }
+}

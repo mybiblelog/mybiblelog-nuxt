@@ -421,5 +421,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/pages/today.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/pages/today.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/today.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/today.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/today.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/today.json" />

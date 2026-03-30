@@ -1,5 +1,5 @@
 <template>
-  <div v-if="authStore.loggedIn">
+  <div v-if="authStore.loggedIn" class="no-print">
     <button
       class="floating-action-button"
       :aria-label="$t('floating_action_button.give_feedback')"
@@ -89,5 +89,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/components/FloatingFeedbackButton.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/components/FloatingFeedbackButton.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/FloatingFeedbackButton.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/FloatingFeedbackButton.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/FloatingFeedbackButton.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/FloatingFeedbackButton.json" />

@@ -40,6 +40,8 @@
     "look_back_date_saved_successfully": "Rückblickdatum erfolgreich gespeichert.",
     "unable_to_save_look_back_date": "Nicht gespeichert. Bitte geben Sie ein Datum nicht später als morgen ein.",
     "preferred_bible_version_saved_successfully": "Bibelversion bevorzugt erfolgreich gespeichert.",
-    "unable_to_save_preferred_bible_version": "Nicht gespeichert."
+    "unable_to_save_preferred_bible_version": "Nicht gespeichert.",
+    "preferred_bible_app_saved_successfully": "Bibel-App bevorzugt erfolgreich für dieses Gerät gespeichert.",
+    "unable_to_save_preferred_bible_app": "Nicht gespeichert."
   }
 }

@@ -12,6 +12,7 @@ const render = ({ locale, emailVerificationCode }: RenderEmailVerificationParams
     en: 'Email Verification',
     es: 'Verificación de correo electrónico',
     fr: 'Vérification de l\'adresse e-mail',
+    ko: '이메일 인증',
     pt: 'Verificação de email',
     uk: 'Підтвердження електронної пошти',
   }[locale];
@@ -22,6 +23,7 @@ const render = ({ locale, emailVerificationCode }: RenderEmailVerificationParams
     en: `Click <a href="${link}">this link</a> to verify your email.`,
     es: `Haga clic en <a href="${link}">este enlace</a> para verificar su correo electrónico.`,
     fr: `Cliquez sur <a href="${link}">ce lien</a> pour vérifier votre adresse e-mail.`,
+    ko: `<a href="${link}">이 링크</a>를 눌러 이메일을 인증하세요.`,
     pt: `Clique em <a href="${link}">este link</a> para verificar seu email.`,
     uk: `Натисніть <a href="${link}">це посилання</a>, щоб підтвердити свою електронну пошту.`,
   }[locale];

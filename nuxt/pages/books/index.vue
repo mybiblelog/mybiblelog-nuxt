@@ -45,5 +45,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/pages/books/index.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/pages/books/index.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/books/index.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/books/index.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/books/index.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/books/index.json" />

@@ -261,5 +261,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/components/popups/AppAchievements.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/components/popups/AppAchievements.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/popups/AppAchievements.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/popups/AppAchievements.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/popups/AppAchievements.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/popups/AppAchievements.json" />

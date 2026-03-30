@@ -38,6 +38,7 @@ const i18nConfig: Options = {
       de: numberFormats,
       es: numberFormats,
       fr: numberFormats,
+      ko: numberFormats,
       pt: numberFormats,
       uk: numberFormats,
     },

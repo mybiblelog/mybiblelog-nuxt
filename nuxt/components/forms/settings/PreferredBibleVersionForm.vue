@@ -95,6 +95,7 @@ const bibleVersionNames = {
   [BibleVersions.LSG]: 'Louis Segond (LSG)',
   [BibleVersions.ARC]: 'Almeida Revista e Corrigida (ARC)',
   [BibleVersions.LUT]: 'Luther 1545 (LUT)',
+  [BibleVersions.KRV]: '개역한글 (KRV)',
 };
 
 const bibleVersionOptions = Object.keys(bibleVersionNames).map((key) => {
@@ -233,5 +234,6 @@ select {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/settings/PreferredBibleVersionForm.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/settings/PreferredBibleVersionForm.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/settings/PreferredBibleVersionForm.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/forms/settings/PreferredBibleVersionForm.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/settings/PreferredBibleVersionForm.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/settings/PreferredBibleVersionForm.json" />

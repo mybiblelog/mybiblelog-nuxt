@@ -1,0 +1,9 @@
+{
+  "change_email": "이메일 변경",
+  "confirming_your_new_email_address": "새 이메일 주소를 확인하는 중…",
+  "your_email_change_request_has_expired": "이메일 변경 요청이 만료되었습니다.",
+  "please_go_to_your_settings_and_try_changing_your_email_address_again": "설정에서 이메일 변경을 다시 시도해 주세요.",
+  "there_was_an_error_changing_your_email_address": "이메일 주소를 변경하는 중 오류가 발생했습니다.",
+  "an_unknown_error_occurred": "알 수 없는 오류가 발생했습니다.",
+  "your_email_address_was_updated_successfully": "이메일 주소가 성공적으로 변경되었습니다."
+}

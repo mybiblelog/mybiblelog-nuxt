@@ -430,5 +430,6 @@ td:nth-child(2) {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/pages/progress.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/pages/progress.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/progress.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/progress.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/progress.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/progress.json" />

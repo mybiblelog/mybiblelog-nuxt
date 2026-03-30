@@ -5,6 +5,11 @@ import SimpleDate from './simple-date';
 
 // additional locales ('en' is already included)
 import 'dayjs/locale/es';
+import 'dayjs/locale/de';
+import 'dayjs/locale/fr';
+import 'dayjs/locale/ko';
+import 'dayjs/locale/pt';
+import 'dayjs/locale/uk';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);

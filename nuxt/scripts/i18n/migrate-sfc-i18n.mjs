@@ -11,7 +11,7 @@ const SFC_DIRS = [
   { kind: 'pages', dir: path.join(NUXT_ROOT, 'pages') },
 ];
 
-const LOCALES = ['en', 'de', 'es', 'fr', 'pt', 'uk'];
+const LOCALES = ['en', 'de', 'es', 'fr', 'ko', 'pt', 'uk'];
 
 async function* walkFiles(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true });

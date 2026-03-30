@@ -466,5 +466,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/pages/notes.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/pages/notes.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/notes.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/notes.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/notes.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/notes.json" />

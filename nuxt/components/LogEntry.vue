@@ -132,5 +132,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/components/LogEntry.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/components/LogEntry.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/LogEntry.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/LogEntry.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/LogEntry.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/LogEntry.json" />

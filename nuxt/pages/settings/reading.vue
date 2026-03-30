@@ -123,6 +123,7 @@ const bibleVersionNames = {
   [BibleVersions.LSG]: 'Louis Segond (LSG)',
   [BibleVersions.ARC]: 'Almeida Revista e Corrigida (ARC)',
   [BibleVersions.LUT]: 'Luther 1545 (LUT)',
+  [BibleVersions.KRV]: '개역한글 (KRV)',
 };
 
 const bibleAppNames = {
@@ -268,5 +269,6 @@ select {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/pages/settings/reading.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/pages/settings/reading.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/settings/reading.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/settings/reading.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/settings/reading.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/settings/reading.json" />

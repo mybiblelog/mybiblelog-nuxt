@@ -135,5 +135,6 @@ h1, h2, h3, h4, h5, h6 {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/pages/about/_slug.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/pages/about/_slug.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/about/_slug.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/about/_slug.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/about/_slug.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/about/_slug.json" />

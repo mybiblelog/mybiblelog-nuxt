@@ -1,0 +1,13 @@
+{
+  "ok": "확인",
+  "achievement": {
+    "book_complete": {
+      "title": "책을 다 읽었습니다!",
+      "message": "축하합니다! {bookName}을(를) 모두 읽으셨습니다!"
+    },
+    "bible_complete": {
+      "title": "성경 전체를 다 읽었습니다!",
+      "message": "🎉 놀랍습니다! 성경 전체를 읽으셨습니다! 🎉"
+    }
+  }
+}

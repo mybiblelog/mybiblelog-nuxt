@@ -152,5 +152,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/pages/reset-password.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/pages/reset-password.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/reset-password.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/reset-password.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/reset-password.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/reset-password.json" />

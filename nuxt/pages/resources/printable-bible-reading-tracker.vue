@@ -1,7 +1,7 @@
 <template>
   <main>
-    <div class="content-column">
-      <section class="no-print">
+    <div class="content-column no-print">
+      <section>
         <header class="page-header">
           <h1 class="title">
             {{ $t('meta.title') }}
@@ -194,5 +194,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/pages/resources/printable-bible-reading-tracker.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/pages/resources/printable-bible-reading-tracker.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/resources/printable-bible-reading-tracker.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/resources/printable-bible-reading-tracker.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/resources/printable-bible-reading-tracker.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/resources/printable-bible-reading-tracker.json" />

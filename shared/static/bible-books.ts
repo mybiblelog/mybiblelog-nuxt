@@ -53,6 +53,12 @@ const bibleBooks: BibleBook[] = [
           'Gen',
         ],
       },
+      ko: {
+        name: '창세기',
+        abbreviations: [
+          '창',
+        ],
+      },
       uk: {
         name: 'Буття',
         abbreviations: [
@@ -102,6 +108,12 @@ const bibleBooks: BibleBook[] = [
           'Êx',
         ],
       },
+      ko: {
+        name: '출애굽기',
+        abbreviations: [
+          '출',
+        ],
+      },
       uk: {
         name: 'Вихід',
         abbreviations: [
@@ -149,6 +161,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Levítico',
         abbreviations: [
           'Lv',
+        ],
+      },
+      ko: {
+        name: '레위기',
+        abbreviations: [
+          '레',
         ],
       },
       uk: {
@@ -202,6 +220,12 @@ const bibleBooks: BibleBook[] = [
           'Núm',
         ],
       },
+      ko: {
+        name: '민수기',
+        abbreviations: [
+          '민',
+        ],
+      },
       uk: {
         name: 'Числа',
         abbreviations: [
@@ -252,6 +276,12 @@ const bibleBooks: BibleBook[] = [
           'Deut',
         ],
       },
+      ko: {
+        name: '신명기',
+        abbreviations: [
+          '신',
+        ],
+      },
       uk: {
         name: 'Повторення Закону',
         abbreviations: [
@@ -300,6 +330,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Js',
           'Jos',
+        ],
+      },
+      ko: {
+        name: '여호수아',
+        abbreviations: [
+          '수',
         ],
       },
       uk: {
@@ -353,6 +389,12 @@ const bibleBooks: BibleBook[] = [
           'Juíz',
         ],
       },
+      ko: {
+        name: '사사기',
+        abbreviations: [
+          '삿',
+        ],
+      },
       uk: {
         name: 'Суддів',
         abbreviations: [
@@ -400,6 +442,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Rute',
         abbreviations: [
           'Rt',
+        ],
+      },
+      ko: {
+        name: '룻기',
+        abbreviations: [
+          '룻',
         ],
       },
       uk: {
@@ -451,6 +499,12 @@ const bibleBooks: BibleBook[] = [
           '1Sm',
           '1Sam',
           '1Samuel',
+        ],
+      },
+      ko: {
+        name: '사무엘상',
+        abbreviations: [
+          '삼상',
         ],
       },
       uk: {
@@ -505,6 +559,12 @@ const bibleBooks: BibleBook[] = [
           '2Samuel',
         ],
       },
+      ko: {
+        name: '사무엘하',
+        abbreviations: [
+          '삼하',
+        ],
+      },
       uk: {
         name: '2 Самуїл',
         abbreviations: [
@@ -554,6 +614,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           '1Rs',
           '1Reis',
+        ],
+      },
+      ko: {
+        name: '열왕기상',
+        abbreviations: [
+          '왕상',
         ],
       },
       uk: {
@@ -607,6 +673,12 @@ const bibleBooks: BibleBook[] = [
           '2Reis',
         ],
       },
+      ko: {
+        name: '열왕기하',
+        abbreviations: [
+          '왕하',
+        ],
+      },
       uk: {
         name: '2 Царів',
         abbreviations: [
@@ -655,6 +727,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           '1Cr',
           '1Crônicas',
+        ],
+      },
+      ko: {
+        name: '역대상',
+        abbreviations: [
+          '대상',
         ],
       },
       uk: {
@@ -707,6 +785,12 @@ const bibleBooks: BibleBook[] = [
           '2Crônicas',
         ],
       },
+      ko: {
+        name: '역대하',
+        abbreviations: [
+          '대하',
+        ],
+      },
       uk: {
         name: '2 Паралипоменон',
         abbreviations: [
@@ -755,6 +839,12 @@ const bibleBooks: BibleBook[] = [
           'Ed',
         ],
       },
+      ko: {
+        name: '에스라',
+        abbreviations: [
+          '스',
+        ],
+      },
       uk: {
         name: 'Езра',
         abbreviations: [
@@ -801,6 +891,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Ne',
           'Neem',
+        ],
+      },
+      ko: {
+        name: '느헤미야',
+        abbreviations: [
+          '느',
         ],
       },
       uk: {
@@ -852,6 +948,12 @@ const bibleBooks: BibleBook[] = [
           'Et',
         ],
       },
+      ko: {
+        name: '에스더',
+        abbreviations: [
+          '에',
+        ],
+      },
       uk: {
         name: 'Есфір',
         abbreviations: [
@@ -898,6 +1000,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Jó',
         abbreviations: [
           'Jó',
+        ],
+      },
+      ko: {
+        name: '욥기',
+        abbreviations: [
+          '욥',
         ],
       },
       uk: {
@@ -951,6 +1059,12 @@ const bibleBooks: BibleBook[] = [
           'Sal',
         ],
       },
+      ko: {
+        name: '시편',
+        abbreviations: [
+          '시',
+        ],
+      },
       uk: {
         name: 'Псалми',
         abbreviations: [
@@ -1000,6 +1114,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Pv',
           'Prov',
+        ],
+      },
+      ko: {
+        name: '잠언',
+        abbreviations: [
+          '잠',
         ],
       },
       uk: {
@@ -1055,6 +1175,12 @@ const bibleBooks: BibleBook[] = [
           'Ec',
         ],
       },
+      ko: {
+        name: '전도서',
+        abbreviations: [
+          '전',
+        ],
+      },
       uk: {
         name: 'Екклезіяст',
         abbreviations: [
@@ -1103,6 +1229,12 @@ const bibleBooks: BibleBook[] = [
           'Ct',
         ],
       },
+      ko: {
+        name: '아가',
+        abbreviations: [
+          '아',
+        ],
+      },
       uk: {
         name: 'Пісня над Піснями',
         abbreviations: [
@@ -1149,6 +1281,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Isaías',
         abbreviations: [
           'Is',
+        ],
+      },
+      ko: {
+        name: '이사야',
+        abbreviations: [
+          '사',
         ],
       },
       uk: {
@@ -1201,6 +1339,12 @@ const bibleBooks: BibleBook[] = [
           'Jer',
         ],
       },
+      ko: {
+        name: '예레미야',
+        abbreviations: [
+          '렘',
+        ],
+      },
       uk: {
         name: 'Єремія',
         abbreviations: [
@@ -1248,6 +1392,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Lm',
           'Lam',
+        ],
+      },
+      ko: {
+        name: '예레미야애가',
+        abbreviations: [
+          '렘애',
         ],
       },
       uk: {
@@ -1300,6 +1450,12 @@ const bibleBooks: BibleBook[] = [
           'Ezeq',
         ],
       },
+      ko: {
+        name: '에스겔',
+        abbreviations: [
+          '겔',
+        ],
+      },
       uk: {
         name: 'Єзекіїль',
         abbreviations: [
@@ -1348,6 +1504,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Dn',
           'Dan',
+        ],
+      },
+      ko: {
+        name: '다니엘',
+        abbreviations: [
+          '단',
         ],
       },
       uk: {
@@ -1399,6 +1561,12 @@ const bibleBooks: BibleBook[] = [
           'Ose',
         ],
       },
+      ko: {
+        name: '호세아',
+        abbreviations: [
+          '호',
+        ],
+      },
       uk: {
         name: 'Осія',
         abbreviations: [
@@ -1447,6 +1615,12 @@ const bibleBooks: BibleBook[] = [
           'Jl',
         ],
       },
+      ko: {
+        name: '요엘',
+        abbreviations: [
+          '욜',
+        ],
+      },
       uk: {
         name: 'Йоїл',
         abbreviations: [
@@ -1491,6 +1665,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Amós',
         abbreviations: [
           'Am',
+        ],
+      },
+      ko: {
+        name: '아모스',
+        abbreviations: [
+          '암',
         ],
       },
       uk: {
@@ -1540,6 +1720,12 @@ const bibleBooks: BibleBook[] = [
           'Obd',
         ],
       },
+      ko: {
+        name: '오바댜',
+        abbreviations: [
+          '옵',
+        ],
+      },
       uk: {
         name: 'Овдій',
         abbreviations: [
@@ -1585,6 +1771,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Jonas',
         abbreviations: [
           'Jn',
+        ],
+      },
+      ko: {
+        name: '요나',
+        abbreviations: [
+          '욘',
         ],
       },
       uk: {
@@ -1633,6 +1825,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Mq',
           'Miq',
+        ],
+      },
+      ko: {
+        name: '미가',
+        abbreviations: [
+          '미',
         ],
       },
       uk: {
@@ -1684,6 +1882,12 @@ const bibleBooks: BibleBook[] = [
           'Nm',
         ],
       },
+      ko: {
+        name: '나훔',
+        abbreviations: [
+          '나',
+        ],
+      },
       uk: {
         name: 'Наум',
         abbreviations: [
@@ -1731,6 +1935,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Hc',
           'Hab',
+        ],
+      },
+      ko: {
+        name: '하박국',
+        abbreviations: [
+          '합',
         ],
       },
       uk: {
@@ -1783,6 +1993,12 @@ const bibleBooks: BibleBook[] = [
           'Sof',
         ],
       },
+      ko: {
+        name: '스바냐',
+        abbreviations: [
+          '습',
+        ],
+      },
       uk: {
         name: 'Софонія',
         abbreviations: [
@@ -1829,6 +2045,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Ageu',
         abbreviations: [
           'Ag',
+        ],
+      },
+      ko: {
+        name: '학개',
+        abbreviations: [
+          '학',
         ],
       },
       uk: {
@@ -1881,6 +2103,12 @@ const bibleBooks: BibleBook[] = [
           'Zac',
         ],
       },
+      ko: {
+        name: '스가랴',
+        abbreviations: [
+          '슥',
+        ],
+      },
       uk: {
         name: 'Захарія',
         abbreviations: [
@@ -1930,6 +2158,12 @@ const bibleBooks: BibleBook[] = [
           'Mal',
         ],
       },
+      ko: {
+        name: '말라기',
+        abbreviations: [
+          '말',
+        ],
+      },
       uk: {
         name: 'Малахій',
         abbreviations: [
@@ -1976,6 +2210,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Mateus',
         abbreviations: [
           'Mt',
+        ],
+      },
+      ko: {
+        name: '마태복음',
+        abbreviations: [
+          '마',
         ],
       },
       uk: {
@@ -2027,6 +2267,12 @@ const bibleBooks: BibleBook[] = [
           'Mr',
         ],
       },
+      ko: {
+        name: '마가복음',
+        abbreviations: [
+          '막',
+        ],
+      },
       uk: {
         name: 'Марк',
         abbreviations: [
@@ -2073,6 +2319,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Lc',
           'Lc',
+        ],
+      },
+      ko: {
+        name: '누가복음',
+        abbreviations: [
+          '눅',
         ],
       },
       uk: {
@@ -2122,6 +2374,12 @@ const bibleBooks: BibleBook[] = [
           'João',
         ],
       },
+      ko: {
+        name: '요한복음',
+        abbreviations: [
+          '요',
+        ],
+      },
       uk: {
         name: 'Іван',
         abbreviations: [
@@ -2165,6 +2423,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Atos',
         abbreviations: [
           'At',
+        ],
+      },
+      ko: {
+        name: '사도행전',
+        abbreviations: [
+          '행',
         ],
       },
       uk: {
@@ -2217,6 +2481,12 @@ const bibleBooks: BibleBook[] = [
           'Rom',
         ],
       },
+      ko: {
+        name: '로마서',
+        abbreviations: [
+          '롬',
+        ],
+      },
       uk: {
         name: 'Римляни',
         abbreviations: [
@@ -2264,6 +2534,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           '1Co',
           '1Cor',
+        ],
+      },
+      ko: {
+        name: '고린도전서',
+        abbreviations: [
+          '고전',
         ],
       },
       uk: {
@@ -2315,6 +2591,12 @@ const bibleBooks: BibleBook[] = [
           '2Cor',
         ],
       },
+      ko: {
+        name: '고린도후서',
+        abbreviations: [
+          '고후',
+        ],
+      },
       uk: {
         name: '2 Коринтяни',
         abbreviations: [
@@ -2364,6 +2646,12 @@ const bibleBooks: BibleBook[] = [
           'Gál',
         ],
       },
+      ko: {
+        name: '갈라디아서',
+        abbreviations: [
+          '갈',
+        ],
+      },
       uk: {
         name: 'Галати',
         abbreviations: [
@@ -2410,6 +2698,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Efésios',
         abbreviations: [
           'Ef',
+        ],
+      },
+      ko: {
+        name: '에베소서',
+        abbreviations: [
+          '엡',
         ],
       },
       uk: {
@@ -2462,6 +2756,12 @@ const bibleBooks: BibleBook[] = [
           'Fil',
         ],
       },
+      ko: {
+        name: '빌립보서',
+        abbreviations: [
+          '빌',
+        ],
+      },
       uk: {
         name: "Филип'яни",
         abbreviations: [
@@ -2508,6 +2808,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Cl',
           'Col',
+        ],
+      },
+      ko: {
+        name: '골로새서',
+        abbreviations: [
+          '골',
         ],
       },
       uk: {
@@ -2560,6 +2866,12 @@ const bibleBooks: BibleBook[] = [
           '1Tes',
         ],
       },
+      ko: {
+        name: '데살로니가전서',
+        abbreviations: [
+          '살전',
+        ],
+      },
       uk: {
         name: '1 Солуняни',
         abbreviations: [
@@ -2608,6 +2920,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           '2Ts',
           '2Tes',
+        ],
+      },
+      ko: {
+        name: '데살로니가후서',
+        abbreviations: [
+          '살후',
         ],
       },
       uk: {
@@ -2659,6 +2977,12 @@ const bibleBooks: BibleBook[] = [
           '1Tm',
         ],
       },
+      ko: {
+        name: '디모데전서',
+        abbreviations: [
+          '딤전',
+        ],
+      },
       uk: {
         name: '1 Тимофію',
         abbreviations: [
@@ -2708,6 +3032,12 @@ const bibleBooks: BibleBook[] = [
           '2Tm',
         ],
       },
+      ko: {
+        name: '디모데후서',
+        abbreviations: [
+          '딤후',
+        ],
+      },
       uk: {
         name: '2 Тимофію',
         abbreviations: [
@@ -2754,6 +3084,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Tito',
         abbreviations: [
           'Tt',
+        ],
+      },
+      ko: {
+        name: '디도서',
+        abbreviations: [
+          '딛',
         ],
       },
       uk: {
@@ -2806,6 +3142,12 @@ const bibleBooks: BibleBook[] = [
           'Fm',
         ],
       },
+      ko: {
+        name: '빌레몬서',
+        abbreviations: [
+          '몬',
+        ],
+      },
       uk: {
         name: 'Филимона',
         abbreviations: [
@@ -2851,6 +3193,12 @@ const bibleBooks: BibleBook[] = [
         name: 'Hebreus',
         abbreviations: [
           'Hb',
+        ],
+      },
+      ko: {
+        name: '히브리서',
+        abbreviations: [
+          '히',
         ],
       },
       uk: {
@@ -2900,6 +3248,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Tg',
           'Tia',
+        ],
+      },
+      ko: {
+        name: '야고보서',
+        abbreviations: [
+          '약',
         ],
       },
       uk: {
@@ -2953,6 +3307,12 @@ const bibleBooks: BibleBook[] = [
           '1Pedro',
         ],
       },
+      ko: {
+        name: '베드로전서',
+        abbreviations: [
+          '벧전',
+        ],
+      },
       uk: {
         name: '1 Петра',
         abbreviations: [
@@ -3002,6 +3362,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           '2Pe',
           '2Pedro',
+        ],
+      },
+      ko: {
+        name: '베드로후서',
+        abbreviations: [
+          '벧후',
         ],
       },
       uk: {
@@ -3054,6 +3420,12 @@ const bibleBooks: BibleBook[] = [
           '1João',
         ],
       },
+      ko: {
+        name: '요한일서',
+        abbreviations: [
+          '요일',
+        ],
+      },
       uk: {
         name: '1 Івана',
         abbreviations: [
@@ -3102,6 +3474,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           '2Jo',
           '2João',
+        ],
+      },
+      ko: {
+        name: '요한이서',
+        abbreviations: [
+          '요이',
         ],
       },
       uk: {
@@ -3154,6 +3532,12 @@ const bibleBooks: BibleBook[] = [
           '3João',
         ],
       },
+      ko: {
+        name: '요한삼서',
+        abbreviations: [
+          '요삼',
+        ],
+      },
       uk: {
         name: '3 Івана',
         abbreviations: [
@@ -3203,6 +3587,12 @@ const bibleBooks: BibleBook[] = [
           'Jd',
         ],
       },
+      ko: {
+        name: '유다서',
+        abbreviations: [
+          '유',
+        ],
+      },
       uk: {
         name: 'Юда',
         abbreviations: [
@@ -3249,6 +3639,12 @@ const bibleBooks: BibleBook[] = [
         abbreviations: [
           'Ap',
           'Apoc',
+        ],
+      },
+      ko: {
+        name: '요한계시록',
+        abbreviations: [
+          '계',
         ],
       },
       uk: {

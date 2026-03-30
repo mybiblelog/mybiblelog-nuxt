@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "title": "인쇄용 성경 읽기 추적표",
+    "description": "성경 각 장에 체크박스가 있는 무료 인쇄용 읽기 추적표입니다. 성경을 읽으며 진행 상황을 기록해 보세요."
+  },
+  "print": "인쇄",
+  "site_title": "My Bible Log",
+  "site_description": "무료 성경 읽기 추적",
+  "content": {
+    "this_is": "성경 각 장에 체크박스가 있는 무료 인쇄용 읽기 추적표입니다. 성경을 읽으며 진행 상황을 기록하는 데 사용하세요.",
+    "printer_friendly": "이 페이지는 인쇄에 맞춰져 있습니다. 위의 \"인쇄\" 버튼을 누르면 체크리스트만 인쇄됩니다.",
+    "download_directly": "PDF는 <a target='_blank' href='/downloads/인쇄용 성경 읽기 추적표.pdf'>여기</a>에서 직접 받을 수 있습니다.",
+    "chapters_in_the_bible": "성경의 장",
+    "there_are_66_books": "성경에는 66권, 총 1,189장이 있습니다. 하루 3.25장(또는 주당 23장)을 읽으면 1년에 성경 전체를 읽을 수 있습니다.",
+    "track_your_progress_online": "온라인으로 진행 상황 추적",
+    "if_you_would_like": "기기에서 성경 읽기를 기록하고 싶다면 무료 <a href='/ko'>My Bible Log</a> 앱과 웹사이트를 이용해 보세요!"
+  }
+}

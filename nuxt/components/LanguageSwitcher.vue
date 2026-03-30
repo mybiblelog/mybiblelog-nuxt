@@ -100,5 +100,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/components/LanguageSwitcher.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/components/LanguageSwitcher.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/LanguageSwitcher.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/LanguageSwitcher.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/LanguageSwitcher.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/LanguageSwitcher.json" />

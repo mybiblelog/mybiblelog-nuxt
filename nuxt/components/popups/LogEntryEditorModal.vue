@@ -76,5 +76,6 @@ export default {
 <i18n locale="de" lang="json" src="@/locales/sfc/de/components/popups/LogEntryEditorModal.json" />
 <i18n locale="es" lang="json" src="@/locales/sfc/es/components/popups/LogEntryEditorModal.json" />
 <i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/popups/LogEntryEditorModal.json" />
+<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/popups/LogEntryEditorModal.json" />
 <i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/popups/LogEntryEditorModal.json" />
 <i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/popups/LogEntryEditorModal.json" />
