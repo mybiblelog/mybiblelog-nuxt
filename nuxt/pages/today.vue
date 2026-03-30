@@ -137,6 +137,7 @@ import InfoLink from '@/components/InfoLink';
 import PassageNote from '@/components/PassageNote';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 
 export default {
   name: 'TodayPage',
@@ -289,12 +290,14 @@ export default {
       }
     },
     openAddEntryForm() {
-      this.$store.dispatch('log-entry-editor/openEditor', { empty: true });
+      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
+      logEntryEditorStore.openEditor({ empty: true });
     },
     openEditEntryForm(id) {
+      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
       const targetEntry = this.logEntries.find(e => e.id === id);
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id,
         date,
         startVerseId,
@@ -315,8 +318,9 @@ export default {
       }
     },
     trackPassage(passage) {
+      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
       const { startVerseId, endVerseId } = passage;
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id: null,
         date: dayjs().format('YYYY-MM-DD'),
         startVerseId,

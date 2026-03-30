@@ -147,6 +147,7 @@ import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 
 function stableCompare(a, b) {
   if (a === b) { return 0; }
@@ -350,7 +351,8 @@ export default {
       this.pushLogQuery({ ...this.query, offset, limit: this.effectiveLimit });
     },
     openAddEntryForm() {
-      this.$store.dispatch('log-entry-editor/openEditor', { empty: true });
+      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
+      logEntryEditorStore.openEditor({ empty: true });
     },
     actionsForLogEntry(entry) {
       return [
@@ -386,10 +388,11 @@ export default {
       this.$router.push({ path: this.localePath('/notes'), query });
     },
     openEditEntryForm(id) {
+      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
       const targetEntry = (this.logEntries || []).find(e => e.id === id);
       if (!targetEntry) { return; }
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id,
         date,
         startVerseId,

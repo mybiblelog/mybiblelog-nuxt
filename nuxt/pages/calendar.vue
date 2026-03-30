@@ -35,6 +35,7 @@ import CalendarMonth from '@/components/calendar/CalendarMonth';
 import LogEntry from '@/components/LogEntry';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 
 export default {
   name: 'CalendarPage',
@@ -120,12 +121,14 @@ export default {
       }
     },
     openAddEntryFormForDate(date) {
-      this.$store.dispatch('log-entry-editor/openEditor', { empty: true, date });
+      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
+      logEntryEditorStore.openEditor({ empty: true, date });
     },
     openEditEntryForm(id) {
+      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
       const targetEntry = this.logEntries.find(e => e.id === id);
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id,
         date,
         startVerseId,

@@ -62,6 +62,7 @@ import ChapterReport from '@/components/ChapterReport';
 import SegmentBar from '@/components/SegmentBar';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 
 const calcPercent = (numerator, denominator) => {
   return Math.floor(numerator / denominator * 100);
@@ -146,8 +147,9 @@ export default {
       return segments;
     },
     openAddEntryForm(bookIndex, chapterIndex) {
+      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
       const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id: null,
         date: dayjs().format('YYYY-MM-DD'),
         startVerseId: Bible.makeVerseId(bookIndex, chapterIndex, 1),
