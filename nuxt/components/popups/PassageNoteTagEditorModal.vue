@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <app-modal v-if="open" :title="modalTitle" @close="handleClose">
+    <app-modal v-if="open" :title="modalTitle" :z-index="60" @close="handleClose">
       <template slot="content">
         <passage-note-tag-editor-form />
       </template>
@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import AppModal from '@/components/popups/AppModal';
 import PassageNoteTagEditorForm from '@/components/forms/PassageNoteTagEditorForm';
+import { usePassageNoteTagEditorStore } from '~/stores/passage-note-tag-editor';
 
 export default {
   name: 'PassageNoteTagEditorModal',
@@ -28,13 +28,18 @@ export default {
     PassageNoteTagEditorForm,
   },
   computed: {
-    ...mapState('passage-note-tag-editor', {
-      open: state => state.open,
-      isValid: state => state.isValid,
-    }),
+    passageNoteTagEditorStore() {
+      return usePassageNoteTagEditorStore();
+    },
+    open() {
+      return this.passageNoteTagEditorStore.open;
+    },
+    isValid() {
+      return this.passageNoteTagEditorStore.isValid;
+    },
     modalTitle() {
       // Check if we're editing an existing tag or creating a new one
-      const passageNoteTag = this.$store.state['passage-note-tag-editor'].passageNoteTag;
+      const passageNoteTag = this.passageNoteTagEditorStore.passageNoteTag;
       if (passageNoteTag && passageNoteTag.id) {
         return this.$t('tag_editor.edit_tag');
       }
@@ -43,13 +48,13 @@ export default {
   },
   methods: {
     handleClose() {
-      this.$store.dispatch('passage-note-tag-editor/closeEditor', {
+      this.passageNoteTagEditorStore.closeEditor({
         confirmMessage: this.$t('messaging.are_you_sure_close_tag_editor'),
       });
     },
     handleSave() {
       // Trigger form submission
-      this.$store.dispatch('passage-note-tag-editor/savePassageNoteTag');
+      this.passageNoteTagEditorStore.savePassageNoteTag();
     },
   },
 };

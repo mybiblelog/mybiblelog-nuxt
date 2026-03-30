@@ -93,6 +93,7 @@ import InfoLink from '@/components/InfoLink';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
+import { usePassageNoteTagEditorStore } from '~/stores/passage-note-tag-editor';
 
 export default {
   name: 'NoteTagsListPage',
@@ -146,7 +147,7 @@ export default {
       this.$router.push({ path: this.localePath('/notes'), query });
     },
     openPassageNoteTagEditor(passageNoteTag = null) {
-      this.$store.dispatch('passage-note-tag-editor/openEditor', passageNoteTag);
+      usePassageNoteTagEditorStore().openEditor(passageNoteTag);
     },
     async deletePassageNoteTag(id) {
       const dialogStore = useDialogStore(this.$pinia);

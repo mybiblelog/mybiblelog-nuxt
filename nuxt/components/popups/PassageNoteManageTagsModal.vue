@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import AppModal from '@/components/popups/AppModal';
 import PassageNoteTagSelector from '@/components/forms/PassageNoteTagSelector';
+import { usePassageNoteTagEditorStore } from '~/stores/passage-note-tag-editor';
 
 export default {
   name: 'PassageNoteManageTagsModal',
@@ -52,9 +52,12 @@ export default {
     };
   },
   computed: {
-    ...mapState('passage-note-tag-editor', {
-      tagEditorOpen: state => state.open,
-    }),
+    passageNoteTagEditorStore() {
+      return usePassageNoteTagEditorStore();
+    },
+    tagEditorOpen() {
+      return this.passageNoteTagEditorStore.open;
+    },
   },
   watch: {
     tagEditorOpen(next, prev) {
@@ -71,7 +74,7 @@ export default {
     openNewTagEditor() {
       this.baselineTagIds = (this.passageNoteTags ?? []).map(t => t.id);
       this.pendingCreateTag = true;
-      this.$store.dispatch('passage-note-tag-editor/openEditor', null);
+      this.passageNoteTagEditorStore.openEditor(null);
     },
     selectNewlyCreatedTagIfAny() {
       const currentIds = new Set((this.passageNoteTags ?? []).map(t => t.id));
