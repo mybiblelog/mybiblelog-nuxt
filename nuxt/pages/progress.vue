@@ -213,13 +213,14 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import InfoLink from '@/components/InfoLink';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { useDateVerseCountsStore } from '~/stores/date-verse-counts';
 
 export default {
   name: 'ProgressPage',
@@ -246,10 +247,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      dateVerseCountsBusy: 'date-verse-counts/busy',
-      getDateVerseCounts: 'date-verse-counts/getDateVerseCounts',
-    }),
+    dateVerseCountsStore() {
+      return useDateVerseCountsStore();
+    },
+    dateVerseCountsBusy() {
+      return this.dateVerseCountsStore.busy;
+    },
+    getDateVerseCounts() {
+      return this.dateVerseCountsStore.getDateVerseCounts;
+    },
     logEntriesStore() {
       return useLogEntriesStore();
     },
@@ -350,7 +356,7 @@ export default {
   mounted() {
     setTimeout(() => {
       // dispatch this long-running action in a timeout to prevent blocking
-      this.$store.dispatch('date-verse-counts/cacheDateVerseCounts');
+      this.dateVerseCountsStore.cacheDateVerseCounts();
     }, 0);
   },
   methods: {

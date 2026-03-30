@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible, displayDate } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
@@ -38,6 +38,7 @@ import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
+import { useDateVerseCountsStore } from '~/stores/date-verse-counts';
 
 export default {
   name: 'CalendarPage',
@@ -61,10 +62,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      dateVerseCountsBusy: 'date-verse-counts/busy',
-      getDateVerseCounts: 'date-verse-counts/getDateVerseCounts',
-    }),
+    dateVerseCountsStore() {
+      return useDateVerseCountsStore();
+    },
+    dateVerseCountsBusy() {
+      return this.dateVerseCountsStore.busy;
+    },
+    getDateVerseCounts() {
+      return this.dateVerseCountsStore.getDateVerseCounts;
+    },
     logEntriesStore() {
       return useLogEntriesStore();
     },
@@ -96,7 +102,7 @@ export default {
   mounted() {
     setTimeout(() => {
       // dispatch this long-running action in a timeout to prevent blocking
-      this.$store.dispatch('date-verse-counts/cacheDateVerseCounts');
+      this.dateVerseCountsStore.cacheDateVerseCounts();
     }, 0);
   },
   methods: {

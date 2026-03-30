@@ -2,6 +2,11 @@ import { defineStore } from 'pinia';
 import { Bible } from '@mybiblelog/shared';
 import { useAchievementsStore } from '~/stores/achievements';
 
+const refreshDateVerseCounts = async (date?: string): Promise<void> => {
+  const { useDateVerseCountsStore } = await import('~/stores/date-verse-counts');
+  useDateVerseCountsStore().cacheDateVerseCounts(date);
+};
+
 export type LogEntry = {
   id: number | string;
   date: string; // YYYY-MM-DD
@@ -96,8 +101,8 @@ export const useLogEntriesStore = defineStore('log-entries', {
       const vuex = this.$vuex;
       if (vuex) {
         vuex.dispatch('reading-suggestions/refreshReadingSuggestions', null, { root: true });
-        vuex.dispatch('date-verse-counts/cacheDateVerseCounts', date, { root: true });
       }
+      refreshDateVerseCounts(date);
 
       return data;
     },
@@ -140,8 +145,8 @@ export const useLogEntriesStore = defineStore('log-entries', {
       const vuex = this.$vuex;
       if (vuex) {
         vuex.dispatch('reading-suggestions/refreshReadingSuggestions', null, { root: true });
-        vuex.dispatch('date-verse-counts/cacheDateVerseCounts', date, { root: true });
       }
+      refreshDateVerseCounts(date);
 
       return updated;
     },
@@ -160,9 +165,9 @@ export const useLogEntriesStore = defineStore('log-entries', {
       const vuex = this.$vuex;
       if (vuex) {
         vuex.dispatch('reading-suggestions/refreshReadingSuggestions', null, { root: true });
-        if (date) {
-          vuex.dispatch('date-verse-counts/cacheDateVerseCounts', date, { root: true });
-        }
+      }
+      if (date) {
+        refreshDateVerseCounts(date);
       }
 
       return true;
