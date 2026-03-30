@@ -39,10 +39,8 @@ const plugin: Plugin = (context, inject) => {
   const pinia = createPinia();
 
   // Mirror Nuxt injections (e.g. `$http`) into Pinia stores.
-  // This keeps store actions consistent with existing Vuex modules.
   pinia.use(() => ({
     $http: ctx.$http as unknown as HttpClient,
-    $vuex: ctx.store,
     $i18n: ctx.app.i18n ?? { locale: 'en', t: key => key },
   }));
 

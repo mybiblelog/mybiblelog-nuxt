@@ -20,7 +20,6 @@ type I18nLike = {
 declare module 'pinia' {
   export interface PiniaCustomProperties {
     $http: HttpClient;
-    $vuex: import('vuex').Store<unknown>;
     $i18n: I18nLike;
   }
 }

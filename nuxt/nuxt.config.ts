@@ -13,6 +13,8 @@ dotenv.config({
 
 const config: NuxtConfig = {
   components: true,
+  // State management uses Pinia only.
+  store: false,
   // Doc: https://nuxt.com/docs/4.x/bridge/configuration
   bridge: {
     typescript: true,
