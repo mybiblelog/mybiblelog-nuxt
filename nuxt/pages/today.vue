@@ -126,7 +126,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
@@ -140,6 +139,7 @@ import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
 import { usePassageNotesStore } from '~/stores/passage-notes';
+import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { useReadingSuggestionsStore } from '~/stores/reading-suggestions';
 import { useUserSettingsStore } from '~/stores/user-settings';
@@ -171,15 +171,18 @@ export default {
     passageNotesStore() {
       return usePassageNotesStore();
     },
+    passageNoteTagsStore() {
+      return usePassageNoteTagsStore();
+    },
     readingSuggestionsStore() {
       return useReadingSuggestionsStore();
     },
     logEntries() {
       return this.logEntriesStore.currentLogEntries;
     },
-    ...mapState({
-      passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
-    }),
+    passageNoteTags() {
+      return this.passageNoteTagsStore.passageNoteTags;
+    },
     userSettings() {
       return useUserSettingsStore().settings;
     },
@@ -251,7 +254,7 @@ export default {
       sortOn: 'createdAt',
       sortDirection: 'descending',
     });
-    this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
+    await this.passageNoteTagsStore.loadPassageNoteTags();
   },
   methods: {
     actionsForTodayLogEntry(entry) {

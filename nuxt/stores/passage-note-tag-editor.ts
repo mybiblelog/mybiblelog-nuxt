@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ApiError, UnknownApiError } from '@/helpers/api-error';
 import mapFormErrors from '@/helpers/map-form-errors';
 import { useDialogStore } from '~/stores/dialog';
+import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
 
 export type PassageNoteTagModel = {
   id: number | string | null;
@@ -93,34 +94,28 @@ export const usePassageNoteTagEditorStore = defineStore('passage-note-tag-editor
 
     async savePassageNoteTag(): Promise<unknown | null> {
       try {
-        const vuex = this.$vuex;
-        if (!vuex) {
-          this.errors = mapFormErrors(new UnknownApiError()) || {};
-          return null;
-        }
+        const passageNoteTagsStore = usePassageNoteTagsStore();
 
         let savedPassageNoteTag: unknown;
         if (this.passageNoteTag.id) {
-          savedPassageNoteTag = await vuex.dispatch(
-            'passage-note-tags/updatePassageNoteTag',
-            this.passageNoteTag,
-            { root: true },
-          );
+          savedPassageNoteTag = await passageNoteTagsStore.updatePassageNoteTag({
+            id: this.passageNoteTag.id,
+            label: this.passageNoteTag.label,
+            color: this.passageNoteTag.color,
+            description: this.passageNoteTag.description,
+          });
         }
         else {
-          savedPassageNoteTag = await vuex.dispatch(
-            'passage-note-tags/createPassageNoteTag',
-            this.passageNoteTag,
-            { root: true },
-          );
+          savedPassageNoteTag = await passageNoteTagsStore.createPassageNoteTag({
+            label: this.passageNoteTag.label,
+            color: this.passageNoteTag.color,
+            description: this.passageNoteTag.description,
+          });
         }
 
         if (savedPassageNoteTag) {
           this.$reset();
-          // Reload passage note tags list if it exists
-          if ((vuex.state as Record<string, unknown>)['passage-note-tags']) {
-            await vuex.dispatch('passage-note-tags/loadPassageNoteTags', undefined, { root: true });
-          }
+          await passageNoteTagsStore.loadPassageNoteTags();
           return savedPassageNoteTag;
         }
 

@@ -170,14 +170,9 @@ export const useUserSettingsStore = defineStore('user-settings', {
       });
 
       if (typeof passageNoteTagSortOrder === 'string' && passageNoteTagSortOrder) {
-        const vuex = this.$vuex;
-        if (vuex) {
-          await vuex.dispatch(
-            'passage-note-tags/setPassageNoteTagSortOrder',
-            { sortOrder: passageNoteTagSortOrder, persist: false },
-            { root: true },
-          );
-        }
+        // Avoid a static import here (passage-note-tags store reads user-settings store).
+        const { usePassageNoteTagsStore } = await import('~/stores/passage-note-tags');
+        await usePassageNoteTagsStore().setPassageNoteTagSortOrder({ sortOrder: passageNoteTagSortOrder, persist: false });
       }
     },
 

@@ -136,7 +136,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import { decodePassageNotesRouteQuery, encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import PassageNote from '@/components/PassageNote';
@@ -149,6 +148,7 @@ import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { usePassageNotesStore } from '~/stores/passage-notes';
+import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
 import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
@@ -177,9 +177,12 @@ export default {
     passageNotesStore() {
       return usePassageNotesStore();
     },
-    ...mapState({
-      passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
-    }),
+    passageNoteTagsStore() {
+      return usePassageNoteTagsStore();
+    },
+    passageNoteTags() {
+      return this.passageNoteTagsStore.passageNoteTags;
+    },
     loading() {
       return this.passageNotesStore.loading;
     },
@@ -266,7 +269,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
+    this.passageNoteTagsStore.loadPassageNoteTags();
   },
   methods: {
     pushNotesQuery(nextQuery, { replace = false } = {}) {

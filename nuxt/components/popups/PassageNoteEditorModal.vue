@@ -22,6 +22,7 @@
 import AppModal from '@/components/popups/AppModal';
 import PassageNoteEditorForm from '@/components/forms/PassageNoteEditorForm';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
+import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
 
 export default {
   name: 'PassageNoteEditorModal',
@@ -33,6 +34,9 @@ export default {
     passageNoteEditorStore() {
       return usePassageNoteEditorStore();
     },
+    passageNoteTagsStore() {
+      return usePassageNoteTagsStore();
+    },
     open() {
       return this.passageNoteEditorStore.open;
     },
@@ -40,7 +44,7 @@ export default {
       return this.passageNoteEditorStore.isValid;
     },
     passageNoteTags() {
-      return this.$store.state['passage-note-tags'].passageNoteTags;
+      return this.passageNoteTagsStore.passageNoteTags;
     },
     modalTitle() {
       // Check if we're editing an existing note or creating a new one
@@ -55,7 +59,7 @@ export default {
     open(newValue) {
       // Load passage note tags when modal opens
       if (newValue) {
-        this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
+        this.passageNoteTagsStore.loadPassageNoteTags();
       }
     },
   },
