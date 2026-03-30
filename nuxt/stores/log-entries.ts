@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { Bible } from '@mybiblelog/shared';
 import { useAchievementsStore } from '~/stores/achievements';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 const refreshDateVerseCounts = async (date?: string): Promise<void> => {
   const { useDateVerseCountsStore } = await import('~/stores/date-verse-counts');
@@ -57,11 +58,7 @@ export const useLogEntriesStore = defineStore('log-entries', {
   }),
   getters: {
     currentLogEntries(state): LogEntry[] {
-      type VuexUserSettingsState = { settings?: { lookBackDate?: string } };
-      type VuexRootState = { 'user-settings'?: VuexUserSettingsState };
-
-      const vuexState = (this.$vuex?.state || {}) as unknown as VuexRootState;
-      const lookBackDate = vuexState['user-settings']?.settings?.lookBackDate;
+      const lookBackDate = useUserSettingsStore().settings.lookBackDate;
       if (!lookBackDate) {
         return state.logEntries;
       }

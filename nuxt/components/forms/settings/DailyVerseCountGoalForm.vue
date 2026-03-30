@@ -123,6 +123,7 @@
 <script>
 import * as dayjs from 'dayjs';
 import { useToastStore } from '~/stores/toast';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 const TOTAL_BIBLE_VERSES = 31102;
 
@@ -334,7 +335,7 @@ export default {
       }
 
       this.isSaving = true;
-      const success = await this.$store.dispatch('user-settings/updateSettings', {
+      const success = await useUserSettingsStore().updateSettings({
         dailyVerseCountGoal: this.dailyVerseCountGoal,
       });
 

@@ -149,6 +149,7 @@ import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 function stableCompare(a, b) {
   if (a === b) { return 0; }
@@ -368,7 +369,7 @@ export default {
       ];
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return useUserSettingsStore().getReadingUrl(bookIndex, chapterIndex);
     },
     openPassageInBible(passage) {
       const start = Bible.parseVerseId(passage.startVerseId);

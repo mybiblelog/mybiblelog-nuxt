@@ -1,4 +1,5 @@
 import { BrowserCache } from '@mybiblelog/shared';
+import { useUserSettingsStore } from '~/stores/user-settings';
 import {
   SET_PASSAGE_NOTE_TAGS,
   ADD_PASSAGE_NOTE_TAG,
@@ -210,8 +211,8 @@ export const getters = {
 };
 
 export const actions = {
-  async loadPassageNoteTags({ commit, rootState }) {
-    const sortOrder = rootState?.['user-settings']?.settings?.passageNoteTagSortOrder;
+  async loadPassageNoteTags({ commit }) {
+    const sortOrder = useUserSettingsStore().settings.passageNoteTagSortOrder;
     if (sortOrder) {
       commit(SET_PASSAGE_NOTE_TAG_SORT_ORDER, sortOrder);
     }
@@ -226,11 +227,11 @@ export const actions = {
     passageNoteTags = passageNoteTagsData;
     commit(SET_PASSAGE_NOTE_TAGS, passageNoteTags);
   },
-  setPassageNoteTagSortOrder({ commit, dispatch }, { sortOrder, persist = true } = {}) {
+  setPassageNoteTagSortOrder({ commit }, { sortOrder, persist = true } = {}) {
     const normalized = normalizeSortOrder(sortOrder);
     commit(SET_PASSAGE_NOTE_TAG_SORT_ORDER, normalized);
     if (!persist) { return true; }
-    return dispatch('user-settings/updateSettings', { passageNoteTagSortOrder: normalized }, { root: true });
+    return useUserSettingsStore().updateSettings({ passageNoteTagSortOrder: normalized });
   },
   async createPassageNoteTag({ commit }, { label, color, description }) {
     const { data: result } = await this.$http.post('/api/passage-note-tags', { label, color, description });

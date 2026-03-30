@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { useUserSettingsStore } from '~/stores/user-settings';
+
 export default {
   name: 'SettingsPage',
   middleware: ['auth'],
@@ -62,7 +64,7 @@ export default {
   },
   computed: {
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
   },
 };

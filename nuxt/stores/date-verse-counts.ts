@@ -3,6 +3,7 @@ import { set as vueSet } from 'vue';
 import dayjs from 'dayjs';
 import { Bible, BrowserCache } from '@mybiblelog/shared';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export type DateVerseCounts = {
   total: number;
@@ -17,10 +18,6 @@ const DATE_VERSE_COUNTS_CACHE_MINUTES = 60 * 24;
 const blockingIterations = 10;
 
 const emptyCounts: DateVerseCounts = { total: 0, unique: 0 };
-
-type VuexUserSettingsState = { settings?: { lookBackDate?: string } };
-type VuexRootState = { 'user-settings'?: VuexUserSettingsState };
-
 const yieldToEventLoop = async (): Promise<void> => {
   await new Promise<void>(resolve => setTimeout(resolve, 0));
 };
@@ -92,9 +89,8 @@ export const useDateVerseCountsStore = defineStore('date-verse-counts', {
           totalVersesToDate = Bible.countUniqueRangeVerses(cumulativeLogEntries);
         }
         else {
-          // If no start date was provided, start at lookBackDate (still in Vuex today)
-          const vuexState = (this.$vuex?.state || {}) as unknown as VuexRootState;
-          effectiveStartDate = vuexState['user-settings']?.settings?.lookBackDate;
+          // If no start date was provided, start at lookBackDate
+          effectiveStartDate = useUserSettingsStore().settings.lookBackDate;
         }
 
         if (!effectiveStartDate) {

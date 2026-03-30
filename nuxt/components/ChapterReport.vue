@@ -20,6 +20,7 @@ import { Bible } from '@mybiblelog/shared';
 import SegmentBar from '@/components/SegmentBar';
 import StarIcon from '@/components/svg/StarIcon';
 import { useActionSheetStore } from '~/stores/action-sheet';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   components: {
@@ -74,7 +75,7 @@ export default {
       });
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return useUserSettingsStore().getReadingUrl(bookIndex, chapterIndex);
     },
     openChapterInBible() {
       const { bookIndex, chapterIndex } = this.report;

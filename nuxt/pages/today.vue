@@ -142,6 +142,7 @@ import { useLogEntriesStore } from '~/stores/log-entries';
 import { usePassageNotesStore } from '~/stores/passage-notes';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { useReadingSuggestionsStore } from '~/stores/reading-suggestions';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   name: 'TodayPage',
@@ -177,9 +178,11 @@ export default {
       return this.logEntriesStore.currentLogEntries;
     },
     ...mapState({
-      userSettings: state => state['user-settings'].settings,
       passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
     }),
+    userSettings() {
+      return useUserSettingsStore().settings;
+    },
     passageNotesLoading() {
       return this.passageNotesStore.loading;
     },
@@ -267,7 +270,7 @@ export default {
       ];
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return useUserSettingsStore().getReadingUrl(bookIndex, chapterIndex);
     },
     addNewVerseCountToLogEntry(logEntry) {
       const today = dayjs().format('YYYY-MM-DD');

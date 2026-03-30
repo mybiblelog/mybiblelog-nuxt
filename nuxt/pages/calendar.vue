@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible, displayDate } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
@@ -39,6 +38,7 @@ import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { useDateVerseCountsStore } from '~/stores/date-verse-counts';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   name: 'CalendarPage',
@@ -74,9 +74,12 @@ export default {
     logEntriesStore() {
       return useLogEntriesStore();
     },
-    ...mapState({
-      userSettings: state => state['user-settings'].settings,
-    }),
+    userSettingsStore() {
+      return useUserSettingsStore();
+    },
+    userSettings() {
+      return this.userSettingsStore.settings;
+    },
     logEntries() {
       return this.logEntriesStore.logEntries;
     },
@@ -118,7 +121,7 @@ export default {
       ];
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return this.userSettingsStore.getReadingUrl(bookIndex, chapterIndex);
     },
     async deleteEntry(id) {
       const dialogStore = useDialogStore();

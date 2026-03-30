@@ -29,6 +29,7 @@
 
 <script>
 import { useToastStore } from '~/stores/toast';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   name: 'StartPageSettingsPage',
@@ -52,7 +53,7 @@ export default {
   },
   computed: {
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
     startPageOptions() {
       return [
@@ -72,7 +73,7 @@ export default {
   methods: {
     async handleStartPageSubmit() {
       const { startPage } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { startPage });
+      const success = await useUserSettingsStore().updateSettings({ startPage });
       if (success) {
         const toastStore = useToastStore();
         toastStore.add({

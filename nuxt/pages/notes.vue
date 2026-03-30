@@ -149,6 +149,7 @@ import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { usePassageNotesStore } from '~/stores/passage-notes';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   name: 'NotesListPage',
@@ -275,7 +276,7 @@ export default {
       return replace ? this.$router.replace(nav) : this.$router.push(nav);
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return useUserSettingsStore().getReadingUrl(bookIndex, chapterIndex);
     },
     displayVerseRange(startVerseId, endVerseId) {
       return Bible.displayVerseRange(startVerseId, endVerseId, this.$i18n.locale);

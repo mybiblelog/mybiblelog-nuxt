@@ -1,4 +1,5 @@
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export const AUTH_COOKIE_NAME = 'auth_token';
 
@@ -52,15 +53,15 @@ export const actions = {
       await dispatch('loadUserData');
     }
   },
-  async nuxtClientInit({ dispatch, state }) {
+  nuxtClientInit({ dispatch, state }) {
     if (state.auth.loggedIn) {
       // On client side, re-trigger user settings load
       // since some settings are stored in LocalStorage
-      await dispatch('user-settings/loadClientSettings');
+      useUserSettingsStore().loadClientSettings();
     }
   },
   async loadUserData({ dispatch }) {
     await useLogEntriesStore().loadLogEntries();
-    await dispatch('user-settings/loadSettings');
+    await useUserSettingsStore().loadSettings();
   },
 };

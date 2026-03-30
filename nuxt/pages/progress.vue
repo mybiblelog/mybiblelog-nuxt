@@ -213,7 +213,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
@@ -221,6 +220,7 @@ import InfoLink from '@/components/InfoLink';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import { useLogEntriesStore } from '~/stores/log-entries';
 import { useDateVerseCountsStore } from '~/stores/date-verse-counts';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   name: 'ProgressPage',
@@ -262,9 +262,12 @@ export default {
     logEntries() {
       return this.logEntriesStore.currentLogEntries;
     },
-    ...mapState({
-      userSettings: state => state['user-settings'].settings,
-    }),
+    userSettingsStore() {
+      return useUserSettingsStore();
+    },
+    userSettings() {
+      return this.userSettingsStore.settings;
+    },
     totalBibleVerseCount() {
       return Bible.getTotalVerseCount();
     },

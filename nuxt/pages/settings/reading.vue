@@ -102,6 +102,7 @@
 <script>
 import { BibleApps, BibleVersions } from '@mybiblelog/shared';
 import { useToastStore } from '~/stores/toast';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 const bibleVersionNames = {
   [BibleVersions.NASB2020]: 'New American Standard Bible (NASB)',
@@ -178,7 +179,7 @@ export default {
   },
   computed: {
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
     bibleReadingDays() {
       if (!this.userSettings.dailyVerseCountGoal) {
@@ -194,7 +195,7 @@ export default {
   methods: {
     async handleDailyVerseCountGoalSubmit() {
       const { dailyVerseCountGoal } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { dailyVerseCountGoal });
+      const success = await useUserSettingsStore().updateSettings({ dailyVerseCountGoal });
       if (success) {
         const toastStore = useToastStore();
         toastStore.add({
@@ -208,7 +209,7 @@ export default {
     },
     async handleLookBackDateSubmit() {
       const { lookBackDate } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { lookBackDate });
+      const success = await useUserSettingsStore().updateSettings({ lookBackDate });
       if (success) {
         const toastStore = useToastStore();
         toastStore.add({
@@ -222,7 +223,7 @@ export default {
     },
     async handlePreferredBibleVersionSubmit() {
       const { preferredBibleVersion } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { preferredBibleVersion });
+      const success = await useUserSettingsStore().updateSettings({ preferredBibleVersion });
       if (success) {
         const toastStore = useToastStore();
         toastStore.add({
@@ -236,7 +237,7 @@ export default {
     },
     async handlePreferredBibleAppSubmit() {
       const { preferredBibleApp } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { preferredBibleApp });
+      const success = await useUserSettingsStore().updateSettings({ preferredBibleApp });
       if (success) {
         const toastStore = useToastStore();
         toastStore.add({

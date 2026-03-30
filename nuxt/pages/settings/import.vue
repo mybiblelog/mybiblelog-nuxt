@@ -64,6 +64,7 @@ import * as csv from 'csv';
 import { Bible, SimpleDate, displayDate } from '@mybiblelog/shared';
 import { useToastStore } from '~/stores/toast';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 const delimiter = ',';
 
@@ -100,7 +101,7 @@ export default {
       return this.$i18n.locales.find(locale => locale.code === this.$i18n.locale).name;
     },
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
   },
   methods: {
@@ -267,7 +268,7 @@ export default {
     },
     async updateLookBackDate() {
       const toastStore = useToastStore();
-      await this.$store.dispatch('user-settings/updateSettings', { lookBackDate: this.earliestLogEntryDate });
+      await useUserSettingsStore().updateSettings({ lookBackDate: this.earliestLogEntryDate });
       toastStore.add({
         type: 'success',
         text: this.$t('messaging.look_back_date_updated_successfully'),
