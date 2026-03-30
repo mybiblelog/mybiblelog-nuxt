@@ -148,7 +148,7 @@ export default {
       return segments;
     },
     openAddEntryForm(bookIndex, chapterIndex) {
-      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
+      const logEntryEditorStore = useLogEntryEditorStore();
       const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
       logEntryEditorStore.openEditor({
         id: null,
@@ -161,7 +161,7 @@ export default {
       const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
       const startVerseId = Bible.makeVerseId(bookIndex, chapterIndex, 1);
       const endVerseId = Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount);
-      usePassageNoteEditorStore(this.$pinia).openEditor({
+      usePassageNoteEditorStore().openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });

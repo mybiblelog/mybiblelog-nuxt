@@ -123,7 +123,7 @@ export default {
   },
   computed: {
     passageNoteEditorStore() {
-      return usePassageNoteEditorStore(this.$pinia);
+      return usePassageNoteEditorStore();
     },
     passageNote() {
       return this.passageNoteEditorStore.passageNote;
@@ -220,7 +220,7 @@ export default {
     async removePassage(index) {
       // only require confirmation if the passage is already valid (new or existing)
       if (!this.editingNewPassage) {
-        const dialogStore = useDialogStore(this.$pinia);
+        const dialogStore = useDialogStore();
         const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure') });
         if (!confirmed) {
           return;

@@ -39,7 +39,7 @@ export default {
   name: 'ActionSheetModal',
   computed: {
     actionSheetStore() {
-      return useActionSheetStore(this.$pinia);
+      return useActionSheetStore();
     },
     open() {
       return this.actionSheetStore.open;

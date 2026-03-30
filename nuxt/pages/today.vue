@@ -163,7 +163,7 @@ export default {
   },
   computed: {
     logEntriesStore() {
-      return useLogEntriesStore(this.$pinia);
+      return useLogEntriesStore();
     },
     logEntries() {
       return this.logEntriesStore.currentLogEntries;
@@ -282,8 +282,8 @@ export default {
       };
     },
     async deleteEntry(id) {
-      const dialogStore = useDialogStore(this.$pinia);
-      const toastStore = useToastStore(this.$pinia);
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
       const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure_you_want_to_delete_this_entry') });
       if (!confirmed) { return; }
       const success = await this.logEntriesStore.deleteLogEntry(id);
@@ -295,11 +295,11 @@ export default {
       }
     },
     openAddEntryForm() {
-      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
+      const logEntryEditorStore = useLogEntryEditorStore();
       logEntryEditorStore.openEditor({ empty: true });
     },
     openEditEntryForm(id) {
-      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
+      const logEntryEditorStore = useLogEntryEditorStore();
       const targetEntry = this.logEntries.find(e => e.id === id);
       const { date, startVerseId, endVerseId } = targetEntry;
       logEntryEditorStore.openEditor({
@@ -323,7 +323,7 @@ export default {
       }
     },
     trackPassage(passage) {
-      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
+      const logEntryEditorStore = useLogEntryEditorStore();
       const { startVerseId, endVerseId } = passage;
       logEntryEditorStore.openEditor({
         id: null,
@@ -334,7 +334,7 @@ export default {
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      usePassageNoteEditorStore(this.$pinia).openEditor({
+      usePassageNoteEditorStore().openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });
@@ -358,11 +358,11 @@ export default {
       // If passageNote has empty: true, open for creating new note
       // Otherwise, open for editing existing note
       const noteToEdit = passageNote.empty ? null : passageNote;
-      usePassageNoteEditorStore(this.$pinia).openEditor(noteToEdit);
+      usePassageNoteEditorStore().openEditor(noteToEdit);
     },
     async deletePassageNote(id) {
-      const dialogStore = useDialogStore(this.$pinia);
-      const toastStore = useToastStore(this.$pinia);
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
       const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
       if (!confirmed) { return; }
 

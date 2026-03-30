@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     logEntriesStore() {
-      return useLogEntriesStore(this.$pinia);
+      return useLogEntriesStore();
     },
     logEntries() {
       return this.logEntriesStore.currentLogEntries;

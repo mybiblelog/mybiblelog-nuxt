@@ -251,7 +251,7 @@ export default {
       getDateVerseCounts: 'date-verse-counts/getDateVerseCounts',
     }),
     logEntriesStore() {
-      return useLogEntriesStore(this.$pinia);
+      return useLogEntriesStore();
     },
     logEntries() {
       return this.logEntriesStore.currentLogEntries;

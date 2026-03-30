@@ -119,7 +119,7 @@ export default {
   },
   computed: {
     logEntryEditorStore() {
-      return useLogEntryEditorStore(this.$pinia);
+      return useLogEntryEditorStore();
     },
     logEntry() {
       return this.logEntryEditorStore.logEntry;

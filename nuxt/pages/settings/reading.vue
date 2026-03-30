@@ -196,7 +196,7 @@ export default {
       const { dailyVerseCountGoal } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { dailyVerseCountGoal });
       if (success) {
-        const toastStore = useToastStore(this.$pinia);
+        const toastStore = useToastStore();
         toastStore.add({
           type: 'success',
           text: this.$t('messaging.daily_verse_count_goal_saved_successfully'),
@@ -210,7 +210,7 @@ export default {
       const { lookBackDate } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { lookBackDate });
       if (success) {
-        const toastStore = useToastStore(this.$pinia);
+        const toastStore = useToastStore();
         toastStore.add({
           type: 'success',
           text: this.$t('messaging.look_back_date_saved_successfully'),
@@ -224,7 +224,7 @@ export default {
       const { preferredBibleVersion } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { preferredBibleVersion });
       if (success) {
-        const toastStore = useToastStore(this.$pinia);
+        const toastStore = useToastStore();
         toastStore.add({
           type: 'success',
           text: this.$t('messaging.preferred_bible_version_saved_successfully'),
@@ -238,7 +238,7 @@ export default {
       const { preferredBibleApp } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { preferredBibleApp });
       if (success) {
-        const toastStore = useToastStore(this.$pinia);
+        const toastStore = useToastStore();
         toastStore.add({
           type: 'success',
           text: this.$t('messaging.preferred_bible_app_saved_successfully'),

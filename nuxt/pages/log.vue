@@ -180,7 +180,7 @@ export default {
   },
   computed: {
     logEntriesStore() {
-      return useLogEntriesStore(this.$pinia);
+      return useLogEntriesStore();
     },
     logEntries() {
       return this.logEntriesStore.logEntries;
@@ -355,7 +355,7 @@ export default {
       this.pushLogQuery({ ...this.query, offset, limit: this.effectiveLimit });
     },
     openAddEntryForm() {
-      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
+      const logEntryEditorStore = useLogEntryEditorStore();
       logEntryEditorStore.openEditor({ empty: true });
     },
     actionsForLogEntry(entry) {
@@ -377,7 +377,7 @@ export default {
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      usePassageNoteEditorStore(this.$pinia).openEditor({
+      usePassageNoteEditorStore().openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });
@@ -392,7 +392,7 @@ export default {
       this.$router.push({ path: this.localePath('/notes'), query });
     },
     openEditEntryForm(id) {
-      const logEntryEditorStore = useLogEntryEditorStore(this.$pinia);
+      const logEntryEditorStore = useLogEntryEditorStore();
       const targetEntry = (this.logEntries || []).find(e => e.id === id);
       if (!targetEntry) { return; }
       const { date, startVerseId, endVerseId } = targetEntry;
@@ -404,8 +404,8 @@ export default {
       });
     },
     async deleteEntry(id) {
-      const dialogStore = useDialogStore(this.$pinia);
-      const toastStore = useToastStore(this.$pinia);
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
       const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_entry') });
       if (!confirmed) { return; }
       const success = await this.logEntriesStore.deleteLogEntry(id);

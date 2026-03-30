@@ -95,7 +95,7 @@ export default {
     }
 
     // Display confirmation toast
-    const toastStore = useToastStore(this.$pinia);
+    const toastStore = useToastStore();
     toastStore.add({
       type: 'success',
       text: this.$t('your_email_address_was_updated_successfully'),

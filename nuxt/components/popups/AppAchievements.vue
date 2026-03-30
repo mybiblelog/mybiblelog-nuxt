@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     achievementsStore() {
-      return useAchievementsStore(this.$pinia);
+      return useAchievementsStore();
     },
     achievement() {
       return this.achievementsStore;

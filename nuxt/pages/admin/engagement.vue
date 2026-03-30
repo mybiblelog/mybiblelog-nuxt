@@ -70,7 +70,7 @@ export default {
         this.engagementData = engagementData;
       }
       catch (err) {
-        const dialogStore = useDialogStore(this.$pinia);
+        const dialogStore = useDialogStore();
         await dialogStore.alert({ message: 'Error loading engagement data.' });
       }
       this.loading = false;

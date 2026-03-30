@@ -249,7 +249,7 @@ export default {
       this.loadUsers();
     },
     async deleteUser(email) {
-      const dialogStore = useDialogStore(this.$pinia);
+      const dialogStore = useDialogStore();
       if (email === this.$store.state.auth.user.email) {
         await dialogStore.alert({ message: 'You cannot delete your own account.' });
         return;
@@ -281,7 +281,7 @@ export default {
     async signInAsUser() {
       if (!this.selectedUser) { return; }
 
-      const dialogStore = useDialogStore(this.$pinia);
+      const dialogStore = useDialogStore();
       const confirmed = await dialogStore.confirm({ message: 'Are you sure you want to sign in as this user? You will be logged out of your own account.' });
       if (!confirmed) {
         return;

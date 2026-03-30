@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     logEntryEditorStore() {
-      return useLogEntryEditorStore(this.$pinia);
+      return useLogEntryEditorStore();
     },
     open() {
       return this.logEntryEditorStore.open;

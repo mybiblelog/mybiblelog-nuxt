@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     async deleteAccount() {
-      const toastStore = useToastStore(this.$pinia);
+      const toastStore = useToastStore();
       try {
         await this.$http.put('/api/settings/delete-account');
         await this.$store.dispatch('auth/logout');

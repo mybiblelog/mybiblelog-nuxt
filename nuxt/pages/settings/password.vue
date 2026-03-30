@@ -123,7 +123,7 @@ export default {
           newPassword,
         });
         this.resetChangePasswordForm();
-        const toastStore = useToastStore(this.$pinia);
+        const toastStore = useToastStore();
         toastStore.add({
           type: 'success',
           text: this.$t('password_changed_successfully'),

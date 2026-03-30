@@ -173,7 +173,7 @@ export default {
           newEmail,
         });
         this.resetChangeEmailForm();
-        const toastStore = useToastStore(this.$pinia);
+        const toastStore = useToastStore();
         toastStore.add({
           type: 'success',
           text: this.$t('messaging.confirmation_link_sent'),
@@ -195,8 +195,8 @@ export default {
     },
 
     async cancelChangeEmailRequest() {
-      const dialogStore = useDialogStore(this.$pinia);
-      const toastStore = useToastStore(this.$pinia);
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
       this.formBusy = true;
       try {
         const { data } = await this.$http.delete('/api/auth/change-email');

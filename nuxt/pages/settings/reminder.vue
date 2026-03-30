@@ -97,7 +97,7 @@ export default {
           timezoneOffset,
           active,
         });
-        const toastStore = useToastStore(this.$pinia);
+        const toastStore = useToastStore();
         toastStore.add({
           type: 'success',
           text: this.$t('messaging.reminder_settings_updated_successfully'),

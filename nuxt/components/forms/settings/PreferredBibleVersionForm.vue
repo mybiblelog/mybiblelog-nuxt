@@ -191,7 +191,7 @@ export default {
 
       if (success) {
         if (this.showToast) {
-          const toastStore = useToastStore(this.$pinia);
+          const toastStore = useToastStore();
           toastStore.add({
             type: 'success',
             text: this.$t('messaging.preferred_bible_settings_saved_successfully'),

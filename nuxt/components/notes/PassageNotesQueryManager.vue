@@ -317,7 +317,7 @@ export default {
       this.draft = pickManagedQuery(this.appliedQuery);
     },
     async confirmAndReset() {
-      const dialogStore = useDialogStore(this.$pinia);
+      const dialogStore = useDialogStore();
       const confirmed = await dialogStore.confirm({ message: this.$t('reset_confirm') });
       if (!confirmed) { return; }
 

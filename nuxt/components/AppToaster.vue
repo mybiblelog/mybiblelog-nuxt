@@ -19,7 +19,7 @@ export default {
   name: 'AppToaster',
   computed: {
     toastStore() {
-      return useToastStore(this.$pinia);
+      return useToastStore();
     },
     messages() {
       return this.toastStore.messages;

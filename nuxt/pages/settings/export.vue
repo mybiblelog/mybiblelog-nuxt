@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     logEntriesStore() {
-      return useLogEntriesStore(this.$pinia);
+      return useLogEntriesStore();
     },
     logEntries() {
       return this.logEntriesStore.logEntries;
@@ -136,7 +136,7 @@ export default {
           await this.generateTextDownloadFromNotes();
         }
         catch (err) {
-          const toastStore = useToastStore(this.$pinia);
+          const toastStore = useToastStore();
           toastStore.add({ type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
           return;
         }
@@ -169,7 +169,7 @@ export default {
           await this.generateJsonDownloadFromNotes();
         }
         catch (err) {
-          const toastStore = useToastStore(this.$pinia);
+          const toastStore = useToastStore();
           toastStore.add({ type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
           return;
         }

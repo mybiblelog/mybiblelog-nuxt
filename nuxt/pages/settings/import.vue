@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     logEntriesStore() {
-      return useLogEntriesStore(this.$pinia);
+      return useLogEntriesStore();
     },
     logEntries() {
       return this.logEntriesStore.logEntries;
@@ -207,7 +207,7 @@ export default {
       }
     },
     async uploadCSVFilesChange(event) {
-      const toastStore = useToastStore(this.$pinia);
+      const toastStore = useToastStore();
       const files = event.target.files;
       if (!files.length) { return; }
 
@@ -266,7 +266,7 @@ export default {
         });
     },
     async updateLookBackDate() {
-      const toastStore = useToastStore(this.$pinia);
+      const toastStore = useToastStore();
       await this.$store.dispatch('user-settings/updateSettings', { lookBackDate: this.earliestLogEntryDate });
       toastStore.add({
         type: 'success',

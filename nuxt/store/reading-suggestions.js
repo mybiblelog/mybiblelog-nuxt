@@ -21,7 +21,7 @@ const capitalize = word =>
 
 export const actions = {
   refreshReadingSuggestions({ commit }) {
-    const logEntries = useLogEntriesStore(this.$pinia).currentLogEntries;
+    const logEntries = useLogEntriesStore().currentLogEntries;
 
     // Based on recent logEntries, suggest passages to read next
     const suggestionCount = 3;

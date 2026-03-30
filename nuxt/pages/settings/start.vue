@@ -74,7 +74,7 @@ export default {
       const { startPage } = this.userSettingsForm;
       const success = await this.$store.dispatch('user-settings/updateSettings', { startPage });
       if (success) {
-        const toastStore = useToastStore(this.$pinia);
+        const toastStore = useToastStore();
         toastStore.add({
           type: 'success',
           text: this.$t('messaging.preferred_start_page_saved_successfully'),

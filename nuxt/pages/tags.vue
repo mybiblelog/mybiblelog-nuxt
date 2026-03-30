@@ -150,8 +150,8 @@ export default {
       usePassageNoteTagEditorStore().openEditor(passageNoteTag);
     },
     async deletePassageNoteTag(id) {
-      const dialogStore = useDialogStore(this.$pinia);
-      const toastStore = useToastStore(this.$pinia);
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
       if (this.passageNoteTags.find(tag => tag.id === id).noteCount > 0) {
         await dialogStore.alert({ message: this.$t('cannot_delete_tag_in_use') });
         return;

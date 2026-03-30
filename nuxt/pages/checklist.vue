@@ -14,7 +14,7 @@
       </div>
       <div v-for="bookReport in bookReports" :key="bookReport.bookIndex" class="book-card">
         <div class="book-card--header">
-          <div class="book-card--completion-indicator">
+          <div>
             <check-mark-icon width="100%" height="100%" :fill="bookReport.complete ? '#0c0' : 'transparent'" />
           </div>
           <div class="book-card--book-name">
@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     logEntriesStore() {
-      return useLogEntriesStore(this.$pinia);
+      return useLogEntriesStore();
     },
     logEntries() {
       return this.logEntriesStore.currentLogEntries;
@@ -190,7 +190,7 @@ export default {
       if (this.busyChapter) {
         return;
       }
-      const toastStore = useToastStore(this.$pinia);
+      const toastStore = useToastStore();
       this.busyChapter = `${bookIndex}.${chapterIndex}`;
 
       const date = dayjs().format('YYYY-MM-DD');
@@ -338,10 +338,6 @@ export default {
 .chapter-card--chapter-number {
   text-align: center;
   font-weight: bold;
-}
-
-.chapter-card--completion-indicator {
-  //
 }
 </style>
 

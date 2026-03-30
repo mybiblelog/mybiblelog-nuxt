@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     passageNoteEditorStore() {
-      return usePassageNoteEditorStore(this.$pinia);
+      return usePassageNoteEditorStore();
     },
     open() {
       return this.passageNoteEditorStore.open;

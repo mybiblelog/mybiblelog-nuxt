@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     openActionSheet() {
-      const actionSheetStore = useActionSheetStore(this.$pinia);
+      const actionSheetStore = useActionSheetStore();
       actionSheetStore.openSheet({
         title: this.sheetTitle,
         actions: this.actions,

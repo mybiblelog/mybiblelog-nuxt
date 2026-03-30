@@ -296,11 +296,11 @@ export default {
       // If passageNote has empty: true, open for creating new note
       // Otherwise, open for editing existing note
       const noteToEdit = passageNote.empty ? null : passageNote;
-      usePassageNoteEditorStore(this.$pinia).openEditor(noteToEdit);
+      usePassageNoteEditorStore().openEditor(noteToEdit);
     },
     async deletePassageNote(id) {
-      const dialogStore = useDialogStore(this.$pinia);
-      const toastStore = useToastStore(this.$pinia);
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
       const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
       if (!confirmed) { return; }
 

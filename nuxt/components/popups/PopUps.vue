@@ -33,7 +33,7 @@ export default {
   name: 'PopUps',
   computed: {
     dialogStore() {
-      return useDialogStore(this.$pinia);
+      return useDialogStore();
     },
     dialog() {
       return this.dialogStore;

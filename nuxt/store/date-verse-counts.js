@@ -58,7 +58,7 @@ export const actions = {
       commit(SET_ALL_DATE_VERSE_COUNTS, cachedDateVerseCounts);
     }
 
-    const logEntries = useLogEntriesStore(this.$pinia).currentLogEntries;
+    const logEntries = useLogEntriesStore().currentLogEntries;
 
     const cumulativeLogEntries = [];
     let totalVersesToDate = 0;

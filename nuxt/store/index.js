@@ -60,7 +60,7 @@ export const actions = {
     }
   },
   async loadUserData({ dispatch }) {
-    await useLogEntriesStore(this.$pinia).loadLogEntries();
+    await useLogEntriesStore().loadLogEntries();
     await dispatch('user-settings/loadSettings');
   },
 };

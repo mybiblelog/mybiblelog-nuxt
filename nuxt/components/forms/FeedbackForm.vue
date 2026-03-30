@@ -85,7 +85,7 @@ export default {
         this.form.kind = 'bug';
         this.form.message = '';
 
-        const dialogStore = useDialogStore(this.$pinia);
+        const dialogStore = useDialogStore();
         await dialogStore.alert({ message: this.$t('messaging.feedback_submitted') });
 
         // Emit success event so parent can handle (e.g., close modal)
