@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { Bible } from '@mybiblelog/shared';
+import { useAchievementsStore } from '~/stores/achievements';
 
 export type LogEntry = {
   id: number | string;
@@ -85,15 +86,15 @@ export const useLogEntriesStore = defineStore('log-entries', {
       const isBookNowComplete = isBookComplete(bookIndex, updatedLogEntries);
       const isBibleNowComplete = isBibleComplete(updatedLogEntries);
 
+      if (!wasBibleComplete && isBibleNowComplete) {
+        useAchievementsStore().showBibleCompleteAchievement();
+      }
+      else if (!wasBookComplete && isBookNowComplete) {
+        useAchievementsStore().showBookCompleteAchievement(bookIndex);
+      }
+
       const vuex = this.$vuex;
       if (vuex) {
-        if (!wasBibleComplete && isBibleNowComplete) {
-          vuex.dispatch('achievements/showBibleCompleteAchievement', null, { root: true });
-        }
-        else if (!wasBookComplete && isBookNowComplete) {
-          vuex.dispatch('achievements/showBookCompleteAchievement', bookIndex, { root: true });
-        }
-
         vuex.dispatch('reading-suggestions/refreshReadingSuggestions', null, { root: true });
         vuex.dispatch('date-verse-counts/cacheDateVerseCounts', date, { root: true });
       }
@@ -129,15 +130,15 @@ export const useLogEntriesStore = defineStore('log-entries', {
       const isBookNowComplete = isBookComplete(bookIndex, updatedLogEntries);
       const isBibleNowComplete = isBibleComplete(updatedLogEntries);
 
+      if (!wasBibleComplete && isBibleNowComplete) {
+        useAchievementsStore().showBibleCompleteAchievement();
+      }
+      else if (!wasBookComplete && isBookNowComplete) {
+        useAchievementsStore().showBookCompleteAchievement(bookIndex);
+      }
+
       const vuex = this.$vuex;
       if (vuex) {
-        if (!wasBibleComplete && isBibleNowComplete) {
-          vuex.dispatch('achievements/showBibleCompleteAchievement', null, { root: true });
-        }
-        else if (!wasBookComplete && isBookNowComplete) {
-          vuex.dispatch('achievements/showBookCompleteAchievement', bookIndex, { root: true });
-        }
-
         vuex.dispatch('reading-suggestions/refreshReadingSuggestions', null, { root: true });
         vuex.dispatch('date-verse-counts/cacheDateVerseCounts', date, { root: true });
       }
