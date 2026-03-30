@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import * as csv from 'csv';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import { UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 import { useToastStore } from '~/stores/toast';
+import { useLogEntriesStore } from '~/stores/log-entries';
 
 const delimiter = ',';
 
@@ -75,9 +75,12 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      logEntries: state => state['log-entries'].logEntries,
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore(this.$pinia);
+    },
+    logEntries() {
+      return this.logEntriesStore.logEntries;
+    },
   },
   methods: {
     /**

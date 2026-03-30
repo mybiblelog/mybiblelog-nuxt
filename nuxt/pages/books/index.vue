@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import BibleReport from '@/components/BibleReport';
+import { useLogEntriesStore } from '~/stores/log-entries';
 
 export default {
   components: {
@@ -22,9 +22,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      logEntries: 'log-entries/currentLogEntries',
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore(this.$pinia);
+    },
+    logEntries() {
+      return this.logEntriesStore.currentLogEntries;
+    },
   },
   methods: {
     viewBookReport(bookIndex) {

@@ -219,6 +219,7 @@ import { Bible } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import InfoLink from '@/components/InfoLink';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
+import { useLogEntriesStore } from '~/stores/log-entries';
 
 export default {
   name: 'ProgressPage',
@@ -246,10 +247,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      logEntries: 'log-entries/currentLogEntries',
       dateVerseCountsBusy: 'date-verse-counts/busy',
       getDateVerseCounts: 'date-verse-counts/getDateVerseCounts',
     }),
+    logEntriesStore() {
+      return useLogEntriesStore(this.$pinia);
+    },
+    logEntries() {
+      return this.logEntriesStore.currentLogEntries;
+    },
     ...mapState({
       userSettings: state => state['user-settings'].settings,
     }),

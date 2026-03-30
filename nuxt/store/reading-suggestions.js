@@ -3,6 +3,7 @@ import { Bible, SimpleDate, displayDaysSince } from '@mybiblelog/shared';
 import {
   SET_READING_SUGGESTIONS,
 } from './mutation-types';
+import { useLogEntriesStore } from '~/stores/log-entries';
 
 export const state = () => ({
   passages: [],
@@ -19,8 +20,8 @@ const capitalize = word =>
   word.slice(1);
 
 export const actions = {
-  refreshReadingSuggestions({ commit, rootGetters }) {
-    const logEntries = rootGetters['log-entries/currentLogEntries'];
+  refreshReadingSuggestions({ commit }) {
+    const logEntries = useLogEntriesStore(this.$pinia).currentLogEntries;
 
     // Based on recent logEntries, suggest passages to read next
     const suggestionCount = 3;

@@ -60,10 +60,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import * as csv from 'csv';
 import { Bible, SimpleDate, displayDate } from '@mybiblelog/shared';
 import { useToastStore } from '~/stores/toast';
+import { useLogEntriesStore } from '~/stores/log-entries';
 
 const delimiter = ',';
 
@@ -90,9 +90,12 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      logEntries: state => state['log-entries'].logEntries,
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore(this.$pinia);
+    },
+    logEntries() {
+      return this.logEntriesStore.logEntries;
+    },
     activeLocale() {
       return this.$i18n.locales.find(locale => locale.code === this.$i18n.locale).name;
     },
@@ -194,7 +197,11 @@ export default {
         }
         else {
           newLogEntry.status = this.$t('log_entry_status.importing_now');
-          await this.$store.dispatch('log-entries/createLogEntry', newLogEntry);
+          await this.logEntriesStore.createLogEntry({
+            date: newLogEntry.date,
+            startVerseId: newLogEntry.startVerseId,
+            endVerseId: newLogEntry.endVerseId,
+          });
           newLogEntry.status = this.$t('log_entry_status.imported');
         }
       }

@@ -36,6 +36,7 @@ import LogEntry from '@/components/LogEntry';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
+import { useLogEntriesStore } from '~/stores/log-entries';
 
 export default {
   name: 'CalendarPage',
@@ -63,10 +64,15 @@ export default {
       dateVerseCountsBusy: 'date-verse-counts/busy',
       getDateVerseCounts: 'date-verse-counts/getDateVerseCounts',
     }),
+    logEntriesStore() {
+      return useLogEntriesStore(this.$pinia);
+    },
     ...mapState({
       userSettings: state => state['user-settings'].settings,
-      logEntries: state => state['log-entries'].logEntries,
     }),
+    logEntries() {
+      return this.logEntriesStore.logEntries;
+    },
     entryDate() {
       const dateLogEntries = [];
       let dateVerses = 0;
@@ -112,7 +118,7 @@ export default {
       const toastStore = useToastStore(this.$pinia);
       const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure') });
       if (!confirmed) { return; }
-      const success = await this.$store.dispatch('log-entries/deleteLogEntry', id);
+      const success = await this.logEntriesStore.deleteLogEntry(id);
       if (!success) {
         toastStore.add({
           type: 'error',

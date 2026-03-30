@@ -1,3 +1,5 @@
+import { useLogEntriesStore } from '~/stores/log-entries';
+
 export const AUTH_COOKIE_NAME = 'auth_token';
 
 const parseCookieHeader = (cookieHeader) => {
@@ -58,7 +60,7 @@ export const actions = {
     }
   },
   async loadUserData({ dispatch }) {
-    await dispatch('log-entries/loadLogEntries');
+    await useLogEntriesStore(this.$pinia).loadLogEntries();
     await dispatch('user-settings/loadSettings');
   },
 };

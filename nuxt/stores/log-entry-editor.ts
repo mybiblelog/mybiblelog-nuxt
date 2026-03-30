@@ -4,6 +4,7 @@ import { Bible } from '@mybiblelog/shared';
 import mapFormErrors from '~/helpers/map-form-errors';
 import { useDialogStore } from '~/stores/dialog';
 import { ApiError } from '~/helpers/api-error';
+import { useLogEntriesStore } from '~/stores/log-entries';
 
 export type LogEntryEditorModel = {
   id: number | string | null;
@@ -27,10 +28,6 @@ export type LogEntryEditorState = {
   logEntry: LogEntryEditorModel;
   errors: LogEntryEditorErrors;
   isValid: boolean;
-};
-
-type VuexStoreLike = {
-  dispatch: (type: string, payload?: unknown, options?: unknown) => Promise<unknown> | unknown;
 };
 
 const newLogEntry: LogEntryEditorModel = {
@@ -201,14 +198,23 @@ export const useLogEntryEditorStore = defineStore('log-entry-editor', {
       this.updateLogEntry(updated);
     },
 
-    async saveLogEntry(vuexStore: VuexStoreLike): Promise<unknown | null> {
+    async saveLogEntry(): Promise<unknown | null> {
       try {
         let savedLogEntry: unknown;
         if (this.logEntry.id) {
-          savedLogEntry = await vuexStore.dispatch('log-entries/updateLogEntry', this.logEntry, { root: true });
+          savedLogEntry = await useLogEntriesStore().updateLogEntry({
+            id: this.logEntry.id,
+            date: String(this.logEntry.date),
+            startVerseId: Number(this.logEntry.startVerseId),
+            endVerseId: Number(this.logEntry.endVerseId),
+          });
         }
         else {
-          savedLogEntry = await vuexStore.dispatch('log-entries/createLogEntry', this.logEntry, { root: true });
+          savedLogEntry = await useLogEntriesStore().createLogEntry({
+            date: String(this.logEntry.date),
+            startVerseId: Number(this.logEntry.startVerseId),
+            endVerseId: Number(this.logEntry.endVerseId),
+          });
         }
 
         if (savedLogEntry) {

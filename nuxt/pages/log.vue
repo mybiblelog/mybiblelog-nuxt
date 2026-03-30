@@ -136,7 +136,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { Bible, displayDate } from '@mybiblelog/shared';
 import { decodeLogEntriesRouteQuery, encodeLogEntriesQueryToRoute, defaultLogEntriesQuery } from '@/helpers/log-entries-route-query';
 import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
@@ -148,6 +147,7 @@ import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
+import { useLogEntriesStore } from '~/stores/log-entries';
 
 function stableCompare(a, b) {
   if (a === b) { return 0; }
@@ -178,9 +178,12 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      logEntries: state => state['log-entries'].logEntries,
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore(this.$pinia);
+    },
+    logEntries() {
+      return this.logEntriesStore.logEntries;
+    },
     hasAppliedViewOptions() {
       const q = this.query || {};
       const hasDateFilters = !!(q.startDate || q.endDate);
@@ -404,7 +407,7 @@ export default {
       const toastStore = useToastStore(this.$pinia);
       const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_entry') });
       if (!confirmed) { return; }
-      const success = await this.$store.dispatch('log-entries/deleteLogEntry', id);
+      const success = await this.logEntriesStore.deleteLogEntry(id);
       if (!success) {
         toastStore.add({
           type: 'error',

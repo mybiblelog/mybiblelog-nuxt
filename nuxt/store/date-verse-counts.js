@@ -1,6 +1,7 @@
 import { set as vueSet } from 'vue';
 import * as dayjs from 'dayjs';
 import { Bible, BrowserCache } from '@mybiblelog/shared';
+import { useLogEntriesStore } from '~/stores/log-entries';
 import {
   START_DATE_VERSE_COUNT_JOB,
   FINISH_DATE_VERSE_COUNT_JOB,
@@ -48,7 +49,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async cacheDateVerseCounts({ commit, getters, rootGetters, rootState }, startDate) {
+  async cacheDateVerseCounts({ commit, getters, rootState }, startDate) {
     commit(START_DATE_VERSE_COUNT_JOB);
 
     // Check for cached data to give an immediate visual response
@@ -57,7 +58,7 @@ export const actions = {
       commit(SET_ALL_DATE_VERSE_COUNTS, cachedDateVerseCounts);
     }
 
-    const logEntries = rootGetters['log-entries/currentLogEntries'];
+    const logEntries = useLogEntriesStore(this.$pinia).currentLogEntries;
 
     const cumulativeLogEntries = [];
     let totalVersesToDate = 0;

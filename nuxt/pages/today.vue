@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
@@ -138,6 +138,7 @@ import PassageNote from '@/components/PassageNote';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
+import { useLogEntriesStore } from '~/stores/log-entries';
 
 export default {
   name: 'TodayPage',
@@ -160,9 +161,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      logEntries: 'log-entries/currentLogEntries',
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore(this.$pinia);
+    },
+    logEntries() {
+      return this.logEntriesStore.currentLogEntries;
+    },
     ...mapState({
       userSettings: state => state['user-settings'].settings,
       readingSuggestions: state => state['reading-suggestions'].passages,
@@ -281,7 +285,7 @@ export default {
       const toastStore = useToastStore(this.$pinia);
       const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure_you_want_to_delete_this_entry') });
       if (!confirmed) { return; }
-      const success = await this.$store.dispatch('log-entries/deleteLogEntry', id);
+      const success = await this.logEntriesStore.deleteLogEntry(id);
       if (!success) {
         toastStore.add({
           type: 'error',

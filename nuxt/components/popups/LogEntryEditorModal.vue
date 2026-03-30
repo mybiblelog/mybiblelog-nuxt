@@ -54,7 +54,7 @@ export default {
       });
     },
     handleSave() {
-      this.logEntryEditorStore.saveLogEntry(this.$store);
+      this.logEntryEditorStore.saveLogEntry();
     },
   },
 };

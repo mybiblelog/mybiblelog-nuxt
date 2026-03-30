@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible, BrowserCache } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
@@ -57,6 +56,7 @@ import CaretDownIcon from '@/components/svg/CaretDownIcon';
 import SpinnerIcon from '@/components/svg/SpinnerIcon';
 import InfoLink from '@/components/InfoLink';
 import { useToastStore } from '~/stores/toast';
+import { useLogEntriesStore } from '~/stores/log-entries';
 const CHAPTER_CHECKLIST_CACHE_KEY = 'chapterChecklist';
 const CHAPTER_CHECKLIST_CACHE_MINUTES = 60;
 
@@ -94,9 +94,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      logEntries: 'log-entries/currentLogEntries',
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore(this.$pinia);
+    },
+    logEntries() {
+      return this.logEntriesStore.currentLogEntries;
+    },
     busy() {
       return Boolean(this.busyChapter || this.computeBusy);
     },
@@ -202,7 +205,7 @@ export default {
           logEntry.endVerseId === endVerseId
         ));
         if (matchingLogEntry) {
-          const success = await this.$store.dispatch('log-entries/deleteLogEntry', matchingLogEntry.id);
+          const success = await this.logEntriesStore.deleteLogEntry(matchingLogEntry.id);
           if (success) {
             await this.getBookReports();
           }
@@ -222,7 +225,7 @@ export default {
       }
       else {
         const newLogEntry = { date, startVerseId, endVerseId };
-        const createdEntry = await this.$store.dispatch('log-entries/createLogEntry', newLogEntry);
+        const createdEntry = await this.logEntriesStore.createLogEntry(newLogEntry);
         if (createdEntry) {
           await this.getBookReports();
         }
