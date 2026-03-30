@@ -36,9 +36,6 @@
             <nuxt-link class="navbar-item" :to="localePath('/calendar')">
               {{ $t('calendar') }}
             </nuxt-link>
-            <nuxt-link class="navbar-item" :to="localePath('/log')">
-              {{ $t('log') }}
-            </nuxt-link>
             <nuxt-link class="navbar-item" :to="localePath('/notes')">
               {{ $t('notes') }}
             </nuxt-link>
