@@ -218,11 +218,11 @@ To allow users to sign in with their existing user accounts you will need to fol
 
 The `$t` translation helper, provided by the i18n module, is used to translate messages.
 
-It will first look for the given message in the `<i18n>` block of the current component, and will fall back to the global translations registered in `nuxt.config.js` if the local `<i18n>` block is missing that message.
+It will first look for the given message in the `<i18n>` block of the current component, and will fall back to the global translations registered in `nuxt/nuxt.config.ts` if the local `<i18n>` block is missing that message.
 
-Note that since the global locale files are loaded from `nuxt.config.js`, updating them will not trigger a hot reload. The entire app will need to be restarted to see global locale updates.
+Note that since the global locale files are loaded from `nuxt/nuxt.config.ts`, updating them will not trigger a hot reload. The entire app will need to be restarted to see global locale updates.
 
-The `$terr` helper is a custom function that unwraps server errors. It is defined in `plugins/translate-api.js`.
+The `$terr` helper is a custom function that unwraps server errors. It is defined in `nuxt/plugins/translate-api.ts`.
 
 ### Adding a Locale
 
