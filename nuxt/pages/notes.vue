@@ -148,6 +148,7 @@ import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
+import { usePassageNotesStore } from '~/stores/passage-notes';
 
 export default {
   name: 'NotesListPage',
@@ -172,13 +173,24 @@ export default {
     };
   },
   computed: {
+    passageNotesStore() {
+      return usePassageNotesStore();
+    },
     ...mapState({
-      loading: state => state['passage-notes'].loading,
-      query: state => state['passage-notes'].query,
-      passageNotes: state => state['passage-notes'].passageNotes,
-      pagination: state => state['passage-notes'].pagination,
       passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
     }),
+    loading() {
+      return this.passageNotesStore.loading;
+    },
+    query() {
+      return this.passageNotesStore.query;
+    },
+    passageNotes() {
+      return this.passageNotesStore.passageNotes;
+    },
+    pagination() {
+      return this.passageNotesStore.pagination;
+    },
     pagerPage() {
       return Number((this.pagination && this.pagination.page) || 1);
     },
@@ -243,7 +255,7 @@ export default {
         const key = JSON.stringify(decoded);
         if (key === this.lastAppliedNotesRouteQueryKey) { return; }
         this.lastAppliedNotesRouteQueryKey = key;
-        await this.$store.dispatch('passage-notes/resetQuery', decoded);
+        await this.passageNotesStore.resetQuery(decoded);
       },
     },
     pagination() {
@@ -304,7 +316,7 @@ export default {
       const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
       if (!confirmed) { return; }
 
-      const success = await this.$store.dispatch('passage-notes/deletePassageNote', id);
+      const success = await this.passageNotesStore.deletePassageNote(id);
       if (!success) {
         toastStore.add({
           type: 'error',

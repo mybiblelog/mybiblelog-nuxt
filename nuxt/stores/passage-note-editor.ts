@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ApiError, UnknownApiError } from '@/helpers/api-error';
 import mapFormErrors from '@/helpers/map-form-errors';
 import { useDialogStore } from '~/stores/dialog';
+import { usePassageNotesStore } from '~/stores/passage-notes';
 
 export type PassageRange = {
   startVerseId: number;
@@ -97,21 +98,21 @@ export const usePassageNoteEditorStore = defineStore('passage-note-editor', {
 
     async savePassageNote(): Promise<unknown | null> {
       try {
-        const vuex = this.$vuex;
+        const passageNotesStore = usePassageNotesStore();
 
         let savedPassageNote: unknown;
         if (this.passageNote.id) {
-          savedPassageNote = await vuex.dispatch('passage-notes/updatePassageNote', this.passageNote, { root: true });
+          savedPassageNote = await passageNotesStore.updatePassageNote(this.passageNote as unknown as { id: number | string });
         }
         else {
-          savedPassageNote = await vuex.dispatch('passage-notes/createPassageNote', this.passageNote, { root: true });
+          savedPassageNote = await passageNotesStore.createPassageNote(this.passageNote as unknown as Record<string, unknown>);
         }
 
         if (savedPassageNote) {
           this.$reset();
-          // Reload passage notes list if it exists
-          if ((vuex.state as Record<string, unknown>)['passage-notes']) {
-            await vuex.dispatch('passage-notes/loadPassageNotesPage', null, { root: true });
+          // Reload passage notes list if already in use
+          if (passageNotesStore.hasLoadedOnce) {
+            await passageNotesStore.loadPassageNotesPage();
           }
           return savedPassageNote;
         }

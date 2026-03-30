@@ -139,6 +139,7 @@ import { useDialogStore } from '~/stores/dialog';
 import { useToastStore } from '~/stores/toast';
 import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { usePassageNotesStore } from '~/stores/passage-notes';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { useReadingSuggestionsStore } from '~/stores/reading-suggestions';
 
@@ -166,6 +167,9 @@ export default {
     logEntriesStore() {
       return useLogEntriesStore();
     },
+    passageNotesStore() {
+      return usePassageNotesStore();
+    },
     readingSuggestionsStore() {
       return useReadingSuggestionsStore();
     },
@@ -175,9 +179,13 @@ export default {
     ...mapState({
       userSettings: state => state['user-settings'].settings,
       passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
-      passageNotesLoading: state => state['passage-notes'].loading,
-      passageNotes: state => state['passage-notes'].passageNotes,
     }),
+    passageNotesLoading() {
+      return this.passageNotesStore.loading;
+    },
+    passageNotes() {
+      return this.passageNotesStore.passageNotes;
+    },
     readingSuggestions() {
       return this.readingSuggestionsStore.passages;
     },
@@ -234,7 +242,7 @@ export default {
     await this.readingSuggestionsStore.refreshReadingSuggestions();
     this.loadingReadingSuggestions = false;
     // Load the 3 most recent notes using the passage-notes store
-    await this.$store.dispatch('passage-notes/resetQuery', {
+    await this.passageNotesStore.resetQuery({
       limit: 3,
       offset: 0,
       sortOn: 'createdAt',
@@ -372,7 +380,7 @@ export default {
       const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
       if (!confirmed) { return; }
 
-      const success = await this.$store.dispatch('passage-notes/deletePassageNote', id);
+      const success = await this.passageNotesStore.deletePassageNote(id);
       if (!success) {
         toastStore.add({
           type: 'error',
@@ -380,7 +388,7 @@ export default {
         });
       }
       // Reload the recent notes after deletion
-      await this.$store.dispatch('passage-notes/updateQuery', {
+      await this.passageNotesStore.updateQuery({
         limit: 3,
         offset: 0,
         sortOn: 'createdAt',
