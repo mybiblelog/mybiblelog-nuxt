@@ -123,6 +123,7 @@ const bibleVersionNames = {
   [BibleVersions.LSG]: 'Louis Segond (LSG)',
   [BibleVersions.ARC]: 'Almeida Revista e Corrigida (ARC)',
   [BibleVersions.LUT]: 'Luther 1545 (LUT)',
+  [BibleVersions.KLB]: '한글성경 (KLB)',
   [BibleVersions.KRV]: '개역한글 (KRV)',
 };
 
