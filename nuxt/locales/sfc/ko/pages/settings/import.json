@@ -1,29 +1,29 @@
 {
-  "import": "가져오기",
-  "you_can_import_a_csv": "읽기 기록 CSV 파일을 My Bible Log로 가져올 수 있습니다.",
+  "import": "불러오기",
+  "you_can_import_a_csv": "읽기 기록 CSV 파일을 My Bible Log로 불러올 수 있습니다.",
   "choose_a_file": "파일 선택…",
   "log_import_progress": "가져오기 진행",
-  "date": "날짜",
+  "date": "일자",
   "passage": "구절",
-  "status": "상태",
+  "status": "현황",
   "no_log_entries_to_show": "표시할 읽기 기록이 없습니다.",
   "log_entry_status": {
-    "invalid": "잘못됨",
+    "invalid": "올바르지 않음",
     "to_do": "대기",
     "checking": "확인 중",
-    "already_exists": "이미 있음",
-    "importing_now": "가져오는 중",
-    "imported": "가져옴"
+    "already_exists": "이미 존재함",
+    "importing_now": "불러오는 중",
+    "imported": "불러오기 완료"
   },
   "messaging": {
-    "file_not_a_csv": "파일 {filename}은(는) CSV 형식이 아닙니다. 형식: {filetype}.",
-    "unable_to_parse_file": "파일 {filename}을(를) 해석할 수 없습니다. 형식이 맞는지 확인하세요.",
-    "unable_to_parse_any_log_entries": "업로드한 파일에서 읽기 기록을 찾을 수 없습니다.",
+    "file_not_a_csv": "{filename} 파일은 CSV 형식이 아닙니다. {filetype} 형식입니다.",
+    "unable_to_parse_file": "{filename} 파일을 해석할 수 없습니다. 형식이 올바른지 확인해주세요.",
+    "unable_to_parse_any_log_entries": "업로드된 파일에서 읽기 기록을 찾을 수 없습니다.",
     "successfully_processed_log_entries": "{count}개의 읽기 기록을 처리했습니다.",
     "there_was_a_problem_creating_the_log_entries": "읽기 기록을 만드는 중 문제가 발생했습니다.",
     "look_back_date_reset_message": {
-      "1": "가져온 파일에 기준 시작일 이전 기록이 포함되어 있습니다. 대부분의 화면에서는 진행 상황에 이 기록이 반영되지 않습니다.",
-      "2": "기준 시작일을 {lookBackDate}로 바꿔 이 기록을 포함할까요?"
+      "1": "불러온 파일에 기준 시작일 이전 기록이 포함되어 있습니다. 대부분의 페이지에서는 해당 기록이 진행 상황에 반영되지 않습니다.",
+      "2": "기준 시작일을 {lookBackDate}로 바꿔 해당 기록을 포함시킬까요?"
     },
     "update_look_back_date_yes": "기준 시작일 업데이트",
     "update_look_back_date_no": "현재 기준 시작일 유지",

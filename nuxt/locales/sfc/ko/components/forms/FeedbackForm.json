@@ -5,9 +5,9 @@
   "feature_request": "기능 제안",
   "general_comment": "일반 의견",
   "feedback_details": "피드백 내용",
-  "submit_feedback": "피드백 보내기",
+  "submit_feedback": "피드백 제출하기",
   "messaging": {
     "unknown_error": "알 수 없는 오류가 발생했습니다.",
-    "feedback_submitted": "피드백이 전송되었습니다. 감사합니다!"
+    "feedback_submitted": "피드백이 성공적으로 제출되었습니다. 감사합니다!"
   }
 }

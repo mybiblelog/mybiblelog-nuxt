@@ -1,50 +1,50 @@
 {
-  "progress": "진행",
-  "bible_books": "성경 책",
+  "progress": "진행 상황",
+  "bible_books": "성경 일람",
   "your_reading_settings": {
-    "title": "읽기 설정",
-    "description": "이 설정으로 진행 상황을 계산하고 표시합니다.",
-    "update_settings": "설정 바꾸기",
+    "title": "나의 읽기 설정",
+    "description": "아래 설정에 기반해 읽기 현황을 계산 및 표시합니다.",
+    "update_settings": "설정 변경",
     "look_back_date": "기준 시작일",
-    "daily_verse_count_goal": "하루 읽을 절 수 목표"
+    "daily_verse_count_goal": "일일 구절 목표"
   },
   "your_progress_so_far": {
-    "title": "지금까지의 진행",
-    "total_bible_verses": "성경 전체 절 수",
-    "verses_read": "읽은 절",
-    "verses_remaining": "남은 절",
+    "title": "현재까지의 진행 상황",
+    "total_bible_verses": "성경 전체 구절 수",
+    "verses_read": "읽은 구절 수",
+    "verses_remaining": "남은 구절 수",
     "percent_complete": "완료율"
   },
   "your_outlook": {
     "historical": {
       "title": "전체 기간 전망",
-      "description": "<strong>기준 시작일</strong> 이후 읽기 습관을 바탕으로, 성경을 다 읽는 데 얼마나 걸릴까요?"
+      "description": "<strong>기준 시작일</strong> 이후 읽기 습관을 바탕으로, 성경을 완독하는 데 얼마나 걸릴까요?"
     },
     "30_day": {
       "title": "최근 30일 전망",
-      "description": "지난 30일의 읽기 습관을 바탕으로, 성경을 다 읽는 데 얼마나 걸릴까요?"
+      "description": "지난 30일간의 읽기 습관을 바탕으로, 성경을 완독하는 데 얼마나 걸릴까요?"
     },
     "7_day": {
       "title": "최근 7일 전망",
-      "description": "지난 7일의 읽기 습관을 바탕으로, 성경을 다 읽는 데 얼마나 걸릴까요?"
+      "description": "지난 7일간의 읽기 습관을 바탕으로, 성경을 완독하는 데 얼마나 걸릴까요?"
     },
     "today": {
       "title": "오늘의 전망",
-      "description": "오늘 읽은 양을 바탕으로, 성경을 다 읽는 데 얼마나 걸릴까요?"
+      "description": "오늘 읽은 분량을 바탕으로, 성경을 완독하는 데 얼마나 걸릴까요?"
     },
-    "days_since_look_back_date": "<strong>기준 시작일</strong> 이후 일수",
-    "verses_read": "읽은 절",
-    "average_daily_verses_read": "하루 평균 읽은 절",
-    "days_to_finish_at_this_rate": "이 속도로 다 읽는 데 걸리는 날",
-    "date_to_finish_at_this_rate": "이 속도로 다 읽는 날짜"
+    "days_since_look_back_date": "<strong>기준 시작일<strong> 이후 경과일",
+    "verses_read": "읽은 구절 수",
+    "average_daily_verses_read": "일일 평균 읽은 구절 수",
+    "days_to_finish_at_this_rate": "현재 속도로 완독까지 남은 일수",
+    "date_to_finish_at_this_rate": "현재 속도로 완독 예상일"
   },
   "set_a_goal": {
-    "title": "목표 정하기",
-    "description": "성경을 다 읽을 목표 날짜를 정하면, 하루에 몇 절을 읽어야 하는지 알 수 있습니다.",
-    "goal_finish_date": "목표 완료일",
-    "goal_finish_date_error": "목표 날짜는 미래여야 합니다.",
-    "days_to_finish_by_goal": "목표까지 남은 날",
-    "verses_required_each_day": "하루에 필요한 절 수"
+    "title": "목표 설정",
+    "description": "성경 완독 목표일을 선택하면 매일 몇 구절을 읽어야 하는지 역산하여 표시해줍니다.",
+    "goal_finish_date": "목표달성일",
+    "goal_finish_date_error": "목표 일자는 미래여야 합니다.",
+    "days_to_finish_by_goal": "목표까지 남은 일수",
+    "verses_required_each_day": "매일 읽어야 할 구절 수"
   },
   "never": "해당 없음"
 }

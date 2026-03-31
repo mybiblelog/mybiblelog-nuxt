@@ -8,6 +8,7 @@
 #   export CROWDIN_PROJECT_ID="<numeric project id>"
 #   export CROWDIN_PERSONAL_TOKEN="<personal access token>"
 #   crowdin upload sources
+#   crowdin upload translations
 #   crowdin download
 #
 # Do not commit tokens. project_id may be set here instead of env if you prefer.

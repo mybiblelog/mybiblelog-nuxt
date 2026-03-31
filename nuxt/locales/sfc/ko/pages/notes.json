@@ -1,7 +1,7 @@
 {
   "notes": "노트",
   "tags": "태그",
-  "new": "새",
+  "new": "신규 작성",
   "pagination": {
     "label": "페이지",
     "prev": "이전",
