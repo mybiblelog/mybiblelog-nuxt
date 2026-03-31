@@ -44,6 +44,11 @@
         />
       </client-only>
     </div>
+    <div class="has-text-centered" style="margin-top: 1rem;">
+      <nuxt-link class="button is-light" :to="localePath('/log')">
+        {{ $t('view_all_reading') }}
+      </nuxt-link>
+    </div>
     <br>
     <h3 class="title is-5">
       {{ $t('reading_suggestions') }}
@@ -435,6 +440,7 @@ export default {
     "no_recent_notes": "Keine Notizen",
     "view_note": "Notiz ansehen",
     "new_note": "Neue Notiz",
+    "view_all_reading": "Alle Lesungen ansehen",
     "view_all_notes": "Alle Notizen ansehen",
     "note": {
       "edit": "Bearbeiten",
@@ -466,6 +472,7 @@ export default {
     "no_recent_notes": "No Notes",
     "view_note": "View Note",
     "new_note": "New Note",
+    "view_all_reading": "View All Reading",
     "view_all_notes": "View All Notes",
     "note": {
       "edit": "Edit",
@@ -497,6 +504,7 @@ export default {
     "no_recent_notes": "Sin Notas",
     "view_note": "Ver Nota",
     "new_note": "Nueva Nota",
+    "view_all_reading": "Ver Todas las Lecturas",
     "view_all_notes": "Ver Todas las Notas",
     "note": {
       "edit": "Editar",
@@ -528,6 +536,7 @@ export default {
     "no_recent_notes": "Aucune Note",
     "view_note": "Voir la Note",
     "new_note": "Nouvelle Note",
+    "view_all_reading": "Voir Toutes les Lectures",
     "view_all_notes": "Voir Toutes les Notes",
     "note": {
       "edit": "Éditer",
@@ -559,6 +568,7 @@ export default {
     "no_recent_notes": "Sem Notas",
     "view_note": "Ver Nota",
     "new_note": "Nova Nota",
+    "view_all_reading": "Ver Todas as Leituras",
     "view_all_notes": "Ver Todas as Notas",
     "note": {
       "edit": "Editar",
@@ -590,6 +600,7 @@ export default {
     "no_recent_notes": "Немає Нотаток",
     "view_note": "Переглянути Нотатку",
     "new_note": "Нова Нотатка",
+    "view_all_reading": "Переглянути Всі Читання",
     "view_all_notes": "Переглянути Всі Нотатки",
     "note": {
       "edit": "Редагувати",
