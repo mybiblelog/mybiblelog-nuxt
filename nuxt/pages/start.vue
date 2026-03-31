@@ -54,6 +54,7 @@ import DailyVerseCountGoalForm from '@/components/forms/settings/DailyVerseCount
 import PreferredBibleVersionForm from '@/components/forms/settings/PreferredBibleVersionForm.vue';
 import GetStartedModal from '@/components/popups/GetStartedModal.vue';
 import PillProgressBar from '@/components/PillProgressBar.vue';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   name: 'StartPage',
@@ -103,11 +104,11 @@ export default {
     };
   },
   async fetch() {
-    await this.$store.dispatch('user-settings/loadSettings');
+    await useUserSettingsStore().loadSettings();
   },
   computed: {
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
   },
   methods: {

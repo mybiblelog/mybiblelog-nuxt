@@ -33,16 +33,23 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { useActionSheetStore } from '~/stores/action-sheet';
 
 export default {
   name: 'ActionSheetModal',
   computed: {
-    ...mapState('action-sheet', {
-      open: state => state.open,
-      title: state => state.title,
-      actions: state => state.actions,
-    }),
+    actionSheetStore() {
+      return useActionSheetStore();
+    },
+    open() {
+      return this.actionSheetStore.open;
+    },
+    title() {
+      return this.actionSheetStore.title;
+    },
+    actions() {
+      return this.actionSheetStore.actions;
+    },
   },
   watch: {
     open(newValue) {
@@ -69,7 +76,7 @@ export default {
   },
   methods: {
     close() {
-      this.$store.dispatch('action-sheet/closeSheet');
+      this.actionSheetStore.closeSheet();
     },
     handleAction(action) {
       this.close();

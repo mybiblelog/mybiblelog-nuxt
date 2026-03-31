@@ -73,6 +73,8 @@
 
 <script>
 import { BibleVersions, BibleApps } from '@mybiblelog/shared';
+import { useToastStore } from '~/stores/toast';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 const bibleVersionNames = {
   [BibleVersions.NASB2020]: 'New American Standard Bible (NASB)',
@@ -183,14 +185,15 @@ export default {
       }
 
       this.isSaving = true;
-      const success = await this.$store.dispatch('user-settings/updateSettings', {
+      const success = await useUserSettingsStore().updateSettings({
         preferredBibleVersion: this.preferredBibleVersion,
         preferredBibleApp: this.preferredBibleApp,
       });
 
       if (success) {
         if (this.showToast) {
-          this.$store.dispatch('toast/add', {
+          const toastStore = useToastStore();
+          toastStore.add({
             type: 'success',
             text: this.$t('messaging.preferred_bible_settings_saved_successfully'),
           });

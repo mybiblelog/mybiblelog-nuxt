@@ -213,12 +213,15 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import InfoLink from '@/components/InfoLink';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
+import { useLogEntriesStore } from '~/stores/log-entries';
+import { useDateVerseCountsStore } from '~/stores/date-verse-counts';
+import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   name: 'ProgressPage',
@@ -237,7 +240,7 @@ export default {
     };
   },
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {
@@ -245,14 +248,27 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      logEntries: 'log-entries/currentLogEntries',
-      dateVerseCountsBusy: 'date-verse-counts/busy',
-      getDateVerseCounts: 'date-verse-counts/getDateVerseCounts',
-    }),
-    ...mapState({
-      userSettings: state => state['user-settings'].settings,
-    }),
+    dateVerseCountsStore() {
+      return useDateVerseCountsStore();
+    },
+    dateVerseCountsBusy() {
+      return this.dateVerseCountsStore.busy;
+    },
+    getDateVerseCounts() {
+      return this.dateVerseCountsStore.getDateVerseCounts;
+    },
+    logEntriesStore() {
+      return useLogEntriesStore();
+    },
+    logEntries() {
+      return this.logEntriesStore.currentLogEntries;
+    },
+    userSettingsStore() {
+      return useUserSettingsStore();
+    },
+    userSettings() {
+      return this.userSettingsStore.settings;
+    },
     totalBibleVerseCount() {
       return Bible.getTotalVerseCount();
     },
@@ -344,7 +360,7 @@ export default {
   mounted() {
     setTimeout(() => {
       // dispatch this long-running action in a timeout to prevent blocking
-      this.$store.dispatch('date-verse-counts/cacheDateVerseCounts');
+      this.dateVerseCountsStore.cacheDateVerseCounts();
     }, 0);
   },
   methods: {

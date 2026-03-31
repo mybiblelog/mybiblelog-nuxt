@@ -131,6 +131,8 @@
 
 <script>
 import CaretDownIcon from '@/components/svg/CaretDownIcon';
+import { useDialogStore } from '~/stores/dialog';
+import { useAuthStore } from '~/stores/auth';
 
 const SortColumns = {
   email: 'email',
@@ -248,22 +250,17 @@ export default {
       this.loadUsers();
     },
     async deleteUser(email) {
-      if (email === this.$store.state.auth.user.email) {
-        await this.$store.dispatch('dialog/alert', {
-          message: 'You cannot delete your own account.',
-        });
+      const dialogStore = useDialogStore();
+      if (email === useAuthStore().user?.email) {
+        await dialogStore.alert({ message: 'You cannot delete your own account.' });
         return;
       }
       let confirmed = false;
-      confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: `Are you sure you want to delete account "${email}"? This action cannot be undone.`,
-      });
+      confirmed = await dialogStore.confirm({ message: `Are you sure you want to delete account "${email}"? This action cannot be undone.` });
       if (!confirmed) {
         return;
       }
-      confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: `Are you absolutely certain? The account "${email}" will be completely removed from the system.`,
-      });
+      confirmed = await dialogStore.confirm({ message: `Are you absolutely certain? The account "${email}" will be completely removed from the system.` });
       if (!confirmed) {
         return;
       }
@@ -273,9 +270,7 @@ export default {
         this.loadUsers();
       }
       catch (err) {
-        await this.$store.dispatch('dialog/alert', {
-          message: 'Unable to delete user.',
-        });
+        await dialogStore.alert({ message: 'Unable to delete user.' });
       }
     },
     openUserDetails(user) {
@@ -287,9 +282,8 @@ export default {
     async signInAsUser() {
       if (!this.selectedUser) { return; }
 
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: 'Are you sure you want to sign in as this user? You will be logged out of your own account.',
-      });
+      const dialogStore = useDialogStore();
+      const confirmed = await dialogStore.confirm({ message: 'Are you sure you want to sign in as this user? You will be logged out of your own account.' });
       if (!confirmed) {
         return;
       }
@@ -303,9 +297,7 @@ export default {
         window.location.href = '/start';
       }
       catch (error) {
-        await this.$store.dispatch('dialog/alert', {
-          message: 'Unable to sign in as user.',
-        });
+        await dialogStore.alert({ message: 'Unable to sign in as user.' });
       }
     },
   },

@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import BibleReport from '@/components/BibleReport';
+import { useLogEntriesStore } from '~/stores/log-entries';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   components: {
@@ -14,7 +15,7 @@ export default {
   },
   middleware: ['auth'],
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {
@@ -22,9 +23,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      logEntries: 'log-entries/currentLogEntries',
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore();
+    },
+    logEntries() {
+      return this.logEntriesStore.currentLogEntries;
+    },
   },
   methods: {
     viewBookReport(bookIndex) {

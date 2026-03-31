@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { useAuthStore } from '~/stores/auth';
+
 export default {
   name: 'GoogleLoginPage',
   middleware: ['auth'],
@@ -46,7 +48,7 @@ export default {
         });
 
         // Reload user now that auth cookie should be set
-        await this.$store.dispatch('auth/refreshUser');
+        await useAuthStore().refreshUser();
 
         // Redirect to the user's preferred locale.
         const redirectUrl = this.localePath('/start', userLocale);

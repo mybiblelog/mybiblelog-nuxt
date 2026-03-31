@@ -27,14 +27,17 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { useDialogStore } from '~/stores/dialog';
 
 export default {
   name: 'PopUps',
   computed: {
-    ...mapState({
-      dialog: state => state.dialog,
-    }),
+    dialogStore() {
+      return useDialogStore();
+    },
+    dialog() {
+      return this.dialogStore;
+    },
     buttonClass() {
       return {
         [this.dialog.buttonType]: true,
@@ -49,13 +52,13 @@ export default {
 
   methods: {
     _clear() {
-      this.$store.dispatch('dialog/closeAlert');
+      this.dialogStore.closeAlert();
     },
     _confirm() {
-      this.$store.dispatch('dialog/acceptConfirm');
+      this.dialogStore.acceptConfirm();
     },
     _cancel() {
-      this.$store.dispatch('dialog/cancelConfirm');
+      this.dialogStore.cancelConfirm();
     },
   },
 };

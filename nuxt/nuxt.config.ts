@@ -13,6 +13,8 @@ dotenv.config({
 
 const config: NuxtConfig = {
   components: true,
+  // State management uses Pinia only.
+  store: false,
   // Doc: https://nuxt.com/docs/4.x/bridge/configuration
   bridge: {
     typescript: true,
@@ -59,10 +61,13 @@ const config: NuxtConfig = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/gtag.client.js',
-    '~/plugins/translate-api.js',
-    '~/plugins/nuxt-client-init.client.js',
-    '~/plugins/http.js',
+    // Ensure `$http` is available before Pinia stores initialize.
+    '~/plugins/http.ts',
+    '~/plugins/pinia.ts',
+    '~/plugins/app-init.server.ts',
+    '~/plugins/gtag.client.ts',
+    '~/plugins/translate-api.ts',
+    '~/plugins/nuxt-client-init.client.ts',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -70,6 +75,10 @@ const config: NuxtConfig = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
+    // Doc: https://typescript.nuxtjs.org/guide/introduction
+    // This is needed to enable TypeScript support in Nuxt 2,
+    // even beyond what Nuxt Bridge provides.
+    '@nuxt/typescript-build',
     // Doc: https://pwa.nuxtjs.org/
     '@nuxtjs/pwa',
   ],
@@ -121,7 +130,15 @@ const config: NuxtConfig = {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-      // Webpack alias removed - now using npm workspace package
+      // Ensure Pinia's ESM dependency (`vue-demi`) resolves correctly in Nuxt 2's
+      // server build, which can otherwise prefer CJS entrypoints.
+      if (config.resolve?.alias) {
+        // Vue 2's CJS entrypoint doesn't support named ESM imports (e.g. `computed`).
+        // Pinia + vue-demi expect ESM-style exports.
+        // eslint-disable-next-line dot-notation
+        config.resolve.alias['vue$'] = 'vue/dist/vue.runtime.esm.js';
+        config.resolve.alias['vue-demi'] = 'vue-demi/lib/index.mjs';
+      }
     },
     loaders: {
       scss: {

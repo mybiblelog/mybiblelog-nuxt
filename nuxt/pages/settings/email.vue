@@ -13,7 +13,7 @@
         <p>
           {{ $t('current_request.your_current_email_is') }}
           <br>
-          <strong>{{ $store.state.auth.user.email }}</strong>
+          <strong>{{ authStore.user?.email }}</strong>
         </p>
         <p>
           {{ $t('current_request.your_requested_email_is') }}
@@ -76,6 +76,9 @@
 <script>
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'EmailSettingsPage',
@@ -103,6 +106,11 @@ export default {
         { hid: 'robots', name: 'robots', content: 'noindex' },
       ],
     };
+  },
+  computed: {
+    authStore() {
+      return useAuthStore();
+    },
   },
   async mounted() {
     await this.checkChangeEmailRequestState();
@@ -171,7 +179,8 @@ export default {
           newEmail,
         });
         this.resetChangeEmailForm();
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore();
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.confirmation_link_sent'),
         });
@@ -192,24 +201,24 @@ export default {
     },
 
     async cancelChangeEmailRequest() {
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
       this.formBusy = true;
       try {
         const { data } = await this.$http.delete('/api/auth/change-email');
         if (data === true) {
           this.currentChangeEmailRequest = null;
-          await this.$store.dispatch('dialog/alert', {
-            message: this.$t('messaging.your_request_was_cancelled'),
-          });
+          await dialogStore.alert({ message: this.$t('messaging.your_request_was_cancelled') });
         }
         else {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'error',
             text: this.$t('messaging.unable_to_cancel_request'),
           });
         }
       }
       catch (err) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('messaging.something_went_wrong'),
         });

@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { useUserSettingsStore } from '~/stores/user-settings';
+
 export default {
   name: 'GetStartedStep',
   props: {
@@ -29,7 +31,7 @@ export default {
   },
   computed: {
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
   },
   methods: {
@@ -37,7 +39,7 @@ export default {
       this.$emit('previous');
     },
     async handleGetStarted() {
-      await this.$store.dispatch('user-settings/updateSettings', { startPage: 'today' });
+      await useUserSettingsStore().updateSettings({ startPage: 'today' });
       this.$router.push('/today');
     },
   },

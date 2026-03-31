@@ -27,12 +27,19 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible, displayDate } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
 import CalendarMonth from '@/components/calendar/CalendarMonth';
 import LogEntry from '@/components/LogEntry';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
+import { useLogEntriesStore } from '~/stores/log-entries';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
+import { useDateVerseCountsStore } from '~/stores/date-verse-counts';
+import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   name: 'CalendarPage',
@@ -48,7 +55,7 @@ export default {
     };
   },
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {
@@ -56,14 +63,27 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      dateVerseCountsBusy: 'date-verse-counts/busy',
-      getDateVerseCounts: 'date-verse-counts/getDateVerseCounts',
-    }),
-    ...mapState({
-      userSettings: state => state['user-settings'].settings,
-      logEntries: state => state['log-entries'].logEntries,
-    }),
+    dateVerseCountsStore() {
+      return useDateVerseCountsStore();
+    },
+    dateVerseCountsBusy() {
+      return this.dateVerseCountsStore.busy;
+    },
+    getDateVerseCounts() {
+      return this.dateVerseCountsStore.getDateVerseCounts;
+    },
+    logEntriesStore() {
+      return useLogEntriesStore();
+    },
+    userSettingsStore() {
+      return useUserSettingsStore();
+    },
+    userSettings() {
+      return this.userSettingsStore.settings;
+    },
+    logEntries() {
+      return this.logEntriesStore.logEntries;
+    },
     entryDate() {
       const dateLogEntries = [];
       let dateVerses = 0;
@@ -86,7 +106,7 @@ export default {
   mounted() {
     setTimeout(() => {
       // dispatch this long-running action in a timeout to prevent blocking
-      this.$store.dispatch('date-verse-counts/cacheDateVerseCounts');
+      this.dateVerseCountsStore.cacheDateVerseCounts();
     }, 0);
   },
   methods: {
@@ -102,28 +122,30 @@ export default {
       ];
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return this.userSettingsStore.getReadingUrl(bookIndex, chapterIndex);
     },
     async deleteEntry(id) {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('are_you_sure'),
-      });
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
+      const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure') });
       if (!confirmed) { return; }
-      const success = await this.$store.dispatch('log-entries/deleteLogEntry', id);
+      const success = await this.logEntriesStore.deleteLogEntry(id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('could_not_delete'),
         });
       }
     },
     openAddEntryFormForDate(date) {
-      this.$store.dispatch('log-entry-editor/openEditor', { empty: true, date });
+      const logEntryEditorStore = useLogEntryEditorStore();
+      logEntryEditorStore.openEditor({ empty: true, date });
     },
     openEditEntryForm(id) {
+      const logEntryEditorStore = useLogEntryEditorStore();
       const targetEntry = this.logEntries.find(e => e.id === id);
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id,
         date,
         startVerseId,
@@ -138,7 +160,7 @@ export default {
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      this.$store.dispatch('passage-note-editor/openEditor', {
+      usePassageNoteEditorStore().openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });

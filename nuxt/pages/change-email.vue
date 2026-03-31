@@ -31,6 +31,8 @@
 <script>
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useToastStore } from '~/stores/toast';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'ChangeEmailPage',
@@ -94,13 +96,14 @@ export default {
     }
 
     // Display confirmation toast
-    this.$store.dispatch('toast/add', {
+    const toastStore = useToastStore();
+    toastStore.add({
       type: 'success',
       text: this.$t('your_email_address_was_updated_successfully'),
     });
 
     // Reload user now that auth cookie should be set
-    await this.$store.dispatch('auth/refreshUser');
+    await useAuthStore().refreshUser();
 
     // Redirect to the settings page, which displays the current email
     this.$router.push(this.localePath('/settings'));

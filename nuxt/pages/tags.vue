@@ -85,12 +85,15 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
 import { displayDateTime, displayTimeSince } from '@mybiblelog/shared';
 import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import HyperlinkedText from '@/components/HyperlinkedText';
 import InfoLink from '@/components/InfoLink';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
+import { usePassageNoteTagEditorStore } from '~/stores/passage-note-tag-editor';
+import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
 
 export default {
   name: 'NoteTagsListPage',
@@ -106,27 +109,27 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
-    }),
-    ...mapGetters('passage-note-tags', [
-      'tagCreatedAtMs',
-    ]),
+    passageNoteTagsStore() {
+      return usePassageNoteTagsStore();
+    },
+    passageNoteTags() {
+      return this.passageNoteTagsStore.passageNoteTags;
+    },
     sortOrder: {
       get() {
-        return this.$store.state['passage-note-tags'].sortOrder;
+        return this.passageNoteTagsStore.sortOrder;
       },
       set(value) {
-        this.$store.dispatch('passage-note-tags/setPassageNoteTagSortOrder', { sortOrder: value, persist: true });
+        this.passageNoteTagsStore.setPassageNoteTagSortOrder({ sortOrder: value, persist: true });
       },
     },
   },
   mounted() {
-    this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
+    this.passageNoteTagsStore.loadPassageNoteTags();
   },
   methods: {
     tagCreatedAtDate(tag) {
-      const ms = this.tagCreatedAtMs(tag);
+      const ms = this.passageNoteTagsStore.tagCreatedAtMs(tag);
       return ms ? new Date(ms) : null;
     },
     displayTagDateTime(tag) {
@@ -144,23 +147,21 @@ export default {
       this.$router.push({ path: this.localePath('/notes'), query });
     },
     openPassageNoteTagEditor(passageNoteTag = null) {
-      this.$store.dispatch('passage-note-tag-editor/openEditor', passageNoteTag);
+      usePassageNoteTagEditorStore().openEditor(passageNoteTag);
     },
     async deletePassageNoteTag(id) {
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
       if (this.passageNoteTags.find(tag => tag.id === id).noteCount > 0) {
-        await this.$store.dispatch('dialog/alert', {
-          message: this.$t('cannot_delete_tag_in_use'),
-        });
+        await dialogStore.alert({ message: this.$t('cannot_delete_tag_in_use') });
         return;
       }
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('confirm_delete_tag'),
-      });
+      const confirmed = await dialogStore.confirm({ message: this.$t('confirm_delete_tag') });
       if (!confirmed) { return; }
 
-      const success = await this.$store.dispatch('passage-note-tags/deletePassageNoteTag', id);
+      const success = await this.passageNoteTagsStore.deletePassageNoteTag(id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('tag_not_deleted'),
         });

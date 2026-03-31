@@ -60,9 +60,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import * as csv from 'csv';
 import { Bible, SimpleDate, displayDate } from '@mybiblelog/shared';
+import { useToastStore } from '~/stores/toast';
+import { useLogEntriesStore } from '~/stores/log-entries';
+import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAppInitStore } from '~/stores/app-init';
 
 const delimiter = ',';
 
@@ -79,7 +82,7 @@ export default {
     };
   },
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {
@@ -89,14 +92,17 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      logEntries: state => state['log-entries'].logEntries,
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore();
+    },
+    logEntries() {
+      return this.logEntriesStore.logEntries;
+    },
     activeLocale() {
       return this.$i18n.locales.find(locale => locale.code === this.$i18n.locale).name;
     },
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
   },
   methods: {
@@ -193,12 +199,17 @@ export default {
         }
         else {
           newLogEntry.status = this.$t('log_entry_status.importing_now');
-          await this.$store.dispatch('log-entries/createLogEntry', newLogEntry);
+          await this.logEntriesStore.createLogEntry({
+            date: newLogEntry.date,
+            startVerseId: newLogEntry.startVerseId,
+            endVerseId: newLogEntry.endVerseId,
+          });
           newLogEntry.status = this.$t('log_entry_status.imported');
         }
       }
     },
     async uploadCSVFilesChange(event) {
+      const toastStore = useToastStore();
       const files = event.target.files;
       if (!files.length) { return; }
 
@@ -206,7 +217,7 @@ export default {
       this.importLogEntries = [];
       for (const file of files) {
         if (file.type && !file.type.includes('csv')) {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'error',
             text: this.$t('messaging.file_not_a_csv', { filename: file.name, filetype: file.type }),
           });
@@ -222,7 +233,7 @@ export default {
           })
           .then(fileLogEntries => this.importLogEntries.push(...fileLogEntries))
           .catch(() => {
-            this.$store.dispatch('toast/add', {
+            toastStore.add({
               type: 'error',
               text: this.$t('messaging.unable_to_parse_file', { filename: file.name }),
             });
@@ -231,7 +242,7 @@ export default {
 
       // Ensure there were valid entries
       if (!this.importLogEntries.length) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('messaging.unable_to_parse_any_log_entries'),
         });
@@ -240,7 +251,7 @@ export default {
 
       await this.createLogEntries()
         .then(() => {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'success',
             text: this.$t('messaging.successfully_processed_log_entries', { count: this.importLogEntries.length }),
           });
@@ -250,15 +261,16 @@ export default {
           }
         })
         .catch(() => {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'error',
             text: this.$t('messaging.there_was_a_problem_creating_the_log_entries'),
           });
         });
     },
     async updateLookBackDate() {
-      await this.$store.dispatch('user-settings/updateSettings', { lookBackDate: this.earliestLogEntryDate });
-      this.$store.dispatch('toast/add', {
+      const toastStore = useToastStore();
+      await useUserSettingsStore().updateSettings({ lookBackDate: this.earliestLogEntryDate });
+      toastStore.add({
         type: 'success',
         text: this.$t('messaging.look_back_date_updated_successfully'),
       });

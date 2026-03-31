@@ -11,11 +11,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import { encodeLogEntriesQueryToRoute } from '@/helpers/log-entries-route-query';
 import BookReport from '@/components/BookReport';
+import { useLogEntriesStore } from '~/stores/log-entries';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   components: {
@@ -33,15 +34,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      logEntries: 'log-entries/currentLogEntries',
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore();
+    },
+    logEntries() {
+      return this.logEntriesStore.currentLogEntries;
+    },
     book() {
       return Bible.getBooks().find(b => b.bibleOrder === this.bookIndex);
     },
   },
   mounted() {
-    this.$store.dispatch('log-entries/loadLogEntries');
+    useAppInitStore().loadUserData();
   },
   methods: {
     viewBibleReport() {

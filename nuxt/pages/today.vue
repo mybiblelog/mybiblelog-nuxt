@@ -126,7 +126,6 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
@@ -135,6 +134,16 @@ import DoubleProgressBar from '@/components/DoubleProgressBar';
 import LogEntry from '@/components/LogEntry';
 import InfoLink from '@/components/InfoLink';
 import PassageNote from '@/components/PassageNote';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
+import { useLogEntriesStore } from '~/stores/log-entries';
+import { usePassageNotesStore } from '~/stores/passage-notes';
+import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
+import { useReadingSuggestionsStore } from '~/stores/reading-suggestions';
+import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAppInitStore } from '~/stores/app-init';
 
 export default {
   name: 'TodayPage',
@@ -157,16 +166,36 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      logEntries: 'log-entries/currentLogEntries',
-    }),
-    ...mapState({
-      userSettings: state => state['user-settings'].settings,
-      readingSuggestions: state => state['reading-suggestions'].passages,
-      passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
-      passageNotesLoading: state => state['passage-notes'].loading,
-      passageNotes: state => state['passage-notes'].passageNotes,
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore();
+    },
+    passageNotesStore() {
+      return usePassageNotesStore();
+    },
+    passageNoteTagsStore() {
+      return usePassageNoteTagsStore();
+    },
+    readingSuggestionsStore() {
+      return useReadingSuggestionsStore();
+    },
+    logEntries() {
+      return this.logEntriesStore.currentLogEntries;
+    },
+    passageNoteTags() {
+      return this.passageNoteTagsStore.passageNoteTags;
+    },
+    userSettings() {
+      return useUserSettingsStore().settings;
+    },
+    passageNotesLoading() {
+      return this.passageNotesStore.loading;
+    },
+    passageNotes() {
+      return this.passageNotesStore.passageNotes;
+    },
+    readingSuggestions() {
+      return this.readingSuggestionsStore.passages;
+    },
     loadingRecentNotes() {
       return this.passageNotesLoading;
     },
@@ -216,17 +245,17 @@ export default {
     },
   },
   async mounted() {
-    await this.$store.dispatch('loadUserData');
-    await this.$store.dispatch('reading-suggestions/refreshReadingSuggestions');
+    await useAppInitStore().loadUserData();
+    await this.readingSuggestionsStore.refreshReadingSuggestions();
     this.loadingReadingSuggestions = false;
     // Load the 3 most recent notes using the passage-notes store
-    await this.$store.dispatch('passage-notes/resetQuery', {
+    await this.passageNotesStore.resetQuery({
       limit: 3,
       offset: 0,
       sortOn: 'createdAt',
       sortDirection: 'descending',
     });
-    this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
+    await this.passageNoteTagsStore.loadPassageNoteTags();
   },
   methods: {
     actionsForTodayLogEntry(entry) {
@@ -245,7 +274,7 @@ export default {
       ];
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return useUserSettingsStore().getReadingUrl(bookIndex, chapterIndex);
     },
     addNewVerseCountToLogEntry(logEntry) {
       const today = dayjs().format('YYYY-MM-DD');
@@ -274,25 +303,27 @@ export default {
       };
     },
     async deleteEntry(id) {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('are_you_sure_you_want_to_delete_this_entry'),
-      });
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
+      const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure_you_want_to_delete_this_entry') });
       if (!confirmed) { return; }
-      const success = await this.$store.dispatch('log-entries/deleteLogEntry', id);
+      const success = await this.logEntriesStore.deleteLogEntry(id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('the_log_entry_could_not_be_deleted'),
         });
       }
     },
     openAddEntryForm() {
-      this.$store.dispatch('log-entry-editor/openEditor', { empty: true });
+      const logEntryEditorStore = useLogEntryEditorStore();
+      logEntryEditorStore.openEditor({ empty: true });
     },
     openEditEntryForm(id) {
+      const logEntryEditorStore = useLogEntryEditorStore();
       const targetEntry = this.logEntries.find(e => e.id === id);
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id,
         date,
         startVerseId,
@@ -313,8 +344,9 @@ export default {
       }
     },
     trackPassage(passage) {
+      const logEntryEditorStore = useLogEntryEditorStore();
       const { startVerseId, endVerseId } = passage;
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id: null,
         date: dayjs().format('YYYY-MM-DD'),
         startVerseId,
@@ -323,7 +355,7 @@ export default {
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      this.$store.dispatch('passage-note-editor/openEditor', {
+      usePassageNoteEditorStore().openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });
@@ -347,23 +379,23 @@ export default {
       // If passageNote has empty: true, open for creating new note
       // Otherwise, open for editing existing note
       const noteToEdit = passageNote.empty ? null : passageNote;
-      this.$store.dispatch('passage-note-editor/openEditor', noteToEdit);
+      usePassageNoteEditorStore().openEditor(noteToEdit);
     },
     async deletePassageNote(id) {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('messaging.are_you_sure_delete_note'),
-      });
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
+      const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
       if (!confirmed) { return; }
 
-      const success = await this.$store.dispatch('passage-notes/deletePassageNote', id);
+      const success = await this.passageNotesStore.deletePassageNote(id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('messaging.note_could_not_be_deleted'),
         });
       }
       // Reload the recent notes after deletion
-      await this.$store.dispatch('passage-notes/updateQuery', {
+      await this.passageNotesStore.updateQuery({
         limit: 3,
         offset: 0,
         sortOn: 'createdAt',

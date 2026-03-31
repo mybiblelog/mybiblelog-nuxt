@@ -101,6 +101,8 @@
 
 <script>
 import { BibleApps, BibleVersions } from '@mybiblelog/shared';
+import { useToastStore } from '~/stores/toast';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 const bibleVersionNames = {
   [BibleVersions.NASB2020]: 'New American Standard Bible (NASB)',
@@ -177,7 +179,7 @@ export default {
   },
   computed: {
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
     bibleReadingDays() {
       if (!this.userSettings.dailyVerseCountGoal) {
@@ -193,9 +195,10 @@ export default {
   methods: {
     async handleDailyVerseCountGoalSubmit() {
       const { dailyVerseCountGoal } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { dailyVerseCountGoal });
+      const success = await useUserSettingsStore().updateSettings({ dailyVerseCountGoal });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore();
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.daily_verse_count_goal_saved_successfully'),
         });
@@ -206,9 +209,10 @@ export default {
     },
     async handleLookBackDateSubmit() {
       const { lookBackDate } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { lookBackDate });
+      const success = await useUserSettingsStore().updateSettings({ lookBackDate });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore();
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.look_back_date_saved_successfully'),
         });
@@ -219,9 +223,10 @@ export default {
     },
     async handlePreferredBibleVersionSubmit() {
       const { preferredBibleVersion } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { preferredBibleVersion });
+      const success = await useUserSettingsStore().updateSettings({ preferredBibleVersion });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore();
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.preferred_bible_version_saved_successfully'),
         });
@@ -232,9 +237,10 @@ export default {
     },
     async handlePreferredBibleAppSubmit() {
       const { preferredBibleApp } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { preferredBibleApp });
+      const success = await useUserSettingsStore().updateSettings({ preferredBibleApp });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore();
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.preferred_bible_app_saved_successfully'),
         });

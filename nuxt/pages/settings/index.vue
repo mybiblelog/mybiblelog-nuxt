@@ -6,7 +6,7 @@
       </h1>
       <div class="content">
         <p>
-          <em>{{ $store.state.auth.user.email }}</em>
+          <em>{{ authStore.user?.email }}</em>
         </p>
         <p>
           <nuxt-link class="button is-primary" :to="localePath('/settings/email')">
@@ -14,7 +14,7 @@
           </nuxt-link>
         </p>
       </div>
-      <template v-if="$store.state.auth.user.hasLocalAccount">
+      <template v-if="authStore.user?.hasLocalAccount">
         <h2 class="title is-4">
           {{ $t('password') }}
         </h2>
@@ -43,6 +43,10 @@
 </template>
 
 <script>
+import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAuthStore } from '~/stores/auth';
+import { useAppInitStore } from '~/stores/app-init';
+
 export default {
   name: 'SettingsPage',
   middleware: ['auth'],
@@ -51,7 +55,7 @@ export default {
     };
   },
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {
@@ -61,8 +65,11 @@ export default {
     };
   },
   computed: {
+    authStore() {
+      return useAuthStore();
+    },
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
   },
 };

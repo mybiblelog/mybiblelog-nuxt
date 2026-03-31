@@ -40,18 +40,23 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { usePassageNoteTagEditorStore } from '~/stores/passage-note-tag-editor';
 
 export default {
   name: 'PassageNoteTagEditorForm',
   computed: {
-    ...mapState('passage-note-tag-editor', {
-      passageNoteTag: state => state.passageNoteTag,
-      errors: state => state.errors,
-    }),
+    passageNoteTagEditorStore() {
+      return usePassageNoteTagEditorStore();
+    },
+    passageNoteTag() {
+      return this.passageNoteTagEditorStore.passageNoteTag;
+    },
+    errors() {
+      return this.passageNoteTagEditorStore.errors;
+    },
     isValid() {
       const valid = this.validatePassageNoteTag(this.passageNoteTag);
-      this.$store.dispatch('passage-note-tag-editor/setValid', valid);
+      this.passageNoteTagEditorStore.setValid(valid);
       return valid;
     },
   },
@@ -68,20 +73,20 @@ export default {
     updateLabel(event) {
       const updatedPassageNoteTag = JSON.parse(JSON.stringify(this.passageNoteTag));
       updatedPassageNoteTag.label = event.target.value;
-      this.$store.dispatch('passage-note-tag-editor/updatePassageNoteTag', updatedPassageNoteTag);
+      this.passageNoteTagEditorStore.updatePassageNoteTag(updatedPassageNoteTag);
     },
     updateColor(event) {
       const updatedPassageNoteTag = JSON.parse(JSON.stringify(this.passageNoteTag));
       updatedPassageNoteTag.color = event.target.value;
-      this.$store.dispatch('passage-note-tag-editor/updatePassageNoteTag', updatedPassageNoteTag);
+      this.passageNoteTagEditorStore.updatePassageNoteTag(updatedPassageNoteTag);
     },
     updateDescription(event) {
       const updatedPassageNoteTag = JSON.parse(JSON.stringify(this.passageNoteTag));
       updatedPassageNoteTag.description = event.target.value;
-      this.$store.dispatch('passage-note-tag-editor/updatePassageNoteTag', updatedPassageNoteTag);
+      this.passageNoteTagEditorStore.updatePassageNoteTag(updatedPassageNoteTag);
     },
     handleSubmit() {
-      this.$store.dispatch('passage-note-tag-editor/savePassageNoteTag');
+      this.passageNoteTagEditorStore.savePassageNoteTag();
     },
   },
 };

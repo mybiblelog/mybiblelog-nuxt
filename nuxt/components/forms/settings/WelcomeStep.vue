@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { useUserSettingsStore } from '~/stores/user-settings';
+
 export default {
   name: 'WelcomeStep',
   props: {
@@ -39,7 +41,7 @@ export default {
       this.$emit('next');
     },
     async handleSkip() {
-      const success = await this.$store.dispatch('user-settings/updateSettings', {
+      const success = await useUserSettingsStore().updateSettings({
         startPage: 'today',
       });
       if (success) {

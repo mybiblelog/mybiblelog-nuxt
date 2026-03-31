@@ -160,6 +160,7 @@
 <script>
 import VerseInput from '@/components/forms/VerseInput';
 import PassageNotesTagFilterModal from '@/components/popups/PassageNotesTagFilterModal';
+import { useDialogStore } from '~/stores/dialog';
 
 const DEFAULT_DRAFT = {
   limit: 10,
@@ -316,9 +317,8 @@ export default {
       this.draft = pickManagedQuery(this.appliedQuery);
     },
     async confirmAndReset() {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('reset_confirm'),
-      });
+      const dialogStore = useDialogStore();
+      const confirmed = await dialogStore.confirm({ message: this.$t('reset_confirm') });
       if (!confirmed) { return; }
 
       const update = pickManagedQuery(JSON.parse(JSON.stringify(DEFAULT_DRAFT)));

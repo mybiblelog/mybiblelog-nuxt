@@ -14,7 +14,7 @@
       </div>
       <div v-for="bookReport in bookReports" :key="bookReport.bookIndex" class="book-card">
         <div class="book-card--header">
-          <div class="book-card--completion-indicator">
+          <div>
             <check-mark-icon width="100%" height="100%" :fill="bookReport.complete ? '#0c0' : 'transparent'" />
           </div>
           <div class="book-card--book-name">
@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import * as dayjs from 'dayjs';
 import { Bible, BrowserCache } from '@mybiblelog/shared';
 import BusyBar from '@/components/BusyBar';
@@ -56,6 +55,8 @@ import CheckMarkIcon from '@/components/svg/CheckMarkIcon';
 import CaretDownIcon from '@/components/svg/CaretDownIcon';
 import SpinnerIcon from '@/components/svg/SpinnerIcon';
 import InfoLink from '@/components/InfoLink';
+import { useToastStore } from '~/stores/toast';
+import { useLogEntriesStore } from '~/stores/log-entries';
 const CHAPTER_CHECKLIST_CACHE_KEY = 'chapterChecklist';
 const CHAPTER_CHECKLIST_CACHE_MINUTES = 60;
 
@@ -93,9 +94,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      logEntries: 'log-entries/currentLogEntries',
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore();
+    },
+    logEntries() {
+      return this.logEntriesStore.currentLogEntries;
+    },
     busy() {
       return Boolean(this.busyChapter || this.computeBusy);
     },
@@ -186,6 +190,7 @@ export default {
       if (this.busyChapter) {
         return;
       }
+      const toastStore = useToastStore();
       this.busyChapter = `${bookIndex}.${chapterIndex}`;
 
       const date = dayjs().format('YYYY-MM-DD');
@@ -200,19 +205,19 @@ export default {
           logEntry.endVerseId === endVerseId
         ));
         if (matchingLogEntry) {
-          const success = await this.$store.dispatch('log-entries/deleteLogEntry', matchingLogEntry.id);
+          const success = await this.logEntriesStore.deleteLogEntry(matchingLogEntry.id);
           if (success) {
             await this.getBookReports();
           }
           else {
-            this.$store.dispatch('toast/add', {
+            toastStore.add({
               type: 'error',
               text: this.$t('unable_to_mark_incomplete'),
             });
           }
         }
         else {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'info',
             text: this.$t('logged_before_today'),
           });
@@ -220,12 +225,12 @@ export default {
       }
       else {
         const newLogEntry = { date, startVerseId, endVerseId };
-        const createdEntry = await this.$store.dispatch('log-entries/createLogEntry', newLogEntry);
+        const createdEntry = await this.logEntriesStore.createLogEntry(newLogEntry);
         if (createdEntry) {
           await this.getBookReports();
         }
         else {
-          this.$store.dispatch('toast/add', {
+          toastStore.add({
             type: 'error',
             text: this.$t('unable_to_mark_complete'),
           });
@@ -333,10 +338,6 @@ export default {
 .chapter-card--chapter-number {
   text-align: center;
   font-weight: bold;
-}
-
-.chapter-card--completion-indicator {
-  //
 }
 </style>
 

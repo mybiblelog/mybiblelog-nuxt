@@ -136,7 +136,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import { decodePassageNotesRouteQuery, encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
 import PassageNote from '@/components/PassageNote';
@@ -145,6 +144,12 @@ import AppModal from '@/components/popups/AppModal';
 import InfoLink from '@/components/InfoLink';
 import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
+import { usePassageNotesStore } from '~/stores/passage-notes';
+import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   name: 'NotesListPage',
@@ -169,13 +174,27 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      loading: state => state['passage-notes'].loading,
-      query: state => state['passage-notes'].query,
-      passageNotes: state => state['passage-notes'].passageNotes,
-      pagination: state => state['passage-notes'].pagination,
-      passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
-    }),
+    passageNotesStore() {
+      return usePassageNotesStore();
+    },
+    passageNoteTagsStore() {
+      return usePassageNoteTagsStore();
+    },
+    passageNoteTags() {
+      return this.passageNoteTagsStore.passageNoteTags;
+    },
+    loading() {
+      return this.passageNotesStore.loading;
+    },
+    query() {
+      return this.passageNotesStore.query;
+    },
+    passageNotes() {
+      return this.passageNotesStore.passageNotes;
+    },
+    pagination() {
+      return this.passageNotesStore.pagination;
+    },
     pagerPage() {
       return Number((this.pagination && this.pagination.page) || 1);
     },
@@ -240,7 +259,7 @@ export default {
         const key = JSON.stringify(decoded);
         if (key === this.lastAppliedNotesRouteQueryKey) { return; }
         this.lastAppliedNotesRouteQueryKey = key;
-        await this.$store.dispatch('passage-notes/resetQuery', decoded);
+        await this.passageNotesStore.resetQuery(decoded);
       },
     },
     pagination() {
@@ -250,7 +269,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('passage-note-tags/loadPassageNoteTags');
+    this.passageNoteTagsStore.loadPassageNoteTags();
   },
   methods: {
     pushNotesQuery(nextQuery, { replace = false } = {}) {
@@ -260,7 +279,7 @@ export default {
       return replace ? this.$router.replace(nav) : this.$router.push(nav);
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return useUserSettingsStore().getReadingUrl(bookIndex, chapterIndex);
     },
     displayVerseRange(startVerseId, endVerseId) {
       return Bible.displayVerseRange(startVerseId, endVerseId, this.$i18n.locale);
@@ -293,17 +312,17 @@ export default {
       // If passageNote has empty: true, open for creating new note
       // Otherwise, open for editing existing note
       const noteToEdit = passageNote.empty ? null : passageNote;
-      this.$store.dispatch('passage-note-editor/openEditor', noteToEdit);
+      usePassageNoteEditorStore().openEditor(noteToEdit);
     },
     async deletePassageNote(id) {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('messaging.are_you_sure_delete_note'),
-      });
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
+      const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
       if (!confirmed) { return; }
 
-      const success = await this.$store.dispatch('passage-notes/deletePassageNote', id);
+      const success = await this.passageNotesStore.deletePassageNote(id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('messaging.note_could_not_be_deleted'),
         });

@@ -48,6 +48,9 @@
 </template>
 
 <script>
+import { useToastStore } from '~/stores/toast';
+import { useAuthStore } from '~/stores/auth';
+
 export default {
   name: 'DeleteAccountPage',
   middleware: ['auth'],
@@ -81,13 +84,13 @@ export default {
   },
   methods: {
     async deleteAccount() {
+      const toastStore = useToastStore();
       try {
         await this.$http.put('/api/settings/delete-account');
-        await this.$store.dispatch('auth/logout');
-        this.$router.push(this.localePath('/login', this.$i18n.locale));
+        await useAuthStore().logout();
       }
       catch (err) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('unable_to_delete'),
         });

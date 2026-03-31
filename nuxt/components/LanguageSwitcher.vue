@@ -34,6 +34,8 @@
 <script>
 import AppModal from '@/components/popups/AppModal.vue';
 import TranslatorIcon from '@/components/svg/TranslatorIcon.vue';
+import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'LanguageSwitcher',
@@ -59,8 +61,8 @@ export default {
       this.$i18n.setLocale(locale);
 
       // If the user is already logged in and changes the locale, we capture the new locale in the database
-      if (this.$store.state.auth.loggedIn) {
-        this.$store.dispatch('user-settings/updateSettings', { locale });
+      if (useAuthStore().loggedIn) {
+        useUserSettingsStore().updateSettings({ locale });
       }
     },
   },

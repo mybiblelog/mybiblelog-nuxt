@@ -2,16 +2,16 @@
   <nav class="navbar is-light is-fixed-top no-print" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <nuxt-link class="navbar-item" :to="localePath($store.state.auth.loggedIn ? '/start' : '/')" aria-label="home">
+        <nuxt-link class="navbar-item" :to="localePath(authStore.loggedIn ? '/start' : '/')" aria-label="home">
           <img src="/images/logo.svg" width="28" height="28" alt="">
         </nuxt-link>
-        <template v-if="!$store.state.auth.loggedIn">
-          <nuxt-link class="navbar-item" :to="localePath($store.state.auth.loggedIn ? '/start' : '/')">
+        <template v-if="!authStore.loggedIn">
+          <nuxt-link class="navbar-item" :to="localePath(authStore.loggedIn ? '/start' : '/')">
             {{ $t('my_bible_log') }}
           </nuxt-link>
         </template>
         <template v-else>
-          <nuxt-link class="navbar-item is-hidden-desktop-only" :to="localePath($store.state.auth.loggedIn ? '/start' : '/')">
+          <nuxt-link class="navbar-item is-hidden-desktop-only" :to="localePath(authStore.loggedIn ? '/start' : '/')">
             {{ $t('my_bible_log') }}
           </nuxt-link>
         </template>
@@ -23,7 +23,7 @@
       </div>
       <div class="navbar-menu" :class="{ 'is-active': navOpen }">
         <div class="navbar-start">
-          <template v-if="$store.state.auth.loggedIn">
+          <template v-if="authStore.loggedIn">
             <nuxt-link class="navbar-item" :to="localePath('/today')">
               {{ $t('today') }}
             </nuxt-link>
@@ -48,12 +48,12 @@
           <nuxt-link class="navbar-item" :to="localePath('/about/overview')">
             {{ $t('about') }}
           </nuxt-link>
-          <template v-if="$store.state.auth.loggedIn">
+          <template v-if="authStore.loggedIn">
             <nuxt-link class="navbar-item" :to="localePath('/settings')">
               {{ $t('settings') }}
             </nuxt-link>
           </template>
-          <template v-if="$store.state.auth.loggedIn && $store.state.auth.user.isAdmin">
+          <template v-if="authStore.loggedIn && authStore.user?.isAdmin">
             <div class="navbar-item has-dropdown" :class="{ 'is-active': adminDropdownOpen }">
               <a class="navbar-link" @click="toggleAdminDropdown">Admin</a>
               <div v-if="adminDropdownOpen" class="navbar-dropdown" @click="toggleAdminDropdown">
@@ -69,7 +69,7 @@
               </div>
             </div>
           </template>
-          <template v-if="$store.state.auth.loggedIn">
+          <template v-if="authStore.loggedIn">
             <a class="navbar-item" href="#" @click.prevent="logout">{{ $t('log_out') }}</a>
           </template>
           <template v-else>
@@ -89,6 +89,7 @@
 
 <script>
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'SiteNav',
@@ -108,6 +109,11 @@ export default {
       },
     };
   },
+  computed: {
+    authStore() {
+      return useAuthStore();
+    },
+  },
   watch: {
     $route() {
       this.navOpen = false;
@@ -121,12 +127,7 @@ export default {
       this.adminDropdownOpen = !this.adminDropdownOpen;
     },
     async logout() {
-      // Remove all cached user data at session end.
-      // Note that this removes ALL sessionStorage,
-      // not just values set by the BrowserCache utility.
-      sessionStorage.clear();
-      await this.$store.dispatch('auth/logout');
-      this.$router.push(this.localePath('/login', this.$i18n.locale));
+      await this.authStore.logout();
     },
   },
 };

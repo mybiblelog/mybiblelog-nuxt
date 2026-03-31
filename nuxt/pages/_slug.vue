@@ -8,14 +8,17 @@
 </template>
 
 <script>
+import { useAuthStore } from '~/stores/auth';
+
 export default {
   name: 'ContentPage',
-  async asyncData({ $content, params, app, error, store, redirect }) {
+  async asyncData({ $content, params, app, error, redirect }) {
     try {
       const slug = params.slug ?? 'index';
       const isIndexPage = slug === 'index';
 
-      if (isIndexPage && store.state.auth.loggedIn) {
+      const authStore = useAuthStore(app.pinia);
+      if (isIndexPage && authStore.loggedIn) {
         const currentSetLocale = app.i18n.locale;
         return redirect(app.localePath('/start', currentSetLocale));
       }

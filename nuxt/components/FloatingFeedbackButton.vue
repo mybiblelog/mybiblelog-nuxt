@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.state.auth.loggedIn">
+  <div v-if="authStore.loggedIn">
     <button
       class="floating-action-button"
       :aria-label="$t('floating_action_button.give_feedback')"
@@ -14,6 +14,7 @@
 <script>
 import FeedbackIcon from '@/components/svg/FeedbackIcon.vue';
 import FeedbackModal from '@/components/popups/FeedbackModal.vue';
+import { useAuthStore } from '~/stores/auth';
 
 export default {
   name: 'FloatingFeedbackButton',
@@ -25,6 +26,11 @@ export default {
     return {
       isModalVisible: false,
     };
+  },
+  computed: {
+    authStore() {
+      return useAuthStore();
+    },
   },
   methods: {
     openModal() {

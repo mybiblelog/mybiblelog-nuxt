@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { Bible, displayDateTime, displayTimeSince } from '@mybiblelog/shared';
 import HyperlinkedText from '@/components/HyperlinkedText';
 import PassageNoteTagPill from '@/components/PassageNoteTagPill';
+import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
 
 export default {
   name: 'PassageNote',
@@ -69,9 +69,12 @@ export default {
     },
   },
   computed: {
-    ...mapState({
-      passageNoteTags: state => state['passage-note-tags'].passageNoteTags,
-    }),
+    passageNoteTagsStore() {
+      return usePassageNoteTagsStore();
+    },
+    passageNoteTags() {
+      return this.passageNoteTagsStore.passageNoteTags;
+    },
   },
   methods: {
     displayVerseRange(startVerseId, endVerseId) {

@@ -19,6 +19,8 @@
 import { Bible } from '@mybiblelog/shared';
 import SegmentBar from '@/components/SegmentBar';
 import StarIcon from '@/components/svg/StarIcon';
+import { useActionSheetStore } from '~/stores/action-sheet';
+import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   components: {
@@ -66,13 +68,14 @@ export default {
   },
   methods: {
     openActionSheet() {
-      this.$store.dispatch('action-sheet/openSheet', {
+      const actionSheetStore = useActionSheetStore();
+      actionSheetStore.openSheet({
         title: this.sheetTitle,
         actions: this.actions,
       });
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return useUserSettingsStore().getReadingUrl(bookIndex, chapterIndex);
     },
     openChapterInBible() {
       const { bookIndex, chapterIndex } = this.report;

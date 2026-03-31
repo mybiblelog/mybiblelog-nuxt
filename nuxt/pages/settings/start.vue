@@ -28,6 +28,9 @@
 </template>
 
 <script>
+import { useToastStore } from '~/stores/toast';
+import { useUserSettingsStore } from '~/stores/user-settings';
+
 export default {
   name: 'StartPageSettingsPage',
   middleware: ['auth'],
@@ -50,7 +53,7 @@ export default {
   },
   computed: {
     userSettings() {
-      return this.$store.state['user-settings'].settings;
+      return useUserSettingsStore().settings;
     },
     startPageOptions() {
       return [
@@ -70,9 +73,10 @@ export default {
   methods: {
     async handleStartPageSubmit() {
       const { startPage } = this.userSettingsForm;
-      const success = await this.$store.dispatch('user-settings/updateSettings', { startPage });
+      const success = await useUserSettingsStore().updateSettings({ startPage });
       if (success) {
-        this.$store.dispatch('toast/add', {
+        const toastStore = useToastStore();
+        toastStore.add({
           type: 'success',
           text: this.$t('messaging.preferred_start_page_saved_successfully'),
         });

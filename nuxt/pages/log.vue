@@ -136,7 +136,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { Bible, displayDate } from '@mybiblelog/shared';
 import { decodeLogEntriesRouteQuery, encodeLogEntriesQueryToRoute, defaultLogEntriesQuery } from '@/helpers/log-entries-route-query';
 import { encodePassageNotesQueryToRoute } from '@/helpers/passage-notes-route-query';
@@ -145,6 +144,13 @@ import LogEntriesQueryManager from '@/components/log/LogEntriesQueryManager';
 import AppModal from '@/components/popups/AppModal';
 import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
+import { useDialogStore } from '~/stores/dialog';
+import { useToastStore } from '~/stores/toast';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
+import { useLogEntriesStore } from '~/stores/log-entries';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
+import { useUserSettingsStore } from '~/stores/user-settings';
+import { useAppInitStore } from '~/stores/app-init';
 
 function stableCompare(a, b) {
   if (a === b) { return 0; }
@@ -175,9 +181,12 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      logEntries: state => state['log-entries'].logEntries,
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore();
+    },
+    logEntries() {
+      return this.logEntriesStore.logEntries;
+    },
     hasAppliedViewOptions() {
       const q = this.query || {};
       const hasDateFilters = !!(q.startDate || q.endDate);
@@ -311,7 +320,7 @@ export default {
     },
     async loadPageData() {
       try {
-        await this.$store.dispatch('loadUserData');
+        await useAppInitStore().loadUserData();
       }
       finally {
         this.loading = false;
@@ -348,7 +357,8 @@ export default {
       this.pushLogQuery({ ...this.query, offset, limit: this.effectiveLimit });
     },
     openAddEntryForm() {
-      this.$store.dispatch('log-entry-editor/openEditor', { empty: true });
+      const logEntryEditorStore = useLogEntryEditorStore();
+      logEntryEditorStore.openEditor({ empty: true });
     },
     actionsForLogEntry(entry) {
       return [
@@ -360,7 +370,7 @@ export default {
       ];
     },
     getReadingUrl(bookIndex, chapterIndex) {
-      return this.$store.getters['user-settings/getReadingUrl'](bookIndex, chapterIndex);
+      return useUserSettingsStore().getReadingUrl(bookIndex, chapterIndex);
     },
     openPassageInBible(passage) {
       const start = Bible.parseVerseId(passage.startVerseId);
@@ -369,7 +379,7 @@ export default {
     },
     takeNoteOnPassage(passage) {
       const { startVerseId, endVerseId } = passage;
-      this.$store.dispatch('passage-note-editor/openEditor', {
+      usePassageNoteEditorStore().openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });
@@ -384,10 +394,11 @@ export default {
       this.$router.push({ path: this.localePath('/notes'), query });
     },
     openEditEntryForm(id) {
+      const logEntryEditorStore = useLogEntryEditorStore();
       const targetEntry = (this.logEntries || []).find(e => e.id === id);
       if (!targetEntry) { return; }
       const { date, startVerseId, endVerseId } = targetEntry;
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id,
         date,
         startVerseId,
@@ -395,13 +406,13 @@ export default {
       });
     },
     async deleteEntry(id) {
-      const confirmed = await this.$store.dispatch('dialog/confirm', {
-        message: this.$t('messaging.are_you_sure_delete_entry'),
-      });
+      const dialogStore = useDialogStore();
+      const toastStore = useToastStore();
+      const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_entry') });
       if (!confirmed) { return; }
-      const success = await this.$store.dispatch('log-entries/deleteLogEntry', id);
+      const success = await this.logEntriesStore.deleteLogEntry(id);
       if (!success) {
-        this.$store.dispatch('toast/add', {
+        toastStore.add({
           type: 'error',
           text: this.$t('messaging.log_entry_could_not_be_deleted'),
         });

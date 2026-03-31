@@ -62,6 +62,8 @@ import ChapterReport from '@/components/ChapterReport';
 import SegmentBar from '@/components/SegmentBar';
 import CaretRightIcon from '@/components/svg/CaretRightIcon';
 import CaretLeftIcon from '@/components/svg/CaretLeftIcon';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 
 const calcPercent = (numerator, denominator) => {
   return Math.floor(numerator / denominator * 100);
@@ -146,8 +148,9 @@ export default {
       return segments;
     },
     openAddEntryForm(bookIndex, chapterIndex) {
+      const logEntryEditorStore = useLogEntryEditorStore();
       const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
-      this.$store.dispatch('log-entry-editor/openEditor', {
+      logEntryEditorStore.openEditor({
         id: null,
         date: dayjs().format('YYYY-MM-DD'),
         startVerseId: Bible.makeVerseId(bookIndex, chapterIndex, 1),
@@ -158,7 +161,7 @@ export default {
       const chapterVerseCount = Bible.getChapterVerseCount(bookIndex, chapterIndex);
       const startVerseId = Bible.makeVerseId(bookIndex, chapterIndex, 1);
       const endVerseId = Bible.makeVerseId(bookIndex, chapterIndex, chapterVerseCount);
-      this.$store.dispatch('passage-note-editor/openEditor', {
+      usePassageNoteEditorStore().openEditor({
         passages: [{ startVerseId, endVerseId }],
         content: '',
       });

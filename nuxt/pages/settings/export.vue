@@ -44,12 +44,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import * as csv from 'csv';
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
 import { UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
+import { useToastStore } from '~/stores/toast';
+import { useLogEntriesStore } from '~/stores/log-entries';
+import { useAppInitStore } from '~/stores/app-init';
 
 const delimiter = ',';
 
@@ -64,7 +66,7 @@ export default {
     };
   },
   async fetch() {
-    await this.$store.dispatch('loadUserData');
+    await useAppInitStore().loadUserData();
   },
   head() {
     return {
@@ -74,9 +76,12 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      logEntries: state => state['log-entries'].logEntries,
-    }),
+    logEntriesStore() {
+      return useLogEntriesStore();
+    },
+    logEntries() {
+      return this.logEntriesStore.logEntries;
+    },
   },
   methods: {
     /**
@@ -132,7 +137,8 @@ export default {
           await this.generateTextDownloadFromNotes();
         }
         catch (err) {
-          this.$store.dispatch('toast/add', { type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
+          const toastStore = useToastStore();
+          toastStore.add({ type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
           return;
         }
       }
@@ -164,7 +170,8 @@ export default {
           await this.generateJsonDownloadFromNotes();
         }
         catch (err) {
-          this.$store.dispatch('toast/add', { type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
+          const toastStore = useToastStore();
+          toastStore.add({ type: 'error', text: this.$terr(mapFormErrors(new UnknownApiError())._form) });
           return;
         }
       }

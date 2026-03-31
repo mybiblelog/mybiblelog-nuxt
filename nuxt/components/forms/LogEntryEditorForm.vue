@@ -106,7 +106,7 @@
 <script>
 import * as dayjs from 'dayjs';
 import { Bible } from '@mybiblelog/shared';
-import { mapState } from 'vuex';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 
 export default {
   name: 'LogEntryEditorForm',
@@ -118,10 +118,15 @@ export default {
     };
   },
   computed: {
-    ...mapState('log-entry-editor', {
-      logEntry: state => state.logEntry,
-      isValid: state => state.isValid,
-    }),
+    logEntryEditorStore() {
+      return useLogEntryEditorStore();
+    },
+    logEntry() {
+      return this.logEntryEditorStore.logEntry;
+    },
+    isValid() {
+      return this.logEntryEditorStore.isValid;
+    },
     defaultDate() {
       return dayjs().format('YYYY-MM-DD');
     },
@@ -224,36 +229,36 @@ export default {
       return Bible.getBookName(bookIndex, this.$i18n.locale);
     },
     updateDate(event) {
-      this.$store.dispatch('log-entry-editor/updateDate', event.target.value);
+      this.logEntryEditorStore.updateDate(event.target.value);
     },
     onSelectBook(event) {
       const bookIndex = parseInt(event.target.value, 10);
-      this.$store.dispatch('log-entry-editor/selectBook', bookIndex);
+      this.logEntryEditorStore.selectBook(bookIndex);
       this.$nextTick(() => {
         this.$refs.startChapter?.focus();
       });
     },
     onSelectStartChapter(event) {
       const chapterIndex = parseInt(event.target.value, 10);
-      this.$store.dispatch('log-entry-editor/selectStartChapter', chapterIndex);
+      this.logEntryEditorStore.selectStartChapter(chapterIndex);
       this.$nextTick(() => {
         this.$refs.endVerse?.focus();
       });
     },
     onSelectStartVerse(event) {
       const verseIndex = parseInt(event.target.value, 10);
-      this.$store.dispatch('log-entry-editor/selectStartVerse', verseIndex);
+      this.logEntryEditorStore.selectStartVerse(verseIndex);
     },
     onSelectEndChapter(event) {
       const chapterIndex = parseInt(event.target.value, 10);
-      this.$store.dispatch('log-entry-editor/selectEndChapter', chapterIndex);
+      this.logEntryEditorStore.selectEndChapter(chapterIndex);
       this.$nextTick(() => {
         this.$refs.endVerse?.focus();
       });
     },
     onSelectEndVerse(event) {
       const verseIndex = parseInt(event.target.value, 10);
-      this.$store.dispatch('log-entry-editor/selectEndVerse', verseIndex);
+      this.logEntryEditorStore.selectEndVerse(verseIndex);
     },
   },
 };

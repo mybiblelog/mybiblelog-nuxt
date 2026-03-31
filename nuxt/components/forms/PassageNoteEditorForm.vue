@@ -92,11 +92,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
 import PassageSelector from '@/components/forms/PassageSelector';
 import PassageNoteTagPill from '@/components/PassageNoteTagPill';
 import PassageNoteManageTagsModal from '@/components/popups/PassageNoteManageTagsModal';
+import { useDialogStore } from '~/stores/dialog';
+import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 
 export default {
   name: 'PassageNoteEditorForm',
@@ -121,10 +122,15 @@ export default {
     };
   },
   computed: {
-    ...mapState('passage-note-editor', {
-      passageNote: state => state.passageNote,
-      errors: state => state.errors,
-    }),
+    passageNoteEditorStore() {
+      return usePassageNoteEditorStore();
+    },
+    passageNote() {
+      return this.passageNoteEditorStore.passageNote;
+    },
+    errors() {
+      return this.passageNoteEditorStore.errors;
+    },
     selectedTags() {
       const tagIds = this.passageNote?.tags ?? [];
       if (!this.passageNoteTags?.length) {
@@ -141,7 +147,7 @@ export default {
       if (!this.passageNote.content.length && !this.passageNote.passages.length) {
         valid = false;
       }
-      this.$store.dispatch('passage-note-editor/setValid', valid);
+      this.passageNoteEditorStore.setValid(valid);
       return valid;
     },
     editingPassageIsDirty() {
@@ -168,12 +174,12 @@ export default {
     passageSelectorChange(index, { startVerseId, endVerseId }) {
       const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
       this.$set(updatedPassageNote.passages, index, { startVerseId, endVerseId });
-      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
+      this.passageNoteEditorStore.updatePassageNote(updatedPassageNote);
     },
     addPassage() {
       const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
       updatedPassageNote.passages.push({ empty: true });
-      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
+      this.passageNoteEditorStore.updatePassageNote(updatedPassageNote);
       this.editingPassage = updatedPassageNote.passages.length - 1;
       this.editingNewPassage = true;
     },
@@ -205,7 +211,7 @@ export default {
         const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
         const originalValue = JSON.parse(this.editingPassageOriginalValue);
         this.$set(updatedPassageNote.passages, index, originalValue);
-        this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
+        this.passageNoteEditorStore.updatePassageNote(updatedPassageNote);
       }
       this.editingPassage = -1;
       this.editingNewPassage = false;
@@ -214,9 +220,8 @@ export default {
     async removePassage(index) {
       // only require confirmation if the passage is already valid (new or existing)
       if (!this.editingNewPassage) {
-        const confirmed = await this.$store.dispatch('dialog/confirm', {
-          message: this.$t('are_you_sure'),
-        });
+        const dialogStore = useDialogStore();
+        const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure') });
         if (!confirmed) {
           return;
         }
@@ -226,19 +231,19 @@ export default {
       }
       const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
       updatedPassageNote.passages.splice(index, 1);
-      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
+      this.passageNoteEditorStore.updatePassageNote(updatedPassageNote);
       this.editingNewPassage = false;
       this.editingPassageOriginalValue = null;
     },
     updateContent(event) {
       const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
       updatedPassageNote.content = event.target.value;
-      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
+      this.passageNoteEditorStore.updatePassageNote(updatedPassageNote);
     },
     updateSelectedTags(tags) {
       const updatedPassageNote = JSON.parse(JSON.stringify(this.passageNote));
       updatedPassageNote.tags = tags;
-      this.$store.dispatch('passage-note-editor/updatePassageNote', updatedPassageNote);
+      this.passageNoteEditorStore.updatePassageNote(updatedPassageNote);
     },
     openManageTags() {
       this.draftSelectedTagIds = JSON.parse(JSON.stringify(this.passageNote?.tags ?? []));
@@ -252,7 +257,7 @@ export default {
       this.closeManageTags();
     },
     handleSubmit() {
-      this.$store.dispatch('passage-note-editor/savePassageNote');
+      this.passageNoteEditorStore.savePassageNote();
     },
   },
 };

@@ -32,9 +32,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { Bible } from '@mybiblelog/shared';
-import { ACHIEVEMENT } from '@/store/achievements';
+import { ACHIEVEMENT, useAchievementsStore } from '~/stores/achievements';
 import StarIcon from '@/components/svg/StarIcon';
 import ShimmerStarIcon from '@/components/svg/ShimmerStarIcon';
 
@@ -51,9 +50,12 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      achievement: state => state.achievements,
-    }),
+    achievementsStore() {
+      return useAchievementsStore();
+    },
+    achievement() {
+      return this.achievementsStore;
+    },
     achievementTitle() {
       if (this.achievement.achievementType === ACHIEVEMENT.BOOK_COMPLETE) {
         const bookName = Bible.getBookName(this.achievement.achievementData, this.$i18n.locale);
@@ -101,7 +103,7 @@ export default {
   },
   methods: {
     _close() {
-      this.$store.dispatch('achievements/closeAchievement');
+      this.achievementsStore.closeAchievement();
     },
     createParticles() {
       const particleCount = 7;

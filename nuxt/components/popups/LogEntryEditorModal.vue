@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import AppModal from '@/components/popups/AppModal';
 import LogEntryEditorForm from '@/components/forms/LogEntryEditorForm';
+import { useLogEntryEditorStore } from '~/stores/log-entry-editor';
 
 export default {
   name: 'LogEntryEditorModal',
@@ -28,11 +28,18 @@ export default {
     LogEntryEditorForm,
   },
   computed: {
-    ...mapState('log-entry-editor', {
-      open: state => state.open,
-      isValid: state => state.isValid,
-      logEntry: state => state.logEntry,
-    }),
+    logEntryEditorStore() {
+      return useLogEntryEditorStore();
+    },
+    open() {
+      return this.logEntryEditorStore.open;
+    },
+    isValid() {
+      return this.logEntryEditorStore.isValid;
+    },
+    logEntry() {
+      return this.logEntryEditorStore.logEntry;
+    },
     modalTitle() {
       if (this.logEntry && this.logEntry.id) {
         return this.$t('edit_entry');
@@ -42,12 +49,12 @@ export default {
   },
   methods: {
     handleClose() {
-      this.$store.dispatch('log-entry-editor/closeEditor', {
+      this.logEntryEditorStore.closeEditor({
         confirmMessage: this.$t('messaging.are_you_sure_close_editor'),
       });
     },
     handleSave() {
-      this.$store.dispatch('log-entry-editor/saveLogEntry');
+      this.logEntryEditorStore.saveLogEntry();
     },
   },
 };
