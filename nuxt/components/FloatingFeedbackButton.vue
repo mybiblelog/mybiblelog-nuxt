@@ -85,10 +85,42 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/FloatingFeedbackButton.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/FloatingFeedbackButton.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/FloatingFeedbackButton.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/FloatingFeedbackButton.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/FloatingFeedbackButton.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/FloatingFeedbackButton.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/FloatingFeedbackButton.json" />
+<i18n lang="json">
+{
+  "en": {
+    "floating_action_button": {
+      "give_feedback": "Give Feedback"
+    }
+  },
+  "de": {
+    "floating_action_button": {
+      "give_feedback": "Feedback geben"
+    }
+  },
+  "es": {
+    "floating_action_button": {
+      "give_feedback": "Dar Comentarios"
+    }
+  },
+  "fr": {
+    "floating_action_button": {
+      "give_feedback": "Donner des Commentaires"
+    }
+  },
+  "ko": {
+    "floating_action_button": {
+      "give_feedback": "피드백 보내기"
+    }
+  },
+  "pt": {
+    "floating_action_button": {
+      "give_feedback": "Dar Feedback"
+    }
+  },
+  "uk": {
+    "floating_action_button": {
+      "give_feedback": "Залишити відгук"
+    }
+  }
+}
+</i18n>

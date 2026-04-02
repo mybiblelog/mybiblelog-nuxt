@@ -41,10 +41,28 @@ export default {
 <style lang="scss">
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/books/index.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/books/index.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/books/index.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/books/index.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/books/index.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/books/index.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/books/index.json" />
+<i18n lang="json">
+{
+  "en": {
+    "page_title": "Bible Books"
+  },
+  "de": {
+    "page_title": "Bibelbücher"
+  },
+  "es": {
+    "page_title": "Libros de la Biblia"
+  },
+  "fr": {
+    "page_title": "Livres de la Bible"
+  },
+  "ko": {
+    "page_title": "성경 일람"
+  },
+  "pt": {
+    "page_title": "Livros da Bíblia"
+  },
+  "uk": {
+    "page_title": "Книги Біблії"
+  }
+}
+</i18n>

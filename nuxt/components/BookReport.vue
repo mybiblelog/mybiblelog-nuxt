@@ -235,10 +235,35 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/BookReport.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/BookReport.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/BookReport.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/BookReport.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/BookReport.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/BookReport.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/BookReport.json" />
+<i18n lang="json">
+{
+  "en": {
+    "book_notes": "Book Notes",
+    "book_reading": "Book Reading"
+  },
+  "de": {
+    "book_notes": "Buch Notizen",
+    "book_reading": "Buch Lesen"
+  },
+  "es": {
+    "book_notes": "Notas del libro",
+    "book_reading": "Lectura del libro"
+  },
+  "fr": {
+    "book_notes": "Notes du livre",
+    "book_reading": "Lecture du livre"
+  },
+  "ko": {
+    "book_notes": "권별 노트",
+    "book_reading": "권별 읽기"
+  },
+  "pt": {
+    "book_notes": "Notas do livro",
+    "book_reading": "Leitura do livro"
+  },
+  "uk": {
+    "book_notes": "Нотатки книги",
+    "book_reading": "Читання книги"
+  }
+}
+</i18n>

@@ -171,10 +171,28 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/ActionMenu.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/ActionMenu.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/ActionMenu.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/ActionMenu.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/ActionMenu.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/ActionMenu.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/ActionMenu.json" />
+<i18n lang="json">
+{
+  "en": {
+    "open_menu": "Open menu"
+  },
+  "de": {
+    "open_menu": "Menü öffnen"
+  },
+  "es": {
+    "open_menu": "Abrir menú"
+  },
+  "fr": {
+    "open_menu": "Ouvrir le menu"
+  },
+  "ko": {
+    "open_menu": "메뉴 열기"
+  },
+  "pt": {
+    "open_menu": "Abrir menu"
+  },
+  "uk": {
+    "open_menu": "Відкрити меню"
+  }
+}
+</i18n>

@@ -1,9 +1,0 @@
-{
-  "change_email": "Змінити електронну адресу",
-  "confirming_your_new_email_address": "Підтвердження вашої нової електронної адреси...",
-  "your_email_change_request_has_expired": "Ваш запит на зміну електронної адреси застарів.",
-  "please_go_to_your_settings_and_try_changing_your_email_address_again": "Будь ласка, перейдіть до налаштувань і спробуйте змінити свою електронну адресу знову.",
-  "there_was_an_error_changing_your_email_address": "Під час зміни вашої електронної адреси сталася помилка.",
-  "an_unknown_error_occurred": "Сталася невідома помилка.",
-  "your_email_address_was_updated_successfully": "Ваша електронна адреса була успішно оновлена."
-}

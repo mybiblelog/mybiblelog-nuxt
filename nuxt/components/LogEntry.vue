@@ -128,10 +128,42 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/LogEntry.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/LogEntry.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/LogEntry.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/LogEntry.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/LogEntry.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/LogEntry.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/LogEntry.json" />
+<i18n lang="json">
+{
+  "en": {
+    "verse": "verse | verses",
+    "all": "all | all",
+    "new": "new | new"
+  },
+  "de": {
+    "verse": "Vers | Verse",
+    "all": "alle | alle",
+    "new": "neu | neu"
+  },
+  "es": {
+    "verse": "versículo | versículos",
+    "all": "todo | todos",
+    "new": "nuevo | nuevos"
+  },
+  "fr": {
+    "verse": "verset | versets",
+    "all": "tout | tout",
+    "new": "nouveau | nouveau"
+  },
+  "ko": {
+    "verse": "절 | 절",
+    "all": "전체 | 전체",
+    "new": "새 | 새"
+  },
+  "pt": {
+    "verse": "versículo | versículos",
+    "all": "todas | todas",
+    "new": "novos | novos"
+  },
+  "uk": {
+    "verse": "верс | віршів",
+    "all": "всі | всі",
+    "new": "новий | нові"
+  }
+}
+</i18n>

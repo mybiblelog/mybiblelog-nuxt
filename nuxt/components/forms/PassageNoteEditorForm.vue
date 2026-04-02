@@ -312,10 +312,112 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/PassageNoteEditorForm.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/PassageNoteEditorForm.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/PassageNoteEditorForm.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/PassageNoteEditorForm.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/forms/PassageNoteEditorForm.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/PassageNoteEditorForm.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/PassageNoteEditorForm.json" />
+<i18n lang="json">
+{
+  "en": {
+    "passages": "Passages",
+    "add_passage": "Add Passage",
+    "done": "Done",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "no_passages": "No passages added yet",
+    "content": "Content",
+    "tags": "Tags",
+    "manage_tags": "Choose Tags",
+    "no_tags_selected": "No tags selected",
+    "loading": "Loading",
+    "characters": "characters",
+    "are_you_sure": "Are you sure you want to remove this passage?"
+  },
+  "de": {
+    "passages": "Passagen",
+    "add_passage": "Passage hinzufügen",
+    "done": "Fertig",
+    "cancel": "Abbrechen",
+    "remove": "Entfernen",
+    "no_passages": "Noch keine Passagen hinzugefügt",
+    "content": "Inhalt",
+    "tags": "Tags",
+    "manage_tags": "Tags auswählen",
+    "no_tags_selected": "Keine Tags ausgewählt",
+    "loading": "Laden",
+    "characters": "Zeichen",
+    "are_you_sure": "Sind Sie sicher, dass Sie diese Passage entfernen möchten?"
+  },
+  "es": {
+    "passages": "Pasajes",
+    "add_passage": "Añadir Pasaje",
+    "done": "Hecho",
+    "cancel": "Cancelar",
+    "remove": "Eliminar",
+    "no_passages": "No hay pasajes",
+    "content": "Contenido",
+    "tags": "Etiquetas",
+    "manage_tags": "Elegir etiquetas",
+    "no_tags_selected": "No hay etiquetas seleccionadas",
+    "loading": "Cargando",
+    "characters": "caracteres",
+    "are_you_sure": "¿Estás seguro de que quieres eliminar este pasaje?"
+  },
+  "fr": {
+    "passages": "Passages",
+    "add_passage": "Ajouter un passage",
+    "done": "Terminé",
+    "cancel": "Annuler",
+    "remove": "Supprimer",
+    "no_passages": "Aucun passage",
+    "content": "Contenu",
+    "tags": "Étiquettes",
+    "manage_tags": "Choisir des étiquettes",
+    "no_tags_selected": "Aucune étiquette sélectionnée",
+    "loading": "Chargement",
+    "characters": "caractères",
+    "are_you_sure": "Êtes-vous sûr de vouloir supprimer ce passage ?"
+  },
+  "ko": {
+    "passages": "구절",
+    "add_passage": "구절 추가",
+    "done": "완료",
+    "cancel": "취소",
+    "remove": "삭제",
+    "no_passages": "아직 추가된 구절이 없습니다",
+    "content": "내용",
+    "tags": "태그",
+    "manage_tags": "태그 선택",
+    "no_tags_selected": "선택된 태그가 없습니다",
+    "loading": "불러오는 중",
+    "characters": "자",
+    "are_you_sure": "해당 구절을 삭제할까요?"
+  },
+  "pt": {
+    "passages": "Passagens",
+    "add_passage": "Adicionar Passagem",
+    "done": "Concluído",
+    "cancel": "Cancelar",
+    "remove": "Remover",
+    "no_passages": "Nenhuma passagem adicionada ainda",
+    "content": "Conteúdo",
+    "tags": "Tags",
+    "manage_tags": "Escolher Tags",
+    "no_tags_selected": "Nenhuma tag selecionada",
+    "loading": "Carregando",
+    "characters": "caracteres",
+    "are_you_sure": "Tem certeza de que deseja remover esta passagem?"
+  },
+  "uk": {
+    "passages": "Пасажі",
+    "add_passage": "Додати пасаж",
+    "done": "Готово",
+    "cancel": "Скасувати",
+    "remove": "Видалити",
+    "no_passages": "Немає пасажів",
+    "content": "Зміст",
+    "tags": "Теги",
+    "manage_tags": "Вибрати теги",
+    "no_tags_selected": "Теги не вибрані",
+    "loading": "Завантаження",
+    "characters": "символи",
+    "are_you_sure": "Ви впевнені, що хочете видалити цей пасаж?"
+  }
+}
+</i18n>

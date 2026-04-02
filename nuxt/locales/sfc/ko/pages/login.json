@@ -1,9 +1,0 @@
-{
-  "your_email_address_is_required": "이메일 주소를 입력해 주세요.",
-  "sign_in": "로그인",
-  "need_an_account": "계정이 없으신가요?",
-  "password_reset_link_sent": "암호 재설정 링크가 이메일 주소로 발송되었습니다.",
-  "email": "이메일",
-  "password": "비밀번호",
-  "forgot_your_password": "비밀번호를 잊으셨나요? 이메일을 통해 재설정해보세요."
-}

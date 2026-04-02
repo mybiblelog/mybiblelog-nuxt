@@ -224,10 +224,112 @@ export default {
 
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/log/LogEntriesQueryManager.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/log/LogEntriesQueryManager.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/log/LogEntriesQueryManager.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/log/LogEntriesQueryManager.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/log/LogEntriesQueryManager.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/log/LogEntriesQueryManager.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/log/LogEntriesQueryManager.json" />
+<i18n lang="json">
+{
+  "en": {
+    "title": "View Options",
+    "reset": "Reset",
+    "reset_confirm": "Are you sure you want to reset search/filter/sort settings?",
+    "first_date": "First Date",
+    "last_date": "Last Date",
+    "passage": "Filter by Passage",
+    "clear": "Clear",
+    "sort": "Sort",
+    "sort_newest_first": "Newest First",
+    "sort_oldest_first": "Oldest First",
+    "page_size": "Page Size",
+    "apply": "Apply",
+    "cancel": "Cancel"
+  },
+  "de": {
+    "title": "Ansichtsoptionen",
+    "reset": "Zurücksetzen",
+    "reset_confirm": "Möchten Sie die Such-/Filter-/Sortiereinstellungen wirklich zurücksetzen?",
+    "first_date": "Von (Datum)",
+    "last_date": "Bis (Datum)",
+    "passage": "Nach Passage filtern",
+    "clear": "Löschen",
+    "sort": "Sortieren",
+    "sort_newest_first": "Neueste zuerst",
+    "sort_oldest_first": "Älteste zuerst",
+    "page_size": "Seitengröße",
+    "apply": "Anwenden",
+    "cancel": "Abbrechen"
+  },
+  "es": {
+    "title": "Opciones de vista",
+    "reset": "Restablecer",
+    "reset_confirm": "¿Está seguro de que desea restablecer la búsqueda / filtros / orden?",
+    "first_date": "Primera fecha",
+    "last_date": "Última fecha",
+    "passage": "Filtrar por pasaje",
+    "clear": "Limpiar",
+    "sort": "Ordenar",
+    "sort_newest_first": "Más reciente primero",
+    "sort_oldest_first": "Más antiguo primero",
+    "page_size": "Tamaño de página",
+    "apply": "Aplicar",
+    "cancel": "Cancelar"
+  },
+  "fr": {
+    "title": "Options d’affichage",
+    "reset": "Réinitialiser",
+    "reset_confirm": "Êtes-vous sûr de vouloir réinitialiser la recherche / les filtres / le tri ?",
+    "first_date": "Première date",
+    "last_date": "Dernière date",
+    "passage": "Filtrer par passage",
+    "clear": "Effacer",
+    "sort": "Trier",
+    "sort_newest_first": "Le plus récent d'abord",
+    "sort_oldest_first": "Plus ancien en premier",
+    "page_size": "Taille de page",
+    "apply": "Appliquer",
+    "cancel": "Annuler"
+  },
+  "ko": {
+    "title": "보기 옵션",
+    "reset": "초기화",
+    "reset_confirm": "검색·필터·정렬 설정을 초기화할까요?",
+    "first_date": "시작 일자",
+    "last_date": "종료 일자",
+    "passage": "구절로 필터",
+    "clear": "지우기",
+    "sort": "정렬",
+    "sort_newest_first": "최신순",
+    "sort_oldest_first": "오래된순",
+    "page_size": "페이지 크기",
+    "apply": "적용",
+    "cancel": "취소"
+  },
+  "pt": {
+    "title": "Opções de visualização",
+    "reset": "Reiniciar",
+    "reset_confirm": "Tem certeza de que deseja reiniciar as configurações de busca / filtro / ordenação?",
+    "first_date": "Primeira data",
+    "last_date": "Última data",
+    "passage": "Filtrar por passagem",
+    "clear": "Limpar",
+    "sort": "Ordenar",
+    "sort_newest_first": "Mais Recentes Primeiro",
+    "sort_oldest_first": "Mais Antigos Primeiro",
+    "page_size": "Tamanho da página",
+    "apply": "Aplicar",
+    "cancel": "Cancelar"
+  },
+  "uk": {
+    "title": "Параметри перегляду",
+    "reset": "Скинути",
+    "reset_confirm": "Ви впевнені, що хочете скинути налаштування пошуку / фільтра / сортування?",
+    "first_date": "Перша дата",
+    "last_date": "Остання дата",
+    "passage": "Фільтрувати за уривком",
+    "clear": "Очистити",
+    "sort": "Сортувати",
+    "sort_newest_first": "Спочатку нові",
+    "sort_oldest_first": "Спочатку старі",
+    "page_size": "Розмір сторінки",
+    "apply": "Застосувати",
+    "cancel": "Скасувати"
+  }
+}
+</i18n>

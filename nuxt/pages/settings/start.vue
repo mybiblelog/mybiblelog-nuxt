@@ -100,10 +100,147 @@ select {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/settings/start.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/settings/start.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/settings/start.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/settings/start.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/settings/start.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/settings/start.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/settings/start.json" />
+<i18n lang="json">
+{
+  "en": {
+    "start_page": "Start Page",
+    "start": "Start",
+    "today": "Today",
+    "bible_books": "Bible Books",
+    "chapter_checklist": "Chapter Checklist",
+    "calendar": "Calendar",
+    "notes": "Notes",
+    "save": "Save",
+    "select_an_option": "Select an Option",
+    "preferred_start_page": {
+      "info": {
+        "1": "This page will be displayed when you first log in to My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Preferred start page saved successfully.",
+      "unable_to_save_preferred_start_page": "Unable to save."
+    }
+  },
+  "de": {
+    "start_page": "Startseite",
+    "start": "Start",
+    "today": "Heute",
+    "bible_books": "Bibelbücher",
+    "chapter_checklist": "Kapitel Checkliste",
+    "calendar": "Kalender",
+    "notes": "Notizen",
+    "save": "Speichern",
+    "select_an_option": "Eine Option auswählen",
+    "preferred_start_page": {
+      "info": {
+        "1": "Diese Seite wird angezeigt, wenn Sie sich zum ersten Mal bei My Bible Log anmelden."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Bevorzugte Startseite erfolgreich gespeichert.",
+      "unable_to_save_preferred_start_page": "Nicht gespeichert."
+    }
+  },
+  "es": {
+    "start_page": "Página de inicio",
+    "start": "Inicio",
+    "today": "Hoy",
+    "bible_books": "Libros Bíblicos",
+    "chapter_checklist": "Lista de Capítulos",
+    "calendar": "Calendario",
+    "notes": "Notas",
+    "save": "Guardar",
+    "select_an_option": "Seleccionar una opción",
+    "preferred_start_page": {
+      "info": {
+        "1": "Esta página se mostrará cuando inicie sesión por primera vez en My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Página de inicio preferida guardada con éxito.",
+      "unable_to_save_preferred_start_page": "No se puede guardar."
+    }
+  },
+  "fr": {
+    "start_page": "Page de démarrage",
+    "start": "Démarrer",
+    "today": "Aujourd'hui",
+    "bible_books": "Livres de la Bible",
+    "chapter_checklist": "Liste de Contrôle",
+    "calendar": "Calendrier",
+    "notes": "Notes",
+    "save": "Enregistrer",
+    "select_an_option": "Sélectionner une option",
+    "preferred_start_page": {
+      "info": {
+        "1": "Cette page s'affichera lorsque vous vous connecterez pour la première fois à My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Page de démarrage préférée enregistrée avec succès.",
+      "unable_to_save_preferred_start_page": "Impossible d'enregistrer."
+    }
+  },
+  "ko": {
+    "start_page": "시작 페이지",
+    "start": "시작",
+    "today": "오늘",
+    "bible_books": "성경 일람",
+    "chapter_checklist": "장별 체크",
+    "calendar": "달력",
+    "notes": "노트",
+    "save": "저장",
+    "select_an_option": "옵션 선택",
+    "preferred_start_page": {
+      "info": {
+        "1": "My Bible Log에 로그인할 때 이 페이지가 표시됩니다."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "선호 초기 화면이 저장되었습니다.",
+      "unable_to_save_preferred_start_page": "저장할 수 없습니다."
+    }
+  },
+  "pt": {
+    "start_page": "Página de início",
+    "start": "Início",
+    "today": "Hoje",
+    "bible_books": "Livros da Bíblia",
+    "chapter_checklist": "Lista de Capítulos",
+    "calendar": "Calendário",
+    "notes": "Notas",
+    "save": "Salvar",
+    "select_an_option": "Selecionar uma Opção",
+    "preferred_start_page": {
+      "info": {
+        "1": "Esta página será exibida quando você fizer login pela primeira vez no My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Página de início preferida salva com sucesso.",
+      "unable_to_save_preferred_start_page": "Não é possível salvar."
+    }
+  },
+  "uk": {
+    "start_page": "Стартова сторінка",
+    "start": "Старт",
+    "today": "Сьогодні",
+    "bible_books": "Книги Біблії",
+    "chapter_checklist": "Список розділів",
+    "calendar": "Календар",
+    "notes": "Нотатки",
+    "save": "Зберегти",
+    "select_an_option": "Вибрати опцію",
+    "preferred_start_page": {
+      "info": {
+        "1": "Ця сторінка буде відображатися, коли ви вперше ввійдете в My Bible Log."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Обрану стартову сторінку успішно збережено.",
+      "unable_to_save_preferred_start_page": "Не вдалося зберегти."
+    }
+  }
+}
+</i18n>

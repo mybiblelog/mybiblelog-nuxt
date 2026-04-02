@@ -118,10 +118,77 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/settings.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/settings.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/settings.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/settings.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/settings.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/settings.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/settings.json" />
+<i18n lang="json">
+{
+  "en": {
+    "settings": "Settings",
+    "menu": "Menu",
+    "account": "Account",
+    "start_page": "Start Page",
+    "reading": "Reading",
+    "reminder": "Reminder",
+    "export": "Export",
+    "import": "Import"
+  },
+  "de": {
+    "settings": "Einstellungen",
+    "menu": "Menü",
+    "account": "Konto",
+    "start_page": "Startseite",
+    "reading": "Lesen",
+    "reminder": "Erinnerung",
+    "export": "Exportieren",
+    "import": "Importieren"
+  },
+  "es": {
+    "settings": "Configuración",
+    "menu": "Menú",
+    "account": "Cuenta",
+    "start_page": "Página de inicio",
+    "reading": "Lectura",
+    "reminder": "Recordatorio",
+    "export": "Exportar",
+    "import": "Importar"
+  },
+  "fr": {
+    "settings": "Paramètres",
+    "menu": "Menu",
+    "account": "Compte",
+    "start_page": "Page de démarrage",
+    "reading": "Lecture",
+    "reminder": "Rappel",
+    "export": "Exporter",
+    "import": "Importer"
+  },
+  "ko": {
+    "settings": "설정",
+    "menu": "메뉴",
+    "account": "계정",
+    "start_page": "시작 페이지",
+    "reading": "읽기",
+    "reminder": "알림",
+    "export": "보내기",
+    "import": "불러오기"
+  },
+  "pt": {
+    "settings": "Configurações",
+    "menu": "Menu",
+    "account": "Conta",
+    "start_page": "Página de início",
+    "reading": "Leitura",
+    "reminder": "Lembrete",
+    "export": "Exportar",
+    "import": "Importar"
+  },
+  "uk": {
+    "settings": "Налаштування",
+    "menu": "Меню",
+    "account": "Акаунт",
+    "start_page": "Стартова сторінка",
+    "reading": "Читання",
+    "reminder": "Нагадування",
+    "export": "Експорт",
+    "import": "Імпорт"
+  }
+}
+</i18n>

@@ -43,10 +43,42 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/InfoLink.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/InfoLink.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/InfoLink.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/InfoLink.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/InfoLink.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/InfoLink.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/InfoLink.json" />
+<i18n lang="json">
+{
+  "en": {
+    "aria": {
+      "more_information": "More information"
+    }
+  },
+  "de": {
+    "aria": {
+      "more_information": "Weitere Informationen"
+    }
+  },
+  "es": {
+    "aria": {
+      "more_information": "Más información"
+    }
+  },
+  "fr": {
+    "aria": {
+      "more_information": "Plus d'informations"
+    }
+  },
+  "ko": {
+    "aria": {
+      "more_information": "추가 정보"
+    }
+  },
+  "pt": {
+    "aria": {
+      "more_information": "Mais informações"
+    }
+  },
+  "uk": {
+    "aria": {
+      "more_information": "Більше інформації"
+    }
+  }
+}
+</i18n>

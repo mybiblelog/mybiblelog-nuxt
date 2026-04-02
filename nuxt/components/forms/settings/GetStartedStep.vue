@@ -90,10 +90,77 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/settings/GetStartedStep.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/settings/GetStartedStep.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/settings/GetStartedStep.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/settings/GetStartedStep.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/forms/settings/GetStartedStep.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/settings/GetStartedStep.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/settings/GetStartedStep.json" />
+<i18n lang="json">
+{
+  "en": {
+    "start_page": {
+      "get_started": {
+        "title": "Get Started",
+        "description": "You're all set up! It's time to start reading.",
+        "feedback_hint": "One last thing - you can provide feedback, request features, and report bugs by clicking this feedback button in the bottom right corner.",
+        "button": "Let's Go"
+      }
+    }
+  },
+  "de": {
+    "start_page": {
+      "get_started": {
+        "title": "Loslegen",
+        "description": "Sie sind fertig eingerichtet! Es ist Zeit, mit dem Lesen zu beginnen.",
+        "feedback_hint": "Eine letzte Sache - Sie können Feedback geben, Funktionen anfordern und Fehler melden, indem Sie auf diese Feedback-Schaltfläche in der unteren rechten Ecke klicken.",
+        "button": "Los geht's"
+      }
+    }
+  },
+  "es": {
+    "start_page": {
+      "get_started": {
+        "title": "Comenzar",
+        "description": "¡Todo está listo! Es hora de comenzar a leer.",
+        "feedback_hint": "Una última cosa: puede proporcionar comentarios, solicitar funciones e informar errores haciendo clic en este botón de comentarios en la esquina inferior derecha.",
+        "button": "Vamos"
+      }
+    }
+  },
+  "fr": {
+    "start_page": {
+      "get_started": {
+        "title": "Commencer",
+        "description": "Tout est prêt ! Il est temps de commencer à lire.",
+        "feedback_hint": "Une dernière chose - vous pouvez fournir des commentaires, demander des fonctionnalités et signaler des bugs en cliquant sur ce bouton de commentaires dans le coin inférieur droit.",
+        "button": "Allons-y"
+      }
+    }
+  },
+  "ko": {
+    "start_page": {
+      "get_started": {
+        "title": "시작하기",
+        "description": "준비가 모두 끝났습니다! 이제 성경을 읽기 시작할 시간이에요.",
+        "feedback_hint": "마지막으로, 우하단에 보이는 피드백 버튼을 눌러 의견·기능 요청·버그 신고를 진행할 수 있습니다.",
+        "button": "시작해볼까요?"
+      }
+    }
+  },
+  "pt": {
+    "start_page": {
+      "get_started": {
+        "title": "Começar",
+        "description": "Tudo está pronto! É hora de começar a ler.",
+        "feedback_hint": "Uma última coisa - você pode fornecer feedback, solicitar recursos e relatar bugs clicando neste botão de feedback no canto inferior direito.",
+        "button": "Vamos lá"
+      }
+    }
+  },
+  "uk": {
+    "start_page": {
+      "get_started": {
+        "title": "Почніть",
+        "description": "Все налаштовано! Час почати читати.",
+        "feedback_hint": "Останнє - ви можете надати відгук, запросити функції та повідомити про помилки, натиснувши цю кнопку відгуку в правому нижньому куті.",
+        "button": "Поїхали"
+      }
+    }
+  }
+}
+</i18n>

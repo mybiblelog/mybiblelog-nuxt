@@ -90,10 +90,28 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/calendar/CalendarDateSelector.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/calendar/CalendarDateSelector.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/calendar/CalendarDateSelector.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/calendar/CalendarDateSelector.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/calendar/CalendarDateSelector.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/calendar/CalendarDateSelector.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/calendar/CalendarDateSelector.json" />
+<i18n lang="json">
+{
+  "en": {
+    "today": "Today"
+  },
+  "de": {
+    "today": "Heute"
+  },
+  "es": {
+    "today": "Hoy"
+  },
+  "fr": {
+    "today": "Aujourd'hui"
+  },
+  "ko": {
+    "today": "오늘"
+  },
+  "pt": {
+    "today": "Hoje"
+  },
+  "uk": {
+    "today": "Сьогодні"
+  }
+}
+</i18n>

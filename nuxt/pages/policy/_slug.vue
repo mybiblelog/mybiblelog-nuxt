@@ -45,10 +45,28 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/policy/_slug.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/policy/_slug.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/policy/_slug.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/policy/_slug.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/policy/_slug.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/policy/_slug.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/policy/_slug.json" />
+<i18n lang="json">
+{
+  "en": {
+    "back": "Back"
+  },
+  "de": {
+    "back": "Zurück"
+  },
+  "es": {
+    "back": "Atrás"
+  },
+  "fr": {
+    "back": "Retour"
+  },
+  "ko": {
+    "back": "뒤로가기"
+  },
+  "pt": {
+    "back": "Voltar"
+  },
+  "uk": {
+    "back": "Назад"
+  }
+}
+</i18n>

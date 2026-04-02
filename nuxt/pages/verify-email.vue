@@ -68,10 +68,42 @@ export default {
 //
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/verify-email.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/verify-email.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/verify-email.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/verify-email.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/verify-email.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/verify-email.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/verify-email.json" />
+<i18n lang="json">
+{
+  "en": {
+    "verify_email": "Verify Email",
+    "verifying_email": "Verifying Email",
+    "one_moment_please": "One moment please..."
+  },
+  "de": {
+    "verify_email": "E-Mail bestätigen",
+    "verifying_email": "E-Mail wird bestätigt",
+    "one_moment_please": "Einen Moment bitte..."
+  },
+  "es": {
+    "verify_email": "Verificar correo electrónico",
+    "verifying_email": "Verificando correo electrónico",
+    "one_moment_please": "Un momento por favor..."
+  },
+  "fr": {
+    "verify_email": "Vérifier l'email",
+    "verifying_email": "Vérification de l'email",
+    "one_moment_please": "Un instant s'il vous plaît..."
+  },
+  "ko": {
+    "verify_email": "이메일 인증",
+    "verifying_email": "이메일 인증 진행 중",
+    "one_moment_please": "잠시만 기다려주세요..."
+  },
+  "pt": {
+    "verify_email": "Verificar Email",
+    "verifying_email": "Verificando Email",
+    "one_moment_please": "Por favor, aguarde um momento..."
+  },
+  "uk": {
+    "verify_email": "Підтвердити електронну пошту",
+    "verifying_email": "Підтвердження електронної пошти",
+    "one_moment_please": "Зачекайте хвилинку..."
+  }
+}
+</i18n>

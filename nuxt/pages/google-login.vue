@@ -78,10 +78,35 @@ export default {
 //
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/google-login.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/google-login.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/google-login.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/google-login.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/google-login.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/google-login.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/google-login.json" />
+<i18n lang="json">
+{
+  "en": {
+    "page_title": "Sign In - Google",
+    "signing_in_with_google": "Signing in with Google..."
+  },
+  "de": {
+    "page_title": "Anmelden – Google",
+    "signing_in_with_google": "Mit Google anmelden..."
+  },
+  "es": {
+    "page_title": "Iniciar sesión - Google",
+    "signing_in_with_google": "Iniciando sesión con Google..."
+  },
+  "fr": {
+    "page_title": "Connexion - Google",
+    "signing_in_with_google": "Connexion avec Google en cours..."
+  },
+  "ko": {
+    "page_title": "Google 계정으로 로그인",
+    "signing_in_with_google": "Google로 로그인하는 중…"
+  },
+  "pt": {
+    "page_title": "Entrar - Google",
+    "signing_in_with_google": "Entrando com Google..."
+  },
+  "uk": {
+    "page_title": "Увійти - Google",
+    "signing_in_with_google": "Увійти через Google..."
+  }
+}
+</i18n>

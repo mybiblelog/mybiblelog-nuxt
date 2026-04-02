@@ -114,10 +114,42 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/popups/PopUps.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/popups/PopUps.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/popups/PopUps.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/popups/PopUps.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/popups/PopUps.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/popups/PopUps.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/popups/PopUps.json" />
+<i18n lang="json">
+{
+  "en": {
+    "ok": "OK",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "de": {
+    "ok": "OK",
+    "confirm": "Bestätigen",
+    "cancel": "Abbrechen"
+  },
+  "es": {
+    "ok": "OK",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
+  },
+  "fr": {
+    "ok": "D'accord",
+    "confirm": "Confirmer",
+    "cancel": "Annuler"
+  },
+  "ko": {
+    "ok": "확인",
+    "confirm": "확인",
+    "cancel": "취소"
+  },
+  "pt": {
+    "ok": "OK",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
+  },
+  "uk": {
+    "ok": "OK",
+    "confirm": "Підтвердити",
+    "cancel": "Скасувати"
+  }
+}
+</i18n>

@@ -4,8 +4,9 @@ This document describes how **My Bible Log** stores UI strings, how that layout 
 
 ## Source of truth
 
-- **The repository is authoritative.** After you merge a pull request, the JSON files in git are what production builds use.
-- **English is the source language** for new keys and copy. Translators work in Crowdin (or elsewhere); **downloaded translations are committed** like any other code change.
+- **The repository is authoritative.** After you merge a pull request, [`nuxt/locales/locales.ts`](nuxt/locales/locales.ts) and the Vue `<i18n>` blocks in git are what production builds use.
+- **English is the source language** for new keys and copy. Translators work in Crowdin; after **`crowdin download`**, run **`i18n:import-crowdin`** and commit the updated TypeScript / Vue sources (unless your team commits the bundle JSON under `nuxt/locales/crowdin/` instead—see [.gitignore](.gitignore)).
+- **Local translation edits are normal.** You may add or fix non-English strings directly in `locales.ts` or Vue `<i18n>` blocks during development. Run **`i18n:export-crowdin`**, then **`crowdin upload translations`** to push those bundle files to Crowdin so the project stays in sync (see [Typical CLI workflow](#typical-cli-workflow)).
 
 Crowdin is a collaboration layer: it helps translators work in context, reuse translations, and review changes. It does not replace git as the system of record.
 
@@ -13,25 +14,29 @@ Crowdin is a collaboration layer: it helps translators work in context, reuse tr
 
 ### Global (shared) messages
 
-- **Path:** `nuxt/locales/global/`
-- **Files:** One JSON file per app locale code, e.g. `en.json`, `de.json`, `es.json`, `fr.json`, `pt.json`, `uk.json`.
+- **Path:** [`nuxt/locales/locales.ts`](nuxt/locales/locales.ts)
 - **Contents:** Keys shared across the app (for example `api_error.*` used by `$terr`, `reading_suggestion.*`, `my_bible_log`, etc.).
-- **Loading:** Nuxt i18n is configured with `lazy: true` and `langDir: 'locales/global/'` in `nuxt/i18n.config.ts`. Only the **active locale’s** global file is loaded for that request—not every language at once.
+- **Loading:** [`nuxt/i18n.config.ts`](nuxt/i18n.config.ts) passes all global messages from `locales.ts` via `vueI18n.messages` (`lazy: false`).
 
-### Component and page messages (SFC-scoped)
+### Component messages (SFC-scoped, co-located)
 
-- **Path:** `nuxt/locales/sfc/<locale>/components/...` and `nuxt/locales/sfc/<locale>/pages/...`
-- **Layout:** Mirrors the path of the Vue file under `nuxt/components/` or `nuxt/pages/`, with `.json` instead of `.vue`.
-  - Example: `nuxt/components/forms/FeedbackForm.vue` → `nuxt/locales/sfc/en/components/forms/FeedbackForm.json` (and the same relative path for `de`, `es`, …).
-- **Wiring:** Vue files reference those JSON files with **self-closing** `<i18n>` blocks—one block per locale—using the `@/` alias, for example:
+- **Where:** At the end of each `nuxt/components/**/*.vue` file, a single **`<i18n lang="json">`** custom block holds **all locales** in one JSON object (top-level keys are locale codes: `en`, `de`, `es`, …).
+- **Example:**
 
 ```vue
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/FeedbackForm.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/FeedbackForm.json" />
-<!-- ... other locales ... -->
+<i18n lang="json">
+{
+  "en": { "aria": { "more_information": "More information" } },
+  "de": { "aria": { "more_information": "Weitere Informationen" } }
+}
+</i18n>
 ```
 
-These messages are still **scoped to the component or page** that declares the blocks; they ship with the bundles that use them, similar to the old inline `<i18n>` blocks, but the text is **editable as plain JSON** (and Crowdin-friendly).
+These messages are **scoped to that component**. For Crowdin, they are included in the merged per-locale bundles under `nuxt/locales/crowdin/` (see **Syncing with Crowdin**).
+
+### Page messages (SFC-scoped, co-located)
+
+- **Where:** At the end of each `nuxt/pages/**/*.vue` file that defines page copy, the same pattern applies: one **`<i18n lang="json">`** block with **all locale codes** as top-level keys (`en`, `de`, `es`, …), same as components.
 
 ### What is not in `nuxt/locales/`
 
@@ -42,18 +47,19 @@ Other localized content still lives elsewhere, for example:
 - Bible book names and related data in `shared/`
 - Day.js locales in `shared/date-helpers.ts`
 
-Those are **not** covered by the `nuxt/locales/sfc/**` layout. For a full “new locale” checklist beyond JSON UI strings, see **Adding a new locale** below and the longer list in [README.md](README.md) under **Adding a Locale**.
+Those are **not** the UI strings in `locales.ts` / Vue `<i18n>` blocks. For a full “new locale” checklist beyond that, see **Adding a new locale** below and [README.md](README.md) **Adding a Locale**.
 
 ## Adding or changing strings (developers)
 
 1. **Edit English only** when introducing a new key or changing source copy:
-   - Global: `nuxt/locales/global/en.json`
-   - Scoped: the matching file under `nuxt/locales/sfc/en/...`
-2. Keep JSON **valid** and preserve **vue-i18n** placeholders exactly (e.g. `{field}`, `{minlength}`, `{display_date}`). Do not rename keys unless you update every locale file and every `$t(...)` usage.
-3. Run **`npm run -w nuxt build`** (or dev) to catch broken paths or bad JSON.
-4. **Upload sources** to Crowdin (see [Syncing with Crowdin](#syncing-with-crowdin)) so translators see the new or updated strings.
+   - Global: the `en` object in [`nuxt/locales/locales.ts`](nuxt/locales/locales.ts)
+   - Page- / component-scoped: the `"en"` object inside the `<i18n lang="json">` block in the relevant `.vue` file
+2. Keep JSON (in Vue blocks) and TypeScript **valid**; preserve **vue-i18n** placeholders exactly (e.g. `{field}`, `{minlength}`, `{display_date}`). Do not rename keys unless you update every locale and every `$t(...)` usage.
+3. Run **`npm run -w nuxt build`** (or dev) to catch breakage.
+4. Run **`npm run -w nuxt i18n:export-crowdin`**, then **`crowdin upload sources`** so Crowdin receives the updated English bundle (see [Syncing with Crowdin](#syncing-with-crowdin)).
+5. If you also changed **non-English** strings in the repo, run **`crowdin upload translations`** after export so target-language bundles (`de.json`, `es.json`, …) are pushed to Crowdin.
 
-Translators (or `crowdin download`) will fill or update the non-English JSON files; you commit those changes in a PR.
+After **`crowdin download`**, run **`npm run -w nuxt i18n:import-crowdin`** to write translations into `locales.ts` and Vue files, then commit those sources. The files under `nuxt/locales/crowdin/` are **gitignored** by default; they only need to exist on disk for the CLI.
 
 ## Syncing with Crowdin
 
@@ -91,7 +97,7 @@ crowdin --version
 npx @crowdin/cli --version
 ```
 
-Use `npx @crowdin/cli` in place of `crowdin` in the commands below (for example `npx @crowdin/cli upload sources`).
+Use `npx @crowdin/cli` in place of `crowdin` in the commands below (for example `npx @crowdin/cli upload sources` or `npx @crowdin/cli upload translations`).
 
 **Optional:** Add `@crowdin/cli` as a **devDependency** in the repo root `package.json` if you want a pinned version for the whole team (`npm install -D @crowdin/cli` at the repo root), then run it with `npx crowdin` or an npm script.
 
@@ -103,12 +109,23 @@ From the **repository root**, with `crowdin.yml` present (see below):
 export CROWDIN_PROJECT_ID="YOUR_PROJECT_ID"
 export CROWDIN_PERSONAL_TOKEN="YOUR_TOKEN"
 
-# Push updated English sources (new keys, changed strings)
+# Regenerate English + all locale bundle JSON from the repo
+npm run -w nuxt i18n:export-crowdin
+
+# Push updated English source strings to Crowdin (new keys, changed copy in en)
 crowdin upload sources
 
-# Pull translated JSON into the repo (then commit)
+# Optional: push local non-English edits from crowdin/*.json (after editing locales.ts / Vue and re-exporting)
+crowdin upload translations
+
+# Pull translated bundles (writes nuxt/locales/crowdin/<code>.json)
 crowdin download
+
+# Merge downloaded strings back into locales.ts and Vue SFCs (then commit those)
+npm run -w nuxt i18n:import-crowdin
 ```
+
+**`crowdin upload translations`** updates target languages in Crowdin from the JSON files on disk. Typical use: you changed `de`, `es`, … in [`locales.ts`](nuxt/locales/locales.ts) or in Vue `<i18n>` blocks, ran **`i18n:export-crowdin`** to refresh `nuxt/locales/crowdin/de.json` (etc.), then run **`crowdin upload translations`** so translators and TM in Crowdin see your edits. You still use **`crowdin upload sources`** when only English (structure or copy) changed.
 
 If you did not install globally, prefix with `npx @crowdin/cli` instead of `crowdin`.
 
@@ -116,18 +133,18 @@ Exact flags may vary slightly with CLI version; use `crowdin --help` or `npx @cr
 
 ### `crowdin.yml` in this repo
 
-The repository includes [`crowdin.yml`](crowdin.yml) at the **root**. It defines:
+The repository includes [`crowdin.yml`](crowdin.yml) at the **root**. It defines a **single** file group:
 
-- **Global:** `nuxt/locales/global/en.json` → `nuxt/locales/global/%two_letters_code%.json`
-- **SFC:** `nuxt/locales/sfc/en/**/*.json` → `nuxt/locales/sfc/%two_letters_code%/**/%original_file_name%` (the `**` in the translation pattern preserves subfolders such as `components/forms/` per [Crowdin’s configuration docs](https://developer.crowdin.com/configuration-file/))
+- **Source:** `nuxt/locales/crowdin/en.json` (merged bundle: `global`, `components`, `pages`)
+- **Translation:** `nuxt/locales/crowdin/%two_letters_code%.json`
 
-It also sets **`languages_mapping`** so Crowdin **`pt-BR`** exports to paths using **`pt`**, matching `shared/i18n.ts` and `nuxt/locales/sfc/pt/...`. If your Crowdin project uses a different code for Portuguese, adjust the mapping in `crowdin.yml`.
+It sets **`languages_mapping`** so Crowdin **`pt-BR`** maps to **`pt.json`**, matching [`shared/i18n.ts`](shared/i18n.ts).
 
 ### Portuguese: `pt` in the repo vs `pt-BR` in Crowdin
 
 The app uses locale code **`pt`** (see `shared/i18n.ts`; `iso` is `pt-BR` for URLs/metadata). Crowdin often uses **`pt-BR`** as the language code.
 
-If downloads would otherwise create `pt-BR.json` or `nuxt/locales/sfc/pt-BR/...`, use Crowdin’s **language mapping** (in `crowdin.yml` or the project settings) so files land as **`pt.json`** and **`nuxt/locales/sfc/pt/...`**, matching Nuxt and the `<i18n src=".../pt/...">` paths.
+If downloads would otherwise create `pt-BR.json`, use **language mapping** so the file lands as **`nuxt/locales/crowdin/pt.json`**, matching the app locale code **`pt`**.
 
 ## Adding a new locale
 
@@ -142,34 +159,28 @@ Do this in **addition** to enabling the language in Crowdin.
 ### 2. Nuxt i18n module
 
 - **`nuxt/i18n.config.ts`**  
-  - Add a `numberFormats` entry for the new locale code (same shape as existing locales).  
-  - The `locales` array is derived from `shared/i18n.ts` and sets `file: \`${locale.code}.json\`` for lazy-loaded global files—no need to duplicate the list by hand if you only changed `shared/i18n.ts`.
+  - Add a `numberFormats` entry for the new locale code (same shape as existing locales).
 
-### 3. Global JSON file
+### 3. Global messages in TypeScript
 
-- Add **`nuxt/locales/global/<code>.json`**, usually by copying `en.json` and translating (or leaving values in English until Crowdin fills them).
+- Add a **`<code>`** top-level object in [`nuxt/locales/locales.ts`](nuxt/locales/locales.ts) with the same keys as `en` (values may be English until Crowdin fills them, then use **import-crowdin**).
 
-### 4. SFC JSON files and Vue `<i18n>` tags
+### 4. Vue `<i18n>` tags (components and pages)
 
-For **every** `nuxt/components/**/*.vue` and `nuxt/pages/**/*.vue` that already has one `<i18n>` line per locale:
+**Components (`nuxt/components/**/*.vue`)** and **pages (`nuxt/pages/**/*.vue`):** In each file that has an `<i18n lang="json">` block, add a **top-level `"<code>"` key** (same nested key structure as `"en"`). Keep every locale inside that **single** JSON object.
 
-1. Add a new line:  
-   `<i18n locale="<code>" lang="json" src="@/locales/sfc/<code>/..." />`  
-   using the **same relative path** as the existing `en` line, with `<code>` instead of `en`.
-2. Add the matching JSON file at  
-   `nuxt/locales/sfc/<code>/components/...` or `nuxt/locales/sfc/<code>/pages/...`  
-   with the **same key structure** as `en.json` for that file.
+Some locales may use **`{}`** where translations were missing. The app falls back via `fallbackLocale` in `nuxt/i18n.config.ts`, but you should **replace empty objects with real translations** over time.
 
-Some files may currently have **`{}`** for a locale where translations were missing. The app falls back via `fallbackLocale` in `nuxt/i18n.config.ts`, but you should **replace empty objects with real translations** over time (Crowdin helps here).
+### 5. Crowdin export and import
 
-### 5. Migration script locale list
-
-If you use **`npm run -w nuxt i18n:migrate-sfc`** ([`nuxt/scripts/i18n/migrate-sfc-i18n.mjs`](nuxt/scripts/i18n/migrate-sfc-i18n.mjs)) for bulk work, update the hardcoded **`LOCALES`** array inside that script to include the new code. Otherwise the script will not emit or expect files for that language.
+- **Export:** **`npm run -w nuxt i18n:export-crowdin`** ([`nuxt/scripts/i18n/export-crowdin-locales.ts`](nuxt/scripts/i18n/export-crowdin-locales.ts)) writes **`nuxt/locales/crowdin/<code>.json`** for every locale in [`shared/i18n.ts`](shared/i18n.ts).
+- **Push to Crowdin:** After export, run **`crowdin upload sources`** when English changed; run **`crowdin upload translations`** when you fixed or added non-English strings locally and want Crowdin updated (see [Typical CLI workflow](#typical-cli-workflow)).
+- **Import:** **`npm run -w nuxt i18n:import-crowdin`** ([`nuxt/scripts/i18n/import-crowdin-locales.ts`](nuxt/scripts/i18n/import-crowdin-locales.ts)) reads those JSON files and updates **`locales.ts`** plus inline `<i18n>` blocks in components and pages.
 
 ### 6. Crowdin project
 
 - Add the new target language in Crowdin.  
-- Ensure download paths or language mapping match **`nuxt/locales/global/<code>.json`** and **`nuxt/locales/sfc/<code>/...`**.
+- Ensure download paths match **`nuxt/locales/crowdin/<code>.json`** (see [`crowdin.yml`](crowdin.yml)).
 
 ### 7. Rest of the product (not JSON UI strings)
 
@@ -188,7 +199,7 @@ npm run -w nuxt build
 2. Add target languages aligned with `shared/i18n.ts`.  
 3. Prefer file format **JSON**; preserve **nested keys** (do not flatten keys in Crowdin if it would break `api_error.validation_error`-style paths).  
 4. Connect the repo (integration) or install [`@crowdin/cli`](https://www.npmjs.com/package/@crowdin/cli) and use `crowdin.yml` as above.  
-5. First **`upload sources`**, then invite translators; after work is done, **`download`** and open a PR.
+5. Run **`i18n:export-crowdin`**, **`crowdin upload sources`**, then invite translators; use **`crowdin upload translations`** when you want local non-English fixes in the repo reflected in Crowdin. After work is done, **`crowdin download`**, **`i18n:import-crowdin`**, and open a PR with the updated `locales.ts` / Vue files.
 
 Optional: use Crowdin **translation memory**, **glossary**, and **screenshots** for context; they are project settings, not repo files.
 
@@ -196,11 +207,12 @@ Optional: use Crowdin **translation memory**, **glossary**, and **screenshots** 
 
 | Issue | What to check |
 |--------|----------------|
-| Missing translation at runtime | Key exists in `en.json` for that scope; non-English file has the same key path; typos in `$t('...')`. |
-| Wrong or missing file after `crowdin download` | `crowdin.yml` `translation` pattern; `preserve_hierarchy`; **language mapping** for `pt` vs `pt-BR`. |
-| Build fails after pull | Invalid JSON (trailing commas, duplicate keys); wrong file path in `<i18n src="...">`. |
-| Merge conflicts in JSON | Resolve like code: pick consistent keys; re-run `crowdin download` if needed after fixing `en` sources. |
-| Global strings not updating in dev | Lazy global files: restart dev server after changing `nuxt/locales/global/*.json` if hot reload does not pick them up. |
+| Missing translation at runtime | Key exists under `en` for that scope; other locales have the same key path; typos in `$t('...')`. |
+| Wrong or missing file after `crowdin download` | `crowdin.yml` paths under `nuxt/locales/crowdin/`; **language mapping** for `pt` vs `pt-BR`. |
+| Crowdin missing your local translation edits | Run **`i18n:export-crowdin`**, then **`crowdin upload translations`** (not only `upload sources`). |
+| Build fails after pull | Invalid JSON in `<i18n>` blocks; invalid `locales.ts` after import; run `i18n:verify-keys`. |
+| Merge conflicts | Resolve in `locales.ts` / Vue sources; re-export or re-import if needed. |
+| Global strings not updating in dev | Restart Nuxt after changing `nuxt/locales/locales.ts` if hot reload misses updates. |
 | `crowdin: command not found` | Run `npm install -g @crowdin/cli` or use `npx @crowdin/cli …` instead of `crowdin`. |
 
 ## Related files
@@ -208,10 +220,14 @@ Optional: use Crowdin **translation memory**, **glossary**, and **screenshots** 
 | File | Role |
 |------|------|
 | `shared/i18n.ts` | Supported locale codes, ISO codes, display names |
-| `nuxt/i18n.config.ts` | Lazy global `langDir`, `vueI18n` fallback, `numberFormats` |
-| `nuxt/locales/global/*.json` | Shared messages per locale |
-| `nuxt/locales/sfc/<locale>/...` | Per-component/page messages |
+| `nuxt/i18n.config.ts` | Global messages from `locales.ts`, `vueI18n` fallback, `numberFormats` |
+| `nuxt/locales/locales.ts` | Shared (global) messages per locale in TypeScript |
+| `nuxt/components/**`, `nuxt/pages/**` (`.vue`) | Scoped messages in `<i18n lang="json">` blocks |
+| `nuxt/locales/crowdin/*.json` | Per-locale bundles for Crowdin CLI (`export-crowdin`, `upload sources` / `upload translations`, `download`; gitignored by default) |
+| `crowdin.yml` | Maps `en.json` ↔ `%two_letters_code%.json` under `nuxt/locales/crowdin/` |
 | `nuxt/plugins/translate-api.ts` | `$terr` → `api_error.*` keys |
-| `nuxt/scripts/i18n/migrate-sfc-i18n.mjs` | Bulk migration helper; `LOCALES` must stay in sync |
+| `nuxt/scripts/i18n/export-crowdin-locales.ts` | Repo → `crowdin/*.json` |
+| `nuxt/scripts/i18n/import-crowdin-locales.ts` | `crowdin/*.json` → `locales.ts` + Vue `<i18n>` |
+| `nuxt/scripts/i18n/verify-i18n-keys.ts` | CI-friendly check: `locales.ts` + Vue `<i18n>` key parity vs English (no `crowdin/` required) |
 
 For general i18n behavior (`$t`, `$terr`) and non-Crowdin locale work, see [README.md](README.md) **Internationalization (i18n) Notes**.

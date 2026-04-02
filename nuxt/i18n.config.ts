@@ -1,5 +1,6 @@
 import type { Options } from '@nuxtjs/i18n';
-import { locales, defaultLocale } from '@mybiblelog/shared';
+import { locales as localeList, defaultLocale } from '@mybiblelog/shared';
+import globalMessages from './locales/locales';
 
 const numberFormats = {
   decimal: {
@@ -22,15 +23,17 @@ const numberFormats = {
 
 const i18nConfig: Options = {
   baseUrl: process.env.BASE_URL,
-  locales: locales.map(locale => ({
-    ...locale,
-    file: `${locale.code}.json`,
+  locales: localeList.map(locale => ({
+    code: locale.code,
+    iso: locale.iso,
+    name: locale.name,
   })),
   defaultLocale,
   strategy: 'prefix_except_default', // default value, but explicitly set for clarity
-  lazy: true,
-  langDir: 'locales/global/',
+  lazy: false,
   vueI18n: {
+    locale: defaultLocale,
+    messages: globalMessages,
     silentFallbackWarn: true, // for suppressing the warning about missing translations
     fallbackLocale: defaultLocale,
     numberFormats: {

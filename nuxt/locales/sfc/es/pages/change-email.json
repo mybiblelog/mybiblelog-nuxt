@@ -1,9 +1,0 @@
-{
-  "change_email": "Cambiar Correo Electrónico",
-  "confirming_your_new_email_address": "Confirmando su nueva dirección de correo electrónico...",
-  "your_email_change_request_has_expired": "Su solicitud de cambio de correo electrónico ha caducado.",
-  "please_go_to_your_settings_and_try_changing_your_email_address_again": "Por favor, vaya a su configuración e intente cambiar su dirección de correo electrónico de nuevo.",
-  "there_was_an_error_changing_your_email_address": "Hubo un error al cambiar su dirección de correo electrónico.",
-  "an_unknown_error_occurred": "Ocurrió un error desconocido.",
-  "your_email_address_was_updated_successfully": "Su dirección de correo electrónico se actualizó correctamente."
-}

@@ -52,10 +52,70 @@ export default {
 };
 </script>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/settings/WelcomeStep.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/settings/WelcomeStep.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/settings/WelcomeStep.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/settings/WelcomeStep.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/forms/settings/WelcomeStep.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/settings/WelcomeStep.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/settings/WelcomeStep.json" />
+<i18n lang="json">
+{
+  "en": {
+    "start_page": {
+      "welcome": {
+        "title": "Welcome to your new My Bible Log account!",
+        "description": "Let's personalize your settings so you can get the most out of the app.",
+        "skip_personalization": "Skip Personalization"
+      }
+    }
+  },
+  "de": {
+    "start_page": {
+      "welcome": {
+        "title": "Willkommen in Ihrem neuen My Bible Log-Konto!",
+        "description": "Lassen Sie uns Ihre Einstellungen personalisieren, damit Sie das Beste aus der App herausholen können.",
+        "skip_personalization": "Personalisierung überspringen"
+      }
+    }
+  },
+  "es": {
+    "start_page": {
+      "welcome": {
+        "title": "¡Bienvenido a tu nueva cuenta de My Bible Log!",
+        "description": "Personalicemos tu configuración para que puedas aprovechar al máximo la aplicación.",
+        "skip_personalization": "Omitir personalización"
+      }
+    }
+  },
+  "fr": {
+    "start_page": {
+      "welcome": {
+        "title": "Bienvenue dans votre nouveau compte My Bible Log !",
+        "description": "Personnalisons vos paramètres pour que vous puissiez tirer le meilleur parti de l'application.",
+        "skip_personalization": "Ignorer la personnalisation"
+      }
+    }
+  },
+  "ko": {
+    "start_page": {
+      "welcome": {
+        "title": "My Bible Log 계정에 오신 것을 환영합니다!",
+        "description": "My Bible Log를 최대한 유용하게 활용할 수 있도록 맞춤 설정을 도와드리겠습니다.",
+        "skip_personalization": "맞춤 설정 건너뛰기"
+      }
+    }
+  },
+  "pt": {
+    "start_page": {
+      "welcome": {
+        "title": "Bem-vindo à sua nova conta My Bible Log!",
+        "description": "Vamos personalizar suas configurações para que você possa aproveitar ao máximo o aplicativo.",
+        "skip_personalization": "Pular personalização"
+      }
+    }
+  },
+  "uk": {
+    "start_page": {
+      "welcome": {
+        "title": "Ласкаво просимо до вашого нового облікового запису My Bible Log!",
+        "description": "Давайте персоналізуємо ваші налаштування, щоб ви могли максимально використовувати додаток.",
+        "skip_personalization": "Пропустити персоналізацію"
+      }
+    }
+  }
+}
+</i18n>

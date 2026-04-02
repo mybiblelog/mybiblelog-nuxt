@@ -134,10 +134,126 @@ export default {
 //
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/SiteNav.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/SiteNav.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/SiteNav.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/SiteNav.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/SiteNav.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/SiteNav.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/SiteNav.json" />
+<i18n lang="json">
+{
+  "en": {
+    "today": "Today",
+    "bible_books": "Bible Books",
+    "chapter_checklist": "Chapter Checklist",
+    "calendar": "Calendar",
+    "log": "Log",
+    "notes": "Notes",
+    "about": "About",
+    "settings": "Settings",
+    "admin": "Admin",
+    "users": "Users",
+    "feedback": "Feedback",
+    "engagement": "Engagement",
+    "log_out": "Log Out",
+    "sign_up": "Sign Up",
+    "sign_in": "Sign In"
+  },
+  "de": {
+    "today": "Heute",
+    "bible_books": "Bibelbücher",
+    "chapter_checklist": "Kapitel Checkliste",
+    "calendar": "Kalender",
+    "log": "Journal",
+    "notes": "Notizen",
+    "about": "Über",
+    "settings": "Einstellungen",
+    "admin": "Administrator",
+    "users": "Benutzer",
+    "feedback": "Feedback",
+    "engagement": "Engagement",
+    "log_out": "Abmelden",
+    "sign_up": "Registrieren",
+    "sign_in": "Anmelden"
+  },
+  "es": {
+    "today": "Hoy",
+    "bible_books": "Libros Bíblicos",
+    "chapter_checklist": "Lista de Capítulos",
+    "calendar": "Calendario",
+    "log": "Registro",
+    "notes": "Notas",
+    "about": "Acerca de",
+    "settings": "Configuración",
+    "admin": "Administrador",
+    "users": "Usuarios",
+    "feedback": "Comentarios",
+    "engagement": "Participación",
+    "log_out": "Cerrar sesión",
+    "sign_up": "Registrarse",
+    "sign_in": "Iniciar sesión"
+  },
+  "fr": {
+    "today": "Aujourd'hui",
+    "bible_books": "Livres de la Bible",
+    "chapter_checklist": "Liste de Contrôle",
+    "calendar": "Calendrier",
+    "log": "Journal",
+    "notes": "Notes",
+    "about": "À Propos",
+    "settings": "Paramètres",
+    "admin": "Administrateur",
+    "users": "Utilisateurs",
+    "feedback": "Retour d'Information",
+    "engagement": "Engagement",
+    "log_out": "Déconnexion",
+    "sign_up": "S'inscrire",
+    "sign_in": "Se connecter"
+  },
+  "ko": {
+    "today": "오늘",
+    "bible_books": "성경 일람",
+    "chapter_checklist": "장별 체크",
+    "calendar": "달력",
+    "log": "기록",
+    "notes": "노트",
+    "about": "소개",
+    "settings": "설정",
+    "admin": "관리자",
+    "users": "사용자",
+    "feedback": "피드백",
+    "engagement": "참여",
+    "log_out": "로그아웃",
+    "sign_up": "회원가입",
+    "sign_in": "로그인"
+  },
+  "pt": {
+    "today": "Hoje",
+    "bible_books": "Livros da Bíblia",
+    "chapter_checklist": "Lista de Capítulos",
+    "calendar": "Calendário",
+    "log": "Registro",
+    "notes": "Notas",
+    "about": "Sobre",
+    "settings": "Configurações",
+    "admin": "Administrador",
+    "users": "Usuários",
+    "feedback": "Feedback",
+    "engagement": "Engajamento",
+    "log_out": "Sair",
+    "sign_up": "Inscrever-se",
+    "sign_in": "Entrar"
+  },
+  "uk": {
+    "today": "Сьогодні",
+    "bible_books": "Книги Біблії",
+    "chapter_checklist": "Список розділів",
+    "calendar": "Календар",
+    "log": "Журнал",
+    "notes": "Нотатки",
+    "about": "Про нас",
+    "settings": "Налаштування",
+    "admin": "Адміністратор",
+    "users": "Користувачі",
+    "feedback": "Зворотній зв'язок",
+    "engagement": "Залученість",
+    "log_out": "Вийти",
+    "sign_up": "Зареєструватися",
+    "sign_in": "Увійти"
+  }
+}
+</i18n>

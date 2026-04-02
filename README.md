@@ -214,15 +214,15 @@ To allow users to sign in with their existing user accounts you will need to fol
 
 ## Internationalization (i18n) Notes
 
-For **Crowdin**, where JSON files live, how paths map to Crowdin, and how to push/pull translations, see [CROWDIN.md](CROWDIN.md). If Crowdin’s language code does not match the app locale code (for example Portuguese in Crowdin is often `pt-BR` while the app uses `pt`), add a `languages_mapping` entry in [`crowdin.yml`](crowdin.yml).
+For **Crowdin**, where bundle files live, how paths map to Crowdin, and how to run **`crowdin upload sources`**, **`crowdin upload translations`**, and **`crowdin download`**, see [CROWDIN.md](CROWDIN.md). If Crowdin’s language code does not match the app locale code (for example Portuguese in Crowdin is often `pt-BR` while the app uses `pt`), add a `languages_mapping` entry in [`crowdin.yml`](crowdin.yml).
 
 ### `$t` and `$terr` Behavior
 
 The `$t` translation helper, provided by the i18n module, is used to translate messages.
 
-It will first look for the given message in the **component-scoped** locale messages loaded via `<i18n>` blocks in the current Vue file (each block points at JSON under `nuxt/locales/sfc/<locale>/...`), and will fall back to the **global** translations loaded from `nuxt/locales/global/<locale>.json` via [`nuxt/i18n.config.ts`](nuxt/i18n.config.ts) if the scoped messages do not define that key.
+It will first look for the given message in the **component- or page-scoped** locale messages from that Vue file’s `<i18n lang="json">` block (one JSON object with top-level keys per locale: `en`, `de`, `es`, …), then fall back to the **global** translations from [`nuxt/locales/locales.ts`](nuxt/locales/locales.ts) wired through [`nuxt/i18n.config.ts`](nuxt/i18n.config.ts) if the scoped messages do not define that key.
 
-Global messages are loaded **lazily** per locale (`lazy: true` in `nuxt/i18n.config.ts`). Updating `nuxt/locales/global/*.json` may not hot-reload in dev; restart the Nuxt dev server if changes do not appear.
+Global messages are bundled from `locales.ts` (`lazy: false`). Restart the Nuxt dev server if changes to that file do not hot-reload.
 
 The `$terr` helper is a custom function that unwraps server errors. It is defined in [`nuxt/plugins/translate-api.ts`](nuxt/plugins/translate-api.ts).
 
@@ -235,13 +235,12 @@ Use this checklist when introducing a **new** locale code (e.g. `ja`). English (
 1. **[`shared/i18n.ts`](shared/i18n.ts)** — Add the code to the `LocaleCode` union and insert `{ code, iso, name }` into the `locales` array after `en`, in alphabetical order by `code` (see the comment in that file: English is the only locale not sorted with the rest).
 1. **[`nuxt/i18n.config.ts`](nuxt/i18n.config.ts)** — Add a `numberFormats` entry for the new locale (same shape as existing locales).
 
-**UI strings (JSON + Vue)**
+**UI strings (TypeScript + Vue)**
 
-1. **`nuxt/locales/global/<code>.json`** — Same nested keys as [`nuxt/locales/global/en.json`](nuxt/locales/global/en.json); translate values.
-1. **`nuxt/locales/sfc/<code>/...`** — Mirror every file under [`nuxt/locales/sfc/en/`](nuxt/locales/sfc/en): paths under `components/` and `pages/` match the matching `.vue` path (`.json` instead of `.vue`). See [CROWDIN.md](CROWDIN.md) for examples.
-1. **Vue `<i18n>` blocks** — For each file under `nuxt/components/` and `nuxt/pages/` that already has per-locale `<i18n locale="..." lang="json" src="@/locales/sfc/...">` blocks, add one block for the new locale and keep the same relative JSON path pattern as the other locales. (In this repo, locale blocks are ordered `en`, `de`, `es`, `fr`, `ko`, `pt`, `uk`.)
-1. **[`nuxt/scripts/i18n/migrate-sfc-i18n.mjs`](nuxt/scripts/i18n/migrate-sfc-i18n.mjs)** — If you use `npm run -w nuxt i18n:migrate-sfc`, add the new code to the `LOCALES` array.
-1. **Key parity** — Run `npm run -w nuxt i18n:verify-keys` ([`nuxt/scripts/i18n/verify-i18n-keys.mjs`](nuxt/scripts/i18n/verify-i18n-keys.mjs)). Locale codes are **discovered from directory names** under `nuxt/locales/sfc/` (excluding `en`). For each such code, the script checks `nuxt/locales/global/<code>.json` and every mirrored JSON under `nuxt/locales/sfc/<code>/` against English; it exits with an error if keys or files are missing.
+1. **[`nuxt/locales/locales.ts`](nuxt/locales/locales.ts)** — Add a `"<code>"` object with the same nested keys as `"en"`; translate values.
+1. **Vue `<i18n>` blocks** — In each `nuxt/components/**/*.vue` and `nuxt/pages/**/*.vue` that already has an `<i18n lang="json">` block, add a top-level `"<code>"` object (same keys as `"en"`). Prefer locale order `en`, `de`, `es`, `fr`, `ko`, `pt`, `uk`. See [CROWDIN.md](CROWDIN.md).
+1. **Crowdin export / import** — Run `npm run -w nuxt i18n:export-crowdin` to write bundles under `nuxt/locales/crowdin/` (see [`.gitignore`](.gitignore)). Use `crowdin upload sources` for English changes and `crowdin upload translations` when you have updated non-English strings locally and want Crowdin to receive them (see [CROWDIN.md](CROWDIN.md)). After `crowdin download`, run `npm run -w nuxt i18n:import-crowdin` to merge translations back into [`nuxt/locales/locales.ts`](nuxt/locales/locales.ts) and Vue `<i18n>` blocks.
+1. **Key parity** — Run `npm run -w nuxt i18n:verify-keys` ([`nuxt/scripts/i18n/verify-i18n-keys.ts`](nuxt/scripts/i18n/verify-i18n-keys.ts)). It checks that every non-default locale matches English for **leaf keys** in [`locales.ts`](nuxt/locales/locales.ts) and in each component/page **inline `<i18n>`** block (locale list from [`shared/i18n.ts`](shared/i18n.ts)).
 
 **Relative dates (dayjs)**
 
@@ -264,8 +263,7 @@ Use this checklist when introducing a **new** locale code (e.g. `ja`). English (
 **Printable reading tracker**
 
 1. Add a PDF under **`nuxt/static/downloads/`** (stable filename).
-1. Add **`nuxt/locales/sfc/<code>/pages/resources/printable-bible-reading-tracker.json`** (same keys as English; set `content.download_directly` to that file’s `/downloads/...` URL).
-1. Add an `<i18n locale="<code>" ...>` block in [`nuxt/pages/resources/printable-bible-reading-tracker.vue`](nuxt/pages/resources/printable-bible-reading-tracker.vue).
+1. In [`nuxt/pages/resources/printable-bible-reading-tracker.vue`](nuxt/pages/resources/printable-bible-reading-tracker.vue), add a `"<code>"` section to the `<i18n lang="json">` block (same keys as `"en"`; set `content.download_directly` to the new PDF’s `/downloads/...` URL).
 1. Append the PDF path to the static URL list in [`api/router/routes/sitemap.ts`](api/router/routes/sitemap.ts).
 
 **Optional**

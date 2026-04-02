@@ -1,9 +1,0 @@
-{
-  "change_email": "Changer l'e-mail",
-  "confirming_your_new_email_address": "Confirmation de votre nouvelle adresse e-mail...",
-  "your_email_change_request_has_expired": "Votre demande de changement d'e-mail a expiré.",
-  "please_go_to_your_settings_and_try_changing_your_email_address_again": "Veuillez vous rendre dans vos paramètres et essayer de changer à nouveau votre adresse e-mail.",
-  "there_was_an_error_changing_your_email_address": "Une erreur s'est produite lors du changement de votre adresse e-mail.",
-  "an_unknown_error_occurred": "Une erreur inconnue s'est produite.",
-  "your_email_address_was_updated_successfully": "Votre adresse e-mail a été mise à jour avec succès."
-}

@@ -131,10 +131,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/about/_slug.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/about/_slug.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/about/_slug.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/about/_slug.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/about/_slug.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/about/_slug.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/about/_slug.json" />
+<i18n lang="json">
+{
+  "en": {
+    "back": "Go to My Bible Log overview"
+  },
+  "de": {
+    "back": "Zurück zur Übersicht von My Bible Log"
+  },
+  "es": {
+    "back": "Volver a la página de My Bible Log"
+  },
+  "fr": {
+    "back": "Retour à la page d'accueil de My Bible Log"
+  },
+  "ko": {
+    "back": "My Bible Log 소개 페이지로 이동"
+  },
+  "pt": {
+    "back": "Ir para a visão geral do My Bible Log"
+  },
+  "uk": {
+    "back": "Перейти до огляду My Bible Log"
+  }
+}
+</i18n>

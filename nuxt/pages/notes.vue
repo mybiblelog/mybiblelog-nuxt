@@ -462,10 +462,308 @@ export default {
 
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/pages/notes.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/pages/notes.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/pages/notes.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/pages/notes.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/pages/notes.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/pages/notes.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/pages/notes.json" />
+<i18n lang="json">
+{
+  "en": {
+    "notes": "Notes",
+    "tags": "Tags",
+    "new": "New",
+    "pagination": {
+      "label": "Pagination",
+      "prev": "Prev",
+      "next": "Next",
+      "page": "Page"
+    },
+    "query_manager": {
+      "open": "Search | Filter | Sort",
+      "title": "View Options",
+      "reset": "Reset",
+      "reset_button": "Reset View Options"
+    },
+    "results": {
+      "loading": "Loading...",
+      "no_results": "No Results"
+    },
+    "note": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Are you sure you want to delete this note?",
+      "note_could_not_be_deleted": "The note could not be deleted."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "No notes",
+        "results": "No results"
+      },
+      "showing_all": {
+        "notes": "Showing {total} note | Showing {total} notes",
+        "results": "Showing {total} result | Showing {total} results"
+      },
+      "showing_range": {
+        "notes": "Showing {first}–{last} of {total} total note | Showing {first}–{last} of {total} total notes",
+        "results": "Showing {first}–{last} of {total} total result | Showing {first}–{last} of {total} total results"
+      }
+    }
+  },
+  "de": {
+    "notes": "Notizen",
+    "tags": "Tags",
+    "new": "Neu",
+    "pagination": {
+      "label": "Seitennavigation",
+      "prev": "Zurück",
+      "next": "Weiter",
+      "page": "Seite"
+    },
+    "query_manager": {
+      "open": "Suchen | Filtern | Sortieren",
+      "title": "Ansichtsoptionen",
+      "reset": "Zurücksetzen",
+      "reset_button": "Ansichtsoptionen zurücksetzen"
+    },
+    "results": {
+      "loading": "Laden...",
+      "no_results": "Keine Ergebnisse"
+    },
+    "note": {
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Möchten Sie diese Notiz wirklich löschen?",
+      "note_could_not_be_deleted": "Die Notiz konnte nicht gelöscht werden."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "Keine Notizen",
+        "results": "Keine Ergebnisse"
+      },
+      "showing_all": {
+        "notes": "Zeige {total} Notiz | Zeige {total} Notizen",
+        "results": "Zeige {total} Ergebnis | Zeige {total} Ergebnisse"
+      },
+      "showing_range": {
+        "notes": "Zeige {first}–{last} von {total} gesamten Notiz | Zeige {first}–{last} von {total} gesamten Notizen",
+        "results": "Zeige {first}–{last} von {total} gesamten Ergebnis | Zeige {first}–{last} von {total} gesamten Ergebnissen"
+      }
+    }
+  },
+  "es": {
+    "notes": "Notas",
+    "tags": "Etiquetas",
+    "new": "Nuevo",
+    "pagination": {
+      "label": "Paginación",
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "page": "Página"
+    },
+    "query_manager": {
+      "open": "Buscar | Filtrar | Ordenar",
+      "title": "Opciones de vista",
+      "reset": "Restablecer",
+      "reset_button": "Restablecer opciones de vista"
+    },
+    "results": {
+      "loading": "Cargando...",
+      "no_results": "Sin resultados"
+    },
+    "note": {
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "¿Estás seguro de que quieres eliminar esta nota?",
+      "note_could_not_be_deleted": "La nota no se pudo eliminar."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "No hay notas",
+        "results": "Sin resultados"
+      },
+      "showing_all": {
+        "notes": "Mostrando {total} nota | Mostrando {total} notas",
+        "results": "Mostrando {total} resultado | Mostrando {total} resultados"
+      },
+      "showing_range": {
+        "notes": "Mostrando {first}–{last} de {total} nota en total | Mostrando {first}–{last} de {total} notas en total",
+        "results": "Mostrando {first}–{last} de {total} resultado en total | Mostrando {first}–{last} de {total} resultados en total"
+      }
+    }
+  },
+  "fr": {
+    "notes": "Notes",
+    "tags": "Tags",
+    "new": "New",
+    "pagination": {
+      "label": "Pagination",
+      "prev": "Précédent",
+      "next": "Suivant",
+      "page": "Page"
+    },
+    "query_manager": {
+      "open": "Rechercher | Filtrer | Trier",
+      "title": "Options d’affichage",
+      "reset": "Réinitialiser",
+      "reset_button": "Réinitialiser les options d’affichage"
+    },
+    "results": {
+      "loading": "Chargement...",
+      "no_results": "Aucun résultat"
+    },
+    "note": {
+      "edit": "Éditer",
+      "delete": "Effacer"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Êtes-vous sûr de vouloir supprimer cette note ?",
+      "note_could_not_be_deleted": "La note n'a pas pu être supprimée."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "Aucune note",
+        "results": "Aucun résultat"
+      },
+      "showing_all": {
+        "notes": "{total} note affichée | {total} notes affichées",
+        "results": "{total} résultat affiché | {total} résultats affichés"
+      },
+      "showing_range": {
+        "notes": "{first}–{last} sur {total} note au total affichée | {first}–{last} sur {total} notes au total affichées",
+        "results": "{first}–{last} sur {total} résultat au total affiché | {first}–{last} sur {total} résultats au total affichés"
+      }
+    }
+  },
+  "ko": {
+    "notes": "노트",
+    "tags": "태그",
+    "new": "신규 작성",
+    "pagination": {
+      "label": "페이지",
+      "prev": "이전",
+      "next": "다음",
+      "page": "페이지"
+    },
+    "query_manager": {
+      "open": "검색 | 필터 | 정렬",
+      "title": "보기 옵션",
+      "reset": "초기화",
+      "reset_button": "보기 옵션 초기화"
+    },
+    "results": {
+      "loading": "불러오는 중…",
+      "no_results": "결과 없음"
+    },
+    "note": {
+      "edit": "편집",
+      "delete": "삭제"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "이 노트를 삭제할까요?",
+      "note_could_not_be_deleted": "노트를 삭제할 수 없습니다."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "노트 없음",
+        "results": "결과 없음"
+      },
+      "showing_all": {
+        "notes": "노트 {total}개 표시 | 노트 {total}개 표시",
+        "results": "결과 {total}개 표시 | 결과 {total}개 표시"
+      },
+      "showing_range": {
+        "notes": "전체 {total}개 중 {first}–{last} | 전체 {total}개 중 {first}–{last}",
+        "results": "전체 {total}개 중 {first}–{last} | 전체 {total}개 중 {first}–{last}"
+      }
+    }
+  },
+  "pt": {
+    "notes": "Notas",
+    "tags": "Tags",
+    "new": "Novo",
+    "pagination": {
+      "label": "Paginação",
+      "prev": "Anterior",
+      "next": "Próximo",
+      "page": "Página"
+    },
+    "query_manager": {
+      "open": "Buscar | Filtrar | Ordenar",
+      "title": "Opções de visualização",
+      "reset": "Reiniciar",
+      "reset_button": "Reiniciar opções de visualização"
+    },
+    "results": {
+      "loading": "Carregando...",
+      "no_results": "Sem resultados"
+    },
+    "note": {
+      "edit": "Editar",
+      "delete": "Apagar"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Tem certeza de que deseja excluir esta nota?",
+      "note_could_not_be_deleted": "A nota não pôde ser excluída."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "Nenhuma nota",
+        "results": "Nenhum resultado"
+      },
+      "showing_all": {
+        "notes": "Mostrando {total} nota | Mostrando {total} notas",
+        "results": "Mostrando {total} resultado | Mostrando {total} resultados"
+      },
+      "showing_range": {
+        "notes": "Mostrando {first}–{last} de {total} nota no total | Mostrando {first}–{last} de {total} notas no total",
+        "results": "Mostrando {first}–{last} de {total} resultado no total | Mostrando {first}–{last} de {total} resultados no total"
+      }
+    }
+  },
+  "uk": {
+    "notes": "Нотатки",
+    "tags": "Теги",
+    "new": "Нове",
+    "pagination": {
+      "label": "Навігація сторінками",
+      "prev": "Попередня",
+      "next": "Наступна",
+      "page": "Сторінка"
+    },
+    "query_manager": {
+      "open": "Пошук | Фільтр | Сортування",
+      "title": "Параметри перегляду",
+      "reset": "Скинути",
+      "reset_button": "Скинути параметри перегляду"
+    },
+    "results": {
+      "loading": "Завантаження...",
+      "no_results": "Немає результатів"
+    },
+    "note": {
+      "edit": "Редагувати",
+      "delete": "Видалити"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Ви впевнені, що хочете видалити цю нотатку?",
+      "note_could_not_be_deleted": "Нотатку не вдалося видалити."
+    },
+    "query_summary": {
+      "none": {
+        "notes": "Немає нотаток",
+        "results": "Немає результатів"
+      },
+      "showing_all": {
+        "notes": "Показано {total} нотатку | Показано {total} нотатки | Показано {total} нотаток",
+        "results": "Показано {total} результат | Показано {total} результати | Показано {total} результатів"
+      },
+      "showing_range": {
+        "notes": "Показано {first}–{last} із {total} нотатки загалом | Показано {first}–{last} із {total} нотаток загалом | Показано {first}–{last} із {total} нотаток загалом",
+        "results": "Показано {first}–{last} із {total} результату загалом | Показано {first}–{last} із {total} результатів загалом | Показано {first}–{last} із {total} результатів загалом"
+      }
+    }
+  }
+}
+</i18n>

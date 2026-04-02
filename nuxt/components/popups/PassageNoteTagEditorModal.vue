@@ -72,10 +72,84 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/popups/PassageNoteTagEditorModal.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/popups/PassageNoteTagEditorModal.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/popups/PassageNoteTagEditorModal.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/popups/PassageNoteTagEditorModal.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/popups/PassageNoteTagEditorModal.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/popups/PassageNoteTagEditorModal.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/popups/PassageNoteTagEditorModal.json" />
+<i18n lang="json">
+{
+  "en": {
+    "tag_editor": {
+      "edit_tag": "Edit Tag",
+      "add_tag": "Add Tag",
+      "save": "Save",
+      "close": "Close"
+    },
+    "messaging": {
+      "are_you_sure_close_tag_editor": "Are you sure you want to close the tag editor? All unsaved changes will be lost."
+    }
+  },
+  "de": {
+    "tag_editor": {
+      "edit_tag": "Tag bearbeiten",
+      "add_tag": "Tag hinzufügen",
+      "save": "Speichern",
+      "close": "Schließen"
+    },
+    "messaging": {
+      "are_you_sure_close_tag_editor": "Möchten Sie den Tag-Editor wirklich schließen? Alle ungespeicherten Änderungen gehen verloren."
+    }
+  },
+  "es": {
+    "tag_editor": {
+      "edit_tag": "Editar Etiqueta",
+      "add_tag": "Añadir Etiqueta",
+      "save": "Guardar",
+      "close": "Cerrar"
+    },
+    "messaging": {
+      "are_you_sure_close_tag_editor": "¿Estás seguro de que quieres cerrar el editor de etiquetas? Todas las modificaciones no guardadas se perderán."
+    }
+  },
+  "fr": {
+    "tag_editor": {
+      "edit_tag": "Éditer le tag",
+      "add_tag": "Ajouter un tag",
+      "save": "Enregistrer",
+      "close": "Fermer"
+    },
+    "messaging": {
+      "are_you_sure_close_tag_editor": "Êtes-vous sûr de vouloir fermer l'éditeur de tags? Toutes les modifications non enregistrées seront perdues."
+    }
+  },
+  "ko": {
+    "tag_editor": {
+      "edit_tag": "태그 편집",
+      "add_tag": "태그 추가",
+      "save": "저장",
+      "close": "닫기"
+    },
+    "messaging": {
+      "are_you_sure_close_tag_editor": "태그 편집기를 닫을까요? 저장하지 않은 변경 내용이 사라집니다."
+    }
+  },
+  "pt": {
+    "tag_editor": {
+      "edit_tag": "Editar Tag",
+      "add_tag": "Adicionar Tag",
+      "save": "Salvar",
+      "close": "Fechar"
+    },
+    "messaging": {
+      "are_you_sure_close_tag_editor": "Tem certeza de que deseja fechar o editor de tags? Todas as modificações não salvas serão perdidas."
+    }
+  },
+  "uk": {
+    "tag_editor": {
+      "edit_tag": "Редагувати Тег",
+      "add_tag": "Додати Тег",
+      "save": "Зберегти",
+      "close": "Закрити"
+    },
+    "messaging": {
+      "are_you_sure_close_tag_editor": "Ви впевнені, що хочете закрити редактор тегів? Всі незбережені зміни будуть втрачені."
+    }
+  }
+}
+</i18n>

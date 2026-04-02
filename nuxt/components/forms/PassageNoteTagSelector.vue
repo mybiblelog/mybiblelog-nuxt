@@ -119,10 +119,28 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/forms/PassageNoteTagSelector.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/forms/PassageNoteTagSelector.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/forms/PassageNoteTagSelector.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/forms/PassageNoteTagSelector.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/forms/PassageNoteTagSelector.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/forms/PassageNoteTagSelector.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/forms/PassageNoteTagSelector.json" />
+<i18n lang="json">
+{
+  "en": {
+    "create_a_tag_to_select_it_here": "Create a tag to select it here."
+  },
+  "de": {
+    "create_a_tag_to_select_it_here": "Erstellen Sie ein Tag, um es hier auszuwählen."
+  },
+  "es": {
+    "create_a_tag_to_select_it_here": "Crea una etiqueta para seleccionarla aquí."
+  },
+  "fr": {
+    "create_a_tag_to_select_it_here": "Créez une étiquette pour la sélectionner ici."
+  },
+  "ko": {
+    "create_a_tag_to_select_it_here": "태그를 만든 뒤 여기서 선택할 수 있습니다."
+  },
+  "pt": {
+    "create_a_tag_to_select_it_here": "Crie uma tag para selecioná-la aqui."
+  },
+  "uk": {
+    "create_a_tag_to_select_it_here": "Створіть тег, щоб вибрати його тут."
+  }
+}
+</i18n>

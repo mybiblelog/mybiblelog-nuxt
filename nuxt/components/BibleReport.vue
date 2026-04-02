@@ -250,10 +250,42 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/BibleReport.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/BibleReport.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/BibleReport.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/BibleReport.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/BibleReport.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/BibleReport.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/BibleReport.json" />
+<i18n lang="json">
+{
+  "en": {
+    "bible_books": "Bible Books",
+    "progress": "Progress",
+    "note": "Note | Notes"
+  },
+  "de": {
+    "bible_books": "Bücher der Bibel",
+    "progress": "Fortschritt",
+    "note": "Notiz | Notizen"
+  },
+  "es": {
+    "bible_books": "Libros de la Biblia",
+    "progress": "Progreso",
+    "note": "Nota | Notas"
+  },
+  "fr": {
+    "bible_books": "Livres de la Bible",
+    "progress": "Progrès",
+    "note": "Note | Notes"
+  },
+  "ko": {
+    "bible_books": "성경 일람",
+    "progress": "진행 상황",
+    "note": "노트 | 노트"
+  },
+  "pt": {
+    "bible_books": "Livros da Bíblia",
+    "progress": "Progresso",
+    "note": "Nota | Notas"
+  },
+  "uk": {
+    "bible_books": "Книги Біблії",
+    "progress": "Прогрес",
+    "note": "Примітка | Примітки"
+  }
+}
+</i18n>

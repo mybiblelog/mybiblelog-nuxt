@@ -257,10 +257,98 @@ export default {
 }
 </style>
 
-<i18n locale="en" lang="json" src="@/locales/sfc/en/components/popups/AppAchievements.json" />
-<i18n locale="de" lang="json" src="@/locales/sfc/de/components/popups/AppAchievements.json" />
-<i18n locale="es" lang="json" src="@/locales/sfc/es/components/popups/AppAchievements.json" />
-<i18n locale="fr" lang="json" src="@/locales/sfc/fr/components/popups/AppAchievements.json" />
-<i18n locale="ko" lang="json" src="@/locales/sfc/ko/components/popups/AppAchievements.json" />
-<i18n locale="pt" lang="json" src="@/locales/sfc/pt/components/popups/AppAchievements.json" />
-<i18n locale="uk" lang="json" src="@/locales/sfc/uk/components/popups/AppAchievements.json" />
+<i18n lang="json">
+{
+  "en": {
+    "ok": "OK",
+    "achievement": {
+      "book_complete": {
+        "title": "Book Complete!",
+        "message": "Congratulations! You have completed {bookName}!"
+      },
+      "bible_complete": {
+        "title": "Bible Complete!",
+        "message": "🎉 Amazing! You have completed reading the entire Bible! 🎉"
+      }
+    }
+  },
+  "de": {
+    "ok": "OK",
+    "achievement": {
+      "book_complete": {
+        "title": "Buch abgeschlossen!",
+        "message": "Glückwunsch! Sie haben {bookName} vollständig gelesen!"
+      },
+      "bible_complete": {
+        "title": "Bibel abgeschlossen!",
+        "message": "🎉 Unglaublich! Sie haben die gesamte Bibel gelesen! 🎉"
+      }
+    }
+  },
+  "es": {
+    "ok": "OK",
+    "achievement": {
+      "book_complete": {
+        "title": "¡Libro completado!",
+        "message": "¡Felicitaciones! Has completado {bookName}!"
+      },
+      "bible_complete": {
+        "title": "¡Biblia completada!",
+        "message": "🎉 ¡Increíble! Has completado la lectura de toda la Biblia! 🎉"
+      }
+    }
+  },
+  "fr": {
+    "ok": "D'accord",
+    "achievement": {
+      "book_complete": {
+        "title": "Livre terminé!",
+        "message": "Félicitations! Vous avez terminé {bookName}!"
+      },
+      "bible_complete": {
+        "title": "Bible terminée!",
+        "message": "🎉 Incroyable! Vous avez terminé de lire toute la Bible! 🎉"
+      }
+    }
+  },
+  "ko": {
+    "ok": "확인",
+    "achievement": {
+      "book_complete": {
+        "title": "한 권을 다 읽으셨네요!",
+        "message": "축하드립니다! {bookName}을(를) 모두 읽으셨네요!"
+      },
+      "bible_complete": {
+        "title": "일독에 성공하셨네요!",
+        "message": "🎉 대단해요! 성경 전체를 1독하셨네요! 🎉"
+      }
+    }
+  },
+  "pt": {
+    "ok": "OK",
+    "achievement": {
+      "book_complete": {
+        "title": "Livro completo!",
+        "message": "Parabéns! Você completou {bookName}!"
+      },
+      "bible_complete": {
+        "title": "Bíblia completa!",
+        "message": "🎉 Incrível! Você completou a leitura de toda a Bíblia! 🎉"
+      }
+    }
+  },
+  "uk": {
+    "ok": "OK",
+    "achievement": {
+      "book_complete": {
+        "title": "Книга завершена!",
+        "message": "Вітаємо! Ви завершили {bookName}!"
+      },
+      "bible_complete": {
+        "title": "Біблія завершена!",
+        "message": "🎉 Дивовижно! Ви завершили читання всієї Біблії! 🎉"
+      }
+    }
+  }
+}
+</i18n>
