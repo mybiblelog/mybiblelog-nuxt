@@ -44,11 +44,6 @@
         />
       </client-only>
     </div>
-    <div class="has-text-centered" style="margin-top: 1rem;">
-      <nuxt-link class="button is-light" :to="localePath('/log')">
-        {{ $t('view_all_reading') }}
-      </nuxt-link>
-    </div>
     <br>
     <h3 class="title is-5">
       {{ $t('reading_suggestions') }}
@@ -76,6 +71,11 @@
           :message="$t('no_suggestions')"
         />
       </client-only>
+    </div>
+    <div class="has-text-centered" style="margin-top: 1rem;">
+      <nuxt-link class="button is-light" :to="localePath('/log')">
+        {{ $t('view_all_reading') }}
+      </nuxt-link>
     </div>
     <br>
     <div class="level is-mobile">

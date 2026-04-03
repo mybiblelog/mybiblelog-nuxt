@@ -263,24 +263,30 @@ export default {
 
       if (!entries.length) { return [0]; }
 
-      const starts = [0];
+      // Contiguous same-date runs (sort order is already by date).
+      const dayGroups = [];
       let i = 0;
-      let pageCount = 0;
-
       while (i < entries.length) {
         const date = entries[i].date;
         let j = i + 1;
         while (j < entries.length && entries[j].date === date) { j += 1; }
-
-        const groupSize = j - i;
-        const wouldOverflow = pageCount > 0 && (pageCount + groupSize) > limit;
-        if (wouldOverflow) {
-          starts.push(i);
-          pageCount = 0;
-        }
-
-        pageCount += groupSize;
+        dayGroups.push({ start: i, count: j - i });
         i = j;
+      }
+
+      // Pack whole days per page: each page (except the last) has at least `limit`
+      // entries. A single day never spans two pages.
+      const starts = [0];
+      let g = 0;
+      while (g < dayGroups.length) {
+        let pageCount = 0;
+        while (g < dayGroups.length && pageCount < limit) {
+          pageCount += dayGroups[g].count;
+          g += 1;
+        }
+        if (g < dayGroups.length) {
+          starts.push(dayGroups[g].start);
+        }
       }
 
       return starts;
