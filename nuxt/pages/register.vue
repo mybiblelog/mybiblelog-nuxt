@@ -17,6 +17,11 @@
       <template v-if="formSubmitted">
         <div class="content">
           <p>{{ $t('registration_submitted') }}</p>
+          <resend-verification-email
+            v-if="requireEmailVerification"
+            :email="email"
+            :initial-seconds-until-can-retry="300"
+          />
         </div>
       </template>
       <template v-else>
@@ -60,6 +65,7 @@
 
 <script>
 import InfoLink from '@/components/InfoLink';
+import ResendVerificationEmail from '@/components/ResendVerificationEmail.vue';
 import { ApiError, UnknownApiError } from '~/helpers/api-error';
 import mapFormErrors from '~/helpers/map-form-errors';
 import { useAuthStore } from '~/stores/auth';
@@ -68,6 +74,7 @@ export default {
   name: 'RegisterPage',
   components: {
     InfoLink,
+    ResendVerificationEmail,
   },
   middleware: ['auth'],
   asyncData({ $config }) {

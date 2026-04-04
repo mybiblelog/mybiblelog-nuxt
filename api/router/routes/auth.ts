@@ -1,4 +1,5 @@
 import express from 'express';
+import crypto from 'node:crypto';
 import config from '../../config';
 import rateLimit from '../helpers/rateLimit';
 import authCurrentUser, { AUTH_COOKIE_NAME, setAuthTokenCookie } from '../helpers/authCurrentUser';
@@ -371,6 +372,7 @@ router.post('/auth/register', async (req, res, next) => {
       }
     }
 
+    user.emailVerificationCodeLastSentAt = new Date();
     await user.save();
 
     res.json({ data: { success: true } } satisfies ApiResponse);
@@ -641,6 +643,105 @@ router.post('/auth/verify-email', async (req, res) => {
   const token = user.generateJWT();
   setAuthTokenCookie(res, token);
   res.json({ data: { token } } satisfies ApiResponse);
+});
+
+/**
+ * @swagger
+ * /auth/resend-email-verification:
+ *   post:
+ *     summary: Resend verification email (cooldown)
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *               locale:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Returns whether resend was queued and cooldown seconds
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   required:
+ *                     - success
+ *                     - secondsUntilCanRetry
+ *                   properties:
+ *                     success:
+ *                       type: boolean
+ *                     secondsUntilCanRetry:
+ *                       type: number
+ *       400:
+ *         description: Validation error (e.g., missing email)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
+ */
+router.post('/auth/resend-email-verification', async (req, res) => {
+  // Rate limiting for resend requests
+  const authBypass = checkTestBypass(req);
+  if (!authBypass) {
+    await rateLimit(req, { maxRequests: 10, windowMs: 60 * 60 * 1000 }); // 10 attempts per hour
+  }
+
+  const cooldownMs = 5 * 60 * 1000;
+  const defaultSecondsUntilCanRetry = Math.ceil(cooldownMs / 1000);
+
+  const rawEmail = req.body?.email;
+  if (!rawEmail) {
+    throw new ValidationError([{ code: ApiErrorDetailCode.Required, field: 'email' }]);
+  }
+  const email = String(rawEmail).trim().toLowerCase();
+
+  const { User } = await useMongooseModels();
+  const user = await User.findOne({ email });
+
+  // Avoid email enumeration: unknown / already verified both return a generic success.
+  if (!user || isEmailVerified(user) || !requireEmailVerification) {
+    return res.json({ data: { success: true, secondsUntilCanRetry: defaultSecondsUntilCanRetry } } satisfies ApiResponse);
+  }
+
+  const nowMs = Date.now();
+  const lastSentAtMs = (user.emailVerificationCodeLastSentAt?.getTime?.() ?? 0);
+  const remainingSeconds = Math.max(0, Math.ceil((lastSentAtMs + cooldownMs - nowMs) / 1000));
+
+  if (remainingSeconds > 0) {
+    return res.json({ data: { success: false, secondsUntilCanRetry: remainingSeconds } } satisfies ApiResponse);
+  }
+
+  user.emailVerificationCode = crypto.randomBytes(64).toString('hex');
+  user.emailVerificationExpires = new Date(nowMs + 24 * 60 * 60 * 1000);
+  user.emailVerificationCodeLastSentAt = new Date(nowMs);
+  await user.save();
+
+  const responseData: { success: boolean; secondsUntilCanRetry: number; emailVerificationCode?: string } = {
+    success: true,
+    secondsUntilCanRetry: defaultSecondsUntilCanRetry,
+  };
+  if (authBypass) {
+    responseData.emailVerificationCode = user.emailVerificationCode;
+  }
+  res.json({ data: responseData } satisfies ApiResponse);
+
+  const localeFromBody = req.body?.locale;
+  const locale = (user.settings?.locale as LocaleCode) || (localeFromBody as LocaleCode) || 'en';
+
+  const emailService = await useEmailService();
+  emailService.sendUserEmailVerification(user.email, user.emailVerificationCode, locale);
 });
 
 /**
@@ -1118,20 +1219,29 @@ router.post('/auth/reset-password', async (req, res) => {
   }
 
   const { email } = req.body;
-  const { User } = await useMongooseModels();
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new NotFoundError([{ code: ApiErrorDetailCode.AccountNotFound, field: 'email' }]);
+  if (!email) {
+    throw new ValidationError([{ code: ApiErrorDetailCode.Required, field: 'email' }]);
   }
+  const { User } = await useMongooseModels();
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const user = await User.findOne({ email: normalizedEmail });
+
+  // Avoid email enumeration: always return success.
+  const responseData: { success: boolean; passwordResetCode?: string } = { success: true };
+
+  if (!user) {
+    return res.json({ data: responseData } satisfies ApiResponse);
+  }
+
   // have the password reset expire in 1 hour
   user.enablePasswordReset();
   await user.save();
 
-  // send success response, but don't `return` here so the email can be sent
-  const responseData: { success: boolean; passwordResetCode?: string } = { success: true };
   if (authBypass && user.passwordResetCode) {
     responseData.passwordResetCode = user.passwordResetCode;
   }
+
+  // send success response, but don't `return` here so the email can be sent
   res.json({ data: responseData } satisfies ApiResponse);
 
   // send password reset code via email

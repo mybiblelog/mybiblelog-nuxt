@@ -370,20 +370,69 @@ describe('Auth routes', () => {
       await deleteTestUser(testUser);
     });
 
-    it('returns 404 for invalid email (no account found)', async () => {
+    it('returns 200 for unknown email (avoid enumeration)', async () => {
       const response = await requestApi
         .post('/api/auth/reset-password')
         .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
         .send({
           email: 'invalid-email',
         });
-      expect(response.statusCode).toBe(404);
-      expect(response.body).toHaveProperty('error');
-      expect(response.body).not.toHaveProperty('data');
-      expect(response.body.error).toEqual({
-        code: 'not_found',
-        errors: [{ field: 'email', code: 'account_not_found' }],
-      });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toHaveProperty('data');
+      expect(response.body).not.toHaveProperty('error');
+      expect(response.body.data).toEqual({ success: true });
+    });
+  });
+
+  describe('POST /api/auth/resend-email-verification', () => {
+    it('returns 200 for unknown email (avoid enumeration)', async () => {
+      const res = await requestApi
+        .post('/api/auth/resend-email-verification')
+        .send({ email: 'unknown_user@example.com', locale: 'en' });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toHaveProperty('data');
+      expect(res.body).not.toHaveProperty('error');
+      expect(res.body.data).toHaveProperty('success');
+      expect(res.body.data).toHaveProperty('secondsUntilCanRetry');
+      expect(res.body.data.success).toBe(true);
+      expect(res.body.data.secondsUntilCanRetry).toBe(300);
+    });
+
+    it('returns cooldown info for recently-sent verification email', async () => {
+      const testEmail = generateTestEmail();
+      const testEmailVerificationCode = generateRandomString(64);
+
+      const registerResponse = await requestApi
+        .post('/api/auth/register')
+        .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
+        .send({
+          email: testEmail,
+          password: 'password123',
+          locale: 'en',
+          emailVerificationCode: testEmailVerificationCode,
+        });
+      expect(registerResponse.statusCode).toBe(200);
+
+      const res = await requestApi
+        .post('/api/auth/resend-email-verification')
+        .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
+        .send({ email: testEmail, locale: 'en' });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toHaveProperty('data');
+      expect(res.body).not.toHaveProperty('error');
+      expect(res.body.data.success).toBe(true); // always true to avoid enumeration
+      expect(res.body.data.secondsUntilCanRetry).toBeGreaterThan(0);
+      expect(res.body.data.secondsUntilCanRetry).toBeLessThanOrEqual(300);
+
+      // Cleanup by logging in (bypasses email verification) then deleting account
+      const loginResponse = await requestApi
+        .post('/api/auth/login')
+        .set('x-test-bypass-secret', TEST_BYPASS_SECRET!)
+        .send({ email: testEmail, password: 'password123' });
+      expect(loginResponse.statusCode).toBe(200);
+      await deleteTestUser({ token: loginResponse.body.data.token });
     });
   });
 
