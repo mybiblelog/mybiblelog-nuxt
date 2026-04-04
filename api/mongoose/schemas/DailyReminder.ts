@@ -33,6 +33,10 @@ export const DailyReminderSchema = new mongoose.Schema({
     type: String,
     default: () => crypto.randomBytes(16).toString('base64url'),
   },
+  lastEmailEngagementAt: {
+    type: Date,
+    default: null,
+  },
   nextOccurrence: {
     type: Number,
     default: () => Date.now(),
@@ -78,6 +82,7 @@ DailyReminderSchema.pre('save', async function() {
   // re-calculate an unsubscribe code
   if (this.isModified('active') && this.active) {
     this.unsubscribeCode = crypto.randomBytes(16).toString('base64url');
+    this.lastEmailEngagementAt = new Date();
   }
 });
 

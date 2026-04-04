@@ -8,9 +8,18 @@ import { EmailService } from './email/email-service';
 
 const baseUrl = config.siteUrl;
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+const TIME_BEFORE_DISABLING_DAILY_REMINDER_EMAIL_MS = 3 * DAY_MS;
+
 const getLocaleBaseUrl = (locale) => {
   const localePathSegment = locale === 'en' ? '' : '/' + locale;
   return baseUrl + localePathSegment;
+};
+
+const buildDailyReminderTrackedLink = ({ unsubscribeCode, to }: { unsubscribeCode: string; to: string }) => {
+  const trackUrl = new URL(`/api/reminders/daily-reminder/track/${unsubscribeCode}`, baseUrl);
+  trackUrl.searchParams.set('to', to);
+  return trackUrl.toString();
 };
 
 const init = async ({ emailService }: { emailService: EmailService }) => {
@@ -85,8 +94,10 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
       emailDate.setTime(utcNow.valueOf() + dayMs);
     }
 
-    const siteLink = `${getLocaleBaseUrl(locale)}/start`;
-    const settingsLink = `${getLocaleBaseUrl(locale)}/settings/reminder`;
+    const rawSiteLink = `${getLocaleBaseUrl(locale)}/start`;
+    const rawSettingsLink = `${getLocaleBaseUrl(locale)}/settings/reminder`;
+    const siteLink = buildDailyReminderTrackedLink({ unsubscribeCode: reminder.unsubscribeCode, to: rawSiteLink });
+    const settingsLink = buildDailyReminderTrackedLink({ unsubscribeCode: reminder.unsubscribeCode, to: rawSettingsLink });
     const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.unsubscribeCode}`;
 
     // Build an unsubscribe email address that includes the unsubscribe code
@@ -136,6 +147,18 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
   };
 
   const sendReminder = async (reminder) => {
+    const engagementCutoffMs = Date.now() - TIME_BEFORE_DISABLING_DAILY_REMINDER_EMAIL_MS;
+
+    if (!reminder.lastEmailEngagementAt) {
+      // Backward-compatibility for reminders that existed before engagement tracking
+      reminder.lastEmailEngagementAt = new Date();
+    }
+    else if (reminder.lastEmailEngagementAt.getTime() < engagementCutoffMs) {
+      reminder.active = false;
+      await reminder.save();
+      return;
+    }
+
     const user = await User.findOne({ _id: reminder.owner });
     const recentLogEntries = await getRecentLogEntries(user);
     const email = buildEmail(user, reminder, recentLogEntries);

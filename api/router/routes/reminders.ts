@@ -3,8 +3,28 @@ import authCurrentUser from '../helpers/authCurrentUser';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { type ApiResponse } from '../response';
 import { NotFoundError } from '../errors/http-errors';
+import config from '../../config';
 
 const router = express.Router();
+
+const getSafeDailyReminderRedirectUrl = (to: unknown): string => {
+  const fallback = new URL('/start', config.siteUrl).toString();
+  if (typeof to !== 'string' || !to) {
+    return fallback;
+  }
+
+  try {
+    const dest = to.startsWith('/') ? new URL(to, config.siteUrl) : new URL(to);
+    const allowedOrigin = new URL(config.siteUrl).origin;
+    if (dest.origin !== allowedOrigin) {
+      return fallback;
+    }
+    return dest.toString();
+  }
+  catch {
+    return fallback;
+  }
+};
 
 /**
  * @swagger
@@ -44,7 +64,35 @@ const router = express.Router();
  *         unsubscribeCode:
  *           type: string
  *           description: A unique code for unsubscribing from the reminder
+ *         lastEmailEngagementAt:
+ *           type: string
+ *           format: date-time
+ *           description: The last time the user clicked a tracked link in a daily reminder email
  */
+
+/**
+ * Tracks engagement by updating lastEmailEngagementAt.
+ * Always redirects to a safe destination (prevents open redirects).
+ */
+router.get('/reminders/daily-reminder/track/:code', async (req, res, next) => {
+  try {
+    const { code } = req.params;
+    const { to } = req.query;
+    const redirectTo = getSafeDailyReminderRedirectUrl(to);
+
+    const { DailyReminder } = await useMongooseModels();
+    const reminder = await DailyReminder.findOne({ unsubscribeCode: code });
+    if (reminder) {
+      reminder.lastEmailEngagementAt = new Date();
+      await reminder.save();
+    }
+
+    return res.redirect(redirectTo);
+  }
+  catch (error) {
+    next(error);
+  }
+});
 
 /**
  * Returns the single daily reminder for the given user,
@@ -202,7 +250,7 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
  *             schema:
  *               $ref: '#/components/schemas/ApiErrorResponse'
  */
-router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res, next) => {
+router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res) => {
   const { code } = req.params;
   const { DailyReminder, User } = await useMongooseModels();
 

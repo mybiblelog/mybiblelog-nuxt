@@ -66,5 +66,14 @@ describe('Reminders routes', () => {
     expect(res.body.data.timezoneOffset).toBe(-420);
     expect(res.body.data.active).toBe(true);
   });
+
+  test('GET /api/reminders/daily-reminder/track/:code (redirects safely)', async () => {
+    const res = await requestApi
+      .get('/api/reminders/daily-reminder/track/not-a-real-code?to=/start');
+
+    expect(res.statusCode).toBe(302);
+    expect(res.headers).toHaveProperty('location');
+    expect(res.headers.location).toMatch(/\/start$/);
+  });
 });
 
