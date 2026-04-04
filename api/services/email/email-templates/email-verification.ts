@@ -1,5 +1,6 @@
 import { LocaleCode } from '@shared/dist/i18n';
 import { getLocaleBaseUrl } from './helpers';
+import renderBrandedEmail from './branded-wrapper';
 
 type RenderEmailVerificationParams = {
   locale: LocaleCode;
@@ -18,7 +19,7 @@ const render = ({ locale, emailVerificationCode }: RenderEmailVerificationParams
   }[locale];
 
   const link = getLocaleBaseUrl(locale) + '/verify-email?code=' + emailVerificationCode;
-  const html = {
+  const contentHtml = {
     de: `Klicken Sie auf <a href="${link}">diesen Link</a>, um Ihre E-Mail zu bestätigen.`,
     en: `Click <a href="${link}">this link</a> to verify your email.`,
     es: `Haga clic en <a href="${link}">este enlace</a> para verificar su correo electrónico.`,
@@ -30,7 +31,7 @@ const render = ({ locale, emailVerificationCode }: RenderEmailVerificationParams
 
   return {
     subject,
-    html,
+    html: renderBrandedEmail({ title: subject, contentHtml }),
   };
 };
 

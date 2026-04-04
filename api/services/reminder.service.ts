@@ -1,5 +1,3 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import config from '../config';
 import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../mongoose/useMongooseModels';
@@ -108,9 +106,6 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
       unsubscribeEmail = `${address}+${reminder.publicToken}@${domain}`;
     }
 
-    // Load brand logo asset
-    const brandLogoAssetPath = path.resolve(__dirname, 'email', 'assets', 'brand.png');
-
     const { subject, html } = renderDailyReminderEmail({
       siteLink,
       settingsLink,
@@ -138,11 +133,6 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
       },
       subject,
       html,
-      attachments: [{
-        filename: 'brand.png',
-        content: fs.readFileSync(brandLogoAssetPath),
-        contentId: 'logo@mybiblelog',
-      }],
     };
   };
 

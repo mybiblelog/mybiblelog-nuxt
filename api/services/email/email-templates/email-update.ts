@@ -1,5 +1,6 @@
 import { LocaleCode } from '@shared/dist/i18n';
 import { getLocaleBaseUrl } from './helpers';
+import renderBrandedEmail from './branded-wrapper';
 
 type RenderEmailUpdateParams = {
   locale: LocaleCode;
@@ -25,7 +26,7 @@ const render = ({
   }[locale];
 
   const link = getLocaleBaseUrl(locale) + '/change-email?code=' + newEmailVerificationCode;
-  const html = {
+  const contentHtml = {
     de: [
       `<p>Die My Bible Log-Konto mit der E-Mail-Adresse <strong>${currentEmail}</strong> hat eine Anfrage gestellt, ihre E-Mail-Adresse zu ändern zu <strong>${newEmail}</strong>.</p>`,
       '<br>',
@@ -72,7 +73,7 @@ const render = ({
 
   return {
     subject,
-    html,
+    html: renderBrandedEmail({ title: subject, contentHtml }),
   };
 };
 

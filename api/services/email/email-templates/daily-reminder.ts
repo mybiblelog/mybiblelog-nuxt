@@ -1,4 +1,5 @@
 import { LocaleCode } from '@shared/dist/i18n';
+import renderBrandedEmail from './branded-wrapper';
 
 const translations = {
   de: {
@@ -80,159 +81,6 @@ const translations = {
   },
 };
 
-/* eslint-disable indent */
-
-const renderHead = () => (`
-  <head>
-    <style>
-      .gray {
-        background: #eee;
-      }
-
-      .title-box {
-        background: #1f3d7a;
-        color: #fff;
-      }
-
-      .content-area {
-        padding: 15px;
-      }
-
-      h1 {
-        font-size: 35px;
-        margin: 0;
-      }
-
-      .brand {
-        vertical-align: middle;
-        padding-right: 5px;
-      }
-
-      .text-centered {
-        text-align: center;
-      }
-
-      .cta-container {
-        margin-top: 3em;
-        margin-bottom: 4em;
-      }
-
-      .cta-button {
-        color: #fff !important;
-        background: #3298dc;
-        text-align: center;
-        text-decoration: none;
-        padding: 0.5em 1em;
-        white-space: nowrap;
-        border-radius: 4px;
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .cta-button:hover {
-        background: #2793da;
-      }
-
-      .log-entry-table {
-        border-collapse: collapse;
-      }
-
-      .log-entry-table th,
-      .log-entry-table td {
-        text-align: left;
-        border: 0;
-      }
-
-      .log-entry-table td {
-        border-top: 1px solid #333;
-      }
-    </style>
-  </head>`
-);
-
-const renderBody = ({
-  siteLink,
-  settingsLink,
-  unsubscribeLink,
-  recentLogEntries,
-  t,
-}: {
-  siteLink: string;
-  settingsLink: string;
-  unsubscribeLink: string;
-  recentLogEntries: { displayDate: string, passage: string }[];
-  t: typeof translations[LocaleCode];
-}) => (`
-  <body>
-    <table border="0" cellpadding="5" cellspacing="0" width="100%">
-      <tbody>
-        <tr>
-          <td class="gray" colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td class="gray" width="*"></td>
-          <td class="title-box content-area" width="500px">
-            <h1></h1>
-              <img class="brand" alt="" src="cid:logo@mybiblelog" width="50" height="50">
-              ${t.my_bible_log}
-            </h1>
-          </td>
-          <td class="gray" width="*"></td>
-        </tr>
-        <tr>
-          <td class="gray" width="*"></td>
-          <td class="content-area" width="500px">
-            <p class="text-centered">${t.this_is_your_reminder}</p>
-            <p class="text-centered">${t.you_can_update_preferences(settingsLink)}</p>
-            <p class="cta-container text-centered">
-              <a class="cta-button" href="${siteLink}">
-                ${t.open_my_bible_log}
-              </a>
-            </p>
-            <p>
-              <strong>${t.most_recent_log_entries}</strong>
-            </p>
-            <p>
-              <table class="log-entry-table" border="0" cellpadding="5" cellspacing="0" width="100%">
-                <thead>
-                  <tr>
-                    <th>${t.date}</th>
-                    <th>${t.passage}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${recentLogEntries.length > 0 ? (
-                    recentLogEntries.map((logEntry) => (`
-                      <tr>
-                        <td>${logEntry.displayDate}</td>
-                        <td>${logEntry.passage}</td>
-                      </tr>
-                    `)).join('')
-                  ) : (
-                    `<tr><td colspan="2">${t.no_log_entries_found}</td></tr>`
-                  )}
-                </tbody>
-              </table>
-            </p>
-          </td>
-          <td class="gray"></td>
-        </tr>
-        <tr>
-          <td class="gray" width="*"></td>
-          <td class="gray content-area text-centered">
-            <p>
-              <a href="${unsubscribeLink}">${t.unsubscribe}</a>
-            </p>
-          </td>
-          <td class="gray"></td>
-        </tr>
-      </tbody>
-    </table>
-  </body>`
-);
-
-/* eslint-enable indent */
-
 type RenderDailyReminderEmailParams = {
   siteLink: string;
   settingsLink: string;
@@ -250,6 +98,7 @@ const render = ({
   emailDate,
   locale,
 }: RenderDailyReminderEmailParams) => {
+  const t = translations[locale];
   const dateFormatOptions: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric' };
   const subjectDate = new Intl.DateTimeFormat(locale, dateFormatOptions).format(emailDate);
 
@@ -263,18 +112,42 @@ const render = ({
     uk: `Нагадування My Bible Log для ${subjectDate}`,
   }[locale];
 
-  const html = (
-    `<html>
-    ${renderHead()}
-    ${renderBody({
-      siteLink,
-      settingsLink,
-      unsubscribeLink,
-      recentLogEntries,
-      t: translations[locale],
-    })}
-    </html>`
-  );
+  /* eslint-disable indent */
+  const recentLogEntriesRowsHtml = recentLogEntries.length > 0
+    ? recentLogEntries.map((logEntry) => (`
+        <tr>
+          <td>${logEntry.displayDate}</td>
+          <td>${logEntry.passage}</td>
+        </tr>
+      `)).join('')
+    : `<tr><td colspan="2">${t.no_log_entries_found}</td></tr>`;
+
+  const contentHtml = (`
+    <p class="text-centered">${t.this_is_your_reminder}</p>
+    <p class="text-centered">${t.you_can_update_preferences(settingsLink)}</p>
+    <p class="cta-container text-centered">
+      <a class="cta-button" href="${siteLink}">
+        ${t.open_my_bible_log}
+      </a>
+    </p>
+    <p><strong>${t.most_recent_log_entries}</strong></p>
+    <table class="log-entry-table" border="0" cellpadding="5" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>${t.date}</th>
+          <th>${t.passage}</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${recentLogEntriesRowsHtml}
+      </tbody>
+    </table>
+  `);
+
+  const footerHtml = `<p><a href="${unsubscribeLink}">${t.unsubscribe}</a></p>`;
+  /* eslint-enable indent */
+
+  const html = renderBrandedEmail({ title: subject, contentHtml, footerHtml });
   return {
     subject,
     html,

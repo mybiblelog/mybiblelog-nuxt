@@ -1,5 +1,6 @@
 import { LocaleCode } from '@shared/dist/i18n';
 import { getLocaleBaseUrl } from './helpers';
+import renderBrandedEmail from './branded-wrapper';
 
 type RenderPasswordResetLinkParams = {
   locale: LocaleCode;
@@ -21,7 +22,7 @@ const render = ({
   }[locale];
 
   const link = getLocaleBaseUrl(locale) + '/reset-password?code=' + passwordResetLink;
-  const html = {
+  const contentHtml = {
     de: `Klicken Sie auf <a href="${link}">diesen Link</a>, um Ihr Passwort zurückzusetzen.`,
     en: `Click <a href="${link}">this link</a> to reset your password.`,
     es: `Haga clic en <a href="${link}">este enlace</a> para restablecer su contraseña.`,
@@ -33,7 +34,7 @@ const render = ({
 
   return {
     subject,
-    html,
+    html: renderBrandedEmail({ title: subject, contentHtml }),
   };
 };
 
