@@ -116,7 +116,6 @@
             :key="note.id"
             :note="note"
             :actions="actionsForRecentNote(note)"
-            :get-reading-url="getReadingUrl"
             role="listitem"
           />
           <div class="has-text-centered" style="margin-top: 1rem;">

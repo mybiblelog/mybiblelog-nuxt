@@ -1,5 +1,9 @@
 <template>
-  <div class="grid-selector" :style="gridSelectorStyle">
+  <div
+    class="grid-selector"
+    :class="flow === 'row' ? 'grid-selector--flow-row' : 'grid-selector--flow-column'"
+    :style="gridSelectorStyle"
+  >
     <div v-for="option in options" :key="option.value" class="grid-selector--option" @click="selectValue(option.value)">
       {{ option.label }}
     </div>
@@ -18,6 +22,15 @@ export default {
       type: Number,
       default: 2,
     },
+    /**
+     * column: fill top-to-bottom within each column, then left-to-right (default).
+     * row: fill left-to-right within each row, then top-to-bottom.
+     */
+    flow: {
+      type: String,
+      default: 'column',
+      validator: v => v === 'column' || v === 'row',
+    },
   },
   computed: {
     gridRows() {
@@ -25,6 +38,7 @@ export default {
     },
     gridSelectorStyle() {
       return {
+        'grid-auto-flow': this.flow,
         'grid-template-columns': `repeat(${this.columns}, 1fr)`,
         'grid-template-rows': `repeat(${this.gridRows}, 1fr)`,
       };
@@ -41,10 +55,16 @@ export default {
 <style lang="scss" scoped>
 .grid-selector {
   display: grid;
-  padding: 1px;
   font-size: 0.8rem;
   user-select: none;
-  grid-auto-flow: column;
+}
+
+.grid-selector--flow-column {
+  column-gap: 0.5rem;
+}
+
+.grid-selector--flow-row {
+  row-gap: 0.5rem;
 }
 
 .grid-selector--option {

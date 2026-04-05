@@ -112,7 +112,6 @@
                 :key="note.id"
                 :note="note"
                 :actions="actionsForNote(note)"
-                :get-reading-url="getReadingUrl"
               />
             </template>
           </div>
@@ -149,7 +148,6 @@ import { useToastStore } from '~/stores/toast';
 import { usePassageNoteEditorStore } from '~/stores/passage-note-editor';
 import { usePassageNotesStore } from '~/stores/passage-notes';
 import { usePassageNoteTagsStore } from '~/stores/passage-note-tags';
-import { useUserSettingsStore } from '~/stores/user-settings';
 
 export default {
   name: 'NotesListPage',
@@ -277,9 +275,6 @@ export default {
       const query = encodePassageNotesQueryToRoute(nextQuery);
       const nav = { path, query };
       return replace ? this.$router.replace(nav) : this.$router.push(nav);
-    },
-    getReadingUrl(bookIndex, chapterIndex) {
-      return useUserSettingsStore().getReadingUrl(bookIndex, chapterIndex);
     },
     displayVerseRange(startVerseId, endVerseId) {
       return Bible.displayVerseRange(startVerseId, endVerseId, this.$i18n.locale);

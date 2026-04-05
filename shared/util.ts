@@ -1,5 +1,5 @@
 import Bible from './bible';
-import { LocaleCode } from './i18n';
+import { defaultLocale, isValidLocaleCode, type LocaleCode } from './i18n';
 
 /** Determines if the operating system is a mobile device (for opening links in apps). */
 const isMobileOperatingSystem = () => {
@@ -122,6 +122,17 @@ export const defaultLocaleBibleVersions = {
   uk: BibleVersions.UKR,
 } as const satisfies Record<LocaleCode, typeof BibleVersions[keyof typeof BibleVersions]>;
 
+/** Default HelloAO/API bible version key for the UI locale (read page, links, etc.). */
+export const getDefaultBibleVersionForUiLocale = (
+  locale: string,
+): keyof typeof BibleVersions => {
+  const code: LocaleCode = isValidLocaleCode(locale) ? locale : defaultLocale;
+  return defaultLocaleBibleVersions[code] as keyof typeof BibleVersions;
+};
+
+export const isBibleVersionKey = (s: string): s is keyof typeof BibleVersions =>
+  Object.prototype.hasOwnProperty.call(BibleVersions, s);
+
 type BibleVersionsType = {
   [Key in keyof typeof BibleVersions]: string | number;
 };
@@ -148,6 +159,39 @@ const BlueLetterBibleVersions: BibleVersionsType = {
   [BibleVersions.KLB]: 'niv', // No Korean on Blue Letter Bible
   [BibleVersions.KRV]: 'niv', // No Korean on Blue Letter Bible
 } as const;
+
+/**
+ * Translation ids for https://bible.helloao.org/api/{id}/{USFM}/{chapter}.json
+ * (see GET /api/available_translations.json). Where helloao has no matching
+ * text, we use a close substitute or English {@link HELLOAO_DEFAULT_TRANSLATION_ID}.
+ */
+export const HELLOAO_DEFAULT_TRANSLATION_ID = 'BSB';
+
+const HelloaoTranslationIds: { readonly [Key in keyof typeof BibleVersions]: string } = {
+  [BibleVersions.AMP]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.KJV]: 'eng_cpb',
+  [BibleVersions.NKJV]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.NIV]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.ESV]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.NASB1995]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.NASB2020]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.NABRE]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.NLT]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.TPT]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.MSG]: HELLOAO_DEFAULT_TRANSLATION_ID,
+  [BibleVersions.RVR1960]: 'spa_r09',
+  [BibleVersions.RVR2020]: 'spa_r09',
+  [BibleVersions.UKR]: 'ukr_1996',
+  [BibleVersions.BDS]: 'fra_lsg',
+  [BibleVersions.LSG]: 'fra_lsg',
+  [BibleVersions.ARC]: 'por_bsl',
+  [BibleVersions.LUT]: 'deu_l12',
+  [BibleVersions.KLB]: 'kor_old',
+  [BibleVersions.KRV]: 'kor_old',
+};
+
+export const getHelloaoTranslationId = (version: keyof typeof BibleVersions): string =>
+  HelloaoTranslationIds[version] ?? HELLOAO_DEFAULT_TRANSLATION_ID;
 
 const BibleGatewayVersions: BibleVersionsType = {
   [BibleVersions.AMP]: 'AMP',

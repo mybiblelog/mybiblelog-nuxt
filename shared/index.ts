@@ -16,3 +16,20 @@ export { default as chapterVerses } from './static/chapter-verses/nasb';
 
 // Type exports
 export type { BibleBook } from './static/bible-books';
+
+export { BIBLE_ORDER_TO_USFM, bookIndexToUsfm } from './bible-usfm';
+export type {
+  HelloaoChapterFetchPlan,
+  HelloaoPassageBlock,
+  HelloaoPassagePiece,
+  HelloaoPassageVerseRow,
+  HelloaoVerseLine,
+  HelloaoVerseSegment,
+} from './helloao-passage';
+export {
+  extractHelloaoPassagePiecesFromChapter,
+  extractHelloaoVersesFromChapter,
+  getHelloaoChapterFetchPlan,
+  shouldUseChapterByChapterReadMore,
+  verseBoundsForChapter,
+} from './helloao-passage';
