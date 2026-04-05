@@ -108,25 +108,6 @@ main p {
 
 <i18n lang="json">
 {
-  "de": {
-    "title": "Konto löschen",
-    "description": "Sie haben die Kontrolle über Ihre Daten. Sie können Ihr Konto und alle mit ihm verbundenen Daten löschen:",
-    "list": {
-      "account": "Dies wird Ihr Konto und Ihre persönlichen Einstellungen dauerhaft löschen.",
-      "log_entries": "Dies wird Ihre Einträge im Journal dauerhaft löschen.",
-      "notes": "Dies wird Ihre Notizen und benutzerdefinierten Tags dauerhaft löschen.",
-      "export": "Sie müssen Ihre Einträge im Journal exportieren, bevor Sie Ihr Konto löschen, wenn Sie sie beibehalten möchten.",
-      "permanent": "Diese Aktion kann nicht rückgängig gemacht werden."
-    },
-    "understand": {
-      "log_entries": "Ich verstehe, dass dies alle Daten meiner Einträge im Journal löscht.",
-      "export": "Ich verstehe, dass ich derzeit meine Einträge im Journal für meine eigene Verwendung exportieren kann, was ich nicht nach dem Löschen meines Kontos tun kann.",
-      "notes": "Ich verstehe, dass dies alle meine Notizen und Tags dauerhaft löscht.",
-      "permanent": "Ich verstehe, dass diese Aktion dauerhaft ist und nicht rückgängig gemacht werden kann."
-    },
-    "delete_my_account": "Mein Konto löschen",
-    "unable_to_delete": "Das Konto kann nicht gelöscht werden. Bitte versuchen Sie es später erneut."
-  },
   "en": {
     "title": "Delete Account",
     "description": "You are in control of your data. You can delete your account and all data associated with it:",
@@ -145,6 +126,25 @@ main p {
     },
     "delete_my_account": "Delete My Account",
     "unable_to_delete": "Unable to delete account. Please try again later."
+  },
+  "de": {
+    "title": "Konto löschen",
+    "description": "Sie haben die Kontrolle über Ihre Daten. Sie können Ihr Konto und alle mit ihm verbundenen Daten löschen:",
+    "list": {
+      "account": "Dies wird Ihr Konto und Ihre persönlichen Einstellungen dauerhaft löschen.",
+      "log_entries": "Dies wird Ihre Einträge im Journal dauerhaft löschen.",
+      "notes": "Dies wird Ihre Notizen und benutzerdefinierten Tags dauerhaft löschen.",
+      "export": "Sie müssen Ihre Einträge im Journal exportieren, bevor Sie Ihr Konto löschen, wenn Sie sie beibehalten möchten.",
+      "permanent": "Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "understand": {
+      "log_entries": "Ich verstehe, dass dies alle Daten meiner Einträge im Journal löscht.",
+      "export": "Ich verstehe, dass ich derzeit meine Einträge im Journal für meine eigene Verwendung exportieren kann, was ich nicht nach dem Löschen meines Kontos tun kann.",
+      "notes": "Ich verstehe, dass dies alle meine Notizen und Tags dauerhaft löscht.",
+      "permanent": "Ich verstehe, dass diese Aktion dauerhaft ist und nicht rückgängig gemacht werden kann."
+    },
+    "delete_my_account": "Mein Konto löschen",
+    "unable_to_delete": "Das Konto kann nicht gelöscht werden. Bitte versuchen Sie es später erneut."
   },
   "es": {
     "title": "Eliminar cuenta",
@@ -183,6 +183,25 @@ main p {
     },
     "delete_my_account": "Supprimer Mon Compte",
     "unable_to_delete": "Impossible de supprimer le compte. Veuillez réessayer plus tard."
+  },
+  "ko": {
+    "title": "계정 삭제",
+    "description": "여러분의 데이터는 여러분이 관리할 수 있습니다. 계정 및 모든 관련 데이터를 삭제할 수 있습니다:",
+    "list": {
+      "account": "계정과 개인 설정이 영구 삭제됩니다.",
+      "log_entries": "읽기 기록이 영구적 삭제됩니다.",
+      "notes": "노트 및 맞춤 태그가 영구적 삭제됩니다.",
+      "export": "기록을 보관하기 위해서는 계정 삭제 이전에 읽기 기록을 내보내기 해야 합니다.",
+      "permanent": "이 작업은 되돌릴 수 없습니다."
+    },
+    "understand": {
+      "log_entries": "모든 읽기 기록 데이터가 삭제된다는 것을 이해했습니다.",
+      "export": "지금은 읽기 기록을 내보내기 할 수 있지만, 계정 삭제 이후에는 내보내기가 불가능하다는 점을 이해했습니다.",
+      "notes": "모든 노트와 태그가 삭제된다는 것을 이해했습니다.",
+      "permanent": "이 작업은 영구적이며 되돌릴 수 없다는 것을 이해했습니다."
+    },
+    "delete_my_account": "나의 계정 삭제",
+    "unable_to_delete": "계정을 삭제할 수 없습니다. 나중에 다시 시도해 주세요."
   },
   "pt": {
     "title": "Apagar Conta",

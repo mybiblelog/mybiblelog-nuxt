@@ -43,11 +43,16 @@ export default {
 }
 </style>
 
-<i18n>
+<i18n lang="json">
 {
   "en": {
     "aria": {
       "more_information": "More information"
+    }
+  },
+  "de": {
+    "aria": {
+      "more_information": "Weitere Informationen"
     }
   },
   "es": {
@@ -58,6 +63,16 @@ export default {
   "fr": {
     "aria": {
       "more_information": "Plus d'informations"
+    }
+  },
+  "ko": {
+    "aria": {
+      "more_information": "추가 정보"
+    }
+  },
+  "pt": {
+    "aria": {
+      "more_information": "Mais informações"
     }
   },
   "uk": {

@@ -96,24 +96,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "unsubscribe": "Abmelden",
-    "success": "Erfolg! Die E-Mail-Adresse <strong>{email}</strong> wurde von den täglichen Erinnerungs-E-Mails abgemeldet.",
-    "update_preferences": "Einstellungen aktualisieren",
-    "client_error": {
-      "title": "Fehler beim Versuch der Abmeldung aufgetreten.",
-      "p1": "Der Abmeldelink, der verwendet wurde, um diese Seite zu erreichen, ist wahrscheinlich abgelaufen.",
-      "p2": "Dies geschieht, wenn jemand sich abgemeldet hat und dann erneut angemeldet hat und so ein neues Abonnement erstellt hat.",
-      "p3": "Bitte folgen Sie dem Abmeldelink in der neuesten E-Mail oder aktualisieren Sie Ihre Einstellungen."
-    },
-    "server_error": {
-      "p1": "Der Abmeldelink, der verwendet wurde, um diese Seite zu erreichen, ist abgelaufen.",
-      "p2": "Dies geschieht, wenn jemand sich abgemeldet hat und dann erneut angemeldet hat und so ein neues Abonnement erstellt hat.",
-      "p3": "Bitte folgen Sie dem Abmeldelink in der neuesten E-Mail oder melden Sie sich an, um Ihre Einstellungen zu aktualisieren."
-    },
-    "unsubscribing_you": "Abmeldung von täglichen Erinnerungsmails...",
-    "there_was_an_error": "Es ist ein Fehler während des Abmeldeprozesses aufgetreten."
-  },
   "en": {
     "unsubscribe": "Unsubscribe",
     "success": "Success! The email address <strong>{email}</strong> has been unsubscribed from daily reminder emails.",
@@ -131,6 +113,24 @@ export default {
     },
     "unsubscribing_you": "Unsubscribing you from daily reminder emails...",
     "there_was_an_error": "There was an error during the unsubscribe process."
+  },
+  "de": {
+    "unsubscribe": "Abmelden",
+    "success": "Erfolg! Die E-Mail-Adresse <strong>{email}</strong> wurde von den täglichen Erinnerungs-E-Mails abgemeldet.",
+    "update_preferences": "Einstellungen aktualisieren",
+    "client_error": {
+      "title": "Fehler beim Versuch der Abmeldung aufgetreten.",
+      "p1": "Der Abmeldelink, der verwendet wurde, um diese Seite zu erreichen, ist wahrscheinlich abgelaufen.",
+      "p2": "Dies geschieht, wenn jemand sich abgemeldet hat und dann erneut angemeldet hat und so ein neues Abonnement erstellt hat.",
+      "p3": "Bitte folgen Sie dem Abmeldelink in der neuesten E-Mail oder aktualisieren Sie Ihre Einstellungen."
+    },
+    "server_error": {
+      "p1": "Der Abmeldelink, der verwendet wurde, um diese Seite zu erreichen, ist abgelaufen.",
+      "p2": "Dies geschieht, wenn jemand sich abgemeldet hat und dann erneut angemeldet hat und so ein neues Abonnement erstellt hat.",
+      "p3": "Bitte folgen Sie dem Abmeldelink in der neuesten E-Mail oder melden Sie sich an, um Ihre Einstellungen zu aktualisieren."
+    },
+    "unsubscribing_you": "Abmeldung von täglichen Erinnerungsmails...",
+    "there_was_an_error": "Es ist ein Fehler während des Abmeldeprozesses aufgetreten."
   },
   "es": {
     "unsubscribe": "Cancelar suscripción",
@@ -167,6 +167,24 @@ export default {
     },
     "unsubscribing_you": "Désabonnement des e-mails de rappel quotidiens en cours...",
     "there_was_an_error": "Une erreur s'est produite lors du processus de désabonnement."
+  },
+  "ko": {
+    "unsubscribe": "수신 거부",
+    "success": "수신 거부가 완료되었습니다! <strong>{email}</strong> 주소는 매일 알림 목록에서 삭제되었습니다.",
+    "update_preferences": "설정 변경",
+    "client_error": {
+      "title": "수신 거부 처리 중 오류가 발생했습니다.",
+      "p1": "이 페이지로 연결되는 링크가 만료되었을 수 있습니다.",
+      "p2": "수신 거부 이후 재구독시, 구독이 새로 생성되어 링크가 변경됩니다.",
+      "p3": "가장 최근 수신된 이메일에 포함된 수신 거부 링크를 클릭하거나 설정에서 변경해 주세요."
+    },
+    "server_error": {
+      "p1": "이 페이지로 연결되는 링크가 만료되었습니다.",
+      "p2": "수신 거부 이후 재구독시, 구독이 새로 생성되어 링크가 변경됩니다.",
+      "p3": "가장 최근 수신된 이메일에 포함된 수신 거부 링크를 클릭하거나 로그인 후 설정에서 변경해 주세요."
+    },
+    "unsubscribing_you": "매일 알림 목록에서 삭제하는 중…",
+    "there_was_an_error": "수신 거부 처리 과정에서 오류가 발생했습니다."
   },
   "pt": {
     "unsubscribe": "Cancelar a subscrição",

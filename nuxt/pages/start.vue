@@ -141,16 +141,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "start_page": {
-      "save_and_continue": "Speichern und Fortfahren",
-      "save_and_finish": "Speichern und Fertigstellen",
-      "back": "Zurück",
-      "welcome": {
-        "button": "Meine Einstellungen personalisieren"
-      }
-    }
-  },
   "en": {
     "start_page": {
       "save_and_continue": "Save and Continue",
@@ -158,6 +148,16 @@ export default {
       "back": "Back",
       "welcome": {
         "button": "Personalize My Settings"
+      }
+    }
+  },
+  "de": {
+    "start_page": {
+      "save_and_continue": "Speichern und Fortfahren",
+      "save_and_finish": "Speichern und Fertigstellen",
+      "back": "Zurück",
+      "welcome": {
+        "button": "Meine Einstellungen personalisieren"
       }
     }
   },
@@ -178,6 +178,16 @@ export default {
       "back": "Retour",
       "welcome": {
         "button": "Personnaliser Mes Paramètres"
+      }
+    }
+  },
+  "ko": {
+    "start_page": {
+      "save_and_continue": "저장 및 계속",
+      "save_and_finish": "저장 및 완료",
+      "back": "뒤로",
+      "welcome": {
+        "button": "내 설정 맞춤화"
       }
     }
   },

@@ -136,23 +136,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "today": "Heute",
-    "bible_books": "Bibelbücher",
-    "chapter_checklist": "Kapitel Checkliste",
-    "calendar": "Kalender",
-    "log": "Journal",
-    "notes": "Notizen",
-    "about": "Über",
-    "settings": "Einstellungen",
-    "admin": "Administrator",
-    "users": "Benutzer",
-    "feedback": "Feedback",
-    "engagement": "Engagement",
-    "log_out": "Abmelden",
-    "sign_up": "Registrieren",
-    "sign_in": "Anmelden"
-  },
   "en": {
     "today": "Today",
     "bible_books": "Bible Books",
@@ -169,6 +152,23 @@ export default {
     "log_out": "Log Out",
     "sign_up": "Sign Up",
     "sign_in": "Sign In"
+  },
+  "de": {
+    "today": "Heute",
+    "bible_books": "Bibelbücher",
+    "chapter_checklist": "Kapitel Checkliste",
+    "calendar": "Kalender",
+    "log": "Journal",
+    "notes": "Notizen",
+    "about": "Über",
+    "settings": "Einstellungen",
+    "admin": "Administrator",
+    "users": "Benutzer",
+    "feedback": "Feedback",
+    "engagement": "Engagement",
+    "log_out": "Abmelden",
+    "sign_up": "Registrieren",
+    "sign_in": "Anmelden"
   },
   "es": {
     "today": "Hoy",
@@ -203,6 +203,23 @@ export default {
     "log_out": "Déconnexion",
     "sign_up": "S'inscrire",
     "sign_in": "Se connecter"
+  },
+  "ko": {
+    "today": "오늘",
+    "bible_books": "성경 일람",
+    "chapter_checklist": "장별 체크",
+    "calendar": "달력",
+    "log": "기록",
+    "notes": "노트",
+    "about": "소개",
+    "settings": "설정",
+    "admin": "관리자",
+    "users": "사용자",
+    "feedback": "피드백",
+    "engagement": "참여",
+    "log_out": "로그아웃",
+    "sign_up": "회원가입",
+    "sign_in": "로그인"
   },
   "pt": {
     "today": "Hoje",

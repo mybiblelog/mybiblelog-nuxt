@@ -92,17 +92,20 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "today": "Heute"
-  },
   "en": {
     "today": "Today"
+  },
+  "de": {
+    "today": "Heute"
   },
   "es": {
     "today": "Hoy"
   },
   "fr": {
     "today": "Aujourd'hui"
+  },
+  "ko": {
+    "today": "오늘"
   },
   "pt": {
     "today": "Hoje"

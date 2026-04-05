@@ -58,13 +58,13 @@
           <div class="select">
             <select :value="draft.limit" @change="setDraft({ limit: Number($event.target.value) })">
               <option :value="10">
-                10
+                {{ $t('page_size_option', { n: 10 }) }}
               </option>
               <option :value="20">
-                20
+                {{ $t('page_size_option', { n: 20 }) }}
               </option>
               <option :value="50">
-                50
+                {{ $t('page_size_option', { n: 50 }) }}
               </option>
             </select>
           </div>
@@ -226,21 +226,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "title": "Ansichtsoptionen",
-    "reset": "Zurücksetzen",
-    "reset_confirm": "Möchten Sie die Such-/Filter-/Sortiereinstellungen wirklich zurücksetzen?",
-    "first_date": "Von (Datum)",
-    "last_date": "Bis (Datum)",
-    "passage": "Nach Passage filtern",
-    "clear": "Löschen",
-    "sort": "Sortieren",
-    "sort_newest_first": "Neueste zuerst",
-    "sort_oldest_first": "Älteste zuerst",
-    "page_size": "Seitengröße",
-    "apply": "Anwenden",
-    "cancel": "Abbrechen"
-  },
   "en": {
     "title": "View Options",
     "reset": "Reset",
@@ -253,8 +238,25 @@ export default {
     "sort_newest_first": "Newest First",
     "sort_oldest_first": "Oldest First",
     "page_size": "Page Size",
+    "page_size_option": "{n}+",
     "apply": "Apply",
     "cancel": "Cancel"
+  },
+  "de": {
+    "title": "Ansichtsoptionen",
+    "reset": "Zurücksetzen",
+    "reset_confirm": "Möchten Sie die Such-/Filter-/Sortiereinstellungen wirklich zurücksetzen?",
+    "first_date": "Von (Datum)",
+    "last_date": "Bis (Datum)",
+    "passage": "Nach Passage filtern",
+    "clear": "Löschen",
+    "sort": "Sortieren",
+    "sort_newest_first": "Neueste zuerst",
+    "sort_oldest_first": "Älteste zuerst",
+    "page_size": "Seitengröße",
+    "page_size_option": "{n}+",
+    "apply": "Anwenden",
+    "cancel": "Abbrechen"
   },
   "es": {
     "title": "Opciones de vista",
@@ -268,6 +270,7 @@ export default {
     "sort_newest_first": "Más reciente primero",
     "sort_oldest_first": "Más antiguo primero",
     "page_size": "Tamaño de página",
+    "page_size_option": "{n}+",
     "apply": "Aplicar",
     "cancel": "Cancelar"
   },
@@ -283,8 +286,25 @@ export default {
     "sort_newest_first": "Le plus récent d'abord",
     "sort_oldest_first": "Plus ancien en premier",
     "page_size": "Taille de page",
+    "page_size_option": "{n}+",
     "apply": "Appliquer",
     "cancel": "Annuler"
+  },
+  "ko": {
+    "title": "보기 옵션",
+    "reset": "초기화",
+    "reset_confirm": "검색·필터·정렬 설정을 초기화할까요?",
+    "first_date": "시작 일자",
+    "last_date": "종료 일자",
+    "passage": "구절로 필터",
+    "clear": "지우기",
+    "sort": "정렬",
+    "sort_newest_first": "최신순",
+    "sort_oldest_first": "오래된순",
+    "page_size": "페이지 크기",
+    "page_size_option": "{n}+",
+    "apply": "적용",
+    "cancel": "취소"
   },
   "pt": {
     "title": "Opções de visualização",
@@ -298,6 +318,7 @@ export default {
     "sort_newest_first": "Mais Recentes Primeiro",
     "sort_oldest_first": "Mais Antigos Primeiro",
     "page_size": "Tamanho da página",
+    "page_size_option": "{n}+",
     "apply": "Aplicar",
     "cancel": "Cancelar"
   },
@@ -313,6 +334,7 @@ export default {
     "sort_newest_first": "Спочатку нові",
     "sort_oldest_first": "Спочатку старі",
     "page_size": "Розмір сторінки",
+    "page_size_option": "{n}+",
     "apply": "Застосувати",
     "cancel": "Скасувати"
   }

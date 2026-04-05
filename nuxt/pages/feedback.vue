@@ -44,18 +44,18 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "feedback_form": "Feedback-Formular",
-    "feedback_form_intro": {
-      "p1": "Verwenden Sie dieses Formular, um Feedback für My Bible Log einzureichen.",
-      "p2": "Fehlerberichte, Funktionsanfragen und allgemeine Kommentare sind willkommen."
-    }
-  },
   "en": {
     "feedback_form": "Feedback Form",
     "feedback_form_intro": {
       "p1": "Use this form to submit feedback for My Bible Log.",
       "p2": "Bug reports, feature requests, and general comments are all welcome."
+    }
+  },
+  "de": {
+    "feedback_form": "Feedback-Formular",
+    "feedback_form_intro": {
+      "p1": "Verwenden Sie dieses Formular, um Feedback für My Bible Log einzureichen.",
+      "p2": "Fehlerberichte, Funktionsanfragen und allgemeine Kommentare sind willkommen."
     }
   },
   "es": {
@@ -70,6 +70,13 @@ export default {
     "feedback_form_intro": {
       "p1": "Utilisez ce formulaire pour soumettre des commentaires pour My Bible Log.",
       "p2": "Les rapports de bogues, les demandes de fonctionnalités et les commentaires généraux sont les bienvenus."
+    }
+  },
+  "ko": {
+    "feedback_form": "피드백 양식",
+    "feedback_form_intro": {
+      "p1": "이 양식을 통해 My Bible Log에 대한 피드백을 보내주세요.",
+      "p2": "버그 신고, 기능 제안, 일반 의견 모두 환영합니다."
     }
   },
   "pt": {

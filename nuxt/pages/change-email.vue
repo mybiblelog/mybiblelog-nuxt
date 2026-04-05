@@ -120,15 +120,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "change_email": "E-Mail ändern",
-    "confirming_your_new_email_address": "Bestätige deine neue E-Mail-Adresse...",
-    "your_email_change_request_has_expired": "Deine E-Mail-Änderungsanfrage ist abgelaufen.",
-    "please_go_to_your_settings_and_try_changing_your_email_address_again": "Gehe zu deinen Einstellungen und versuche erneut, deine E-Mail-Adresse zu ändern.",
-    "there_was_an_error_changing_your_email_address": "Es gab einen Fehler beim Ändern deiner E-Mail-Adresse.",
-    "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten.",
-    "your_email_address_was_updated_successfully": "Deine E-Mail-Adresse wurde erfolgreich aktualisiert."
-  },
   "en": {
     "change_email": "Change Email",
     "confirming_your_new_email_address": "Confirming your new email address...",
@@ -137,6 +128,15 @@ export default {
     "there_was_an_error_changing_your_email_address": "There was an error changing your email address.",
     "an_unknown_error_occurred": "An unknown error occurred.",
     "your_email_address_was_updated_successfully": "Your email address was updated successfully."
+  },
+  "de": {
+    "change_email": "E-Mail ändern",
+    "confirming_your_new_email_address": "Bestätige deine neue E-Mail-Adresse...",
+    "your_email_change_request_has_expired": "Deine E-Mail-Änderungsanfrage ist abgelaufen.",
+    "please_go_to_your_settings_and_try_changing_your_email_address_again": "Gehe zu deinen Einstellungen und versuche erneut, deine E-Mail-Adresse zu ändern.",
+    "there_was_an_error_changing_your_email_address": "Es gab einen Fehler beim Ändern deiner E-Mail-Adresse.",
+    "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten.",
+    "your_email_address_was_updated_successfully": "Deine E-Mail-Adresse wurde erfolgreich aktualisiert."
   },
   "es": {
     "change_email": "Cambiar Correo Electrónico",
@@ -155,6 +155,15 @@ export default {
     "there_was_an_error_changing_your_email_address": "Une erreur s'est produite lors du changement de votre adresse e-mail.",
     "an_unknown_error_occurred": "Une erreur inconnue s'est produite.",
     "your_email_address_was_updated_successfully": "Votre adresse e-mail a été mise à jour avec succès."
+  },
+  "ko": {
+    "change_email": "이메일 변경",
+    "confirming_your_new_email_address": "새 이메일 주소를 확인하는 중…",
+    "your_email_change_request_has_expired": "이메일 변경 요청이 만료되었습니다.",
+    "please_go_to_your_settings_and_try_changing_your_email_address_again": "설정에서 이메일 변경을 다시 시도해 주세요.",
+    "there_was_an_error_changing_your_email_address": "이메일 주소를 변경하는 과정에서 오류가 발생했습니다.",
+    "an_unknown_error_occurred": "알 수 없는 오류가 발생했습니다.",
+    "your_email_address_was_updated_successfully": "이메일 주소가 성공적으로 변경되었습니다."
   },
   "pt": {
     "change_email": "Alterar E-mail",

@@ -534,19 +534,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "select_book": "Wähle Buch",
-    "select_chapters": "Wähle Kapitel",
-    "select_end_chapter": "Wähle Endkapitel",
-    "select_verses": "Wähle Verse",
-    "select_start_verse": "Wähle Startvers",
-    "select_end_verse": "Wähle Endvers",
-    "click_and_drag_to_select_multiple_chapters": "Klicke und ziehe, um mehrere Kapitel auszuwählen.",
-    "old_testament": "Altes Testament",
-    "new_testament": "Neues Testament",
-    "select_chapters_note": "Wählen Sie das erste und letzte Kapitel im Abschnitt aus, oder wählen Sie für ein einzelnes Kapitel zweimal aus.",
-    "select_verses_note": "Wählen Sie den ersten und letzten Vers im Kapitel aus, oder wählen Sie für einen einzelnen Vers zweimal aus."
-  },
   "en": {
     "select_book": "Select Book",
     "select_chapters": "Select Chapter(s)",
@@ -559,6 +546,19 @@ export default {
     "new_testament": "New Testament",
     "select_chapters_note": "Select the first and last chapter in the passage, or for a single chapter select it twice.",
     "select_verses_note": "Select the first and last verse in the chapter, or for a single verse select it twice."
+  },
+  "de": {
+    "select_book": "Wähle Buch",
+    "select_chapters": "Wähle Kapitel",
+    "select_end_chapter": "Wähle Endkapitel",
+    "select_verses": "Wähle Verse",
+    "select_start_verse": "Wähle Startvers",
+    "select_end_verse": "Wähle Endvers",
+    "click_and_drag_to_select_multiple_chapters": "Klicke und ziehe, um mehrere Kapitel auszuwählen.",
+    "old_testament": "Altes Testament",
+    "new_testament": "Neues Testament",
+    "select_chapters_note": "Wählen Sie das erste und letzte Kapitel im Abschnitt aus, oder wählen Sie für ein einzelnes Kapitel zweimal aus.",
+    "select_verses_note": "Wählen Sie den ersten und letzten Vers im Kapitel aus, oder wählen Sie für einen einzelnen Vers zweimal aus."
   },
   "es": {
     "select_book": "Seleccionar Libro",
@@ -585,6 +585,19 @@ export default {
     "new_testament": "Nouveau Testament",
     "select_chapters_note": "Sélectionnez le premier et le dernier chapitre du passage, ou pour un seul chapitre, sélectionnez-le deux fois.",
     "select_verses_note": "Sélectionnez le premier et le dernier verset du chapitre, ou pour un seul verset, sélectionnez-le deux fois."
+  },
+  "ko": {
+    "select_book": "권 선택",
+    "select_chapters": "장 선택",
+    "select_end_chapter": "마무리 장 선택",
+    "select_verses": "절 선택",
+    "select_start_verse": "시작 절 선택",
+    "select_end_verse": "마무리 절 선택",
+    "click_and_drag_to_select_multiple_chapters": "여러 장을 선택하려면 클릭한 채 드래그하세요.",
+    "old_testament": "구약",
+    "new_testament": "신약",
+    "select_chapters_note": "구절의 첫 장과 마지막 장을 선택하세요. 한 장만 선택하기 위해서는 같은 장을 두 번 누르세요.",
+    "select_verses_note": "장 안에서 첫 절과 마지막 절을 선택하세요. 한 절만 선택하기 위해서는 같은 절을 두 번 누르세요."
   },
   "pt": {
     "select_book": "Selecionar Livro",

@@ -314,21 +314,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "passages": "Passagen",
-    "add_passage": "Passage hinzufügen",
-    "done": "Fertig",
-    "cancel": "Abbrechen",
-    "remove": "Entfernen",
-    "no_passages": "Noch keine Passagen hinzugefügt",
-    "content": "Inhalt",
-    "tags": "Tags",
-    "manage_tags": "Tags auswählen",
-    "no_tags_selected": "Keine Tags ausgewählt",
-    "loading": "Laden",
-    "characters": "Zeichen",
-    "are_you_sure": "Sind Sie sicher, dass Sie diese Passage entfernen möchten?"
-  },
   "en": {
     "passages": "Passages",
     "add_passage": "Add Passage",
@@ -343,6 +328,21 @@ export default {
     "loading": "Loading",
     "characters": "characters",
     "are_you_sure": "Are you sure you want to remove this passage?"
+  },
+  "de": {
+    "passages": "Passagen",
+    "add_passage": "Passage hinzufügen",
+    "done": "Fertig",
+    "cancel": "Abbrechen",
+    "remove": "Entfernen",
+    "no_passages": "Noch keine Passagen hinzugefügt",
+    "content": "Inhalt",
+    "tags": "Tags",
+    "manage_tags": "Tags auswählen",
+    "no_tags_selected": "Keine Tags ausgewählt",
+    "loading": "Laden",
+    "characters": "Zeichen",
+    "are_you_sure": "Sind Sie sicher, dass Sie diese Passage entfernen möchten?"
   },
   "es": {
     "passages": "Pasajes",
@@ -373,6 +373,21 @@ export default {
     "loading": "Chargement",
     "characters": "caractères",
     "are_you_sure": "Êtes-vous sûr de vouloir supprimer ce passage ?"
+  },
+  "ko": {
+    "passages": "구절",
+    "add_passage": "구절 추가",
+    "done": "완료",
+    "cancel": "취소",
+    "remove": "삭제",
+    "no_passages": "아직 추가된 구절이 없습니다",
+    "content": "내용",
+    "tags": "태그",
+    "manage_tags": "태그 선택",
+    "no_tags_selected": "선택된 태그가 없습니다",
+    "loading": "불러오는 중",
+    "characters": "자",
+    "are_you_sure": "해당 구절을 삭제할까요?"
   },
   "pt": {
     "passages": "Passagens",

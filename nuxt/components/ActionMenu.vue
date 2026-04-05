@@ -173,17 +173,20 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "open_menu": "Menü öffnen"
-  },
   "en": {
     "open_menu": "Open menu"
+  },
+  "de": {
+    "open_menu": "Menü öffnen"
   },
   "es": {
     "open_menu": "Abrir menú"
   },
   "fr": {
     "open_menu": "Ouvrir le menu"
+  },
+  "ko": {
+    "open_menu": "메뉴 열기"
   },
   "pt": {
     "open_menu": "Abrir menu"

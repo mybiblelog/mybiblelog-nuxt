@@ -153,17 +153,6 @@ main p {
 
 <i18n lang="json">
 {
-  "de": {
-    "change_password": "Passwort ändern",
-    "current_password": "Aktuelles Passwort",
-    "new_password": "Neues Passwort",
-    "confirm_new_password": "Neues Passwort bestätigen",
-    "change_password_button": "Passwort ändern",
-    "enter_current_password": "Geben Sie Ihr aktuelles Passwort ein.",
-    "passwords_must_match": "Passwörter müssen übereinstimmen.",
-    "password_changed_successfully": "Passwort erfolgreich geändert.",
-    "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten."
-  },
   "en": {
     "change_password": "Change Password",
     "current_password": "Current Password",
@@ -174,6 +163,17 @@ main p {
     "passwords_must_match": "Passwords must match.",
     "password_changed_successfully": "Password changed successfully.",
     "an_unknown_error_occurred": "An unknown error occurred."
+  },
+  "de": {
+    "change_password": "Passwort ändern",
+    "current_password": "Aktuelles Passwort",
+    "new_password": "Neues Passwort",
+    "confirm_new_password": "Neues Passwort bestätigen",
+    "change_password_button": "Passwort ändern",
+    "enter_current_password": "Geben Sie Ihr aktuelles Passwort ein.",
+    "passwords_must_match": "Passwörter müssen übereinstimmen.",
+    "password_changed_successfully": "Passwort erfolgreich geändert.",
+    "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten."
   },
   "es": {
     "change_password": "Cambiar contraseña",
@@ -196,6 +196,17 @@ main p {
     "passwords_must_match": "Les mots de passe doivent correspondre.",
     "password_changed_successfully": "Mot de passe modifié avec succès.",
     "an_unknown_error_occurred": "Une erreur inconnue s'est produite."
+  },
+  "ko": {
+    "change_password": "비밀번호 변경",
+    "current_password": "현재 비밀번호",
+    "new_password": "새 비밀번호",
+    "confirm_new_password": "새 비밀번호 확인",
+    "change_password_button": "비밀번호 변경",
+    "enter_current_password": "현재 비밀번호를 입력하세요.",
+    "passwords_must_match": "비밀번호가 일치해야 합니다.",
+    "password_changed_successfully": "비밀번호가 변경되었습니다.",
+    "an_unknown_error_occurred": "알 수 없는 오류가 발생했습니다."
   },
   "pt": {
     "change_password": "Alterar Senha",

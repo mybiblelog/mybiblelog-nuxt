@@ -188,6 +188,16 @@ export default {
     "privacy_policy": "Politique de confidentialité",
     "terms_and_conditions": "Conditions d'utilisation"
   },
+  "ko": {
+    "home": "홈페이지",
+    "faq": "자주 묻는 질문",
+    "give_feedback": "피드백 보내기",
+    "contribute": "기여하기",
+    "donate_ko_fi": "Ko-fi를 통해 기부",
+    "code_on_github": "GitHub 코드",
+    "privacy_policy": "개인정보처리방침",
+    "terms_and_conditions": "이용약관"
+  },
   "pt": {
     "home": "Início",
     "faq": "FAQ",

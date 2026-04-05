@@ -130,15 +130,15 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "verse": "Vers | Verse",
-    "all": "alle | alle",
-    "new": "neu | neu"
-  },
   "en": {
     "verse": "verse | verses",
     "all": "all | all",
     "new": "new | new"
+  },
+  "de": {
+    "verse": "Vers | Verse",
+    "all": "alle | alle",
+    "new": "neu | neu"
   },
   "es": {
     "verse": "versículo | versículos",
@@ -149,6 +149,11 @@ export default {
     "verse": "verset | versets",
     "all": "tout | tout",
     "new": "nouveau | nouveau"
+  },
+  "ko": {
+    "verse": "절 | 절",
+    "all": "전체 | 전체",
+    "new": "새 | 새"
   },
   "pt": {
     "verse": "versículo | versículos",

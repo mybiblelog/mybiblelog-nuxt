@@ -108,6 +108,8 @@ export const BibleVersions = {
   LSG: 'LSG', // Louis Segond (French)
   ARC: 'ARC', // Almeida Revista e Corrigida (Portuguese)
   LUT: 'LUT', // Luther 1912 (German)
+  KLB: 'KLB', // Korean Language Bible
+  KRV: 'KRV', // Korean Revised Version (개역한글)
 } as const;
 
 export const defaultLocaleBibleVersions = {
@@ -115,6 +117,7 @@ export const defaultLocaleBibleVersions = {
   de: BibleVersions.LUT,
   es: BibleVersions.RVR2020,
   fr: BibleVersions.LSG,
+  ko: BibleVersions.KRV,
   pt: BibleVersions.ARC,
   uk: BibleVersions.UKR,
 } as const satisfies Record<LocaleCode, typeof BibleVersions[keyof typeof BibleVersions]>;
@@ -142,6 +145,8 @@ const BlueLetterBibleVersions: BibleVersionsType = {
   [BibleVersions.LSG]: 'ls',
   [BibleVersions.ARC]: 'nasb20', // There is no ARC version on Blue Letter Bible
   [BibleVersions.LUT]: 'lut',
+  [BibleVersions.KLB]: 'niv', // No Korean on Blue Letter Bible
+  [BibleVersions.KRV]: 'niv', // No Korean on Blue Letter Bible
 } as const;
 
 const BibleGatewayVersions: BibleVersionsType = {
@@ -163,6 +168,8 @@ const BibleGatewayVersions: BibleVersionsType = {
   [BibleVersions.LSG]: 'LSG',
   [BibleVersions.ARC]: 'ARC',
   [BibleVersions.LUT]: 'LUTH1545',
+  [BibleVersions.KLB]: 'KLB',
+  [BibleVersions.KRV]: 'KLB', // Bible Gateway doesn't support KRV
 } as const;
 
 // The language code of each translation on Bible.com
@@ -185,6 +192,8 @@ const BibleComTranslationLanguages: BibleVersionsType = {
   [BibleVersions.LSG]: 93,
   [BibleVersions.ARC]: 212,
   [BibleVersions.LUT]: 51,
+  [BibleVersions.KLB]: 86,
+  [BibleVersions.KRV]: 88,
 } as const;
 
 const defaultBibleVersion: keyof typeof BibleVersions = BibleVersions.NASB2020;

@@ -54,21 +54,21 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "start_page": {
-      "welcome": {
-        "title": "Willkommen in Ihrem neuen My Bible Log-Konto!",
-        "description": "Lassen Sie uns Ihre Einstellungen personalisieren, damit Sie das Beste aus der App herausholen können.",
-        "skip_personalization": "Personalisierung überspringen"
-      }
-    }
-  },
   "en": {
     "start_page": {
       "welcome": {
         "title": "Welcome to your new My Bible Log account!",
         "description": "Let's personalize your settings so you can get the most out of the app.",
         "skip_personalization": "Skip Personalization"
+      }
+    }
+  },
+  "de": {
+    "start_page": {
+      "welcome": {
+        "title": "Willkommen in Ihrem neuen My Bible Log-Konto!",
+        "description": "Lassen Sie uns Ihre Einstellungen personalisieren, damit Sie das Beste aus der App herausholen können.",
+        "skip_personalization": "Personalisierung überspringen"
       }
     }
   },
@@ -87,6 +87,15 @@ export default {
         "title": "Bienvenue dans votre nouveau compte My Bible Log !",
         "description": "Personnalisons vos paramètres pour que vous puissiez tirer le meilleur parti de l'application.",
         "skip_personalization": "Ignorer la personnalisation"
+      }
+    }
+  },
+  "ko": {
+    "start_page": {
+      "welcome": {
+        "title": "My Bible Log 계정에 오신 것을 환영합니다!",
+        "description": "My Bible Log를 최대한 유용하게 활용할 수 있도록 맞춤 설정을 도와드리겠습니다.",
+        "skip_personalization": "맞춤 설정 건너뛰기"
       }
     }
   },

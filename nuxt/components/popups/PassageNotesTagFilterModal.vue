@@ -49,16 +49,16 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "tag_filters": {
-      "title": "Tags auswählen",
-      "done": "Fertig"
-    }
-  },
   "en": {
     "tag_filters": {
       "title": "Choose Tags",
       "done": "Done"
+    }
+  },
+  "de": {
+    "tag_filters": {
+      "title": "Tags auswählen",
+      "done": "Fertig"
     }
   },
   "es": {
@@ -71,6 +71,12 @@ export default {
     "tag_filters": {
       "title": "Choisir des étiquettes",
       "done": "Terminé"
+    }
+  },
+  "ko": {
+    "tag_filters": {
+      "title": "태그 선택",
+      "done": "완료"
     }
   },
   "pt": {

@@ -252,15 +252,15 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "bible_books": "Bücher der Bibel",
-    "progress": "Fortschritt",
-    "note": "Notiz | Notizen"
-  },
   "en": {
     "bible_books": "Bible Books",
     "progress": "Progress",
     "note": "Note | Notes"
+  },
+  "de": {
+    "bible_books": "Bücher der Bibel",
+    "progress": "Fortschritt",
+    "note": "Notiz | Notizen"
   },
   "es": {
     "bible_books": "Libros de la Biblia",
@@ -271,6 +271,11 @@ export default {
     "bible_books": "Livres de la Bible",
     "progress": "Progrès",
     "note": "Note | Notes"
+  },
+  "ko": {
+    "bible_books": "성경 일람",
+    "progress": "진행 상황",
+    "note": "노트 | 노트"
   },
   "pt": {
     "bible_books": "Livros da Bíblia",

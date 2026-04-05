@@ -288,38 +288,6 @@ main p {
 
 <i18n lang="json">
 {
-  "de": {
-    "import": "Import",
-    "you_can_import_a_csv": "Sie können ein CSV-Datei mit Journal-Einträgen in My Bible Log importieren.",
-    "choose_a_file": "Datei auswählen...",
-    "log_import_progress": "Journal-Import-Fortschritt",
-    "date": "Datum",
-    "passage": "Passage",
-    "status": "Status",
-    "no_log_entries_to_show": "Keine Journal-Einträge zum Anzeigen.",
-    "log_entry_status": {
-      "invalid": "Ungültig",
-      "to_do": "Zu tun",
-      "checking": "Überprüfen",
-      "already_exists": "Bereits vorhanden",
-      "importing_now": "Wird importiert",
-      "imported": "Importiert"
-    },
-    "messaging": {
-      "file_not_a_csv": "Die Datei {filename} ist nicht im CSV-Format. Es ist {filetype}.",
-      "unable_to_parse_file": "Die Datei {filename} kann nicht analysiert werden. Stellen Sie sicher, dass das Format korrekt ist.",
-      "unable_to_parse_any_log_entries": "Die Journal-Einträge aus den hochgeladenen Dateien können nicht analysiert werden.",
-      "successfully_processed_log_entries": "Erfolgreich verarbeitet {count} Journal-Einträge.",
-      "there_was_a_problem_creating_the_log_entries": "Es gab ein Problem beim Erstellen der Journal-Einträge.",
-      "look_back_date_reset_message": {
-        "1": "Ihre importierte Datei enthält Journal-Einträge vor Ihrem Rückblickdatum. Die meisten Seiten werden diese Einträge beim Anzeigen Ihres Fortschritts ignorieren.",
-        "2": "Möchten Sie Ihr Rückblickdatum auf {lookBackDate} aktualisieren, um diese Einträge zu berücksichtigen?"
-      },
-      "update_look_back_date_yes": "Rückblickdatum aktualisieren",
-      "update_look_back_date_no": "Aktuelles Rückblickdatum beibehalten",
-      "look_back_date_updated_successfully": "Rückblickdatum erfolgreich aktualisiert."
-    }
-  },
   "en": {
     "import": "Import",
     "you_can_import_a_csv": "You can import a reading log CSV file to My Bible Log.",
@@ -350,6 +318,38 @@ main p {
       "update_look_back_date_yes": "Update Look Back Date",
       "update_look_back_date_no": "Keep Current Look Back Date",
       "look_back_date_updated_successfully": "Look back date updated successfully."
+    }
+  },
+  "de": {
+    "import": "Import",
+    "you_can_import_a_csv": "Sie können ein CSV-Datei mit Journal-Einträgen in My Bible Log importieren.",
+    "choose_a_file": "Datei auswählen...",
+    "log_import_progress": "Journal-Import-Fortschritt",
+    "date": "Datum",
+    "passage": "Passage",
+    "status": "Status",
+    "no_log_entries_to_show": "Keine Journal-Einträge zum Anzeigen.",
+    "log_entry_status": {
+      "invalid": "Ungültig",
+      "to_do": "Zu tun",
+      "checking": "Überprüfen",
+      "already_exists": "Bereits vorhanden",
+      "importing_now": "Wird importiert",
+      "imported": "Importiert"
+    },
+    "messaging": {
+      "file_not_a_csv": "Die Datei {filename} ist nicht im CSV-Format. Es ist {filetype}.",
+      "unable_to_parse_file": "Die Datei {filename} kann nicht analysiert werden. Stellen Sie sicher, dass das Format korrekt ist.",
+      "unable_to_parse_any_log_entries": "Die Journal-Einträge aus den hochgeladenen Dateien können nicht analysiert werden.",
+      "successfully_processed_log_entries": "Erfolgreich verarbeitet {count} Journal-Einträge.",
+      "there_was_a_problem_creating_the_log_entries": "Es gab ein Problem beim Erstellen der Journal-Einträge.",
+      "look_back_date_reset_message": {
+        "1": "Ihre importierte Datei enthält Journal-Einträge vor Ihrem Rückblickdatum. Die meisten Seiten werden diese Einträge beim Anzeigen Ihres Fortschritts ignorieren.",
+        "2": "Möchten Sie Ihr Rückblickdatum auf {lookBackDate} aktualisieren, um diese Einträge zu berücksichtigen?"
+      },
+      "update_look_back_date_yes": "Rückblickdatum aktualisieren",
+      "update_look_back_date_no": "Aktuelles Rückblickdatum beibehalten",
+      "look_back_date_updated_successfully": "Rückblickdatum erfolgreich aktualisiert."
     }
   },
   "es": {
@@ -414,6 +414,38 @@ main p {
       "update_look_back_date_yes": "Mettre à jour la Date de Rétrospection",
       "update_look_back_date_no": "Conserver la Date de Rétrospection Actuelle",
       "look_back_date_updated_successfully": "Date de rétrospection mise à jour avec succès."
+    }
+  },
+  "ko": {
+    "import": "불러오기",
+    "you_can_import_a_csv": "읽기 기록 CSV 파일을 My Bible Log로 불러올 수 있습니다.",
+    "choose_a_file": "파일 선택…",
+    "log_import_progress": "가져오기 진행",
+    "date": "일자",
+    "passage": "구절",
+    "status": "현황",
+    "no_log_entries_to_show": "표시할 읽기 기록이 없습니다.",
+    "log_entry_status": {
+      "invalid": "올바르지 않음",
+      "to_do": "대기",
+      "checking": "확인 중",
+      "already_exists": "이미 존재함",
+      "importing_now": "불러오는 중",
+      "imported": "불러오기 완료"
+    },
+    "messaging": {
+      "file_not_a_csv": "{filename} 파일은 CSV 형식이 아닙니다. {filetype} 형식입니다.",
+      "unable_to_parse_file": "{filename} 파일을 해석할 수 없습니다. 형식이 올바른지 확인해주세요.",
+      "unable_to_parse_any_log_entries": "업로드된 파일에서 읽기 기록을 찾을 수 없습니다.",
+      "successfully_processed_log_entries": "{count}개의 읽기 기록을 처리했습니다.",
+      "there_was_a_problem_creating_the_log_entries": "읽기 기록을 만드는 중 문제가 발생했습니다.",
+      "look_back_date_reset_message": {
+        "1": "불러온 파일에 기준 시작일 이전 기록이 포함되어 있습니다. 대부분의 페이지에서는 해당 기록이 진행 상황에 반영되지 않습니다.",
+        "2": "기준 시작일을 {lookBackDate}로 바꿔 해당 기록을 포함시킬까요?"
+      },
+      "update_look_back_date_yes": "기준 시작일 업데이트",
+      "update_look_back_date_no": "현재 기준 시작일 유지",
+      "look_back_date_updated_successfully": "기준 시작일이 업데이트되었습니다."
     }
   },
   "pt": {

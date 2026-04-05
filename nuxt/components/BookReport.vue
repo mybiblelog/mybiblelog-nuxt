@@ -237,13 +237,13 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "book_notes": "Buch Notizen",
-    "book_reading": "Buch Lesen"
-  },
   "en": {
     "book_notes": "Book Notes",
     "book_reading": "Book Reading"
+  },
+  "de": {
+    "book_notes": "Buch Notizen",
+    "book_reading": "Buch Lesen"
   },
   "es": {
     "book_notes": "Notas del libro",
@@ -252,6 +252,10 @@ export default {
   "fr": {
     "book_notes": "Notes du livre",
     "book_reading": "Lecture du livre"
+  },
+  "ko": {
+    "book_notes": "권별 노트",
+    "book_reading": "권별 읽기"
   },
   "pt": {
     "book_notes": "Notas do livro",

@@ -422,36 +422,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "title": "Ansichtsoptionen",
-    "reset": "Zurücksetzen",
-    "reset_confirm": "Möchten Sie die Such-/Filter-/Sortiereinstellungen wirklich zurücksetzen?",
-    "search_text": "Suchtext",
-    "search_placeholder": "Text eingeben…",
-    "tag_filters": "Nach Tags filtern",
-    "tag_select": {
-      "choose": "Tags auswählen…",
-      "clear": "Tags löschen"
-    },
-    "tag_only_untagged": "Nur ungetaggte Notizen",
-    "tag_match": "Übereinstimmung",
-    "tag_match_any": "Beliebig",
-    "tag_match_all": "Alle",
-    "tag_match_exact": "Exakt",
-    "passage": "Nach Passage filtern",
-    "clear": "Löschen",
-    "passage_match": "Übereinstimmung",
-    "passage_match_inclusive": "Inklusiv",
-    "passage_match_exclusive": "Exklusiv",
-    "passage_match_inclusive_description": "Stimmt mit einer Notiz überein, wenn sich einer ihrer Verse mit Ihrer Filterpassage überschneidet.",
-    "passage_match_exclusive_description": "Stimmt mit einer Notiz überein, wenn einer ihrer Verse innerhalb Ihrer Filterpassage liegt.",
-    "sort": "Sortieren",
-    "sort_newest_first": "Neueste zuerst",
-    "sort_oldest_first": "Älteste zuerst",
-    "page_size": "Seitengröße",
-    "apply": "Anwenden",
-    "cancel": "Abbrechen"
-  },
   "en": {
     "title": "View Options",
     "reset": "Reset",
@@ -481,6 +451,36 @@ export default {
     "page_size": "Page Size",
     "apply": "Apply",
     "cancel": "Cancel"
+  },
+  "de": {
+    "title": "Ansichtsoptionen",
+    "reset": "Zurücksetzen",
+    "reset_confirm": "Möchten Sie die Such-/Filter-/Sortiereinstellungen wirklich zurücksetzen?",
+    "search_text": "Suchtext",
+    "search_placeholder": "Text eingeben…",
+    "tag_filters": "Nach Tags filtern",
+    "tag_select": {
+      "choose": "Tags auswählen…",
+      "clear": "Tags löschen"
+    },
+    "tag_only_untagged": "Nur ungetaggte Notizen",
+    "tag_match": "Übereinstimmung",
+    "tag_match_any": "Beliebig",
+    "tag_match_all": "Alle",
+    "tag_match_exact": "Exakt",
+    "passage": "Nach Passage filtern",
+    "clear": "Löschen",
+    "passage_match": "Übereinstimmung",
+    "passage_match_inclusive": "Inklusiv",
+    "passage_match_exclusive": "Exklusiv",
+    "passage_match_inclusive_description": "Stimmt mit einer Notiz überein, wenn sich einer ihrer Verse mit Ihrer Filterpassage überschneidet.",
+    "passage_match_exclusive_description": "Stimmt mit einer Notiz überein, wenn einer ihrer Verse innerhalb Ihrer Filterpassage liegt.",
+    "sort": "Sortieren",
+    "sort_newest_first": "Neueste zuerst",
+    "sort_oldest_first": "Älteste zuerst",
+    "page_size": "Seitengröße",
+    "apply": "Anwenden",
+    "cancel": "Abbrechen"
   },
   "es": {
     "title": "Opciones de vista",
@@ -541,6 +541,36 @@ export default {
     "page_size": "Taille de page",
     "apply": "Appliquer",
     "cancel": "Annuler"
+  },
+  "ko": {
+    "title": "보기 옵션",
+    "reset": "초기화",
+    "reset_confirm": "검색·필터·정렬 설정을 초기화할까요?",
+    "search_text": "검색어",
+    "search_placeholder": "텍스트 입력…",
+    "tag_filters": "태그로 필터",
+    "tag_select": {
+      "choose": "태그 선택…",
+      "clear": "태그 지우기"
+    },
+    "tag_only_untagged": "태그 없는 노트만",
+    "tag_match": "일치",
+    "tag_match_any": "이 중 하나라도",
+    "tag_match_all": "전부",
+    "tag_match_exact": "정확히",
+    "passage": "구절로 필터",
+    "clear": "지우기",
+    "passage_match": "일치",
+    "passage_match_inclusive": "포함",
+    "passage_match_exclusive": "제외",
+    "passage_match_inclusive_description": "필터 구절과 한 절이라도 겹치는 노트를 찾습니다.",
+    "passage_match_exclusive_description": "필터 구절 범위 내 노트를 찾습니다.",
+    "sort": "정렬",
+    "sort_newest_first": "최신순",
+    "sort_oldest_first": "오래된순",
+    "page_size": "페이지 크기",
+    "apply": "적용",
+    "cancel": "취소"
   },
   "pt": {
     "title": "Opções de visualização",

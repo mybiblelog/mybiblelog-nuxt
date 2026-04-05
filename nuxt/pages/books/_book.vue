@@ -82,10 +82,11 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {},
   "en": {},
+  "de": {},
   "es": {},
   "fr": {},
+  "ko": {},
   "pt": {},
   "uk": {}
 }

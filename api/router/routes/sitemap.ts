@@ -62,6 +62,7 @@ router.get('/sitemap.xml', (req, res, next) => {
     '/downloads/feuille-de-suivi-de-lecture-de-la-Bible-imprimable.pdf',
     '/downloads/drukovanyy-vidstezhuvach-chytannya-bibliyi.pdf',
     '/downloads/rastreador-de-leitura-da-biblia-para-imprimir.pdf',
+    '/downloads/인쇄용 성경 읽기 추적표.pdf',
   );
 
   const urls = relativeUrls.map((url) => config.siteUrl + url);

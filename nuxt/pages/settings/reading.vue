@@ -123,6 +123,8 @@ const bibleVersionNames = {
   [BibleVersions.LSG]: 'Louis Segond (LSG)',
   [BibleVersions.ARC]: 'Almeida Revista e Corrigida (ARC)',
   [BibleVersions.LUT]: 'Luther 1545 (LUT)',
+  [BibleVersions.KLB]: '한글성경 (KLB)',
+  [BibleVersions.KRV]: '개역한글 (KRV)',
 };
 
 const bibleAppNames = {
@@ -266,51 +268,6 @@ select {
 
 <i18n lang="json">
 {
-  "de": {
-    "reading": "Lesen",
-    "save": "Speichern",
-    "select_an_option": "Eine Option auswählen",
-    "daily_verse_count_goal": {
-      "title": "Tägliche Verszahl Ziel",
-      "info": {
-        "1": "Dies ist die Anzahl der Versetze, die Sie jeden Tag lesen möchten.",
-        "2": "Wenn Sie {dailyVerseCountGoal} Versetze jeden Tag lesen, lesen Sie die ganze Bibel in {bibleReadingDays} Tagen."
-      }
-    },
-    "look_back_date": {
-      "title": "Rückblickdatum",
-      "info": {
-        "1": "My Bible Log wird Ihre Einträge im Journal vor diesem Datum nicht beim Berechnen Ihres Fortschritts berücksichtigen.",
-        "2": "Einträge im Journal vor diesem Datum existieren weiterhin und können jederzeit angesehen und aktualisiert werden.",
-        "3": "Dies ermöglicht es Ihnen, Ihren Bibel-Lesefortschritt jederzeit neu zu starten.",
-        "4": "Wenn Sie beispielsweise gerade die ganze Bibel einmal gelesen haben, können Sie Ihr Rückblickdatum auf heute setzen, um sie erneut zu lesen."
-      }
-    },
-    "preferred_bible_version": {
-      "title": "Bibelversion bevorzugt",
-      "info": {
-        "1": "Externe Leselinks öffnen diese Bibelübersetzung in Ihrer bevorzugten Lese-App."
-      }
-    },
-    "preferred_bible_app": {
-      "title": "Bibel-App bevorzugt",
-      "info": {
-        "1": "Externe Leselinks öffnen diese Website oder App."
-      },
-      "callout": {
-        "1": "Diese Einstellung wird auf diesem Gerät gespeichert, anstatt auf Ihrem Konto.",
-        "2": "Dies bedeutet, dass Sie für verschiedene Geräte verschiedene Apps oder Websites verwenden können."
-      }
-    },
-    "messaging": {
-      "daily_verse_count_goal_saved_successfully": "Tägliche Verszahl Ziel erfolgreich gespeichert.",
-      "unable_to_save_daily_verse_count_goal": "Nicht gespeichert. Bitte geben Sie eine Zahl zwischen 1 und 1111 ein.",
-      "look_back_date_saved_successfully": "Rückblickdatum erfolgreich gespeichert.",
-      "unable_to_save_look_back_date": "Nicht gespeichert. Bitte geben Sie ein Datum nicht später als morgen ein.",
-      "preferred_bible_version_saved_successfully": "Bibelversion bevorzugt erfolgreich gespeichert.",
-      "unable_to_save_preferred_bible_version": "Nicht gespeichert."
-    }
-  },
   "en": {
     "reading": "Reading",
     "save": "Save",
@@ -356,6 +313,53 @@ select {
       "unable_to_save_preferred_bible_version": "Unable to save.",
       "preferred_bible_app_saved_successfully": "Preferred Bible app saved successfully for this device.",
       "unable_to_save_preferred_bible_app": "Unable to save."
+    }
+  },
+  "de": {
+    "reading": "Lesen",
+    "save": "Speichern",
+    "select_an_option": "Eine Option auswählen",
+    "daily_verse_count_goal": {
+      "title": "Tägliche Verszahl Ziel",
+      "info": {
+        "1": "Dies ist die Anzahl der Versetze, die Sie jeden Tag lesen möchten.",
+        "2": "Wenn Sie {dailyVerseCountGoal} Versetze jeden Tag lesen, lesen Sie die ganze Bibel in {bibleReadingDays} Tagen."
+      }
+    },
+    "look_back_date": {
+      "title": "Rückblickdatum",
+      "info": {
+        "1": "My Bible Log wird Ihre Einträge im Journal vor diesem Datum nicht beim Berechnen Ihres Fortschritts berücksichtigen.",
+        "2": "Einträge im Journal vor diesem Datum existieren weiterhin und können jederzeit angesehen und aktualisiert werden.",
+        "3": "Dies ermöglicht es Ihnen, Ihren Bibel-Lesefortschritt jederzeit neu zu starten.",
+        "4": "Wenn Sie beispielsweise gerade die ganze Bibel einmal gelesen haben, können Sie Ihr Rückblickdatum auf heute setzen, um sie erneut zu lesen."
+      }
+    },
+    "preferred_bible_version": {
+      "title": "Bibelversion bevorzugt",
+      "info": {
+        "1": "Externe Leselinks öffnen diese Bibelübersetzung in Ihrer bevorzugten Lese-App."
+      }
+    },
+    "preferred_bible_app": {
+      "title": "Bibel-App bevorzugt",
+      "info": {
+        "1": "Externe Leselinks öffnen diese Website oder App."
+      },
+      "callout": {
+        "1": "Diese Einstellung wird auf diesem Gerät gespeichert, anstatt auf Ihrem Konto.",
+        "2": "Dies bedeutet, dass Sie für verschiedene Geräte verschiedene Apps oder Websites verwenden können."
+      }
+    },
+    "messaging": {
+      "daily_verse_count_goal_saved_successfully": "Tägliche Verszahl Ziel erfolgreich gespeichert.",
+      "unable_to_save_daily_verse_count_goal": "Nicht gespeichert. Bitte geben Sie eine Zahl zwischen 1 und 1111 ein.",
+      "look_back_date_saved_successfully": "Rückblickdatum erfolgreich gespeichert.",
+      "unable_to_save_look_back_date": "Nicht gespeichert. Bitte geben Sie ein Datum nicht später als morgen ein.",
+      "preferred_bible_version_saved_successfully": "Bibelversion bevorzugt erfolgreich gespeichert.",
+      "unable_to_save_preferred_bible_version": "Nicht gespeichert.",
+      "preferred_bible_app_saved_successfully": "Bibel-App bevorzugt erfolgreich für dieses Gerät gespeichert.",
+      "unable_to_save_preferred_bible_app": "Nicht gespeichert."
     }
   },
   "es": {
@@ -450,6 +454,53 @@ select {
       "unable_to_save_preferred_bible_version": "Impossible d'enregistrer.",
       "preferred_bible_app_saved_successfully": "Application de la Bible préférée enregistrée avec succès pour cet appareil.",
       "unable_to_save_preferred_bible_app": "Impossible d'enregistrer."
+    }
+  },
+  "ko": {
+    "reading": "읽기",
+    "save": "저장",
+    "select_an_option": "옵션 선택",
+    "daily_verse_count_goal": {
+      "title": "일일 구절 목표",
+      "info": {
+        "1": "매일 읽고자 하는 구절 수입니다.",
+        "2": "하루에 {dailyVerseCountGoal}절을 읽으면 {bibleReadingDays}일 만에 성경 전체를 완독할 수 있습니다."
+      }
+    },
+    "look_back_date": {
+      "title": "기준 시작일",
+      "info": {
+        "1": "My Bible Log는 진행 상황을 계산할 때 이 날짜 이전의 기록을 무시합니다.",
+        "2": "해당 날짜 이전 기록도 삭제되지 않으며, 언제든 조회하거나 수정할 수 있습니다.",
+        "3": "이를 통해 언제든지 성경 읽기 진행 상황을 새로 시작할 수 있습니다.",
+        "4": "예를 들어 성경 전체를 완독한 이후, 기준 시작일을 오늘로 설정해 읽기를 다시 시작할 수 있습니다."
+      }
+    },
+    "preferred_bible_version": {
+      "title": "선호 성경 번역본",
+      "info": {
+        "1": "외부 읽기 링크를 누를 때 선택한 번역본이 선호하는 성경 앱에서 열립니다."
+      }
+    },
+    "preferred_bible_app": {
+      "title": "선호 성경 앱",
+      "info": {
+        "1": "외부 읽기 링크가 이 홈페이지 또는 앱에서 열립니다."
+      },
+      "callout": {
+        "1": "이 설정은 계정이 아닌 이 기기에 저장됩니다.",
+        "2": "각 기기마다 서로 다른 앱이나 웹사이트를 사용할 수 있습니다."
+      }
+    },
+    "messaging": {
+      "daily_verse_count_goal_saved_successfully": "일일 구절 수 목표가 저장되었습니다.",
+      "unable_to_save_daily_verse_count_goal": "저장할 수 없습니다. 1~1111 사이의 숫자를 입력해 주세요.",
+      "look_back_date_saved_successfully": "기준 시작일이 저장되었습니다.",
+      "unable_to_save_look_back_date": "저장할 수 없습니다. 내일 안쪽의 날짜를 입력해 주세요.",
+      "preferred_bible_version_saved_successfully": "선호 성경 번역본이 저장되었습니다.",
+      "unable_to_save_preferred_bible_version": "저장할 수 없습니다.",
+      "preferred_bible_app_saved_successfully": "선호 성경 앱이 이 기기에 저장되었습니다.",
+      "unable_to_save_preferred_bible_app": "저장할 수 없습니다."
     }
   },
   "pt": {

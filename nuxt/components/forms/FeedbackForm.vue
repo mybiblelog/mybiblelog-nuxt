@@ -112,19 +112,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "your_email": "Ihre E-Mail",
-    "what_kind_of_feedback": "Welche Art von Feedback reichen Sie ein?",
-    "bug_report": "Fehlerbericht",
-    "feature_request": "Funktionsanfrage",
-    "general_comment": "Allgemeiner Kommentar",
-    "feedback_details": "Feedback-Details",
-    "submit_feedback": "Feedback einreichen",
-    "messaging": {
-      "unknown_error": "Ein unbekannter Fehler ist aufgetreten.",
-      "feedback_submitted": "Feedback erfolgreich übermittelt. Vielen Dank!"
-    }
-  },
   "en": {
     "your_email": "Your Email",
     "what_kind_of_feedback": "What kind of feedback are you submitting?",
@@ -136,6 +123,19 @@ export default {
     "messaging": {
       "unknown_error": "An unknown error occurred.",
       "feedback_submitted": "Feedback submitted successfully. Thank you!"
+    }
+  },
+  "de": {
+    "your_email": "Ihre E-Mail",
+    "what_kind_of_feedback": "Welche Art von Feedback reichen Sie ein?",
+    "bug_report": "Fehlerbericht",
+    "feature_request": "Funktionsanfrage",
+    "general_comment": "Allgemeiner Kommentar",
+    "feedback_details": "Feedback-Details",
+    "submit_feedback": "Feedback einreichen",
+    "messaging": {
+      "unknown_error": "Ein unbekannter Fehler ist aufgetreten.",
+      "feedback_submitted": "Feedback erfolgreich übermittelt. Vielen Dank!"
     }
   },
   "es": {
@@ -162,6 +162,19 @@ export default {
     "messaging": {
       "unknown_error": "Une erreur inconnue s'est produite.",
       "feedback_submitted": "Commentaires soumis avec succès. Merci!"
+    }
+  },
+  "ko": {
+    "your_email": "이메일",
+    "what_kind_of_feedback": "어떤 종류의 피드백인가요?",
+    "bug_report": "버그 신고",
+    "feature_request": "기능 제안",
+    "general_comment": "일반 의견",
+    "feedback_details": "피드백 내용",
+    "submit_feedback": "피드백 제출하기",
+    "messaging": {
+      "unknown_error": "알 수 없는 오류가 발생했습니다.",
+      "feedback_submitted": "피드백이 성공적으로 제출되었습니다. 감사합니다!"
     }
   },
   "pt": {

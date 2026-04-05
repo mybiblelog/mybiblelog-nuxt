@@ -44,11 +44,6 @@
         />
       </client-only>
     </div>
-    <div class="has-text-centered" style="margin-top: 1rem;">
-      <nuxt-link class="button is-light" :to="localePath('/log')">
-        {{ $t('view_all_reading') }}
-      </nuxt-link>
-    </div>
     <br>
     <h3 class="title is-5">
       {{ $t('reading_suggestions') }}
@@ -76,6 +71,11 @@
           :message="$t('no_suggestions')"
         />
       </client-only>
+    </div>
+    <div class="has-text-centered" style="margin-top: 1rem;">
+      <nuxt-link class="button is-light" :to="localePath('/log')">
+        {{ $t('view_all_reading') }}
+      </nuxt-link>
     </div>
     <br>
     <div class="level is-mobile">
@@ -419,38 +419,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "today": "Heute",
-    "add_entry": "Eintrag hinzufügen",
-    "new_verses_read": "{0} / {1} neue Versetze",
-    "loading": "Lädt...",
-    "edit": "Bearbeiten",
-    "delete": "Löschen",
-    "take_note": "Notiz hinzufügen",
-    "view_notes": "Notizen ansehen",
-    "no_entries": "Keine Einträge",
-    "reading_suggestions": "Lesevorschläge",
-    "suggestions": "Vorschläge",
-    "open_bible": "Bibel öffnen",
-    "log_reading": "Lesung hinzufügen",
-    "no_suggestions": "Keine Vorschläge",
-    "are_you_sure_you_want_to_delete_this_entry": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
-    "the_log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden.",
-    "recent_notes": "Letzte Notizen",
-    "no_recent_notes": "Keine Notizen",
-    "view_note": "Notiz ansehen",
-    "new_note": "Neue Notiz",
-    "view_all_reading": "Alle Lesungen ansehen",
-    "view_all_notes": "Alle Notizen ansehen",
-    "note": {
-      "edit": "Bearbeiten",
-      "delete": "Löschen"
-    },
-    "messaging": {
-      "are_you_sure_delete_note": "Möchten Sie diese Notiz wirklich löschen?",
-      "note_could_not_be_deleted": "Die Notiz konnte nicht gelöscht werden."
-    }
-  },
   "en": {
     "today": "Today",
     "add_entry": "Add Entry",
@@ -461,6 +429,7 @@ export default {
     "take_note": "Take Note",
     "view_notes": "View Notes",
     "no_entries": "No Entries",
+    "view_all_reading": "View All Reading",
     "reading_suggestions": "Reading Suggestions",
     "suggestions": "Suggestions",
     "open_bible": "Open Bible",
@@ -472,7 +441,6 @@ export default {
     "no_recent_notes": "No Notes",
     "view_note": "View Note",
     "new_note": "New Note",
-    "view_all_reading": "View All Reading",
     "view_all_notes": "View All Notes",
     "note": {
       "edit": "Edit",
@@ -481,6 +449,38 @@ export default {
     "messaging": {
       "are_you_sure_delete_note": "Are you sure you want to delete this note?",
       "note_could_not_be_deleted": "The note could not be deleted."
+    }
+  },
+  "de": {
+    "today": "Heute",
+    "add_entry": "Eintrag hinzufügen",
+    "new_verses_read": "{0} / {1} neue Versetze",
+    "loading": "Lädt...",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "take_note": "Notiz hinzufügen",
+    "view_notes": "Notizen ansehen",
+    "no_entries": "Keine Einträge",
+    "view_all_reading": "Alle Lesungen ansehen",
+    "reading_suggestions": "Lesevorschläge",
+    "suggestions": "Vorschläge",
+    "open_bible": "Bibel öffnen",
+    "log_reading": "Lesung hinzufügen",
+    "no_suggestions": "Keine Vorschläge",
+    "are_you_sure_you_want_to_delete_this_entry": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
+    "the_log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden.",
+    "recent_notes": "Letzte Notizen",
+    "no_recent_notes": "Keine Notizen",
+    "view_note": "Notiz ansehen",
+    "new_note": "Neue Notiz",
+    "view_all_notes": "Alle Notizen ansehen",
+    "note": {
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "Möchten Sie diese Notiz wirklich löschen?",
+      "note_could_not_be_deleted": "Die Notiz konnte nicht gelöscht werden."
     }
   },
   "es": {
@@ -493,6 +493,7 @@ export default {
     "take_note": "Tomar nota",
     "view_notes": "Ver notas",
     "no_entries": "No hay entradas",
+    "view_all_reading": "Ver toda la lectura",
     "reading_suggestions": "Sugerencias de Lectura",
     "suggestions": "Sugerencias",
     "open_bible": "Abrir en la Biblia",
@@ -504,7 +505,6 @@ export default {
     "no_recent_notes": "Sin Notas",
     "view_note": "Ver Nota",
     "new_note": "Nueva Nota",
-    "view_all_reading": "Ver Todas las Lecturas",
     "view_all_notes": "Ver Todas las Notas",
     "note": {
       "edit": "Editar",
@@ -525,6 +525,7 @@ export default {
     "take_note": "Prendre note",
     "view_notes": "Voir les notes",
     "no_entries": "Pas d'entrées",
+    "view_all_reading": "Voir toute la lecture",
     "reading_suggestions": "Suggestions de Lecture",
     "suggestions": "Suggestions",
     "open_bible": "Ouvrir dans la Bible",
@@ -536,7 +537,6 @@ export default {
     "no_recent_notes": "Aucune Note",
     "view_note": "Voir la Note",
     "new_note": "Nouvelle Note",
-    "view_all_reading": "Voir Toutes les Lectures",
     "view_all_notes": "Voir Toutes les Notes",
     "note": {
       "edit": "Éditer",
@@ -545,6 +545,38 @@ export default {
     "messaging": {
       "are_you_sure_delete_note": "Êtes-vous sûr de vouloir supprimer cette note ?",
       "note_could_not_be_deleted": "La note n'a pas pu être supprimée."
+    }
+  },
+  "ko": {
+    "today": "오늘",
+    "add_entry": "읽기 추가",
+    "new_verses_read": "새로 읽은 구절 {0} / {1}",
+    "loading": "불러오는 중…",
+    "edit": "편집",
+    "delete": "삭제",
+    "take_note": "노트 작성",
+    "view_notes": "노트 보기",
+    "no_entries": "항목 없음",
+    "view_all_reading": "모든 읽기 보기",
+    "reading_suggestions": "읽기 제안",
+    "suggestions": "제안",
+    "open_bible": "성경 열기",
+    "log_reading": "기록하기",
+    "no_suggestions": "제안 없음",
+    "are_you_sure_you_want_to_delete_this_entry": "해당 항목을 삭제할까요?",
+    "the_log_entry_could_not_be_deleted": "읽기 기록을 삭제할 수 없습니다.",
+    "recent_notes": "최근 노트",
+    "no_recent_notes": "노트 없음",
+    "view_note": "노트 보기",
+    "new_note": "노트 작성",
+    "view_all_notes": "모든 노트 보기",
+    "note": {
+      "edit": "편집",
+      "delete": "삭제"
+    },
+    "messaging": {
+      "are_you_sure_delete_note": "해당 노트를 삭제할까요?",
+      "note_could_not_be_deleted": "노트를 삭제할 수 없습니다."
     }
   },
   "pt": {
@@ -557,6 +589,7 @@ export default {
     "take_note": "Tomar nota",
     "view_notes": "Ver notas",
     "no_entries": "Sem Entradas",
+    "view_all_reading": "Ver toda a leitura",
     "reading_suggestions": "Sugestões de Leitura",
     "suggestions": "Sugestões",
     "open_bible": "Ler na Biblia",
@@ -568,7 +601,6 @@ export default {
     "no_recent_notes": "Sem Notas",
     "view_note": "Ver Nota",
     "new_note": "Nova Nota",
-    "view_all_reading": "Ver Todas as Leituras",
     "view_all_notes": "Ver Todas as Notas",
     "note": {
       "edit": "Editar",
@@ -589,6 +621,7 @@ export default {
     "take_note": "Записати",
     "view_notes": "Переглянути записи",
     "no_entries": "Немає записів",
+    "view_all_reading": "Переглянути все читання",
     "reading_suggestions": "Рекомендації для Читання",
     "suggestions": "Рекомендації",
     "open_bible": "Читати в Біблії",
@@ -600,7 +633,6 @@ export default {
     "no_recent_notes": "Немає Нотаток",
     "view_note": "Переглянути Нотатку",
     "new_note": "Нова Нотатка",
-    "view_all_reading": "Переглянути Всі Читання",
     "view_all_notes": "Переглянути Всі Нотатки",
     "note": {
       "edit": "Редагувати",

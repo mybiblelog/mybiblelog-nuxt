@@ -263,24 +263,30 @@ export default {
 
       if (!entries.length) { return [0]; }
 
-      const starts = [0];
+      // Contiguous same-date runs (sort order is already by date).
+      const dayGroups = [];
       let i = 0;
-      let pageCount = 0;
-
       while (i < entries.length) {
         const date = entries[i].date;
         let j = i + 1;
         while (j < entries.length && entries[j].date === date) { j += 1; }
-
-        const groupSize = j - i;
-        const wouldOverflow = pageCount > 0 && (pageCount + groupSize) > limit;
-        if (wouldOverflow) {
-          starts.push(i);
-          pageCount = 0;
-        }
-
-        pageCount += groupSize;
+        dayGroups.push({ start: i, count: j - i });
         i = j;
+      }
+
+      // Pack whole days per page: each page (except the last) has at least `limit`
+      // entries. A single day never spans two pages.
+      const starts = [0];
+      let g = 0;
+      while (g < dayGroups.length) {
+        let pageCount = 0;
+        while (g < dayGroups.length && pageCount < limit) {
+          pageCount += dayGroups[g].count;
+          g += 1;
+        }
+        if (g < dayGroups.length) {
+          starts.push(dayGroups[g].start);
+        }
       }
 
       return starts;
@@ -663,49 +669,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "log": "Lesejournal",
-    "add_entry": "Hinzufügen",
-    "pagination": {
-      "label": "Seitennavigation",
-      "prev": "Zurück",
-      "next": "Weiter",
-      "page": "Seite"
-    },
-    "query_manager": {
-      "open": "Suchen | Filtern | Sortieren",
-      "title": "Ansichtsoptionen",
-      "reset": "Zurücksetzen",
-      "reset_button": "Ansichtsoptionen zurücksetzen"
-    },
-    "results": {
-      "loading": "Laden...",
-      "no_results": "Keine Ergebnisse"
-    },
-    "open_bible": "Bibel öffnen",
-    "take_note": "Notiz hinzufügen",
-    "view_notes": "Notizen ansehen",
-    "edit": "Bearbeiten",
-    "delete": "Löschen",
-    "messaging": {
-      "are_you_sure_delete_entry": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
-      "log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden."
-    },
-    "query_summary": {
-      "none": {
-        "entries": "Keine Einträge",
-        "results": "Keine Ergebnisse"
-      },
-      "showing_all": {
-        "entries": "Zeige {total} Eintrag | Zeige {total} Einträge",
-        "results": "Zeige {total} Ergebnis | Zeige {total} Ergebnisse"
-      },
-      "showing_range": {
-        "entries": "Zeige {first}–{last} von {total} gesamten Eintrag | Zeige {first}–{last} von {total} gesamten Einträgen",
-        "results": "Zeige {first}–{last} von {total} gesamten Ergebnis | Zeige {first}–{last} von {total} gesamten Ergebnissen"
-      }
-    }
-  },
   "en": {
     "log": "Reading Log",
     "add_entry": "Add",
@@ -746,6 +709,49 @@ export default {
       "showing_range": {
         "entries": "Showing {first}–{last} of {total} total entry | Showing {first}–{last} of {total} total entries",
         "results": "Showing {first}–{last} of {total} total result | Showing {first}–{last} of {total} total results"
+      }
+    }
+  },
+  "de": {
+    "log": "Lesejournal",
+    "add_entry": "Hinzufügen",
+    "pagination": {
+      "label": "Seitennavigation",
+      "prev": "Zurück",
+      "next": "Weiter",
+      "page": "Seite"
+    },
+    "query_manager": {
+      "open": "Suchen | Filtern | Sortieren",
+      "title": "Ansichtsoptionen",
+      "reset": "Zurücksetzen",
+      "reset_button": "Ansichtsoptionen zurücksetzen"
+    },
+    "results": {
+      "loading": "Laden...",
+      "no_results": "Keine Ergebnisse"
+    },
+    "open_bible": "Bibel öffnen",
+    "take_note": "Notiz hinzufügen",
+    "view_notes": "Notizen ansehen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "messaging": {
+      "are_you_sure_delete_entry": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
+      "log_entry_could_not_be_deleted": "Der Eintrag konnte nicht gelöscht werden."
+    },
+    "query_summary": {
+      "none": {
+        "entries": "Keine Einträge",
+        "results": "Keine Ergebnisse"
+      },
+      "showing_all": {
+        "entries": "Zeige {total} Eintrag | Zeige {total} Einträge",
+        "results": "Zeige {total} Ergebnis | Zeige {total} Ergebnisse"
+      },
+      "showing_range": {
+        "entries": "Zeige {first}–{last} von {total} gesamten Eintrag | Zeige {first}–{last} von {total} gesamten Einträgen",
+        "results": "Zeige {first}–{last} von {total} gesamten Ergebnis | Zeige {first}–{last} von {total} gesamten Ergebnissen"
       }
     }
   },
@@ -832,6 +838,49 @@ export default {
       "showing_range": {
         "entries": "Affichage de {first}–{last} sur {total} entrée au total | Affichage de {first}–{last} sur {total} entrées au total",
         "results": "Affichage de {first}–{last} sur {total} résultat au total | Affichage de {first}–{last} sur {total} résultats au total"
+      }
+    }
+  },
+  "ko": {
+    "log": "읽기 기록",
+    "add_entry": "추가",
+    "pagination": {
+      "label": "페이지",
+      "prev": "이전",
+      "next": "다음",
+      "page": "페이지"
+    },
+    "query_manager": {
+      "open": "검색 | 필터 | 정렬",
+      "title": "보기 옵션",
+      "reset": "초기화",
+      "reset_button": "보기 옵션 초기화"
+    },
+    "results": {
+      "loading": "불러오는 중…",
+      "no_results": "결과 없음"
+    },
+    "open_bible": "성경 열기",
+    "take_note": "노트 작성",
+    "view_notes": "노트 보기",
+    "edit": "편집",
+    "delete": "삭제",
+    "messaging": {
+      "are_you_sure_delete_entry": "해당 항목을 삭제할까요?",
+      "log_entry_could_not_be_deleted": "읽기 기록을 삭제할 수 없습니다."
+    },
+    "query_summary": {
+      "none": {
+        "entries": "읽기 기록 없음",
+        "results": "결과 없음"
+      },
+      "showing_all": {
+        "entries": "항목 {total}개 표시 | 항목 {total}개 표시",
+        "results": "결과 {total}개 표시 | 결과 {total}개 표시"
+      },
+      "showing_range": {
+        "entries": "전체 {total}개 중 {first}–{last} | 전체 {total}개 중 {first}–{last}",
+        "results": "전체 {total}개 중 {first}–{last} | 전체 {total}개 중 {first}–{last}"
       }
     }
   },

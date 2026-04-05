@@ -116,15 +116,15 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "ok": "OK",
-    "confirm": "Bestätigen",
-    "cancel": "Abbrechen"
-  },
   "en": {
     "ok": "OK",
     "confirm": "Confirm",
     "cancel": "Cancel"
+  },
+  "de": {
+    "ok": "OK",
+    "confirm": "Bestätigen",
+    "cancel": "Abbrechen"
   },
   "es": {
     "ok": "OK",
@@ -135,6 +135,11 @@ export default {
     "ok": "D'accord",
     "confirm": "Confirmer",
     "cancel": "Annuler"
+  },
+  "ko": {
+    "ok": "확인",
+    "confirm": "확인",
+    "cancel": "취소"
   },
   "pt": {
     "ok": "OK",

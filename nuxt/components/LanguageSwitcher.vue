@@ -98,17 +98,20 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "choose_language": "Sprache wählen"
-  },
   "en": {
     "choose_language": "Choose Language"
+  },
+  "de": {
+    "choose_language": "Sprache wählen"
   },
   "es": {
     "choose_language": "Elige idioma"
   },
   "fr": {
     "choose_language": "Choisissez la langue"
+  },
+  "ko": {
+    "choose_language": "언어 선택"
   },
   "pt": {
     "choose_language": "Escolha o Idioma"

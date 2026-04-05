@@ -92,16 +92,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "start_page": {
-      "get_started": {
-        "title": "Loslegen",
-        "description": "Sie sind fertig eingerichtet! Es ist Zeit, mit dem Lesen zu beginnen.",
-        "feedback_hint": "Eine letzte Sache - Sie können Feedback geben, Funktionen anfordern und Fehler melden, indem Sie auf diese Feedback-Schaltfläche in der unteren rechten Ecke klicken.",
-        "button": "Los geht's"
-      }
-    }
-  },
   "en": {
     "start_page": {
       "get_started": {
@@ -109,6 +99,16 @@ export default {
         "description": "You're all set up! It's time to start reading.",
         "feedback_hint": "One last thing - you can provide feedback, request features, and report bugs by clicking this feedback button in the bottom right corner.",
         "button": "Let's Go"
+      }
+    }
+  },
+  "de": {
+    "start_page": {
+      "get_started": {
+        "title": "Loslegen",
+        "description": "Sie sind fertig eingerichtet! Es ist Zeit, mit dem Lesen zu beginnen.",
+        "feedback_hint": "Eine letzte Sache - Sie können Feedback geben, Funktionen anfordern und Fehler melden, indem Sie auf diese Feedback-Schaltfläche in der unteren rechten Ecke klicken.",
+        "button": "Los geht's"
       }
     }
   },
@@ -129,6 +129,16 @@ export default {
         "description": "Tout est prêt ! Il est temps de commencer à lire.",
         "feedback_hint": "Une dernière chose - vous pouvez fournir des commentaires, demander des fonctionnalités et signaler des bugs en cliquant sur ce bouton de commentaires dans le coin inférieur droit.",
         "button": "Allons-y"
+      }
+    }
+  },
+  "ko": {
+    "start_page": {
+      "get_started": {
+        "title": "시작하기",
+        "description": "준비가 모두 끝났습니다! 이제 성경을 읽기 시작할 시간이에요.",
+        "feedback_hint": "마지막으로, 우하단에 보이는 피드백 버튼을 눌러 의견·기능 요청·버그 신고를 진행할 수 있습니다.",
+        "button": "시작해볼까요?"
       }
     }
   },

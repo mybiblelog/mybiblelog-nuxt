@@ -102,26 +102,6 @@ select {
 
 <i18n lang="json">
 {
-  "de": {
-    "start_page": "Startseite",
-    "start": "Start",
-    "today": "Heute",
-    "bible_books": "Bibelbücher",
-    "chapter_checklist": "Kapitel Checkliste",
-    "calendar": "Kalender",
-    "notes": "Notizen",
-    "save": "Speichern",
-    "select_an_option": "Eine Option auswählen",
-    "preferred_start_page": {
-      "info": {
-        "1": "Diese Seite wird angezeigt, wenn Sie sich zum ersten Mal bei My Bible Log anmelden."
-      }
-    },
-    "messaging": {
-      "preferred_start_page_saved_successfully": "Bevorzugte Startseite erfolgreich gespeichert.",
-      "unable_to_save_preferred_start_page": "Nicht gespeichert."
-    }
-  },
   "en": {
     "start_page": "Start Page",
     "start": "Start",
@@ -140,6 +120,26 @@ select {
     "messaging": {
       "preferred_start_page_saved_successfully": "Preferred start page saved successfully.",
       "unable_to_save_preferred_start_page": "Unable to save."
+    }
+  },
+  "de": {
+    "start_page": "Startseite",
+    "start": "Start",
+    "today": "Heute",
+    "bible_books": "Bibelbücher",
+    "chapter_checklist": "Kapitel Checkliste",
+    "calendar": "Kalender",
+    "notes": "Notizen",
+    "save": "Speichern",
+    "select_an_option": "Eine Option auswählen",
+    "preferred_start_page": {
+      "info": {
+        "1": "Diese Seite wird angezeigt, wenn Sie sich zum ersten Mal bei My Bible Log anmelden."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "Bevorzugte Startseite erfolgreich gespeichert.",
+      "unable_to_save_preferred_start_page": "Nicht gespeichert."
     }
   },
   "es": {
@@ -180,6 +180,26 @@ select {
     "messaging": {
       "preferred_start_page_saved_successfully": "Page de démarrage préférée enregistrée avec succès.",
       "unable_to_save_preferred_start_page": "Impossible d'enregistrer."
+    }
+  },
+  "ko": {
+    "start_page": "시작 페이지",
+    "start": "시작",
+    "today": "오늘",
+    "bible_books": "성경 일람",
+    "chapter_checklist": "장별 체크",
+    "calendar": "달력",
+    "notes": "노트",
+    "save": "저장",
+    "select_an_option": "옵션 선택",
+    "preferred_start_page": {
+      "info": {
+        "1": "My Bible Log에 로그인할 때 이 페이지가 표시됩니다."
+      }
+    },
+    "messaging": {
+      "preferred_start_page_saved_successfully": "선호 초기 화면이 저장되었습니다.",
+      "unable_to_save_preferred_start_page": "저장할 수 없습니다."
     }
   },
   "pt": {

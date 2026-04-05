@@ -357,27 +357,6 @@ form select:not(:disabled) {
 
 <i18n lang="json">
 {
-  "de": {
-    "add_entry": "Eintrag hinzufügen",
-    "edit_entry": "Eintrag bearbeiten",
-    "preview_passage": "Passage Vorschau",
-    "date": "Datum",
-    "save": "Speichern",
-    "add": "Hinzufügen",
-    "close": "Schließen",
-    "book": "Buch",
-    "choose_book": "Buch auswählen",
-    "start_chapter": "Kapitel starten",
-    "choose_start_chapter": "Kapitel auswählen",
-    "start_verse": "Startvers",
-    "choose_start_verse": "Vers auswählen",
-    "end_chapter": "Endkapitel",
-    "choose_end_chapter": "Kapitel auswählen",
-    "end_verse": "Endvers",
-    "choose_end_verse": "Vers auswählen",
-    "unable_to_add_entry": "Eintrag konnte nicht hinzugefügt werden.",
-    "unable_to_update_entry": "Eintrag konnte nicht aktualisiert werden."
-  },
   "en": {
     "add_entry": "Add Entry",
     "edit_entry": "Edit Entry",
@@ -398,6 +377,27 @@ form select:not(:disabled) {
     "choose_end_verse": "Choose End Verse",
     "unable_to_add_entry": "Unable to add entry.",
     "unable_to_update_entry": "Unable to update entry."
+  },
+  "de": {
+    "add_entry": "Eintrag hinzufügen",
+    "edit_entry": "Eintrag bearbeiten",
+    "preview_passage": "Passage Vorschau",
+    "date": "Datum",
+    "save": "Speichern",
+    "add": "Hinzufügen",
+    "close": "Schließen",
+    "book": "Buch",
+    "choose_book": "Buch auswählen",
+    "start_chapter": "Kapitel starten",
+    "choose_start_chapter": "Kapitel auswählen",
+    "start_verse": "Startvers",
+    "choose_start_verse": "Vers auswählen",
+    "end_chapter": "Endkapitel",
+    "choose_end_chapter": "Kapitel auswählen",
+    "end_verse": "Endvers",
+    "choose_end_verse": "Vers auswählen",
+    "unable_to_add_entry": "Eintrag konnte nicht hinzugefügt werden.",
+    "unable_to_update_entry": "Eintrag konnte nicht aktualisiert werden."
   },
   "es": {
     "add_entry": "Añadir entrada",
@@ -440,6 +440,27 @@ form select:not(:disabled) {
     "choose_end_verse": "Verset de fin",
     "unable_to_add_entry": "Impossible d'ajouter une entrée.",
     "unable_to_update_entry": "Impossible de mettre à jour l'entrée."
+  },
+  "ko": {
+    "add_entry": "읽기 추가",
+    "edit_entry": "읽기 수정",
+    "preview_passage": "구절 미리보기",
+    "date": "일자",
+    "save": "저장",
+    "add": "추가",
+    "close": "닫기",
+    "book": "권",
+    "choose_book": "권 선택",
+    "start_chapter": "시작 장",
+    "choose_start_chapter": "시작 장 선택",
+    "start_verse": "시작 절",
+    "choose_start_verse": "시작 절 선택",
+    "end_chapter": "마무리 장",
+    "choose_end_chapter": "마무리 장 선택",
+    "end_verse": "마무리 절",
+    "choose_end_verse": "마무리 절 선택",
+    "unable_to_add_entry": "항목을 추가할 수 없습니다.",
+    "unable_to_update_entry": "항목을 수정할 수 없습니다."
   },
   "pt": {
     "add_entry": "Adicionar Entrada",

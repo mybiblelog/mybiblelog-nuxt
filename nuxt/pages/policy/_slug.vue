@@ -47,17 +47,20 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "back": "Zurück"
-  },
   "en": {
     "back": "Back"
+  },
+  "de": {
+    "back": "Zurück"
   },
   "es": {
     "back": "Atrás"
   },
   "fr": {
     "back": "Retour"
+  },
+  "ko": {
+    "back": "뒤로가기"
   },
   "pt": {
     "back": "Voltar"

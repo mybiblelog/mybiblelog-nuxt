@@ -12,9 +12,7 @@ const locales: Locales = {
       min_length: 'Must be {minlength} or more characters',
       max_length: 'Must be {maxlength} or fewer characters',
       review: 'Please review.',
-
       not_found: 'Not found',
-
       invalid_login: 'Email or password is incorrect',
       verify_email: 'Please check {email} to verify your email first',
       new_email_required: 'New email cannot be the same as current email',
@@ -34,39 +32,6 @@ const locales: Locales = {
       date_you_read_passage: '{display_date} you read {passage}',
     },
   },
-  es: {
-    my_bible_log: 'My Bible Log',
-    api_error: {
-      unknown_error: 'Ocurrió un error desconocido',
-      validation_error: 'Hubo un error con su solicitud',
-      required: 'Se requiere un {field}',
-      is_invalid: 'Por favor ingrese un {field} válido',
-      unique: 'Este {field} ya está en uso',
-      min_length: 'Debe tener {minlength} o más caracteres',
-      max_length: 'Debe tener {maxlength} o menos caracteres',
-      review: 'Por favor revise.',
-
-      not_found: 'No encontrado',
-
-      invalid_login: 'El correo electrónico o la contraseña son incorrectos',
-      verify_email: 'Por favor revise {email} para verificar su correo electrónico primero',
-      new_email_required: 'El nuevo correo electrónico no puede ser el mismo que el correo electrónico actual',
-      email_in_use: 'La dirección de correo electrónico ya está en uso',
-      password_incorrect: 'La contraseña es incorrecta',
-      account_not_found: 'Cuenta no encontrada',
-      password_reset_link_expired: 'El enlace de restablecimiento de contraseña ha caducado',
-      too_many_requests: 'Se enviaron demasiadas solicitudes en un corto período de tiempo',
-      invalid_request: 'Solicitud inválida',
-      email_not_verified: 'Correo electrónico no verificado',
-      verification_code_expired: 'El código de verificación ha caducado',
-    },
-    reading_suggestion: {
-      new_testament: 'Lee algo nuevo en el Nuevo Testamento',
-      old_testament: 'Lee algo nuevo en el Antiguo Testamento',
-      wisdom: 'Lee algo nuevo en los libros de Sabiduría',
-      date_you_read_passage: '{display_date} leíste {passage}',
-    },
-  },
   de: {
     my_bible_log: 'My Bible Log',
     api_error: {
@@ -78,9 +43,7 @@ const locales: Locales = {
       min_length: 'Muss {minlength} oder mehr Zeichen haben',
       max_length: 'Muss {maxlength} oder weniger Zeichen haben',
       review: 'Bitte überprüfen Sie.',
-
       not_found: 'Nicht gefunden',
-
       invalid_login: 'Email oder Passwort ist falsch',
       verify_email: 'Bitte überprüfen Sie {email} zuerst, um Ihre Email zu bestätigen',
       new_email_required: 'Die neue Email kann nicht die gleiche wie die aktuelle Email sein',
@@ -100,6 +63,37 @@ const locales: Locales = {
       date_you_read_passage: '{display_date} hast du {passage} gelesen',
     },
   },
+  es: {
+    my_bible_log: 'My Bible Log',
+    api_error: {
+      unknown_error: 'Ocurrió un error desconocido',
+      validation_error: 'Hubo un error con su solicitud',
+      required: 'Se requiere un {field}',
+      is_invalid: 'Por favor ingrese un {field} válido',
+      unique: 'Este {field} ya está en uso',
+      min_length: 'Debe tener {minlength} o más caracteres',
+      max_length: 'Debe tener {maxlength} o menos caracteres',
+      review: 'Por favor revise.',
+      not_found: 'No encontrado',
+      invalid_login: 'El correo electrónico o la contraseña son incorrectos',
+      verify_email: 'Por favor revise {email} para verificar su correo electrónico primero',
+      new_email_required: 'El nuevo correo electrónico no puede ser el mismo que el correo electrónico actual',
+      email_in_use: 'La dirección de correo electrónico ya está en uso',
+      password_incorrect: 'La contraseña es incorrecta',
+      account_not_found: 'Cuenta no encontrada',
+      password_reset_link_expired: 'El enlace de restablecimiento de contraseña ha caducado',
+      too_many_requests: 'Se enviaron demasiadas solicitudes en un corto período de tiempo',
+      invalid_request: 'Solicitud inválida',
+      email_not_verified: 'Correo electrónico no verificado',
+      verification_code_expired: 'El código de verificación ha caducado',
+    },
+    reading_suggestion: {
+      new_testament: 'Lee algo nuevo en el Nuevo Testamento',
+      old_testament: 'Lee algo nuevo en el Antiguo Testamento',
+      wisdom: 'Lee algo nuevo en los libros de Sabiduría',
+      date_you_read_passage: '{display_date} leíste {passage}',
+    },
+  },
   fr: {
     my_bible_log: 'My Bible Log',
     api_error: {
@@ -111,9 +105,7 @@ const locales: Locales = {
       min_length: 'Doit contenir {minlength} caractères ou plus',
       max_length: 'Doit contenir {maxlength} caractères ou moins',
       review: 'Veuillez revoir.',
-
       not_found: 'Non trouvé',
-
       invalid_login: 'Email ou mot de passe incorrect',
       verify_email: 'Veuillez vérifier {email} pour vérifier votre adresse email d\'abord',
       new_email_required: 'Le nouvel email ne peut pas être le même que l\'email actuel',
@@ -133,6 +125,37 @@ const locales: Locales = {
       date_you_read_passage: '{display_date} vous avez lu {passage}',
     },
   },
+  ko: {
+    my_bible_log: 'My Bible Log',
+    api_error: {
+      unknown_error: '알 수 없는 오류가 발생했습니다',
+      validation_error: '요청 처리 중 오류가 발생했습니다',
+      required: '{field}을(를) 입력해 주세요',
+      is_invalid: '올바른 {field}을(를) 입력해 주세요',
+      unique: '이 {field}은(는) 이미 사용 중입니다',
+      min_length: '{minlength}자 이상이어야 합니다',
+      max_length: '{maxlength}자 이하여야 합니다',
+      review: '내용을 확인해 주세요.',
+      not_found: '찾을 수 없습니다',
+      invalid_login: '이메일 또는 비밀번호가 올바르지 않습니다',
+      verify_email: '먼저 {email}로 발신된 메일을 통해 이메일 주소 인증을 완료해 주세요',
+      new_email_required: '새 이메일 주소는 현재 이메일 주소와 달라야 합니다',
+      email_in_use: '이 이메일 주소는 이미 사용 중입니다',
+      password_incorrect: '비밀번호가 올바르지 않습니다',
+      account_not_found: '계정을 찾을 수 없습니다',
+      password_reset_link_expired: '비밀번호 재설정 링크가 만료되었습니다',
+      too_many_requests: '짧은 시간에 과다한 요청이 전송되었습니다',
+      invalid_request: '잘못된 요청입니다',
+      email_not_verified: '이메일이 인증되지 않았습니다',
+      verification_code_expired: '인증 코드가 만료되었습니다',
+    },
+    reading_suggestion: {
+      new_testament: '신약성경에서 새로운 내용을 읽어보세요',
+      old_testament: '구약성경에서 새로운 내용을 읽어보세요',
+      wisdom: '지혜서에서 새로운 내용을 읽어보세요',
+      date_you_read_passage: '{display_date} {passage}을(를) 읽었습니다',
+    },
+  },
   pt: {
     my_bible_log: 'My Bible Log',
     api_error: {
@@ -144,9 +167,7 @@ const locales: Locales = {
       min_length: 'Deve ter {minlength} ou mais caracteres',
       max_length: 'Deve ter {maxlength} ou menos caracteres',
       review: 'Por favor, revise.',
-
       not_found: 'Não encontrado',
-
       invalid_login: 'Email ou senha incorretos',
       verify_email: 'Por favor, verifique {email} para confirmar seu email primeiro',
       new_email_required: 'O novo email não pode ser o mesmo que o email atual',
@@ -177,9 +198,7 @@ const locales: Locales = {
       min_length: 'Має бути {minlength} або більше символів',
       max_length: 'Має бути {maxlength} або менше символів',
       review: 'Будь ласка, перегляньте.',
-
       not_found: 'Не знайдено',
-
       invalid_login: 'Електронна пошта або пароль невірні',
       verify_email: 'Будь ласка, перевірте {email}, щоб спочатку підтвердити свою електронну пошту',
       new_email_required: 'Нова електронна пошта не може бути такою ж, як поточна електронна пошта',

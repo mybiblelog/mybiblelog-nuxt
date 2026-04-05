@@ -162,19 +162,19 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "open_bible": "Bibel öffnen",
-    "log_reading": "Lesen protokollieren",
-    "take_note": "Notiz hinzufügen",
-    "view_notes": "Notizen ansehen",
-    "view_reading_log": "Lesejournal ansehen"
-  },
   "en": {
     "open_bible": "Open Bible",
     "log_reading": "Log Reading",
     "take_note": "Take Note",
     "view_notes": "View Notes",
     "view_reading_log": "View Reading Log"
+  },
+  "de": {
+    "open_bible": "Bibel öffnen",
+    "log_reading": "Lesen protokollieren",
+    "take_note": "Notiz hinzufügen",
+    "view_notes": "Notizen ansehen",
+    "view_reading_log": "Lesejournal ansehen"
   },
   "es": {
     "open_bible": "Abrir en la Biblia",
@@ -189,6 +189,13 @@ export default {
     "take_note": "Prendre note",
     "view_notes": "Voir les notes",
     "view_reading_log": "Voir le journal de lecture"
+  },
+  "ko": {
+    "open_bible": "성경 열기",
+    "log_reading": "기록하기",
+    "take_note": "노트 작성",
+    "view_notes": "노트 보기",
+    "view_reading_log": "읽기 기록 보기"
   },
   "pt": {
     "open_bible": "Ler na Biblia",

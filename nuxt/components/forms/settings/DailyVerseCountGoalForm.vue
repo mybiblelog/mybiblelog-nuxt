@@ -445,32 +445,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "start_page": {
-      "daily_verse_count_goal": {
-        "title": "Tägliche Verszahl Ziel",
-        "description": "Ihr Tägliches Verszahl-Ziel ist die Anzahl der Verse, die Sie jeden Tag lesen möchten. My Bible Log zeigt Ihnen Ihren Fortschritt zu diesem Ziel.",
-        "i_want_to": "Ich möchte...",
-        "read_in_2_years": "Die Bibel in 2 Jahren lesen",
-        "read_in_year": "Die Bibel in einem Jahr lesen",
-        "read_in_6_months": "Die Bibel in 6 Monaten lesen",
-        "read_by_specific_date": "Die Bibel bis zu einem bestimmten Datum lesen",
-        "read_at_own_pace": "In meinem eigenen Tempo lesen",
-        "goal_finish_date": "Ziel-Fertigstellungsdatum",
-        "finish_on": "Fertig am",
-        "daily_verse_count": "Verse pro Tag zu lesen",
-        "table_verses_in_bible": "Anzahl der Verse in der Bibel",
-        "table_days_until_date": "Anzahl der Tage bis zum Datum",
-        "table_verses_per_day": "Erforderliche Verse pro Tag",
-        "calculated_goal": "Um bis zu Ihrem Zieldatum fertig zu werden, müssen Sie {dailyGoal} Verse pro Tag lesen ({days} Tage).",
-        "change_hint": "Sie können diese Einstellung jederzeit ändern."
-      }
-    },
-    "messaging": {
-      "daily_verse_count_goal_saved_successfully": "Tägliche Verszahl Ziel erfolgreich gespeichert.",
-      "unable_to_save_daily_verse_count_goal": "Nicht gespeichert. Bitte geben Sie eine Zahl zwischen 1 und 1111 ein."
-    }
-  },
   "en": {
     "start_page": {
       "daily_verse_count_goal": {
@@ -495,6 +469,32 @@ export default {
     "messaging": {
       "daily_verse_count_goal_saved_successfully": "Daily verse count goal saved successfully.",
       "unable_to_save_daily_verse_count_goal": "Unable to save. Please enter a number between 1 and 1111."
+    }
+  },
+  "de": {
+    "start_page": {
+      "daily_verse_count_goal": {
+        "title": "Tägliche Verszahl Ziel",
+        "description": "Ihr Tägliches Verszahl-Ziel ist die Anzahl der Verse, die Sie jeden Tag lesen möchten. My Bible Log zeigt Ihnen Ihren Fortschritt zu diesem Ziel.",
+        "i_want_to": "Ich möchte...",
+        "read_in_2_years": "Die Bibel in 2 Jahren lesen",
+        "read_in_year": "Die Bibel in einem Jahr lesen",
+        "read_in_6_months": "Die Bibel in 6 Monaten lesen",
+        "read_by_specific_date": "Die Bibel bis zu einem bestimmten Datum lesen",
+        "read_at_own_pace": "In meinem eigenen Tempo lesen",
+        "goal_finish_date": "Ziel-Fertigstellungsdatum",
+        "finish_on": "Fertig am",
+        "daily_verse_count": "Verse pro Tag zu lesen",
+        "table_verses_in_bible": "Anzahl der Verse in der Bibel",
+        "table_days_until_date": "Anzahl der Tage bis zum Datum",
+        "table_verses_per_day": "Erforderliche Verse pro Tag",
+        "calculated_goal": "Um bis zu Ihrem Zieldatum fertig zu werden, müssen Sie {dailyGoal} Verse pro Tag lesen ({days} Tage).",
+        "change_hint": "Sie können diese Einstellung jederzeit ändern."
+      }
+    },
+    "messaging": {
+      "daily_verse_count_goal_saved_successfully": "Tägliche Verszahl Ziel erfolgreich gespeichert.",
+      "unable_to_save_daily_verse_count_goal": "Nicht gespeichert. Bitte geben Sie eine Zahl zwischen 1 und 1111 ein."
     }
   },
   "es": {
@@ -547,6 +547,32 @@ export default {
     "messaging": {
       "daily_verse_count_goal_saved_successfully": "Objectif de nombre de versets quotidiens enregistré avec succès.",
       "unable_to_save_daily_verse_count_goal": "Impossible d'enregistrer. Veuillez entrer un nombre entre 1 et 1111."
+    }
+  },
+  "ko": {
+    "start_page": {
+      "daily_verse_count_goal": {
+        "title": "일일 구절 목표",
+        "description": "일일 구절 목표는 매일 읽고자 하는 구절 수를 의미합니다. My Bible Log는 해당 목표까지 진행 상황을 표시해줍니다.",
+        "i_want_to": "저는…",
+        "read_in_2_years": "2년 1독하고 싶어요",
+        "read_in_year": "1년 1독하고 싶어요",
+        "read_in_6_months": "6개월 1독하고 싶어요",
+        "read_by_specific_date": "정해진 날짜까지 1독하고 싶어요",
+        "read_at_own_pace": "저만의 속도대로 읽고 싶어요",
+        "goal_finish_date": "목표달성일",
+        "finish_on": "완료일",
+        "daily_verse_count": "매일 읽어야 할 구절 수",
+        "table_verses_in_bible": "성경 전체 구절 수",
+        "table_days_until_date": "목표일까지 남은 일수",
+        "table_verses_per_day": "매일 읽어야 할 구절 수",
+        "calculated_goal": "목표일까지 1독을 성공하기 위해서는 매일 {dailyGoal}구절을 읽어야 합니다 ({days}일).",
+        "change_hint": "이 설정은 언제든지 바꿀 수 있습니다."
+      }
+    },
+    "messaging": {
+      "daily_verse_count_goal_saved_successfully": "일일 구절 수 목표가 저장되었습니다.",
+      "unable_to_save_daily_verse_count_goal": "저장할 수 없습니다. 1~1111 사이의 숫자를 입력해 주세요."
     }
   },
   "pt": {

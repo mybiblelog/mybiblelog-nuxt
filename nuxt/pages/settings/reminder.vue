@@ -127,25 +127,6 @@ main p {
 
 <i18n lang="json">
 {
-  "de": {
-    "reminder": "Erinnerung",
-    "info": {
-      "p1a": "Sie können eine Uhrzeit für die tägliche Erinnerungs-E-Mail festlegen.",
-      "p1b": "Sie müssen das Kästchen unten ankreuzen und Ihre Einstellungen speichern, um E-Mails zu erhalten.",
-      "p2a": "Wenn Sie diese E-Mails nicht mehr erhalten möchten, entfernen Sie einfach das Kästchen unten und speichern Sie Ihre Einstellungen.",
-      "p2b": "Sie können auch den Link \"abbestellen\" in einer E-Mail klicken, um sich abzumelden."
-    },
-    "form": {
-      "i_want_to_receive_a_daily_reminder_email": "Ich möchte eine tägliche Erinnerungs-E-Mail erhalten.",
-      "reminder_time": "Erinnerungszeit",
-      "save_preferences": "Einstellungen speichern"
-    },
-    "messaging": {
-      "please_choose_a_time": "Bitte wählen Sie eine Uhrzeit für die Erinnerung.",
-      "reminder_settings_updated_successfully": "Erinnerungseinstellungen erfolgreich aktualisiert.",
-      "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten."
-    }
-  },
   "en": {
     "reminder": "Reminder",
     "info": {
@@ -163,6 +144,25 @@ main p {
       "please_choose_a_time": "Please choose a time to receive a reminder",
       "reminder_settings_updated_successfully": "Reminder settings updated successfully.",
       "an_unknown_error_occurred": "An unknown error occurred."
+    }
+  },
+  "de": {
+    "reminder": "Erinnerung",
+    "info": {
+      "p1a": "Sie können eine Uhrzeit für die tägliche Erinnerungs-E-Mail festlegen.",
+      "p1b": "Sie müssen das Kästchen unten ankreuzen und Ihre Einstellungen speichern, um E-Mails zu erhalten.",
+      "p2a": "Wenn Sie diese E-Mails nicht mehr erhalten möchten, entfernen Sie einfach das Kästchen unten und speichern Sie Ihre Einstellungen.",
+      "p2b": "Sie können auch den Link \"abbestellen\" in einer E-Mail klicken, um sich abzumelden."
+    },
+    "form": {
+      "i_want_to_receive_a_daily_reminder_email": "Ich möchte eine tägliche Erinnerungs-E-Mail erhalten.",
+      "reminder_time": "Erinnerungszeit",
+      "save_preferences": "Einstellungen speichern"
+    },
+    "messaging": {
+      "please_choose_a_time": "Bitte wählen Sie eine Uhrzeit für die Erinnerung.",
+      "reminder_settings_updated_successfully": "Erinnerungseinstellungen erfolgreich aktualisiert.",
+      "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten."
     }
   },
   "es": {
@@ -201,6 +201,25 @@ main p {
       "please_choose_a_time": "Veuillez choisir une heure pour recevoir un rappel",
       "reminder_settings_updated_successfully": "Paramètres de rappel mis à jour avec succès.",
       "an_unknown_error_occurred": "Une erreur inconnue est survenue."
+    }
+  },
+  "ko": {
+    "reminder": "알림",
+    "info": {
+      "p1a": "매일 알림 이메일을 받을 시간을 설정할 수 있습니다.",
+      "p1b": "이메일을 수신하기 위해서는 아래 확인란에 체크하고 설정을 저장해야 합니다.",
+      "p2a": "더 이상 메일을 수신하지 않기 위해서는 아래 확인란을 해제하고 설정을 저장하세요.",
+      "p2b": "이메일에 포함된 \"수신 거부\" 링크를 눌러 처리할 수도 있습니다."
+    },
+    "form": {
+      "i_want_to_receive_a_daily_reminder_email": "매일 알림 이메일을 받고 싶습니다.",
+      "reminder_time": "알림 시간",
+      "save_preferences": "설정 저장"
+    },
+    "messaging": {
+      "please_choose_a_time": "알림을 받을 시간을 선택해 주세요",
+      "reminder_settings_updated_successfully": "알림 설정이 업데이트되었습니다.",
+      "an_unknown_error_occurred": "알 수 없는 오류가 발생했습니다."
     }
   },
   "pt": {

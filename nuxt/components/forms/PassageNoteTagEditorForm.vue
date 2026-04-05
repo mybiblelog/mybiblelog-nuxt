@@ -98,15 +98,15 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "label": "Label",
-    "color": "Farbe",
-    "description": "Beschreibung"
-  },
   "en": {
     "label": "Label",
     "color": "Color",
     "description": "Description"
+  },
+  "de": {
+    "label": "Label",
+    "color": "Farbe",
+    "description": "Beschreibung"
   },
   "es": {
     "label": "Etiqueta",
@@ -117,6 +117,11 @@ export default {
     "label": "Étiquette",
     "color": "Couleur",
     "description": "Description"
+  },
+  "ko": {
+    "label": "이름",
+    "color": "색상",
+    "description": "설명"
   },
   "pt": {
     "label": "Nome",

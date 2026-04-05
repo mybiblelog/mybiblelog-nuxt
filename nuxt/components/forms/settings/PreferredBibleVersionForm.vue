@@ -95,6 +95,7 @@ const bibleVersionNames = {
   [BibleVersions.LSG]: 'Louis Segond (LSG)',
   [BibleVersions.ARC]: 'Almeida Revista e Corrigida (ARC)',
   [BibleVersions.LUT]: 'Luther 1545 (LUT)',
+  [BibleVersions.KRV]: '개역한글 (KRV)',
 };
 
 const bibleVersionOptions = Object.keys(bibleVersionNames).map((key) => {
@@ -231,23 +232,6 @@ select {
 
 <i18n lang="json">
 {
-  "de": {
-    "start_page": {
-      "preferred_bible_version": {
-        "title": "Bibel-Einstellungen",
-        "translation_label": "Wenn ich die Bibel von My Bible Log öffne, möchte ich diese Übersetzung lesen:",
-        "app_label": "Wenn ich eine Passage von My Bible Log öffne, möchte ich, dass sie in dieser App oder Website geöffnet wird:",
-        "change_hint": "Sie können diese Einstellungen jederzeit ändern."
-      }
-    },
-    "select_an_option": "Eine Option auswählen",
-    "messaging": {
-      "preferred_bible_settings_saved_successfully": "Bibel-Einstellungen erfolgreich gespeichert.",
-      "unable_to_save_preferred_bible_settings": "Nicht gespeichert.",
-      "unable_to_save_preferred_bible_version": "Nicht gespeichert.",
-      "unable_to_save_preferred_bible_app": "Nicht gespeichert."
-    }
-  },
   "en": {
     "start_page": {
       "preferred_bible_version": {
@@ -263,6 +247,23 @@ select {
       "unable_to_save_preferred_bible_settings": "Unable to save.",
       "unable_to_save_preferred_bible_version": "Unable to save.",
       "unable_to_save_preferred_bible_app": "Unable to save."
+    }
+  },
+  "de": {
+    "start_page": {
+      "preferred_bible_version": {
+        "title": "Bibel-Einstellungen",
+        "translation_label": "Wenn ich die Bibel von My Bible Log öffne, möchte ich diese Übersetzung lesen:",
+        "app_label": "Wenn ich eine Passage von My Bible Log öffne, möchte ich, dass sie in dieser App oder Website geöffnet wird:",
+        "change_hint": "Sie können diese Einstellungen jederzeit ändern."
+      }
+    },
+    "select_an_option": "Eine Option auswählen",
+    "messaging": {
+      "preferred_bible_settings_saved_successfully": "Bibel-Einstellungen erfolgreich gespeichert.",
+      "unable_to_save_preferred_bible_settings": "Nicht gespeichert.",
+      "unable_to_save_preferred_bible_version": "Nicht gespeichert.",
+      "unable_to_save_preferred_bible_app": "Nicht gespeichert."
     }
   },
   "es": {
@@ -297,6 +298,23 @@ select {
       "unable_to_save_preferred_bible_settings": "Impossible d'enregistrer.",
       "unable_to_save_preferred_bible_version": "Impossible d'enregistrer.",
       "unable_to_save_preferred_bible_app": "Impossible d'enregistrer."
+    }
+  },
+  "ko": {
+    "start_page": {
+      "preferred_bible_version": {
+        "title": "성경 설정",
+        "translation_label": "My Bible Log에서 성경을 열 때, 이 번역본으로 읽고 싶습니다:",
+        "app_label": "My Bible Log에서 성경 구절을 열 때 이 앱 또는 홈페이지에서 열고 싶습니다:",
+        "change_hint": "이 설정은 언제든지 바꿀 수 있습니다."
+      }
+    },
+    "select_an_option": "옵션 선택",
+    "messaging": {
+      "preferred_bible_settings_saved_successfully": "성경 설정이 저장되었습니다.",
+      "unable_to_save_preferred_bible_settings": "저장할 수 없습니다.",
+      "unable_to_save_preferred_bible_version": "저장할 수 없습니다.",
+      "unable_to_save_preferred_bible_app": "저장할 수 없습니다."
     }
   },
   "pt": {

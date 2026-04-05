@@ -192,17 +192,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "page_title": "Kalender",
-    "verse": "Vers | Verse",
-    "open_bible": "Bibel öffnen",
-    "take_note": "Notiz hinzufügen",
-    "edit": "Bearbeiten",
-    "delete": "Löschen",
-    "no_entries": "Keine Einträge",
-    "are_you_sure": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
-    "could_not_delete": "Der Log-Eintrag konnte nicht gelöscht werden."
-  },
   "en": {
     "page_title": "Calendar",
     "verse": "verse | verses",
@@ -213,6 +202,17 @@ export default {
     "no_entries": "No Entries",
     "are_you_sure": "Are you sure you want to delete this entry?",
     "could_not_delete": "The log entry could not be deleted."
+  },
+  "de": {
+    "page_title": "Kalender",
+    "verse": "Vers | Verse",
+    "open_bible": "Bibel öffnen",
+    "take_note": "Notiz hinzufügen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "no_entries": "Keine Einträge",
+    "are_you_sure": "Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?",
+    "could_not_delete": "Der Log-Eintrag konnte nicht gelöscht werden."
   },
   "es": {
     "page_title": "Calendario",
@@ -235,6 +235,17 @@ export default {
     "no_entries": "Aucune entrée",
     "are_you_sure": "Êtes-vous sûr de vouloir supprimer cette entrée?",
     "could_not_delete": "L'entrée du journal n'a pas pu être supprimée."
+  },
+  "ko": {
+    "page_title": "달력",
+    "verse": "절 | 절",
+    "open_bible": "성경 열기",
+    "take_note": "노트 작성",
+    "edit": "편집",
+    "delete": "삭제",
+    "no_entries": "항목 없음",
+    "are_you_sure": "해당 항목을 삭제할까요?",
+    "could_not_delete": "읽기 기록을 삭제할 수 없습니다."
   },
   "pt": {
     "page_title": "Calendário",

@@ -432,19 +432,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "example_prefix": "z.B.",
-    "invalid_single": "Gib einen einzelnen Vers ein, z.B. „{example}“.",
-    "invalid_multi": "Ungültige Referenz. Versuche „{example1}“ oder „{example2}“.",
-    "select_book": "Wähle Buch",
-    "select_chapter": "Wähle Kapitel",
-    "select_verse": "Wähle Vers",
-    "pick": "Auswählen",
-    "aria_clear": "Leeren",
-    "aria_pick": "Vers auswählen",
-    "old_testament_short": "AT",
-    "new_testament_short": "NT"
-  },
   "en": {
     "example_prefix": "e.g.",
     "invalid_single": "Enter a single verse like “{example}”.",
@@ -456,6 +443,19 @@ export default {
     "aria_clear": "Clear",
     "aria_pick": "Pick verse",
     "old_testament_short": "OT",
+    "new_testament_short": "NT"
+  },
+  "de": {
+    "example_prefix": "z.B.",
+    "invalid_single": "Gib einen einzelnen Vers ein, z.B. „{example}“.",
+    "invalid_multi": "Ungültige Referenz. Versuche „{example1}“ oder „{example2}“.",
+    "select_book": "Wähle Buch",
+    "select_chapter": "Wähle Kapitel",
+    "select_verse": "Wähle Vers",
+    "pick": "Auswählen",
+    "aria_clear": "Leeren",
+    "aria_pick": "Vers auswählen",
+    "old_testament_short": "AT",
     "new_testament_short": "NT"
   },
   "es": {
@@ -483,6 +483,19 @@ export default {
     "aria_pick": "Choisir un verset",
     "old_testament_short": "AT",
     "new_testament_short": "NT"
+  },
+  "ko": {
+    "example_prefix": "예:",
+    "invalid_single": "“{example}”처럼 한 절만 입력해 주세요.",
+    "invalid_multi": "잘못된 참조입니다. “{example1}” 또는 “{example2}” 형식을 사용해 보세요.",
+    "select_book": "권 선택",
+    "select_chapter": "장 선택",
+    "select_verse": "절 선택",
+    "pick": "선택",
+    "aria_clear": "지우기",
+    "aria_pick": "절 선택",
+    "old_testament_short": "구약",
+    "new_testament_short": "신약"
   },
   "pt": {
     "example_prefix": "ex.",

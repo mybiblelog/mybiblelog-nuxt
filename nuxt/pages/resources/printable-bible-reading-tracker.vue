@@ -1,7 +1,7 @@
 <template>
   <main>
-    <div class="content-column">
-      <section class="no-print">
+    <div class="content-column no-print">
+      <section>
         <header class="page-header">
           <h1 class="title">
             {{ $t('meta.title') }}
@@ -192,24 +192,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "meta": {
-      "title": "Druckbare Bibel-Lesetrack",
-      "description": "Druckbare Bibel-Lesetrack mit Kontrollkästchen für jeden Kapitel der Bibel. Verfolgen Sie Ihren Fortschritt beim Lesen durch die Bücher der Bibel."
-    },
-    "print": "Drucken",
-    "site_title": "My Bible Log",
-    "site_description": "Druckbare Bibel-Lesetrack",
-    "content": {
-      "this_is": "Dies ist ein druckbares Kontrollkästchen für die Bibel-Lesetrack mit Kontrollkästchen für jeden Kapitel der Bibel. Verfolgen Sie Ihren Fortschritt beim Lesen durch die Bücher der Bibel.",
-      "printer_friendly": "Diese Seite ist druckfreundlich. Klicken Sie auf den Druckknopf oben, um diese Seite zu drucken. Nur die tatsächliche Checkliste wird gedruckt.",
-      "download_directly": "Sie können auch die PDF-Version direkt <a target='_blank' href='/downloads/druckbare-bibel-lesetrack.pdf'>hier</a> herunterladen.",
-      "chapters_in_the_bible": "Kapitel in der Bibel",
-      "there_are_66_books": "Es gibt 66 Bücher in der Bibel und insgesamt 1.189 Kapitel. Wenn Sie 3,25 Kapitel pro Tag lesen (oder insgesamt 23 Kapitel pro Woche), können Sie die gesamte Bibel in einem Jahr lesen.",
-      "track_your_progress_online": "Verfolgen Sie Ihren Fortschritt online",
-      "if_you_would_like": "Wenn Sie Ihren Fortschritt beim Lesen der Bibel von Ihrem Gerät aus verfolgen möchten, schauen Sie sich die kostenlosen <a href='/de'>My Bible Log</a> App und Website an!"
-    }
-  },
   "en": {
     "meta": {
       "title": "Printable Bible Reading Tracker",
@@ -226,6 +208,24 @@ export default {
       "there_are_66_books": "There are 66 books in the Bible, and a total of 1,189 chapters. If you read 3.25 chapters each day (or a total of 23 chapters each week), you can read the entire Bible in one year.",
       "track_your_progress_online": "Track Your Progress Online",
       "if_you_would_like": "If you would like to track your Bible reading from your device, check out the free <a href='/'>My Bible Log</a> app and website!"
+    }
+  },
+  "de": {
+    "meta": {
+      "title": "Druckbare Bibel-Lesetrack",
+      "description": "Druckbare Bibel-Lesetrack mit Kontrollkästchen für jeden Kapitel der Bibel. Verfolgen Sie Ihren Fortschritt beim Lesen durch die Bücher der Bibel."
+    },
+    "print": "Drucken",
+    "site_title": "My Bible Log",
+    "site_description": "Druckbare Bibel-Lesetrack",
+    "content": {
+      "this_is": "Dies ist ein druckbares Kontrollkästchen für die Bibel-Lesetrack mit Kontrollkästchen für jeden Kapitel der Bibel. Verfolgen Sie Ihren Fortschritt beim Lesen durch die Bücher der Bibel.",
+      "printer_friendly": "Diese Seite ist druckfreundlich. Klicken Sie auf den Druckknopf oben, um diese Seite zu drucken. Nur die tatsächliche Checkliste wird gedruckt.",
+      "download_directly": "Sie können auch die PDF-Version direkt <a target='_blank' href='/downloads/druckbare-bibel-lesetrack.pdf'>hier</a> herunterladen.",
+      "chapters_in_the_bible": "Kapitel in der Bibel",
+      "there_are_66_books": "Es gibt 66 Bücher in der Bibel und insgesamt 1.189 Kapitel. Wenn Sie 3,25 Kapitel pro Tag lesen (oder insgesamt 23 Kapitel pro Woche), können Sie die gesamte Bibel in einem Jahr lesen.",
+      "track_your_progress_online": "Verfolgen Sie Ihren Fortschritt online",
+      "if_you_would_like": "Wenn Sie Ihren Fortschritt beim Lesen der Bibel von Ihrem Gerät aus verfolgen möchten, schauen Sie sich die kostenlosen <a href='/de'>My Bible Log</a> App und Website an!"
     }
   },
   "es": {
@@ -262,6 +262,24 @@ export default {
       "there_are_66_books": "Il y a 66 livres dans la Bible, et un total de 1 189 chapitres. Si vous lisez 3,25 chapitres chaque jour (ou un total de 23 chapitres chaque semaine), vous pouvez lire toute la Bible en un an.",
       "track_your_progress_online": "Suivez votre progression en ligne",
       "if_you_would_like": "Si vous souhaitez suivre votre lecture de la Bible à partir de votre appareil, consultez l'application et le site Web gratuits <a href='/'>My Bible Log</a> !"
+    }
+  },
+  "ko": {
+    "meta": {
+      "title": "인쇄용 성경일독표",
+      "description": "성경 각 장 옆 체크박스가 있는 무료 인쇄용 성경일독표입니다. 성경을 읽으며 진행 상황을 기록해 보세요."
+    },
+    "print": "인쇄",
+    "site_title": "My Bible Log",
+    "site_description": "무료 성경 읽기 트래킹",
+    "content": {
+      "this_is": "성경 각 장 옆 체크박스가 있는 무료 인쇄용 성경일독표입니다. 성경을 읽으며 진행 상황을 기록하는 데 사용해보세요.",
+      "printer_friendly": "인쇄용으로 편집된 페이지입니다. 상단 \"인쇄\" 버튼을 누르면 체크리스트만 인쇄됩니다.",
+      "download_directly": "PDF 파일은 <a target='_blank' href='/downloads/인쇄용 성경 읽기 추적표.pdf'>이곳</a>을 눌러 직접 다운로드 받을 수 있습니다.",
+      "chapters_in_the_bible": "성경에 있는 장 수",
+      "there_are_66_books": "성경에는 66권, 총 1,189장이 있습니다. 매일 3.25장(또는 매주 23장)씩 읽으면 1년에 성경 전체를 완독할 수 있습니다.",
+      "track_your_progress_online": "온라인으로 진행 상황 추적",
+      "if_you_would_like": "기기에서 성경 읽기를 추적하고 싶다면 무료 <a href='/ko'>My Bible Log</a> 앱과 웹사이트를 이용해 보세요!"
     }
   },
   "pt": {

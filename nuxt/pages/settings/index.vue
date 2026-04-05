@@ -83,17 +83,6 @@ main p {
 
 <i18n lang="json">
 {
-  "de": {
-    "account": "Konto",
-    "email": "E-Mail",
-    "change_email": "E-Mail ändern",
-    "password": "Passwort",
-    "you_can_change_your_password_below": "Sie können Ihr Passwort unten ändern.",
-    "change_password": "Passwort ändern",
-    "delete_account": "Konto löschen",
-    "you_are_in_control": "Sie haben die Kontrolle über Ihre Daten. Sie können Ihr Konto und alle mit ihm verbundenen Daten löschen.",
-    "learn_more": "Mehr erfahren"
-  },
   "en": {
     "account": "Account",
     "email": "Email",
@@ -104,6 +93,17 @@ main p {
     "delete_account": "Delete Account",
     "you_are_in_control": "You are in control of your data. You can delete your account and all data associated with it.",
     "learn_more": "Learn More"
+  },
+  "de": {
+    "account": "Konto",
+    "email": "E-Mail",
+    "change_email": "E-Mail ändern",
+    "password": "Passwort",
+    "you_can_change_your_password_below": "Sie können Ihr Passwort unten ändern.",
+    "change_password": "Passwort ändern",
+    "delete_account": "Konto löschen",
+    "you_are_in_control": "Sie haben die Kontrolle über Ihre Daten. Sie können Ihr Konto und alle mit ihm verbundenen Daten löschen.",
+    "learn_more": "Mehr erfahren"
   },
   "es": {
     "account": "Cuenta",
@@ -126,6 +126,17 @@ main p {
     "delete_account": "Supprimer Compte",
     "you_are_in_control": "Vous êtes en contrôle de vos données. Vous pouvez supprimer votre compte et toutes les données qui y sont associées.",
     "learn_more": "En savoir plus"
+  },
+  "ko": {
+    "account": "계정",
+    "email": "이메일",
+    "change_email": "이메일 변경",
+    "password": "비밀번호",
+    "you_can_change_your_password_below": "아래에서 비밀번호를 변경할 수 있습니다.",
+    "change_password": "비밀번호 변경",
+    "delete_account": "계정 삭제",
+    "you_are_in_control": "여러분의 데이터는 여러분이 관리할 수 있습니다. 계정 및 모든 관련 데이터를 삭제할 수 있습니다.",
+    "learn_more": "자세히 보기"
   },
   "pt": {
     "account": "Conta",

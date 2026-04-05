@@ -80,13 +80,13 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "page_title": "Anmelden – Google",
-    "signing_in_with_google": "Mit Google anmelden..."
-  },
   "en": {
     "page_title": "Sign In - Google",
     "signing_in_with_google": "Signing in with Google..."
+  },
+  "de": {
+    "page_title": "Anmelden – Google",
+    "signing_in_with_google": "Mit Google anmelden..."
   },
   "es": {
     "page_title": "Iniciar sesión - Google",
@@ -95,6 +95,10 @@ export default {
   "fr": {
     "page_title": "Connexion - Google",
     "signing_in_with_google": "Connexion avec Google en cours..."
+  },
+  "ko": {
+    "page_title": "Google 계정으로 로그인",
+    "signing_in_with_google": "Google로 로그인하는 중…"
   },
   "pt": {
     "page_title": "Entrar - Google",

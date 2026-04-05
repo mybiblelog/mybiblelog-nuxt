@@ -133,17 +133,20 @@ h1, h2, h3, h4, h5, h6 {
 
 <i18n lang="json">
 {
-  "de": {
-    "back": "Zurück zur Übersicht von My Bible Log"
-  },
   "en": {
     "back": "Go to My Bible Log overview"
+  },
+  "de": {
+    "back": "Zurück zur Übersicht von My Bible Log"
   },
   "es": {
     "back": "Volver a la página de My Bible Log"
   },
   "fr": {
     "back": "Retour à la page d'accueil de My Bible Log"
+  },
+  "ko": {
+    "back": "My Bible Log 소개 페이지로 이동"
   },
   "pt": {
     "back": "Ir para a visão geral do My Bible Log"

@@ -121,17 +121,20 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "create_a_tag_to_select_it_here": "Erstellen Sie ein Tag, um es hier auszuwählen."
-  },
   "en": {
     "create_a_tag_to_select_it_here": "Create a tag to select it here."
+  },
+  "de": {
+    "create_a_tag_to_select_it_here": "Erstellen Sie ein Tag, um es hier auszuwählen."
   },
   "es": {
     "create_a_tag_to_select_it_here": "Crea una etiqueta para seleccionarla aquí."
   },
   "fr": {
     "create_a_tag_to_select_it_here": "Créez une étiquette pour la sélectionner ici."
+  },
+  "ko": {
+    "create_a_tag_to_select_it_here": "태그를 만든 뒤 여기서 선택할 수 있습니다."
   },
   "pt": {
     "create_a_tag_to_select_it_here": "Crie uma tag para selecioná-la aqui."

@@ -43,17 +43,20 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "page_title": "Bibelbücher"
-  },
   "en": {
     "page_title": "Bible Books"
+  },
+  "de": {
+    "page_title": "Bibelbücher"
   },
   "es": {
     "page_title": "Libros de la Biblia"
   },
   "fr": {
     "page_title": "Livres de la Bible"
+  },
+  "ko": {
+    "page_title": "성경 일람"
   },
   "pt": {
     "page_title": "Livros da Bíblia"

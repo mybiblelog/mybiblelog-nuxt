@@ -150,18 +150,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "reset_password": "Passwort zurücksetzen",
-    "once_you_set_a_new_password_you_will_be_automatically_logged_in": "Sobald Sie ein neues Passwort festgelegt haben, werden Sie automatisch angemeldet.",
-    "new_password": "Neues Passwort",
-    "confirm_new_password": "Neues Passwort bestätigen",
-    "submit": "Absenden",
-    "this_password_reset_link_is_expired": "Dieses Passwort-Wiederherstellungs-Link ist abgelaufen.",
-    "you_can_send_a_new_password_reset_email_from_the_sign_in_page": "Sie können ein neues Passwort-Wiederherstellungs-E-Mail von der Anmeldeseite senden.",
-    "sign_in": "Anmelden",
-    "passwords_must_match": "Passwörter müssen übereinstimmen.",
-    "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten."
-  },
   "en": {
     "reset_password": "Reset Password",
     "once_you_set_a_new_password_you_will_be_automatically_logged_in": "Once you set a new password, you will be automatically logged in.",
@@ -173,6 +161,18 @@ export default {
     "sign_in": "Sign In",
     "passwords_must_match": "Passwords must match.",
     "an_unknown_error_occurred": "An unknown error occurred."
+  },
+  "de": {
+    "reset_password": "Passwort zurücksetzen",
+    "once_you_set_a_new_password_you_will_be_automatically_logged_in": "Sobald Sie ein neues Passwort festgelegt haben, werden Sie automatisch angemeldet.",
+    "new_password": "Neues Passwort",
+    "confirm_new_password": "Neues Passwort bestätigen",
+    "submit": "Absenden",
+    "this_password_reset_link_is_expired": "Dieses Passwort-Wiederherstellungs-Link ist abgelaufen.",
+    "you_can_send_a_new_password_reset_email_from_the_sign_in_page": "Sie können ein neues Passwort-Wiederherstellungs-E-Mail von der Anmeldeseite senden.",
+    "sign_in": "Anmelden",
+    "passwords_must_match": "Passwörter müssen übereinstimmen.",
+    "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten."
   },
   "es": {
     "reset_password": "Restablecer la contraseña",
@@ -197,6 +197,18 @@ export default {
     "sign_in": "Se connecter",
     "passwords_must_match": "Les mots de passe doivent correspondre.",
     "an_unknown_error_occurred": "Une erreur inconnue s'est produite."
+  },
+  "ko": {
+    "reset_password": "비밀번호 재설정",
+    "once_you_set_a_new_password_you_will_be_automatically_logged_in": "새 비밀번호를 설정하면 자동으로 로그인됩니다.",
+    "new_password": "새 비밀번호",
+    "confirm_new_password": "새 비밀번호 확인",
+    "submit": "제출",
+    "this_password_reset_link_is_expired": "본 비밀번호 재설정 링크는 만료되었습니다.",
+    "you_can_send_a_new_password_reset_email_from_the_sign_in_page": "로그인 페이지에서 비밀번호 재설정 이메일을 새로 보낼 수 있습니다.",
+    "sign_in": "로그인",
+    "passwords_must_match": "비밀번호가 일치해야 합니다.",
+    "an_unknown_error_occurred": "알 수 없는 오류가 발생했습니다."
   },
   "pt": {
     "reset_password": "Redefinir Senha",

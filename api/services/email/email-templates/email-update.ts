@@ -19,6 +19,7 @@ const render = ({
     en: 'Confirm New Email Address',
     es: 'Confirmar nueva dirección de correo electrónico',
     fr: 'Confirmer la nouvelle adresse e-mail',
+    ko: '새 이메일 주소 확인',
     pt: 'Confirmar nova endereço de email',
     uk: `Підтвердіть нову адресу електронної пошти`,
   }[locale];
@@ -54,6 +55,12 @@ const render = ({
       '<br>',
       `<p>Clique em <a href="${link}">este link</a> para confirmar <strong>${newEmail}</strong> como o novo endereço de email para esta conta.</p>`,
       '<p>Se você não solicitou a alteração do seu endereço de email do My Bible Log, você pode ignorar esta mensagem.',
+    ].join(''),
+    ko: [
+      `<p>이메일 <strong>${currentEmail}</strong>의 My Bible Log 계정이 이메일을 <strong>${newEmail}</strong>(으)로 바꾸길 요청했습니다.</p>`,
+      '<br>',
+      `<p><a href="${link}">이 링크</a>를 눌러 이 계정의 새 이메일로 <strong>${newEmail}</strong>을(를) 확인하세요.</p>`,
+      '<p>My Bible Log 이메일 변경을 요청하지 않았다면 이 메일을 무시하셔도 됩니다.',
     ].join(''),
     uk: [
       `<p>Обліковий запис My Bible Log з електронною адресою <strong>${currentEmail}</strong> запросив змінити свою електронну адресу на <strong>${newEmail}</strong>.</p>`,

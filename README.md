@@ -214,37 +214,69 @@ To allow users to sign in with their existing user accounts you will need to fol
 
 ## Internationalization (i18n) Notes
 
+For **Crowdin**, where bundle files live, how paths map to Crowdin, and how to run **`crowdin upload sources`**, **`crowdin upload translations`**, and **`crowdin download`**, see [CROWDIN.md](CROWDIN.md). If Crowdin’s language code does not match the app locale code (for example Portuguese in Crowdin is often `pt-BR` while the app uses `pt`), add a `languages_mapping` entry in [`crowdin.yml`](crowdin.yml).
+
 ### `$t` and `$terr` Behavior
 
 The `$t` translation helper, provided by the i18n module, is used to translate messages.
 
-It will first look for the given message in the `<i18n>` block of the current component, and will fall back to the global translations registered in `nuxt/nuxt.config.ts` if the local `<i18n>` block is missing that message.
+It will first look for the given message in the **component- or page-scoped** locale messages from that Vue file’s `<i18n lang="json">` block (one JSON object with top-level keys per locale: `en`, `de`, `es`, …), then fall back to the **global** translations from [`nuxt/locales/locales.ts`](nuxt/locales/locales.ts) wired through [`nuxt/i18n.config.ts`](nuxt/i18n.config.ts) if the scoped messages do not define that key.
 
-Note that since the global locale files are loaded from `nuxt/nuxt.config.ts`, updating them will not trigger a hot reload. The entire app will need to be restarted to see global locale updates.
+Global messages are bundled from `locales.ts` (`lazy: false`). Restart the Nuxt dev server if changes to that file do not hot-reload.
 
-The `$terr` helper is a custom function that unwraps server errors. It is defined in `nuxt/plugins/translate-api.ts`.
+The `$terr` helper is a custom function that unwraps server errors. It is defined in [`nuxt/plugins/translate-api.ts`](nuxt/plugins/translate-api.ts).
 
-### Adding a Locale
+### Adding a locale
 
-These are the steps to adding an entirely new locale to the site (along with any relevant helper tools):
+Use this checklist when introducing a **new** locale code (e.g. `ja`). English (`en`) is the source for keys and file layout.
 
-1. Add the locale to `shared/i18n.ts` (manual)
-1. Define the locale in `nuxt/i18n.config.js` (manual)
-1. Add the locale to `nuxt/locales/locales.js` (use Cursor)
-1. Import the locale for `dayjs` in `shared/date-helpers.ts` (manual)
-1. Add Bible book title translations to `shared/static/bible-books.ts` (\_translate.js)
-1. Each component manages its own translation messages in an `<i18n>` block, so add the locale to all `.vue` files in the `pages` and `components` directories. (\_translate.js)
-1. Email templates manage their own translation messages, so add the locale to each `api/services/email/email-templates/*.ts` file. (use Cursor)
-1. Each locale has its own `nuxt/content` directory with markdown files that back the `/about` and `/policy` pages. (`nuxt/_translate.js`)
-1. Each locale currently has its own printable reading tracker PDF in `nuxt/static/downloads` which is manually listed in the XML sitemap route, `/api/router/routes/sitemap.ts`. (manually "print as PDF", update sitemap route, and update `nuxt/pages/resources/printable-bible-reading-tracker.vue`)
-1. Add at least one preferred Bible translation option for the new locale in both `shared/util.ts` and `pages/settings/reading.vue`.
-1. Add a default Bible translation for the new locale to the `defaultLocaleBibleVersions` constant in `shared/util.ts` in.
+**Shared app config**
+
+1. **[`shared/i18n.ts`](shared/i18n.ts)** — Add the code to the `LocaleCode` union and insert `{ code, iso, name }` into the `locales` array after `en`, in alphabetical order by `code` (see the comment in that file: English is the only locale not sorted with the rest).
+1. **[`nuxt/i18n.config.ts`](nuxt/i18n.config.ts)** — Add a `numberFormats` entry for the new locale (same shape as existing locales).
+
+**UI strings (TypeScript + Vue)**
+
+1. **[`nuxt/locales/locales.ts`](nuxt/locales/locales.ts)** — Add a `"<code>"` object with the same nested keys as `"en"`; translate values.
+1. **Vue `<i18n>` blocks** — In each `nuxt/components/**/*.vue` and `nuxt/pages/**/*.vue` that already has an `<i18n lang="json">` block, add a top-level `"<code>"` object (same keys as `"en"`). Prefer locale order `en`, `de`, `es`, `fr`, `ko`, `pt`, `uk`. See [CROWDIN.md](CROWDIN.md).
+1. **Crowdin export / import** — Run `npm run -w nuxt i18n:export-crowdin` to write bundles under `nuxt/locales/crowdin/` (see [`.gitignore`](.gitignore)). Use `crowdin upload sources` for English changes and `crowdin upload translations` when you have updated non-English strings locally and want Crowdin to receive them (see [CROWDIN.md](CROWDIN.md)). After `crowdin download`, run `npm run -w nuxt i18n:import-crowdin` to merge translations back into [`nuxt/locales/locales.ts`](nuxt/locales/locales.ts) and Vue `<i18n>` blocks.
+1. **Key parity** — Run `npm run -w nuxt i18n:verify-keys` ([`nuxt/scripts/i18n/verify-i18n-keys.ts`](nuxt/scripts/i18n/verify-i18n-keys.ts)). It checks that every non-default locale matches English for **leaf keys** in [`locales.ts`](nuxt/locales/locales.ts) and in each component/page **inline `<i18n>`** block (locale list from [`shared/i18n.ts`](shared/i18n.ts)).
+
+**Relative dates (dayjs)**
+
+1. **[`shared/date-helpers.ts`](shared/date-helpers.ts)** — For localized strings from `displayTimeSince` / `displayDaysSince`, add `import 'dayjs/locale/<tag>'` using the module name that exists under `dayjs/locale` (often the same as the app locale code; confirm in `node_modules/dayjs/locale` if unsure).
+
+**Bible versions, defaults, and book names**
+
+1. **[`shared/util.ts`](shared/util.ts)** — If readers need a translation not already in `BibleVersions`, add it and wire it through `BlueLetterBibleVersions`, `BibleGatewayVersions`, and `BibleComTranslationLanguages`. Set **`defaultLocaleBibleVersions[<code>]`** to the default translation for that locale (required for typings and new-user defaults).
+1. **[`nuxt/pages/settings/reading.vue`](nuxt/pages/settings/reading.vue)** and **[`nuxt/components/forms/settings/PreferredBibleVersionForm.vue`](nuxt/components/forms/settings/PreferredBibleVersionForm.vue)** — Add a label for each relevant `BibleVersions` key in `bibleVersionNames` (both files define the same map).
+1. **[`shared/static/bible-books.ts`](shared/static/bible-books.ts)** — Every book’s `locales` object needs an entry for the new code (`name` and `abbreviations`). Large updates are often done with [`nuxt/_translate.js`](nuxt/_translate.js) (`newLanguageCode` / `newLanguageName`) or careful manual edits.
+
+**Email**
+
+1. **`api/services/email/email-templates/`** — Add the locale to every locale-keyed map in [`email-verification.ts`](api/services/email/email-templates/email-verification.ts), [`password-reset-link.ts`](api/services/email/email-templates/password-reset-link.ts), [`email-update.ts`](api/services/email/email-templates/email-update.ts), and [`daily-reminder.ts`](api/services/email/email-templates/daily-reminder.ts) (both the `translations` object and the **subject** map in `daily-reminder.ts`).
+
+**Nuxt Content (marketing / docs routes)**
+
+1. **`nuxt/content/<code>/`** — Mirror the structure of [`nuxt/content/en/`](nuxt/content/en): at minimum `index.md`, `faq.md`, `contribute.md`, files under `about/` (feature docs, how-tos, `overview.md`), and `policy/terms.md` & `policy/privacy.md`. These back localized routes such as `/<code>/faq`, `/<code>/about/...`, and `/<code>/policy/...`. Update the “current languages” list in `contribute.md` if you maintain it.
+
+**Printable reading tracker**
+
+1. Add a PDF under **`nuxt/static/downloads/`** (stable filename).
+1. In [`nuxt/pages/resources/printable-bible-reading-tracker.vue`](nuxt/pages/resources/printable-bible-reading-tracker.vue), add a `"<code>"` section to the `<i18n lang="json">` block (same keys as `"en"`; set `content.download_directly` to the new PDF’s `/downloads/...` URL).
+1. Append the PDF path to the static URL list in [`api/router/routes/sitemap.ts`](api/router/routes/sitemap.ts).
+
+**Optional**
+
+1. **[`api/test/sitemap.test.ts`](api/test/sitemap.test.ts)** — Assert the sitemap contains `/<code>/` (or another route) if you want regression coverage.
+
+After **`shared/`** changes, run **`npm run heroku-prebuild`** (or `npm run build -w shared` and reinstall workspaces) before `npm run dev` so `api` and `nuxt` pick up the rebuilt `@mybiblelog/shared` package.
 
 ## Adding support for a new Bible translation
 
 1. Define the translation in `shared/util.ts` by adding it to the `BibleVersions` constant.
-1. Also in in `shared/util.ts`: for each of the supported apps, there is a `BibleVersionsType` constant containing that app's internal code/tag/label for that translation. Find and add the code for the translation in each app. (Typescript will raise an error to highlight where these updates are needed.)
-1. In the `nuxt/pages/settings/reading.vue` file, add the display name of the translation to the `bibleVersionNames` constant.
+1. Also in `shared/util.ts`: for each of the supported apps, there is a `BibleVersionsType` constant containing that app's internal code/tag/label for that translation. Find and add the code for the translation in each app. (TypeScript will raise an error to highlight where these updates are needed.)
+1. In [`nuxt/pages/settings/reading.vue`](nuxt/pages/settings/reading.vue) and [`nuxt/components/forms/settings/PreferredBibleVersionForm.vue`](nuxt/components/forms/settings/PreferredBibleVersionForm.vue), add the display name of the translation to the `bibleVersionNames` constant in both files.
 
 NOTE: you will need to run `npm run heroku-prebuild` before running `npm run dev` to see your changes, as this will require rebuilding the `shared` project and installing it as a dependency in the other projects.
 

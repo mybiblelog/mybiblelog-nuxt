@@ -91,17 +91,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "note_editor": {
-      "edit_note": "Notiz bearbeiten",
-      "add_note": "Notiz hinzufügen",
-      "save": "Speichern",
-      "close": "Schließen"
-    },
-    "messaging": {
-      "are_you_sure_close_editor": "Möchten Sie den Noteneditor wirklich schließen? Alle ungespeicherten Änderungen gehen verloren."
-    }
-  },
   "en": {
     "note_editor": {
       "edit_note": "Edit Note",
@@ -111,6 +100,17 @@ export default {
     },
     "messaging": {
       "are_you_sure_close_editor": "Are you sure you want to close the note editor? All unsaved changes will be lost."
+    }
+  },
+  "de": {
+    "note_editor": {
+      "edit_note": "Notiz bearbeiten",
+      "add_note": "Notiz hinzufügen",
+      "save": "Speichern",
+      "close": "Schließen"
+    },
+    "messaging": {
+      "are_you_sure_close_editor": "Möchten Sie den Noteneditor wirklich schließen? Alle ungespeicherten Änderungen gehen verloren."
     }
   },
   "es": {
@@ -133,6 +133,17 @@ export default {
     },
     "messaging": {
       "are_you_sure_close_editor": "Êtes-vous sûr de vouloir fermer l'éditeur de notes? Toutes les modifications non enregistrées seront perdues."
+    }
+  },
+  "ko": {
+    "note_editor": {
+      "edit_note": "노트 편집",
+      "add_note": "노트 추가",
+      "save": "저장",
+      "close": "닫기"
+    },
+    "messaging": {
+      "are_you_sure_close_editor": "노트 편집기를 닫을까요? 저장하지 않은 변경 내용이 사라집니다."
     }
   },
   "pt": {

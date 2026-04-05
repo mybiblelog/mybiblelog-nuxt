@@ -428,56 +428,6 @@ td:nth-child(2) {
 
 <i18n lang="json">
 {
-  "de": {
-    "progress": "Fortschritt",
-    "bible_books": "Bücher der Bibel",
-    "your_reading_settings": {
-      "title": "Ihre Leseinstellungen",
-      "description": "Diese Einstellungen werden verwendet, um Ihren Fortschritt zu berechnen und anzuzeigen.",
-      "update_settings": "Einstellungen aktualisieren",
-      "look_back_date": "Rückblickdatum",
-      "daily_verse_count_goal": "Tägliche Verszahl-Ziel"
-    },
-    "your_progress_so_far": {
-      "title": "Ihr Fortschritt bis jetzt",
-      "total_bible_verses": "Gesamte Bibelverszahl",
-      "verses_read": "Gelesene Verszahl",
-      "verses_remaining": "Verbleibende Verszahl",
-      "percent_complete": "Fortschritt in Prozent"
-    },
-    "your_outlook": {
-      "historical": {
-        "title": "Ihre historische Perspektive",
-        "description": "Basierend auf Ihren Lesegewohnheiten seit Ihrem <strong>Rückblickdatum</strong>, wie lange wird es dauern, bis Sie die Bibel lesen?"
-      },
-      "30_day": {
-        "title": "Ihre 30-Tage-Perspektive",
-        "description": "Basierend auf Ihren Lesegewohnheiten der letzten 30 Tage, wie lange wird es dauern, bis Sie die Bibel lesen?"
-      },
-      "7_day": {
-        "title": "Ihre 7-Tage-Perspektive",
-        "description": "Basierend auf Ihren Lesegewohnheiten der letzten 7 Tage, wie lange wird es dauern, bis Sie die Bibel lesen?"
-      },
-      "today": {
-        "title": "Ihre heutige Perspektive",
-        "description": "Basierend auf Ihrer heutigen Lesegewohnheit, wie lange wird es dauern, bis Sie die Bibel lesen?"
-      },
-      "days_since_look_back_date": "Tage seit <strong>Rückblickdatum<strong>",
-      "verses_read": "Gelesene Verszahl",
-      "average_daily_verses_read": "Durchschnittliche tägliche Verszahl",
-      "days_to_finish_at_this_rate": "Tage bis zum Erreichen dieses Rhythmus",
-      "date_to_finish_at_this_rate": "Datum bis zum Erreichen dieses Rhythmus"
-    },
-    "set_a_goal": {
-      "title": "Ziel setzen",
-      "description": "Wählen Sie ein Zieldatum, um die Bibel zu lesen, und arbeiten Sie rückwärts, um zu sehen, wie viele Verszahl Sie jeden Tag lesen müssen.",
-      "goal_finish_date": "Ziel-Enddatum",
-      "goal_finish_date_error": "Das Zieldatum muss in der Zukunft liegen.",
-      "days_to_finish_by_goal": "Tage bis zum Erreichen des Ziels",
-      "verses_required_each_day": "Verszahl pro Tag"
-    },
-    "never": "Nie"
-  },
   "en": {
     "progress": "Progress",
     "bible_books": "Bible Books",
@@ -527,6 +477,56 @@ td:nth-child(2) {
       "verses_required_each_day": "Verses Required Each Day"
     },
     "never": "Never"
+  },
+  "de": {
+    "progress": "Fortschritt",
+    "bible_books": "Bücher der Bibel",
+    "your_reading_settings": {
+      "title": "Ihre Leseinstellungen",
+      "description": "Diese Einstellungen werden verwendet, um Ihren Fortschritt zu berechnen und anzuzeigen.",
+      "update_settings": "Einstellungen aktualisieren",
+      "look_back_date": "Rückblickdatum",
+      "daily_verse_count_goal": "Tägliche Verszahl-Ziel"
+    },
+    "your_progress_so_far": {
+      "title": "Ihr Fortschritt bis jetzt",
+      "total_bible_verses": "Gesamte Bibelverszahl",
+      "verses_read": "Gelesene Verszahl",
+      "verses_remaining": "Verbleibende Verszahl",
+      "percent_complete": "Fortschritt in Prozent"
+    },
+    "your_outlook": {
+      "historical": {
+        "title": "Ihre historische Perspektive",
+        "description": "Basierend auf Ihren Lesegewohnheiten seit Ihrem <strong>Rückblickdatum</strong>, wie lange wird es dauern, bis Sie die Bibel lesen?"
+      },
+      "30_day": {
+        "title": "Ihre 30-Tage-Perspektive",
+        "description": "Basierend auf Ihren Lesegewohnheiten der letzten 30 Tage, wie lange wird es dauern, bis Sie die Bibel lesen?"
+      },
+      "7_day": {
+        "title": "Ihre 7-Tage-Perspektive",
+        "description": "Basierend auf Ihren Lesegewohnheiten der letzten 7 Tage, wie lange wird es dauern, bis Sie die Bibel lesen?"
+      },
+      "today": {
+        "title": "Ihre heutige Perspektive",
+        "description": "Basierend auf Ihrer heutigen Lesegewohnheit, wie lange wird es dauern, bis Sie die Bibel lesen?"
+      },
+      "days_since_look_back_date": "Tage seit <strong>Rückblickdatum<strong>",
+      "verses_read": "Gelesene Verszahl",
+      "average_daily_verses_read": "Durchschnittliche tägliche Verszahl",
+      "days_to_finish_at_this_rate": "Tage bis zum Erreichen dieses Rhythmus",
+      "date_to_finish_at_this_rate": "Datum bis zum Erreichen dieses Rhythmus"
+    },
+    "set_a_goal": {
+      "title": "Ziel setzen",
+      "description": "Wählen Sie ein Zieldatum, um die Bibel zu lesen, und arbeiten Sie rückwärts, um zu sehen, wie viele Verszahl Sie jeden Tag lesen müssen.",
+      "goal_finish_date": "Ziel-Enddatum",
+      "goal_finish_date_error": "Das Zieldatum muss in der Zukunft liegen.",
+      "days_to_finish_by_goal": "Tage bis zum Erreichen des Ziels",
+      "verses_required_each_day": "Verszahl pro Tag"
+    },
+    "never": "Nie"
   },
   "es": {
     "progress": "Progreso",
@@ -627,6 +627,56 @@ td:nth-child(2) {
       "verses_required_each_day": "Versets requis chaque jour"
     },
     "never": "Jamais"
+  },
+  "ko": {
+    "progress": "진행 상황",
+    "bible_books": "성경 일람",
+    "your_reading_settings": {
+      "title": "나의 읽기 설정",
+      "description": "아래 설정에 기반해 읽기 현황을 계산 및 표시합니다.",
+      "update_settings": "설정 변경",
+      "look_back_date": "기준 시작일",
+      "daily_verse_count_goal": "일일 구절 목표"
+    },
+    "your_progress_so_far": {
+      "title": "현재까지의 진행 상황",
+      "total_bible_verses": "성경 전체 구절 수",
+      "verses_read": "읽은 구절 수",
+      "verses_remaining": "남은 구절 수",
+      "percent_complete": "완료율"
+    },
+    "your_outlook": {
+      "historical": {
+        "title": "전체 기간 전망",
+        "description": "<strong>기준 시작일</strong> 이후 읽기 습관을 바탕으로, 성경을 완독하는 데 얼마나 걸릴까요?"
+      },
+      "30_day": {
+        "title": "최근 30일 전망",
+        "description": "지난 30일간의 읽기 습관을 바탕으로, 성경을 완독하는 데 얼마나 걸릴까요?"
+      },
+      "7_day": {
+        "title": "최근 7일 전망",
+        "description": "지난 7일간의 읽기 습관을 바탕으로, 성경을 완독하는 데 얼마나 걸릴까요?"
+      },
+      "today": {
+        "title": "오늘의 전망",
+        "description": "오늘 읽은 분량을 바탕으로, 성경을 완독하는 데 얼마나 걸릴까요?"
+      },
+      "days_since_look_back_date": "<strong>기준 시작일<strong> 이후 경과일",
+      "verses_read": "읽은 구절 수",
+      "average_daily_verses_read": "일일 평균 읽은 구절 수",
+      "days_to_finish_at_this_rate": "현재 속도로 완독까지 남은 일수",
+      "date_to_finish_at_this_rate": "현재 속도로 완독 예상일"
+    },
+    "set_a_goal": {
+      "title": "목표 설정",
+      "description": "성경 완독 목표일을 선택하면 매일 몇 구절을 읽어야 하는지 역산하여 표시해줍니다.",
+      "goal_finish_date": "목표달성일",
+      "goal_finish_date_error": "목표 일자는 미래여야 합니다.",
+      "days_to_finish_by_goal": "목표까지 남은 일수",
+      "verses_required_each_day": "매일 읽어야 할 구절 수"
+    },
+    "never": "해당 없음"
   },
   "pt": {
     "progress": "Progress",

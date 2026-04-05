@@ -34,6 +34,17 @@ const translations = {
     passage: 'Pasaje',
     unsubscribe: 'Cancelar suscripción',
   },
+  ko: {
+    my_bible_log: 'My Bible Log',
+    this_is_your_reminder: 'My Bible Log에서 보내는 매일 알림 메일입니다.',
+    you_can_update_preferences: (settingsLink) => `알림 설정은 <a href="${settingsLink}">여기</a>에서 바꿀 수 있습니다.`,
+    open_my_bible_log: 'My Bible Log 열기',
+    most_recent_log_entries: '최근 읽기 기록',
+    no_log_entries_found: '기록이 없습니다. 읽기를 시작해 보세요!',
+    date: '날짜',
+    passage: '구절',
+    unsubscribe: '수신 거부',
+  },
   fr: {
     my_bible_log: 'My Bible Log',
     this_is_your_reminder: 'Voici votre e-mail de rappel quotidien de My Bible Log.',
@@ -247,6 +258,7 @@ const render = ({
     en: `My Bible Log Reminder for ${subjectDate}`,
     es: `Recordatorio de My Bible Log para ${subjectDate}`,
     fr: `Rappel de My Bible Log pour le ${subjectDate}`,
+    ko: `My Bible Log 알림 (${subjectDate})`,
     pt: `Lembrete do My Bible Log para ${subjectDate}`,
     uk: `Нагадування My Bible Log для ${subjectDate}`,
   }[locale];

@@ -70,15 +70,15 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "verify_email": "E-Mail bestätigen",
-    "verifying_email": "E-Mail wird bestätigt",
-    "one_moment_please": "Einen Moment bitte..."
-  },
   "en": {
     "verify_email": "Verify Email",
     "verifying_email": "Verifying Email",
     "one_moment_please": "One moment please..."
+  },
+  "de": {
+    "verify_email": "E-Mail bestätigen",
+    "verifying_email": "E-Mail wird bestätigt",
+    "one_moment_please": "Einen Moment bitte..."
   },
   "es": {
     "verify_email": "Verificar correo electrónico",
@@ -89,6 +89,11 @@ export default {
     "verify_email": "Vérifier l'email",
     "verifying_email": "Vérification de l'email",
     "one_moment_please": "Un instant s'il vous plaît..."
+  },
+  "ko": {
+    "verify_email": "이메일 인증",
+    "verifying_email": "이메일 인증 진행 중",
+    "one_moment_please": "잠시만 기다려주세요..."
   },
   "pt": {
     "verify_email": "Verificar Email",

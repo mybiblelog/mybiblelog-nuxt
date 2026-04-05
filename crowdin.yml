@@ -1,0 +1,34 @@
+# Crowdin CLI configuration
+# Docs: https://developer.crowdin.com/configuration-file/
+#
+# Source strings: one JSON bundle per locale under nuxt/locales/crowdin/
+# Shape: { "global": {...}, "components": { "<path>": {...} }, "pages": { "<path>": {...} } }
+# English (en.json) is the Crowdin source language; other files are translations.
+#
+# From the repository root:
+#   npm run -w nuxt i18n:export-crowdin   # generate bundles before upload
+#
+#   export CROWDIN_PROJECT_ID="<numeric project id>"
+#   export CROWDIN_PERSONAL_TOKEN="<personal access token>"
+#
+#   crowdin upload sources        # push updated English (en.json) — new keys / changed source copy
+#   crowdin upload translations   # push updated non-English bundles (de.json, es.json, …).
+#                                 # Use after you change translations locally in locales.ts / Vue <i18n>
+#                                 # and run i18n:export-crowdin so crowdin/*.json reflects those edits.
+#
+#   crowdin download              # pull latest from Crowdin into crowdin/*.json
+#   npm run -w nuxt i18n:import-crowdin  # merge bundles back into locales.ts + Vue SFCs
+#
+# Do not commit tokens.
+
+project_id_env: CROWDIN_PROJECT_ID
+api_token_env: CROWDIN_PERSONAL_TOKEN
+base_path: .
+preserve_hierarchy: true
+
+files:
+  - source: /nuxt/locales/crowdin/en.json
+    translation: /nuxt/locales/crowdin/%two_letters_code%.json
+    languages_mapping:
+      two_letters_code:
+        pt-BR: pt

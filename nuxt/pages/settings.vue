@@ -120,16 +120,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "settings": "Einstellungen",
-    "menu": "Menü",
-    "account": "Konto",
-    "start_page": "Startseite",
-    "reading": "Lesen",
-    "reminder": "Erinnerung",
-    "export": "Exportieren",
-    "import": "Importieren"
-  },
   "en": {
     "settings": "Settings",
     "menu": "Menu",
@@ -139,6 +129,16 @@ export default {
     "reminder": "Reminder",
     "export": "Export",
     "import": "Import"
+  },
+  "de": {
+    "settings": "Einstellungen",
+    "menu": "Menü",
+    "account": "Konto",
+    "start_page": "Startseite",
+    "reading": "Lesen",
+    "reminder": "Erinnerung",
+    "export": "Exportieren",
+    "import": "Importieren"
   },
   "es": {
     "settings": "Configuración",
@@ -159,6 +159,16 @@ export default {
     "reminder": "Rappel",
     "export": "Exporter",
     "import": "Importer"
+  },
+  "ko": {
+    "settings": "설정",
+    "menu": "메뉴",
+    "account": "계정",
+    "start_page": "시작 페이지",
+    "reading": "읽기",
+    "reminder": "알림",
+    "export": "보내기",
+    "import": "불러오기"
   },
   "pt": {
     "settings": "Configurações",

@@ -343,19 +343,19 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "chapter_checklist": "Kapitelliste",
-    "loading": "Laden...",
-    "logged_before_today": "Dieses Kapitel wurde vor heute protokolliert. Sie können frühere Protokolleinträge auf der Kalenderseite bearbeiten.",
-    "unable_to_mark_complete": "Kann das Kapitel nicht als abgeschlossen markieren.",
-    "unable_to_mark_incomplete": "Kann das Kapitel nicht als unvollständig markieren."
-  },
   "en": {
     "chapter_checklist": "Chapter Checklist",
     "loading": "Loading...",
     "logged_before_today": "This chapter was logged before today. You can edit previous log entries on the Calendar page.",
     "unable_to_mark_complete": "Unable to mark the chapter complete.",
     "unable_to_mark_incomplete": "Unable to mark the chapter incomplete."
+  },
+  "de": {
+    "chapter_checklist": "Kapitelliste",
+    "loading": "Laden...",
+    "logged_before_today": "Dieses Kapitel wurde vor heute protokolliert. Sie können frühere Protokolleinträge auf der Kalenderseite bearbeiten.",
+    "unable_to_mark_complete": "Kann das Kapitel nicht als abgeschlossen markieren.",
+    "unable_to_mark_incomplete": "Kann das Kapitel nicht als unvollständig markieren."
   },
   "es": {
     "chapter_checklist": "Lista de capítulos",
@@ -370,6 +370,13 @@ export default {
     "logged_before_today": "Ce chapitre a été enregistré avant aujourd'hui. Vous pouvez modifier les entrées de journal précédentes sur la page du calendrier.",
     "unable_to_mark_complete": "Impossible de marquer le chapitre comme terminé.",
     "unable_to_mark_incomplete": "Impossible de marquer le chapitre comme incomplet."
+  },
+  "ko": {
+    "chapter_checklist": "장별 체크",
+    "loading": "불러오는 중…",
+    "logged_before_today": "이 장은 오늘 이전에 기록되었습니다. 달력 페이지에서 이전 기록을 수정할 수 있습니다.",
+    "unable_to_mark_complete": "해당 장을 읽기 완료 표시할 수 없습니다.",
+    "unable_to_mark_incomplete": "해당 장을 읽지 않음으로 표시할 수 없습니다."
   },
   "pt": {
     "chapter_checklist": "Lista de Capítulos",

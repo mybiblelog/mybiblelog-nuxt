@@ -74,17 +74,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "tag_editor": {
-      "edit_tag": "Tag bearbeiten",
-      "add_tag": "Tag hinzufügen",
-      "save": "Speichern",
-      "close": "Schließen"
-    },
-    "messaging": {
-      "are_you_sure_close_tag_editor": "Möchten Sie den Tag-Editor wirklich schließen? Alle ungespeicherten Änderungen gehen verloren."
-    }
-  },
   "en": {
     "tag_editor": {
       "edit_tag": "Edit Tag",
@@ -94,6 +83,17 @@ export default {
     },
     "messaging": {
       "are_you_sure_close_tag_editor": "Are you sure you want to close the tag editor? All unsaved changes will be lost."
+    }
+  },
+  "de": {
+    "tag_editor": {
+      "edit_tag": "Tag bearbeiten",
+      "add_tag": "Tag hinzufügen",
+      "save": "Speichern",
+      "close": "Schließen"
+    },
+    "messaging": {
+      "are_you_sure_close_tag_editor": "Möchten Sie den Tag-Editor wirklich schließen? Alle ungespeicherten Änderungen gehen verloren."
     }
   },
   "es": {
@@ -116,6 +116,17 @@ export default {
     },
     "messaging": {
       "are_you_sure_close_tag_editor": "Êtes-vous sûr de vouloir fermer l'éditeur de tags? Toutes les modifications non enregistrées seront perdues."
+    }
+  },
+  "ko": {
+    "tag_editor": {
+      "edit_tag": "태그 편집",
+      "add_tag": "태그 추가",
+      "save": "저장",
+      "close": "닫기"
+    },
+    "messaging": {
+      "are_you_sure_close_tag_editor": "태그 편집기를 닫을까요? 저장하지 않은 변경 내용이 사라집니다."
     }
   },
   "pt": {

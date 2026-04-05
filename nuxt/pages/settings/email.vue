@@ -237,39 +237,6 @@ main p {
 
 <i18n lang="json">
 {
-  "de": {
-    "change_email": "E-Mail ändern",
-    "checking_current_email_settings": "Aktuelle E-Mail-Einstellungen werden überprüft...",
-    "current_request": {
-      "your_current_email_is": "Ihre aktuelle E-Mail-Adresse ist:",
-      "your_requested_email_is": "Sie haben angefragt, Ihre E-Mail-Adresse zu ändern zu:",
-      "check_your_new_email": "Bitte überprüfen Sie Ihre neue E-Mail-Adresse, um den Wechsel zu bestätigen. Möglicherweise müssen Sie diese Seite später aktualisieren.",
-      "you_can_cancel": "Sie können auch Ihre E-Mail-Änderungsanfrage stornieren, um Ihre aktuelle E-Mail-Adresse beizubehalten.",
-      "cancel_request": "Anfrage stornieren"
-    },
-    "new_request": {
-      "enter_new_email": "Geben Sie Ihre neue E-Mail-Adresse sowie Ihr aktuelles Passwort ein.",
-      "you_will_receive_an_email": "Sie erhalten eine E-Mail an der neuen Adresse, um den Wechsel zu bestätigen.",
-      "create_password": {
-        "part_1": "Wenn Sie sich mit Google anmelden, möchten Sie möglicherweise kein Passwort haben.",
-        "part_2": "Sie können ein Passwort erstellen, indem Sie sich abmelden und dann zur Anmeldeseite gehen.",
-        "part_3": "Verwenden Sie den Link \"Passwort vergessen?\", der Ihnen ein Passwort erstellen wird."
-      }
-    },
-    "form": {
-      "new_email": "Neue E-Mail-Adresse",
-      "password": "Aktuelles Passwort",
-      "change_email": "E-Mail ändern"
-    },
-    "messaging": {
-      "enter_your_current_password": "Geben Sie Ihr aktuelles Passwort ein.",
-      "confirmation_link_sent": "Eine Bestätigungs-E-Mail wurde an Ihre neue E-Mail-Adresse gesendet. Klicken Sie auf den Link, um den Wechsel abzuschließen.",
-      "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten.",
-      "your_request_was_cancelled": "Ihre E-Mail-Änderungsanfrage wurde storniert.",
-      "unable_to_cancel_request": "Die Anfrage konnte nicht storniert werden. Möglicherweise wurde sie bereits ausgeführt.",
-      "something_went_wrong": "Etwas ist schiefgegangen. Bitte versuchen Sie es erneut."
-    }
-  },
   "en": {
     "change_email": "Change Email",
     "checking_current_email_settings": "Checking current email settings...",
@@ -301,6 +268,39 @@ main p {
       "your_request_was_cancelled": "Your email change request was cancelled.",
       "unable_to_cancel_request": "Unable to cancel request. It may already be fulfilled.",
       "something_went_wrong": "Something went wrong. Please try again."
+    }
+  },
+  "de": {
+    "change_email": "E-Mail ändern",
+    "checking_current_email_settings": "Aktuelle E-Mail-Einstellungen werden überprüft...",
+    "current_request": {
+      "your_current_email_is": "Ihre aktuelle E-Mail-Adresse ist:",
+      "your_requested_email_is": "Sie haben angefragt, Ihre E-Mail-Adresse zu ändern zu:",
+      "check_your_new_email": "Bitte überprüfen Sie Ihre neue E-Mail-Adresse, um den Wechsel zu bestätigen. Möglicherweise müssen Sie diese Seite später aktualisieren.",
+      "you_can_cancel": "Sie können auch Ihre E-Mail-Änderungsanfrage stornieren, um Ihre aktuelle E-Mail-Adresse beizubehalten.",
+      "cancel_request": "Anfrage stornieren"
+    },
+    "new_request": {
+      "enter_new_email": "Geben Sie Ihre neue E-Mail-Adresse sowie Ihr aktuelles Passwort ein.",
+      "you_will_receive_an_email": "Sie erhalten eine E-Mail an der neuen Adresse, um den Wechsel zu bestätigen.",
+      "create_password": {
+        "part_1": "Wenn Sie sich mit Google anmelden, möchten Sie möglicherweise kein Passwort haben.",
+        "part_2": "Sie können ein Passwort erstellen, indem Sie sich abmelden und dann zur Anmeldeseite gehen.",
+        "part_3": "Verwenden Sie den Link \"Passwort vergessen?\", der Ihnen ein Passwort erstellen wird."
+      }
+    },
+    "form": {
+      "new_email": "Neue E-Mail-Adresse",
+      "password": "Aktuelles Passwort",
+      "change_email": "E-Mail ändern"
+    },
+    "messaging": {
+      "enter_your_current_password": "Geben Sie Ihr aktuelles Passwort ein.",
+      "confirmation_link_sent": "Eine Bestätigungs-E-Mail wurde an Ihre neue E-Mail-Adresse gesendet. Klicken Sie auf den Link, um den Wechsel abzuschließen.",
+      "an_unknown_error_occurred": "Ein unbekannter Fehler ist aufgetreten.",
+      "your_request_was_cancelled": "Ihre E-Mail-Änderungsanfrage wurde storniert.",
+      "unable_to_cancel_request": "Die Anfrage konnte nicht storniert werden. Möglicherweise wurde sie bereits ausgeführt.",
+      "something_went_wrong": "Etwas ist schiefgegangen. Bitte versuchen Sie es erneut."
     }
   },
   "es": {
@@ -367,6 +367,39 @@ main p {
       "your_request_was_cancelled": "Votre demande de changement d'e-mail a été annulée.",
       "unable_to_cancel_request": "Impossible d'annuler la demande. Elle peut déjà être satisfaite.",
       "something_went_wrong": "Quelque chose s'est mal passé. Veuillez réessayer."
+    }
+  },
+  "ko": {
+    "change_email": "이메일 변경",
+    "checking_current_email_settings": "현재 이메일 설정을 확인하는 중…",
+    "current_request": {
+      "your_current_email_is": "현재 이메일 주소:",
+      "your_requested_email_is": "다음 주소로 변경을 요청하셨습니다:",
+      "check_your_new_email": "변경을 완료하려면 새 이메일 주소로 보낸 메일을 확인하세요. 이후 이 페이지를 새로고침해야 할 수 있습니다.",
+      "you_can_cancel": "이메일 변경 요청을 취소하고 현재 이메일을 유지할 수도 있습니다.",
+      "cancel_request": "요청 취소"
+    },
+    "new_request": {
+      "enter_new_email": "새 이메일과 현재 비밀번호를 입력하세요.",
+      "you_will_receive_an_email": "새로운 주소로 확인 메일이 발송됩니다.",
+      "create_password": {
+        "part_1": "Google로 로그인힌 경우 비밀번호가 존재하지 않을 수 있습니다.",
+        "part_2": "로그아웃한 뒤 로그인 페이지로 이동하면 비밀번호를 생성할 수 있습니다.",
+        "part_3": "\"비밀번호를 잊으셨나요?\" 링크를 통해 비밀번호를 생성할 수 있습니다."
+      }
+    },
+    "form": {
+      "new_email": "새 이메일",
+      "password": "현재 비밀번호",
+      "change_email": "이메일 변경"
+    },
+    "messaging": {
+      "enter_your_current_password": "현재 비밀번호를 입력하세요.",
+      "confirmation_link_sent": "새로운 이메일 주소로 확인 링크가 발송되었습니다. 해당 링크를 눌러 이메일 변경을 완료하세요.",
+      "an_unknown_error_occurred": "알 수 없는 오류가 발생했습니다.",
+      "your_request_was_cancelled": "이메일 변경 요청이 취소되었습니다.",
+      "unable_to_cancel_request": "요청을 취소할 수 없습니다. 이미 처리 완료되었을 수 있습니다.",
+      "something_went_wrong": "문제가 발생했습니다. 다시 시도해 주세요."
     }
   },
   "pt": {

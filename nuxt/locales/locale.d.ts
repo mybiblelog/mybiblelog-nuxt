@@ -1,3 +1,5 @@
+import { LocaleCode } from '@mybiblelog/shared';
+
 // Keep in sync with api/router/helpers/i18n-errors.js
 export type Translation = {
   my_bible_log: string;
@@ -35,6 +37,4 @@ export type Translation = {
   },
 };
 
-export type Locales = {
-  [key: string]: Translation;
-};
+export type Locales = Record<LocaleCode, Translation>;

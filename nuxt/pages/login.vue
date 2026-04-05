@@ -167,15 +167,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "your_email_address_is_required": "Ihre E-Mail-Adresse ist erforderlich.",
-    "sign_in": "Anmelden",
-    "need_an_account": "Benötigen Sie ein Konto?",
-    "password_reset_link_sent": "Ein Link zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse gesendet.",
-    "email": "E-Mail",
-    "password": "Passwort",
-    "forgot_your_password": "Passwort vergessen? Setzen Sie es per E-Mail zurück."
-  },
   "en": {
     "your_email_address_is_required": "Your email address is required.",
     "sign_in": "Sign In",
@@ -184,6 +175,15 @@ export default {
     "email": "Email",
     "password": "Password",
     "forgot_your_password": "Forgot your password? Reset it via email."
+  },
+  "de": {
+    "your_email_address_is_required": "Ihre E-Mail-Adresse ist erforderlich.",
+    "sign_in": "Anmelden",
+    "need_an_account": "Benötigen Sie ein Konto?",
+    "password_reset_link_sent": "Ein Link zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse gesendet.",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "forgot_your_password": "Passwort vergessen? Setzen Sie es per E-Mail zurück."
   },
   "es": {
     "your_email_address_is_required": "Su dirección de correo electrónico es obligatoria.",
@@ -202,6 +202,15 @@ export default {
     "email": "Email",
     "password": "Mot de passe",
     "forgot_your_password": "Mot de passe oublié ? Réinitialisez-le via e-mail."
+  },
+  "ko": {
+    "your_email_address_is_required": "이메일 주소를 입력해 주세요.",
+    "sign_in": "로그인",
+    "need_an_account": "계정이 없으신가요?",
+    "password_reset_link_sent": "암호 재설정 링크가 이메일 주소로 발송되었습니다.",
+    "email": "이메일",
+    "password": "비밀번호",
+    "forgot_your_password": "비밀번호를 잊으셨나요? 이메일을 통해 재설정해보세요."
   },
   "pt": {
     "your_email_address_is_required": "Seu endereço de e-mail é obrigatório.",

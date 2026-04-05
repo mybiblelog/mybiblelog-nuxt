@@ -140,15 +140,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "sign_up": "Registrieren",
-    "have_an_account": "Haben Sie bereits ein Konto?",
-    "registration_submitted": "Registrierung erfolgreich! Bitte überprüfen Sie Ihre E-Mail für einen Bestätigungslink.",
-    "email": "E-Mail",
-    "password": "Passwort",
-    "have_a_google_account": "Haben Sie ein Google-Konto?",
-    "sign_in_with_google": "Sie können sich mit Google anmelden, ohne ein Passwort zu erstellen! Gehen Sie zur Anmeldeseite, um loszulegen."
-  },
   "en": {
     "sign_up": "Sign Up",
     "have_an_account": "Have an account?",
@@ -157,6 +148,15 @@ export default {
     "password": "Password",
     "have_a_google_account": "Have a Google account?",
     "sign_in_with_google": "You can sign in with Google without creating a password! Go to the Sign In page to get started."
+  },
+  "de": {
+    "sign_up": "Registrieren",
+    "have_an_account": "Haben Sie bereits ein Konto?",
+    "registration_submitted": "Registrierung erfolgreich! Bitte überprüfen Sie Ihre E-Mail für einen Bestätigungslink.",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "have_a_google_account": "Haben Sie ein Google-Konto?",
+    "sign_in_with_google": "Sie können sich mit Google anmelden, ohne ein Passwort zu erstellen! Gehen Sie zur Anmeldeseite, um loszulegen."
   },
   "es": {
     "sign_up": "Registrarse",
@@ -175,6 +175,15 @@ export default {
     "password": "Mot de passe",
     "have_a_google_account": "Vous avez un compte Google?",
     "sign_in_with_google": "Vous pouvez vous connecter avec Google sans créer de mot de passe! Rendez-vous sur la page de connexion pour commencer."
+  },
+  "ko": {
+    "sign_up": "회원가입",
+    "have_an_account": "이미 계정이 있으신가요?",
+    "registration_submitted": "가입이 접수되었습니다. 이메일로 발송된 인증 링크를 확인해 주세요.",
+    "email": "이메일",
+    "password": "비밀번호",
+    "have_a_google_account": "Google 계정이 있으신가요?",
+    "sign_in_with_google": "비밀번호 없이 Google 계정으로 로그인할 수 있어요! 로그인 페이지에서 곧바로 시작해보세요."
   },
   "pt": {
     "sign_up": "Inscrever-se",

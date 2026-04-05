@@ -1,5 +1,5 @@
 <template>
-  <div v-if="authStore.loggedIn">
+  <div v-if="authStore.loggedIn" class="no-print">
     <button
       class="floating-action-button"
       :aria-label="$t('floating_action_button.give_feedback')"
@@ -87,14 +87,14 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "floating_action_button": {
-      "give_feedback": "Feedback geben"
-    }
-  },
   "en": {
     "floating_action_button": {
       "give_feedback": "Give Feedback"
+    }
+  },
+  "de": {
+    "floating_action_button": {
+      "give_feedback": "Feedback geben"
     }
   },
   "es": {
@@ -105,6 +105,11 @@ export default {
   "fr": {
     "floating_action_button": {
       "give_feedback": "Donner des Commentaires"
+    }
+  },
+  "ko": {
+    "floating_action_button": {
+      "give_feedback": "피드백 보내기"
     }
   },
   "pt": {

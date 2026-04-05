@@ -74,16 +74,6 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "add_entry": "Eintrag hinzufügen",
-    "edit_entry": "Eintrag bearbeiten",
-    "save": "Speichern",
-    "add": "Hinzufügen",
-    "close": "Schließen",
-    "messaging": {
-      "are_you_sure_close_editor": "Möchten Sie den Editor wirklich schließen? Alle ungespeicherten Änderungen gehen verloren."
-    }
-  },
   "en": {
     "add_entry": "Add Entry",
     "edit_entry": "Edit Entry",
@@ -92,6 +82,16 @@ export default {
     "close": "Close",
     "messaging": {
       "are_you_sure_close_editor": "Are you sure you want to close the editor? All unsaved changes will be lost."
+    }
+  },
+  "de": {
+    "add_entry": "Eintrag hinzufügen",
+    "edit_entry": "Eintrag bearbeiten",
+    "save": "Speichern",
+    "add": "Hinzufügen",
+    "close": "Schließen",
+    "messaging": {
+      "are_you_sure_close_editor": "Möchten Sie den Editor wirklich schließen? Alle ungespeicherten Änderungen gehen verloren."
     }
   },
   "es": {
@@ -112,6 +112,16 @@ export default {
     "close": "Fermer",
     "messaging": {
       "are_you_sure_close_editor": "Êtes-vous sûr de vouloir fermer l'éditeur? Toutes les modifications non enregistrées seront perdues."
+    }
+  },
+  "ko": {
+    "add_entry": "읽기 추가",
+    "edit_entry": "읽기 수정",
+    "save": "저장",
+    "add": "추가",
+    "close": "닫기",
+    "messaging": {
+      "are_you_sure_close_editor": "편집기를 닫을까요? 저장하지 않은 변경 내용이 사라집니다."
     }
   },
   "pt": {

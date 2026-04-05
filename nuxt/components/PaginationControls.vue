@@ -168,17 +168,17 @@ export default {
 
 <i18n lang="json">
 {
-  "de": {
-    "first": "Erste",
-    "prev": "Zurück",
-    "next": "Weiter",
-    "last": "Letzte"
-  },
   "en": {
     "first": "First",
     "prev": "Prev",
     "next": "Next",
     "last": "Last"
+  },
+  "de": {
+    "first": "Erste",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "last": "Letzte"
   },
   "es": {
     "first": "Primero",
@@ -191,6 +191,12 @@ export default {
     "prev": "Précédent",
     "next": "Suivant",
     "last": "Dernier"
+  },
+  "ko": {
+    "first": "처음",
+    "prev": "이전",
+    "next": "다음",
+    "last": "마지막"
   },
   "pt": {
     "first": "Primeiro",
