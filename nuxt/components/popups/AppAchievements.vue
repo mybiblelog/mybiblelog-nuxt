@@ -316,11 +316,11 @@ export default {
     "achievement": {
       "book_complete": {
         "title": "한 권을 다 읽으셨네요!",
-        "message": "축하드립니다! {bookName}을(를) 모두 읽으셨네요!"
+        "message": "축하드립니다! {bookName}을(를) 모두 읽으셨군요!"
       },
       "bible_complete": {
-        "title": "일독에 성공하셨네요!",
-        "message": "🎉 대단해요! 성경 전체를 1독하셨네요! 🎉"
+        "title": "성경을 다 읽으셨네요!",
+        "message": "🎉 대단합니다! 성경 전체를 1독하셨군요! 🎉"
       }
     }
   },

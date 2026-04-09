@@ -152,8 +152,8 @@ export default {
   },
   "ko": {
     "verse": "절 | 절",
-    "all": "전체 | 전체",
-    "new": "새 | 새"
+    "all": "전부 | 전부",
+    "new": "새 분량 | 새 분량"
   },
   "pt": {
     "verse": "versículo | versículos",

@@ -639,7 +639,7 @@ export default {
   "ko": {
     "notes": "노트",
     "tags": "태그",
-    "new": "신규 작성",
+    "new": "노트 작성",
     "pagination": {
       "label": "페이지",
       "prev": "이전",

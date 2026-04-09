@@ -420,16 +420,16 @@ main p {
     "import": "불러오기",
     "you_can_import_a_csv": "읽기 기록 CSV 파일을 My Bible Log로 불러올 수 있습니다.",
     "choose_a_file": "파일 선택…",
-    "log_import_progress": "가져오기 진행",
+    "log_import_progress": "불러오기 진행률",
     "date": "일자",
     "passage": "구절",
-    "status": "현황",
+    "status": "비고",
     "no_log_entries_to_show": "표시할 읽기 기록이 없습니다.",
     "log_entry_status": {
       "invalid": "올바르지 않음",
       "to_do": "대기",
       "checking": "확인 중",
-      "already_exists": "이미 존재함",
+      "already_exists": "중복값 존재",
       "importing_now": "불러오는 중",
       "imported": "불러오기 완료"
     },
@@ -440,7 +440,7 @@ main p {
       "successfully_processed_log_entries": "{count}개의 읽기 기록을 처리했습니다.",
       "there_was_a_problem_creating_the_log_entries": "읽기 기록을 만드는 중 문제가 발생했습니다.",
       "look_back_date_reset_message": {
-        "1": "불러온 파일에 기준 시작일 이전 기록이 포함되어 있습니다. 대부분의 페이지에서는 해당 기록이 진행 상황에 반영되지 않습니다.",
+        "1": "불러온 파일에 기준 시작일 이전 기록이 포함되어 있습니다. 대부분의 페이지에서는 해당 기록이 진도에 반영되지 않습니다.",
         "2": "기준 시작일을 {lookBackDate}로 바꿔 해당 기록을 포함시킬까요?"
       },
       "update_look_back_date_yes": "기준 시작일 업데이트",

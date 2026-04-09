@@ -553,7 +553,7 @@ export default {
     "start_page": {
       "daily_verse_count_goal": {
         "title": "일일 구절 목표",
-        "description": "일일 구절 목표는 매일 읽고자 하는 구절 수를 의미합니다. My Bible Log는 해당 목표까지 진행 상황을 표시해줍니다.",
+        "description": "일일 구절 목표는 매일 읽고자 하는 구절 수를 의미합니다. My Bible Log는 해당 목표까지 진도를 표시해줍니다.",
         "i_want_to": "저는…",
         "read_in_2_years": "2년 1독하고 싶어요",
         "read_in_year": "1년 1독하고 싶어요",

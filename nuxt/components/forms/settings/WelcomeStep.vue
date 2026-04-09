@@ -94,8 +94,8 @@ export default {
     "start_page": {
       "welcome": {
         "title": "My Bible Log 계정에 오신 것을 환영합니다!",
-        "description": "My Bible Log를 최대한 유용하게 활용할 수 있도록 맞춤 설정을 도와드리겠습니다.",
-        "skip_personalization": "맞춤 설정 건너뛰기"
+        "description": "My Bible Log를 최대한 유용하게 활용할 수 있도록 개인화 설정을 도와드리겠습니다.",
+        "skip_personalization": "개인화 설정 건너뛰기"
       }
     }
   },

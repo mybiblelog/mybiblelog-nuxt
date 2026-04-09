@@ -255,7 +255,7 @@ export default {
   },
   "ko": {
     "book_notes": "권별 노트",
-    "book_reading": "권별 읽기"
+    "book_reading": "권별 기록"
   },
   "pt": {
     "book_notes": "Notas do livro",

@@ -629,17 +629,17 @@ td:nth-child(2) {
     "never": "Jamais"
   },
   "ko": {
-    "progress": "진행 상황",
+    "progress": "진도",
     "bible_books": "성경 일람",
     "your_reading_settings": {
       "title": "나의 읽기 설정",
-      "description": "아래 설정에 기반해 읽기 현황을 계산 및 표시합니다.",
+      "description": "아래 설정에 기반해 읽기 진도를 계산 및 표시합니다.",
       "update_settings": "설정 변경",
       "look_back_date": "기준 시작일",
       "daily_verse_count_goal": "일일 구절 목표"
     },
     "your_progress_so_far": {
-      "title": "현재까지의 진행 상황",
+      "title": "현재까지의 진도",
       "total_bible_verses": "성경 전체 구절 수",
       "verses_read": "읽은 구절 수",
       "verses_remaining": "남은 구절 수",

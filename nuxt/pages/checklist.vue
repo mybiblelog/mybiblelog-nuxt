@@ -375,7 +375,7 @@ export default {
     "chapter_checklist": "장별 체크",
     "loading": "불러오는 중…",
     "logged_before_today": "이 장은 오늘 이전에 기록되었습니다. 달력 페이지에서 이전 기록을 수정할 수 있습니다.",
-    "unable_to_mark_complete": "해당 장을 읽기 완료 표시할 수 없습니다.",
+    "unable_to_mark_complete": "해당 장을 읽기 완료로 표시할 수 없습니다.",
     "unable_to_mark_incomplete": "해당 장을 읽지 않음으로 표시할 수 없습니다."
   },
   "pt": {

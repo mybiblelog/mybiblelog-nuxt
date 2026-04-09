@@ -185,7 +185,7 @@ select {
   "ko": {
     "start_page": "시작 페이지",
     "start": "시작",
-    "today": "오늘",
+    "today": "오늘의 성경",
     "bible_books": "성경 일람",
     "chapter_checklist": "장별 체크",
     "calendar": "달력",
