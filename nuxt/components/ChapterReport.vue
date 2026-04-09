@@ -192,10 +192,10 @@ export default {
   },
   "ko": {
     "open_bible": "성경 열기",
-    "log_reading": "기록하기",
+    "log_reading": "기록 추가",
     "take_note": "노트 작성",
     "view_notes": "노트 보기",
-    "view_reading_log": "읽기 기록 보기"
+    "view_reading_log": "기록 보기"
   },
   "pt": {
     "open_bible": "Ler na Biblia",

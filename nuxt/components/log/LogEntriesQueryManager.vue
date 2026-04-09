@@ -296,7 +296,7 @@ export default {
     "reset_confirm": "검색·필터·정렬 설정을 초기화할까요?",
     "first_date": "시작 일자",
     "last_date": "종료 일자",
-    "passage": "구절로 필터",
+    "passage": "범위 필터",
     "clear": "지우기",
     "sort": "정렬",
     "sort_newest_first": "최신순",

@@ -587,12 +587,12 @@ export default {
     "select_verses_note": "Sélectionnez le premier et le dernier verset du chapitre, ou pour un seul verset, sélectionnez-le deux fois."
   },
   "ko": {
-    "select_book": "권 선택",
+    "select_book": "책 선택",
     "select_chapters": "장 선택",
-    "select_end_chapter": "마무리 장 선택",
+    "select_end_chapter": "끝 장 선택",
     "select_verses": "절 선택",
     "select_start_verse": "시작 절 선택",
-    "select_end_verse": "마무리 절 선택",
+    "select_end_verse": "끝 절 선택",
     "click_and_drag_to_select_multiple_chapters": "여러 장을 선택하려면 클릭한 채 드래그하세요.",
     "old_testament": "구약",
     "new_testament": "신약",

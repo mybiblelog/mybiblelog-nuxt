@@ -866,8 +866,8 @@ export default {
     "edit": "편집",
     "delete": "삭제",
     "messaging": {
-      "are_you_sure_delete_entry": "해당 항목을 삭제할까요?",
-      "log_entry_could_not_be_deleted": "읽기 기록을 삭제할 수 없습니다."
+      "are_you_sure_delete_entry": "해당 기록을 삭제할까요?",
+      "log_entry_could_not_be_deleted": "해당 기록을 삭제할 수 없습니다."
     },
     "query_summary": {
       "none": {

@@ -244,8 +244,8 @@ export default {
     "edit": "편집",
     "delete": "삭제",
     "no_entries": "항목 없음",
-    "are_you_sure": "해당 항목을 삭제할까요?",
-    "could_not_delete": "읽기 기록을 삭제할 수 없습니다."
+    "are_you_sure": "해당 기록을 삭제할까요?",
+    "could_not_delete": "해당 기록을 삭제할 수 없습니다."
   },
   "pt": {
     "page_title": "Calendário",

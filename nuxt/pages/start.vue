@@ -187,7 +187,7 @@ export default {
       "save_and_finish": "저장 및 완료",
       "back": "뒤로",
       "welcome": {
-        "button": "내 설정 맞춤화"
+        "button": "내 설정 개인화"
       }
     }
   },

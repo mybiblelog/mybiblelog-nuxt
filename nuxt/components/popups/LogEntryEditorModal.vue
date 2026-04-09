@@ -115,8 +115,8 @@ export default {
     }
   },
   "ko": {
-    "add_entry": "읽기 추가",
-    "edit_entry": "읽기 수정",
+    "add_entry": "기록 추가",
+    "edit_entry": "기록 수정",
     "save": "저장",
     "add": "추가",
     "close": "닫기",

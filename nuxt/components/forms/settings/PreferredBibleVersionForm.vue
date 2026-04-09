@@ -305,7 +305,7 @@ select {
       "preferred_bible_version": {
         "title": "성경 설정",
         "translation_label": "My Bible Log에서 성경을 열 때, 이 번역본으로 읽고 싶습니다:",
-        "app_label": "My Bible Log에서 성경 구절을 열 때 이 앱 또는 홈페이지에서 열고 싶습니다:",
+        "app_label": "My Bible Log에서 성경 구절을 열 때 이 앱 또는 성경 사이트에서 열고 싶습니다:",
         "change_hint": "이 설정은 언제든지 바꿀 수 있습니다."
       }
     },

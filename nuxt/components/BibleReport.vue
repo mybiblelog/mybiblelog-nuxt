@@ -274,7 +274,7 @@ export default {
   },
   "ko": {
     "bible_books": "성경 일람",
-    "progress": "진행 상황",
+    "progress": "진도",
     "note": "노트 | 노트"
   },
   "pt": {

@@ -119,7 +119,7 @@ export default {
     "description": "Description"
   },
   "ko": {
-    "label": "이름",
+    "label": "태그 이름",
     "color": "색상",
     "description": "설명"
   },

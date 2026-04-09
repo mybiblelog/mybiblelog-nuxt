@@ -167,7 +167,7 @@ export default {
     "start_page": "시작 페이지",
     "reading": "읽기",
     "reminder": "알림",
-    "export": "보내기",
+    "export": "내보내기",
     "import": "불러오기"
   },
   "pt": {
