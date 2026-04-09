@@ -88,7 +88,7 @@ const renderBody = ({ contentHtml, footerHtml }: { contentHtml: string; footerHt
           <td class="gray" width="*"></td>
           <td class="title-box content-area" width="500px">
             <h1>
-              <img class="brand" alt="${brandName}" src="cid:${brandLogoCid}" width="50" height="50">
+              <img class="brand" alt="" src="cid:${brandLogoCid}" width="50" height="50">
               ${brandName}
             </h1>
           </td>
@@ -101,14 +101,13 @@ const renderBody = ({ contentHtml, footerHtml }: { contentHtml: string; footerHt
           </td>
           <td class="gray"></td>
         </tr>
-        ${footerHtml ? `
         <tr>
           <td class="gray" width="*"></td>
           <td class="gray content-area text-centered">
-            ${footerHtml}
+            ${footerHtml ?? ''}
           </td>
           <td class="gray"></td>
-        </tr>` : ''}
+        </tr>
       </tbody>
     </table>
   </body>`

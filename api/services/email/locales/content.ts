@@ -1,4 +1,5 @@
 import { LocaleCode } from '@mybiblelog/shared';
+import strings from './strings.json';
 
 export type Translation = {
   daily_reminder: {
@@ -30,3 +31,5 @@ export type Translation = {
 };
 
 export type Locales = Record<LocaleCode, Translation>;
+
+export default strings satisfies Locales;

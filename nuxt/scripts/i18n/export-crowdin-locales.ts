@@ -1,6 +1,7 @@
 /**
  * Builds one merged JSON per locale under nuxt/locales/crowdin/ for Crowdin CLI uploads.
- * Sources: nuxt/locales/locales.ts (global) + inline <i18n lang="json"> in components/pages.
+ * Sources: nuxt/locales/locales.ts (global) + api/services/email/locales/strings.json (email) +
+ * inline <i18n lang="json"> in components/pages.
  *
  * After editing strings in the repo, run this before:
  *   - crowdin upload sources (English / source copy)
@@ -14,8 +15,10 @@ import { fileURLToPath } from 'node:url';
 import { getLocaleCodes } from '@mybiblelog/shared';
 import globalLocales from '../../locales/locales';
 import {
+  emailLocaleStringsPath,
   findInlineI18nBody,
   isLegacySrcI18n,
+  isPlainObject,
   parseInlineI18nBlockJson,
   toRelKey,
   walkVueFiles,
@@ -67,6 +70,15 @@ function sortRecordKeys<T extends Record<string, unknown>>(obj: T): T {
   return out;
 }
 
+async function loadEmailStringsRoot(filePath: string): Promise<Record<string, unknown>> {
+  const raw = await fs.readFile(filePath, 'utf8');
+  const parsed = JSON.parse(raw) as unknown;
+  if (!isPlainObject(parsed)) {
+    throw new Error(`${filePath}: expected JSON object keyed by locale codes`);
+  }
+  return parsed;
+}
+
 async function main() {
   const localeCodes = getLocaleCodes();
   const componentsDir = path.join(NUXT_ROOT, 'components');
@@ -75,6 +87,9 @@ async function main() {
 
   const componentBlocks = await collectSfcBlocks(componentsDir);
   const pageBlocks = await collectSfcBlocks(pagesDir);
+
+  const emailStringsPath = emailLocaleStringsPath(NUXT_ROOT);
+  const emailRoot = await loadEmailStringsRoot(emailStringsPath);
 
   await fs.mkdir(outDir, { recursive: true });
 
@@ -94,8 +109,12 @@ async function main() {
       pages[relKey] = messagesForLocale(parsed, locale);
     }
 
+    const emailRaw = emailRoot[locale];
+    const emailMsg = isPlainObject(emailRaw) ? emailRaw : {};
+
     const bundle = {
       global: structuredClone(globalMsg) as Record<string, unknown>,
+      email: structuredClone(emailMsg) as Record<string, unknown>,
       components: sortRecordKeys(components),
       pages: sortRecordKeys(pages),
     };

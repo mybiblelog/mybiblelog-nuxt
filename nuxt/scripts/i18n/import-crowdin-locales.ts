@@ -1,5 +1,6 @@
 /**
- * Writes nuxt/locales/locales.ts and Vue <i18n> blocks from nuxt/locales/crowdin/<locale>.json
+ * Writes nuxt/locales/locales.ts, api/services/email/locales/strings.json, and Vue <i18n> blocks
+ * from nuxt/locales/crowdin/<locale>.json
  * (typically after `crowdin download`). To push local translation edits to Crowdin instead,
  * run `i18n:export-crowdin` then `crowdin upload translations` (and `upload sources` when English changed).
  *
@@ -10,8 +11,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getLocaleCodes } from '@mybiblelog/shared';
 import {
+  emailLocaleStringsPath,
   findInlineI18nBodySpan,
   isLegacySrcI18n,
+  isPlainObject,
   replaceInlineI18nBody,
 } from './crowdin-bundle-shared';
 
@@ -22,13 +25,10 @@ const LOCALES_TS = path.join(NUXT_ROOT, 'locales', 'locales.ts');
 
 type CrowdinBundle = {
   global: Record<string, unknown>;
+  email: Record<string, unknown>;
   components: Record<string, Record<string, unknown>>;
   pages: Record<string, Record<string, unknown>>;
 };
-
-function isPlainObject(v: unknown): v is Record<string, unknown> {
-  return v !== null && typeof v === 'object' && !Array.isArray(v);
-}
 
 function quoteTsString(s: string): string {
   return `'${s
@@ -74,11 +74,12 @@ async function readBundle(locale: string, filePath: string): Promise<CrowdinBund
     throw new Error(`${filePath}: root must be a JSON object`);
   }
   const g = parsed.global;
+  const e = parsed.email;
   const c = parsed.components;
   const p = parsed.pages;
-  if (!isPlainObject(g) || !isPlainObject(c) || !isPlainObject(p)) {
+  if (!isPlainObject(g) || !isPlainObject(e) || !isPlainObject(c) || !isPlainObject(p)) {
     throw new Error(
-      `${filePath}: expected keys "global", "components", "pages" (objects)`,
+      `${filePath}: expected keys "global", "email", "components", "pages" (objects)`,
     );
   }
   const components: Record<string, Record<string, unknown>> = {};
@@ -91,9 +92,23 @@ async function readBundle(locale: string, filePath: string): Promise<CrowdinBund
   }
   return {
     global: g,
+    email: e,
     components,
     pages,
   };
+}
+
+async function writeEmailStringsFile(
+  bundles: Record<string, CrowdinBundle>,
+  localeCodes: string[],
+): Promise<void> {
+  const out: Record<string, unknown> = {};
+  for (const loc of localeCodes) {
+    out[loc] = bundles[loc].email;
+  }
+  const emailPath = emailLocaleStringsPath(NUXT_ROOT);
+  await fs.writeFile(emailPath, `${JSON.stringify(out, null, 2)}\n`, 'utf8');
+  console.log(`Wrote ${path.relative(process.cwd(), emailPath)}`);
 }
 
 function keyToVueAbsPath(kind: 'components' | 'pages', key: string): string {
@@ -189,6 +204,8 @@ async function main() {
 
   await fs.writeFile(LOCALES_TS, buildLocalesTsFile(globalPerLocale), 'utf8');
   console.log(`Wrote ${path.relative(process.cwd(), LOCALES_TS)}`);
+
+  await writeEmailStringsFile(bundles, localeCodes);
 
   await applyVueSection(bundles, localeCodes, 'components');
   await applyVueSection(bundles, localeCodes, 'pages');

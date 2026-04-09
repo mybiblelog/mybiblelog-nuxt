@@ -2,7 +2,8 @@
 # Docs: https://developer.crowdin.com/configuration-file/
 #
 # Source strings: one JSON bundle per locale under nuxt/locales/crowdin/
-# Shape: { "global": {...}, "components": { "<path>": {...} }, "pages": { "<path>": {...} } }
+# Shape: { "global": {...}, "email": {...}, "components": { "<path>": {...} }, "pages": { "<path>": {...} } }
+# (`email` mirrors api/services/email/locales/strings.json for the current locale.)
 # English (en.json) is the Crowdin source language; other files are translations.
 #
 # From the repository root:
@@ -17,7 +18,7 @@
 #                                 # and run i18n:export-crowdin so crowdin/*.json reflects those edits.
 #
 #   crowdin download              # pull latest from Crowdin into crowdin/*.json
-#   npm run -w nuxt i18n:import-crowdin  # merge bundles back into locales.ts + Vue SFCs
+#   npm run -w nuxt i18n:import-crowdin  # merge into locales.ts, email strings.json, and Vue SFCs
 #
 # Do not commit tokens.
 
