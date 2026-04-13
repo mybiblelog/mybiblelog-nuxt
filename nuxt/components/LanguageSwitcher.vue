@@ -18,7 +18,7 @@
         <span style="padding-left: 0.2rem"> {{ $t('choose_language') }}</span>
       </button>
     </div>
-    <app-modal v-if="modalOpen" :title="'🌎 ' + $t('choose_language')" @close="modalOpen = false">
+    <app-modal :open="modalOpen" :title="'🌎 ' + $t('choose_language')" @close="modalOpen = false">
       <template slot="content">
         <div class="language-buttons is-flex is-flex-direction-column is-align-items-stretch is-flex-gap-1">
           <a v-for="locale in availableLocales" :key="locale.code" class="button" href="#" @click.prevent.stop="() => { modalOpen = false; setLocale(locale.code); }">

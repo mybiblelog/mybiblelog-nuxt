@@ -1,32 +1,30 @@
 <template>
-  <transition name="fade" appear>
-    <app-modal v-if="open" :title="$t('manage_tags')" @close="cancel">
-      <template slot="content">
-        <div :class="{ 'manage-tags__disabled': tagEditorOpen }">
-          <passage-note-tag-selector
-            :passage-note-tags="passageNoteTags"
-            :selected-tag-ids="selectedTagIds"
-            @change="updateSelectedTagIds"
-          />
+  <app-modal :open="open" :title="$t('manage_tags')" @close="cancel">
+    <template slot="content">
+      <div :class="{ 'manage-tags__disabled': tagEditorOpen }">
+        <passage-note-tag-selector
+          :passage-note-tags="passageNoteTags"
+          :selected-tag-ids="selectedTagIds"
+          @change="updateSelectedTagIds"
+        />
 
-          <div class="manage-tags__new-row">
-            <button class="button is-small is-info" type="button" @click="openNewTagEditor">
-              {{ $t('new') }}
-            </button>
-          </div>
+        <div class="manage-tags__new-row">
+          <button class="button is-small is-info" type="button" @click="openNewTagEditor">
+            {{ $t('new') }}
+          </button>
         </div>
-      </template>
+      </div>
+    </template>
 
-      <template slot="footer">
-        <button class="button is-primary" type="button" :disabled="tagEditorOpen" @click="done">
-          {{ $t('done') }}
-        </button>
-        <button class="button is-light" type="button" :disabled="tagEditorOpen" @click="cancel">
-          {{ $t('close') }}
-        </button>
-      </template>
-    </app-modal>
-  </transition>
+    <template slot="footer">
+      <button class="button is-primary" type="button" :disabled="tagEditorOpen" @click="done">
+        {{ $t('done') }}
+      </button>
+      <button class="button is-light" type="button" :disabled="tagEditorOpen" @click="cancel">
+        {{ $t('close') }}
+      </button>
+    </template>
+  </app-modal>
 </template>
 
 <script>
@@ -107,16 +105,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* css class for the transition */
-.fade-enter-active,
-.fade-leave-active {
-  transition: $transition-fade;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-
 .manage-tags__new-row {
   margin-top: 0.75rem;
 }

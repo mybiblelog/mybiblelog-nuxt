@@ -1,20 +1,18 @@
 <template>
-  <transition name="fade">
-    <app-modal v-if="open" :title="$t('tag_filters.title')" @close="$emit('close')">
-      <template slot="content">
-        <passage-note-tag-selector
-          :passage-note-tags="passageNoteTags"
-          :selected-tag-ids="selectedTagIds"
-          @change="(tagIds) => $emit('change', tagIds)"
-        />
-      </template>
-      <template slot="footer">
-        <button class="button is-primary" type="button" @click="$emit('close')">
-          {{ $t('tag_filters.done') }}
-        </button>
-      </template>
-    </app-modal>
-  </transition>
+  <app-modal :open="open" :title="$t('tag_filters.title')" @close="$emit('close')">
+    <template slot="content">
+      <passage-note-tag-selector
+        :passage-note-tags="passageNoteTags"
+        :selected-tag-ids="selectedTagIds"
+        @change="(tagIds) => $emit('change', tagIds)"
+      />
+    </template>
+    <template slot="footer">
+      <button class="button is-primary" type="button" @click="$emit('close')">
+        {{ $t('tag_filters.done') }}
+      </button>
+    </template>
+  </app-modal>
 </template>
 
 <script>
@@ -34,18 +32,6 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-/* css class for the transition */
-.fade-enter-active,
-.fade-leave-active {
-  transition: $transition-fade;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
 
 <i18n lang="json">
 {
