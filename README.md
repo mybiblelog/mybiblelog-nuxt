@@ -254,7 +254,7 @@ Use this checklist when introducing a **new** locale code (e.g. `ja`). English (
 
 **Email**
 
-1. **`api/services/email/email-templates/`** — Add the locale to every locale-keyed map in [`email-verification.ts`](api/services/email/email-templates/email-verification.ts), [`password-reset-link.ts`](api/services/email/email-templates/password-reset-link.ts), [`email-update.ts`](api/services/email/email-templates/email-update.ts), and [`daily-reminder.ts`](api/services/email/email-templates/daily-reminder.ts) (both the `translations` object and the **subject** map in `daily-reminder.ts`).
+1. **[`api/services/email/locales/strings.json`](api/services/email/locales/strings.json)** — Add a top-level `"<code>"` object with the same nested structure as `"en"`: `daily_reminder` (including `subject`), `email_update`, `email_verification`, and `password_reset`. All templates read strings through [`api/services/email/locales/content.ts`](api/services/email/locales/content.ts), which imports this JSON and types it; you do not edit per-template files for translation text. If you introduce a **new** message key (not just a new locale), extend the `Translation` type in `content.ts` and add the key under every locale in `strings.json`.
 
 **Nuxt Content (marketing / docs routes)**
 
