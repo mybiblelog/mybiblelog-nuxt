@@ -61,9 +61,9 @@ const getSafeDailyReminderRedirectUrl = (to: unknown): string => {
  *         active:
  *           type: boolean
  *           description: Whether the reminder is active
- *         unsubscribeCode:
+ *         publicToken:
  *           type: string
- *           description: A unique code for unsubscribing from the reminder
+ *           description: Opaque public token for email links (tracking, unsubscribe, mailto); rotated when the reminder is (re)activated
  *         lastEmailEngagementAt:
  *           type: string
  *           format: date-time
@@ -74,14 +74,14 @@ const getSafeDailyReminderRedirectUrl = (to: unknown): string => {
  * Tracks engagement by updating lastEmailEngagementAt.
  * Always redirects to a safe destination (prevents open redirects).
  */
-router.get('/reminders/daily-reminder/track/:code', async (req, res, next) => {
+router.get('/reminders/daily-reminder/track/:token', async (req, res, next) => {
   try {
-    const { code } = req.params;
+    const { token } = req.params;
     const { to } = req.query;
     const redirectTo = getSafeDailyReminderRedirectUrl(to);
 
     const { DailyReminder } = await useMongooseModels();
-    const reminder = await DailyReminder.findOne({ unsubscribeCode: code });
+    const reminder = await DailyReminder.findOne({ publicToken: token });
     if (reminder) {
       reminder.lastEmailEngagementAt = new Date();
       await reminder.save();
@@ -216,17 +216,17 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
 
 /**
  * @swagger
- * /reminders/daily-reminder/unsubscribe/{code}:
+ * /reminders/daily-reminder/unsubscribe/{token}:
  *   put:
- *     summary: Unsubscribe from daily reminders using a unique code
+ *     summary: Unsubscribe from daily reminders using the reminder public token
  *     tags: [Reminders]
  *     parameters:
  *       - in: path
- *         name: code
+ *         name: token
  *         schema:
  *           type: string
  *         required: true
- *         description: The unique unsubscribe code
+ *         description: The reminder public token from the unsubscribe link
  *     responses:
  *       200:
  *         description: Unsubscribe result
@@ -250,11 +250,11 @@ router.put('/reminders/daily-reminder', async (req, res, next) => {
  *             schema:
  *               $ref: '#/components/schemas/ApiErrorResponse'
  */
-router.put('/reminders/daily-reminder/unsubscribe/:code', async (req, res) => {
-  const { code } = req.params;
+router.put('/reminders/daily-reminder/unsubscribe/:token', async (req, res) => {
+  const { token } = req.params;
   const { DailyReminder, User } = await useMongooseModels();
 
-  const reminder = await DailyReminder.findOne({ unsubscribeCode: code });
+  const reminder = await DailyReminder.findOne({ publicToken: token });
   if (!reminder) {
     throw new NotFoundError();
   }

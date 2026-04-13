@@ -45,7 +45,7 @@ export default {
   name: 'ReminderUnsubscribePage',
   data() {
     return {
-      reminderUnsubscribeCode: null,
+      reminderPublicToken: null,
       complete: false,
       error: '',
       email: '',
@@ -59,8 +59,8 @@ export default {
     };
   },
   mounted() {
-    this.reminderUnsubscribeCode = new URL(window.location.href).searchParams.get('code');
-    if (!this.reminderUnsubscribeCode) {
+    this.reminderPublicToken = new URL(window.location.href).searchParams.get('code');
+    if (!this.reminderPublicToken) {
       return this.$router.push(this.localePath('/'));
     }
     this.unsubscribe();
@@ -68,7 +68,7 @@ export default {
   methods: {
     async unsubscribe() {
       try {
-        const { data } = await this.$http.put(`/api/reminders/daily-reminder/unsubscribe/${this.reminderUnsubscribeCode}`);
+        const { data } = await this.$http.put(`/api/reminders/daily-reminder/unsubscribe/${this.reminderPublicToken}`);
         this.complete = true;
         this.email = data.email;
       }

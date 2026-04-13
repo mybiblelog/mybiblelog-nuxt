@@ -16,8 +16,8 @@ const getLocaleBaseUrl = (locale) => {
   return baseUrl + localePathSegment;
 };
 
-const buildDailyReminderTrackedLink = ({ unsubscribeCode, to }: { unsubscribeCode: string; to: string }) => {
-  const trackUrl = new URL(`/api/reminders/daily-reminder/track/${unsubscribeCode}`, baseUrl);
+const buildDailyReminderTrackedLink = ({ publicToken, to }: { publicToken: string; to: string }) => {
+  const trackUrl = new URL(`/api/reminders/daily-reminder/track/${publicToken}`, baseUrl);
   trackUrl.searchParams.set('to', to);
   return trackUrl.toString();
 };
@@ -96,16 +96,16 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
 
     const rawSiteLink = `${getLocaleBaseUrl(locale)}/start`;
     const rawSettingsLink = `${getLocaleBaseUrl(locale)}/settings/reminder`;
-    const siteLink = buildDailyReminderTrackedLink({ unsubscribeCode: reminder.unsubscribeCode, to: rawSiteLink });
-    const settingsLink = buildDailyReminderTrackedLink({ unsubscribeCode: reminder.unsubscribeCode, to: rawSettingsLink });
-    const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.unsubscribeCode}`;
+    const siteLink = buildDailyReminderTrackedLink({ publicToken: reminder.publicToken, to: rawSiteLink });
+    const settingsLink = buildDailyReminderTrackedLink({ publicToken: reminder.publicToken, to: rawSettingsLink });
+    const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.publicToken}`;
 
-    // Build an unsubscribe email address that includes the unsubscribe code
+    // Build an unsubscribe email address that includes the reminder public token
     // This can be send to a Cloudflare email worker to unsubscribe the user
     let unsubscribeEmail = '';
     if (config.emailUnsubscribeAddress) {
       const [address, domain] = config.emailUnsubscribeAddress.split('@');
-      unsubscribeEmail = `${address}+${reminder.unsubscribeCode}@${domain}`;
+      unsubscribeEmail = `${address}+${reminder.publicToken}@${domain}`;
     }
 
     // Load brand logo asset

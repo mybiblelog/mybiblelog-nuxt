@@ -7,7 +7,7 @@ import useMongooseModels, { closeConnection } from '../mongoose/useMongooseModel
 
 // Main
 const main = async (): Promise<void> => {
-  const { User } = await useMongooseModels();
+  const { User, DailyReminder } = await useMongooseModels();
 
   // users without a locale need 'en' locale (original default)
   const usersWithoutLocale = await User.find({ 'settings.locale': { $exists: false } });
@@ -83,6 +83,20 @@ const main = async (): Promise<void> => {
       user.passwordResetExpires = new Date(0);
     }
     await user.save();
+  }
+
+  // DailyReminder: rename legacy field unsubscribeCode -> publicToken (run this migration before deploying API code that only queries publicToken)
+  const remindersWithLegacyField = await DailyReminder.countDocuments({ unsubscribeCode: { $exists: true } });
+  if (remindersWithLegacyField === 0) {
+    console.log('DailyReminder unsubscribeCode -> publicToken: already migrated (no legacy field).');
+  }
+  else {
+    console.log(`DailyReminder: renaming unsubscribeCode to publicToken on ${remindersWithLegacyField} document(s)...`);
+    const result = await DailyReminder.collection.updateMany(
+      {},
+      { $rename: { unsubscribeCode: 'publicToken' } },
+    );
+    console.log(`DailyReminder rename complete (matched ${result.matchedCount}, modified ${result.modifiedCount}).`);
   }
 
   // close connection
