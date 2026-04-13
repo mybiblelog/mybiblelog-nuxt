@@ -140,7 +140,7 @@ const locales: Locales = {
       invalid_login: '이메일 또는 비밀번호가 올바르지 않습니다',
       verify_email: '먼저 {email}로 발신된 메일을 통해 이메일 주소 인증을 완료해 주세요',
       new_email_required: '새로운 이메일 주소는 현재 이메일 주소와 달라야 합니다',
-      email_in_use: '이 이메일 주소는 이미 사용 중입니다',
+      email_in_use: '해당 이메일 주소는 이미 사용 중입니다',
       password_incorrect: '비밀번호가 올바르지 않습니다',
       account_not_found: '계정을 찾을 수 없습니다',
       password_reset_link_expired: '비밀번호 재설정 링크가 만료되었습니다',

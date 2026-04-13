@@ -113,22 +113,22 @@
   },
   "ko": {
     "daily_reminder": {
-      "subject": "My Bible Log 알림 ({{subjectDate}})",
+      "subject": "My Bible Log 알림 ({{subjectDate}} 기준)",
       "my_bible_log": "My Bible Log",
-      "this_is_your_reminder": "My Bible Log에서 보내는 매일 알림 메일입니다.",
-      "you_can_update_preferences": "알림 설정은 <a href=\"{{settingsLink}}\">여기</a>에서 바꿀 수 있습니다.",
+      "this_is_your_reminder": "My Bible Log에서 보내드리는 매일 알림 메일입니다.",
+      "you_can_update_preferences": "알림 설정은 <a href=\"{{settingsLink}}\">이곳</a>에서 변경할 수 있습니다.",
       "open_my_bible_log": "My Bible Log 열기",
       "most_recent_log_entries": "최근 읽기 기록",
-      "no_log_entries_found": "기록이 없습니다. 읽기를 시작해 보세요!",
-      "date": "날짜",
+      "no_log_entries_found": "기록이 없습니다. 읽기 시작해 보세요!",
+      "date": "일자",
       "passage": "구절",
       "unsubscribe": "수신 거부"
     },
     "email_update": {
       "subject": "새 이메일 주소 확인",
-      "email_update_requested": "이메일 <strong>{{currentEmail}}</strong>의 My Bible Log 계정이 이메일을 <strong>{{newEmail}}</strong>(으)로 바꾸길 요청했습니다.",
-      "click_to_confirm": "<a href=\"{{link}}\">이 링크</a>를 눌러 이 계정의 새 이메일로 <strong>{{newEmail}}</strong>을(를) 확인하세요.",
-      "if_you_did_not_request": "My Bible Log 이메일 변경을 요청하지 않았다면 이 메일을 무시하셔도 됩니다."
+      "email_update_requested": "<strong>{{currentEmail}}</strong> 이메일 주소로 등록된 My Bible Log 계정에서 <strong>{{newEmail}}</strong>(으)로 이메일 주소 변경이 요청되었습니다.",
+      "click_to_confirm": "<strong>{{newEmail}}</strong>을(를) 해당 계정의 새 이메일 주소로 확인하려면 <a href=\"{{link}}\">이 링크</a>를 클릭하세요.",
+      "if_you_did_not_request": "My Bible Log에 등록된 이메일 주소 변경을 요청하지 않았다면 이 메일은 무시하셔도 됩니다."
     },
     "email_verification": {
       "subject": "이메일 인증",
