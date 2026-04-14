@@ -1,15 +1,13 @@
 <template>
-  <transition name="fade">
-    <app-modal v-if="isVisible" :title="$t('feedback_form')" @close="close">
-      <template slot="content">
-        <div class="content">
-          <p>{{ $t('feedback_form_intro.p1') }}</p>
-          <p>{{ $t('feedback_form_intro.p2') }}</p>
-        </div>
-        <feedback-form @success="handleSuccess" />
-      </template>
-    </app-modal>
-  </transition>
+  <app-modal :open="isVisible" :title="$t('feedback_form')" @close="close">
+    <template slot="content">
+      <div class="content">
+        <p>{{ $t('feedback_form_intro.p1') }}</p>
+        <p>{{ $t('feedback_form_intro.p2') }}</p>
+      </div>
+      <feedback-form @success="handleSuccess" />
+    </template>
+  </app-modal>
 </template>
 
 <script>
@@ -39,19 +37,6 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-/* css class for the transition */
-.fade-enter-active,
-.fade-leave-active {
-  transition: $transition-fade;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
 
 <i18n lang="json">
 {

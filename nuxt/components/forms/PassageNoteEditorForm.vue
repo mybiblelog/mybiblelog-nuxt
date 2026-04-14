@@ -75,7 +75,6 @@
         </div>
       </div>
       <passage-note-manage-tags-modal
-        v-if="showManageTagsModal"
         :open="showManageTagsModal"
         :passage-note-tags="passageNoteTags"
         :selected-tag-ids="draftSelectedTagIds"

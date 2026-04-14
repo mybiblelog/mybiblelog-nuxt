@@ -129,17 +129,19 @@
         </section>
       </div>
 
-      <transition name="fade" appear>
-        <app-modal v-if="showQueryManagerModal" :title="$t('query_manager.title')" @close="closeQueryManagerModal">
-          <template slot="content">
-            <log-entries-query-manager
-              :applied-query="query"
-              @apply="applyQueryManager"
-              @cancel="closeQueryManagerModal"
-            />
-          </template>
-        </app-modal>
-      </transition>
+      <app-modal
+        :open="showQueryManagerModal"
+        :title="$t('query_manager.title')"
+        @close="closeQueryManagerModal"
+      >
+        <template slot="content">
+          <log-entries-query-manager
+            :applied-query="query"
+            @apply="applyQueryManager"
+            @cancel="closeQueryManagerModal"
+          />
+        </template>
+      </app-modal>
     </div>
   </main>
 </template>

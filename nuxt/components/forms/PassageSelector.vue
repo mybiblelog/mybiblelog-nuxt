@@ -56,7 +56,7 @@
         </template>
       </template>
     </div>
-    <app-modal v-if="selectionTarget" :title="modalTitle" @close="endSelection">
+    <app-modal :open="!!selectionTarget" :title="modalTitle" @close="endSelection">
       <template slot="content">
         <template v-if="selectionTarget === SELECTION.BOOK">
           <div class="book-selector-controls">

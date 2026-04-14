@@ -40,7 +40,7 @@
     </p>
 
     <!-- Single-verse picker flow -->
-    <app-modal v-if="singleSelectionTarget" :title="singleModalTitle" @close="closeSinglePicker">
+    <app-modal :open="!!singleSelectionTarget" :title="singleModalTitle" @close="closeSinglePicker">
       <template slot="content">
         <template v-if="singleSelectionTarget === SINGLE_SELECTION.BOOK">
           <div class="book-selector-controls">

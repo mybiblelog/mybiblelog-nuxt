@@ -119,18 +119,20 @@
         </section>
       </div>
 
-      <transition name="fade" appear>
-        <app-modal v-if="showQueryManagerModal" :title="$t('query_manager.title')" @close="closeQueryManagerModal">
-          <template slot="content">
-            <passage-notes-query-manager
-              :applied-query="query"
-              :passage-note-tags="passageNoteTags"
-              @apply="applyQueryManager"
-              @cancel="closeQueryManagerModal"
-            />
-          </template>
-        </app-modal>
-      </transition>
+      <app-modal
+        :open="showQueryManagerModal"
+        :title="$t('query_manager.title')"
+        @close="closeQueryManagerModal"
+      >
+        <template slot="content">
+          <passage-notes-query-manager
+            :applied-query="query"
+            :passage-note-tags="passageNoteTags"
+            @apply="applyQueryManager"
+            @cancel="closeQueryManagerModal"
+          />
+        </template>
+      </app-modal>
     </div>
   </main>
 </template>
@@ -410,16 +412,6 @@ export default {
   justify-content: flex-end;
   gap: 0.75rem;
   margin-bottom: 1rem;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: $transition-fade;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 
 .notes-page__results-bar {

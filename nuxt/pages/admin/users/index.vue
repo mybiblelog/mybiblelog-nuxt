@@ -94,42 +94,32 @@
       </div>
     </section>
 
-    <!-- User Details Modal -->
-    <div class="modal" :class="{ 'is-active': selectedUser }">
-      <div class="modal-background" @click="closeUserDetails" />
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">
-            {{ selectedUser?.email || 'Loading...' }}
-          </p>
-          <button class="delete" aria-label="close" @click="closeUserDetails" />
-        </header>
-        <section class="modal-card-body">
-          <div v-if="selectedUser">
-            <div class="buttons">
-              <button class="button is-primary" @click="signInAsUser">
-                Sign In As User
-              </button>
-              <button class="button is-danger" @click="deleteUser(selectedUser.email)">
-                Delete User
-              </button>
-            </div>
-          </div>
-          <div v-else>
-            <p>Loading user details...</p>
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button" @click="closeUserDetails">
-            Close
+    <app-modal
+      :open="!!selectedUser"
+      :title="selectedUser ? selectedUser.email : ''"
+      @close="closeUserDetails"
+    >
+      <template slot="content">
+        <div v-if="selectedUser" class="buttons">
+          <button class="button is-primary" type="button" @click="signInAsUser">
+            Sign In As User
           </button>
-        </footer>
-      </div>
-    </div>
+          <button class="button is-danger" type="button" @click="deleteUser(selectedUser.email)">
+            Delete User
+          </button>
+        </div>
+      </template>
+      <template slot="footer">
+        <button class="button" type="button" @click="closeUserDetails">
+          Close
+        </button>
+      </template>
+    </app-modal>
   </main>
 </template>
 
 <script>
+import AppModal from '@/components/popups/AppModal';
 import CaretDownIcon from '@/components/svg/CaretDownIcon';
 import { useDialogStore } from '~/stores/dialog';
 import { useAuthStore } from '~/stores/auth';
@@ -142,6 +132,7 @@ const SortColumns = {
 export default {
   name: 'AdminUserListPage',
   components: {
+    AppModal,
     CaretDownIcon,
   },
   middleware: ['auth'],
