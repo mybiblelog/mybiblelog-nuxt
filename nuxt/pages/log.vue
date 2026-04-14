@@ -547,7 +547,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .log-page {
   max-width: 1100px;
   min-height: 70vh;
@@ -569,8 +569,10 @@ export default {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
 
-  @media (min-width: $breakpoint) {
+@media (min-width: 800px) {
+  .log-page__mobile-query-button {
     display: none;
   }
 }
@@ -593,11 +595,13 @@ export default {
 
 .log-page__sidebar {
   display: none;
+}
 
-  @media (min-width: $breakpoint) {
+@media (min-width: 800px) {
+  .log-page__sidebar {
     display: block;
     position: sticky;
-    top: calc(#{$header-height} + 1rem);
+    top: calc(var(--header-height) + 1rem);
     align-self: flex-start;
   }
 }
@@ -614,7 +618,7 @@ export default {
 
 .log-page__results-bar {
   position: sticky;
-  top: calc(#{$header-height} + 0.5rem - 1px);
+  top: calc(var(--header-height) + 0.5rem - 1px);
   z-index: 10;
 
   background: white;
@@ -627,8 +631,10 @@ export default {
   flex-direction: column;
   align-items: stretch;
   gap: 0.25rem; /* tighter row gap on small screens */
+}
 
-  @media (min-width: 600px) {
+@media (min-width: 600px) {
+  .log-page__results-bar {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -646,15 +652,17 @@ export default {
 .log-page__results-pager {
   display: flex;
   justify-content: flex-start;
+}
 
-  @media (min-width: 600px) {
+@media (min-width: 600px) {
+  .log-page__results-pager {
     justify-content: flex-end;
   }
 }
 
 .log-page__date-heading {
   position: sticky;
-  top: calc(#{$header-height} + 0.5rem + var(--logResultsBarHeight, 0px) - 2px);
+  top: calc(var(--header-height) + 0.5rem + var(--logResultsBarHeight, 0px) - 2px);
   z-index: 9;
 
   background: white;

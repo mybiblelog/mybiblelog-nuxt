@@ -255,13 +255,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 main p {
   margin-bottom: 1rem;
 }
 
 select {
-  // cap <select> width so it doesn't overflow mobile device
+  /*  cap <select> width so it doesn't overflow mobile device */
   max-width: 65vw;
 }
 </style>

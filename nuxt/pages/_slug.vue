@@ -129,12 +129,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
-// This <style> is not scoped because @nuxt/content content is added
-// later in the render pipeline after component compilation (still before SSR),
-// so the Nuxt/Vue loader doesn't apply scoped styles to it
+<style>
+/*  This <style> is not scoped because @nuxt/content content is added */
+/*  later in the render pipeline after component compilation (still before SSR), */
+/*  so the Nuxt/Vue loader doesn't apply scoped styles to it */
 .icon {
-  // override Bulma so @nuxt/content title anchor links don't create empty space
+  /*  override Bulma so @nuxt/content title anchor links don't create empty space */
   display: inline !important;
 }
 

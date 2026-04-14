@@ -124,7 +124,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .tap-range-selector {
   display: grid;
   padding: 1px;
@@ -142,20 +142,20 @@ export default {
   transition: 0.2s;
   border: 2px solid transparent;
   border-radius: 5px;
+}
 
-  &:hover:not(.selected) {
-    color: #fff;
-    background: #999;
-  }
+.tap-range-selector--option:hover:not(.selected) {
+  color: #fff;
+  background: #999;
+}
 
-  &.selected {
-    color: #09f;
-    border-color: #09f;
-  }
+.tap-range-selector--option.selected {
+  color: #09f;
+  border-color: #09f;
+}
 
-  &.waiting {
-    animation: pulseBorder 1.5s ease-in-out infinite;
-  }
+.tap-range-selector--option.waiting {
+  animation: pulseBorder 1.5s ease-in-out infinite;
 }
 
 @keyframes pulseBorder {

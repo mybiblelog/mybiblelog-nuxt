@@ -100,7 +100,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .passage-note {
   padding: 0.5rem 1rem;
   margin: 1rem 0;
@@ -110,12 +110,12 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, auto);
+}
 
-  &.empty {
-    box-shadow: none;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+.passage-note.empty {
+  box-shadow: none;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .passage-note--passages {
@@ -126,9 +126,10 @@ export default {
   grid-area: 1 / 2 / 2 / 3;
   text-align: right;
   cursor: default;
-  & > span {
-    border-bottom: 1px dotted #ccc;
-  }
+}
+
+.passage-note--created-date > span {
+  border-bottom: 1px dotted #ccc;
 }
 
 .passage-note--content {

@@ -37,7 +37,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .shimmer-star {
   aspect-ratio: 1;
 

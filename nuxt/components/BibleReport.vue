@@ -154,99 +154,104 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .bible-report {
   user-select: none;
 }
+
 .plaque {
   margin-bottom: 2rem;
-  p {
-    text-align: right;
+}
+
+.plaque p {
+  text-align: right;
+}
+
+.progress-list .progress-card {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 7px #999;
+
+  display: grid;
+  grid-template-columns: auto auto 1fr 3rem;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "icon title notes percentage"
+    "icon bar   bar   bar";
+
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.progress-list .progress-card:hover {
+  transition: 0.2s;
+  box-shadow: 0 1px 9px #333;
+}
+
+.progress-list .progress-card-icon {
+  grid-area: icon;
+
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.progress-list .progress-card-book,
+.progress-list .progress-card-percentage {
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+}
+
+.progress-list .progress-card-book {
+  grid-area: title;
+}
+
+.progress-list .progress-card-note-count-badge {
+  grid-area: notes;
+  justify-self: end;
+  align-self: baseline;
+  width: fit-content;
+  margin-right: 1rem;
+  font-size: 0.8em;
+  color: #666;
+  background: #efefef;
+  margin-left: 1em;
+  padding: 0 0.5em;
+  border-radius: 0.5em;
+  font-weight: normal;
+  transition: 0.2s ease-in-out;
+}
+
+.progress-list .progress-card-note-count-badge:hover {
+  background: #999;
+  color: #fff;
+}
+
+/* Make the badge easier to click on mobile */
+@media screen and (max-width: 600px) {
+  .progress-list .progress-card-note-count-badge {
+    position: relative;
+  }
+
+  .progress-list .progress-card-note-count-badge::after {
+    content: ' ';
+    position: absolute;
+    top: -1em;
+    left: 0;
+    right: 0;
+    bottom: -1em;
   }
 }
-.progress-list {
-  .progress-card {
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    box-shadow: 0 1px 7px #999;
 
-    display: grid;
-    grid-template-columns: auto auto 1fr 3rem;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      "icon title notes percentage"
-      "icon bar   bar   bar";
+.progress-list .progress-card-percentage {
+  grid-area: percentage;
+  text-align: right;
+}
 
-    cursor: pointer;
-    transition: 0.1s;
-    &:hover {
-      transition: 0.2s;
-      box-shadow: 0 1px 9px #333;
-    }
-
-    &-icon {
-      grid-area: icon;
-
-      margin-right: 0.5rem;
-      display: flex;
-      align-items: center;
-    }
-
-    &-book,
-    &-percentage {
-      font-size: 0.8rem;
-      font-weight: bold;
-      padding-bottom: 0.5rem;
-    }
-
-    &-icon {
-      grid-area: icon;
-    }
-    &-book {
-      grid-area: title;
-    }
-    &-note-count-badge {
-      grid-area: notes;
-      justify-self: end;
-      align-self: baseline;
-      width: fit-content;
-      margin-right: 1rem;
-      font-size: 0.8em;
-      color: #666;
-      background: #efefef;
-      margin-left: 1em;
-      padding: 0 0.5em;
-      border-radius: 0.5em;
-      font-weight: normal;
-      transition: 0.2s ease-in-out;
-
-      &:hover {
-        background: #999;
-        color: #fff;
-      }
-
-      // Make the badge easier to click on mobile
-      @media screen and (max-width: 600px) {
-        position: relative;
-        &::after {
-          content: ' ';
-          position: absolute;
-          top: -1em;
-          left: 0;
-          right: 0;
-          bottom: -1em;
-        }
-      }
-    }
-    &-percentage {
-      grid-area: percentage;
-      text-align: right;
-    }
-    &-progress {
-      grid-area: bar;
-    }
-  }
+.progress-list .progress-card-progress {
+  grid-area: bar;
 }
 </style>
 

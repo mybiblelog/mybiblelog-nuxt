@@ -79,21 +79,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-$day-label-size: 20px;
-
+<style scoped>
 .calendar-day {
   position: relative;
   min-height: 70px;
   font-size: 16px;
   background-color: #fff;
-  color: $grey-800;
+  color: var(--grey-800);
   padding: 5px;
   cursor: pointer;
   user-select: none;
   transition: 0.2s ease-out;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .calendar-day {
     min-height: calc(100vw / 7);
   }
 }
@@ -106,7 +106,10 @@ $day-label-size: 20px;
   position: absolute;
   top: 10%;
   right: 10%;
-  @media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 768px) {
+  .calendar-day .star {
     top: 5%;
     right: 5%;
   }
@@ -123,7 +126,10 @@ $day-label-size: 20px;
   justify-content: center;
   align-items: center;
   transition: 0.2s;
-  @media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 768px) {
+  .calendar-day .date {
     top: 5%;
     left: 5%;
     width: 1.5rem;
@@ -132,16 +138,17 @@ $day-label-size: 20px;
 }
 
 .calendar-day--not-current {
-  color: $grey-300;
+  color: var(--grey-300);
   transition: 0s;
-  &,
-  &:hover {
-    background-color: $grey-100;
-  }
+}
+
+.calendar-day--not-current,
+.calendar-day--not-current:hover {
+  background-color: var(--grey-100);
 }
 
 .calendar-day--today .date {
-  background-color: $grey-200;
+  background-color: var(--grey-200);
 }
 
 .calendar-day--selected .date {
@@ -158,17 +165,17 @@ $day-label-size: 20px;
   background: #000;
   border-radius: 3px;
   overflow: hidden;
+}
 
-  .progress-bar-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background: #09f;
+.calendar-day .progress-bar .progress-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #09f;
+}
 
-    &.secondary {
-      background: #0077bb;
-    }
-  }
+.calendar-day .progress-bar .progress-bar-fill.secondary {
+  background: #0077bb;
 }
 </style>

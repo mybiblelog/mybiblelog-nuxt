@@ -526,7 +526,7 @@ export default {
 }
 </i18n>
 
-<style lang="scss" scoped>
+<style scoped>
 .verse-input__field {
   margin-bottom: 0;
 }
@@ -590,28 +590,28 @@ export default {
   transition: 0.2s;
   font-size: 0.9rem;
   white-space: nowrap;
+}
 
-  &:hover {
-    border-color: #09f;
-    background: #f0f8ff;
-  }
+.button-group--button:hover {
+  border-color: #09f;
+  background: #f0f8ff;
+}
 
-  &.active {
-    background: #09f;
-    color: #fff;
-    border-color: #09f;
-  }
+.button-group--button.active {
+  background: #09f;
+  color: #fff;
+  border-color: #09f;
+}
 
-  &.button-group--button-left {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-right: none;
-  }
+.button-group--button.button-group--button-left {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right: none;
+}
 
-  &.button-group--button-right {
-    border-left: none;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-  }
+.button-group--button.button-group--button-right {
+  border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 </style>

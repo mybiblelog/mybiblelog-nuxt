@@ -45,12 +45,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .calendar-date-selector {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  color: $grey-800;
+  color: var(--grey-800);
   margin: 0 -1rem;
 }
 

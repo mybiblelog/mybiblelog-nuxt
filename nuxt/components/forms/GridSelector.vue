@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .grid-selector {
   display: grid;
   padding: 1px;
@@ -55,24 +55,25 @@ export default {
   align-items: center;
   padding: 1rem;
   transition: 0.2s;
+}
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    transition: 0.2s;
-  }
+.grid-selector--option::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  transition: 0.2s;
+}
 
-  &:hover {
-    color: #000;
-    &::before {
-      border-color: #09f;
-    }
-  }
+.grid-selector--option:hover {
+  color: #000;
+}
+
+.grid-selector--option:hover::before {
+  border-color: #09f;
 }
 </style>

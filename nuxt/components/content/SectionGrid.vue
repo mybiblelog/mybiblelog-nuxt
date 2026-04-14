@@ -136,20 +136,22 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .h3-grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   margin: 1.5rem 0 2rem;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .h3-grid-container {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 }
 
-// Styles for automatically processed tiles (when not using explicit SectionGridTile)
+/*  Styles for automatically processed tiles (when not using explicit SectionGridTile) */
 ::v-deep .h3-grid-item {
   border: 2px solid;
   border-image-slice: 1;
@@ -157,47 +159,48 @@ export default {
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
+}
 
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--secondary-color, #0965f7);
-  }
+::v-deep .h3-grid-item h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--secondary-color, #0965f7);
+}
 
-  .h3-gradient-text {
-    background: linear-gradient(to right, var(--primary-color, #00aaf9) 0%, var(--secondary-color, #0965f7) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
+::v-deep .h3-grid-item .h3-gradient-text {
+  background: linear-gradient(to right, var(--primary-color, #00aaf9) 0%, var(--secondary-color, #0965f7) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
 
-  p {
-    margin-bottom: 0.5rem;
-    color: #444;
-    line-height: 1.6;
+::v-deep .h3-grid-item p {
+  margin-bottom: 0.5rem;
+  color: #444;
+  line-height: 1.6;
+}
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+::v-deep .h3-grid-item p:last-child {
+  margin-bottom: 0;
+}
 
-  ul, ol {
-    margin: 0.5rem 0;
-    padding-left: 1.5rem;
-    color: #444;
-  }
+::v-deep .h3-grid-item ul,
+::v-deep .h3-grid-item ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  color: #444;
+}
 
-  a {
-    color: var(--primary-color, #00aaf9);
-    text-decoration: none;
-    font-weight: 500;
+::v-deep .h3-grid-item a {
+  color: var(--primary-color, #00aaf9);
+  text-decoration: none;
+  font-weight: 500;
+}
 
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+::v-deep .h3-grid-item a:hover {
+  text-decoration: underline;
 }
 </style>

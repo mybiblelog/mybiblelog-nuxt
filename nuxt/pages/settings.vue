@@ -105,14 +105,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.narrow-screen {
-  @media screen and (min-width: 600px) {
+<style scoped>
+@media screen and (min-width: 600px) {
+  .narrow-screen {
     display: none;
   }
 }
-.wide-screen {
-  @media screen and (max-width: 599px) {
+
+@media screen and (max-width: 599px) {
+  .wide-screen {
     display: none;
   }
 }

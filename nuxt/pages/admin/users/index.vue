@@ -295,7 +295,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 table.table {
   width: 100%;
 }
@@ -305,9 +305,10 @@ table.table {
 .sortable {
   cursor: pointer;
   transition: 0.2s;
-  &:hover {
-    background-color: #eee;
-  }
+}
+
+.sortable:hover {
+  background-color: #eee;
 }
 .nowrap {
   white-space: nowrap;

@@ -176,7 +176,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .tag-sort-row {
   margin: 0.25rem 0 1rem;
 }

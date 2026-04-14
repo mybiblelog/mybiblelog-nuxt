@@ -176,20 +176,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-$grid-gap: 1px;
+<style scoped>
+:root {
+  --grid-gap: 1px;
+}
 
 .calendar-month {
   position: relative;
-  background-color: $grey-200;
+  background-color: var(--grey-200);
   color: #2c3e50;
-
-  ol,
-  li {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
+}
+.calendar-month ol,
+.calendar-month li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .calendar-month-header {
@@ -198,15 +199,17 @@ $grid-gap: 1px;
   flex-wrap: wrap;
   background-color: #fff;
   padding-bottom: 10px;
+}
 
-  @media screen and (max-width: 380px) {
+@media screen and (max-width: 380px) {
+  .calendar-month-header {
     flex-direction: column;
     text-align: center;
   }
 }
 
 .day-of-week {
-  color: $grey-800;
+  color: var(--grey-800);
   font-size: 18px;
   background-color: #fff;
   padding-bottom: 5px;
@@ -227,8 +230,8 @@ $grid-gap: 1px;
 .days-grid {
   height: 100%;
   position: relative;
-  grid-column-gap: $grid-gap;
-  grid-row-gap: $grid-gap;
-  border: solid 1px $grey-300;
+  grid-column-gap: var(--grid-gap);
+  grid-row-gap: var(--grid-gap);
+  border: solid 1px var(--grey-300);
 }
 </style>

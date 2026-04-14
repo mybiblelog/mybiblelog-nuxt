@@ -420,7 +420,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 td:nth-child(2) {
   white-space: pre;
 }

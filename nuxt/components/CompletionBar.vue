@@ -41,7 +41,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .completion-bar--progress {
   transition: width 1s ease-out;
 }

@@ -36,26 +36,26 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 /* css class for the transition */
-.modal {
-  &.fade-enter-active,
-  &.fade-leave-active {
-    transition: $transition-fade;
+.modal.fade-enter-active,
+.modal.fade-leave-active {
+  transition: var(--transition-fade);
+}
 
-    .modal-card {
-      transition: $transition-modal;
-    }
-  }
+.modal.fade-enter-active .modal-card,
+.modal.fade-leave-active .modal-card {
+  transition: var(--transition-modal);
+}
 
-  &.fade-enter,
-  &.fade-leave-to {
-    opacity: 0;
+.modal.fade-enter,
+.modal.fade-leave-to {
+  opacity: 0;
+}
 
-    .modal-card {
-      transform: $modal-scale;
-    }
-  }
+.modal.fade-enter .modal-card,
+.modal.fade-leave-to .modal-card {
+  transform: var(--modal-scale);
 }
 
 .modal-card-body {

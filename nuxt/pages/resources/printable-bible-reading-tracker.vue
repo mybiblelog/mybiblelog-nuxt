@@ -122,7 +122,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 @media print {
   body.has-navbar-fixed-top {
     padding-top: 0;
@@ -132,6 +132,10 @@ export default {
     max-width: 100%;
     margin: 0;
     padding: 0;
+  }
+
+  .chapter-checkboxes {
+    break-inside: avoid;
   }
 }
 
@@ -157,10 +161,6 @@ export default {
   display: inline-flex;
   flex-wrap: wrap;
   line-height: 0.5rem;
-
-  @media print {
-    break-inside: avoid;
-  }
 }
 
 .chapter-checkbox-container {
@@ -182,11 +182,11 @@ export default {
 .attribution {
   padding: 0.5rem;
   text-align: right;
+}
 
-  p {
-    margin: 0;
-    font-size: 0.8rem;
-  }
+.attribution p {
+  margin: 0;
+  font-size: 0.8rem;
 }
 </style>
 

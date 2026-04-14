@@ -60,7 +60,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .page-footer {
   min-height: 20vh;
   margin: 4rem 0 0;
@@ -85,8 +85,10 @@ export default {
   grid-auto-columns: minmax(max-content, 1fr);
   justify-content: center;
   gap: 3rem;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .footer-columns {
     grid-auto-flow: row;
     grid-auto-columns: 1fr;
     gap: 2rem;
@@ -115,34 +117,36 @@ export default {
   transition: all 0.2s ease;
   position: relative;
   padding: 0.5rem 0;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .footer-link {
     font-size: 0.9375rem;
   }
+}
 
-  &:hover {
-    color: var(--primary-color, #00aaf9);
-    transform: translateY(-1px);
-  }
+.footer-link:hover {
+  color: var(--primary-color, #00aaf9);
+  transform: translateY(-1px);
+}
 
-  &:active {
-    color: var(--secondary-color, #0965f7);
-  }
+.footer-link:active {
+  color: var(--secondary-color, #0965f7);
+}
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0.25rem;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(135deg, var(--primary-color, #00aaf9) 0%, var(--secondary-color, #0965f7) 100%);
-    transition: width 0.3s ease;
-  }
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, var(--primary-color, #00aaf9) 0%, var(--secondary-color, #0965f7) 100%);
+  transition: width 0.3s ease;
+}
 
-  &:hover::after {
-    width: 100%;
-  }
+.footer-link:hover::after {
+  width: 100%;
 }
 </style>
 

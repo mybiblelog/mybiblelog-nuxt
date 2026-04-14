@@ -69,7 +69,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .line-height-stabilizer {
   line-height: 1em;
   display: flex;

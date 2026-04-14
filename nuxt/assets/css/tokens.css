@@ -1,0 +1,33 @@
+:root {
+  /* Layout / breakpoints */
+  --breakpoint: 800px;
+
+  /* Stacking */
+  --z-index-toast: 42;
+  --z-index-popup: 41;
+  --z-index-modal: 40;
+  --z-index-action-menu: 39;
+  --z-index-action-button: 38;
+  --z-index-busy-bar: 29;
+  --z-index-site-header: 3;
+  --z-index-site-nav: 2;
+  --z-index-site-nav-screen: 1;
+
+  --header-height: calc(1rem + 1.618rem + 3px);
+
+  --grey-100: #e4e9f0;
+  --grey-200: #cfd7e3;
+  --grey-300: #b5c0cd;
+  --grey-800: #3e4e63;
+
+  --transition-fade: opacity 0.3s ease-out;
+  --transition-modal: transform 0.3s ease-out;
+  --modal-scale: scale(0.9);
+
+  --modal-card-border-radius: 6px;
+
+  /* Brand (from former global :root) */
+  --primary-color: #00aaf9;
+  --secondary-color: #0965f7;
+  --tertiary-color: #00d1b2;
+}

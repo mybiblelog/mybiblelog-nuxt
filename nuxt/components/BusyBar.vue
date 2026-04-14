@@ -14,40 +14,38 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 @keyframes busyAnimation {
   100% {
     background-position: 100% 100%;
   }
 }
 
-$busyBarHeight: 5px;
-
 .busy-bar {
   position: fixed;
-  z-index: $zIndexBusyBar;
+  z-index: var(--z-index-busy-bar);
   top: 52px;
   left: 0;
   width: 100vw;
-  height: $busyBarHeight;
+  height: 5px;
   background: transparent;
   pointer-events: none;
-  transform: translateY(-$busyBarHeight);
+  transform: translateY(-5px);
   transition: 0.2s;
+}
 
-  &.is-busy {
-    background: #ccc;
-    background-image:
-      repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 1rem,
-        #ddd 1rem,
-        #ddd 2rem
-      );
-    background-size: 200% 200%;
-    animation: busyAnimation 10s linear infinite;
-    transform: translateY(0);
-  }
+.busy-bar.is-busy {
+  background: #ccc;
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 1rem,
+      #ddd 1rem,
+      #ddd 2rem
+    );
+  background-size: 200% 200%;
+  animation: busyAnimation 10s linear infinite;
+  transform: translateY(0);
 }
 </style>

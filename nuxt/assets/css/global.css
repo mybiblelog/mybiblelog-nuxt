@@ -1,20 +1,10 @@
-@use 'variables' as v;
-
-:root {
-  --primary-color: #00aaf9;
-  --secondary-color: #0965f7;
-  --tertiary-color: #00d1b2;
-}
-
 /* Hide Vue.js apps until they are compiled */
 [v-cloak] {
   display: none;
 }
 
-body {
-  &.modal-open {
-    overflow-y: hidden;
-  }
+body.modal-open {
+  overflow-y: hidden;
 }
 
 .content-column {
@@ -34,8 +24,8 @@ body {
   padding: 0; /* unset from main header -- this should be more specific */
 }
 
-.no-print {
-  @media print {
+@media print {
+  .no-print {
     display: none !important;
   }
 }

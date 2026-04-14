@@ -139,7 +139,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .drag-range-selector {
   display: grid;
   padding: 1px;
@@ -153,43 +153,39 @@ export default {
   justify-content: center;
   padding: 1rem 0;
   position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 0;
-    bottom: 2px;
-    right: 0;
-  }
-
-  &:hover:not(.selected) {
-    color: #fff;
-    background: #999;
-    border-radius: 5px;
-  }
 }
 
-.drag-range-selector.in-progress {
-  .drag-range-selector--option.selected {
+.drag-range-selector--option::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 0;
+  bottom: 2px;
+  right: 0;
+}
 
-    &::before {
-      border-top: 2px solid #09f;
-      border-bottom: 2px solid #09f;
-    }
+.drag-range-selector--option:hover:not(.selected) {
+  color: #fff;
+  background: #999;
+  border-radius: 5px;
+}
 
-    &.first::before {
-      border-left: 2px solid #09f;
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-      left: 2px;
-    }
-    &.last::before {
-      border-right: 2px solid #09f;
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-      right: 2px;
-    }
-  }
+.drag-range-selector.in-progress .drag-range-selector--option.selected::before {
+  border-top: 2px solid #09f;
+  border-bottom: 2px solid #09f;
+}
+
+.drag-range-selector.in-progress .drag-range-selector--option.selected.first::before {
+  border-left: 2px solid #09f;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  left: 2px;
+}
+
+.drag-range-selector.in-progress .drag-range-selector--option.selected.last::before {
+  border-right: 2px solid #09f;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  right: 2px;
 }
 </style>

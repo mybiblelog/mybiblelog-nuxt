@@ -1,7 +1,6 @@
 import path from 'node:path';
 import dotenv from 'dotenv';
 import redirectSSL from 'redirect-ssl';
-import sass from 'sass';
 import i18nConfig from './i18n.config';
 
 import type { NuxtConfig } from '@nuxt/types';
@@ -55,7 +54,7 @@ const config: NuxtConfig = {
   ** Global CSS
   */
   css: [
-    '@/assets/scss/main.scss',
+    '@/assets/css/main.css',
   ],
   /*
   ** Plugins to load before mounting the App
@@ -86,8 +85,6 @@ const config: NuxtConfig = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://www.npmjs.com/package/@nuxtjs/style-resources
-    '@nuxtjs/style-resources',
     // Doc: https://nuxt.com/modules/proxy
     '@nuxtjs/proxy',
     // Doc: https://www.npmjs.com/package/@nuxtjs/redirect-module
@@ -100,9 +97,6 @@ const config: NuxtConfig = {
     '@nuxtjs/i18n',
   ],
   i18n: i18nConfig,
-  styleResources: {
-    scss: ['./assets/scss/_variables.scss'],
-  },
   /*
   ** Proxy
   */
@@ -139,17 +133,6 @@ const config: NuxtConfig = {
         config.resolve.alias['vue$'] = 'vue/dist/vue.runtime.esm.js';
         config.resolve.alias['vue-demi'] = 'vue-demi/lib/index.mjs';
       }
-    },
-    loaders: {
-      scss: {
-        implementation: sass,
-        additionalData: '@use "sass:math"; @use "sass:color";',
-        sassOptions: {
-          sourceMap: true,
-          includePaths: ['./assets/scss'],
-          silenceDeprecations: ['legacy-js-api'],
-        } as sass.Options<'sync'>,
-      },
     },
   },
   serverMiddleware: [

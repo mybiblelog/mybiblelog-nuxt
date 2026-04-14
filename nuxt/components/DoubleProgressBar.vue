@@ -54,7 +54,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 
 .bar-progress {
   transition: width 1s ease-out;
@@ -81,8 +81,9 @@ export default {
   background: linear-gradient(90deg, red 0%, yellow 15%, yellow 20%, lime 30%, cyan 40%, cyan 50%, blue 65%, magenta 80%, red 100%);
   background-size: 200%;
   animation: moveGradient 2s linear infinite;
-  &.is-complete {
-    opacity: 0.3;
-  }
+}
+
+.bar-progress--complete.is-complete {
+  opacity: 0.3;
 }
 </style>
