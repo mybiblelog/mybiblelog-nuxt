@@ -51,6 +51,14 @@ const config: NuxtConfig = {
   */
   loading: { color: '#fff' },
   /*
+  ** Customize Page Transition
+  */
+  pageTransition: {
+    name: 'page',
+    mode: 'out-in',
+    duration: 100,
+  },
+  /*
   ** Global CSS
   */
   css: [

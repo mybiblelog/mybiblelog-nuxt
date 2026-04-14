@@ -29,3 +29,12 @@ body.modal-open {
     display: none !important;
   }
 }
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.1s ease;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
