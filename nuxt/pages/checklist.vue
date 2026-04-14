@@ -14,7 +14,7 @@
       </div>
       <div v-for="bookReport in bookReports" :key="bookReport.bookIndex" class="book-card">
         <div class="book-card--header">
-          <div>
+          <div class="book-card--completion-indicator">
             <check-mark-icon width="100%" height="100%" :fill="bookReport.complete ? '#0c0' : 'transparent'" />
           </div>
           <div class="book-card--book-name">
