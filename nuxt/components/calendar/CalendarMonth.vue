@@ -177,10 +177,6 @@ export default {
 </script>
 
 <style scoped>
-:root {
-  --grid-gap: 1px;
-}
-
 .calendar-month {
   position: relative;
   background-color: var(--grey-200);
@@ -230,8 +226,8 @@ export default {
 .days-grid {
   height: 100%;
   position: relative;
-  grid-column-gap: var(--grid-gap);
-  grid-row-gap: var(--grid-gap);
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
   border: solid 1px var(--grey-300);
 }
 </style>
