@@ -1,8 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import useMongooseModels from '../../mongoose/useMongooseModels';
 import { LocaleCode } from '@mybiblelog/shared';
 import renderEmailVerification from './email-templates/email-verification';
 import renderPasswordResetLink from './email-templates/password-reset-link';
 import renderEmailUpdate from './email-templates/email-update';
+import { brandLogoCid } from './email-templates/branded-wrapper';
 
 import { QueueEmailParams, SendEmailParams } from './email-types';
 import sendEmail from './email-senders/resend';
@@ -11,6 +14,8 @@ import config from '../../config';
 
 const defaultFromEmailAddress = `My Bible Log <team@${config.emailSendingDomain}>`;
 const defaultReplyToEmailAddress = `My Bible Log <team@${config.emailSendingDomain}>`;
+
+type Attachment = NonNullable<SendEmailParams['attachments']>[number];
 
 export type EmailService = {
   send: (params: QueueEmailParams) => void;
@@ -21,6 +26,32 @@ export type EmailService = {
 
 const init = async () => {
   const { Email } = await useMongooseModels();
+
+  let cachedBrandLogoAttachment: Attachment | null | undefined;
+  const getBrandLogoAttachment = (): Attachment | undefined => {
+    if (cachedBrandLogoAttachment !== undefined) {
+      return cachedBrandLogoAttachment || undefined;
+    }
+
+    try {
+      const brandLogoAssetPath = path.resolve(__dirname, 'assets', 'brand.png');
+      if (!fs.existsSync(brandLogoAssetPath)) {
+        cachedBrandLogoAttachment = null;
+        return undefined;
+      }
+
+      cachedBrandLogoAttachment = {
+        filename: 'brand.png',
+        content: fs.readFileSync(brandLogoAssetPath),
+        contentId: brandLogoCid,
+      };
+      return cachedBrandLogoAttachment;
+    }
+    catch {
+      cachedBrandLogoAttachment = null;
+      return undefined;
+    }
+  };
 
   const sendFn = async (params: SendEmailParams): Promise<void> => {
     let status: 'pending' | 'sent' | 'failed' | 'log_only' = 'pending';
@@ -53,6 +84,19 @@ const init = async () => {
     const from = params.from || defaultFromEmailAddress;
     const replyTo = params.replyTo || defaultReplyToEmailAddress;
     const normalized: SendEmailParams = { ...params, from, replyTo };
+
+    // If we're sending HTML, attach the brand logo (if available) so the shared branded
+    // wrapper can reference it via `cid:${brandLogoCid}`.
+    if ('html' in normalized) {
+      const brandLogoAttachment = getBrandLogoAttachment();
+      if (brandLogoAttachment) {
+        const existingAttachments = normalized.attachments || [];
+        const alreadyHasBrandLogo = existingAttachments.some((a) => a.contentId === brandLogoCid);
+        if (!alreadyHasBrandLogo) {
+          normalized.attachments = [...existingAttachments, brandLogoAttachment];
+        }
+      }
+    }
     enqueue(normalized);
   };
 

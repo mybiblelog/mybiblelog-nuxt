@@ -4,6 +4,15 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
+export function isPlainObject(v: unknown): v is Record<string, unknown> {
+  return v !== null && typeof v === 'object' && !Array.isArray(v);
+}
+
+/** api/services/email/locales/strings.json — merged into each Crowdin locale bundle as `email`. */
+export function emailLocaleStringsPath(nuxtRoot: string): string {
+  return path.join(nuxtRoot, '..', 'api', 'services', 'email', 'locales', 'strings.json');
+}
+
 /** First inline block: no locale= and no src= (multi-locale JSON object). */
 export const INLINE_I18N_RE =
   /<i18n\b(?![^>]*\blocale=)(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/i18n>/m;

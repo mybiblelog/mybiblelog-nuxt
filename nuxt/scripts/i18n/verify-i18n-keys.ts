@@ -1,6 +1,7 @@
 /**
  * Verifies that every non-English locale has the same dot-notation leaf keys as English for:
  * - Global messages in nuxt/locales/locales.ts
+ * - api/services/email/locales/strings.json (per locale)
  * - Each inline i18n JSON block in nuxt/components and nuxt/pages (recursive .vue scan)
  *
  * Locales come from @mybiblelog/shared (same list as the app). Does not use nuxt/locales/crowdin/
@@ -15,8 +16,10 @@ import { fileURLToPath } from 'node:url';
 import { getLocaleCodes, defaultLocale } from '@mybiblelog/shared';
 import globalLocales from '../../locales/locales';
 import {
+  emailLocaleStringsPath,
   findInlineI18nBody,
   isLegacySrcI18n,
+  isPlainObject,
   parseInlineI18nBlockJson,
   toRelKey,
   walkVueFiles,
@@ -142,6 +145,41 @@ async function main() {
     }
   }
 
+  const emailPath = emailLocaleStringsPath(NUXT_ROOT);
+  let emailRoot: unknown;
+  try {
+    emailRoot = JSON.parse(await fs.readFile(emailPath, 'utf8'));
+  }
+  catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error(`\nFailed to read or parse email strings: ${emailPath}\n  ${msg}`);
+    ok = false;
+    emailRoot = null;
+  }
+  if (emailRoot !== null) {
+    if (!isPlainObject(emailRoot)) {
+      console.error(`\n${emailPath}: root must be a JSON object keyed by locale`);
+      ok = false;
+    }
+    else {
+      const enEmail = asMessageObject(emailRoot[defaultLocale]);
+      if (!enEmail) {
+        console.error(
+          `\n${emailPath}: missing or invalid "${defaultLocale}" message object`,
+        );
+        ok = false;
+      }
+      else {
+        for (const loc of otherLocales) {
+          const otherEmail = asMessageObject(emailRoot[loc]) ?? {};
+          if (!compareMessages(`email/strings.json en vs ${loc}`, enEmail, otherEmail, loc)) {
+            ok = false;
+          }
+        }
+      }
+    }
+  }
+
   const componentsDir = path.join(NUXT_ROOT, 'components');
   const pagesDir = path.join(NUXT_ROOT, 'pages');
   const r1 = await verifySfcTree(componentsDir, 'components', otherLocales);
@@ -154,7 +192,7 @@ async function main() {
   }
   else {
     console.log(
-      `OK: key parity en ↔ [${otherLocales.join(', ')}] (locales.ts + ${sfcChecked} SFC file(s) with <i18n>).`,
+      `OK: key parity en ↔ [${otherLocales.join(', ')}] (locales.ts + email/strings.json + ${sfcChecked} SFC file(s) with <i18n>).`,
     );
   }
 }

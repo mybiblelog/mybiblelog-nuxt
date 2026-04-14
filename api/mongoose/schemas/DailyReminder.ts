@@ -29,9 +29,13 @@ export const DailyReminderSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  unsubscribeCode: {
+  publicToken: {
     type: String,
     default: () => crypto.randomBytes(16).toString('base64url'),
+  },
+  lastEmailEngagementAt: {
+    type: Date,
+    default: null,
   },
   nextOccurrence: {
     type: Number,
@@ -75,9 +79,10 @@ DailyReminderSchema.pre('save', async function() {
   this.nextOccurrence = nextOccurrence.getTime();
 
   // If the daily reminder was just activated,
-  // re-calculate an unsubscribe code
+  // rotate the public token (email links, tracking, unsubscribe)
   if (this.isModified('active') && this.active) {
-    this.unsubscribeCode = crypto.randomBytes(16).toString('base64url');
+    this.publicToken = crypto.randomBytes(16).toString('base64url');
+    this.lastEmailEngagementAt = new Date();
   }
 });
 

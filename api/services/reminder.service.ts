@@ -1,5 +1,3 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import config from '../config';
 import { Bible } from '@mybiblelog/shared';
 import useMongooseModels from '../mongoose/useMongooseModels';
@@ -8,9 +6,18 @@ import { EmailService } from './email/email-service';
 
 const baseUrl = config.siteUrl;
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+const TIME_BEFORE_DISABLING_DAILY_REMINDER_EMAIL_MS = 3 * DAY_MS;
+
 const getLocaleBaseUrl = (locale) => {
   const localePathSegment = locale === 'en' ? '' : '/' + locale;
   return baseUrl + localePathSegment;
+};
+
+const buildDailyReminderTrackedLink = ({ publicToken, to }: { publicToken: string; to: string }) => {
+  const trackUrl = new URL(`/api/reminders/daily-reminder/track/${publicToken}`, baseUrl);
+  trackUrl.searchParams.set('to', to);
+  return trackUrl.toString();
 };
 
 const init = async ({ emailService }: { emailService: EmailService }) => {
@@ -85,20 +92,19 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
       emailDate.setTime(utcNow.valueOf() + dayMs);
     }
 
-    const siteLink = `${getLocaleBaseUrl(locale)}/start`;
-    const settingsLink = `${getLocaleBaseUrl(locale)}/settings/reminder`;
-    const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.unsubscribeCode}`;
+    const rawSiteLink = `${getLocaleBaseUrl(locale)}/start`;
+    const rawSettingsLink = `${getLocaleBaseUrl(locale)}/settings/reminder`;
+    const siteLink = buildDailyReminderTrackedLink({ publicToken: reminder.publicToken, to: rawSiteLink });
+    const settingsLink = buildDailyReminderTrackedLink({ publicToken: reminder.publicToken, to: rawSettingsLink });
+    const unsubscribeLink = `${getLocaleBaseUrl(locale)}/daily-reminder-unsubscribe?code=${reminder.publicToken}`;
 
-    // Build an unsubscribe email address that includes the unsubscribe code
+    // Build an unsubscribe email address that includes the reminder public token
     // This can be send to a Cloudflare email worker to unsubscribe the user
     let unsubscribeEmail = '';
     if (config.emailUnsubscribeAddress) {
       const [address, domain] = config.emailUnsubscribeAddress.split('@');
-      unsubscribeEmail = `${address}+${reminder.unsubscribeCode}@${domain}`;
+      unsubscribeEmail = `${address}+${reminder.publicToken}@${domain}`;
     }
-
-    // Load brand logo asset
-    const brandLogoAssetPath = path.resolve(__dirname, 'email', 'assets', 'brand.png');
 
     const { subject, html } = renderDailyReminderEmail({
       siteLink,
@@ -127,15 +133,22 @@ const init = async ({ emailService }: { emailService: EmailService }) => {
       },
       subject,
       html,
-      attachments: [{
-        filename: 'brand.png',
-        content: fs.readFileSync(brandLogoAssetPath),
-        contentId: 'logo@mybiblelog',
-      }],
     };
   };
 
   const sendReminder = async (reminder) => {
+    const engagementCutoffMs = Date.now() - TIME_BEFORE_DISABLING_DAILY_REMINDER_EMAIL_MS;
+
+    if (!reminder.lastEmailEngagementAt) {
+      // Backward-compatibility for reminders that existed before engagement tracking
+      reminder.lastEmailEngagementAt = new Date();
+    }
+    else if (reminder.lastEmailEngagementAt.getTime() < engagementCutoffMs) {
+      reminder.active = false;
+      await reminder.save();
+      return;
+    }
+
     const user = await User.findOne({ _id: reminder.owner });
     const recentLogEntries = await getRecentLogEntries(user);
     const email = buildEmail(user, reminder, recentLogEntries);

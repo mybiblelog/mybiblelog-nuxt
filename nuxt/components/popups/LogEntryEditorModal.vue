@@ -121,7 +121,7 @@ export default {
     "add": "추가",
     "close": "닫기",
     "messaging": {
-      "are_you_sure_close_editor": "편집기를 닫을까요? 저장하지 않은 변경 내용이 사라집니다."
+      "are_you_sure_close_editor": "편집창을 닫을까요? 저장하지 않은 변경 내용이 사라집니다."
     }
   },
   "pt": {

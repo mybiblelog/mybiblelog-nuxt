@@ -1,0 +1,198 @@
+{
+  "en": {
+    "daily_reminder": {
+      "subject": "My Bible Log Reminder for {{subjectDate}}",
+      "my_bible_log": "My Bible Log",
+      "this_is_your_reminder": "This is your daily reminder email from My Bible Log.",
+      "you_can_update_preferences": "You can update your reminder preferences <a href=\"{{settingsLink}}\">here</a>.",
+      "open_my_bible_log": "Open My Bible Log",
+      "most_recent_log_entries": "Most Recent Log Entries",
+      "no_log_entries_found": "No log entries found. Time to start reading!",
+      "date": "Date",
+      "passage": "Passage",
+      "unsubscribe": "Unsubscribe"
+    },
+    "email_update": {
+      "subject": "Confirm New Email Address",
+      "email_update_requested": "The My Bible Log account with email address <strong>{{currentEmail}}</strong> has requested to change their email address to <strong>{{newEmail}}</strong>.",
+      "click_to_confirm": "Click <a href=\"{{link}}\">this link</a> to confirm <strong>{{newEmail}}</strong> as the new email address for this account.",
+      "if_you_did_not_request": "If you did not request to change your My Bible Log email address, you can ignore this message."
+    },
+    "email_verification": {
+      "subject": "Email Verification",
+      "click_to_verify": "Click <a href=\"{{link}}\">this link</a> to verify your email."
+    },
+    "password_reset": {
+      "subject": "Reset Password",
+      "click_to_reset": "Click <a href=\"{{link}}\">this link</a> to reset your password."
+    }
+  },
+  "de": {
+    "daily_reminder": {
+      "subject": "My Bible Log Erinnerung für {{subjectDate}}",
+      "my_bible_log": "My Bible Log",
+      "this_is_your_reminder": "Dies ist Ihr täglicher Erinnerungs-E-Mail von My Bible Log.",
+      "you_can_update_preferences": "Sie können Ihre Erinnerungseinstellungen <a href=\"{{settingsLink}}\">hier</a> aktualisieren.",
+      "open_my_bible_log": "My Bible Log öffnen",
+      "most_recent_log_entries": "Letzte Einträge im Journal",
+      "no_log_entries_found": "Keine Einträge im Journal gefunden. Zeit, loszulegen!",
+      "date": "Datum",
+      "passage": "Passage",
+      "unsubscribe": "Abonnement abbestellen"
+    },
+    "email_update": {
+      "subject": "Neue E-Mail-Adresse bestätigen",
+      "email_update_requested": "Die My Bible Log-Konto mit der E-Mail-Adresse <strong>{{currentEmail}}</strong> hat eine Anfrage gestellt, ihre E-Mail-Adresse zu ändern zu <strong>{{newEmail}}</strong>.",
+      "click_to_confirm": "Klicken Sie auf <a href=\"{{link}}\">diesen Link</a>, um <strong>{{newEmail}}</strong> als neue E-Mail-Adresse für dieses Konto zu bestätigen.",
+      "if_you_did_not_request": "Wenn Sie nicht angefragt haben, Ihre E-Mail-Adresse von My Bible Log zu ändern, können Sie diese Nachricht ignorieren."
+    },
+    "email_verification": {
+      "subject": "Email-Verifizierung",
+      "click_to_verify": "Klicken Sie auf <a href=\"{{link}}\">diesen Link</a>, um Ihre E-Mail zu bestätigen."
+    },
+    "password_reset": {
+      "subject": "Passwort zurücksetzen",
+      "click_to_reset": "Klicken Sie auf <a href=\"{{link}}\">diesen Link</a>, um Ihr Passwort zurückzusetzen."
+    }
+  },
+  "es": {
+    "daily_reminder": {
+      "subject": "Recordatorio de My Bible Log para {{subjectDate}}",
+      "my_bible_log": "My Bible Log",
+      "this_is_your_reminder": "Este es tu correo electrónico de recordatorio diario de My Bible Log.",
+      "you_can_update_preferences": "Puedes actualizar tus preferencias de recordatorio <a href=\"{{settingsLink}}\">aquí</a>.",
+      "open_my_bible_log": "Abrir My Bible Log",
+      "most_recent_log_entries": "Entradas más recientes del registro",
+      "no_log_entries_found": "No se encontraron entradas en el registro. ¡Tiempo de empezar a leer!",
+      "date": "Fecha",
+      "passage": "Pasaje",
+      "unsubscribe": "Cancelar suscripción"
+    },
+    "email_update": {
+      "subject": "Confirmar nueva dirección de correo electrónico",
+      "email_update_requested": "La cuenta de My Bible Log con la dirección de correo electrónico <strong>{{currentEmail}}</strong> ha solicitado cambiar su dirección de correo electrónico a <strong>{{newEmail}}</strong>.",
+      "click_to_confirm": "Haga clic en <a href=\"{{link}}\">este enlace</a> para confirmar <strong>{{newEmail}}</strong> como la nueva dirección de correo electrónico para esta cuenta.",
+      "if_you_did_not_request": "Si no solicitó cambiar su dirección de correo electrónico de My Bible Log, puede ignorar este mensaje."
+    },
+    "email_verification": {
+      "subject": "Verificación de correo electrónico",
+      "click_to_verify": "Haga clic en <a href=\"{{link}}\">este enlace</a> para verificar su correo electrónico."
+    },
+    "password_reset": {
+      "subject": "Restablecer la contraseña",
+      "click_to_reset": "Haga clic en <a href=\"{{link}}\">este enlace</a> para restablecer su contraseña."
+    }
+  },
+  "fr": {
+    "daily_reminder": {
+      "subject": "Rappel de My Bible Log pour le {{subjectDate}}",
+      "my_bible_log": "My Bible Log",
+      "this_is_your_reminder": "Voici votre e-mail de rappel quotidien de My Bible Log.",
+      "you_can_update_preferences": "Vous pouvez modifier vos préférences de rappel <a href=\"{{settingsLink}}\">ici</a>.",
+      "open_my_bible_log": "Ouvrir My Bible Log",
+      "most_recent_log_entries": "Dernières entrées du journal",
+      "no_log_entries_found": "Aucune entrée trouvée dans le journal. Il est temps de commencer à lire!",
+      "date": "Date",
+      "passage": "Passage",
+      "unsubscribe": "Se désabonner"
+    },
+    "email_update": {
+      "subject": "Confirmer la nouvelle adresse e-mail",
+      "email_update_requested": "Le compte My Bible Log avec l'adresse e-mail <strong>{{currentEmail}}</strong> a demandé à changer son adresse e-mail en <strong>{{newEmail}}</strong>.",
+      "click_to_confirm": "Cliquez sur <a href=\"{{link}}\">ce lien</a> pour confirmer <strong>{{newEmail}}</strong> comme la nouvelle adresse e-mail de ce compte.",
+      "if_you_did_not_request": "Si vous n'avez pas demandé à changer votre adresse e-mail My Bible Log, vous pouvez ignorer ce message."
+    },
+    "email_verification": {
+      "subject": "Vérification de l'adresse e-mail",
+      "click_to_verify": "Cliquez sur <a href=\"{{link}}\">ce lien</a> pour vérifier votre adresse e-mail."
+    },
+    "password_reset": {
+      "subject": "Réinitialiser le mot de passe",
+      "click_to_reset": "Cliquez sur <a href=\"{{link}}\">ce lien</a> pour réinitialiser votre mot de passe."
+    }
+  },
+  "ko": {
+    "daily_reminder": {
+      "subject": "My Bible Log 알림 ({{subjectDate}} 기준)",
+      "my_bible_log": "My Bible Log",
+      "this_is_your_reminder": "My Bible Log에서 보내드리는 매일 알림 메일입니다.",
+      "you_can_update_preferences": "알림 설정은 <a href=\"{{settingsLink}}\">이곳</a>에서 변경할 수 있습니다.",
+      "open_my_bible_log": "My Bible Log 열기",
+      "most_recent_log_entries": "최근 읽기 기록",
+      "no_log_entries_found": "기록이 없습니다. 읽기 시작해 보세요!",
+      "date": "일자",
+      "passage": "구절",
+      "unsubscribe": "수신 거부"
+    },
+    "email_update": {
+      "subject": "새 이메일 주소 확인",
+      "email_update_requested": "<strong>{{currentEmail}}</strong> 이메일 주소로 등록된 My Bible Log 계정에서 <strong>{{newEmail}}</strong>(으)로 이메일 주소 변경이 요청되었습니다.",
+      "click_to_confirm": "<strong>{{newEmail}}</strong>을(를) 해당 계정의 새 이메일 주소로 확인하려면 <a href=\"{{link}}\">이 링크</a>를 클릭하세요.",
+      "if_you_did_not_request": "My Bible Log에 등록된 이메일 주소 변경을 요청하지 않았다면 이 메일은 무시하셔도 됩니다."
+    },
+    "email_verification": {
+      "subject": "이메일 인증",
+      "click_to_verify": "<a href=\"{{link}}\">이 링크</a>를 눌러 이메일을 인증하세요."
+    },
+    "password_reset": {
+      "subject": "비밀번호 재설정",
+      "click_to_reset": "비밀번호를 재설정하려면 <a href=\"{{link}}\">이 링크</a>를 누르세요."
+    }
+  },
+  "pt": {
+    "daily_reminder": {
+      "subject": "Lembrete do My Bible Log para {{subjectDate}}",
+      "my_bible_log": "My Bible Log",
+      "this_is_your_reminder": "Este é seu e-mail de lembrete diário do My Bible Log.",
+      "you_can_update_preferences": "Você pode atualizar suas preferências de lembrete <a href=\"{{settingsLink}}\">aqui</a>.",
+      "open_my_bible_log": "Abrir My Bible Log",
+      "most_recent_log_entries": "Entradas mais recentes do registro",
+      "no_log_entries_found": "Nenhuma entrada encontrada no registro. É hora de começar a ler!",
+      "date": "Data",
+      "passage": "Passagem",
+      "unsubscribe": "Cancelar inscrição"
+    },
+    "email_update": {
+      "subject": "Confirmar nova endereço de email",
+      "email_update_requested": "A conta do My Bible Log com o endereço de email <strong>{{currentEmail}}</strong> solicitou a alteração do seu endereço de email para <strong>{{newEmail}}</strong>.",
+      "click_to_confirm": "Clique em <a href=\"{{link}}\">este link</a> para confirmar <strong>{{newEmail}}</strong> como o novo endereço de email para esta conta.",
+      "if_you_did_not_request": "Se você não solicitou a alteração do seu endereço de email do My Bible Log, você pode ignorar esta mensagem."
+    },
+    "email_verification": {
+      "subject": "Verificação de email",
+      "click_to_verify": "Clique em <a href=\"{{link}}\">este link</a> para verificar seu email."
+    },
+    "password_reset": {
+      "subject": "Redefinir senha",
+      "click_to_reset": "Clique em <a href=\"{{link}}\">este link</a> para redefinir sua senha."
+    }
+  },
+  "uk": {
+    "daily_reminder": {
+      "subject": "Нагадування My Bible Log для {{subjectDate}}",
+      "my_bible_log": "My Bible Log",
+      "this_is_your_reminder": "Це ваш щоденний лист-нагадування від Мого My Bible Log.",
+      "you_can_update_preferences": "Ви можете змінити налаштування нагадувань <a href=\"{{settingsLink}}\">тут</a>.",
+      "open_my_bible_log": "Відкрити My Bible Log",
+      "most_recent_log_entries": "Останні записи в журналі",
+      "no_log_entries_found": "Немає записів в журналі. Час почати читати!",
+      "date": "Дата",
+      "passage": "Пасаж",
+      "unsubscribe": "Відписатися"
+    },
+    "email_update": {
+      "subject": "Підтвердіть нову адресу електронної пошти",
+      "email_update_requested": "Обліковий запис My Bible Log з електронною адресою <strong>{{currentEmail}}</strong> запросив змінити свою електронну адресу на <strong>{{newEmail}}</strong>.",
+      "click_to_confirm": "Натисніть <a href=\"{{link}}\">це посилання</a>, щоб підтвердити <strong>{{newEmail}}</strong> як нову адресу електронної пошти для цього облікового запису.",
+      "if_you_did_not_request": "Якщо ви не просили змінити свою адресу електронної пошти My Bible Log, ви можете проігнорувати це повідомлення."
+    },
+    "email_verification": {
+      "subject": "Підтвердження електронної пошти",
+      "click_to_verify": "Натисніть <a href=\"{{link}}\">це посилання</a>, щоб підтвердити свою електронну пошту."
+    },
+    "password_reset": {
+      "subject": "Скидання пароля",
+      "click_to_reset": "Натисніть <a href=\"{{link}}\">це посилання</a>, щоб скинути свій пароль."
+    }
+  }
+}

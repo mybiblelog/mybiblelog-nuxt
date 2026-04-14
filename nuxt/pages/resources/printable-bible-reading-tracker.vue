@@ -277,7 +277,7 @@ export default {
       "printer_friendly": "이 페이지는 인쇄에 최적화되어 있습니다. 위의 \"인쇄\" 버튼을 클릭하면 이 페이지를 출력할 수 있습니다. 실제 체크박스만 인쇄됩니다.",
       "download_directly": "PDF 파일은 <a target='_blank' href='/downloads/인쇄용 성경 읽기표.pdf'>이곳</a>을 눌러 직접 다운로드 받을 수 있습니다.",
       "chapters_in_the_bible": "성경 장 수",
-      "there_are_66_books": "성경에는 66권, 총 1,189장이 있습니다. 매일 3.25장(또는 매주 23장)씩 읽으면 1년에 성경 전체를 완독할 수 있습니다.",
+      "there_are_66_books": "성경에는 66권의 책과 총 1,189개의 장이 있습니다. 매일 3.25장씩(또는 매주 총 23장씩) 읽으면, 1년 안에 성경 전체를 읽을 수 있습니다.",
       "track_your_progress_online": "온라인으로 진도 기록하기",
       "if_you_would_like": "나의 기기에서 성경 읽기 진도를 관리하고 싶다면, 무료 <a href='/ko'>My Bible Log</a> 앱과 웹사이트를 확인해 보세요!"
     }
