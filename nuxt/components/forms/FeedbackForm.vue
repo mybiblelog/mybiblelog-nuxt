@@ -64,18 +64,33 @@ export default {
   name: 'FeedbackForm',
   data() {
     const authStore = useAuthStore();
+    const initialForm = {
+      email: authStore.user?.email || '',
+      kind: 'bug',
+      message: '',
+    };
     return {
-      form: {
-        email: authStore.user?.email || '',
-        kind: 'bug',
-        message: '',
-      },
+      form: { ...initialForm },
+      initialForm,
       errors: {},
     };
   },
   computed: {
     authStore() {
       return useAuthStore();
+    },
+    isDirty() {
+      return this.form.email !== this.initialForm.email ||
+        this.form.kind !== this.initialForm.kind ||
+        this.form.message !== this.initialForm.message;
+    },
+  },
+  watch: {
+    isDirty: {
+      immediate: true,
+      handler(isDirty) {
+        this.$emit('dirty-change', isDirty);
+      },
     },
   },
   methods: {
@@ -88,9 +103,8 @@ export default {
           message: this.form.message,
         });
 
-        // Clear the form
-        this.form.kind = 'bug';
-        this.form.message = '';
+        // Reset the form to its initial state after successful submission
+        this.form = { ...this.initialForm };
 
         const dialogStore = useDialogStore();
         await dialogStore.alert({ message: this.$t('messaging.feedback_submitted') });
