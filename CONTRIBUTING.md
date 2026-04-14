@@ -6,7 +6,6 @@ Thank you for your interest in contributing to My Bible Log! This project is a N
 
 - [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
-- [Development Setup](#development-setup)
 - [Testing](#testing)
 - [Code Style](#code-style)
 - [Pull Request Process](#pull-request-process)
@@ -21,50 +20,11 @@ This project and everyone participating in it is governed by our [Code of Conduc
 
 ## Getting Started
 
-### Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- **Node.js**: Version 24.2.0 (use `nvm use 24.2.0` if you have nvm)
-- **MongoDB**: Local instance for development
-- **Git**: For version control
-
-### Development Setup
-
-1. **Fork and clone the repository**
-
-   ```bash
-   git clone https://github.com/mybiblelog-nuxt/mybiblelog-nuxt.git
-   cd mybiblelog-nuxt
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-
-   Create a `.env` file at the root of the project.
-
-   Refer to the Environment Variables section of the README for a template of this file.
-
-4. **Start the development servers**
-
-   ```bash
-   npm run dev
-   ```
-
-   This will start both the API server (Express) and the Nuxt.js frontend with hot reload.
-
-5. **Access the application**
-   - Frontend: <http://localhost:3000>
-   - API: <http://localhost:3000/api>
+See the **Getting Started** section of the [README](./README.md) for instructions on setting up the project and running a development server.
 
 ## Testing
 
-We have comprehensive API and core utility file testing in place.
+There is comprehensive testing in place for the API and core utility files.
 Please ensure all tests pass before submitting a pull request.
 
 Note that API tests that result in a value being incremented/decremented
@@ -101,7 +61,6 @@ npm run test:e2e:ui
 - Bug fixes should include tests that verify the fix
 - API endpoints should have corresponding Jest tests
 - Ideally, UI changes should have corresponding Playwright tests
-- Tests should pass in both development and any CI environments (currently there is no CI environment)
 
 ## Code Style
 
@@ -114,15 +73,6 @@ npm run lint
 # Fix auto-fixable issues
 npm run lint -- --fix
 ```
-
-### Style Guidelines
-
-- Follow the existing ESLint configuration
-- Use meaningful variable and function names
-- Add comments for complex logic
-- Keep functions focused and single-purpose
-- Use consistent indentation (2 spaces)
-- Follow Vue.js and Nuxt.js best practices
 
 ## Pull Request Process
 
@@ -176,48 +126,19 @@ npm run lint -- --fix
 
 Before creating an issue, please check if it already exists.
 
-### Bug Reports
+Use one of the existing templates to structure your issue:
 
-Use the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md) and include:
-
-- Clear description of the bug
-- Steps to reproduce
-- Expected vs actual behavior
-- Environment details (OS, Node.js version, browser)
-- Screenshots if applicable
-
-### Feature Requests
-
-Use the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md) and include:
-
-- Clear description of the feature
-- Use case and motivation
-- Proposed implementation (if you have ideas)
-- Any alternatives considered
-
-### Questions
-
-Use the [question template](.github/ISSUE_TEMPLATE/question.md) for:
-
-- General questions about the project
-- Help with setup or configuration
-- Clarification on existing features
+- [bug report template](.github/ISSUE_TEMPLATE/bug_report.md)
+- [feature request template](.github/ISSUE_TEMPLATE/feature_request.md)
+- [question template](.github/ISSUE_TEMPLATE/question.md)
 
 ## Internationalization
 
-My Bible Log supports multiple languages. When contributing to i18n features:
+My Bible Log supports multiple languages.
 
-### Adding a New Locale
+Refer to the README for a checklist of how to add a new locale in the repository.
 
-Refer to the README for a checklist of how to add a new locale.
-
-### Translation Guidelines
-
-- Use the `$t` helper for component translations
-- Use the `$terr` helper for server error translations
-- Keep translations consistent across all files
-- Test translations in the target language
-- Consider cultural context, not just literal translation
+We use [Crowdin](https://crowdin.com/) to collaborate on translation work.
 
 ## Security
 

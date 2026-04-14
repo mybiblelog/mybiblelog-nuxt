@@ -9,33 +9,6 @@ If you discover a security vulnerability in My Bible Log, please report it respo
 3. Include as much detail as possible about the vulnerability
 4. We will respond within 48 hours and work with you to resolve the issue
 
-## Security Features
-
-### Authentication & Authorization
-
-- JWT-based authentication with configurable expiration
-- Password hashing using bcrypt with salt factor 10
-- Email verification required for new accounts
-- Google OAuth2 integration with CSRF protection
-- Rate limiting on authentication endpoints
-- Account lockout protection for failed login attempts
-
-### API Security
-
-- CORS configured to only allow specific origins
-- Security headers via Helmet.js
-- Input validation and sanitization
-- NoSQL injection prevention through Mongoose schema validation and parameterized queries
-- Rate limiting on sensitive endpoints
-
-### Data Protection
-
-- Passwords never stored in plain text
-- Sensitive data excluded from API responses
-- Email verification codes expire after 24 hours
-- Password reset codes expire after 1 hour
-- Secure session management
-
 ## Security Best Practices for Deployment
 
 ### Environment Variables

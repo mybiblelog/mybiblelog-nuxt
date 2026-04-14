@@ -4,7 +4,7 @@ My Bible Log is a free, open source web app for tracking personal Bible reading.
 
 This is the code that runs the live [mybiblelog.com](https://www.mybiblelog.com/) web app.
 
-## Development, Build, and Deployment Scripts
+## Getting Started
 
 ```bash
 # use the correct NPM version, if applicable

@@ -88,23 +88,20 @@ My Bible Log prend actuellement en charge :
 - Français
 - Allemand
 - Portugais
+- Coréen
 - Ukrainien
 
 ### 🌐 Comment Contribuer aux Traductions
+
+Nous utilisons [Crowdin](https://crowdin.com/) pour gérer les traductions.
 
 Si vous maîtrisez l'une de ces langues (ou une langue que nous ne prenons pas encore en charge), vous pouvez aider en :
 
 - Révisant et améliorant les traductions existantes
 - Traduisant de nouvelles fonctionnalités et du contenu
-- Ajoutant le support d'une nouvelle langue
+- Ajoutant la prise en charge d'une nouvelle langue
 
-Pour les détails techniques sur le fonctionnement des traductions dans le code source, consultez le [Guide de Contribution](https://github.com/mybiblelog/mybiblelog-nuxt/blob/main/CONTRIBUTING.md#internationalization) sur GitHub.
-
-Pour commencer avec les contributions de traduction, vous pouvez :
-
-- Ouvrir un problème sur GitHub pour discuter du travail de traduction
-- Soumettre une demande de tirage avec des améliorations de traduction
-- Nous contacter via le [formulaire de commentaires](/feedback) pour exprimer votre intérêt
+Pour commencer à contribuer aux traductions, vous pouvez nous contacter via le [formulaire de commentaires](/feedback) pour exprimer votre intérêt.
 
 </content-section-grid>
 

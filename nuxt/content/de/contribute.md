@@ -88,9 +88,12 @@ My Bible Log unterstützt derzeit:
 - Französisch
 - Deutsch
 - Portugiesisch
+- Koreanisch
 - Ukrainisch
 
 ### 🌐 Wie man zu Übersetzungen beiträgt
+
+Wir verwenden [Crowdin](https://crowdin.com/), um Übersetzungen zu verwalten.
 
 Wenn Sie eine dieser Sprachen fließend beherrschen (oder eine Sprache, die wir noch nicht unterstützen), können Sie helfen durch:
 
@@ -98,13 +101,7 @@ Wenn Sie eine dieser Sprachen fließend beherrschen (oder eine Sprache, die wir 
 - Übersetzen neuer Funktionen und Inhalte
 - Hinzufügen der Unterstützung für eine neue Sprache
 
-Für technische Details darüber, wie Übersetzungen im Codebase funktionieren, siehe den [Beitragsleitfaden](https://github.com/mybiblelog/mybiblelog-nuxt/blob/main/CONTRIBUTING.md#internationalization) auf GitHub.
-
-Um mit Übersetzungsbeiträgen zu beginnen, können Sie:
-
-- Ein Issue auf GitHub öffnen, um die Übersetzungsarbeit zu besprechen
-- Einen Pull Request mit Übersetzungsverbesserungen einreichen
-- Uns über das [Feedback-Formular](/feedback) kontaktieren, um Interesse zu bekunden
+Um mit Übersetzungsbeiträgen zu beginnen, können Sie uns über das [Feedback-Formular](/feedback) kontaktieren, um Interesse zu bekunden.
 
 </content-section-grid>
 
