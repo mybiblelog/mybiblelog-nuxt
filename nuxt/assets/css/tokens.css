@@ -14,6 +14,7 @@
   --z-index-site-nav-screen: 1;
 
   --header-height: calc(1rem + 1.618rem + 3px);
+  --site-nav-height: 3.25rem;
 
   --grey-100: #e4e9f0;
   --grey-200: #cfd7e3;

@@ -124,7 +124,7 @@ export default {
 
 <style>
 @media print {
-  body.has-navbar-fixed-top {
+  body.has-site-nav-fixed {
     padding-top: 0;
   }
 

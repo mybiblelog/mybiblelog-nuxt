@@ -1,23 +1,23 @@
 <template>
-  <div class="navbar-item language-switcher">
-    <a
-      href="#"
-      class="language-switcher-desktop desktop-switcher"
-      role="button"
+  <div class="language-switcher" :class="rootClass">
+    <button
+      v-if="variant === 'toolbar'"
+      type="button"
+      class="language-switcher__toolbar-btn"
       :aria-label="$t('choose_language')"
-      @click.prevent="modalOpen = true"
+      @click="modalOpen = true"
     >
-      <div class="line-height-stabilizer">
-        <translator-icon />
-        <span class="is-hidden-desktop"> {{ $t('choose_language') }}</span>
-      </div>
-    </a>
-    <div class="buttons is-centered mobile-switcher">
-      <button class="button is-outline" @click="modalOpen = true">
-        <translator-icon width="20" height="20" />
-        <span style="padding-left: 0.2rem"> {{ $t('choose_language') }}</span>
-      </button>
-    </div>
+      <translator-icon />
+    </button>
+    <button
+      v-else
+      type="button"
+      class="language-switcher__drawer-btn"
+      @click="modalOpen = true"
+    >
+      <translator-icon class="language-switcher__drawer-icon" width="20" height="20" />
+      <span class="language-switcher__drawer-label">{{ $t('choose_language') }}</span>
+    </button>
     <app-modal :open="modalOpen" :title="'🌎 ' + $t('choose_language')" @close="modalOpen = false">
       <template slot="content">
         <div class="language-switcher-modal">
@@ -25,8 +25,9 @@
             <a
               v-for="locale in availableLocales"
               :key="locale.code"
-              class="button language-switcher-modal__btn"
+              class="language-switcher-modal__btn"
               href="#"
+              role="button"
               @click.prevent.stop="() => { modalOpen = false; setLocale(locale.code); }"
             >
               <strong v-if="locale.code === $i18n.locale">{{ locale.name }}</strong>
@@ -51,14 +52,25 @@ export default {
     AppModal,
     TranslatorIcon,
   },
+  props: {
+    variant: {
+      type: String,
+      default: 'toolbar',
+      validator(v) {
+        return v === 'toolbar' || v === 'drawer';
+      },
+    },
+  },
   data() {
     return {
       modalOpen: false,
     };
   },
   computed: {
-    localeName() {
-      return this.$i18n.locales.find(locale => locale.code === this.$i18n.locale).name;
+    rootClass() {
+      return this.variant === 'drawer'
+        ? 'language-switcher--drawer'
+        : 'language-switcher--toolbar';
     },
     availableLocales() {
       return this.$i18n.locales;
@@ -78,51 +90,75 @@ export default {
 </script>
 
 <style scoped>
-.line-height-stabilizer {
-  line-height: 1em;
-  display: flex;
-  align-items: center;
-  gap: 0.68rem;
-}
-
-.language-switcher-desktop {
+.language-switcher--toolbar {
   display: inline-flex;
   align-items: center;
-  line-height: 1.5;
-  color: rgba(0, 0, 0, 0.7);
-  text-decoration: none;
+}
+
+.language-switcher__toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #333;
   cursor: pointer;
-  margin: -0.5rem -0.75rem;
-  padding: 1rem 1.5rem;
 }
 
-.language-switcher-desktop:hover,
-.language-switcher-desktop:focus {
-  background-color: #e8e8e8;
-  color: rgba(0, 0, 0, 0.7);
+.language-switcher__toolbar-btn:hover {
+  background: var(--grey-100, #e4e9f0);
 }
 
-.language-switcher-desktop:focus:not(:focus-visible) {
+.language-switcher__toolbar-btn:focus {
   outline: none;
 }
 
-.language-switcher-desktop:focus-visible {
-  outline: 2px solid #485fc7;
+.language-switcher__toolbar-btn:focus-visible {
+  outline: 2px solid var(--secondary-color, #0965f7);
   outline-offset: 2px;
 }
 
-.mobile-switcher {
-  display: none;
-  padding: 1rem;
+.language-switcher--drawer {
+  display: block;
+  width: 100%;
 }
 
-@media screen and (max-width: 1023px) {
-  .desktop-switcher {
-    display: none;
-  }
-  .mobile-switcher {
-    display: flex;
-  }
+.language-switcher__drawer-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  margin: 0;
+  border: 1px solid var(--grey-200, #cfd7e3);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #333;
+  text-align: left;
+  cursor: pointer;
+}
+
+.language-switcher__drawer-btn:hover {
+  background: var(--grey-100, #e4e9f0);
+}
+
+.language-switcher__drawer-btn:focus {
+  outline: none;
+}
+
+.language-switcher__drawer-btn:focus-visible {
+  outline: 2px solid var(--secondary-color, #0965f7);
+  outline-offset: 2px;
+}
+
+.language-switcher__drawer-label {
+  flex: 1;
 }
 
 .language-switcher-modal {
@@ -146,8 +182,35 @@ export default {
 }
 
 .language-switcher-modal__btn {
-  width: 100%;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--grey-200, #cfd7e3);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  color: #333;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+.language-switcher-modal__btn:hover {
+  background: var(--grey-100, #e4e9f0);
+  border-color: var(--grey-300, #b5c0cd);
+}
+
+.language-switcher-modal__btn:focus {
+  outline: none;
+}
+
+.language-switcher-modal__btn:focus-visible {
+  outline: 2px solid var(--secondary-color, #0965f7);
+  outline-offset: 2px;
 }
 </style>
 

@@ -7,6 +7,14 @@ body.modal-open {
   overflow-y: hidden;
 }
 
+body.site-nav-drawer-open {
+  overflow: hidden;
+}
+
+body.has-site-nav-fixed {
+  padding-top: var(--site-nav-height, 3.25rem);
+}
+
 .content-column {
   max-width: 708px;
   min-height: 70vh;
