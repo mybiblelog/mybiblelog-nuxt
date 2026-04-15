@@ -3,13 +3,21 @@
     <div class="site-nav__bar">
       <div class="site-nav__inner">
         <div class="site-nav__mobile-head">
-          <nuxt-link
-            class="site-nav__logo"
-            :to="localePath(authStore.loggedIn ? '/start' : '/')"
-            aria-label="home"
-          >
-            <img src="/images/logo.svg" width="28" height="28" alt="">
-          </nuxt-link>
+          <div class="site-nav__mobile-brand">
+            <nuxt-link
+              class="site-nav__logo"
+              :to="localePath(authStore.loggedIn ? '/start' : '/')"
+              aria-label="home"
+            >
+              <img src="/images/logo.svg" width="28" height="28" alt="">
+            </nuxt-link>
+            <nuxt-link
+              class="site-nav__brand-text"
+              :to="localePath(authStore.loggedIn ? '/start' : '/')"
+            >
+              {{ $t('my_bible_log') }}
+            </nuxt-link>
+          </div>
           <button
             type="button"
             class="site-nav__icon-btn site-nav__menu-btn"
@@ -489,6 +497,21 @@ export default {
   justify-content: space-between;
   gap: 0.5rem;
   padding: 0.5rem 0;
+}
+
+.site-nav__mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.site-nav__mobile-brand .site-nav__brand-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .site-nav__desktop {
