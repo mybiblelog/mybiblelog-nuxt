@@ -145,7 +145,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 main p {
   margin-bottom: 1rem;
 }

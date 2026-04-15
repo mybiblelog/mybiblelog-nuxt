@@ -14,7 +14,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .action-menu-button {
   background: transparent;
   border: none;
@@ -27,15 +27,15 @@ export default {
   transition: background-color 0.2s;
   width: 35px;
   height: 35px;
+}
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
+.action-menu-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 
-  &:focus {
-    outline: 2px solid #09f;
-    outline-offset: 2px;
-  }
+.action-menu-button:focus {
+  outline: 2px solid #09f;
+  outline-offset: 2px;
 }
 
 .action-menu-button-icon {
@@ -47,7 +47,7 @@ export default {
   user-select: none;
   background-color: currentColor;
   border-radius: 50%;
-  // Create three vertically stacked dots using box-shadow
+  /*  Create three vertically stacked dots using box-shadow */
   box-shadow:
     0 -6px 0 0 currentColor,
     0 6px 0 0 currentColor;

@@ -76,7 +76,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .fifty-fifty-section {
   margin: 3rem 0;
   padding: 2rem 0;
@@ -89,8 +89,10 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .fifty-fifty-container {
     flex-direction: column;
     gap: 2rem;
   }
@@ -98,8 +100,10 @@ export default {
 
 .fifty-fifty-section--reverse .fifty-fifty-container {
   flex-direction: row-reverse;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .fifty-fifty-section--reverse .fifty-fifty-container {
     flex-direction: column;
   }
 }
@@ -109,14 +113,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
-  img {
-    width: 100%;
-    max-width: 500px;
-    max-height: 80vh;
-    height: auto;
-    object-fit: contain;
-  }
+.fifty-fifty-image img {
+  width: 100%;
+  max-width: 500px;
+  max-height: 80vh;
+  height: auto;
+  object-fit: contain;
 }
 
 .fifty-fifty-content {
@@ -132,8 +136,10 @@ export default {
   margin-bottom: 0.5rem;
   line-height: 1.3;
   color: #333;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .fifty-fifty-title {
     font-size: 1.75rem;
   }
 }
@@ -144,8 +150,10 @@ export default {
   margin-bottom: 0.5rem;
   color: var(--secondary-color, #0965f7);
   line-height: 1.4;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .fifty-fifty-subtitle {
     font-size: 1.125rem;
   }
 }
@@ -155,8 +163,10 @@ export default {
   line-height: 1.7;
   color: #555;
   margin-bottom: 0.5rem;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .fifty-fifty-description {
     font-size: 1rem;
   }
 }
@@ -165,28 +175,30 @@ export default {
   list-style: none;
   padding-left: 0;
   margin: 1rem 0;
+}
 
-  li {
-    font-size: 1.125rem;
-    line-height: 1.7;
-    color: #555;
-    padding: 0.5rem 0;
-    padding-left: 1.5rem;
-    position: relative;
+.fifty-fifty-list li {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #555;
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
 
-    @media screen and (max-width: 768px) {
-      font-size: 1rem;
-    }
-
-    &::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--tertiary-color, #00d1b2);
-      font-weight: bold;
-      font-size: 1.25rem;
-    }
+@media screen and (max-width: 768px) {
+  .fifty-fifty-list li {
+    font-size: 1rem;
   }
+}
+
+.fifty-fifty-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--tertiary-color, #00d1b2);
+  font-weight: bold;
+  font-size: 1.25rem;
 }
 
 .fifty-fifty-cta {
@@ -201,17 +213,17 @@ export default {
   font-size: 1rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 170, 249, 0.3);
+}
 
-  &:hover {
-    background-color: var(--secondary-color, #0965f7);
-    border-color: var(--secondary-color, #0965f7);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
-  }
+.button.is-primary:hover {
+  background-color: var(--secondary-color, #0965f7);
+  border-color: var(--secondary-color, #0965f7);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
+}
 
-  &:active {
-    transform: translateY(0);
-  }
+.button.is-primary:active {
+  transform: translateY(0);
 }
 
 .fifty-fifty-note {

@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .floating-action-button {
   position: fixed;
   bottom: 2rem;
@@ -58,7 +58,7 @@ export default {
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  z-index: $zIndexActionButton;
+  z-index: var(--z-index-action-button);
   text-decoration: none;
   border: none;
   cursor: pointer;

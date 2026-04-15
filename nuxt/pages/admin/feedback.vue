@@ -91,7 +91,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .table-container {
   overflow-x: auto;
   margin: 0 -0.75rem;

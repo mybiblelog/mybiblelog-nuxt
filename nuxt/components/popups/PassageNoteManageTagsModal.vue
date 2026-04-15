@@ -104,7 +104,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .manage-tags__new-row {
   margin-top: 0.75rem;
 }

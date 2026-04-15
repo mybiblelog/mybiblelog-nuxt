@@ -26,7 +26,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .passage-note-tag-pill {
   font-size: 0.8em;
   color: #fff;

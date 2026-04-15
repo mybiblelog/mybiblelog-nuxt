@@ -114,8 +114,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-//
+<style scoped>
+
 </style>
 
 <i18n lang="json">

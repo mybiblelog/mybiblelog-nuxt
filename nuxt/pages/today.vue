@@ -411,7 +411,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .recent-notes-container {
   margin-top: 1rem;
 }

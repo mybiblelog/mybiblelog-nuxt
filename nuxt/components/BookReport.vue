@@ -194,7 +194,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .book-report {
   user-select: none;
 }

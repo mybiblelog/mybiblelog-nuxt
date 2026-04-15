@@ -79,7 +79,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .app-modal-root {
   pointer-events: none;
 }
@@ -88,41 +88,41 @@ export default {
   pointer-events: auto;
 }
 
-.modal {
-  .modal-background {
-    // help ensure modal background covers the entire viewport
-    height: 100dvh;
-  }
+.modal .modal-background {
+  /*  help ensure modal background covers the entire viewport */
+  height: 100dvh;
+}
 
-  .modal-card {
-    padding: 0 1rem;
-  }
+.modal .modal-card {
+  padding: 0 1rem;
+}
 
-  .modal-card-body {
-    &:last-child {
-      border-bottom-left-radius: $modal-card-border-radius;
-      border-bottom-right-radius: $modal-card-border-radius;
-    }
-  }
+.modal .modal-card-body:last-child {
+  border-bottom-left-radius: var(--modal-card-border-radius);
+  border-bottom-right-radius: var(--modal-card-border-radius);
+}
 
-  &.fade-enter-active,
-  &.fade-appear-active,
-  &.fade-leave-active {
-    transition: $transition-fade;
+.modal.fade-enter-active,
+.modal.fade-appear-active,
+.modal.fade-leave-active {
+  transition: var(--transition-fade);
+}
 
-    .modal-card {
-      transition: $transition-modal;
-    }
-  }
+.modal.fade-enter-active .modal-card,
+.modal.fade-appear-active .modal-card,
+.modal.fade-leave-active .modal-card {
+  transition: var(--transition-modal);
+}
 
-  &.fade-enter,
-  &.fade-appear,
-  &.fade-leave-to {
-    opacity: 0;
+.modal.fade-enter,
+.modal.fade-appear,
+.modal.fade-leave-to {
+  opacity: 0;
+}
 
-    .modal-card {
-      transform: $modal-scale;
-    }
-  }
+.modal.fade-enter .modal-card,
+.modal.fade-appear .modal-card,
+.modal.fade-leave-to .modal-card {
+  transform: var(--modal-scale);
 }
 </style>

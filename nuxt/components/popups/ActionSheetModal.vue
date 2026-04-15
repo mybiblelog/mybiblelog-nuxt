@@ -94,14 +94,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .action-sheet-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: $zIndexActionMenu;
+  z-index: var(--z-index-action-menu);
   background: rgba(0, 0, 0, 0.5);
 }
 
@@ -111,17 +111,18 @@ export default {
   right: 0;
   background: #fff;
   box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.3);
-  z-index: $zIndexActionMenu + 1;
+  z-index: calc(var(--z-index-action-menu) + 1);
   overflow-y: auto;
   max-height: 80vh;
 
-  // Small screens: bottom sheet style
+  /*  Small screens: bottom sheet style */
   bottom: 0;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+}
 
-  // Large screens: float in middle
-  @media (min-width: $breakpoint) {
+@media (min-width: 800px) {
+  .action-sheet {
     bottom: auto;
     top: 50%;
     left: 50%;
@@ -144,15 +145,17 @@ export default {
   color: #333;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   background-color: #fafafa;
+}
 
-  // Small screens: first item gets top border radius
-  @media (max-width: calc($breakpoint - 1px)) {
+@media (max-width: 799px) {
+  .action-sheet-title {
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
   }
+}
 
-  // Large screens: get top border radius
-  @media (min-width: $breakpoint) {
+@media (min-width: 800px) {
+  .action-sheet-title {
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
   }
@@ -164,42 +167,40 @@ export default {
   transition: background-color 0.15s;
   color: #333;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
 
-  &:hover {
-    background-color: #f5f5f5;
-  }
+.action-sheet-item:hover {
+  background-color: #f5f5f5;
+}
 
-  &:active {
-    background-color: #e8e8e8;
-  }
+.action-sheet-item:active {
+  background-color: #e8e8e8;
+}
 
-  &:last-child {
-    border-bottom: none;
-  }
+.action-sheet-item:last-child {
+  border-bottom: none;
+}
 
-  // Small screens: first item gets top border radius (only if no title)
-  @media (max-width: calc($breakpoint - 1px)) {
-    &:first-child {
-      border-top-left-radius: 1rem;
-      border-top-right-radius: 1rem;
-    }
-  }
-
-  // Large screens: all items get border radius
-  @media (min-width: $breakpoint) {
-    &:first-child {
-      border-top-left-radius: 0.5rem;
-      border-top-right-radius: 0.5rem;
-    }
-
-    &:last-child {
-      border-bottom-left-radius: 0.5rem;
-      border-bottom-right-radius: 0.5rem;
-    }
+@media (max-width: 799px) {
+  .action-sheet-item:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
   }
 }
 
-// Fade transition for overlay
+@media (min-width: 800px) {
+  .action-sheet-item:first-child {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+
+  .action-sheet-item:last-child {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+}
+
+/*  Fade transition for overlay */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -210,7 +211,7 @@ export default {
   opacity: 0;
 }
 
-// Slide up transition for sheet
+/*  Slide up transition for sheet */
 .slide-up-enter-active,
 .slide-up-leave-active {
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -219,10 +220,11 @@ export default {
 .slide-up-enter {
   transform: translateY(100%);
   opacity: 0;
+}
 
-  // Large screens: use scale for center animation
-  @media (min-width: $breakpoint) {
-    transform: translate(-50%, -50%) $modal-scale;
+@media (min-width: 800px) {
+  .slide-up-enter {
+    transform: translate(-50%, -50%) var(--modal-scale);
     opacity: 0;
   }
 }
@@ -230,10 +232,11 @@ export default {
 .slide-up-leave-to {
   transform: translateY(100%);
   opacity: 0;
+}
 
-  // Large screens: use scale for center animation
-  @media (min-width: $breakpoint) {
-    transform: translate(-50%, -50%) $modal-scale;
+@media (min-width: 800px) {
+  .slide-up-leave-to {
+    transform: translate(-50%, -50%) var(--modal-scale);
     opacity: 0;
   }
 }
@@ -242,9 +245,11 @@ export default {
 .slide-up-leave {
   transform: translateY(0);
   opacity: 1;
+}
 
-  // Large screens: maintain center position (matches base .action-sheet transform)
-  @media (min-width: $breakpoint) {
+@media (min-width: 800px) {
+  .slide-up-enter-to,
+  .slide-up-leave {
     transform: translate(-50%, -50%);
     opacity: 1;
   }

@@ -48,7 +48,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 .hero-section {
   padding: 4rem 1.5rem;
@@ -72,8 +72,10 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .hero-title {
     font-size: 2.5rem;
   }
 }
@@ -83,8 +85,10 @@ export default {
   color: #4a4a4a;
   margin-bottom: 1.5rem;
   font-style: italic;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .hero-subtitle {
     font-size: 1.25rem;
   }
 }
@@ -97,21 +101,23 @@ export default {
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+}
 
-  @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .hero-description {
     font-size: 1rem;
     margin-bottom: 2rem;
   }
+}
 
-  em {
-    font-style: italic;
-    color: #333;
-  }
+.hero-description em {
+  font-style: italic;
+  color: #333;
+}
 
-  strong {
-    font-weight: 600;
-    color: var(--secondary-color);
-  }
+.hero-description strong {
+  font-weight: 600;
+  color: var(--secondary-color);
 }
 
 .hero-cta {
@@ -129,26 +135,26 @@ export default {
   font-size: 1.125rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 170, 249, 0.3);
+}
 
-  &:hover {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
-  }
+.button.is-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
+}
 
-  &:active {
-    transform: translateY(0);
-  }
+.button.is-primary:active {
+  transform: translateY(0);
 }
 
 .hero-cta-note {
   font-size: 0.9rem;
   color: #666;
   margin: 0;
+}
 
-  em {
-    font-style: italic;
-  }
+.hero-cta-note em {
+  font-style: italic;
 }
 </style>

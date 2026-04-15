@@ -204,7 +204,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .log-entries-query-manager__divider {
   margin: 1rem 0;
 }

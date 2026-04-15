@@ -64,7 +64,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 /* css class for the transition */
 .popup-modal {
   background-color: rgba(0, 0, 0, 0.5);
@@ -76,25 +76,27 @@ export default {
   padding: 0.5rem;
   display: flex;
   align-items: center;
-  z-index: $zIndexPopUp;
+  z-index: var(--z-index-popup);
+}
 
-  &.fade-enter-active,
-  &.fade-leave-active {
-    transition: $transition-fade;
+.popup-modal.fade-enter-active,
+.popup-modal.fade-leave-active {
+  transition: var(--transition-fade);
+}
 
-    .window {
-      transition: $transition-modal;
-    }
-  }
+.popup-modal.fade-enter-active .window,
+.popup-modal.fade-leave-active .window {
+  transition: var(--transition-modal);
+}
 
-  &.fade-enter,
-  &.fade-leave-to {
-    opacity: 0;
+.popup-modal.fade-enter,
+.popup-modal.fade-leave-to {
+  opacity: 0;
+}
 
-    .window {
-      transform: $modal-scale;
-    }
-  }
+.popup-modal.fade-enter .window,
+.popup-modal.fade-leave-to .window {
+  transform: var(--modal-scale);
 }
 
 .window {

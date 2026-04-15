@@ -47,13 +47,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .toaster {
   position: fixed;
-  top: 72px; // clear the nav bar
+  top: 72px; /* clear the nav bar */
   left: 1rem;
   right: 1rem;
-  z-index: $zIndexToast;
+  z-index: var(--z-index-toast);
   pointer-events: none;
 }
 

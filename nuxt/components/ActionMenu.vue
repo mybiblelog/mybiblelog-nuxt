@@ -80,7 +80,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .action-menu-wrapper {
   position: relative;
   display: inline-block;
@@ -98,15 +98,15 @@ export default {
   transition: background-color 0.2s;
   width: 35px;
   height: 35px;
+}
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
+.action-menu-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 
-  &:focus {
-    outline: 2px solid #09f;
-    outline-offset: 2px;
-  }
+.action-menu-button:focus {
+  outline: 2px solid #09f;
+  outline-offset: 2px;
 }
 
 .action-menu-button-icon {
@@ -118,7 +118,7 @@ export default {
   user-select: none;
   background-color: currentColor;
   border-radius: 50%;
-  // Create three vertically stacked dots using box-shadow
+  /*  Create three vertically stacked dots using box-shadow */
   box-shadow:
     0 -6px 0 0 currentColor,
     0 6px 0 0 currentColor;
@@ -130,7 +130,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: $zIndexActionMenu;
+  z-index: var(--z-index-action-menu);
   background: transparent;
 }
 
@@ -144,7 +144,7 @@ export default {
   border-radius: 0.25rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   min-width: 150px;
-  z-index: 39; // Above overlay
+  z-index: 39; /* Above overlay */
   overflow: hidden;
 }
 
@@ -154,20 +154,20 @@ export default {
   transition: background-color 0.15s;
   white-space: nowrap;
   color: #333;
+}
 
-  &:hover {
-    background-color: #f5f5f5;
-  }
+.action-menu-item:hover {
+  background-color: #f5f5f5;
+}
 
-  &:first-child {
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-  }
+.action-menu-item:first-child {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
 
-  &:last-child {
-    border-bottom-left-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-  }
+.action-menu-item:last-child {
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
 }
 </style>
 

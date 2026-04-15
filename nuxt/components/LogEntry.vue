@@ -79,7 +79,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .log-entry {
   display: flex;
   flex-direction: column;
@@ -87,44 +87,44 @@ export default {
   border-radius: 0.25rem;
   box-shadow: 0 1px 7px #999;
   margin: 0.5rem 0;
+}
 
-  &.empty {
-    box-shadow: none;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+.log-entry.empty {
+  box-shadow: none;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 
-  .log-entry-header-message {
-    position: relative;
-    top: -0.5rem;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-    color: rgb(0, 123, 204);
-    font-size: 0.8em;
-    letter-spacing: 0.05cap;
-  }
+.log-entry .log-entry-header-message {
+  position: relative;
+  top: -0.5rem;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  color: rgb(0, 123, 204);
+  font-size: 0.8em;
+  letter-spacing: 0.05cap;
+}
 
-  .log-entry-body {
-    display: flex;
-    justify-content: space-between;
-  }
+.log-entry .log-entry-body {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .log-entry-body-message {
-    //
-  }
+.log-entry .log-entry-body-message {
+  /* no styles */
+}
 
-  .passage {
-    font-weight: bold;
-  }
+.log-entry .passage {
+  font-weight: bold;
+}
 
-  .verse-count {
-    font-size: 0.8em;
-  }
+.log-entry .verse-count {
+  font-size: 0.8em;
+}
 
-  .button-controls {
-    display: flex;
-    justify-content: flex-end;
-  }
+.log-entry .button-controls {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
 

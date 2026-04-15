@@ -451,7 +451,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 .selector-note {
   background: #eee;
@@ -463,27 +463,30 @@ export default {
 .passage-selector {
   display: flex;
   align-items: center;
+}
 
-  .part {
-    display: inline;
-    background: #ccc;
-    padding: 0.5rem 0.75rem;
-    margin: 0 0.25rem;
-    border-radius: 3px;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: color 0.2s ease-out, background-color 0.2s ease-out;
-    &:hover {
-      color: #fff;
-      background: #09f;
-    }
-    &:first-child {
-      margin-left: 0;
-    }
-    &:last-child {
-      margin-right: 0;
-    }
-  }
+.passage-selector .part {
+  display: inline;
+  background: #ccc;
+  padding: 0.5rem 0.75rem;
+  margin: 0 0.25rem;
+  border-radius: 3px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s ease-out, background-color 0.2s ease-out;
+}
+
+.passage-selector .part:hover {
+  color: #fff;
+  background: #09f;
+}
+
+.passage-selector .part:first-child {
+  margin-left: 0;
+}
+
+.passage-selector .part:last-child {
+  margin-right: 0;
 }
 
 .book-selector-controls {
@@ -506,29 +509,29 @@ export default {
   transition: 0.2s;
   font-size: 0.9rem;
   white-space: nowrap;
+}
 
-  &:hover {
-    border-color: #09f;
-    background: #f0f8ff;
-  }
+.button-group--button:hover {
+  border-color: #09f;
+  background: #f0f8ff;
+}
 
-  &.active {
-    background: #09f;
-    color: #fff;
-    border-color: #09f;
-  }
+.button-group--button.active {
+  background: #09f;
+  color: #fff;
+  border-color: #09f;
+}
 
-  &.button-group--button-left {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-right: none;
-  }
+.button-group--button.button-group--button-left {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right: none;
+}
 
-  &.button-group--button-right {
-    border-left: none;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-  }
+.button-group--button.button-group--button-right {
+  border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 </style>
 

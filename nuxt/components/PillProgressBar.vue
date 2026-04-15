@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .pill-progress-bar {
   display: flex;
   gap: 0.5rem;
@@ -38,9 +38,9 @@ export default {
   border-radius: 0.25rem;
   background-color: #e0e0e0;
   transition: background-color 0.3s ease;
+}
 
-  &.is-filled {
-    background-color: #3273dc; // Bulma primary color
-  }
+.pill.is-filled {
+  background-color: #3273dc; /* Bulma primary color */
 }
 </style>

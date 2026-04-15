@@ -57,7 +57,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .passage-note-tag-selector {
   /* stylelint-disable-next-line property-no-unknown */
   container-type: inline-size;

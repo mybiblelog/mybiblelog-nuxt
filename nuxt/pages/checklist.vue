@@ -14,7 +14,7 @@
       </div>
       <div v-for="bookReport in bookReports" :key="bookReport.bookIndex" class="book-card">
         <div class="book-card--header">
-          <div>
+          <div class="book-card--completion-indicator">
             <check-mark-icon width="100%" height="100%" :fill="bookReport.complete ? '#0c0' : 'transparent'" />
           </div>
           <div class="book-card--book-name">
@@ -242,7 +242,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .loading-card {
   padding: 1rem 2rem;
   border-radius: 0.25rem;
@@ -292,33 +292,43 @@ export default {
   grid-area: 1 / 4 / 3 / 5;
   display: flex;
   cursor: pointer;
-  &.flipped {
-    transform: rotate(180deg);
-  }
+}
+
+.book-card--chapter-toggle.flipped {
+  transform: rotate(180deg);
 }
 
 .book-card--chapters {
   display: grid;
   gap: 0.5rem;
   grid-template-columns: repeat(5, 1fr);
-  @media screen and (min-width: 769px) {
+}
+
+@media screen and (min-width: 769px) {
+  .book-card--chapters {
     grid-template-columns: repeat(6, 1fr);
   }
-  @media screen and (min-width: 1024px) {
+}
+
+@media screen and (min-width: 1024px) {
+  .book-card--chapters {
     grid-template-columns: repeat(8, 1fr);
   }
-  @media screen and (min-width: 1216px) {
+}
+
+@media screen and (min-width: 1216px) {
+  .book-card--chapters {
     grid-template-columns: repeat(10, 1fr);
   }
-  @media screen and (min-width: 1408px) {
+}
+
+@media screen and (min-width: 1408px) {
+  .book-card--chapters {
     grid-template-columns: repeat(12, 1fr);
   }
-
-  // margin: -5px;
 }
 
 .chapter-card {
-  // margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.25rem;
   box-shadow: 0 1px 7px #999;
@@ -329,10 +339,11 @@ export default {
   cursor: pointer;
 
   transition: 0.1s;
-  &:hover {
-    transition: 0.2s;
-    box-shadow: 0 1px 9px #333;
-  }
+}
+
+.chapter-card:hover {
+  transition: 0.2s;
+  box-shadow: 0 1px 9px #333;
 }
 
 .chapter-card--chapter-number {

@@ -113,7 +113,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .pagination {
   margin: 1rem 0;
   padding: 0;
@@ -123,8 +123,10 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 0.5rem 0.75rem;
+}
 
-  @media (min-width: 480px) {
+@media (min-width: 480px) {
+  .pagination {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -140,16 +142,20 @@ export default {
 
 .pagination__side--left {
   justify-content: center;
+}
 
-  @media (min-width: 480px) {
+@media (min-width: 480px) {
+  .pagination__side--left {
     justify-content: flex-start;
   }
 }
 
 .pagination__side--right {
   justify-content: center;
+}
 
-  @media (min-width: 480px) {
+@media (min-width: 480px) {
+  .pagination__side--right {
     justify-content: flex-end;
   }
 }

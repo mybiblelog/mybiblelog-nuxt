@@ -98,9 +98,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .chapter-report {
-  // override button styles
+  /*  override button styles */
   border: none;
   background: #fff;
   cursor: pointer;
@@ -114,49 +114,50 @@ export default {
   position: relative;
 
   transition: 0.1s;
-  &:hover {
-    transition: 0.2s;
-    box-shadow: 0 1px 9px #333;
-  }
+}
 
-  &--indicator {
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%;
-    min-height: 3.5rem;
-    margin-bottom: 5px;
+.chapter-report:hover {
+  transition: 0.2s;
+  box-shadow: 0 1px 9px #333;
+}
 
-    &--icon {
-      position: absolute;
-      left: 20%;
-      top: 20%;
-      bottom: 20%;
-      right: 20%;
+.chapter-report--indicator {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  min-height: 3.5rem;
+  margin-bottom: 5px;
+}
 
-      img {
-        width: 100%;
-      }
-    }
-  }
+.chapter-report--indicator--icon {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  bottom: 20%;
+  right: 20%;
+}
 
-  &--index {
-    position: absolute;
-    top: 0;
-    left: 0;
+.chapter-report--indicator--icon img {
+  width: 100%;
+}
 
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
+.chapter-report--index {
+  position: absolute;
+  top: 0;
+  left: 0;
 
-  &--fraction {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 
-    font-size: 0.8rem;
-    font-weight: bold;
-    white-space: nowrap;
-  }
+.chapter-report--fraction {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  font-size: 0.8rem;
+  font-weight: bold;
+  white-space: nowrap;
 }
 </style>
 

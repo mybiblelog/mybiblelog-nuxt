@@ -340,7 +340,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .passage-notes-query-manager__divider {
   margin: 1rem 0;
 }

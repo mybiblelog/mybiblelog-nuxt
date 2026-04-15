@@ -341,7 +341,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .notes-page {
   max-width: 1100px;
   min-height: 70vh;
@@ -363,8 +363,10 @@ export default {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
 
-  @media (min-width: $breakpoint) {
+@media (min-width: 800px) {
+  .notes-page__mobile-query-button {
     display: none;
   }
 }
@@ -387,17 +389,19 @@ export default {
 
 .notes-page__sidebar {
   display: none;
+}
 
-  @media (min-width: $breakpoint) {
+@media (min-width: 800px) {
+  .notes-page__sidebar {
     display: block;
     position: sticky;
-    top: calc(#{$header-height} + 1rem);
+    top: calc(var(--header-height) + 1rem);
     align-self: flex-start;
   }
 }
 
-.notes-page__content {
-  @media (min-width: $breakpoint) {
+@media (min-width: 800px) {
+  .notes-page__content {
     padding-left: 1rem;
   }
 }
@@ -416,7 +420,7 @@ export default {
 
 .notes-page__results-bar {
   position: sticky;
-  top: calc(#{$header-height} + 0.5rem - 1px);
+  top: calc(var(--header-height) + 0.5rem - 1px);
   z-index: 10;
 
   background: white;
@@ -429,8 +433,10 @@ export default {
   flex-direction: column;
   align-items: stretch;
   gap: 0.25rem; /* tighter row gap on small screens */
+}
 
-  @media (min-width: 600px) {
+@media (min-width: 600px) {
+  .notes-page__results-bar {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -446,8 +452,10 @@ export default {
 .notes-page__results-pager {
   display: flex;
   justify-content: flex-start;
+}
 
-  @media (min-width: 600px) {
+@media (min-width: 600px) {
+  .notes-page__results-pager {
     justify-content: flex-end;
   }
 }

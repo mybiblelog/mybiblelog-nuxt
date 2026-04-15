@@ -66,7 +66,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .segment-bar {
   border-radius: 5px;
   overflow: hidden;
@@ -79,13 +79,15 @@ export default {
   height: 100%;
 
   transition: background 0.2s;
-  &.is-read {
-    background-color: var(--segment-read-color);
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--segment-read-hover-color);
-      }
-    }
+}
+
+.segment.is-read {
+  background-color: var(--segment-read-color);
+}
+
+@media (hover: hover) {
+  .segment.is-read:hover {
+    background-color: var(--segment-read-hover-color);
   }
 }
 </style>

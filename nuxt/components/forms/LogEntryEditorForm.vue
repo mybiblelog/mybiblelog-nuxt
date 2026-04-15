@@ -264,9 +264,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-$breakpoint: 550px;
-
+<style scoped>
 form {
   margin: 0 auto;
   max-width: 200px;
@@ -274,7 +272,10 @@ form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 1rem;
-  @media screen and (min-width: $breakpoint) {
+}
+
+@media screen and (min-width: 550px) {
+  form {
     max-width: 400px;
     grid-row-gap: 1rem;
   }
@@ -343,7 +344,7 @@ form select:not(:disabled) {
   background-color: #fff;
 }
 
-@media screen and (max-width: $breakpoint) {
+@media screen and (max-width: 550px) {
   form {
     display: flex;
     flex-direction: column;

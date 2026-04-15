@@ -172,7 +172,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 .entry-date {
   border-bottom: 2px solid #09f;

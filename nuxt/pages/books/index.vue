@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 </style>
 
 <i18n lang="json">

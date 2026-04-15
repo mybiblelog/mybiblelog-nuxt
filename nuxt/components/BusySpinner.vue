@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .busy-spinner,
 .busy-spinner > div {
     position: relative;

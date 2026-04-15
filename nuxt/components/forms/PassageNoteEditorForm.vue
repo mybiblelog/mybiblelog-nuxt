@@ -262,7 +262,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .passages-title {
   display: flex;
   justify-content: space-between;
@@ -278,18 +278,20 @@ export default {
   padding: 0.25rem 0;
   border: 0px dashed #ccc;
   border-top-width: 1px;
-  &:first-child {
-    border-top-style: solid;
-  }
-  &:last-child {
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-  }
+}
 
-  .passage,
-  .controls {
-    margin: 0.25rem 0;
-  }
+.passage-line:first-child {
+  border-top-style: solid;
+}
+
+.passage-line:last-child {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.passage-line .passage,
+.passage-line .controls {
+  margin: 0.25rem 0;
 }
 .passage-note-editor-tags {
   display: flex;
