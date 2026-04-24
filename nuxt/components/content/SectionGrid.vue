@@ -155,7 +155,7 @@ export default {
 ::v-deep .h3-grid-item {
   border: 2px solid;
   border-image-slice: 1;
-  border-image-source: linear-gradient(to right, var(--primary-color, #00aaf9) 0%, var(--secondary-color, #0965f7) 100%);
+  border-image-source: linear-gradient(to right, var(--primary-color) 0%, var(--secondary-color) 100%);
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
@@ -166,11 +166,11 @@ export default {
   margin-bottom: 0.75rem;
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--secondary-color, #0965f7);
+  color: var(--secondary-color);
 }
 
 ::v-deep .h3-grid-item .h3-gradient-text {
-  background: linear-gradient(to right, var(--primary-color, #00aaf9) 0%, var(--secondary-color, #0965f7) 100%);
+  background: linear-gradient(to right, var(--primary-color) 0%, var(--secondary-color) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -195,7 +195,7 @@ export default {
 }
 
 ::v-deep .h3-grid-item a {
-  color: var(--primary-color, #00aaf9);
+  color: var(--primary-color);
   text-decoration: none;
   font-weight: 500;
 }

@@ -30,7 +30,7 @@
 }
 
 .mbl-content {
-  color: var(--mbl-text);
+  color: var(--mbl-text-body);
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -96,6 +96,6 @@
 .mbl-text-center { text-align: center; }
 .mbl-text-danger { color: var(--mbl-danger); }
 .mbl-text-success { color: var(--mbl-success); }
-.mbl-text-warning { color: #946c00; }
+.mbl-text-warning { color: var(--mbl-warning-fg); }
 .mbl-text-muted { color: var(--mbl-text-muted); }
 .mbl-text-small { font-size: 0.85rem; }

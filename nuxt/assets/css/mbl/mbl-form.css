@@ -108,7 +108,7 @@
   background-color: var(--mbl-bg);
   border: 1px solid var(--mbl-border);
   border-radius: var(--mbl-radius);
-  box-shadow: inset 0 0.0625em 0.125em rgba(10, 10, 10, 0.05);
+  box-shadow: var(--mbl-inset-well);
   color: var(--mbl-text);
   display: inline-flex;
   font-size: 1rem;
@@ -123,13 +123,13 @@
 
 .mbl-input:hover,
 .mbl-textarea:hover {
-  border-color: #b5b5b5;
+  border-color: var(--mbl-border-strong);
 }
 
 .mbl-input:focus,
 .mbl-textarea:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.125em rgba(0, 170, 249, 0.25);
+  box-shadow: var(--mbl-focus-ring);
   outline: none;
 }
 
@@ -176,7 +176,7 @@
 }
 
 .mbl-select select:hover {
-  border-color: #b5b5b5;
+  border-color: var(--mbl-border-strong);
 }
 
 .mbl-select::after {
@@ -261,7 +261,7 @@
 }
 
 .mbl-file__cta:hover {
-  border-color: #b5b5b5;
+  border-color: var(--mbl-border-strong);
 }
 
 .mbl-file__text {

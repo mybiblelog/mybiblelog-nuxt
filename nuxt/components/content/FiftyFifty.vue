@@ -148,7 +148,7 @@ export default {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--secondary-color, #0965f7);
+  color: var(--secondary-color);
   line-height: 1.4;
 }
 
@@ -196,7 +196,7 @@ export default {
   content: '✓';
   position: absolute;
   left: 0;
-  color: var(--tertiary-color, #00d1b2);
+  color: var(--tertiary-color);
   font-weight: bold;
   font-size: 1.25rem;
 }
@@ -206,8 +206,8 @@ export default {
 }
 
 .fifty-fifty-cta .mbl-button.mbl-button--primary {
-  background-color: var(--primary-color, #00aaf9);
-  border-color: var(--primary-color, #00aaf9);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   font-weight: 600;
   padding: 0.875rem 2rem;
   font-size: 1rem;
@@ -216,8 +216,8 @@ export default {
 }
 
 .fifty-fifty-cta .mbl-button.mbl-button--primary:hover {
-  background-color: var(--secondary-color, #0965f7);
-  border-color: var(--secondary-color, #0965f7);
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
 }

@@ -110,7 +110,7 @@ export default {
 }
 
 .language-switcher__toolbar-btn:hover {
-  background: var(--grey-100, #e4e9f0);
+  background: var(--neutral-150);
 }
 
 .language-switcher__toolbar-btn:focus {
@@ -118,7 +118,7 @@ export default {
 }
 
 .language-switcher__toolbar-btn:focus-visible {
-  outline: 2px solid var(--secondary-color, #0965f7);
+  outline: 2px solid var(--secondary-color);
   outline-offset: 2px;
 }
 
@@ -134,7 +134,7 @@ export default {
   gap: 0.6rem;
   padding: 0.85rem 1rem;
   margin: 0;
-  border: 1px solid var(--grey-200, #cfd7e3);
+  border: 1px solid var(--neutral-200);
   border-radius: 8px;
   background: #fff;
   font-size: 1rem;
@@ -145,7 +145,7 @@ export default {
 }
 
 .language-switcher__drawer-btn:hover {
-  background: var(--grey-100, #e4e9f0);
+  background: var(--neutral-150);
 }
 
 .language-switcher__drawer-btn:focus {
@@ -153,7 +153,7 @@ export default {
 }
 
 .language-switcher__drawer-btn:focus-visible {
-  outline: 2px solid var(--secondary-color, #0965f7);
+  outline: 2px solid var(--secondary-color);
   outline-offset: 2px;
 }
 
@@ -188,7 +188,7 @@ export default {
   width: 100%;
   min-height: 2.5rem;
   padding: 0.5rem 0.75rem;
-  border: 1px solid var(--grey-200, #cfd7e3);
+  border: 1px solid var(--neutral-200);
   border-radius: 6px;
   background: #fff;
   font-size: 0.9375rem;
@@ -200,8 +200,8 @@ export default {
 }
 
 .language-switcher-modal__btn:hover {
-  background: var(--grey-100, #e4e9f0);
-  border-color: var(--grey-300, #b5c0cd);
+  background: var(--neutral-150);
+  border-color: var(--neutral-300);
 }
 
 .language-switcher-modal__btn:focus {
@@ -209,7 +209,7 @@ export default {
 }
 
 .language-switcher-modal__btn:focus-visible {
-  outline: 2px solid var(--secondary-color, #0965f7);
+  outline: 2px solid var(--secondary-color);
   outline-offset: 2px;
 }
 </style>

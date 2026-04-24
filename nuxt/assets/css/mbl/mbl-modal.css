@@ -13,7 +13,7 @@
   position: fixed;
   right: 0;
   top: 0;
-  z-index: var(--z-index-modal, 40);
+  z-index: var(--z-index-modal);
 }
 
 .mbl-modal--active {
@@ -21,7 +21,7 @@
 }
 
 .mbl-modal__backdrop {
-  background-color: rgba(10, 10, 10, 0.86);
+  background-color: var(--mbl-scrim);
   bottom: 0;
   left: 0;
   position: absolute;

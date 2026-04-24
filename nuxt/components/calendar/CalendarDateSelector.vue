@@ -50,7 +50,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--grey-800);
+  color: var(--neutral-600);
   margin: 0 -1rem;
 }
 

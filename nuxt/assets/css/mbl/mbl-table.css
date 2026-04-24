@@ -27,7 +27,7 @@
 }
 
 .mbl-table--striped tbody tr:nth-child(even) {
-  background-color: #fafafa;
+  background-color: var(--mbl-bg-subtle);
 }
 
 .mbl-table--narrow td,

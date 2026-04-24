@@ -126,12 +126,12 @@ export default {
 }
 
 .footer-link:hover {
-  color: var(--primary-color, #00aaf9);
+  color: var(--primary-color);
   transform: translateY(-1px);
 }
 
 .footer-link:active {
-  color: var(--secondary-color, #0965f7);
+  color: var(--secondary-color);
 }
 
 .footer-link::after {
@@ -141,7 +141,7 @@ export default {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(135deg, var(--primary-color, #00aaf9) 0%, var(--secondary-color, #0965f7) 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   transition: width 0.3s ease;
 }
 

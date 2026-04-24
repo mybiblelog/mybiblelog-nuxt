@@ -85,7 +85,7 @@ export default {
   min-height: 70px;
   font-size: 16px;
   background-color: #fff;
-  color: var(--grey-800);
+  color: var(--neutral-600);
   padding: 5px;
   cursor: pointer;
   user-select: none;
@@ -138,17 +138,17 @@ export default {
 }
 
 .calendar-day--not-current {
-  color: var(--grey-300);
+  color: var(--neutral-300);
   transition: 0s;
 }
 
 .calendar-day--not-current,
 .calendar-day--not-current:hover {
-  background-color: var(--grey-100);
+  background-color: var(--neutral-150);
 }
 
 .calendar-day--today .date {
-  background-color: var(--grey-200);
+  background-color: var(--neutral-200);
 }
 
 .calendar-day--selected .date {

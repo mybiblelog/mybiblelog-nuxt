@@ -44,23 +44,23 @@
 
 .mbl-message--info .mbl-message__header {
   background-color: var(--mbl-info);
-  border-color: #b8d7f5;
-  color: #fff;
+  border-color: var(--mbl-message-info-border);
+  color: var(--mbl-on-accent);
 }
 
 .mbl-message--info .mbl-message__body {
-  background-color: #f5faff;
-  border-color: #b8d7f5;
-  color: #1a5080;
+  background-color: var(--mbl-message-info-bg);
+  border-color: var(--mbl-message-info-border);
+  color: var(--mbl-message-info-fg);
 }
 
 /* After general info body rules: body-only info callout keeps left accent, no full frame */
 .mbl-message--info > .mbl-message__body:only-child {
-  background-color: #f5faff;
+  background-color: var(--mbl-message-info-bg);
   border: none;
-  border-left: 5px solid #7ab8e8;
+  border-left: 5px solid var(--mbl-message-info-accent);
   border-radius: var(--mbl-radius);
-  color: #1a5080;
+  color: var(--mbl-message-info-fg);
 }
 
 .mbl-notification {
@@ -71,23 +71,23 @@
 }
 
 .mbl-notification--info {
-  background-color: #e8f4fc;
-  color: #1a5080;
+  background-color: var(--mbl-notification-info-bg);
+  color: var(--mbl-notification-info-fg);
 }
 
 .mbl-notification--success {
-  background-color: #effaf5;
-  color: #257953;
+  background-color: var(--mbl-notification-success-bg);
+  color: var(--mbl-notification-success-fg);
 }
 
 .mbl-notification--warning {
-  background-color: #fffaeb;
-  color: #946c00;
+  background-color: var(--mbl-notification-warning-bg);
+  color: var(--mbl-notification-warning-fg);
 }
 
 .mbl-notification--danger {
-  background-color: #feecf0;
-  color: #cc0f35;
+  background-color: var(--mbl-notification-danger-bg);
+  color: var(--mbl-notification-danger-fg);
 }
 
 .mbl-notification .mbl-delete {

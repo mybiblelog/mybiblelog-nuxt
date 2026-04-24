@@ -99,15 +99,14 @@ pre {
 }
 
 body {
-  color: #4a4a4a;
+  color: var(--mbl-text-body);
   font-size: 1em;
   font-weight: 400;
   line-height: 1.5;
 }
 
-/* Default link & inline / block content (Bulma-aligned) */
 a {
-  color: #485fc7;
+  color: var(--mbl-link);
   cursor: pointer;
   text-decoration: none;
 }
@@ -117,19 +116,19 @@ a strong {
 }
 
 a:hover {
-  color: #363636;
+  color: var(--mbl-text);
 }
 
 code {
-  background-color: #f5f5f5;
-  color: #da1039;
+  background-color: var(--mbl-bg-muted);
+  color: var(--mbl-code-fg);
   font-size: 0.875em;
   font-weight: 400;
   padding: 0.25em 0.5em 0.25em;
 }
 
 hr {
-  background-color: #f5f5f5;
+  background-color: var(--mbl-bg-muted);
   border: none;
   display: block;
   height: 2px;
@@ -151,7 +150,7 @@ span {
 }
 
 strong {
-  color: #363636;
+  color: var(--mbl-text);
   font-weight: 700;
 }
 
@@ -161,8 +160,8 @@ fieldset {
 
 pre {
   -webkit-overflow-scrolling: touch;
-  background-color: #f5f5f5;
-  color: #4a4a4a;
+  background-color: var(--mbl-bg-muted);
+  color: var(--mbl-text-body);
   font-size: 0.875em;
   overflow-x: auto;
   padding: 1.25rem 1.5rem;
@@ -188,7 +187,7 @@ table th:not([align]) {
 }
 
 table th {
-  color: #363636;
+  color: var(--mbl-text);
 }
 
 @-webkit-keyframes spinAround {
@@ -211,23 +210,23 @@ table th {
   }
 }
 
-/* Bulma `.box` for raw HTML / legacy markup (app uses `.mbl-box` in components) */
+/* Legacy `.box` for raw HTML (app uses `.mbl-box` in components) */
 .box {
-  background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02);
-  color: #4a4a4a;
+  background-color: var(--mbl-bg);
+  border-radius: var(--mbl-radius-card);
+  box-shadow: var(--mbl-shadow);
+  color: var(--mbl-text-body);
   display: block;
   padding: 1.25rem;
 }
 
 a.box:hover,
 a.box:focus {
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px #485fc7;
+  box-shadow: var(--mbl-shadow-box-hover);
 }
 
 a.box:active {
-  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.2), 0 0 0 1px #485fc7;
+  box-shadow: var(--mbl-shadow-box-active);
 }
 
 /* Hide Vue.js apps until they are compiled */
@@ -244,7 +243,7 @@ body.site-nav-drawer-open {
 }
 
 body.has-site-nav-fixed {
-  padding-top: var(--site-nav-height, 3.25rem);
+  padding-top: var(--site-nav-height);
 }
 
 .content-column {
