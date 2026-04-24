@@ -1,29 +1,29 @@
 <template>
   <div class="content-column">
     <header class="page-header">
-      <h1 class="title">
+      <h1 class="mbl-title">
         {{ $t('progress') }}
         <info-link :to="localePath('/about/page-features--progress')" />
       </h1>
-      <nuxt-link class="button" :to="localePath('/books')">
+      <nuxt-link class="mbl-button" :to="localePath('/books')">
         {{ $t('bible_books') }}
         <caret-right-icon style="margin-left: 0.2rem;" />
       </nuxt-link>
     </header>
     <busy-bar :busy="dateVerseCountsBusy" />
-    <article class="message">
-      <div class="message-body">
-        <div class="content">
-          <h2 class="title is-5">
+    <article class="mbl-message">
+      <div class="mbl-message__body">
+        <div class="mbl-content">
+          <h2 class="mbl-title mbl-title--5">
             {{ $t('your_reading_settings.title') }}
           </h2>
           <p>{{ $t('your_reading_settings.description') }}</p>
-          <div class="buttons">
-            <nuxt-link class="button" :to="localePath('/settings/reading')">
+          <div class="mbl-button-group">
+            <nuxt-link class="mbl-button" :to="localePath('/settings/reading')">
               {{ $t('your_reading_settings.update_settings') }}
             </nuxt-link>
           </div>
-          <table class="table">
+          <table class="mbl-table">
             <tbody>
               <tr>
                 <td>{{ $t('your_reading_settings.look_back_date') }}</td>
@@ -38,13 +38,13 @@
         </div>
       </div>
     </article>
-    <article class="message">
-      <div class="message-body">
-        <div class="content">
-          <h2 class="title is-5">
+    <article class="mbl-message">
+      <div class="mbl-message__body">
+        <div class="mbl-content">
+          <h2 class="mbl-title mbl-title--5">
             {{ $t('your_progress_so_far.title') }}
           </h2>
-          <table class="table">
+          <table class="mbl-table">
             <tbody>
               <tr>
                 <td>{{ $t('your_progress_so_far.total_bible_verses') }}</td>
@@ -67,14 +67,14 @@
         </div>
       </div>
     </article>
-    <article class="message">
-      <div class="message-body">
-        <div class="content">
-          <h2 class="title is-5">
+    <article class="mbl-message">
+      <div class="mbl-message__body">
+        <div class="mbl-content">
+          <h2 class="mbl-title mbl-title--5">
             {{ $t('your_outlook.historical.title') }}
           </h2>
           <p v-html="$t('your_outlook.historical.description')" />
-          <table class="table">
+          <table class="mbl-table">
             <tbody>
               <tr>
                 <td v-html="$t('your_outlook.days_since_look_back_date')" />
@@ -97,14 +97,14 @@
         </div>
       </div>
     </article>
-    <article class="message">
-      <div class="message-body">
-        <div class="content">
-          <h2 class="title is-5">
+    <article class="mbl-message">
+      <div class="mbl-message__body">
+        <div class="mbl-content">
+          <h2 class="mbl-title mbl-title--5">
             {{ $t('your_outlook.30_day.title') }}
           </h2>
           <p>{{ $t('your_outlook.30_day.description') }}</p>
-          <table class="table">
+          <table class="mbl-table">
             <tbody>
               <tr>
                 <td>{{ $t('your_outlook.average_daily_verses_read') }}</td>
@@ -123,14 +123,14 @@
         </div>
       </div>
     </article>
-    <article class="message">
-      <div class="message-body">
-        <div class="content">
-          <h2 class="title is-5">
+    <article class="mbl-message">
+      <div class="mbl-message__body">
+        <div class="mbl-content">
+          <h2 class="mbl-title mbl-title--5">
             {{ $t('your_outlook.7_day.title') }}
           </h2>
           <p>{{ $t('your_outlook.7_day.description') }}</p>
-          <table class="table">
+          <table class="mbl-table">
             <tbody>
               <tr>
                 <td>{{ $t('your_outlook.average_daily_verses_read') }}</td>
@@ -149,14 +149,14 @@
         </div>
       </div>
     </article>
-    <article class="message">
-      <div class="message-body">
-        <div class="content">
-          <h2 class="title is-5">
+    <article class="mbl-message">
+      <div class="mbl-message__body">
+        <div class="mbl-content">
+          <h2 class="mbl-title mbl-title--5">
             {{ $t('your_outlook.today.title') }}
           </h2>
           <p>{{ $t('your_outlook.today.description') }}</p>
-          <table class="table">
+          <table class="mbl-table">
             <tbody>
               <tr>
                 <td v-html="$t('your_outlook.verses_read')" />
@@ -175,25 +175,25 @@
         </div>
       </div>
     </article>
-    <article class="message">
-      <div class="message-body">
-        <div class="content">
-          <h2 class="title is-5">
+    <article class="mbl-message">
+      <div class="mbl-message__body">
+        <div class="mbl-content">
+          <h2 class="mbl-title mbl-title--5">
             {{ $t('set_a_goal.title') }}
           </h2>
           <p>{{ $t('set_a_goal.description') }}</p>
-          <table class="table">
+          <table class="mbl-table">
             <tbody>
               <tr>
                 <td colspan="2">
                   <label>{{ $t('set_a_goal.goal_finish_date') }}
-                    <input v-model="goalFinishDate" class="input" type="date">
+                    <input v-model="goalFinishDate" class="mbl-input" type="date">
                   </label>
                 </td>
               </tr>
               <tr v-if="goalFinishDateError">
                 <td colspan="2">
-                  <span class="has-text-danger">{{ goalFinishDateError }}</span>
+                  <span class="mbl-text-danger">{{ goalFinishDateError }}</span>
                 </td>
               </tr>
               <tr>

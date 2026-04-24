@@ -1,42 +1,42 @@
 <template>
-  <div class="container">
-    <h2 class="title is-4">
+  <div class="mbl-container">
+    <h2 class="mbl-title mbl-title--4">
       {{ $t('export') }}
     </h2>
     <p>{{ $t('you_can_download') }}</p>
     <br>
-    <h2 class="title is-5">
+    <h2 class="mbl-title mbl-title--5">
       {{ $t('reading_log.title') }}
     </h2>
     <p>{{ $t('reading_log.info.1') }}</p>
     <p>{{ $t('reading_log.info.2') }}</p>
-    <button class="button is-primary" @click="downloadLogEntriesCSV">
+    <button class="mbl-button mbl-button--primary" @click="downloadLogEntriesCSV">
       {{ $t('reading_log.cta') }}
     </button>
     <hr>
-    <h2 class="title is-5">
+    <h2 class="mbl-title mbl-title--5">
       {{ $t('notes.title') }}
     </h2>
-    <div class="message">
-      <div class="message-body">
+    <div class="mbl-message">
+      <div class="mbl-message__body">
         {{ $t('notes.info') }}
       </div>
     </div>
-    <h2 class="title is-6">
+    <h2 class="mbl-title mbl-title--6">
       {{ $t('notes_text_file.title') }}
     </h2>
     <p>{{ $t('notes_text_file.info') }}</p>
     <p>
-      <button class="button is-primary" @click="downloadNotesTextFile">
+      <button class="mbl-button mbl-button--primary" @click="downloadNotesTextFile">
         {{ $t('notes_text_file.cta') }}
       </button>
     </p>
-    <h2 class="title is-6">
+    <h2 class="mbl-title mbl-title--6">
       {{ $t('notes_json_file.title') }}
     </h2>
     <p>{{ $t('notes_json_file.info') }}</p>
     <p>
-      <button class="button is-primary" @click="downloadNotesJsonFile">
+      <button class="mbl-button mbl-button--primary" @click="downloadNotesJsonFile">
         {{ $t('notes_json_file.cta') }}
       </button>
     </p>

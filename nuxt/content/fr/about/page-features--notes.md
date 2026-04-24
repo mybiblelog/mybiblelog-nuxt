@@ -68,7 +68,7 @@ Sur la page des Tags, vous pouvez voir le nombre de notes qui utilisent chaque t
 
 Vous ne pouvez pas supprimer un tag qui est encore utilisé, vous devrez donc désétiqueter ou supprimer toutes les notes qui utilisent un tag avant de pouvoir supprimer le tag.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/notes">Aller à la page des Notes</a>
-  <a class="button is-light" href="/fr/tags">Aller à la page des Tags</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/notes">Aller à la page des Notes</a>
+  <a class="mbl-button mbl-button--light" href="/fr/tags">Aller à la page des Tags</a>
 </div>

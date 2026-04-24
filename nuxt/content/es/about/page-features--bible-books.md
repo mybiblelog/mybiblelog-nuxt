@@ -40,6 +40,6 @@ Puedes hacer clic en cualquier capítulo para **Abrir** o **Registrar** ese cap�
 * La opción **Abrir** intentará abrir los capítulos en la aplicación de la Biblia YouVersion en dispositivos móviles y en BibleGateway.com en dispositivos de escritorio.
 * La opción **Registrar** creará una nueva entrada en el registro para ese capítulo. Puedes ajustar esta entrada en el registro antes de guardarla. Esto es útil si solo leíste parte del capítulo o si leíste varios capítulos y querías registrarlos todos a la vez.
 
-<div class="buttons">
-  <a class="button is-light" href="/es/books">Ir a la página de Libros</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/es/books">Ir a la página de Libros</a>
 </div>

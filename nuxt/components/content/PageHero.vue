@@ -9,7 +9,7 @@
       </p>
       <p class="hero-description" v-html="description" />
       <div class="hero-cta">
-        <nuxt-link :to="localePath('/register')" class="button is-primary is-large">
+        <nuxt-link :to="localePath('/register')" class="mbl-button mbl-button--primary mbl-button--lg">
           {{ buttonText }}
         </nuxt-link>
         <p class="hero-cta-note">
@@ -127,7 +127,7 @@ export default {
   gap: 0.75rem;
 }
 
-.button.is-primary {
+.mbl-button.mbl-button--primary.mbl-button--lg {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   font-weight: 600;
@@ -137,14 +137,14 @@ export default {
   box-shadow: 0 4px 12px rgba(0, 170, 249, 0.3);
 }
 
-.button.is-primary:hover {
+.mbl-button.mbl-button--primary.mbl-button--lg:hover {
   background-color: var(--secondary-color);
   border-color: var(--secondary-color);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
 }
 
-.button.is-primary:active {
+.mbl-button.mbl-button--primary.mbl-button--lg:active {
   transform: translateY(0);
 }
 

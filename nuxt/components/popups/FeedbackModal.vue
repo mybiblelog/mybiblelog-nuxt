@@ -1,7 +1,7 @@
 <template>
   <app-modal :open="isVisible" :title="$t('feedback_form')" @close="close">
     <template slot="content">
-      <div class="content">
+      <div class="mbl-content">
         <p>{{ $t('feedback_form_intro.p1') }}</p>
         <p>{{ $t('feedback_form_intro.p2') }}</p>
       </div>

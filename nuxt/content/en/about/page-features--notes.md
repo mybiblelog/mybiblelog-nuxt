@@ -68,7 +68,7 @@ On the Tags page you can see the number of notes that are using each tag. Clicki
 
 You can't delete a tag that is still in use, so you will need to untag or delete any notes that are using a tag before you can delete the tag.
 
-<div class="buttons">
-  <a class="button is-light" href="/notes">Go to Notes page</a>
-  <a class="button is-light" href="/tags">Go to Tags page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/notes">Go to Notes page</a>
+  <a class="mbl-button mbl-button--light" href="/tags">Go to Tags page</a>
 </div>

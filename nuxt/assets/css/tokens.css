@@ -31,4 +31,22 @@
   --primary-color: #00aaf9;
   --secondary-color: #0965f7;
   --tertiary-color: #00d1b2;
+
+  /* mbl theme — semantic UI */
+  --mbl-radius: 4px;
+  --mbl-radius-button: 4px;
+  --mbl-radius-card: var(--modal-card-border-radius);
+  --mbl-text: #363636;
+  --mbl-text-muted: #7a7a7a;
+  --mbl-border: #dbdbdb;
+  --mbl-bg: #fff;
+  --mbl-bg-muted: #f5f5f5;
+  --mbl-danger: #f14668;
+  --mbl-success: #48c774;
+  --mbl-warning: #ffdd57;
+  --mbl-info: #3298dc;
+  --mbl-link: var(--secondary-color);
+  --mbl-link-hover: #0546b5;
+  --mbl-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02);
+  --mbl-tablet: 769px;
 }

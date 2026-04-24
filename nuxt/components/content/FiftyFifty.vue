@@ -14,7 +14,7 @@
           <li v-for="(item, index) in list" :key="index" v-html="item" />
         </ul>
         <div v-if="buttonText && buttonDestination" class="fifty-fifty-cta">
-          <nuxt-link :to="localePath(buttonDestination)" class="button is-primary">
+          <nuxt-link :to="localePath(buttonDestination)" class="mbl-button mbl-button--primary">
             {{ buttonText }}
           </nuxt-link>
         </div>
@@ -205,7 +205,7 @@ export default {
   margin-top: 1rem;
 }
 
-.button.is-primary {
+.fifty-fifty-cta .mbl-button.mbl-button--primary {
   background-color: var(--primary-color, #00aaf9);
   border-color: var(--primary-color, #00aaf9);
   font-weight: 600;
@@ -215,14 +215,14 @@ export default {
   box-shadow: 0 4px 12px rgba(0, 170, 249, 0.3);
 }
 
-.button.is-primary:hover {
+.fifty-fifty-cta .mbl-button.mbl-button--primary:hover {
   background-color: var(--secondary-color, #0965f7);
   border-color: var(--secondary-color, #0965f7);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
 }
 
-.button.is-primary:active {
+.fifty-fifty-cta .mbl-button.mbl-button--primary:active {
   transform: translateY(0);
 }
 

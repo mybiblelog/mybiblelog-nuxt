@@ -44,6 +44,6 @@ og:
   * 한 장에서 일부 구절만 읽은 경우
   * 여러 장을 한 번에 기록하고 싶은 경우
 
-<div class="buttons">
-  <a class="button is-light" href="/ko/books">책 페이지로 가기</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/ko/books">책 페이지로 가기</a>
 </div>

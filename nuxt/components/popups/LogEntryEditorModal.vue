@@ -4,10 +4,10 @@
       <log-entry-editor-form />
     </template>
     <template slot="footer">
-      <button class="button is-primary" :disabled="!isValid" @click="handleSave">
+      <button class="mbl-button mbl-button--primary" :disabled="!isValid" @click="handleSave">
         {{ logEntry.id ? $t('save') : $t('add') }}
       </button>
-      <button class="button is-light" @click="handleClose">
+      <button class="mbl-button mbl-button--light" @click="handleClose">
         {{ $t('close') }}
       </button>
     </template>

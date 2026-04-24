@@ -44,6 +44,6 @@ Für jedes Kapitel haben Sie zwei Optionen:
   * Nur einen Teil des Kapitels gelesen haben
   * Mehrere Kapitel auf einmal protokollieren möchten
 
-<div class="buttons">
-  <a class="button is-light" href="/de/books">Zur Bücherseite gehen</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/de/books">Zur Bücherseite gehen</a>
 </div>

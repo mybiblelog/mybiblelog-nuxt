@@ -123,6 +123,6 @@ The reading log import feature uses the same file format as the reading log expo
 
 When you import a spreadsheet, the import progress will be displayed on the page. My Bible Log will not recreate log entries that already exist. If you read Genesis 1 on January 1 and tracked it in My Bible Log, then imported a spreadsheet that included a log entry for that same passage and date, My Bible Log would ignore it.
 
-<div class="buttons">
-  <a class="button is-light" href="/settings">Go to Settings page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/settings">Go to Settings page</a>
 </div>

@@ -41,6 +41,6 @@ Les suggestions incluent un mélange de :
 
 À mesure que vous terminez les chapitres suggérés, de nouveaux apparaîtront pour maintenir votre lecture fraîche et engageante.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/today">Aller à la page d'aujourd'hui</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/today">Aller à la page d'aujourd'hui</a>
 </div>

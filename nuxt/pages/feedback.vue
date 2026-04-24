@@ -1,10 +1,10 @@
 <template>
   <main>
     <div class="content-column">
-      <h1 class="title">
+      <h1 class="mbl-title">
         {{ $t('feedback_form') }}
       </h1>
-      <div class="content">
+      <div class="mbl-content">
         <p>{{ $t('feedback_form_intro.p1') }}</p>
         <p>{{ $t('feedback_form_intro.p2') }}</p>
       </div>

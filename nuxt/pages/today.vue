@@ -2,28 +2,30 @@
   <div class="content-column">
     <busy-bar :busy="loadingReadingSuggestions && !readingSuggestionsWithNewVerseCounts.length" />
     <header class="page-header">
-      <h1 class="title">
+      <h1 class="mbl-title">
         {{ $t('today') }}
         <info-link :to="localePath('/about/page-features--today')" />
       </h1>
-      <button class="button is-info" @click="openAddEntryForm">
+      <button class="mbl-button mbl-button--info" @click="openAddEntryForm">
         {{ $t('add_entry') }}
       </button>
     </header>
     <br>
-    <double-progress-bar :primary-percentage="dailyGoalPercentCompleteNew" :secondary-percentage="dailyGoalPercentComplete" />
-    <div class="level is-mobile">
-      <div class="level-left">
-        <div v-if="userSettings.dailyVerseCountGoal" class="level-item">
-          <span>{{ $t('new_verses_read', [newVersesReadToday, userSettings.dailyVerseCountGoal]) }}</span>
+    <div class="today-page__progress-bar-container">
+      <double-progress-bar :primary-percentage="dailyGoalPercentCompleteNew" :secondary-percentage="dailyGoalPercentComplete" />
+      <div class="mbl-level mbl-level--mobile">
+        <div class="mbl-level-left">
+          <div v-if="userSettings.dailyVerseCountGoal" class="mbl-level-item">
+            <span>{{ $t('new_verses_read', [newVersesReadToday, userSettings.dailyVerseCountGoal]) }}</span>
+          </div>
+          <div v-else class="mbl-level-item">
+            <span>{{ $t('loading') }}</span>
+          </div>
         </div>
-        <div v-else class="level-item">
-          <span>{{ $t('loading') }}</span>
-        </div>
-      </div>
-      <div class="level-right">
-        <div class="level-item">
-          <span>{{ $n(dailyGoalPercentCompleteNew / 100, 'percent') }}</span>
+        <div class="mbl-level-right">
+          <div class="mbl-level-item">
+            <span>{{ $n(dailyGoalPercentCompleteNew / 100, 'percent') }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -45,7 +47,7 @@
       </client-only>
     </div>
     <br>
-    <h3 class="title is-5">
+    <h3 class="mbl-title mbl-title--5">
       {{ $t('reading_suggestions') }}
     </h3>
     <div class="entry-container" role="list" data-testid="reading-suggestions">
@@ -72,35 +74,35 @@
         />
       </client-only>
     </div>
-    <div class="has-text-centered" style="margin-top: 1rem;">
-      <nuxt-link class="button is-light" :to="localePath('/log')">
+    <div class="mbl-text-center" style="margin-top: 1rem;">
+      <nuxt-link class="mbl-button mbl-button--light" :to="localePath('/log')">
         {{ $t('view_all_reading') }}
       </nuxt-link>
     </div>
     <br>
-    <div class="level is-mobile">
-      <div class="level-left">
-        <div class="level-item">
-          <h3 class="title is-5">
+    <div class="mbl-level mbl-level--mobile">
+      <div class="mbl-level-left">
+        <div class="mbl-level-item">
+          <h3 class="mbl-title mbl-title--5">
             {{ $t('recent_notes') }}
           </h3>
         </div>
       </div>
-      <div class="level-right">
-        <div class="level-item">
-          <button class="button is-info" @click="openPassageNoteEditor({ empty: true })">
+      <div class="mbl-level-right">
+        <div class="mbl-level-item">
+          <button class="mbl-button mbl-button--info" @click="openPassageNoteEditor({ empty: true })">
             {{ $t('new_note') }}
           </button>
         </div>
       </div>
     </div>
-    <div class="recent-notes-container" role="list" data-testid="recent-notes">
+    <div class="today-page__recent-notes-container" role="list" data-testid="recent-notes">
       <client-only>
         <div
           v-if="loadingRecentNotes && !recentNotes.length"
           class="passage-note"
         >
-          <div class="passage-note--content has-text-centered">
+          <div class="passage-note--content mbl-text-center">
             {{ $t('loading') }}
           </div>
         </div>
@@ -119,8 +121,8 @@
             :get-reading-url="getReadingUrl"
             role="listitem"
           />
-          <div class="has-text-centered" style="margin-top: 1rem;">
-            <nuxt-link class="button is-light" :to="localePath('/notes')">
+          <div class="mbl-text-center" style="margin-top: 1rem;">
+            <nuxt-link class="mbl-button mbl-button--light" :to="localePath('/notes')">
               {{ $t('view_all_notes') }}
             </nuxt-link>
           </div>
@@ -310,7 +312,10 @@ export default {
     async deleteEntry(id) {
       const dialogStore = useDialogStore();
       const toastStore = useToastStore();
-      const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure_you_want_to_delete_this_entry') });
+      const confirmed = await dialogStore.confirm({
+        message: this.$t('are_you_sure_you_want_to_delete_this_entry'),
+        confirmButtonType: 'danger',
+      });
       if (!confirmed) { return; }
       const success = await this.logEntriesStore.deleteLogEntry(id);
       if (!success) {
@@ -389,7 +394,10 @@ export default {
     async deletePassageNote(id) {
       const dialogStore = useDialogStore();
       const toastStore = useToastStore();
-      const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
+      const confirmed = await dialogStore.confirm({
+        message: this.$t('messaging.are_you_sure_delete_note'),
+        confirmButtonType: 'danger',
+      });
       if (!confirmed) { return; }
 
       const success = await this.passageNotesStore.deletePassageNote(id);
@@ -412,7 +420,12 @@ export default {
 </script>
 
 <style scoped>
-.recent-notes-container {
+.today-page__progress-bar-container {
+  margin-top: -1rem;
+  margin-bottom: 1.5rem;
+}
+
+.today-page__recent-notes-container {
   margin-top: 1rem;
 }
 </style>

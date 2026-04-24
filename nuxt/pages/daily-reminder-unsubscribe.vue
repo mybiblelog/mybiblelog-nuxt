@@ -2,29 +2,29 @@
   <main>
     <div class="content-column">
       <header class="page-header">
-        <h1 class="title is-3">
+        <h1 class="mbl-title mbl-title--3">
           {{ $t('unsubscribe') }}
         </h1>
       </header>
-      <div class="content">
+      <div class="mbl-content">
         <template v-if="complete">
           <p v-html="$t('success', { email })" />
           <p>
-            <nuxt-link class="button is-primary" :to="localePath('/settings/reminder')">
+            <nuxt-link class="mbl-button mbl-button--primary" :to="localePath('/settings/reminder')">
               {{ $t('update_preferences') }}
             </nuxt-link>
           </p>
         </template>
         <template v-else>
           <template v-if="error">
-            <p class="has-text-danger">
+            <p class="mbl-text-danger">
               {{ $t('client_error.title') }}
             </p>
             <p>{{ $t('client_error.p1') }}</p>
             <p>{{ $t('client_error.p2') }}</p>
             <p>{{ $t('client_error.p3') }}</p>
             <p>
-              <nuxt-link class="button is-primary" :to="localePath('/settings/reminder')">
+              <nuxt-link class="mbl-button mbl-button--primary" :to="localePath('/settings/reminder')">
                 {{ $t('update_preferences') }}
               </nuxt-link>
             </p>

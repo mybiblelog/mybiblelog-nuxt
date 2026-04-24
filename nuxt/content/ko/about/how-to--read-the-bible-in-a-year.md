@@ -137,6 +137,6 @@ og:
 
 마지막으로, 성경 읽기에 대한 흥미가 생기는 모든 순간을 최대한 활용하세요. 성경공부, 설교, 매일 묵상 시간 중에 흥미로운 구절을 발견하면 계속 읽어 나가세요! 매일 정해진 절이나 장 수에서 꼭 멈춰야 할 필요는 없습니다. 성경의 어떤 책이나 부분이 정말로 영감을 준다면 그 흐름을 놓치지 말고 원하는 만큼 마음껏 읽으세요!
 
-<div class="buttons">
-  <a class="button is-light" href="/ko/today">시작하기</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/ko/today">시작하기</a>
 </div>

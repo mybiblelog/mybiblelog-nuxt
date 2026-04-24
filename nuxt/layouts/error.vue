@@ -1,12 +1,12 @@
 <template>
   <main>
-    <section class="hero is-large is-dark is-bold">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
+    <section class="mbl-hero mbl-hero--large mbl-hero--dark mbl-hero--bold">
+      <div class="mbl-hero__body">
+        <div class="mbl-container">
+          <h1 class="mbl-title">
             {{ error.statusCode }}
           </h1>
-          <p class="subtitle">
+          <p class="mbl-subtitle">
             {{ error.message }}
           </p>
         </div>

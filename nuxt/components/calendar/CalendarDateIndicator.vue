@@ -1,6 +1,6 @@
 <template>
   <div class="calendar-date-indicator">
-    <div class="title is-4">
+    <div class="mbl-title mbl-title--4">
       {{ selectedMonth }}
       <info-link :to="localePath('/about/page-features--calendar')" />
     </div>

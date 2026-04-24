@@ -1,36 +1,44 @@
 <template>
-  <transition name="fade">
-    <div v-if="dialog.open" class="popup-modal no-select">
-      <div class="window" role="dialog">
-        <div v-if="dialog.title" class="title is-4">
-          {{ dialog.title }}
-        </div>
-        <div class="content">
-          <p>{{ dialog.message }}</p>
-        </div>
-        <div v-if="dialog.type === 'alert'" class="buttons">
-          <button class="button" :class="buttonClass" @click="_clear">
-            {{ dialog.buttonText || $t('ok') }}
-          </button>
-        </div>
-        <div v-if="dialog.type === 'confirm'" class="buttons">
-          <button class="button" :class="confirmButtonClass" @click="_confirm">
-            {{ dialog.confirmButtonText || $t('confirm') }}
-          </button>
-          <button class="button is-light" @click="_cancel">
-            {{ dialog.cancelButtonText || $t('cancel') }}
-          </button>
-        </div>
-      </div>
+  <pop-up-modal :visible="dialog.open">
+    <div v-if="dialog.title" class="mbl-title mbl-title--4">
+      {{ dialog.title }}
     </div>
-  </transition>
+    <div class="mbl-content">
+      <p>{{ dialog.message }}</p>
+    </div>
+    <div v-if="dialog.type === 'alert'" class="mbl-button-group">
+      <button class="mbl-button" :class="buttonClass" @click="_clear">
+        {{ dialog.buttonText || $t('ok') }}
+      </button>
+    </div>
+    <div v-if="dialog.type === 'confirm'" class="mbl-button-group popup-modal__actions">
+      <button class="mbl-button" :class="confirmButtonClass" @click="_confirm">
+        {{ dialog.confirmButtonText || $t('confirm') }}
+      </button>
+      <button class="mbl-button mbl-button--light" @click="_cancel">
+        {{ dialog.cancelButtonText || $t('cancel') }}
+      </button>
+    </div>
+  </pop-up-modal>
 </template>
 
 <script>
 import { useDialogStore } from '~/stores/dialog';
+import PopUpModal from '@/components/popups/PopUpModal.vue';
+
+const buttonTypeToClass = (buttonType) => {
+  return {
+    primary: 'mbl-button--primary',
+    secondary: 'mbl-button--secondary',
+    danger: 'mbl-button--danger',
+  }[buttonType] ?? 'mbl-button--primary';
+};
 
 export default {
   name: 'PopUps',
+  components: {
+    PopUpModal,
+  },
   computed: {
     dialogStore() {
       return useDialogStore();
@@ -39,14 +47,12 @@ export default {
       return this.dialogStore;
     },
     buttonClass() {
-      return {
-        [this.dialog.buttonType]: true,
-      };
+      const buttonClass = buttonTypeToClass(this.dialog.buttonType);
+      return buttonClass;
     },
     confirmButtonClass() {
-      return {
-        [this.dialog.confirmButtonType]: true,
-      };
+      const buttonClass = buttonTypeToClass(this.dialog.confirmButtonType);
+      return buttonClass;
     },
   },
 
@@ -65,54 +71,8 @@ export default {
 </script>
 
 <style scoped>
-/* css class for the transition */
-.popup-modal {
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  z-index: var(--z-index-popup);
-}
-
-.popup-modal.fade-enter-active,
-.popup-modal.fade-leave-active {
-  transition: var(--transition-fade);
-}
-
-.popup-modal.fade-enter-active .window,
-.popup-modal.fade-leave-active .window {
-  transition: var(--transition-modal);
-}
-
-.popup-modal.fade-enter,
-.popup-modal.fade-leave-to {
-  opacity: 0;
-}
-
-.popup-modal.fade-enter .window,
-.popup-modal.fade-leave-to .window {
-  transform: var(--modal-scale);
-}
-
-.window {
-  background: #fff;
-
-  padding: 2rem;
-  border-radius: 0.25rem;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
-
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.no-select {
-  user-select: none;
+.popup-modal__actions {
+  margin-top: 1.25rem;
 }
 </style>
 

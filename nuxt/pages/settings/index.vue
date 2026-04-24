@@ -1,36 +1,36 @@
 <template>
   <div>
-    <div class="container content">
-      <h1 class="title is-4">
+    <div class="mbl-container mbl-content">
+      <h1 class="mbl-title mbl-title--4">
         {{ $t('account') }}
       </h1>
-      <div class="content">
+      <div class="mbl-content">
         <p>
           <em>{{ authStore.user?.email }}</em>
         </p>
         <p>
-          <nuxt-link class="button is-primary" :to="localePath('/settings/email')">
+          <nuxt-link class="mbl-button mbl-button--primary" :to="localePath('/settings/email')">
             {{ $t('change_email') }}
           </nuxt-link>
         </p>
       </div>
       <template v-if="authStore.user?.hasLocalAccount">
-        <h2 class="title is-4">
+        <h2 class="mbl-title mbl-title--4">
           {{ $t('password') }}
         </h2>
-        <div class="content">
+        <div class="mbl-content">
           <p>{{ $t('you_can_change_your_password_below') }}</p>
           <p>
-            <nuxt-link class="button is-primary" :to="localePath('/settings/password')">
+            <nuxt-link class="mbl-button mbl-button--primary" :to="localePath('/settings/password')">
               {{ $t('change_password') }}
             </nuxt-link>
           </p>
         </div>
       </template>
-      <h2 class="title is-4">
+      <h2 class="mbl-title mbl-title--4">
         {{ $t('delete_account') }}
       </h2>
-      <div class="content">
+      <div class="mbl-content">
         <p>{{ $t('you_are_in_control') }}</p>
         <p>
           <nuxt-link :to="localePath('/settings/delete-account')">

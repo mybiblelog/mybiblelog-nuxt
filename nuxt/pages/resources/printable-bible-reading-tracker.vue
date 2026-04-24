@@ -3,16 +3,16 @@
     <div class="content-column no-print">
       <section>
         <header class="page-header">
-          <h1 class="title">
+          <h1 class="mbl-title">
             {{ $t('meta.title') }}
           </h1>
-          <div class="buttons is-align-items-flex-start">
-            <button class="button is-info" @click="print">
+          <div class="mbl-button-group mbl-button-group--start">
+            <button class="mbl-button mbl-button--info" @click="print">
               {{ $t('print') }}
             </button>
           </div>
         </header>
-        <div class="content">
+        <div class="mbl-content">
           <p>{{ $t('content.this_is') }}</p>
           <p>{{ $t('content.printer_friendly') }}</p>
           <p v-html="$t('content.download_directly')" />
@@ -23,7 +23,7 @@
         </div>
       </section>
     </div>
-    <div class="container">
+    <div class="mbl-container">
       <div class="book-grid">
         <div v-for="book in books" :key="book.id" class="book-box">
           <div class="chapter-checkboxes">

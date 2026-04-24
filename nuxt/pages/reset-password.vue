@@ -1,46 +1,46 @@
 <template>
   <main>
     <div class="content-column">
-      <h1 class="title">
+      <h1 class="mbl-title">
         {{ $t('reset_password') }}
       </h1>
       <template v-if="passwordResetCodeValid">
-        <div class="content">
+        <div class="mbl-content">
           <p>{{ $t('once_you_set_a_new_password_you_will_be_automatically_logged_in') }}</p>
         </div>
         <form :disabled="formBusy" @submit.prevent="submitChangePassword()">
-          <div v-if="changePasswordErrors._form" class="help is-danger">
+          <div v-if="changePasswordErrors._form" class="mbl-help mbl-help--danger">
             {{ $terr(changePasswordErrors._form) }}
           </div>
-          <div class="field">
-            <label class="label" for="newPassword">{{ $t('new_password') }}</label>
-            <div class="control">
-              <input v-model="changePasswordModel.newPassword" class="input" type="password" name="newPassword">
+          <div class="mbl-field">
+            <label class="mbl-label" for="newPassword">{{ $t('new_password') }}</label>
+            <div class="mbl-control">
+              <input v-model="changePasswordModel.newPassword" class="mbl-input" type="password" name="newPassword">
             </div>
-            <div v-if="changePasswordErrors.newPassword" class="help is-danger">
+            <div v-if="changePasswordErrors.newPassword" class="mbl-help mbl-help--danger">
               {{ $terr(changePasswordErrors.newPassword) }}
             </div>
           </div>
-          <div class="field">
-            <label class="label" for="confirmNewPassword">{{ $t('confirm_new_password') }}</label>
-            <div class="control">
-              <input v-model="changePasswordModel.confirmNewPassword" class="input" type="password" name="confirmNewPassword">
+          <div class="mbl-field">
+            <label class="mbl-label" for="confirmNewPassword">{{ $t('confirm_new_password') }}</label>
+            <div class="mbl-control">
+              <input v-model="changePasswordModel.confirmNewPassword" class="mbl-input" type="password" name="confirmNewPassword">
             </div>
-            <div v-if="changePasswordErrors.confirmNewPassword" class="help is-danger">
+            <div v-if="changePasswordErrors.confirmNewPassword" class="mbl-help mbl-help--danger">
               {{ $terr(changePasswordErrors.confirmNewPassword) }}
             </div>
           </div>
-          <button class="button is-primary">
+          <button class="mbl-button mbl-button--primary">
             {{ $t('submit') }}
           </button>
         </form>
       </template>
       <template v-else>
-        <div class="content">
+        <div class="mbl-content">
           <p>{{ $t('this_password_reset_link_is_expired') }}</p>
           <p>{{ $t('you_can_send_a_new_password_reset_email_from_the_sign_in_page') }}</p>
         </div>
-        <nuxt-link class="button" :to="localePath('/login')">
+        <nuxt-link class="mbl-button" :to="localePath('/login')">
           Sign In
         </nuxt-link>
       </template>

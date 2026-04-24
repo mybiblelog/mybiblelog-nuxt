@@ -3,24 +3,24 @@
     <transition name="fade" appear>
       <div
         v-if="open"
-        class="modal is-active"
+        class="mbl-modal mbl-modal--active"
         role="dialog"
         :style="modalInlineStyle"
       >
-        <div class="modal-background" @click="close" />
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">
+        <div class="mbl-modal__backdrop" @click="close" />
+        <div class="mbl-modal__card">
+          <header class="mbl-modal__head">
+            <p class="mbl-modal__title">
               {{ title }}
             </p>
-            <button class="delete" type="button" aria-label="close" @click.prevent="close" />
+            <button class="mbl-delete" type="button" aria-label="close" @click.prevent="close" />
           </header>
           <section
-            class="modal-card-body"
+            class="mbl-modal__body"
           >
             <slot name="content" />
           </section>
-          <footer v-if="$slots.footer" class="modal-card-foot">
+          <footer v-if="$slots.footer" class="mbl-modal__foot">
             <slot name="footer" />
           </footer>
         </div>
@@ -84,45 +84,36 @@ export default {
   pointer-events: none;
 }
 
-.modal.is-active {
+.mbl-modal.mbl-modal--active {
   pointer-events: auto;
 }
 
-.modal .modal-background {
+.mbl-modal .mbl-modal__backdrop {
   /*  help ensure modal background covers the entire viewport */
   height: 100dvh;
 }
 
-.modal .modal-card {
-  padding: 0 1rem;
-}
-
-.modal .modal-card-body:last-child {
-  border-bottom-left-radius: var(--modal-card-border-radius);
-  border-bottom-right-radius: var(--modal-card-border-radius);
-}
-
-.modal.fade-enter-active,
-.modal.fade-appear-active,
-.modal.fade-leave-active {
+.mbl-modal.fade-enter-active,
+.mbl-modal.fade-appear-active,
+.mbl-modal.fade-leave-active {
   transition: var(--transition-fade);
 }
 
-.modal.fade-enter-active .modal-card,
-.modal.fade-appear-active .modal-card,
-.modal.fade-leave-active .modal-card {
+.mbl-modal.fade-enter-active .mbl-modal__card,
+.mbl-modal.fade-appear-active .mbl-modal__card,
+.mbl-modal.fade-leave-active .mbl-modal__card {
   transition: var(--transition-modal);
 }
 
-.modal.fade-enter,
-.modal.fade-appear,
-.modal.fade-leave-to {
+.mbl-modal.fade-enter,
+.mbl-modal.fade-appear,
+.mbl-modal.fade-leave-to {
   opacity: 0;
 }
 
-.modal.fade-enter .modal-card,
-.modal.fade-appear .modal-card,
-.modal.fade-leave-to .modal-card {
+.mbl-modal.fade-enter .mbl-modal__card,
+.mbl-modal.fade-appear .mbl-modal__card,
+.mbl-modal.fade-leave-to .mbl-modal__card {
   transform: var(--modal-scale);
 }
 </style>

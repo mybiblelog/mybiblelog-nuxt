@@ -28,6 +28,6 @@ La barre se remplira en fonction de votre objectif de nombre de versets quotidie
 
 Si vous atteignez votre objectif de nombre de versets quotidiens en lisant suffisamment de versets, une étoile bleu foncé apparaîtra pour cette date. Si vous atteignez votre objectif de nombre de versets quotidiens en lisant de nouveaux versets, une étoile dorée apparaîtra à la place pour cette date.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/calendar">Aller à la page du calendrier</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/calendar">Aller à la page du calendrier</a>
 </div>

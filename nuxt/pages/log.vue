@@ -2,31 +2,31 @@
   <main>
     <div class="log-page" :style="pageCssVars">
       <header class="page-header">
-        <h2 class="title">
+        <h2 class="mbl-title">
           {{ $t('log') }}
         </h2>
-        <div class="buttons is-align-items-flex-start">
-          <button class="button is-info" type="button" @click="openAddEntryForm">
+        <div class="mbl-button-group mbl-button-group--start">
+          <button class="mbl-button mbl-button--info" type="button" @click="openAddEntryForm">
             {{ $t('add_entry') }}
           </button>
         </div>
       </header>
 
       <div class="log-page__mobile-query-button">
-        <button class="button is-light is-small log-page__query-button" type="button" @click="openQueryManagerModal">
+        <button class="mbl-button mbl-button--light mbl-button--sm log-page__query-button" type="button" @click="openQueryManagerModal">
           {{ $t('query_manager.open') }}
           <span v-if="hasAppliedViewOptions" class="log-page__query-badge" aria-hidden="true" />
         </button>
-        <button v-if="hasAppliedViewOptions" class="button is-light is-small" type="button" @click="resetViewOptions">
+        <button v-if="hasAppliedViewOptions" class="mbl-button mbl-button--light mbl-button--sm" type="button" @click="resetViewOptions">
           {{ $t('query_manager.reset_button') }}
         </button>
       </div>
 
-      <div class="columns">
-        <aside class="column is-4 log-page__sidebar">
-          <div class="box log-page__query-manager-box">
+      <div class="mbl-centered-column">
+        <aside class="log-page__sidebar">
+          <div class="mbl-box log-page__query-manager-box">
             <div class="log-page__query-manager-actions">
-              <button v-if="hasAppliedViewOptions" class="button is-light is-small" type="button" @click="resetViewOptions">
+              <button v-if="hasAppliedViewOptions" class="mbl-button mbl-button--light mbl-button--sm" type="button" @click="resetViewOptions">
                 {{ $t('query_manager.reset') }}
               </button>
             </div>
@@ -38,7 +38,7 @@
           </div>
         </aside>
 
-        <section class="column log-page__content">
+        <section class="log-page__content">
           <div>
             <template v-if="loading">
               <log-entry
@@ -48,8 +48,8 @@
               />
             </template>
             <template v-else-if="!pagedLogEntries.length">
-              <div class="has-background-light p-5">
-                <div class="has-text-centered">
+              <div class="mbl-bg-muted mbl-p-5">
+                <div class="mbl-text-center">
                   {{ $t('results.no_results') }}
                 </div>
               </div>
@@ -61,10 +61,10 @@
                 </div>
 
                 <div v-if="pagerTotalPages > 1" class="log-page__results-pager">
-                  <div class="field has-addons is-marginless" role="group" :aria-label="$t('pagination.label')">
-                    <p class="control">
+                  <div class="mbl-field mbl-field--addons mbl-field--flush" role="group" :aria-label="$t('pagination.label')">
+                    <p class="mbl-control">
                       <button
-                        class="button is-small is-light"
+                        class="mbl-button mbl-button--sm mbl-button--light"
                         type="button"
                         :disabled="pagerPage <= 1"
                         :aria-label="$t('pagination.prev')"
@@ -74,8 +74,8 @@
                       </button>
                     </p>
 
-                    <div class="control">
-                      <div class="select is-small">
+                    <div class="mbl-control">
+                      <div class="mbl-select mbl-select--sm">
                         <select
                           :value="pagerPage"
                           :aria-label="$t('pagination.page')"
@@ -88,9 +88,9 @@
                       </div>
                     </div>
 
-                    <p class="control">
+                    <p class="mbl-control">
                       <button
-                        class="button is-small is-light"
+                        class="mbl-button mbl-button--sm mbl-button--light"
                         type="button"
                         :disabled="pagerPage >= pagerTotalPages"
                         :aria-label="$t('pagination.next')"
@@ -533,7 +533,10 @@ export default {
     async deleteEntry(id) {
       const dialogStore = useDialogStore();
       const toastStore = useToastStore();
-      const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_entry') });
+      const confirmed = await dialogStore.confirm({
+        message: this.$t('messaging.are_you_sure_delete_entry'),
+        confirmButtonType: 'danger',
+      });
       if (!confirmed) { return; }
       const success = await this.logEntriesStore.deleteLogEntry(id);
       if (!success) {

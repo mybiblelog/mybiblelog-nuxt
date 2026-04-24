@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
-    <h2 class="title is-4">
+  <div class="mbl-container">
+    <h2 class="mbl-title mbl-title--4">
       {{ $t('start_page') }}
     </h2>
-    <div class="field has-addons">
-      <div class="control">
-        <div class="select">
+    <div class="mbl-field mbl-field--addons">
+      <div class="mbl-control">
+        <div class="mbl-select">
           <select v-model="userSettingsForm.startPage">
             <option value="" selected="selected" disabled="disabled">
               {{ $t('select_an_option') }}
@@ -16,11 +16,11 @@
           </select>
         </div>
       </div>
-      <div class="control">
-        <a class="button is-primary" @click="handleStartPageSubmit">{{ $t('save') }}</a>
+      <div class="mbl-control">
+        <a class="mbl-button mbl-button--primary" @click="handleStartPageSubmit">{{ $t('save') }}</a>
       </div>
     </div>
-    <div v-if="userSettingsErrors.startPage" class="help is-danger">
+    <div v-if="userSettingsErrors.startPage" class="mbl-help mbl-help--danger">
       {{ $terr(userSettingsErrors.startPage, { field: $t('preferred_start_page.title') }) }}
     </div>
     <p>{{ $t('preferred_start_page.info.1') }}</p>

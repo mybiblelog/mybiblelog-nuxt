@@ -44,6 +44,6 @@ For each chapter, you have two options:
   * Only read part of the chapter
   * Want to log multiple chapters at once
 
-<div class="buttons">
-  <a class="button is-light" href="/books">Go to Books page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/books">Go to Books page</a>
 </div>

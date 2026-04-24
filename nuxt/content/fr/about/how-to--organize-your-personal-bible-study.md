@@ -27,9 +27,9 @@ Créez un tag pour au moins 3 questions que vous souhaitez rechercher dans la Bi
 * Est-ce que toutes les règles des livres de l'Ancien Testament comme le Lévitique s'appliquent à nous aujourd'hui ? Tag suggéré : Règles de l'AT
 * Comment la Bible parle-t-elle de l'église ? Qui ou quoi compte comme une église ? La Bible nous commande-t-elle d'aller à l'église ? Tag suggéré : Église
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/notes">Aller à la page des Notes</a>
-  <a class="button is-light" href="/fr/tags">Aller à la page des Tags</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/notes">Aller à la page des Notes</a>
+  <a class="mbl-button mbl-button--light" href="/fr/tags">Aller à la page des Tags</a>
 </div>
 
 ## 2. Discipulat / Points de Conversation 1:1
@@ -40,9 +40,9 @@ Beaucoup de gens étudient la Bible avec un ami ou un mentor. Les mentors peuven
 
 Créez un tag pour chaque personne avec qui vous étudiez ou avec qui vous pouvez parler de la Bible. Pour chaque personne, créez au moins une note avec quelque chose que vous voulez discuter avec cette personne.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/notes">Aller à la page des Notes</a>
-  <a class="button is-light" href="/fr/tags">Aller à la page des Tags</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/notes">Aller à la page des Notes</a>
+  <a class="mbl-button mbl-button--light" href="/fr/tags">Aller à la page des Tags</a>
 </div>
 
 ## 3. Étude Thématique
@@ -65,9 +65,9 @@ Utilisez cette liste pour vous inspirer :
 * Paradis
 * Dons Spirituels
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/notes">Aller à la page des Notes</a>
-  <a class="button is-light" href="/fr/tags">Aller à la page des Tags</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/notes">Aller à la page des Notes</a>
+  <a class="mbl-button mbl-button--light" href="/fr/tags">Aller à la page des Tags</a>
 </div>
 
 ## 4. Langue Originale
@@ -80,9 +80,9 @@ Beaucoup de mots ont des nuances différentes dans différentes langues. Par exe
 
 Créez un tag pour les passages que vous voulez rechercher dans la langue originale, comme "Langue Orig." Trouvez au moins 3 versets différents avec le mot "amour" et taguez-les avec ce nouveau tag. Vous pouvez étudier ces versets dans leur langue originale sur des sites comme [Blue Letter Bible](https://www.blueletterbible.org/study.cfm).
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/notes">Aller à la page des Notes</a>
-  <a class="button is-light" href="/fr/tags">Aller à la page des Tags</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/notes">Aller à la page des Notes</a>
+  <a class="mbl-button mbl-button--light" href="/fr/tags">Aller à la page des Tags</a>
 </div>
 
 ## 5. Comparer les Traductions
@@ -121,9 +121,9 @@ Avec cette distinction, nous pouvons maintenant savoir quand les auteurs origina
 
 Trouvez des versets qui disent "frères" dans la NASB95 et voyez s'ils ont été mis à jour en "frères et soeurs" dans la NASB2020, ou si ces versets faisaient vraiment référence uniquement aux hommes.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/notes">Aller à la page des Notes</a>
-  <a class="button is-light" href="/fr/tags">Aller à la page des Tags</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/notes">Aller à la page des Notes</a>
+  <a class="mbl-button mbl-button--light" href="/fr/tags">Aller à la page des Tags</a>
 </div>
 
 ## 6. Versets à Mémoriser
@@ -152,9 +152,9 @@ Il y a de nombreux passages dans la Bible qui partagent l'importance et la valeu
 
 Créez un tag pour suivre vos versets mémorisés. Choisissez au moins 3 de ces passages et taguez-les comme versets de mémoire.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/notes">Aller à la page des Notes</a>
-  <a class="button is-light" href="/fr/tags">Aller à la page des Tags</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/notes">Aller à la page des Notes</a>
+  <a class="mbl-button mbl-button--light" href="/fr/tags">Aller à la page des Tags</a>
 </div>
 
 ## 7. Journal et Prière
@@ -175,9 +175,9 @@ Utilisez le tag **Prière Exaucée** pour faire ressortir les choses encouragean
 
 Créez un tag pour suivre les entrées de votre journal. Commencez par écrire votre première note de journal et taguez-la.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/notes">Aller à la page des Notes</a>
-  <a class="button is-light" href="/fr/tags">Aller à la page des Tags</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/notes">Aller à la page des Notes</a>
+  <a class="mbl-button mbl-button--light" href="/fr/tags">Aller à la page des Tags</a>
 </div>
 
 ## Conclusion

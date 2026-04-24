@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="container content">
-      <h1 class="title is-4">
+    <div class="mbl-container mbl-content">
+      <h1 class="mbl-title mbl-title--4">
         {{ $t('title') }}
       </h1>
-      <div class="content">
+      <div class="mbl-content">
         <p>{{ $t('description') }}</p>
         <ul>
           <li>{{ $t('list.account') }}</li>
@@ -14,31 +14,31 @@
           <li>{{ $t('list.permanent') }}</li>
         </ul>
       </div>
-      <div class="card">
-        <div class="card-content">
+      <div class="mbl-card">
+        <div class="mbl-card__content">
           <form>
-            <div class="field">
-              <label class="checkbox">
+            <div class="mbl-field">
+              <label class="mbl-checkbox">
                 <input v-model="understand.logEntries" type="checkbox"> {{ $t('understand.log_entries') }}
               </label>
             </div>
-            <div class="field">
-              <label class="checkbox">
+            <div class="mbl-field">
+              <label class="mbl-checkbox">
                 <input v-model="understand.export" type="checkbox"> {{ $t('understand.export') }}
               </label>
             </div>
-            <div class="field">
-              <label class="checkbox">
+            <div class="mbl-field">
+              <label class="mbl-checkbox">
                 <input v-model="understand.notes" type="checkbox"> {{ $t('understand.notes') }}
               </label>
             </div>
-            <div class="field">
-              <label class="checkbox">
+            <div class="mbl-field">
+              <label class="mbl-checkbox">
                 <input v-model="understand.permanent" type="checkbox"> {{ $t('understand.permanent') }}
               </label>
             </div>
           </form>
-          <button class="button is-primary" :disabled="!fullyUnderstands" @click="deleteAccount">
+          <button class="mbl-button mbl-button--primary" :disabled="!fullyUnderstands" @click="deleteAccount">
             {{ $t('delete_my_account') }}
           </button>
         </div>

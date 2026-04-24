@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h2 class="title is-5">
+    <h2 class="mbl-title mbl-title--5">
       {{ $t('start_page.daily_verse_count_goal.title') }}
     </h2>
-    <div class="content">
+    <div class="mbl-content">
       <p>
         {{ $t('start_page.daily_verse_count_goal.description') }}
       </p>
 
-      <h3 class="title is-6">
+      <h3 class="mbl-title mbl-title--6">
         {{ $t('start_page.daily_verse_count_goal.i_want_to') }}
       </h3>
     </div>
@@ -19,7 +19,7 @@
         <div class="option-card-radio">
           <input v-model="selectedOption" type="radio" value="year" @click.stop>
         </div>
-        <div class="option-card-content">
+        <div class="option-mbl-card__content">
           <div class="option-card-title">
             {{ $t('start_page.daily_verse_count_goal.read_in_year') }}
           </div>
@@ -41,7 +41,7 @@
         <div class="option-card-radio">
           <input v-model="selectedOption" type="radio" value="specific" @click.stop>
         </div>
-        <div class="option-card-content">
+        <div class="option-mbl-card__content">
           <div class="option-card-title">
             {{ $t('start_page.daily_verse_count_goal.read_by_specific_date') }}
           </div>
@@ -50,7 +50,7 @@
               <label class="detail-label">{{ $t('start_page.daily_verse_count_goal.goal_finish_date') }}:</label>
               <input
                 v-model="goalFinishDate"
-                class="input detail-input"
+                class="mbl-input detail-input"
                 type="date"
                 :min="minDate"
                 :disabled="selectedOption !== 'specific'"
@@ -71,7 +71,7 @@
         <div class="option-card-radio">
           <input v-model="selectedOption" type="radio" value="ownpace" @click.stop>
         </div>
-        <div class="option-card-content">
+        <div class="option-mbl-card__content">
           <div class="option-card-title">
             {{ $t('start_page.daily_verse_count_goal.read_at_own_pace') }}
           </div>
@@ -80,7 +80,7 @@
               <label class="detail-label">{{ $t('start_page.daily_verse_count_goal.daily_verse_count') }}:</label>
               <input
                 v-model.number="dailyVerseCountGoal"
-                class="input detail-input"
+                class="mbl-input detail-input"
                 type="number"
                 min="1"
                 max="1111"
@@ -97,22 +97,22 @@
       </div>
     </div>
 
-    <div v-if="error" class="help is-danger">
+    <div v-if="error" class="mbl-help mbl-help--danger">
       {{ error }}
     </div>
 
-    <div class="content">
-      <p class="help">
+    <div class="mbl-content">
+      <p class="mbl-help">
         {{ $t('start_page.daily_verse_count_goal.change_hint') }}
       </p>
     </div>
 
-    <div class="field">
-      <div class="control buttons">
-        <button class="button" :disabled="isSaving" @click="handlePrevious">
+    <div class="mbl-field">
+      <div class="mbl-control buttons">
+        <button class="mbl-button" :disabled="isSaving" @click="handlePrevious">
           {{ previousButtonText }}
         </button>
-        <button class="button is-info" :disabled="isSaving" @click="handleSubmit">
+        <button class="mbl-button mbl-button--info" :disabled="isSaving" @click="handleSubmit">
           {{ nextButtonText }}
         </button>
       </div>
@@ -398,7 +398,7 @@ export default {
   cursor: pointer;
 }
 
-.option-card-content {
+.option-mbl-card__content {
   flex: 1;
   min-width: 0;
 }

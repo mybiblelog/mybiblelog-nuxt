@@ -41,6 +41,6 @@ My Bible Log розроблений для зручного використан
 
 Просто оновіть сторінку, щоб переконатися, що ви використовуєте останню версію додатка.
 
-<div class="buttons">
-  <a class="button is-light" href="/uk/today">Розпочати</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/uk/today">Розпочати</a>
 </div>

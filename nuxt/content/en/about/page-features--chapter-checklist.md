@@ -42,6 +42,6 @@ However, reading four chapters each day will mean you finish the Bible in 298 da
 
 Instead, read at least 3 chapters per day, but make sure to read that extra fourth chapter once or twice a week to keep up the pace. If you read 23 chapters a week, you will finish the Bible in a year.
 
-<div class="buttons">
-  <a class="button is-light" href="/checklist">Go to Chapter Checklist page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/checklist">Go to Chapter Checklist page</a>
 </div>

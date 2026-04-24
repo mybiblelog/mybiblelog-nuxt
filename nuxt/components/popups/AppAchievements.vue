@@ -1,34 +1,30 @@
 <template>
-  <transition name="fade">
-    <div v-if="achievement.open" class="popup-modal no-select">
-      <div class="window" role="dialog">
-        <div class="star-container">
-          <div class="star-wrapper" :class="{ 'star-stamped': starStamped }">
-            <shimmer-star-icon width="64px" height="64px" />
-          </div>
-          <div
-            v-for="(particle, index) in particles"
-            :key="index"
-            class="particle"
-            :style="particle.style"
-          >
-            <star-icon width="32px" height="32px" fill="#bdf" />
-          </div>
-        </div>
-        <div class="title is-4">
-          {{ achievementTitle }}
-        </div>
-        <div class="content">
-          <p>{{ achievementMessage }}</p>
-        </div>
-        <div class="buttons">
-          <button class="button is-primary" @click="_close">
-            {{ $t('ok') }}
-          </button>
-        </div>
+  <pop-up-modal :visible="achievement.open">
+    <div class="star-container">
+      <div class="star-wrapper" :class="{ 'star-stamped': starStamped }">
+        <shimmer-star-icon width="64px" height="64px" />
+      </div>
+      <div
+        v-for="(particle, index) in particles"
+        :key="index"
+        class="particle"
+        :style="particle.style"
+      >
+        <star-icon width="32px" height="32px" fill="#bdf" />
       </div>
     </div>
-  </transition>
+    <div class="mbl-title mbl-title--4 mbl-text-center">
+      {{ achievementTitle }}
+    </div>
+    <div class="mbl-content mbl-text-center app-achievements__message">
+      <p>{{ achievementMessage }}</p>
+    </div>
+    <div class="mbl-button-group mbl-button-group--center">
+      <button class="mbl-button mbl-button--primary" @click="_close">
+        {{ $t('ok') }}
+      </button>
+    </div>
+  </pop-up-modal>
 </template>
 
 <script>
@@ -36,10 +32,12 @@ import { Bible } from '@mybiblelog/shared';
 import { ACHIEVEMENT, useAchievementsStore } from '~/stores/achievements';
 import StarIcon from '@/components/svg/StarIcon';
 import ShimmerStarIcon from '@/components/svg/ShimmerStarIcon';
+import PopUpModal from '@/components/popups/PopUpModal.vue';
 
 export default {
   name: 'AppAchievements',
   components: {
+    PopUpModal,
     StarIcon,
     ShimmerStarIcon,
   },
@@ -144,55 +142,6 @@ export default {
 </script>
 
 <style scoped>
-/* css class for the transition */
-.popup-modal {
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  z-index: var(--z-index-popup);
-}
-
-.popup-modal.fade-enter-active,
-.popup-modal.fade-leave-active {
-  transition: var(--transition-fade);
-}
-
-.popup-modal.fade-enter-active .window,
-.popup-modal.fade-leave-active .window {
-  transition: var(--transition-modal);
-}
-
-.popup-modal.fade-enter,
-.popup-modal.fade-leave-to {
-  opacity: 0;
-}
-
-.popup-modal.fade-enter .window,
-.popup-modal.fade-leave-to .window {
-  transform: var(--modal-scale);
-}
-
-.window {
-  background: #fff;
-
-  padding: 2rem;
-  border-radius: 0.25rem;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
-
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-
-  overflow: hidden;
-}
-
 .star-container {
   position: relative;
   display: flex;
@@ -241,21 +190,8 @@ export default {
   }
 }
 
-.title {
-  text-align: center;
-}
-
-.content {
-  text-align: center;
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-}
-
-.no-select {
-  user-select: none;
+.app-achievements__message {
+  margin-bottom: 1rem;
 }
 </style>
 

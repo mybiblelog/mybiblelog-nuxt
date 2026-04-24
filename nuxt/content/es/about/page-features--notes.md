@@ -68,7 +68,7 @@ En la página de Etiquetas puedes ver el número de notas que están utilizando 
 
 No puedes eliminar una etiqueta que aún se está utilizando, por lo que deberás quitarle la etiqueta o eliminar cualquier nota que esté utilizando una etiqueta antes de poder eliminarla.
 
-<div class="buttons">
-  <a class="button is-light" href="/es/notes">Ir a la página de Notas</a>
-  <a class="button is-light" href="/es/tags">Ir a la página de Etiquetas</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/es/notes">Ir a la página de Notas</a>
+  <a class="mbl-button mbl-button--light" href="/es/tags">Ir a la página de Etiquetas</a>
 </div>

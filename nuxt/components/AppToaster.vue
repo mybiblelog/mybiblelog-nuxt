@@ -1,10 +1,10 @@
 <template>
   <div class="toaster">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds-tablet py-0">
-          <div v-for="message in messages" :key="message.id" class="notification" :class="messageClass(message.type)">
-            <button class="delete" @click="closeToast(message.id)" />{{ message.text }}
+    <div class="mbl-container">
+      <div class="mbl-centered-column mbl-centered-column--constrained">
+        <div class="mbl-py-0">
+          <div v-for="message in messages" :key="message.id" class="mbl-notification" :class="messageClass(message.type)">
+            <button class="mbl-delete" @click="closeToast(message.id)" />{{ message.text }}
           </div>
         </div>
       </div>
@@ -32,13 +32,13 @@ export default {
     messageClass(type) {
       switch (type) {
       case 'info':
-        return 'is-info';
+        return 'mbl-notification--info';
       case 'success':
-        return 'is-success';
+        return 'mbl-notification--success';
       case 'warning':
-        return 'is-warning';
+        return 'mbl-notification--warning';
       case 'error':
-        return 'is-danger';
+        return 'mbl-notification--danger';
       default:
         return '';
       }
@@ -57,7 +57,7 @@ export default {
   pointer-events: none;
 }
 
-.notification {
+.mbl-notification {
   box-shadow: 0 0 0 2px #fff, 0 0 5px #000;
   pointer-events: auto;
 }

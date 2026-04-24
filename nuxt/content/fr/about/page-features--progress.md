@@ -63,6 +63,6 @@ pour terminer la lecture de la Bible à la date d'objectif.
 C'est un excellent moyen de déterminer combien de lectures vous devez effectuer pour finir la Bible d'ici la fin de l'année,
 ou pour toute autre date butoir que vous choisissez.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/progress">Aller à la page de progression</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/progress">Aller à la page de progression</a>
 </div>

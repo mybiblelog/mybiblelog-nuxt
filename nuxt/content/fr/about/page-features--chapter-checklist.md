@@ -41,6 +41,6 @@ Cependant, lire quatre chapitres chaque jour signifiera que vous finirez la Bibl
 
 Au lieu de cela, lisez au moins 3 chapitres par jour, mais assurez-vous de lire ce quatrième chapitre supplémentaire une ou deux fois par semaine pour garder le rythme. Si vous lisez 23 chapitres par semaine, vous finirez la Bible en un an.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/checklist">Aller à la page de liste de chapitres</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/checklist">Aller à la page de liste de chapitres</a>
 </div>

@@ -1,0 +1,97 @@
+.mbl-message {
+  border-radius: var(--mbl-radius);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0;
+  position: relative;
+}
+
+.mbl-message__header {
+  align-items: center;
+  background-color: var(--mbl-bg-muted);
+  border: 1px solid var(--mbl-border);
+  border-bottom: none;
+  border-radius: var(--mbl-radius) var(--mbl-radius) 0 0;
+  color: var(--mbl-text);
+  display: flex;
+  flex-shrink: 0;
+  font-weight: 600;
+  justify-content: space-between;
+  line-height: 1.25;
+  padding: 0.75em 1em;
+}
+
+.mbl-message__header + .mbl-message__body {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.mbl-message__body {
+  border: 1px solid var(--mbl-border);
+  border-radius: var(--mbl-radius);
+  padding: 1.25em 1.5em;
+}
+
+/* Body-only callout (Bulma-style): light fill, left accent, no full box border */
+.mbl-message > .mbl-message__body:only-child {
+  background-color: var(--mbl-bg-muted);
+  border: none;
+  border-left: 5px solid var(--mbl-border);
+  border-radius: var(--mbl-radius);
+  color: var(--mbl-text);
+}
+
+.mbl-message--info .mbl-message__header {
+  background-color: var(--mbl-info);
+  border-color: #b8d7f5;
+  color: #fff;
+}
+
+.mbl-message--info .mbl-message__body {
+  background-color: #f5faff;
+  border-color: #b8d7f5;
+  color: #1a5080;
+}
+
+/* After general info body rules: body-only info callout keeps left accent, no full frame */
+.mbl-message--info > .mbl-message__body:only-child {
+  background-color: #f5faff;
+  border: none;
+  border-left: 5px solid #7ab8e8;
+  border-radius: var(--mbl-radius);
+  color: #1a5080;
+}
+
+.mbl-notification {
+  background-color: var(--mbl-bg-muted);
+  border-radius: var(--mbl-radius);
+  padding: 1.25rem 2.5rem 1.25rem 1.5rem;
+  position: relative;
+}
+
+.mbl-notification--info {
+  background-color: #e8f4fc;
+  color: #1a5080;
+}
+
+.mbl-notification--success {
+  background-color: #effaf5;
+  color: #257953;
+}
+
+.mbl-notification--warning {
+  background-color: #fffaeb;
+  color: #946c00;
+}
+
+.mbl-notification--danger {
+  background-color: #feecf0;
+  color: #cc0f35;
+}
+
+.mbl-notification .mbl-delete {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}

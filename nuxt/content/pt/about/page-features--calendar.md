@@ -28,6 +28,6 @@ A barra será preenchida com base na sua meta diária de contagem de versículos
 
 Se você alcançar sua meta diária de contagem de versículos lendo versículos suficientes, uma estrela azul escura aparecerá para essa data. Se você alcançar sua meta diária de contagem de versículos lendo versículos novos, uma estrela dourada aparecerá em vez disso.
 
-<div class="buttons">
-  <a class="button is-light" href="/pt/calendar">Ir para a página do Calendário</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/pt/calendar">Ir para a página do Calendário</a>
 </div>

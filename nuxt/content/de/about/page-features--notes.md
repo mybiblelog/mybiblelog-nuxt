@@ -68,7 +68,7 @@ Auf der Tags-Seite sehen Sie die Anzahl der Notizen, die jeden Tag verwenden. We
 
 Sie können einen Tag, der noch verwendet wird, nicht löschen. Sie müssen daher alle Notizen untaggen oder löschen, die einen Tag verwenden, bevor Sie den Tag löschen können.
 
-<div class="buttons">
-  <a class="button is-light" href="/de/notes">Zur Notizseite gehen</a>
-  <a class="button is-light" href="/de/tags">Zur Tags-Seite gehen</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/de/notes">Zur Notizseite gehen</a>
+  <a class="mbl-button mbl-button--light" href="/de/tags">Zur Tags-Seite gehen</a>
 </div>

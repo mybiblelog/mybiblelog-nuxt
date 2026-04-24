@@ -49,7 +49,7 @@ export default {
 .calendar-date-selector {
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center;
   color: var(--grey-800);
   margin: 0 -1rem;
 }

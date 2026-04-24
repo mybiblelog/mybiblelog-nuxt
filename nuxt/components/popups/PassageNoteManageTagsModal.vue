@@ -9,7 +9,7 @@
         />
 
         <div class="manage-tags__new-row">
-          <button class="button is-small is-info" type="button" @click="openNewTagEditor">
+          <button class="mbl-button mbl-button--sm mbl-button--info" type="button" @click="openNewTagEditor">
             {{ $t('new') }}
           </button>
         </div>
@@ -17,10 +17,10 @@
     </template>
 
     <template slot="footer">
-      <button class="button is-primary" type="button" :disabled="tagEditorOpen" @click="done">
+      <button class="mbl-button mbl-button--primary" type="button" :disabled="tagEditorOpen" @click="done">
         {{ $t('done') }}
       </button>
-      <button class="button is-light" type="button" :disabled="tagEditorOpen" @click="cancel">
+      <button class="mbl-button mbl-button--light" type="button" :disabled="tagEditorOpen" @click="cancel">
         {{ $t('close') }}
       </button>
     </template>

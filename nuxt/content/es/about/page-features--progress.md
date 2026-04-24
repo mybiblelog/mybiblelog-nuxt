@@ -63,6 +63,6 @@ para terminar de leer la Biblia para tu fecha objetivo.
 Esta es una excelente manera de determinar cuánta lectura necesitas hacer para terminar de leer la Biblia al final del año,
 o para cualquier otra fecha objetivo que elijas.
 
-<div class="buttons">
-  <a class="button is-light" href="/progress">Ir a la página de Progreso</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/progress">Ir a la página de Progreso</a>
 </div>

@@ -1,33 +1,33 @@
 <template>
   <div class="book-report">
-    <header class="book-report-header is-hidden-mobile">
-      <button class="button book-report-header__back" @click="$emit('exit-book-report')">
+    <header class="book-report-header mbl-hidden-mobile">
+      <button class="mbl-button mbl-button--sm book-report-header__back" @click="$emit('exit-book-report')">
         <caret-left-icon />
       </button>
-      <h2 class="title mb-0 book-report-header__title">
+      <h2 class="mbl-title mbl-mb-0 book-report-header__title">
         <span>{{ bookName }}</span>
       </h2>
-      <button class="button book-report-header__notes" @click="$emit('view-book-notes')">
+      <button class="mbl-button mbl-button--sm book-report-header__notes" @click="$emit('view-book-notes')">
         {{ $t('book_notes') }}
         <caret-right-icon style="margin-left: 0.2rem;" />
       </button>
-      <button class="button book-report-header__reading" @click="$emit('view-book-log')">
+      <button class="mbl-button mbl-button--sm book-report-header__reading" @click="$emit('view-book-log')">
         {{ $t('book_reading') }}
         <caret-right-icon style="margin-left: 0.2rem;" />
       </button>
     </header>
-    <header class="book-report-header is-hidden-tablet">
-      <button class="button is-small book-report-header__back" @click="$emit('exit-book-report')">
+    <header class="book-report-header mbl-hidden-tablet">
+      <button class="mbl-button mbl-button--sm book-report-header__back" @click="$emit('exit-book-report')">
         <caret-left-icon />
       </button>
-      <h2 class="title is-5 mb-0 book-report-header__title">
+      <h2 class="mbl-title mbl-title--5 mbl-mb-0 book-report-header__title">
         <span>{{ bookName }}</span>
       </h2>
-      <button class="button is-small book-report-header__notes" @click="$emit('view-book-notes')">
+      <button class="mbl-button mbl-button--sm book-report-header__notes" @click="$emit('view-book-notes')">
         {{ $t('book_notes') }}
         <caret-right-icon style="margin-left: 0.2rem;" />
       </button>
-      <button class="button is-small book-report-header__reading" @click="$emit('view-book-log')">
+      <button class="mbl-button mbl-button--sm book-report-header__reading" @click="$emit('view-book-log')">
         {{ $t('book_reading') }}
         <caret-right-icon style="margin-left: 0.2rem;" />
       </button>

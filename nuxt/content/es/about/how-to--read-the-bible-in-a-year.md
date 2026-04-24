@@ -135,6 +135,6 @@ Otra excelente manera de seguir avanzando hacia tu objetivo es hablar de ello co
 
 Finalmente, aprovecha cualquier cosa que te haga interesarte por leer la Biblia. Si encuentras un pasaje interesante durante un estudio bíblico, un sermón o tu devocional diario, ¡sigue leyendo! No tienes que detenerte en un cierto número de versículos o capítulos cada día. Cuando encuentres un libro o sección de la Biblia inspirador, ¡aprovecha tu impulso y lee tanto como quieras!
 
-<div class="buttons">
-  <a class="button is-light" href="/es/today">Comenzar</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/es/today">Comenzar</a>
 </div>

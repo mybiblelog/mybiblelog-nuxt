@@ -48,6 +48,6 @@ Las entradas de registro se pueden exportar e importar en la página de Configur
 
 Actualmente, los usuarios no pueden exportar notas, por lo que las notas no se pueden transferir automáticamente entre cuentas.
 
-<div class="buttons">
-  <a class="button is-light" href="/es/login">Ir a la página de Inicio de Sesión</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/es/login">Ir a la página de Inicio de Sesión</a>
 </div>

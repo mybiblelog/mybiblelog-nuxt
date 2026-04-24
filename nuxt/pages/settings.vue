@@ -2,41 +2,41 @@
   <main>
     <div class="content-column">
       <header class="page-header">
-        <h1 class="title is-3">
+        <h1 class="mbl-title mbl-title--3">
           {{ $t('settings') }}
           <info-link :to="localePath('/about/page-features--settings')" />
         </h1>
-        <div class="dropdown narrow-screen is-right" :class="menuOpen ? 'is-active' : ''">
-          <div class="dropdown-trigger" @click="toggleMenu">
-            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+        <div class="mbl-dropdown narrow-screen mbl-dropdown--right" :class="menuOpen ? 'mbl-dropdown--active' : ''">
+          <div class="mbl-dropdown__trigger" @click="toggleMenu">
+            <button class="mbl-button" aria-haspopup="true" aria-controls="mbl-dropdown__menu">
               <span>{{ $t('menu') }}</span>
             </button>
           </div>
-          <div class="dropdown-menu" role="menu" @click="toggleMenu">
-            <div class="dropdown-content">
-              <nuxt-link class="dropdown-item" :to="localePath('/settings')">
+          <div class="mbl-dropdown__menu" role="menu" @click="toggleMenu">
+            <div class="mbl-dropdown__content">
+              <nuxt-link class="mbl-dropdown__item" :to="localePath('/settings')">
                 {{ $t('account') }}
               </nuxt-link>
-              <nuxt-link class="dropdown-item" :to="localePath('/settings/start')">
+              <nuxt-link class="mbl-dropdown__item" :to="localePath('/settings/start')">
                 {{ $t('start_page') }}
               </nuxt-link>
-              <nuxt-link class="dropdown-item" :to="localePath('/settings/reading')">
+              <nuxt-link class="mbl-dropdown__item" :to="localePath('/settings/reading')">
                 {{ $t('reading') }}
               </nuxt-link>
-              <nuxt-link class="dropdown-item" :to="localePath('/settings/reminder')">
+              <nuxt-link class="mbl-dropdown__item" :to="localePath('/settings/reminder')">
                 {{ $t('reminder') }}
               </nuxt-link>
-              <nuxt-link class="dropdown-item" :to="localePath('/settings/export')">
+              <nuxt-link class="mbl-dropdown__item" :to="localePath('/settings/export')">
                 {{ $t('export') }}
               </nuxt-link>
-              <nuxt-link class="dropdown-item" :to="localePath('/settings/import')">
+              <nuxt-link class="mbl-dropdown__item" :to="localePath('/settings/import')">
                 {{ $t('import') }}
               </nuxt-link>
             </div>
           </div>
         </div>
       </header>
-      <div class="tabs wide-screen">
+      <div class="mbl-tabs wide-screen">
         <ul>
           <li>
             <nuxt-link :to="localePath('/settings')">

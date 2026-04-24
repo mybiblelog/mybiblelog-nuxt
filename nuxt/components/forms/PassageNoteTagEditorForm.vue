@@ -1,35 +1,35 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <div v-if="errors._form" class="help is-danger">
-      <div class="help is-danger">
+    <div v-if="errors._form" class="mbl-help mbl-help--danger">
+      <div class="mbl-help mbl-help--danger">
         {{ $terr(errors._form) }}
       </div>
     </div>
-    <div class="field">
-      <div class="label">
+    <div class="mbl-field">
+      <div class="mbl-label">
         {{ $t('label') }}
       </div>
-      <div v-if="errors.label" class="help is-danger">
+      <div v-if="errors.label" class="mbl-help mbl-help--danger">
         {{ $terr(errors.label, { field: $t('label') }) }}
       </div>
-      <div class="control">
-        <input :value="passageNoteTag.label" class="input" type="text" maxlength="32" @input="updateLabel">
+      <div class="mbl-control">
+        <input :value="passageNoteTag.label" class="mbl-input" type="text" maxlength="32" @input="updateLabel">
       </div>
     </div>
-    <div class="field">
-      <div class="label">
+    <div class="mbl-field">
+      <div class="mbl-label">
         {{ $t('color') }}
       </div>
-      <div class="control">
-        <input :value="passageNoteTag.color" class="input" type="color" @input="updateColor">
+      <div class="mbl-control">
+        <input :value="passageNoteTag.color" class="mbl-input" type="color" @input="updateColor">
       </div>
     </div>
-    <div class="field">
-      <div class="label">
+    <div class="mbl-field">
+      <div class="mbl-label">
         {{ $t('description') }}
       </div>
-      <div class="control">
-        <textarea :value="passageNoteTag.description" class="textarea" maxlength="1500" @input="updateDescription" />
+      <div class="mbl-control">
+        <textarea :value="passageNoteTag.description" class="mbl-textarea" maxlength="1500" @input="updateDescription" />
       </div>
     </div>
     <!-- ensures property will be computed because it is accessed-->

@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h2 class="title is-5">
+    <h2 class="mbl-title mbl-title--5">
       {{ $t('start_page.get_started.title') }}
     </h2>
-    <div class="content">
+    <div class="mbl-content">
       <p>
         {{ $t('start_page.get_started.description') }}
       </p>
     </div>
-    <div class="field">
-      <div class="control buttons">
-        <button class="button is-info is-large" @click="handleGetStarted">
+    <div class="mbl-field">
+      <div class="mbl-control buttons">
+        <button class="mbl-button mbl-button--info mbl-button--lg" @click="handleGetStarted">
           {{ $t('start_page.get_started.button') }}
         </button>
       </div>

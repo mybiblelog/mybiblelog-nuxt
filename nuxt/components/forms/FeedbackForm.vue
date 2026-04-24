@@ -1,23 +1,23 @@
 <template>
   <form @submit.prevent="submitFeedback">
-    <div v-if="errors._form" class="help is-danger">
-      <div class="help is-danger">
+    <div v-if="errors._form" class="mbl-help mbl-help--danger">
+      <div class="mbl-help mbl-help--danger">
         {{ $terr(errors._form) }}
       </div>
     </div>
-    <div class="field">
-      <label class="label">{{ $t('your_email') }}</label>
-      <div class="control">
-        <input v-model="form.email" class="input" type="email" :placeholder="$t('your_email')" :disabled="authStore.loggedIn">
-        <div v-if="errors.email" class="help is-danger">
+    <div class="mbl-field">
+      <label class="mbl-label">{{ $t('your_email') }}</label>
+      <div class="mbl-control">
+        <input v-model="form.email" class="mbl-input" type="email" :placeholder="$t('your_email')" :disabled="authStore.loggedIn">
+        <div v-if="errors.email" class="mbl-help mbl-help--danger">
           {{ $terr(errors.email) }}
         </div>
       </div>
     </div>
-    <div class="field">
-      <label class="label">{{ $t('what_kind_of_feedback') }}</label>
-      <div class="control">
-        <div class="select">
+    <div class="mbl-field">
+      <label class="mbl-label">{{ $t('what_kind_of_feedback') }}</label>
+      <div class="mbl-control">
+        <div class="mbl-select">
           <select v-model="form.kind">
             <option value="bug">
               {{ $t('bug_report') }}
@@ -30,23 +30,23 @@
             </option>
           </select>
         </div>
-        <div v-if="errors.kind" class="help is-danger">
+        <div v-if="errors.kind" class="mbl-help mbl-help--danger">
           {{ $terr(errors.kind) }}
         </div>
       </div>
     </div>
-    <div class="field">
-      <label class="label">{{ $t('feedback_details') }}</label>
-      <div class="control">
-        <textarea v-model="form.message" class="textarea" :placeholder="$t('feedback_details')" />
-        <div v-if="errors.message" class="help is-danger">
+    <div class="mbl-field">
+      <label class="mbl-label">{{ $t('feedback_details') }}</label>
+      <div class="mbl-control">
+        <textarea v-model="form.message" class="mbl-textarea" :placeholder="$t('feedback_details')" />
+        <div v-if="errors.message" class="mbl-help mbl-help--danger">
           {{ $terr(errors.message) }}
         </div>
       </div>
     </div>
-    <div class="field">
-      <div class="control">
-        <button class="button is-primary">
+    <div class="mbl-field">
+      <div class="mbl-control">
+        <button class="mbl-button mbl-button--primary">
           {{ $t('submit_feedback') }}
         </button>
       </div>

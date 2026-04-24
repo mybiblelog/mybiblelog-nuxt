@@ -1,36 +1,36 @@
 <template>
-  <div class="container">
-    <h2 class="title is-4">
+  <div class="mbl-container">
+    <h2 class="mbl-title mbl-title--4">
       {{ $t('import') }}
     </h2>
     <p>{{ $t('you_can_import_a_csv') }}</p>
-    <div class="file">
-      <label class="file-label">
-        <input class="file-input" type="file" multiple="multiple" @change="uploadCSVFilesChange">
-        <span class="file-cta">
-          <span class="file-label">{{ $t('choose_a_file') }}</span>
+    <div class="mbl-file-block">
+      <label class="mbl-file">
+        <input class="mbl-file__input" type="file" multiple="multiple" @change="uploadCSVFilesChange">
+        <span class="mbl-file__cta">
+          <span class="mbl-file__text">{{ $t('choose_a_file') }}</span>
         </span>
       </label>
     </div>
     <hr>
-    <div v-if="showLookBackDateResetMessage" class="message is-info">
-      <div class="message-body">
+    <div v-if="showLookBackDateResetMessage" class="mbl-message mbl-message--info">
+      <div class="mbl-message__body">
         <p>{{ $t('messaging.look_back_date_reset_message.1') }}</p>
         <p>{{ $t('messaging.look_back_date_reset_message.2', { lookBackDate: displayDate(userSettings.lookBackDate, $i18n.locale) }) }}</p>
-        <div class="buttons">
-          <button class="button is-primary" @click="updateLookBackDate">
+        <div class="mbl-button-group">
+          <button class="mbl-button mbl-button--primary" @click="updateLookBackDate">
             {{ $t('messaging.update_look_back_date_yes') }}
           </button>
-          <button class="button" @click="() => showLookBackDateResetMessage = false">
+          <button class="mbl-button" @click="() => showLookBackDateResetMessage = false">
             {{ $t('messaging.update_look_back_date_no') }}
           </button>
         </div>
       </div>
     </div>
-    <h3 class="title is-5">
+    <h3 class="mbl-title mbl-title--5">
       {{ $t('log_import_progress') }}
     </h3>
-    <table class="table is-fullwidth">
+    <table class="mbl-table mbl-table--full">
       <thead>
         <tr>
           <th>{{ $t('date') }}</th>

@@ -43,13 +43,6 @@ export default {
       htmlAttrs: {
         lang: this.$i18n.locale,
       },
-      link: [
-        {
-          rel: 'stylesheet',
-          type: 'text/css',
-          href: 'https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css',
-        },
-      ],
     };
   },
 };
