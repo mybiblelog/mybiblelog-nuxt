@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style scoped>
-.calendar-date-indicator {
-  /* no styles */
+.calendar-date-indicator .mbl-title {
+  margin-bottom: 0;
 }
 </style>
