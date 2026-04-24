@@ -1,47 +1,45 @@
 <template>
   <div>
-    <div class="mbl-container mbl-content">
-      <h1 class="mbl-title mbl-title--4">
-        {{ $t('title') }}
-      </h1>
-      <div class="mbl-content">
-        <p>{{ $t('description') }}</p>
-        <ul>
-          <li>{{ $t('list.account') }}</li>
-          <li>{{ $t('list.log_entries') }}</li>
-          <li>{{ $t('list.notes') }}</li>
-          <li>{{ $t('list.export') }}</li>
-          <li>{{ $t('list.permanent') }}</li>
-        </ul>
-      </div>
-      <div class="mbl-card">
-        <div class="mbl-card__content">
-          <form>
-            <div class="mbl-field">
-              <label class="mbl-checkbox">
-                <input v-model="understand.logEntries" type="checkbox"> {{ $t('understand.log_entries') }}
-              </label>
-            </div>
-            <div class="mbl-field">
-              <label class="mbl-checkbox">
-                <input v-model="understand.export" type="checkbox"> {{ $t('understand.export') }}
-              </label>
-            </div>
-            <div class="mbl-field">
-              <label class="mbl-checkbox">
-                <input v-model="understand.notes" type="checkbox"> {{ $t('understand.notes') }}
-              </label>
-            </div>
-            <div class="mbl-field">
-              <label class="mbl-checkbox">
-                <input v-model="understand.permanent" type="checkbox"> {{ $t('understand.permanent') }}
-              </label>
-            </div>
-          </form>
-          <button class="mbl-button mbl-button--primary" :disabled="!fullyUnderstands" @click="deleteAccount">
-            {{ $t('delete_my_account') }}
-          </button>
-        </div>
+    <h1 class="mbl-title mbl-title--4">
+      {{ $t('title') }}
+    </h1>
+    <div class="mbl-content">
+      <p>{{ $t('description') }}</p>
+      <ul>
+        <li>{{ $t('list.account') }}</li>
+        <li>{{ $t('list.log_entries') }}</li>
+        <li>{{ $t('list.notes') }}</li>
+        <li>{{ $t('list.export') }}</li>
+        <li>{{ $t('list.permanent') }}</li>
+      </ul>
+    </div>
+    <div class="mbl-card">
+      <div class="mbl-card__content">
+        <form>
+          <div class="mbl-field">
+            <label class="mbl-checkbox">
+              <input v-model="understand.logEntries" type="checkbox"> {{ $t('understand.log_entries') }}
+            </label>
+          </div>
+          <div class="mbl-field">
+            <label class="mbl-checkbox">
+              <input v-model="understand.export" type="checkbox"> {{ $t('understand.export') }}
+            </label>
+          </div>
+          <div class="mbl-field">
+            <label class="mbl-checkbox">
+              <input v-model="understand.notes" type="checkbox"> {{ $t('understand.notes') }}
+            </label>
+          </div>
+          <div class="mbl-field">
+            <label class="mbl-checkbox">
+              <input v-model="understand.permanent" type="checkbox"> {{ $t('understand.permanent') }}
+            </label>
+          </div>
+        </form>
+        <button class="mbl-button mbl-button--primary" :disabled="!fullyUnderstands" @click="deleteAccount">
+          {{ $t('delete_my_account') }}
+        </button>
       </div>
     </div>
   </div>

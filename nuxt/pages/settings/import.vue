@@ -1,5 +1,5 @@
 <template>
-  <div class="mbl-container">
+  <div>
     <h2 class="mbl-title mbl-title--4">
       {{ $t('import') }}
     </h2>

@@ -112,6 +112,11 @@ a.mbl-box:active {
   margin-bottom: 0;
 }
 
+.mbl-level * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .mbl-level-item {
   align-items: center;
   display: flex;

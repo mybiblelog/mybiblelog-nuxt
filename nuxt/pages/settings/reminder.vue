@@ -1,5 +1,5 @@
 <template>
-  <div class="mbl-container">
+  <div>
     <h2 class="mbl-title mbl-title--4">
       {{ $t('reminder') }}
     </h2>
@@ -18,10 +18,10 @@
         </label>
       </div>
     </div>
-    <div class="mbl-field mbl-field--addons">
+    <div class="mbl-field">
       <div class="mbl-control">
         <label class="mbl-label">{{ $t('form.reminder_time') }}</label>
-        <input v-model="reminderForm.time" class="mbl-input" type="time" min="0" max="23">
+        <input v-model="reminderForm.time" class="mbl-input mbl-input--short" type="time" min="0" max="23">
       </div>
     </div>
     <div class="mbl-field">

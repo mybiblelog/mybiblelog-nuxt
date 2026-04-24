@@ -144,6 +144,12 @@
   border-color: var(--mbl-danger);
 }
 
+/* Shrink to content (e.g. type="time", short numeric fields); still caps at container on narrow viewports */
+.mbl-input.mbl-input--short {
+  max-width: 100%;
+  width: auto;
+}
+
 .mbl-textarea {
   display: block;
   max-height: 600px;

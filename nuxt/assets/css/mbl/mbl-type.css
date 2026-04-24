@@ -48,14 +48,49 @@
   color: var(--mbl-text);
   font-weight: 600;
   line-height: 1.125;
+}
+
+.mbl-content h1 {
+  font-size: 2em;
   margin-bottom: 0.5em;
+}
+
+.mbl-content h1:not(:first-child) {
   margin-top: 1em;
 }
 
-.mbl-content h1 { font-size: 2em; }
-.mbl-content h2 { font-size: 1.75em; }
-.mbl-content h3 { font-size: 1.5em; }
-.mbl-content h4 { font-size: 1.25em; }
+.mbl-content h2 {
+  font-size: 1.75em;
+  margin-bottom: 0.5714em;
+}
+
+.mbl-content h2:not(:first-child) {
+  margin-top: 1.1428em;
+}
+
+.mbl-content h3 {
+  font-size: 1.5em;
+  margin-bottom: 0.6666em;
+}
+
+.mbl-content h3:not(:first-child) {
+  margin-top: 1.3333em;
+}
+
+.mbl-content h4 {
+  font-size: 1.25em;
+  margin-bottom: 0.8em;
+}
+
+.mbl-content h5 {
+  font-size: 1.125em;
+  margin-bottom: 0.8888em;
+}
+
+.mbl-content h6 {
+  font-size: 1em;
+  margin-bottom: 1em;
+}
 
 .mbl-content ul,
 .mbl-content ol {
