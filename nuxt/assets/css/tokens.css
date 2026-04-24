@@ -92,12 +92,6 @@
   --mbl-overlay-soft: rgba(10, 10, 10, 0.2);
   --mbl-overlay-soft-strong: rgba(10, 10, 10, 0.3);
 
-  --mbl-hero-dark-bg: var(--neutral-700);
-  --mbl-hero-dark-fg: var(--neutral-0);
-  --mbl-hero-dark-gradient-start: var(--neutral-800);
-  --mbl-hero-dark-gradient-mid: var(--neutral-700);
-  --mbl-hero-dark-gradient-end: var(--neutral-850);
-
   /* Message / notification intent surfaces */
   --mbl-message-info-border: #b8d7f5;
   --mbl-message-info-bg: #f5faff;
