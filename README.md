@@ -41,8 +41,8 @@ $ npm run start
 Debug launch configs live in `.vscode/launch.json`.
 
 - Debug Nuxt Dev: Run **Debug Nuxt Dev** (F5)
-- Debug Nuxt Prod: first run `npm run build --prefix nuxt`, then Run **Debug Nuxt Prod** (F5)
-- Debug API Server (Prod): first run `npm run build --prefix api`, then Run **Debug API Server (Prod)** (F5)
+- Debug Nuxt Prod: first run `npm run -w nuxt build`, then Run **Debug Nuxt Prod** (F5)
+- Debug API Server (Prod): first run `npm run -w api build`, then Run **Debug API Server (Prod)** (F5)
 
 ### Chrome DevTools (attach to Nuxt SSR Node process)
 
