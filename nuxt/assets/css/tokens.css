@@ -25,7 +25,7 @@
   --header-height: calc(1rem + 1.618rem + 3px);
   --site-nav-height: 3.25rem;
 
-  /* Neutral ramp (Bulma-aligned; used by semantic tokens) */
+  /* Neutral ramp (used by semantic tokens) */
   --neutral-0: #fff;
   --neutral-50: #fafafa;
   --neutral-100: #f5f5f5;

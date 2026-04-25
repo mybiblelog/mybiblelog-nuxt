@@ -233,7 +233,7 @@
   display: flex;
 }
 
-/* File input (Bulma-style markup with mbl classes) */
+/* File input */
 .mbl-file {
   align-items: stretch;
   display: flex;

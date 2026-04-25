@@ -33,7 +33,7 @@
   padding: 1.25em 1.5em;
 }
 
-/* Body-only callout (Bulma-style): light fill, left accent, no full box border */
+/* Body-only callout: light fill, left accent, no full box border */
 .mbl-message > .mbl-message__body:only-child {
   background-color: var(--mbl-bg-muted);
   border: none;

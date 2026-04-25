@@ -1,5 +1,5 @@
 /* Buttons */
-/* Base sizing matches Bulma `.button` (padding-driven, no fixed height) */
+/* Base sizing (padding-driven, no fixed height) */
 .mbl-button {
   align-items: center;
   appearance: none;
