@@ -51,7 +51,7 @@ export default {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background-color: #3273dc; /* Bulma primary color */
+  background-color: var(--secondary-color);
   color: white;
   display: flex;
   align-items: center;
@@ -65,7 +65,7 @@ export default {
 }
 
 .floating-action-button:hover {
-  background-color: #2366d1;
+  background-color: var(--secondary-color-hover);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
 }
