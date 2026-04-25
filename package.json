@@ -19,7 +19,6 @@
     "dev": "npm-run-all --parallel dev:api dev:nuxt",
     "dev:api": "npm run -w api dev:ts",
     "dev:nuxt": "npm run -w nuxt dev",
-    "storybook": "npm run -w nuxt storybook",
     "start": "npm-run-all --parallel start:api start:nuxt",
     "start:api": "npm run -w api start",
     "start:nuxt": "npm run -w nuxt start",

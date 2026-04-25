@@ -31,9 +31,6 @@
   "exclude": [
     "node_modules",
     "dist",
-    ".nuxt",
-    ".nuxt-storybook",
-    "storybook-static",
-    "../storybook-static"
+    ".nuxt"
   ]
 }

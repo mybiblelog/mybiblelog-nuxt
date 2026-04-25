@@ -13,9 +13,7 @@
     "dev": "cross-env NODE_ENV=development nuxt2 dev",
     "start": "cross-env NODE_ENV=production nuxt2 start",
     "build": "nuxt2 build",
-    "storybook": "nuxt-storybook dev",
-    "storybook:build": "nuxt-storybook build",
-    "clean": "rm -rf node_modules .nuxt .nuxt-storybook storybook-static",
+    "clean": "rm -rf node_modules .nuxt",
     "lint": "eslint --ext .ts,.js,.vue .",
     "lint:fix": "eslint --ext .ts,.js,.vue . --fix"
   },
@@ -43,7 +41,6 @@
     "@nuxt/typescript-build": "^3.0.2",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/eslint-module": "^3.1.0",
-    "@nuxtjs/storybook": "^4.3.2",
     "css-loader": "^5.2.7",
     "postcss": "^8.5.10",
     "tsx": "^4.19.3",
