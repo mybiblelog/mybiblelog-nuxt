@@ -121,12 +121,20 @@ h1, h2, h3, h4, h5, h6 {
 
   /* size normalization */
   max-width: 320px;
+}
 
-  img {
+.phone-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+@media (max-width: 767px) {
+  .phone-frame {
+    float: none;
     display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
+    margin: 0 auto 1rem;
   }
 }
 </style>
