@@ -6,7 +6,7 @@
         {{ $t('today') }}
         <info-link :to="localePath('/about/page-features--today')" />
       </h1>
-      <button class="mbl-button mbl-button--info" @click="openAddEntryForm">
+      <button class="mbl-button mbl-button--primary" @click="openAddEntryForm">
         {{ $t('add_entry') }}
       </button>
     </header>
@@ -90,7 +90,7 @@
       </div>
       <div class="mbl-level-right">
         <div class="mbl-level-item">
-          <button class="mbl-button mbl-button--info" @click="openPassageNoteEditor({ empty: true })">
+          <button class="mbl-button mbl-button--primary" @click="openPassageNoteEditor({ empty: true })">
             {{ $t('new_note') }}
           </button>
         </div>

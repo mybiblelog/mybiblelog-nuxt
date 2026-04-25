@@ -4,7 +4,7 @@
       <button class="mbl-button mbl-button--sm book-report-header__back" @click="$emit('exit-book-report')">
         <caret-left-icon />
       </button>
-      <h2 class="mbl-title mbl-mb-0 book-report-header__title">
+      <h2 class="mbl-title book-report-header__title">
         <span>{{ bookName }}</span>
       </h2>
       <button class="mbl-button mbl-button--sm book-report-header__notes" @click="$emit('view-book-notes')">
@@ -20,7 +20,7 @@
       <button class="mbl-button mbl-button--sm book-report-header__back" @click="$emit('exit-book-report')">
         <caret-left-icon />
       </button>
-      <h2 class="mbl-title mbl-title--5 mbl-mb-0 book-report-header__title">
+      <h2 class="mbl-title mbl-title--5 book-report-header__title">
         <span>{{ bookName }}</span>
       </h2>
       <button class="mbl-button mbl-button--sm book-report-header__notes" @click="$emit('view-book-notes')">
@@ -209,7 +209,7 @@ export default {
 }
 
 .book-report-header__back { grid-area: back; }
-.book-report-header__title { grid-area: title; }
+.book-report-header__title { grid-area: title; margin-bottom: 0; }
 .book-report-header__notes { grid-area: notes; }
 .book-report-header__reading { grid-area: reading; }
 

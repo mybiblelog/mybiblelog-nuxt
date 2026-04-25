@@ -46,12 +46,12 @@
             <button class="mbl-button mbl-button--primary">
               {{ $t('sign_in') }}
             </button>
-            <button class="mbl-button" :class="{ 'mbl-button--text': !failedLoginAttempt, 'mbl-button--info': failedLoginAttempt }" @click.prevent="sendPasswordReset">
+            <button class="mbl-button" :class="{ 'mbl-button--text': !failedLoginAttempt, 'mbl-button--primary': failedLoginAttempt }" @click.prevent="sendPasswordReset">
               {{ $t('forgot_your_password') }}
             </button>
           </div>
         </form>
-        <div class="mbl-flex mbl-mt-5">
+        <div class="mbl-flex google-login-button-container">
           <google-login-button v-if="googleOauth2Url" :google-oauth2-url="googleOauth2Url" />
         </div>
       </template>
@@ -162,7 +162,9 @@ export default {
 </script>
 
 <style scoped>
-
+.google-login-button-container {
+  margin-top: 1.5rem;
+}
 </style>
 
 <i18n lang="json">

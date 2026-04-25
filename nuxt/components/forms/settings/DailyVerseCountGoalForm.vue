@@ -112,7 +112,7 @@
         <button class="mbl-button" :disabled="isSaving" @click="handlePrevious">
           {{ previousButtonText }}
         </button>
-        <button class="mbl-button mbl-button--info" :disabled="isSaving" @click="handleSubmit">
+        <button class="mbl-button mbl-button--primary" :disabled="isSaving" @click="handleSubmit">
           {{ nextButtonText }}
         </button>
       </div>

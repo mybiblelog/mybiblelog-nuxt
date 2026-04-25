@@ -7,7 +7,7 @@
             {{ $t('meta.title') }}
           </h1>
           <div class="mbl-button-group mbl-button-group--start">
-            <button class="mbl-button mbl-button--info" @click="print">
+            <button class="mbl-button mbl-button--primary" @click="print">
               {{ $t('print') }}
             </button>
           </div>

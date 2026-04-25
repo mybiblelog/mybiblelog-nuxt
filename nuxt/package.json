@@ -15,7 +15,6 @@
     "build": "nuxt2 build",
     "storybook": "nuxt-storybook dev",
     "storybook:build": "nuxt-storybook build",
-    "css:inventory": "node scripts/css-inventory-classes.mjs",
     "clean": "rm -rf node_modules .nuxt .nuxt-storybook storybook-static",
     "lint": "eslint --ext .ts,.js,.vue .",
     "lint:fix": "eslint --ext .ts,.js,.vue . --fix"

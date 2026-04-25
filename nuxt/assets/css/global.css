@@ -253,14 +253,17 @@ body.has-site-nav-fixed {
   padding: 3rem 1rem 5rem;
 }
 
-.container header.page-header,
-.content-column header.page-header {
+.container .page-header,
+.content-column .page-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   align-items: flex-start;
+}
 
-  padding: 0; /* unset from main header -- this should be more specific */
+.page-header .mbl-title {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 @media print {

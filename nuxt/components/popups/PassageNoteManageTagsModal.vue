@@ -9,7 +9,7 @@
         />
 
         <div class="manage-tags__new-row">
-          <button class="mbl-button mbl-button--sm mbl-button--info" type="button" @click="openNewTagEditor">
+          <button class="mbl-button mbl-button--sm mbl-button--primary" type="button" @click="openNewTagEditor">
             {{ $t('new') }}
           </button>
         </div>

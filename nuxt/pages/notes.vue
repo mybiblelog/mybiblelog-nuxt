@@ -11,7 +11,7 @@
             {{ $t('tags') }}
             <caret-right-icon style="margin-left: 0.2rem;" />
           </nuxt-link>
-          <button class="mbl-button mbl-button--info" @click="openPassageNoteEditor({ empty: true })">
+          <button class="mbl-button mbl-button--primary" @click="openPassageNoteEditor({ empty: true })">
             {{ $t('new') }}
           </button>
         </div>
@@ -26,7 +26,7 @@
         </button>
       </div>
 
-      <div class="mbl-centered-column">
+      <div class="notes-page__layout">
         <aside class="notes-page__sidebar">
           <div class="mbl-box notes-page__query-manager-box">
             <div class="notes-page__query-manager-actions">
@@ -53,7 +53,7 @@
               </div>
             </template>
             <template v-else-if="!passageNotes.length">
-              <div class="mbl-bg-muted mbl-p-5">
+              <div class="mbl-empty-state">
                 <div class="mbl-text-center">
                   {{ $t('results.no_results') }}
                 </div>
@@ -390,6 +390,37 @@ export default {
   box-shadow: 0 0 0 2px white;
 }
 
+.notes-page__layout {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.notes-page__layout:last-child {
+  margin-bottom: -0.75rem;
+}
+
+.notes-page__layout:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.notes-page__layout > * {
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.notes-page__layout > *:first-child {
+  flex: none;
+  width: 100%;
+}
+
+@media (min-width: 769px) {
+  .notes-page__layout > *:first-child {
+    width: 33.333333%;
+  }
+}
+
 .notes-page__sidebar {
   display: none;
 }
@@ -421,6 +452,11 @@ export default {
   margin-bottom: 1rem;
 }
 
+.notes-page__query-manager-actions:empty {
+  display: none;
+  margin-bottom: 0;
+}
+
 .notes-page__results-bar {
   position: sticky;
   top: calc(var(--header-height) + 0.5rem - 1px);
@@ -448,6 +484,8 @@ export default {
 }
 
 .notes-page__results-summary {
+  font-size: 0.95rem;
+  color: rgba(54, 54, 54, 0.85);
   white-space: normal;
   word-break: break-word;
 }

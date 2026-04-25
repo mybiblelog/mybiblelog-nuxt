@@ -44,7 +44,7 @@
           </button>
         </form>
       </template>
-      <div class="mbl-flex mbl-mt-6">
+      <div class="mbl-flex register-page__google-signin-hint">
         <article class="mbl-message mbl-message--info">
           <div class="mbl-message__header">
             <p>{{ $t('have_a_google_account') }}</p>
@@ -135,6 +135,9 @@ export default {
 </script>
 
 <style scoped>
+.register-page__google-signin-hint {
+  margin-top: 2rem;
+}
 
 </style>
 

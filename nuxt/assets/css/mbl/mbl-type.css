@@ -8,10 +8,6 @@
   word-break: break-word;
 }
 
-.mbl-title:not(:last-child) {
-  margin-bottom: 1.5rem;
-}
-
 .mbl-title--1 { font-size: 3rem; }
 .mbl-title--2 { font-size: 2.5rem; }
 .mbl-title--3 { font-size: 2rem; }

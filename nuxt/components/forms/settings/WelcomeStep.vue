@@ -10,7 +10,7 @@
     </div>
     <div class="mbl-field">
       <div class="mbl-control">
-        <button class="mbl-button mbl-button--info" @click="handleNext">
+        <button class="mbl-button mbl-button--primary" @click="handleNext">
           {{ buttonText }}
         </button>
       </div>

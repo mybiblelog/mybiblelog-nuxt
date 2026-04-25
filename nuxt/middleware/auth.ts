@@ -15,7 +15,7 @@ export default function({ route, redirect, error, app }: Context): void {
     }
   }
   else if (authRule === 'admin' && !isAdmin) {
-    error({ statusCode: 403, message: 'You do not have permission to access this page' });
+    error({ statusCode: 403 });
   }
   // default to login if no auth rule is specified
   else if (!authRule && !isLoggedIn) {

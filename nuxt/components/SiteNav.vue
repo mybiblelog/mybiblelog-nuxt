@@ -682,6 +682,8 @@ export default {
   justify-content: center;
   width: 2.75rem;
   height: 2.75rem;
+  margin-top: -0.25rem;
+  margin-bottom: -0.25rem;
   padding: 0;
   border: none;
   border-radius: 6px;

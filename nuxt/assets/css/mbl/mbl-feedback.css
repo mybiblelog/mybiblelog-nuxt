@@ -66,6 +66,7 @@
 .mbl-notification {
   background-color: var(--mbl-bg-muted);
   border-radius: var(--mbl-radius);
+  font-weight: 600;
   padding: 1.25rem 2.5rem 1.25rem 1.5rem;
   position: relative;
 }

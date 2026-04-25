@@ -1,13 +1,11 @@
 <template>
   <div class="toaster">
     <div class="mbl-container">
-      <div class="mbl-centered-column mbl-centered-column--constrained">
-        <div class="mbl-py-0">
-          <div v-for="message in messages" :key="message.id" class="mbl-notification" :class="messageClass(message.type)">
-            <button class="mbl-delete" @click="closeToast(message.id)" />{{ message.text }}
-          </div>
+      <transition-group name="toast" tag="div">
+        <div v-for="message in messages" :key="message.id" class="mbl-notification" :class="messageClass(message.type)">
+          <button class="mbl-delete" @click="closeToast(message.id)" />{{ message.text }}
         </div>
-      </div>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -60,5 +58,22 @@ export default {
 .mbl-notification {
   box-shadow: 0 0 0 2px #fff, 0 0 5px #000;
   pointer-events: auto;
+  margin-bottom: 1rem;
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.toast-enter,
+.toast-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 </style>

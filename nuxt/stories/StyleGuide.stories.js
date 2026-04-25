@@ -8,7 +8,7 @@ export const Overview = () => ({
       <h1 class="mbl-title mbl-title--3">mbl design tokens</h1>
       <p class="mbl-content">All UI classes use the <code>mbl-</code> prefix. This story mirrors <code>main.css</code> (tokens + global + mbl).</p>
 
-      <h2 class="mbl-title mbl-title--4 mbl-mt-6">Typography</h2>
+      <h2 class="mbl-title mbl-title--4" style="margin-top:2rem;">Typography</h2>
       <h1 class="mbl-title mbl-title--1">Title 1</h1>
       <h2 class="mbl-title mbl-title--3">Title 3</h2>
       <p class="mbl-subtitle">Subtitle sample</p>
@@ -18,15 +18,13 @@ export const Overview = () => ({
       </article>
       <p class="mbl-text-muted mbl-text-small">Muted small text</p>
       <p class="mbl-text-danger">Danger text</p>
-      <p class="mbl-text-center mbl-bg-muted mbl-p-5">Centered block</p>
+      <p class="mbl-text-center mbl-empty-state">Centered block</p>
 
-      <h2 class="mbl-title mbl-title--4 mbl-mt-6">Buttons</h2>
+      <h2 class="mbl-title mbl-title--4" style="margin-top:2rem;">Buttons</h2>
       <div class="mbl-button-group" style="margin-bottom:1rem;">
         <button type="button" class="mbl-button mbl-button--primary">Primary</button>
-        <button type="button" class="mbl-button mbl-button--info">Info</button>
         <button type="button" class="mbl-button mbl-button--light">Light</button>
         <button type="button" class="mbl-button mbl-button--danger">Danger</button>
-        <button type="button" class="mbl-button mbl-button--success">Success</button>
       </div>
       <div class="mbl-button-group" style="margin-bottom:1rem;">
         <button type="button" class="mbl-button mbl-button--sm mbl-button--primary">Small</button>
@@ -36,7 +34,7 @@ export const Overview = () => ({
       </div>
       <p><button type="button" class="mbl-delete" aria-label="close" /></p>
 
-      <h2 class="mbl-title mbl-title--4 mbl-mt-6">Forms</h2>
+      <h2 class="mbl-title mbl-title--4" style="margin-top:2rem;">Forms</h2>
       <div class="mbl-field">
         <label class="mbl-label" for="sg-input">Label</label>
         <div class="mbl-control">
@@ -56,7 +54,7 @@ export const Overview = () => ({
         <label class="mbl-radio"><input type="radio" name="sg-r" /> Radio</label>
       </div>
 
-      <h2 class="mbl-title mbl-title--4 mbl-mt-6">Table</h2>
+      <h2 class="mbl-title mbl-title--4" style="margin-top:2rem;">Table</h2>
       <div class="mbl-table-wrap">
         <table class="mbl-table mbl-table--striped mbl-table--narrow">
           <thead><tr><th>A</th><th>B</th></tr></thead>
@@ -64,7 +62,7 @@ export const Overview = () => ({
         </table>
       </div>
 
-      <h2 class="mbl-title mbl-title--4 mbl-mt-6">Message & notification</h2>
+      <h2 class="mbl-title mbl-title--4" style="margin-top:2rem;">Message & notification</h2>
       <article class="mbl-message mbl-message--info" style="margin-bottom:1rem;">
         <div class="mbl-message__header"><p>Info header</p></div>
         <div class="mbl-message__body">Info message with header + body</div>
@@ -74,7 +72,7 @@ export const Overview = () => ({
       </article>
       <div class="mbl-notification mbl-notification--success">Success notification</div>
 
-      <h2 class="mbl-title mbl-title--4 mbl-mt-6">Modal (static)</h2>
+      <h2 class="mbl-title mbl-title--4" style="margin-top:2rem;">Modal (static)</h2>
       <div style="position:relative;height:220px;background:#eee;border-radius:6px;overflow:hidden;">
         <div class="mbl-modal mbl-modal--active" style="position:absolute;">
           <div class="mbl-modal__backdrop" />
@@ -92,11 +90,7 @@ export const Overview = () => ({
         </div>
       </div>
 
-      <h2 class="mbl-title mbl-title--4 mbl-mt-6">Layout</h2>
-      <div class="mbl-centered-column">
-        <div class="mbl-bg-muted">Sidebar width</div>
-        <div class="mbl-bg-muted">Grow</div>
-      </div>
+      <h2 class="mbl-title mbl-title--4" style="margin-top:2rem;">Layout</h2>
       <div class="mbl-box mbl-mt-5">Box</div>
     </div>
   `,

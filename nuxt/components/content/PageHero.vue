@@ -131,7 +131,7 @@ export default {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   font-weight: 600;
-  padding: 1rem 2.5rem;
+  padding: 0.5rem 2.5rem;
   font-size: 1.125rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 170, 249, 0.3);

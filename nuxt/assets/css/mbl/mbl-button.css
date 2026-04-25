@@ -50,17 +50,6 @@
   color: var(--mbl-on-accent);
 }
 
-.mbl-button--info {
-  background-color: var(--mbl-info);
-  border-color: transparent;
-  color: var(--mbl-on-accent);
-}
-
-.mbl-button--info:hover {
-  filter: brightness(0.92);
-  color: var(--mbl-on-accent);
-}
-
 .mbl-button--light {
   background-color: var(--mbl-bg-muted);
   border-color: var(--mbl-border);
@@ -78,17 +67,7 @@
 }
 
 .mbl-button--danger:hover {
-  filter: brightness(0.95);
-  color: var(--mbl-on-accent);
-}
-
-.mbl-button--success {
-  background-color: var(--mbl-success);
   border-color: transparent;
-  color: var(--mbl-on-accent);
-}
-
-.mbl-button--success:hover {
   filter: brightness(0.95);
   color: var(--mbl-on-accent);
 }

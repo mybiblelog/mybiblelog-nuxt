@@ -11,7 +11,7 @@
             {{ $t('notes') }}
             <caret-right-icon style="margin-left: 0.2rem;" />
           </nuxt-link>
-          <button class="mbl-button mbl-button--info" @click="openPassageNoteTagEditor()">
+          <button class="mbl-button mbl-button--primary" @click="openPassageNoteTagEditor()">
             {{ $t('new') }}
           </button>
         </div>

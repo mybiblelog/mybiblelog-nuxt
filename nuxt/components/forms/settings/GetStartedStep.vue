@@ -10,7 +10,7 @@
     </div>
     <div class="mbl-field">
       <div class="mbl-control buttons">
-        <button class="mbl-button mbl-button--info mbl-button--lg" @click="handleGetStarted">
+        <button class="mbl-button mbl-button--primary mbl-button--lg" @click="handleGetStarted">
           {{ $t('start_page.get_started.button') }}
         </button>
       </div>

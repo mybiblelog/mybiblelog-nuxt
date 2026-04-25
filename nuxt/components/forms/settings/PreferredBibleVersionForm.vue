@@ -63,7 +63,7 @@
         <button class="mbl-button" :disabled="isSaving" @click="handlePrevious">
           {{ previousButtonText }}
         </button>
-        <button class="mbl-button mbl-button--info" :disabled="isSaving || !preferredBibleVersion || !preferredBibleApp" @click="handleSubmit">
+        <button class="mbl-button mbl-button--primary" :disabled="isSaving || !preferredBibleVersion || !preferredBibleApp" @click="handleSubmit">
           {{ nextButtonText }}
         </button>
       </div>

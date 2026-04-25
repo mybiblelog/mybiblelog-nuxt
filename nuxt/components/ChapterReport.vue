@@ -116,6 +116,18 @@ export default {
   transition: 0.1s;
 }
 
+@media (min-width: 500px) {
+  .chapter-report {
+    flex-basis: calc(100% / 5 - 1rem);
+  }
+}
+
+@media (min-width: 769px) {
+  .chapter-report {
+    flex-basis: calc(100% / 6 - 1rem);
+  }
+}
+
 .chapter-report:hover {
   transition: 0.2s;
   box-shadow: 0 1px 9px #333;
