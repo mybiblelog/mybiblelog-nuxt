@@ -21,6 +21,7 @@ ld_json:
   image="/screenshots/sc4-daily-goal.webp"
   image-alt="Додаток My Bible Log показує завершену смугу прогресу для досягнення щоденної мети читання"
   image-container-class="phone-frame"
+  fetch-priority="high"
   title="Чому My Bible Log?"
   subtitle="Читайте Своїм Шляхом"
   description="Більшість планів читання Біблії кажуть вам <em>що</em> читати та <em>коли</em>. <strong>My Bible Log працює інакше.</strong> Ви просто реєструєте те, що вже прочитали — з проповідей, роздумів, малих груп або особистого вивчення — і все це зараховується до вашого прогресу."

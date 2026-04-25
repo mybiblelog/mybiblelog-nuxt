@@ -21,6 +21,7 @@ ld_json:
   image="/screenshots/sc4-daily-goal.webp"
   image-alt="일일 읽기 목표 달성 시 완료된 진행 표시줄이 나타나는 My Bible Log 앱"
   image-container-class="phone-frame"
+  fetch-priority="high"
   title="왜 My Bible Log인가요?"
   subtitle="나만의 방식으로 읽기"
   description="대부분의 성경읽기 계획은 <em>무엇</em>을 <em>언제</em> 읽어야 하는지 정해줍니다. <strong>My Bible Log는 다릅니다.</strong> 설교, 묵상, 소모임, 개인공부 등 이미 읽은 부분을 기록만 하면 모든 내용이 진도에 반영됩니다."

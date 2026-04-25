@@ -3,7 +3,11 @@
     <div class="fifty-fifty-container content-column">
       <div class="fifty-fifty-image">
         <div :class="imageContainerClass">
-          <img :src="image" :alt="imageAlt || title">
+          <img
+            :src="image"
+            :alt="imageAlt || title"
+            :fetchpriority="fetchPriority || undefined"
+          >
         </div>
       </div>
       <div class="fifty-fifty-content">
@@ -71,6 +75,11 @@ export default {
     reverse: {
       type: [Boolean],
       default: false,
+    },
+    fetchPriority: {
+      type: String,
+      default: '',
+      validator: value => !value || ['high', 'low', 'auto'].includes(value),
     },
   },
 };
