@@ -39,6 +39,6 @@ og:
 * Псалмів та мудрісної літератури
 * Інших книг Старого Завіту
 
-<div class="buttons">
-  <a class="button is-light" href="/uk/today">Перейти на сторінку Сьогодення</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/uk/today">Перейти на сторінку Сьогодення</a>
 </div>

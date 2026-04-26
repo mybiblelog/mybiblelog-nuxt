@@ -3,7 +3,11 @@
     <div class="fifty-fifty-container content-column">
       <div class="fifty-fifty-image">
         <div :class="imageContainerClass">
-          <img :src="image" :alt="imageAlt || title">
+          <img
+            :src="image"
+            :alt="imageAlt || title"
+            :fetchpriority="fetchPriority || undefined"
+          >
         </div>
       </div>
       <div class="fifty-fifty-content">
@@ -14,7 +18,7 @@
           <li v-for="(item, index) in list" :key="index" v-html="item" />
         </ul>
         <div v-if="buttonText && buttonDestination" class="fifty-fifty-cta">
-          <nuxt-link :to="localePath(buttonDestination)" class="button is-primary">
+          <nuxt-link :to="localePath(buttonDestination)" class="mbl-button mbl-button--primary">
             {{ buttonText }}
           </nuxt-link>
         </div>
@@ -71,6 +75,11 @@ export default {
     reverse: {
       type: [Boolean],
       default: false,
+    },
+    fetchPriority: {
+      type: String,
+      default: '',
+      validator: value => !value || ['high', 'low', 'auto'].includes(value),
     },
   },
 };
@@ -148,7 +157,7 @@ export default {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--secondary-color, #0965f7);
+  color: var(--secondary-color);
   line-height: 1.4;
 }
 
@@ -196,7 +205,7 @@ export default {
   content: '✓';
   position: absolute;
   left: 0;
-  color: var(--tertiary-color, #00d1b2);
+  color: var(--tertiary-color);
   font-weight: bold;
   font-size: 1.25rem;
 }
@@ -205,24 +214,24 @@ export default {
   margin-top: 1rem;
 }
 
-.button.is-primary {
-  background-color: var(--primary-color, #00aaf9);
-  border-color: var(--primary-color, #00aaf9);
+.fifty-fifty-cta .mbl-button.mbl-button--primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   font-weight: 600;
-  padding: 0.875rem 2rem;
+  padding: 0.5rem 2rem;
   font-size: 1rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 170, 249, 0.3);
 }
 
-.button.is-primary:hover {
-  background-color: var(--secondary-color, #0965f7);
-  border-color: var(--secondary-color, #0965f7);
+.fifty-fifty-cta .mbl-button.mbl-button--primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
 }
 
-.button.is-primary:active {
+.fifty-fifty-cta .mbl-button.mbl-button--primary:active {
   transform: translateY(0);
 }
 

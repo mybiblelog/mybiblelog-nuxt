@@ -63,6 +63,6 @@ para terminar de ler a Bíblia até sua data meta.
 Esta é uma ótima maneira de determinar quanto você precisa ler para terminar de ler a Bíblia até o final do ano,
 ou até qualquer outra data meta que você escolher.
 
-<div class="buttons">
-  <a class="button is-light" href="/progress">Ir para a página de Progresso</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/progress">Ir para a página de Progresso</a>
 </div>

@@ -10,7 +10,7 @@
       </ul>
     </div>
     <div class="passage-note--created-date">
-      <span class="has-text-grey is-size-7" :title="displayDateTime(note.createdAt)">{{ displayTimeSince(note.createdAt) }}</span>
+      <span class="mbl-text-muted mbl-text-small" :title="displayDateTime(note.createdAt)">{{ displayTimeSince(note.createdAt) }}</span>
     </div>
     <div class="passage-note--content">
       <hyperlinked-text :text="note.content" />
@@ -19,11 +19,11 @@
       <passage-note-tag-pill v-for="tag in populatedTags(note.tags)" :key="tag.id" :tag="tag" />
     </div>
     <div class="passage-note--controls">
-      <div class="buttons is-right">
+      <div class="mbl-button-group mbl-button-group--end">
         <button
           v-for="(action, index) in actions"
           :key="index"
-          class="button is-small"
+          class="mbl-button mbl-button--sm"
           @click="action.callback"
         >
           {{ action.label }}

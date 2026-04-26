@@ -44,6 +44,6 @@ Pour chaque chapitre, vous avez deux options :
   * N'avez lu qu'une partie du chapitre
   * Voulez enregistrer plusieurs chapitres à la fois
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/books">Aller à la page des Livres</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/books">Aller à la page des Livres</a>
 </div>

@@ -63,6 +63,6 @@ to finish reading the Bible by your goal date.
 This is a great way to determine how much reading you need to do to finish reading the Bible by the end of the year,
 or by any other goal date you choose.
 
-<div class="buttons">
-  <a class="button is-light" href="/progress">Go to Progress page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/progress">Go to Progress page</a>
 </div>

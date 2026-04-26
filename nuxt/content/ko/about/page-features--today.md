@@ -41,6 +41,6 @@ og:
 
 추천된 장을 읽고 나면 새로운 추천이 표시되기 때문에 항상 새롭고 흥미로운 읽기 경험을 이어갈 수 있습니다.
 
-<div class="buttons">
-  <a class="button is-light" href="/ko/today">오늘 페이지로 가기</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/ko/today">오늘 페이지로 가기</a>
 </div>

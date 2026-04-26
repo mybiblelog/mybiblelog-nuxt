@@ -6,10 +6,10 @@
       />
     </template>
     <template slot="footer">
-      <button class="button is-primary" :disabled="!isValid" @click="handleSave">
+      <button class="mbl-button mbl-button--primary" :disabled="!isValid" @click="handleSave">
         {{ $t('note_editor.save') }}
       </button>
-      <button class="button is-light" @click="handleClose">
+      <button class="mbl-button mbl-button--light" @click="handleClose">
         {{ $t('note_editor.close') }}
       </button>
     </template>

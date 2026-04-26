@@ -49,8 +49,8 @@ export default {
 .calendar-date-selector {
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
-  color: var(--grey-800);
+  align-items: center;
+  color: var(--neutral-600);
   margin: 0 -1rem;
 }
 

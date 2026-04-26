@@ -21,6 +21,7 @@ ld_json:
   image="/screenshots/sc4-daily-goal.webp"
   image-alt="Die My Bible Log App zeigt eine abgeschlossene Fortschrittsleiste für das Erreichen des täglichen Leseziels"
   image-container-class="phone-frame"
+  fetch-priority="high"
   title="Warum My Bible Log?"
   subtitle="Lies auf Deine Weise"
   description="Die meisten Bibellespläne sagen dir <em>was</em> du lesen sollst und <em>wann</em>. <strong>My Bible Log funktioniert anders.</strong> Du protokollierst einfach, was du bereits gelesen hast — aus Predigten, Andachten, Kleingruppen oder persönlichem Studium — und alles zählt zu deinem Fortschritt."

@@ -1,6 +1,6 @@
 <template>
   <div class="calendar-date-indicator">
-    <div class="title is-4">
+    <div class="mbl-title mbl-title--4">
       {{ selectedMonth }}
       <info-link :to="localePath('/about/page-features--calendar')" />
     </div>
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style scoped>
-.calendar-date-indicator {
-  /* no styles */
+.calendar-date-indicator .mbl-title {
+  margin-bottom: 0;
 }
 </style>

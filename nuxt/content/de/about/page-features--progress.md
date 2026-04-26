@@ -62,6 +62,6 @@ um die Bibel bis zu Ihrem Ziel-Datum fertig zu lesen.
 
 Dies ist eine großartige Möglichkeit zu bestimmen, wie viel Sie lesen müssen, um die Bibel bis zum Ende des Jahres, oder bis zu einem beliebigen anderen gewünschten Ziel-Datum, fertig zu lesen.
 
-<div class="buttons">
-  <a class="button is-light" href="/progress">Zur Fortschrittsseite gehen</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/progress">Zur Fortschrittsseite gehen</a>
 </div>

@@ -131,6 +131,6 @@ Une autre bonne manière de continuer à avancer vers votre objectif est d'en pa
 
 Enfin, profitez de tout ce qui vous intéresse à lire la Bible. Si vous trouvez un passage intéressant lors d'une étude biblique, d'un sermon ou de votre dévotion quotidienne, continuez de lire ! Vous n'êtes pas obligé de vous arrêter à un certain nombre de versets ou de chapitres chaque jour. Lorsque vous trouvez vraiment un livre ou une section de la Bible inspirante, profitez de votre élan et lisez autant que vous le souhaitez !
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/today">Commencer</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/today">Commencer</a>
 </div>

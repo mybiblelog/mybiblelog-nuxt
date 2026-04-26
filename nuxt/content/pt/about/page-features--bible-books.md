@@ -44,6 +44,6 @@ Para cada capítulo, você tem duas opções:
   * Só leu parte do capítulo
   * Deseja registrar vários capítulos de uma vez
 
-<div class="buttons">
-  <a class="button is-light" href="/pt/books">Ir para a página de Livros</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/pt/books">Ir para a página de Livros</a>
 </div>

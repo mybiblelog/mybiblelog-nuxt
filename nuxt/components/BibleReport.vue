@@ -1,11 +1,11 @@
 <template>
   <div class="bible-report">
     <header class="page-header">
-      <h2 class="title">
+      <h2 class="mbl-title">
         {{ $t('bible_books') }}
         <info-link :to="localePath('/about/page-features--bible-books')" />
       </h2>
-      <nuxt-link class="button" :to="localePath('/progress')">
+      <nuxt-link class="mbl-button" :to="localePath('/progress')">
         {{ $t('progress') }}
         <caret-right-icon style="margin-left: 0.2rem;" />
       </nuxt-link>

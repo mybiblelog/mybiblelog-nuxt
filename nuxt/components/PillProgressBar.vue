@@ -41,6 +41,6 @@ export default {
 }
 
 .pill.is-filled {
-  background-color: #3273dc; /* Bulma primary color */
+  background-color: var(--primary-color);
 }
 </style>

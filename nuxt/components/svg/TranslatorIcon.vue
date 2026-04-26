@@ -25,7 +25,7 @@ export default {
     },
     fill: {
       type: String,
-      default: '#305EFF',
+      default: 'var(--secondary-color)',
     },
   },
 };

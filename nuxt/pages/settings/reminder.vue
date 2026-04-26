@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <h2 class="title is-4">
+  <div>
+    <h2 class="mbl-title mbl-title--4">
       {{ $t('reminder') }}
     </h2>
     <p>
@@ -11,27 +11,27 @@
       {{ $t('info.p2a') }}
       {{ $t('info.p2b') }}
     </p>
-    <div class="field">
-      <div class="control">
-        <label class="checkbox">
+    <div class="mbl-field">
+      <div class="mbl-control">
+        <label class="mbl-checkbox">
           <input v-model="reminderForm.active" type="checkbox"> {{ $t('form.i_want_to_receive_a_daily_reminder_email') }}
         </label>
       </div>
     </div>
-    <div class="field has-addons">
-      <div class="control">
-        <label class="label">{{ $t('form.reminder_time') }}</label>
-        <input v-model="reminderForm.time" class="input" type="time" min="0" max="23">
+    <div class="mbl-field">
+      <div class="mbl-control">
+        <label class="mbl-label">{{ $t('form.reminder_time') }}</label>
+        <input v-model="reminderForm.time" class="mbl-input mbl-input--short" type="time" min="0" max="23">
       </div>
     </div>
-    <div class="field">
-      <div class="control">
-        <button class="button is-primary" @click="handleReminderSubmit">
+    <div class="mbl-field">
+      <div class="mbl-control">
+        <button class="mbl-button mbl-button--primary" @click="handleReminderSubmit">
           {{ $t('form.save_preferences') }}
         </button>
       </div>
     </div>
-    <div v-if="reminderErrors._form" class="help is-danger">
+    <div v-if="reminderErrors._form" class="mbl-help mbl-help--danger">
       {{ $terr(reminderErrors._form) }}
     </div>
   </div>

@@ -1,15 +1,15 @@
 <template>
   <main>
     <div class="content-column">
-      <h1 class="title">
+      <h1 class="mbl-title">
         Admin Feedback Review
       </h1>
       <div v-if="!feedbacks.length">
         <p>There are no feedbacks.</p>
       </div>
       <div v-else>
-        <div class="table-container">
-          <table class="table is-striped is-fullwidth">
+        <div class="mbl-table-wrap">
+          <table class="mbl-table mbl-table--striped mbl-table--full">
             <thead>
               <tr>
                 <th>#</th>
@@ -21,16 +21,16 @@
               <tr v-for="(feedback, index) in feedbacks" :key="feedback._id">
                 <td>{{ index + 1 }}</td>
                 <td>
-                  <div class="is-size-7" style="text-wrap: nowrap;">
+                  <div class="mbl-text-small" style="text-wrap: nowrap;">
                     {{ dayjs(feedback.createdAt).format('YYYY-MM-DD hh:mm a') }}
                   </div>
                   <div>{{ feedback.email }}</div>
-                  <div class="is-size-7">
+                  <div class="mbl-text-small">
                     {{ feedback.ip }}
                   </div>
                 </td>
                 <td>
-                  <div class="is-size-7" :class="feedbackKindClass(feedback.kind)">
+                  <div class="mbl-text-small" :class="feedbackKindClass(feedback.kind)">
                     {{ feedback.kind }}
                   </div>
                   <div>{{ feedback.message }}</div>
@@ -82,9 +82,9 @@ export default {
     },
     feedbackKindClass(kind) {
       return {
-        'has-text-success': kind === 'feature',
-        'has-text-warning': kind === 'question' || kind === 'comment',
-        'has-text-danger': kind === 'bug',
+        'mbl-text-success': kind === 'feature',
+        'mbl-text-warning': kind === 'question' || kind === 'comment',
+        'mbl-text-danger': kind === 'bug',
       };
     },
   },
@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-.table-container {
+.mbl-table-wrap {
   overflow-x: auto;
   margin: 0 -0.75rem;
   padding: 0 0.75rem;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="{ 'content-column content': doc?.slug !== 'index' }">
+    <div :class="{ 'content-column mbl-content': doc?.slug !== 'index' }">
       <nuxt-content :document="doc" />
     </div>
     <content-page-footer />
@@ -134,7 +134,7 @@ export default {
 /*  later in the render pipeline after component compilation (still before SSR), */
 /*  so the Nuxt/Vue loader doesn't apply scoped styles to it */
 .icon {
-  /*  override Bulma so @nuxt/content title anchor links don't create empty space */
+  /*  keep anchors compact inside @nuxt/content output */
   display: inline !important;
 }
 

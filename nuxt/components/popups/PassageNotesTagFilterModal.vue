@@ -8,7 +8,7 @@
       />
     </template>
     <template slot="footer">
-      <button class="button is-primary" type="button" @click="$emit('close')">
+      <button class="mbl-button mbl-button--primary" type="button" @click="$emit('close')">
         {{ $t('tag_filters.done') }}
       </button>
     </template>

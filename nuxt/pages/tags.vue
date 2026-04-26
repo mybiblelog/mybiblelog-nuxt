@@ -2,27 +2,27 @@
   <main>
     <div class="content-column">
       <header class="page-header">
-        <h2 class="title">
+        <h2 class="mbl-title">
           {{ $t('note_tags') }}
           <info-link :to="localePath('/about/page-features--notes')" />
         </h2>
-        <div class="buttons is-align-items-flex-start">
-          <nuxt-link class="button" :to="localePath('/notes')">
+        <div class="mbl-button-group mbl-button-group--start">
+          <nuxt-link class="mbl-button" :to="localePath('/notes')">
             {{ $t('notes') }}
             <caret-right-icon style="margin-left: 0.2rem;" />
           </nuxt-link>
-          <button class="button is-info" @click="openPassageNoteTagEditor()">
+          <button class="mbl-button mbl-button--primary" @click="openPassageNoteTagEditor()">
             {{ $t('new') }}
           </button>
         </div>
       </header>
       <div class="tag-sort-row">
-        <div class="field has-addons">
-          <div class="control">
-            <span class="button is-static">{{ $t('sort_by') }}</span>
+        <div class="mbl-field mbl-field--addons">
+          <div class="mbl-control">
+            <span class="mbl-button mbl-button--static">{{ $t('sort_by') }}</span>
           </div>
-          <div class="control">
-            <div class="select">
+          <div class="mbl-control">
+            <div class="mbl-select">
               <select v-model="sortOrder">
                 <option value="label:ascending">
                   {{ $t('sort_az') }}
@@ -59,23 +59,23 @@
           </div>
           <div class="tag-footer">
             <div v-if="displayTagTimeSince(tag)" class="tag-footer--created">
-              <span class="has-text-grey is-size-7" :title="displayTagDateTime(tag)">{{ $t('created') }} {{ displayTagTimeSince(tag) }}</span>
+              <span class="mbl-text-muted mbl-text-small" :title="displayTagDateTime(tag)">{{ $t('created') }} {{ displayTagTimeSince(tag) }}</span>
             </div>
-            <div class="buttons is-right tag-footer--buttons">
-              <button class="button is-small" @click="viewTagNotes(tag)">
+            <div class="mbl-button-group mbl-button-group--end tag-footer--buttons">
+              <button class="mbl-button mbl-button--sm" @click="viewTagNotes(tag)">
                 {{ $t('notes_count', { count: tag.noteCount }) }}
               </button>
-              <button class="button is-small" @click="openPassageNoteTagEditor(tag)">
+              <button class="mbl-button mbl-button--sm" @click="openPassageNoteTagEditor(tag)">
                 {{ $t('edit') }}
               </button>
-              <button class="button is-small" @click="deletePassageNoteTag(tag.id)">
+              <button class="mbl-button mbl-button--sm" @click="deletePassageNoteTag(tag.id)">
                 {{ $t('delete') }}
               </button>
             </div>
           </div>
         </div>
         <div v-if="!passageNoteTags.length" class="tag-line">
-          <div class="has-text-centered">
+          <div class="mbl-text-center">
             {{ $t('no_tags') }}
           </div>
         </div>
@@ -156,7 +156,10 @@ export default {
         await dialogStore.alert({ message: this.$t('cannot_delete_tag_in_use') });
         return;
       }
-      const confirmed = await dialogStore.confirm({ message: this.$t('confirm_delete_tag') });
+      const confirmed = await dialogStore.confirm({
+        message: this.$t('confirm_delete_tag'),
+        confirmButtonType: 'danger',
+      });
       if (!confirmed) { return; }
 
       const success = await this.passageNoteTagsStore.deletePassageNoteTag(id);

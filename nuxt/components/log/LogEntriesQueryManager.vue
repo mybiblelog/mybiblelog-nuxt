@@ -1,24 +1,24 @@
 <template>
   <div class="log-entries-query-manager">
     <div>
-      <div class="field">
-        <label class="label">{{ $t('first_date') }}</label>
-        <div class="control">
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('first_date') }}</label>
+        <div class="mbl-control">
           <input
             v-model.trim="draft.startDate"
-            class="input"
+            class="mbl-input"
             type="date"
             :max="draft.endDate || null"
           >
         </div>
       </div>
 
-      <div class="field">
-        <label class="label">{{ $t('last_date') }}</label>
-        <div class="control">
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('last_date') }}</label>
+        <div class="mbl-control">
           <input
             v-model.trim="draft.endDate"
-            class="input"
+            class="mbl-input"
             type="date"
             :min="draft.startDate || null"
           >
@@ -27,23 +27,23 @@
 
       <hr class="log-entries-query-manager__divider">
 
-      <div class="field">
-        <label class="label">{{ $t('passage') }}</label>
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('passage') }}</label>
         <verse-input v-model="passageRangeModel" :multi-verse="true" />
       </div>
 
       <hr class="log-entries-query-manager__divider">
 
-      <div class="field">
-        <label class="label">{{ $t('sort') }}</label>
-        <div class="control">
-          <label class="radio">
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('sort') }}</label>
+        <div class="mbl-control">
+          <label class="mbl-radio">
             <input v-model="draft.sortDirection" type="radio" value="descending">
             {{ $t('sort_newest_first') }}
           </label>
         </div>
-        <div class="control">
-          <label class="radio">
+        <div class="mbl-control">
+          <label class="mbl-radio">
             <input v-model="draft.sortDirection" type="radio" value="ascending">
             {{ $t('sort_oldest_first') }}
           </label>
@@ -52,10 +52,10 @@
 
       <hr class="log-entries-query-manager__divider">
 
-      <div class="field">
-        <label class="label">{{ $t('page_size') }}</label>
-        <div class="control">
-          <div class="select">
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('page_size') }}</label>
+        <div class="mbl-control">
+          <div class="mbl-select">
             <select :value="draft.limit" @change="setDraft({ limit: Number($event.target.value) })">
               <option :value="10">
                 {{ $t('page_size_option', { n: 10 }) }}
@@ -72,10 +72,10 @@
       </div>
 
       <div class="log-entries-query-manager__actions">
-        <button class="button is-primary" type="button" :disabled="!isDirty" @click="applyDraft">
+        <button class="mbl-button mbl-button--primary" type="button" :disabled="!isDirty" @click="applyDraft">
           {{ $t('apply') }}
         </button>
-        <button class="button is-light" type="button" :disabled="!isDirty" @click="cancelDraft">
+        <button class="mbl-button mbl-button--light" type="button" :disabled="!isDirty" @click="cancelDraft">
           {{ $t('cancel') }}
         </button>
       </div>

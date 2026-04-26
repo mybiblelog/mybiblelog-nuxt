@@ -28,6 +28,6 @@ The bar will be filled based on your daily verse count goal. If your daily verse
 
 If you reach your daily verse count goal by reading enough verses, a dark blue star will appear for that date. If you reach your daily verse count goal by reading new verses, a gold star will appear for that date instead.
 
-<div class="buttons">
-  <a class="button is-light" href="/calendar">Go to Calendar page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/calendar">Go to Calendar page</a>
 </div>

@@ -41,6 +41,6 @@ When it comes to updates, My Bible Log behaves just like a website.
 
 Simply refresh the page to ensure you are using the latest version of the app.
 
-<div class="buttons">
-  <a class="button is-light" href="/today">Get Started</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/today">Get Started</a>
 </div>

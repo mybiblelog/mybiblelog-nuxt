@@ -41,6 +41,6 @@ Suggestions include a mix of:
 
 As you complete suggested chapters, new ones will appear to keep your reading fresh and engaging.
 
-<div class="buttons">
-  <a class="button is-light" href="/today">Go to Today page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/today">Go to Today page</a>
 </div>

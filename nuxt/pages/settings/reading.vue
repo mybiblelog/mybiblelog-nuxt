@@ -1,37 +1,37 @@
 <template>
-  <div class="container">
-    <h2 class="title is-4">
+  <div>
+    <h2 class="mbl-title mbl-title--4">
       {{ $t('reading') }}
     </h2>
-    <h3 class="title is-5">
+    <h3 class="mbl-title mbl-title--5">
       {{ $t('daily_verse_count_goal.title') }}
     </h3>
-    <div class="field has-addons">
-      <div class="control">
-        <input v-model="userSettingsForm.dailyVerseCountGoal" class="input" type="number" min="1" max="1111">
+    <div class="mbl-field mbl-field--addons">
+      <div class="mbl-control">
+        <input v-model="userSettingsForm.dailyVerseCountGoal" class="mbl-input" type="number" min="1" max="1111">
       </div>
-      <div class="control">
-        <a class="button is-primary" @click="handleDailyVerseCountGoalSubmit">{{ $t('save') }}</a>
+      <div class="mbl-control">
+        <a class="mbl-button mbl-button--primary" @click="handleDailyVerseCountGoalSubmit">{{ $t('save') }}</a>
       </div>
     </div>
-    <div v-if="userSettingsErrors.dailyVerseCountGoal" class="help is-danger">
+    <div v-if="userSettingsErrors.dailyVerseCountGoal" class="mbl-help mbl-help--danger">
       {{ $terr(userSettingsErrors.dailyVerseCountGoal, { field: $t('daily_verse_count_goal.title')}) }}
     </div>
     <p>{{ $t('daily_verse_count_goal.info.1') }}</p>
     <p>{{ $t('daily_verse_count_goal.info.2', { dailyVerseCountGoal: userSettingsForm.dailyVerseCountGoal || 0, bibleReadingDays }) }}</p>
     <hr>
-    <h3 class="title is-5">
+    <h3 class="mbl-title mbl-title--5">
       {{ $t('look_back_date.title') }}
     </h3>
-    <div class="field has-addons">
-      <div class="control">
-        <input v-model="userSettingsForm.lookBackDate" class="input" type="date">
+    <div class="mbl-field mbl-field--addons">
+      <div class="mbl-control">
+        <input v-model="userSettingsForm.lookBackDate" class="mbl-input" type="date">
       </div>
-      <div class="control">
-        <a class="button is-primary" @click="handleLookBackDateSubmit">{{ $t('save') }}</a>
+      <div class="mbl-control">
+        <a class="mbl-button mbl-button--primary" @click="handleLookBackDateSubmit">{{ $t('save') }}</a>
       </div>
     </div>
-    <div v-if="userSettingsErrors.lookBackDate" class="help is-danger">
+    <div v-if="userSettingsErrors.lookBackDate" class="mbl-help mbl-help--danger">
       {{ $terr(userSettingsErrors.lookBackDate, { field: $t('look_back_date.title') }) }}
     </div>
     <p>
@@ -41,12 +41,12 @@
     </p>
     <p>{{ $t('look_back_date.info.4') }}</p>
     <hr>
-    <h3 class="title is-5">
+    <h3 class="mbl-title mbl-title--5">
       {{ $t('preferred_bible_version.title') }}
     </h3>
-    <div class="field has-addons">
-      <div class="control">
-        <div class="select">
+    <div class="mbl-field mbl-field--addons">
+      <div class="mbl-control">
+        <div class="mbl-select">
           <select v-model="userSettingsForm.preferredBibleVersion">
             <option value="" selected="selected" disabled="disabled">
               {{ $t('select_an_option') }}
@@ -57,21 +57,21 @@
           </select>
         </div>
       </div>
-      <div class="control">
-        <a class="button is-primary" @click="handlePreferredBibleVersionSubmit">{{ $t('save') }}</a>
+      <div class="mbl-control">
+        <a class="mbl-button mbl-button--primary" @click="handlePreferredBibleVersionSubmit">{{ $t('save') }}</a>
       </div>
     </div>
-    <div v-if="userSettingsErrors.preferredBibleVersion" class="help is-danger">
+    <div v-if="userSettingsErrors.preferredBibleVersion" class="mbl-help mbl-help--danger">
       {{ $terr(userSettingsErrors.preferredBibleVersion, { field: $t('preferred_bible_version.title') }) }}
     </div>
     <p>{{ $t('preferred_bible_version.info.1') }}</p>
     <hr>
-    <h3 class="title is-5">
+    <h3 class="mbl-title mbl-title--5">
       {{ $t('preferred_bible_app.title') }}
     </h3>
-    <div class="field has-addons">
-      <div class="control">
-        <div class="select">
+    <div class="mbl-field mbl-field--addons">
+      <div class="mbl-control">
+        <div class="mbl-select">
           <select v-model="userSettingsForm.preferredBibleApp">
             <option value="" selected="selected" disabled="disabled">
               {{ $t('select_an_option') }}
@@ -82,16 +82,16 @@
           </select>
         </div>
       </div>
-      <div class="control">
-        <a class="button is-primary" @click="handlePreferredBibleAppSubmit">{{ $t('save') }}</a>
+      <div class="mbl-control">
+        <a class="mbl-button mbl-button--primary" @click="handlePreferredBibleAppSubmit">{{ $t('save') }}</a>
       </div>
     </div>
-    <div v-if="userSettingsErrors.preferredBibleApp" class="help is-danger">
+    <div v-if="userSettingsErrors.preferredBibleApp" class="mbl-help mbl-help--danger">
       {{ userSettingsErrors.preferredBibleApp }}
     </div>
     <p>{{ $t('preferred_bible_app.info.1') }}</p>
-    <div class="message">
-      <div class="message-body">
+    <div class="mbl-message">
+      <div class="mbl-message__body">
         {{ $t('preferred_bible_app.callout.1') }}
         {{ $t('preferred_bible_app.callout.2') }}
       </div>

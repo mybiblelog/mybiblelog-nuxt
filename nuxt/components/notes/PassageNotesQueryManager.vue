@@ -1,12 +1,12 @@
 <template>
   <div class="passage-notes-query-manager">
     <div>
-      <div class="field">
-        <label class="label">{{ $t('search_text') }}</label>
-        <div class="control">
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('search_text') }}</label>
+        <div class="mbl-control">
           <input
             v-model.trim="draft.searchText"
-            class="input"
+            class="mbl-input"
             type="text"
             :placeholder="$t('search_placeholder')"
           >
@@ -15,8 +15,8 @@
 
       <hr class="passage-notes-query-manager__divider">
 
-      <div class="field">
-        <label class="label">{{ $t('tag_filters') }}</label>
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('tag_filters') }}</label>
         <div v-if="hasSelectedTags" class="passage-notes-query-manager__selected-tags">
           <span
             v-for="tag in selectedTags"
@@ -28,12 +28,12 @@
           </span>
         </div>
         <div class="passage-notes-query-manager__tag-actions">
-          <button class="button is-light" type="button" @click="openTagFilterModal">
+          <button class="mbl-button mbl-button--light" type="button" @click="openTagFilterModal">
             {{ $t('tag_select.choose') }}
           </button>
           <button
             v-if="hasSelectedTags"
-            class="button is-light"
+            class="mbl-button mbl-button--light"
             type="button"
             @click="clearTagSelection"
           >
@@ -42,31 +42,31 @@
         </div>
       </div>
 
-      <div v-if="!hasSelectedTags" class="field">
-        <div class="control">
-          <label class="checkbox">
+      <div v-if="!hasSelectedTags" class="mbl-field">
+        <div class="mbl-control">
+          <label class="mbl-checkbox">
             <input v-model="onlyUntaggedNotes" type="checkbox">
             {{ $t('tag_only_untagged') }}
           </label>
         </div>
       </div>
 
-      <div v-if="hasSelectedTags" class="field">
-        <label class="label">{{ $t('tag_match') }}</label>
-        <div class="control">
-          <label class="radio">
+      <div v-if="hasSelectedTags" class="mbl-field">
+        <label class="mbl-label">{{ $t('tag_match') }}</label>
+        <div class="mbl-control">
+          <label class="mbl-radio">
             <input v-model="draft.filterTagMatching" type="radio" value="any">
             {{ $t('tag_match_any') }}
           </label>
         </div>
-        <div class="control">
-          <label class="radio">
+        <div class="mbl-control">
+          <label class="mbl-radio">
             <input v-model="draft.filterTagMatching" type="radio" value="all">
             {{ $t('tag_match_all') }}
           </label>
         </div>
-        <div class="control">
-          <label class="radio">
+        <div class="mbl-control">
+          <label class="mbl-radio">
             <input v-model="draft.filterTagMatching" type="radio" value="exact">
             {{ $t('tag_match_exact') }}
           </label>
@@ -75,22 +75,22 @@
 
       <hr class="passage-notes-query-manager__divider">
 
-      <div class="field">
-        <label class="label">{{ $t('passage') }}</label>
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('passage') }}</label>
         <verse-input v-model="passageRangeModel" :multi-verse="true" />
       </div>
 
-      <div v-if="hasSelectedPassage" class="field">
-        <label class="label">{{ $t('passage_match') }}</label>
-        <div class="control">
-          <label class="radio passage-notes-query-manager__radio-option">
+      <div v-if="hasSelectedPassage" class="mbl-field">
+        <label class="mbl-label">{{ $t('passage_match') }}</label>
+        <div class="mbl-control">
+          <label class="mbl-radio passage-notes-query-manager__radio-option">
             <input v-model="draft.filterPassageMatching" type="radio" value="inclusive">
             <span class="passage-notes-query-manager__radio-title">{{ $t('passage_match_inclusive') }}</span>
             <span class="passage-notes-query-manager__radio-help" v-html="$t('passage_match_inclusive_description')" />
           </label>
         </div>
-        <div class="control">
-          <label class="radio passage-notes-query-manager__radio-option">
+        <div class="mbl-control">
+          <label class="mbl-radio passage-notes-query-manager__radio-option">
             <input v-model="draft.filterPassageMatching" type="radio" value="exclusive">
             <span class="passage-notes-query-manager__radio-title">{{ $t('passage_match_exclusive') }}</span>
             <span class="passage-notes-query-manager__radio-help" v-html="$t('passage_match_exclusive_description')" />
@@ -100,16 +100,16 @@
 
       <hr class="passage-notes-query-manager__divider">
 
-      <div class="field">
-        <label class="label">{{ $t('sort') }}</label>
-        <div class="control">
-          <label class="radio">
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('sort') }}</label>
+        <div class="mbl-control">
+          <label class="mbl-radio">
             <input v-model="draftSort" type="radio" value="createdAt:descending">
             {{ $t('sort_newest_first') }}
           </label>
         </div>
-        <div class="control">
-          <label class="radio">
+        <div class="mbl-control">
+          <label class="mbl-radio">
             <input v-model="draftSort" type="radio" value="createdAt:ascending">
             {{ $t('sort_oldest_first') }}
           </label>
@@ -118,10 +118,10 @@
 
       <hr class="passage-notes-query-manager__divider">
 
-      <div class="field">
-        <label class="label">{{ $t('page_size') }}</label>
-        <div class="control">
-          <div class="select">
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('page_size') }}</label>
+        <div class="mbl-control">
+          <div class="mbl-select">
             <select :value="draft.limit" @change="setDraft({ limit: Number($event.target.value) })">
               <option :value="10">
                 10
@@ -138,10 +138,10 @@
       </div>
 
       <div class="passage-notes-query-manager__actions">
-        <button class="button is-primary" type="button" :disabled="!isDirty" @click="applyDraft">
+        <button class="mbl-button mbl-button--primary" type="button" :disabled="!isDirty" @click="applyDraft">
           {{ $t('apply') }}
         </button>
-        <button class="button is-light" type="button" :disabled="!isDirty" @click="cancelDraft">
+        <button class="mbl-button mbl-button--light" type="button" :disabled="!isDirty" @click="cancelDraft">
           {{ $t('cancel') }}
         </button>
       </div>

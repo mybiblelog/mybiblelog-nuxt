@@ -1,9 +1,9 @@
 <template>
   <transition name="fade">
-    <div v-if="isVisible" class="modal is-active" role="dialog">
-      <div class="modal-background" @click="close" />
-      <div class="modal-card">
-        <section class="modal-card-body">
+    <div v-if="isVisible" class="mbl-modal mbl-modal--active" role="dialog">
+      <div class="mbl-modal__backdrop" @click="close" />
+      <div class="mbl-modal__card">
+        <section class="mbl-modal__body">
           <get-started-step
             :previous-button-text="$t('start_page.back')"
             @previous="close"
@@ -38,27 +38,27 @@ export default {
 
 <style scoped>
 /* css class for the transition */
-.modal.fade-enter-active,
-.modal.fade-leave-active {
+.mbl-modal.fade-enter-active,
+.mbl-modal.fade-leave-active {
   transition: var(--transition-fade);
 }
 
-.modal.fade-enter-active .modal-card,
-.modal.fade-leave-active .modal-card {
+.mbl-modal.fade-enter-active .mbl-modal__card,
+.mbl-modal.fade-leave-active .mbl-modal__card {
   transition: var(--transition-modal);
 }
 
-.modal.fade-enter,
-.modal.fade-leave-to {
+.mbl-modal.fade-enter,
+.mbl-modal.fade-leave-to {
   opacity: 0;
 }
 
-.modal.fade-enter .modal-card,
-.modal.fade-leave-to .modal-card {
+.mbl-modal.fade-enter .mbl-modal__card,
+.mbl-modal.fade-leave-to .mbl-modal__card {
   transform: var(--modal-scale);
 }
 
-.modal-card-body {
+.mbl-modal__body {
   padding: 2rem;
 }
 </style>

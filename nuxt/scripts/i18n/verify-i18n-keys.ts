@@ -2,7 +2,7 @@
  * Verifies that every non-English locale has the same dot-notation leaf keys as English for:
  * - Global messages in nuxt/locales/locales.ts
  * - api/services/email/locales/strings.json (per locale)
- * - Each inline i18n JSON block in nuxt/components and nuxt/pages (recursive .vue scan)
+ * - Each inline i18n JSON block in nuxt/components, nuxt/pages, and nuxt/layouts (recursive .vue scan)
  *
  * Locales come from @mybiblelog/shared (same list as the app). Does not use nuxt/locales/crowdin/
  * so CI works without running export-crowdin first.
@@ -79,7 +79,7 @@ function asMessageObject(v: unknown): Record<string, unknown> | null {
 
 async function verifySfcTree(
   rootDir: string,
-  kind: 'components' | 'pages',
+  kind: 'components' | 'pages' | 'layouts',
   otherLocales: string[],
 ): Promise<{ checked: number; ok: boolean }> {
   let checked = 0;
@@ -180,13 +180,15 @@ async function main() {
     }
   }
 
+  const layoutsDir = path.join(NUXT_ROOT, 'layouts');
   const componentsDir = path.join(NUXT_ROOT, 'components');
   const pagesDir = path.join(NUXT_ROOT, 'pages');
+  const r0 = await verifySfcTree(layoutsDir, 'layouts', otherLocales);
   const r1 = await verifySfcTree(componentsDir, 'components', otherLocales);
   const r2 = await verifySfcTree(pagesDir, 'pages', otherLocales);
-  ok = ok && r1.ok && r2.ok;
+  ok = ok && r0.ok && r1.ok && r2.ok;
 
-  const sfcChecked = r1.checked + r2.checked;
+  const sfcChecked = r0.checked + r1.checked + r2.checked;
   if (!ok) {
     process.exitCode = 1;
   }

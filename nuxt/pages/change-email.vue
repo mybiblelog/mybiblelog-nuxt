@@ -1,22 +1,22 @@
 <template>
   <main>
     <div class="content-column">
-      <h1 class="title">
+      <h1 class="mbl-title">
         {{ $t('change_email') }}
       </h1>
       <template v-if="busy">
-        <div class="content">
+        <div class="mbl-content">
           <p>{{ $t('confirming_your_new_email_address') }}</p>
         </div>
       </template>
       <template v-if="codeExpired">
-        <div class="content">
+        <div class="mbl-content">
           <p>{{ $t('your_email_change_request_has_expired') }}</p>
           <p>{{ $t('please_go_to_your_settings_and_try_changing_your_email_address_again') }}</p>
         </div>
       </template>
       <template v-if="serverError">
-        <div class="content">
+        <div class="mbl-content">
           <p>{{ $t('there_was_an_error_changing_your_email_address') }}</p>
           <p v-if="serverError">
             {{ $terr(serverError) }}

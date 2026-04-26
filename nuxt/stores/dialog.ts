@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 
 export type DialogType = '' | 'alert' | 'confirm';
 
+export type ButtonType = 'primary' | 'secondary' | 'danger';
+
 export type BaseDialogOptions = {
   title?: string;
   message?: string;
@@ -9,12 +11,12 @@ export type BaseDialogOptions = {
 
 export type AlertOptions = BaseDialogOptions & {
   buttonText?: string;
-  buttonType?: string;
+  buttonType?: ButtonType;
 };
 
 export type ConfirmOptions = BaseDialogOptions & {
   confirmButtonText?: string;
-  confirmButtonType?: string;
+  confirmButtonType?: ButtonType;
   cancelButtonText?: string;
 };
 
@@ -26,10 +28,10 @@ export type DialogState = {
   message: string;
 
   buttonText: string;
-  buttonType: string;
+  buttonType: ButtonType;
 
   confirmButtonText: string;
-  confirmButtonType: string;
+  confirmButtonType: ButtonType;
   cancelButtonText: string;
 
   resolvePromise?: (value?: unknown) => void;
@@ -43,10 +45,10 @@ const emptyState: Omit<DialogState, 'resolvePromise'> = {
   message: '',
 
   buttonText: '',
-  buttonType: 'is-primary',
+  buttonType: 'primary',
 
   confirmButtonText: '',
-  confirmButtonType: 'is-primary',
+  confirmButtonType: 'primary',
   cancelButtonText: '',
 };
 
@@ -61,7 +63,7 @@ export const useDialogStore = defineStore('dialog', {
         this.title = options.title || '';
         this.message = options.message || '';
         this.buttonText = options.buttonText || '';
-        this.buttonType = options.buttonType || 'is-primary';
+        this.buttonType = options.buttonType || 'primary';
         this.type = 'alert';
         this.open = true;
         this.resolvePromise = () => resolve();
@@ -72,7 +74,7 @@ export const useDialogStore = defineStore('dialog', {
         this.title = options.title || '';
         this.message = options.message || '';
         this.confirmButtonText = options.confirmButtonText || '';
-        this.confirmButtonType = options.confirmButtonType || 'is-primary';
+        this.confirmButtonType = options.confirmButtonType || 'primary';
         this.cancelButtonText = options.cancelButtonText || '';
         this.type = 'confirm';
         this.open = true;

@@ -1,7 +1,13 @@
+/*
+ * Design tokens — nuxt/assets/css/tokens.css
+ *
+ * Layers:
+ * 1) Brand + neutral primitives (`--primary-color`, `--neutral-*`, etc.).
+ * 2) Semantic UI (`--mbl-*`): use these in components, mbl/*.css, and global element styles.
+ *
+ * Interactive accent for links and card focus rings is `--mbl-link` (maps to brand secondary).
+ */
 :root {
-  /* Layout / breakpoints */
-  --breakpoint: 800px;
-
   /* Stacking */
   --z-index-toast: 42;
   --z-index-popup: 41;
@@ -9,17 +15,21 @@
   --z-index-action-menu: 39;
   --z-index-action-button: 38;
   --z-index-busy-bar: 29;
-  --z-index-site-header: 3;
-  --z-index-site-nav: 2;
-  --z-index-site-nav-screen: 1;
 
   --header-height: calc(1rem + 1.618rem + 3px);
   --site-nav-height: 3.25rem;
 
-  --grey-100: #e4e9f0;
-  --grey-200: #cfd7e3;
-  --grey-300: #b5c0cd;
-  --grey-800: #3e4e63;
+  /* Neutral ramp (used by semantic tokens) */
+  --neutral-0: #fff;
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-150: #eee;
+  --neutral-200: #dbdbdb;
+  --neutral-300: #b5b5b5;
+  --neutral-600: #4a4a4a;
+  --neutral-700: #363636;
+  --neutral-800: #1f191a;
+  --neutral-850: #46403f;
 
   --transition-fade: opacity 0.3s ease-out;
   --transition-modal: transform 0.3s ease-out;
@@ -27,8 +37,69 @@
 
   --modal-card-border-radius: 6px;
 
-  /* Brand (from former global :root) */
+  /* Brand */
   --primary-color: #00aaf9;
+  --primary-color-hover: #0096db;
   --secondary-color: #0965f7;
+  --secondary-color-hover: #0546b5;
   --tertiary-color: #00d1b2;
+
+  /* mbl theme — semantic UI */
+  --mbl-radius: 4px;
+  --mbl-radius-button: 4px;
+  --mbl-radius-card: var(--modal-card-border-radius);
+
+  --mbl-text: var(--neutral-700);
+  --mbl-text-body: var(--neutral-600);
+  --mbl-text-muted: #7a7a7a;
+  --mbl-border: var(--neutral-200);
+  --mbl-border-strong: var(--neutral-300);
+  --mbl-bg: var(--neutral-0);
+  --mbl-bg-muted: var(--neutral-100);
+  --mbl-bg-subtle: var(--neutral-50);
+  --mbl-bg-hover-light: var(--neutral-150);
+
+  --mbl-code-fg: #da1039;
+
+  --mbl-danger: #f14668;
+  --mbl-success: #48c774;
+  --mbl-warning: #ffdd57;
+  --mbl-warning-fg: #946c00;
+  --mbl-info: #3298dc;
+
+  --mbl-link: var(--secondary-color);
+  --mbl-link-hover: #0546b5;
+
+  --mbl-on-accent: var(--neutral-0);
+
+  --mbl-shadow-ambient: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1);
+  --mbl-shadow-ring-subtle: 0 0 0 1px rgba(10, 10, 10, 0.02);
+  --mbl-shadow: var(--mbl-shadow-ambient), var(--mbl-shadow-ring-subtle);
+  --mbl-shadow-box-hover: var(--mbl-shadow-ambient), 0 0 0 1px var(--mbl-link);
+  --mbl-shadow-box-active: inset 0 1px 2px rgba(10, 10, 10, 0.2), 0 0 0 1px var(--mbl-link);
+
+  --mbl-inset-well: inset 0 0.0625em 0.125em rgba(10, 10, 10, 0.05);
+  --mbl-focus-ring: 0 0 0 0.125em rgba(0, 170, 249, 0.25);
+
+  --mbl-scrim: rgba(10, 10, 10, 0.86);
+  --mbl-overlay-soft: rgba(10, 10, 10, 0.2);
+  --mbl-overlay-soft-strong: rgba(10, 10, 10, 0.3);
+
+  /* Message / notification intent surfaces */
+  --mbl-message-info-border: #b8d7f5;
+  --mbl-message-info-bg: #f5faff;
+  --mbl-message-info-fg: #1a5080;
+  --mbl-message-info-accent: #7ab8e8;
+
+  --mbl-notification-info-bg: var(--mbl-info);
+  --mbl-notification-info-fg: var(--mbl-on-accent);
+
+  --mbl-notification-success-bg: var(--mbl-success);
+  --mbl-notification-success-fg: var(--mbl-on-accent);
+
+  --mbl-notification-warning-bg: var(--mbl-warning);
+  --mbl-notification-warning-fg: var(--neutral-800);
+
+  --mbl-notification-danger-bg: var(--mbl-danger);
+  --mbl-notification-danger-fg: var(--mbl-on-accent);
 }

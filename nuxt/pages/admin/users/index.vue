@@ -1,21 +1,21 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <div class="level">
-          <div class="level-left">
-            <h1 class="title">
+    <section class="mbl-section">
+      <div class="mbl-container">
+        <div class="mbl-level">
+          <div class="mbl-level-left">
+            <h1 class="mbl-title">
               Users Admin
             </h1>
           </div>
-          <div class="level-right">
-            <input v-model="searchText" class="input" type="text" placeholder="Search by email">
+          <div class="mbl-level-right">
+            <input v-model="searchText" class="mbl-input" type="text" placeholder="Search by email">
           </div>
         </div>
         <div>
           <div>
             Page
-            <div class="select">
+            <div class="mbl-select">
               <select v-model="page">
                 <option v-for="p in Array.from({ length: totalPages }).map((_, i) => i + 1)" :key="p" :value="p">
                   {{ p }}
@@ -25,7 +25,7 @@
           </div>
           <div>
             Results per page
-            <div class="select">
+            <div class="mbl-select">
               <select v-model="limit">
                 <option v-for="size in [10, 25, 50, 100]" :key="size" :value="size">
                   {{ size }}
@@ -37,8 +37,8 @@
             Showing {{ offset + 1 }} to {{ Math.min(offset + limit, totalUsers) }} of {{ totalUsers }} users.
           </div>
         </div>
-        <div v-if="users" class="table-container">
-          <table class="table is-narrow is-striped">
+        <div v-if="users" class="mbl-table-wrap">
+          <table class="mbl-table mbl-table--narrow mbl-table--striped">
             <thead>
               <tr>
                 <th>#</th>
@@ -81,8 +81,8 @@
                   {{ user.createdAt.split('T')[0] }}
                 </td>
                 <td>
-                  <div class="buttons">
-                    <button class="button is-light is-primary is-small" @click="openUserDetails(user)">
+                  <div class="mbl-button-group">
+                    <button class="mbl-button mbl-button--light mbl-button--primary mbl-button--sm" @click="openUserDetails(user)">
                       Details
                     </button>
                   </div>
@@ -100,17 +100,17 @@
       @close="closeUserDetails"
     >
       <template slot="content">
-        <div v-if="selectedUser" class="buttons">
-          <button class="button is-primary" type="button" @click="signInAsUser">
+        <div v-if="selectedUser" class="mbl-button-group">
+          <button class="mbl-button mbl-button--primary" type="button" @click="signInAsUser">
             Sign In As User
           </button>
-          <button class="button is-danger" type="button" @click="deleteUser(selectedUser.email)">
+          <button class="mbl-button mbl-button--danger" type="button" @click="deleteUser(selectedUser.email)">
             Delete User
           </button>
         </div>
       </template>
       <template slot="footer">
-        <button class="button" type="button" @click="closeUserDetails">
+        <button class="mbl-button" type="button" @click="closeUserDetails">
           Close
         </button>
       </template>
@@ -247,11 +247,17 @@ export default {
         return;
       }
       let confirmed = false;
-      confirmed = await dialogStore.confirm({ message: `Are you sure you want to delete account "${email}"? This action cannot be undone.` });
+      confirmed = await dialogStore.confirm({
+        message: `Are you sure you want to delete account "${email}"? This action cannot be undone.`,
+        confirmButtonType: 'danger',
+      });
       if (!confirmed) {
         return;
       }
-      confirmed = await dialogStore.confirm({ message: `Are you absolutely certain? The account "${email}" will be completely removed from the system.` });
+      confirmed = await dialogStore.confirm({
+        message: `Are you absolutely certain? The account "${email}" will be completely removed from the system.`,
+        confirmButtonType: 'danger',
+      });
       if (!confirmed) {
         return;
       }

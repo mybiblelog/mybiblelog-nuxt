@@ -1,13 +1,13 @@
 <template>
   <div class="verse-input">
-    <div class="field has-addons verse-input__field">
-      <div class="control is-expanded verse-input__input-control">
+    <div class="mbl-field mbl-field--addons verse-input__field">
+      <div class="mbl-control mbl-control--expanded verse-input__input-control">
         <input
           :value="localText"
-          class="input verse-input__input"
+          class="mbl-input verse-input__input"
           type="text"
           :placeholder="placeholder"
-          :class="{ 'is-danger': showInvalid }"
+          :class="{ 'mbl-input--danger': showInvalid }"
           :style="inputStyle"
           @input="onTextInput"
           @focus="onFocus"
@@ -16,16 +16,16 @@
 
         <button
           v-if="hasText"
-          class="delete is-small verse-input__clear"
+          class="mbl-delete mbl-delete--sm verse-input__clear"
           type="button"
           :aria-label="$t('aria_clear')"
           @click="clear"
         />
       </div>
 
-      <div class="control">
+      <div class="mbl-control">
         <button
-          class="button verse-input__pick-button"
+          class="mbl-button verse-input__pick-button"
           type="button"
           :aria-label="$t('aria_pick')"
           @click="openPicker"
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <p v-if="showInvalid" class="help is-danger verse-input__help">
+    <p v-if="showInvalid" class="mbl-help mbl-help--danger verse-input__help">
       {{ invalidHelpText }}
     </p>
 

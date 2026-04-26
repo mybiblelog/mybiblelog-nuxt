@@ -1,17 +1,17 @@
 <template>
   <main>
-    <section class="section">
-      <div class="container">
-        <h1 class="title">
+    <section class="mbl-section">
+      <div class="mbl-container">
+        <h1 class="mbl-title">
           Past Week Engagement
         </h1>
-        <div class="content">
+        <div class="mbl-content">
           <template v-if="loading">
             <p>Loading...</p>
           </template>
           <template v-else>
-            <div class="table-container">
-              <table class="table is-narrow is-striped">
+            <div class="mbl-table-wrap">
+              <table class="mbl-table mbl-table--narrow mbl-table--striped">
                 <thead>
                   <tr>
                     <th>Date</th>

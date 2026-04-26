@@ -123,6 +123,6 @@ La función de importación de registro de lectura utiliza el mismo formato de a
 
 Cuando importas una hoja de cálculo, el progreso de importación se mostrará en la página. My Bible Log no recreará entradas de registro que ya existan. Si leíste Génesis 1 el 1 de enero y lo registraste en My Bible Log, luego importaste una hoja de cálculo que incluía una entrada de registro para ese mismo pasaje y fecha, My Bible Log la ignoraría.
 
-<div class="buttons">
-  <a class="button is-light" href="/es/settings">Ir a la página de Configuración</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/es/settings">Ir a la página de Configuración</a>
 </div>

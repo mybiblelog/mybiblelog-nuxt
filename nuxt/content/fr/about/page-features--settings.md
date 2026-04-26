@@ -123,6 +123,6 @@ La fonction d'importation du journal de lecture utilise le même format de fichi
 
 Lorsque vous importez une feuille de calcul, la progression de l'importation sera affichée sur la page. My Bible Log ne recréera pas les entrées de journal qui existent déjà. Si vous avez lu Genèse 1 le 1er janvier et que vous l'avez suivi dans My Bible Log, puis importé une feuille de calcul incluant une entrée de journal pour le même passage et la même date, My Bible Log l'ignorerait.
 
-<div class="buttons">
-  <a class="button is-light" href="/fr/settings">Aller à la page des paramètres</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/fr/settings">Aller à la page des paramètres</a>
 </div>

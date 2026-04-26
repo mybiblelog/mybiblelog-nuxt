@@ -41,6 +41,6 @@ og:
 
 대신, 매일 최소 3장을 읽되 일주일에 한두 번은 4장을 읽어 속도를 유지해보세요. 매주 23장을 읽으면 1년 안에 성경을 완독할 수 있습니다.
 
-<div class="buttons">
-  <a class="button is-light" href="/ko/checklist">장 체크리스트로 가기</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/ko/checklist">장 체크리스트로 가기</a>
 </div>

@@ -35,6 +35,6 @@ Las sugerencias de lectura son un equilibrio entre libros del Nuevo Testamento, 
 
 Estas sugerencias de lectura respaldan tu objetivo de lectura diaria promoviendo capítulos que aún no has leído. Una vez que terminas de leer uno de los capítulos sugeridos, se sugerirá un nuevo capítulo en su lugar.
 
-<div class="buttons">
-  <a class="button is-light" href="/es/today">Ir a la página de Hoy</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/es/today">Ir a la página de Hoy</a>
 </div>

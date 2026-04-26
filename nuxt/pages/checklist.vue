@@ -2,7 +2,7 @@
   <div class="content-column">
     <busy-bar :busy="busy" />
     <header class="page-header">
-      <h2 class="title">
+      <h2 class="mbl-title">
         {{ $t('chapter_checklist') }}
         <info-link :to="localePath('/about/page-features--chapter-checklist')" />
       </h2>

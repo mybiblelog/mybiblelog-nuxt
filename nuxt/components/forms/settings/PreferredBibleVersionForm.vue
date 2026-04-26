@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h2 class="title is-5">
+    <h2 class="mbl-title mbl-title--5">
       {{ $t('start_page.preferred_bible_version.title') }}
     </h2>
 
-    <div class="box field-box">
-      <div class="field">
-        <label class="label">{{ $t('start_page.preferred_bible_version.translation_label') }}</label>
-        <div class="control">
-          <div class="select">
+    <div class="mbl-box field-box">
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('start_page.preferred_bible_version.translation_label') }}</label>
+        <div class="mbl-control">
+          <div class="mbl-select">
             <select v-model="preferredBibleVersion">
               <option value="" selected="selected" disabled="disabled">
                 {{ $t('select_an_option') }}
@@ -26,11 +26,11 @@
       </div>
     </div>
 
-    <div class="box field-box">
-      <div class="field">
-        <label class="label">{{ $t('start_page.preferred_bible_version.app_label') }}</label>
-        <div class="control">
-          <div class="select">
+    <div class="mbl-box field-box">
+      <div class="mbl-field">
+        <label class="mbl-label">{{ $t('start_page.preferred_bible_version.app_label') }}</label>
+        <div class="mbl-control">
+          <div class="mbl-select">
             <select v-model="preferredBibleApp">
               <option value="" selected="selected" disabled="disabled">
                 {{ $t('select_an_option') }}
@@ -48,22 +48,22 @@
       </div>
     </div>
 
-    <div v-if="error" class="help is-danger">
+    <div v-if="error" class="mbl-help mbl-help--danger">
       {{ error }}
     </div>
 
-    <div class="content">
-      <p class="help">
+    <div class="mbl-content">
+      <p class="mbl-help">
         {{ $t('start_page.preferred_bible_version.change_hint') }}
       </p>
     </div>
 
-    <div class="field">
-      <div class="control buttons">
-        <button class="button" :disabled="isSaving" @click="handlePrevious">
+    <div class="mbl-field">
+      <div class="mbl-control buttons">
+        <button class="mbl-button" :disabled="isSaving" @click="handlePrevious">
           {{ previousButtonText }}
         </button>
-        <button class="button is-info" :disabled="isSaving || !preferredBibleVersion || !preferredBibleApp" @click="handleSubmit">
+        <button class="mbl-button mbl-button--primary" :disabled="isSaving || !preferredBibleVersion || !preferredBibleApp" @click="handleSubmit">
           {{ nextButtonText }}
         </button>
       </div>

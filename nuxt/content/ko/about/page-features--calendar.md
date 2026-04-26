@@ -28,6 +28,6 @@ og:
 
 구절을 충분히 많이 읽어 일일 구절 목표를 달성하게 되면 해당 날짜에 진한 파란색 별이 나타납니다. 새로운 구절을 읽어 일일 구절 목표를 달성한 경우에는 금색 별이 대신 나타납니다.
 
-<div class="buttons">
-  <a class="button is-light" href="/ko/calendar">달력 페이지로 가기</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/ko/calendar">달력 페이지로 가기</a>
 </div>

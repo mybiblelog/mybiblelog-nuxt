@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="content-column">
-      <h1 class="title">
+      <h1 class="mbl-title">
         {{ $t('verifying_email') }}
       </h1>
       <p v-if="error">

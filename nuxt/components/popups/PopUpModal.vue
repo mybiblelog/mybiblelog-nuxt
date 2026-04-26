@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
-    <div v-if="isVisible" class="popup-modal">
-      <div class="window">
+    <div v-if="visible" class="popup-modal">
+      <div class="window" role="dialog">
         <slot />
       </div>
     </div>
@@ -10,26 +10,19 @@
 
 <script>
 export default {
-  name: 'PopupModal',
+  name: 'PopUpModal',
 
-  data: () => ({
-    isVisible: false,
-  }),
-
-  methods: {
-    open() {
-      this.isVisible = true;
-    },
-
-    close() {
-      this.isVisible = false;
+  props: {
+    /** Bind to a store flag or other reactive open state */
+    visible: {
+      type: Boolean,
+      default: false,
     },
   },
 };
 </script>
 
 <style scoped>
-/* css class for the transition */
 .popup-modal {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -41,6 +34,7 @@ export default {
   display: flex;
   align-items: center;
   z-index: var(--z-index-popup);
+  user-select: none;
 }
 
 .popup-modal.fade-enter-active,
@@ -65,13 +59,12 @@ export default {
 
 .window {
   background: #fff;
-
   padding: 2rem;
   border-radius: 0.25rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
-
   max-width: 480px;
   margin-left: auto;
   margin-right: auto;
+  overflow: hidden;
 }
 </style>

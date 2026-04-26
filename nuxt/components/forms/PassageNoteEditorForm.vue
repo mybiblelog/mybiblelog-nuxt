@@ -1,13 +1,13 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <div v-if="errors._form" class="help is-danger">
-      <div class="help is-danger">
+    <div v-if="errors._form" class="mbl-help mbl-help--danger">
+      <div class="mbl-help mbl-help--danger">
         {{ $terr(errors._form) }}
       </div>
     </div>
-    <div class="field passages-title">
-      <label class="label">{{ $t('passages') }}</label>
-      <button class="button is-primary is-small" :disabled="editingPassage > -1" @click.prevent="addPassage">
+    <div class="mbl-field passages-title">
+      <label class="mbl-label">{{ $t('passages') }}</label>
+      <button class="mbl-button mbl-button--primary mbl-button--sm" :disabled="editingPassage > -1" @click.prevent="addPassage">
         {{ $t('add_passage') }}
       </button>
     </div>
@@ -18,22 +18,22 @@
             <passage-selector :populate-with="passage" @change="(updatedPassage) => passageSelectorChange(index, updatedPassage)" />
           </template>
           <template v-else>
-            <button class="button" :disabled="editingPassage > -1 || editingNewPassage" @click.prevent="startEditPassage(index)">
+            <button class="mbl-button" :disabled="editingPassage > -1 || editingNewPassage" @click.prevent="startEditPassage(index)">
               {{ displayVerseRange(passage.startVerseId, passage.endVerseId) }}
             </button>
           </template>
         </div>
-        <div class="buttons">
+        <div class="mbl-button-group">
           <template v-if="editingPassage === index">
-            <button class="button is-primary is-small" :disabled="!editingPassageIsDirty" @click.prevent="saveAndStopEditPassage(index)">
+            <button class="mbl-button mbl-button--primary mbl-button--sm" :disabled="!editingPassageIsDirty" @click.prevent="saveAndStopEditPassage(index)">
               {{ $t('done') }}
             </button>
-            <button class="button is-small" :disabled="editingPassage > -1 && editingPassage !== index" @click.prevent="cancelAndStopEditPassage(index)">
+            <button class="mbl-button mbl-button--sm" :disabled="editingPassage > -1 && editingPassage !== index" @click.prevent="cancelAndStopEditPassage(index)">
               {{ $t('cancel') }}
             </button>
           </template>
           <template v-else>
-            <button class="button is-danger is-small" :disabled="editingPassage > -1 && editingPassage !== index" @click.prevent="removePassage(index)">
+            <button class="mbl-button mbl-button--danger mbl-button--sm" :disabled="editingPassage > -1 && editingPassage !== index" @click.prevent="removePassage(index)">
               {{ $t('remove') }}
             </button>
           </template>
@@ -43,20 +43,20 @@
         <div>{{ $t('no_passages') }}</div>
       </div>
     </div>
-    <div class="field">
-      <label class="label">{{ $t('content') }}</label>
-      <div class="control">
-        <textarea :value="passageNote.content" class="textarea" :disabled="editingPassage > -1" maxlength="3000" @input="updateContent" />
-        <p v-if="errors.content" class="help is-danger">
+    <div class="mbl-field">
+      <label class="mbl-label">{{ $t('content') }}</label>
+      <div class="mbl-control">
+        <textarea :value="passageNote.content" class="mbl-textarea" :disabled="editingPassage > -1" maxlength="3000" @input="updateContent" />
+        <p v-if="errors.content" class="mbl-help mbl-help--danger">
           {{ errors.content }}
         </p>
-        <p class="help">
+        <p class="mbl-help">
           {{ passageNote.content.length }}/3000 {{ $t('characters') }}
         </p>
       </div>
     </div>
-    <div class="field">
-      <label class="label">{{ $t('tags') }}</label>
+    <div class="mbl-field">
+      <label class="mbl-label">{{ $t('tags') }}</label>
       <div class="passage-note-editor-tags">
         <div class="passage-note-editor-tags__selected">
           <passage-note-tag-pill
@@ -69,7 +69,7 @@
           </em>
         </div>
         <div class="passage-note-editor-tags__actions">
-          <button class="button is-small" type="button" @click.prevent="openManageTags">
+          <button class="mbl-button mbl-button--sm" type="button" @click.prevent="openManageTags">
             {{ $t('manage_tags') }}
           </button>
         </div>
@@ -220,7 +220,10 @@ export default {
       // only require confirmation if the passage is already valid (new or existing)
       if (!this.editingNewPassage) {
         const dialogStore = useDialogStore();
-        const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure') });
+        const confirmed = await dialogStore.confirm({
+          message: this.$t('are_you_sure'),
+          confirmButtonType: 'danger',
+        });
         if (!confirmed) {
           return;
         }

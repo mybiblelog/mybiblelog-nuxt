@@ -27,9 +27,9 @@ Create a tag for at least 3 questions you want to research in the Bible. Can you
 * Do all the rules in Old Testament books like Leviticus apply to us today? Suggested tag: OT Rules
 * How does the Bible talk about church? Who or what counts as a church? Does the Bible command us to "go to church"? Suggested tag: Church
 
-<div class="buttons">
-  <a class="button is-light" href="/notes">Go to Notes page</a>
-  <a class="button is-light" href="/tags">Go to Tags page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/notes">Go to Notes page</a>
+  <a class="mbl-button mbl-button--light" href="/tags">Go to Tags page</a>
 </div>
 
 ## 2. Discipleship / 1:1 Conversation Points
@@ -40,9 +40,9 @@ Many people study the Bible with a friend or mentor. Mentors may meet to study t
 
 Create a tag for each person you study with or can talk to about the Bible. For each person, create at least one note with something you want to talk about with that person.
 
-<div class="buttons">
-  <a class="button is-light" href="/notes">Go to Notes page</a>
-  <a class="button is-light" href="/tags">Go to Tags page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/notes">Go to Notes page</a>
+  <a class="mbl-button mbl-button--light" href="/tags">Go to Tags page</a>
 </div>
 
 ## 3. Topical Study
@@ -65,9 +65,9 @@ Use this list for inspiration:
 * Heaven
 * Spiritual Gifts
 
-<div class="buttons">
-  <a class="button is-light" href="/notes">Go to Notes page</a>
-  <a class="button is-light" href="/tags">Go to Tags page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/notes">Go to Notes page</a>
+  <a class="mbl-button mbl-button--light" href="/tags">Go to Tags page</a>
 </div>
 
 ## 4. Original Language
@@ -80,9 +80,9 @@ Many words have different nuances in different languages. For example, in Englis
 
 Create a tag for passages you want to look up in the original language, like "Orig Lang." Find at least 3 different verses with the word "love" and tag them with this new tag. You can research these verses in their original language on sites like [Blue Letter Bible](https://www.blueletterbible.org/study.cfm).
 
-<div class="buttons">
-  <a class="button is-light" href="/notes">Go to Notes page</a>
-  <a class="button is-light" href="/tags">Go to Tags page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/notes">Go to Notes page</a>
+  <a class="mbl-button mbl-button--light" href="/tags">Go to Tags page</a>
 </div>
 
 ## 5. Compare Translations
@@ -121,9 +121,9 @@ With this distinction, we can now tell when the original authors were talking ab
 
 Find verses that say "brothers" in the NASB95 and see if they have been updated to "brothers and sisters" in the NASB2020, or if those verses were really only referring to men.
 
-<div class="buttons">
-  <a class="button is-light" href="/notes">Go to Notes page</a>
-  <a class="button is-light" href="/tags">Go to Tags page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/notes">Go to Notes page</a>
+  <a class="mbl-button mbl-button--light" href="/tags">Go to Tags page</a>
 </div>
 
 ## 6. Memory Verses
@@ -152,9 +152,9 @@ There are many passages in the Bible that share the importance and value of scri
 
 Create a tag to keep track of your memory verses. Choose at least 3 of these passages and tag them as memory verses.
 
-<div class="buttons">
-  <a class="button is-light" href="/notes">Go to Notes page</a>
-  <a class="button is-light" href="/tags">Go to Tags page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/notes">Go to Notes page</a>
+  <a class="mbl-button mbl-button--light" href="/tags">Go to Tags page</a>
 </div>
 
 ## 7. Journal and Prayer
@@ -175,9 +175,9 @@ Use the **Answered Prayer** tag to bring up the encouraging things that God has 
 
 Create a tag to keep track of journal entries. Start by writing your first journal note and tagging it.
 
-<div class="buttons">
-  <a class="button is-light" href="/notes">Go to Notes page</a>
-  <a class="button is-light" href="/tags">Go to Tags page</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/notes">Go to Notes page</a>
+  <a class="mbl-button mbl-button--light" href="/tags">Go to Tags page</a>
 </div>
 
 ## Conclusion

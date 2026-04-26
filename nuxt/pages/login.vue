@@ -1,14 +1,14 @@
 <template>
   <main>
     <div class="content-column">
-      <div class="level">
-        <div class="level-left">
-          <h1 class="title">
+      <div class="mbl-level">
+        <div class="mbl-level-left">
+          <h1 class="mbl-title">
             {{ $t('sign_in') }}
             <info-link :to="localePath('/about/page-features--login')" />
           </h1>
         </div>
-        <div v-if="!passwordResetSubmitted" class="level-right">
+        <div v-if="!passwordResetSubmitted" class="mbl-level-right">
           <nuxt-link :to="localePath('/register')">
             {{ $t('need_an_account') }}
           </nuxt-link>
@@ -18,40 +18,40 @@
         <p>{{ $t('password_reset_link_sent') }}</p>
       </template>
       <template v-else>
-        <div v-if="errors._form" class="help is-danger">
-          <div class="help is-danger">
+        <div v-if="errors._form" class="mbl-help mbl-help--danger">
+          <div class="mbl-help mbl-help--danger">
             {{ $terr(errors._form) }}
           </div>
         </div>
         <form @submit.prevent="onSubmit">
-          <div class="field">
-            <label class="label">{{ $t('email') }}</label>
-            <div class="control">
-              <input v-model="email" class="input" type="text" :placeholder="$t('email')" :class="{ 'is-danger': errors.email }">
+          <div class="mbl-field">
+            <label class="mbl-label">{{ $t('email') }}</label>
+            <div class="mbl-control">
+              <input v-model="email" class="mbl-input" type="text" :placeholder="$t('email')" :class="{ 'mbl-input--danger': errors.email }">
             </div>
-            <p v-if="errors.email" class="help is-danger">
+            <p v-if="errors.email" class="mbl-help mbl-help--danger">
               {{ $terr(errors.email) }}
             </p>
           </div>
-          <div class="field">
-            <label class="label">{{ $t('password') }}</label>
-            <div class="control">
-              <input v-model="password" class="input" type="password" :placeholder="$t('password')" :class="{ 'is-danger': errors.password }">
-              <p v-if="errors.password" class="help is-danger">
+          <div class="mbl-field">
+            <label class="mbl-label">{{ $t('password') }}</label>
+            <div class="mbl-control">
+              <input v-model="password" class="mbl-input" type="password" :placeholder="$t('password')" :class="{ 'mbl-input--danger': errors.password }">
+              <p v-if="errors.password" class="mbl-help mbl-help--danger">
                 {{ $terr(errors.password) }}
               </p>
             </div>
           </div>
-          <div class="buttons">
-            <button class="button is-primary">
+          <div class="mbl-button-group">
+            <button class="mbl-button mbl-button--primary">
               {{ $t('sign_in') }}
             </button>
-            <button class="button" :class="{ 'is-text': !failedLoginAttempt, 'is-info': failedLoginAttempt }" @click.prevent="sendPasswordReset">
+            <button class="mbl-button" :class="{ 'mbl-button--text': !failedLoginAttempt, 'mbl-button--primary': failedLoginAttempt }" @click.prevent="sendPasswordReset">
               {{ $t('forgot_your_password') }}
             </button>
           </div>
         </form>
-        <div class="is-flex mt-5">
+        <div class="mbl-flex google-login-button-container">
           <google-login-button v-if="googleOauth2Url" :google-oauth2-url="googleOauth2Url" />
         </div>
       </template>
@@ -162,7 +162,9 @@ export default {
 </script>
 
 <style scoped>
-
+.google-login-button-container {
+  margin-top: 1.5rem;
+}
 </style>
 
 <i18n lang="json">

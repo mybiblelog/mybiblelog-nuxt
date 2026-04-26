@@ -478,14 +478,14 @@ export default {
   position: relative;
   z-index: calc(var(--site-nav-z-bar) + 1);
   background: #fff;
-  border-bottom: 1px solid var(--grey-200, #cfd7e3);
+  border-bottom: 1px solid var(--neutral-200);
 }
 
 .site-nav__inner {
   max-width: 1152px;
   margin: 0 auto;
   padding: 0 1rem;
-  min-height: var(--site-nav-height, 3.25rem);
+  min-height: var(--site-nav-height);
   display: flex;
   align-items: center;
 }
@@ -521,7 +521,7 @@ export default {
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: nowrap;
-  min-height: var(--site-nav-height, 3.25rem);
+  min-height: var(--site-nav-height);
 }
 
 .site-nav__brand {
@@ -548,9 +548,9 @@ export default {
   text-decoration: none;
   background: linear-gradient(
     20deg,
-    var(--primary-color, #00aaf9) 0%,
-    var(--secondary-color, #0965f7) 50%,
-    var(--tertiary-color, #00d1b2) 100%
+    var(--primary-color) 0%,
+    var(--secondary-color) 50%,
+    var(--tertiary-color) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -568,7 +568,7 @@ export default {
 }
 
 .site-nav__brand-text:focus-visible {
-  outline: 2px solid var(--secondary-color, #0965f7);
+  outline: 2px solid var(--secondary-color);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -612,7 +612,7 @@ export default {
   bottom: 0.2rem;
   height: 2px;
   border-radius: 1px;
-  background: linear-gradient(90deg, var(--secondary-color, #0965f7), var(--tertiary-color, #00d1b2));
+  background: linear-gradient(90deg, var(--secondary-color), var(--tertiary-color));
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 0.2s ease;
@@ -647,7 +647,7 @@ export default {
   min-width: 12rem;
   padding: 0.35rem 0;
   background: #fff;
-  border: 1px solid var(--grey-200, #cfd7e3);
+  border: 1px solid var(--neutral-200);
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
@@ -662,7 +662,7 @@ export default {
 
 .site-nav__admin-item:hover,
 .site-nav__admin-item:focus-visible {
-  background: var(--grey-100, #e4e9f0);
+  background: var(--neutral-150);
   color: #000;
 }
 
@@ -682,6 +682,8 @@ export default {
   justify-content: center;
   width: 2.75rem;
   height: 2.75rem;
+  margin-top: -0.25rem;
+  margin-bottom: -0.25rem;
   padding: 0;
   border: none;
   border-radius: 6px;
@@ -691,7 +693,7 @@ export default {
 }
 
 .site-nav__icon-btn:hover {
-  background: var(--grey-100, #e4e9f0);
+  background: var(--neutral-150);
 }
 
 .site-nav__icon-btn:focus {
@@ -699,7 +701,7 @@ export default {
 }
 
 .site-nav__icon-btn:focus-visible {
-  outline: 2px solid var(--secondary-color, #0965f7);
+  outline: 2px solid var(--secondary-color);
   outline-offset: 2px;
 }
 
@@ -725,12 +727,12 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: stretch;
-  padding-top: var(--site-nav-height, 3.25rem);
+  padding-top: var(--site-nav-height);
 }
 
 .site-nav__backdrop {
   position: absolute;
-  inset: var(--site-nav-height, 3.25rem) 0 0 0;
+  inset: var(--site-nav-height) 0 0 0;
   background: rgba(0, 0, 0, 0.35);
   opacity: 1;
 }
@@ -750,7 +752,7 @@ export default {
   flex-direction: column;
   /* Bottom space so scrollable links stay above FloatingFeedbackButton (56px + 2rem bottom on wider viewports). */
   padding: 1rem 0 calc(2rem + 56px + 1.25rem);
-  max-height: calc(100vh - var(--site-nav-height, 3.25rem));
+  max-height: calc(100vh - var(--site-nav-height));
   overflow-y: auto;
 }
 
@@ -770,7 +772,7 @@ export default {
 .site-nav__drawer-link:hover,
 .site-nav__drawer-link:focus-visible,
 .site-nav__drawer-link.nuxt-link-active {
-  background: var(--grey-100, #e4e9f0);
+  background: var(--neutral-150);
   color: #000;
 }
 

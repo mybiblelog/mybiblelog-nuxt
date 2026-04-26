@@ -68,7 +68,7 @@ My Bible Log에서는 성경을 읽으며 자유형식으로 노트를 작성해
 
 사용 중인 태그는 삭제할 수 없습니다. 태그를 삭제하기 위해서는 먼저 해당 태그를 사용 중인 모든 노트에서 태그를 없애거나 태그가 달린 노트를 삭제해야 합니다.
 
-<div class="buttons">
-  <a class="button is-light" href="/ko/notes">노트 페이지로 가기</a>
-  <a class="button is-light" href="/ko/tags">태그 페이지로 가기</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/ko/notes">노트 페이지로 가기</a>
+  <a class="mbl-button mbl-button--light" href="/ko/tags">태그 페이지로 가기</a>
 </div>

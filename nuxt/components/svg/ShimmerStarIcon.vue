@@ -41,7 +41,7 @@ export default {
 .shimmer-star {
   aspect-ratio: 1;
 
-  /* Colorful gradient matching DoubleProgressBar */
+  /* Decorative gradient palette (intentional asset styling, not theme tokens). */
   background: linear-gradient(90deg, #FDD81D 0%, #FDD81D 20%, #FCB634 60%, #FCB634 80%, #FDD81D 100%);
   background-size: 200% 100%;
 

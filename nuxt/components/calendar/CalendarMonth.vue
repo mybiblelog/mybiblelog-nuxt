@@ -179,7 +179,7 @@ export default {
 <style scoped>
 .calendar-month {
   position: relative;
-  background-color: var(--grey-200);
+  background-color: var(--neutral-200);
   color: #2c3e50;
 }
 .calendar-month ol,
@@ -205,7 +205,7 @@ export default {
 }
 
 .day-of-week {
-  color: var(--grey-800);
+  color: var(--neutral-600);
   font-size: 18px;
   background-color: #fff;
   padding-bottom: 5px;
@@ -228,6 +228,6 @@ export default {
   position: relative;
   grid-column-gap: 1px;
   grid-row-gap: 1px;
-  border: solid 1px var(--grey-300);
+  border: solid 1px var(--neutral-300);
 }
 </style>

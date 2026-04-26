@@ -1,15 +1,15 @@
 <template>
-  <div class="container">
-    <h2 class="title is-4">
+  <div>
+    <h2 class="mbl-title mbl-title--4">
       {{ $t('change_email') }}
     </h2>
     <template v-if="checkingForEmailChangeRequest">
-      <div class="content">
+      <div class="mbl-content">
         <p>{{ $t('checking_current_email_settings') }}</p>
       </div>
     </template>
     <template v-else-if="currentChangeEmailRequest">
-      <div class="content">
+      <div class="mbl-content">
         <p>
           {{ $t('current_request.your_current_email_is') }}
           <br>
@@ -22,17 +22,17 @@
         </p>
         <p>{{ $t('current_request.check_your_new_email') }}</p>
         <p>{{ $t('current_request.you_can_cancel') }}</p>
-        <button class="button is-danger" @click="cancelChangeEmailRequest">
+        <button class="mbl-button mbl-button--danger" @click="cancelChangeEmailRequest">
           {{ $t('current_request.cancel_request') }}
         </button>
       </div>
     </template>
     <template v-else>
-      <div class="content">
+      <div class="mbl-content">
         <p>{{ $t('new_request.enter_new_email') }}</p>
         <p>{{ $t('new_request.you_will_receive_an_email') }}</p>
-        <div class="message">
-          <div class="message-body">
+        <div class="mbl-message">
+          <div class="mbl-message__body">
             {{ $t('new_request.create_password.part_1') }}
             {{ $t('new_request.create_password.part_2') }}
             {{ $t('new_request.create_password.part_3') }}
@@ -40,30 +40,30 @@
         </div>
       </div>
       <form :disabled="formBusy" @submit.prevent="submitChangeEmail()">
-        <div v-if="changeEmailErrors._form" class="help is-danger">
+        <div v-if="changeEmailErrors._form" class="mbl-help mbl-help--danger">
           {{ $terr(changeEmailErrors._form) }}
         </div>
-        <div class="field">
-          <label class="label" for="newEmail">{{ $t('form.new_email') }}</label>
-          <div class="control">
-            <input v-model="changeEmailModel.newEmail" class="input" type="email" name="newEmail">
+        <div class="mbl-field">
+          <label class="mbl-label" for="newEmail">{{ $t('form.new_email') }}</label>
+          <div class="mbl-control">
+            <input v-model="changeEmailModel.newEmail" class="mbl-input" type="email" name="newEmail">
           </div>
-          <div v-if="changeEmailErrors.newEmail" class="help is-danger">
+          <div v-if="changeEmailErrors.newEmail" class="mbl-help mbl-help--danger">
             {{ $terr(changeEmailErrors.newEmail, { field: $t('form.new_email') }) }}
           </div>
         </div>
-        <div class="field">
-          <label class="label" for="password">{{ $t('form.password') }}</label>
-          <div class="control">
-            <input v-model="changeEmailModel.password" class="input" type="password" name="password">
+        <div class="mbl-field">
+          <label class="mbl-label" for="password">{{ $t('form.password') }}</label>
+          <div class="mbl-control">
+            <input v-model="changeEmailModel.password" class="mbl-input" type="password" name="password">
           </div>
-          <div v-if="changeEmailErrors.password" class="help is-danger">
+          <div v-if="changeEmailErrors.password" class="mbl-help mbl-help--danger">
             {{ $terr(changeEmailErrors.password, { field: $t('form.password') }) }}
           </div>
         </div>
-        <div class="field">
-          <div class="control">
-            <button class="button is-primary" type="submit">
+        <div class="mbl-field">
+          <div class="mbl-control">
+            <button class="mbl-button mbl-button--primary" type="submit">
               {{ $t('form.change_email') }}
             </button>
           </div>

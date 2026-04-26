@@ -14,7 +14,7 @@
                 {{ entryDate.verses }} {{ $tc('verse', entryDate.verses) }}
               </div>
             </div>
-            <button class="button is-small" @click="openAddEntryFormForDate(entryDate.date)">
+            <button class="mbl-button mbl-button--sm calendar-page__add-entry-button" @click="openAddEntryFormForDate(entryDate.date)">
               +
             </button>
           </div>
@@ -127,7 +127,10 @@ export default {
     async deleteEntry(id) {
       const dialogStore = useDialogStore();
       const toastStore = useToastStore();
-      const confirmed = await dialogStore.confirm({ message: this.$t('are_you_sure') });
+      const confirmed = await dialogStore.confirm({
+        message: this.$t('are_you_sure'),
+        confirmButtonType: 'danger',
+      });
       if (!confirmed) { return; }
       const success = await this.logEntriesStore.deleteLogEntry(id);
       if (!success) {
@@ -187,6 +190,10 @@ export default {
   .verse-count {
     font-size: 0.8em;
   }
+}
+
+.calendar-page__add-entry-button {
+  align-self: center;
 }
 </style>
 

@@ -131,6 +131,6 @@ Another great way to keep moving toward your goal is to talk about it with frien
 
 Finally, take advantage of anything that makes you interested in reading the Bible. If you find an interesting passage during a Bible study, a sermon, or your daily devotional, keep reading! You don't have to stop at a certain number of verses or chapters each day. When you really find a book or section of the Bible inspiring, take advantage of your momentum and read as much as you want!
 
-<div class="buttons">
-  <a class="button is-light" href="/today">Get Started</a>
+<div class="mbl-button-group">
+  <a class="mbl-button mbl-button--light" href="/today">Get Started</a>
 </div>

@@ -2,35 +2,35 @@
   <main>
     <div class="notes-page">
       <header class="page-header">
-        <h2 class="title">
+        <h2 class="mbl-title">
           {{ $t('notes') }}
           <info-link :to="localePath('/about/page-features--notes')" />
         </h2>
-        <div class="buttons is-align-items-flex-start">
-          <nuxt-link class="button" :to="localePath('/tags')">
+        <div class="mbl-button-group mbl-button-group--start">
+          <nuxt-link class="mbl-button" :to="localePath('/tags')">
             {{ $t('tags') }}
             <caret-right-icon style="margin-left: 0.2rem;" />
           </nuxt-link>
-          <button class="button is-info" @click="openPassageNoteEditor({ empty: true })">
+          <button class="mbl-button mbl-button--primary" @click="openPassageNoteEditor({ empty: true })">
             {{ $t('new') }}
           </button>
         </div>
       </header>
       <div class="notes-page__mobile-query-button">
-        <button class="button is-light is-small notes-page__query-button" type="button" @click="openQueryManagerModal">
+        <button class="mbl-button mbl-button--light mbl-button--sm notes-page__query-button" type="button" @click="openQueryManagerModal">
           {{ $t('query_manager.open') }}
           <span v-if="hasAppliedViewOptions" class="notes-page__query-badge" aria-hidden="true" />
         </button>
-        <button v-if="hasAppliedViewOptions" class="button is-light is-small" type="button" @click="resetViewOptions">
+        <button v-if="hasAppliedViewOptions" class="mbl-button mbl-button--light mbl-button--sm" type="button" @click="resetViewOptions">
           {{ $t('query_manager.reset_button') }}
         </button>
       </div>
 
-      <div class="columns">
-        <aside class="column is-4 notes-page__sidebar">
-          <div class="box notes-page__query-manager-box">
+      <div class="notes-page__layout">
+        <aside class="notes-page__sidebar">
+          <div class="mbl-box notes-page__query-manager-box">
             <div class="notes-page__query-manager-actions">
-              <button v-if="hasAppliedViewOptions" class="button is-light is-small" type="button" @click="resetViewOptions">
+              <button v-if="hasAppliedViewOptions" class="mbl-button mbl-button--light mbl-button--sm" type="button" @click="resetViewOptions">
                 {{ $t('query_manager.reset') }}
               </button>
             </div>
@@ -43,18 +43,18 @@
           </div>
         </aside>
 
-        <section class="column notes-page__content">
+        <section class="notes-page__content">
           <div>
             <template v-if="loading">
               <div class="passage-note">
-                <div class="passage-note--content has-text-centered">
+                <div class="passage-note--content mbl-text-center">
                   {{ $t('results.loading') }}
                 </div>
               </div>
             </template>
             <template v-else-if="!passageNotes.length">
-              <div class="has-background-light p-5">
-                <div class="has-text-centered">
+              <div class="mbl-empty-state">
+                <div class="mbl-text-center">
                   {{ $t('results.no_results') }}
                 </div>
               </div>
@@ -66,10 +66,10 @@
                 </div>
 
                 <div v-if="pagerTotalPages > 1" class="notes-page__results-pager">
-                  <div class="field has-addons is-marginless" role="group" :aria-label="$t('pagination.label')">
-                    <p class="control">
+                  <div class="mbl-field mbl-field--addons mbl-field--flush" role="group" :aria-label="$t('pagination.label')">
+                    <p class="mbl-control">
                       <button
-                        class="button is-small is-light"
+                        class="mbl-button mbl-button--sm mbl-button--light"
                         type="button"
                         :disabled="pagerPage <= 1"
                         :aria-label="$t('pagination.prev')"
@@ -79,8 +79,8 @@
                       </button>
                     </p>
 
-                    <div class="control">
-                      <div class="select is-small">
+                    <div class="mbl-control">
+                      <div class="mbl-select mbl-select--sm">
                         <select
                           :value="pagerPage"
                           :aria-label="$t('pagination.page')"
@@ -93,9 +93,9 @@
                       </div>
                     </div>
 
-                    <p class="control">
+                    <p class="mbl-control">
                       <button
-                        class="button is-small is-light"
+                        class="mbl-button mbl-button--sm mbl-button--light"
                         type="button"
                         :disabled="pagerPage >= pagerTotalPages"
                         :aria-label="$t('pagination.next')"
@@ -319,7 +319,10 @@ export default {
     async deletePassageNote(id) {
       const dialogStore = useDialogStore();
       const toastStore = useToastStore();
-      const confirmed = await dialogStore.confirm({ message: this.$t('messaging.are_you_sure_delete_note') });
+      const confirmed = await dialogStore.confirm({
+        message: this.$t('messaging.are_you_sure_delete_note'),
+        confirmButtonType: 'danger',
+      });
       if (!confirmed) { return; }
 
       const success = await this.passageNotesStore.deletePassageNote(id);
@@ -383,8 +386,39 @@ export default {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 999px;
-  background: #3273dc; /* Bulma primary */
+  background: var(--primary-color);
   box-shadow: 0 0 0 2px white;
+}
+
+.notes-page__layout {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.notes-page__layout:last-child {
+  margin-bottom: -0.75rem;
+}
+
+.notes-page__layout:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.notes-page__layout > * {
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.notes-page__layout > *:first-child {
+  flex: none;
+  width: 100%;
+}
+
+@media (min-width: 769px) {
+  .notes-page__layout > *:first-child {
+    width: 33.333333%;
+  }
 }
 
 .notes-page__sidebar {
@@ -418,6 +452,11 @@ export default {
   margin-bottom: 1rem;
 }
 
+.notes-page__query-manager-actions:empty {
+  display: none;
+  margin-bottom: 0;
+}
+
 .notes-page__results-bar {
   position: sticky;
   top: calc(var(--header-height) + 0.5rem - 1px);
@@ -445,6 +484,8 @@ export default {
 }
 
 .notes-page__results-summary {
+  font-size: 0.95rem;
+  color: rgba(54, 54, 54, 0.85);
   white-space: normal;
   word-break: break-word;
 }
