@@ -1,5 +1,5 @@
 <template>
-  <app-modal :open="open" :title="modalTitle" :z-index="60" @close="handleClose">
+  <app-modal :open="open" :title="modalTitle" @close="handleClose">
     <template slot="content">
       <passage-note-tag-editor-form />
     </template>

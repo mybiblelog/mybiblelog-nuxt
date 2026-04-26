@@ -30,48 +30,56 @@
 </template>
 
 <script>
+/**
+ * Delay in milliseconds for the modal exit transition.
+ * Based on the CSS transition duration for  the .mbl-modal class.
+ */
+const MODAL_EXIT_DELAY = 300;
+
 export default {
   name: 'AppModal',
   props: {
     title: { type: String, default: '' },
     open: { type: Boolean, default: false },
-    /** Optional stacking order for the modal root (Bulma default may be insufficient in some stacks). */
-    zIndex: { type: [Number, String], default: null },
   },
-  computed: {
-    modalInlineStyle() {
-      if (this.zIndex === null || this.zIndex === '' || this.zIndex === undefined) {
-        return {};
+  watch: {
+    open(newValue) {
+      if (newValue) {
+        document.body.style.overflow = 'hidden';
+        this.teleportIn();
       }
-      return { zIndex: this.zIndex };
+      else {
+        document.body.style.overflow = '';
+        setTimeout(() => this.teleportOut(), MODAL_EXIT_DELAY);
+      }
     },
   },
-  /**
-   * This component’s root is rendered into the body of the document, rather than into the parent’s DOM.
-   * This is a workaround for the fact that we cannot use the teleport component in Vue 2.
-   * In Vue 3 we will be able to use the teleport component to achieve this,
-   * but for now we need to manually append and remove the root from the body.
-   * This frees the modal from any ancestor stacking context, avoiding z-index conflicts.
-   * Specifically, this was needed to break the component out of a `sticky` stacking context.
-   *
-   * The root is a stable wrapper so `mounted` always has a real DOM node even when `open` is false
-   * (the inner modal is gated by `open` inside a `<transition>`).
-   */
-  mounted() {
-    // (remove in Vue 3 and use teleport component instead)
-    if (typeof document === 'undefined') { return; }
-    if (this.$el && this.$el.parentNode !== document.body) {
-      document.body.appendChild(this.$el);
-    }
-  },
-  beforeDestroy() {
-    // (remove in Vue 3 and use teleport component instead)
-    if (typeof document === 'undefined') { return; }
-    if (this.$el && this.$el.parentNode === document.body) {
-      document.body.removeChild(this.$el);
-    }
-  },
   methods: {
+    /**
+     * This component’s root is rendered into the body of the document, rather than into the parent’s DOM.
+     * This is a workaround for the fact that we cannot use the teleport component in Vue 2.
+     * In Vue 3 we will be able to use the teleport component to achieve this,
+     * but for now we need to manually append and remove the root from the body.
+     * This frees the modal from any ancestor stacking context, avoiding z-index conflicts.
+     * Specifically, this was needed to break the component out of a `sticky` stacking context.
+     *
+     * The root is a stable wrapper so `mounted` always has a real DOM node even when `open` is false
+     * (the inner modal is gated by `open` inside a `<transition>`).
+     */
+    teleportIn() {
+      // (remove in Vue 3 and use teleport component instead)
+      if (typeof document === 'undefined') { return; }
+      if (this.$el && this.$el.parentNode !== document.body) {
+        document.body.appendChild(this.$el);
+      }
+    },
+    teleportOut() {
+      // (remove in Vue 3 and use teleport component instead)
+      if (typeof document === 'undefined') { return; }
+      if (this.$el && this.$el.parentNode === document.body) {
+        document.body.removeChild(this.$el);
+      }
+    },
     close() {
       this.$emit('close');
     },
