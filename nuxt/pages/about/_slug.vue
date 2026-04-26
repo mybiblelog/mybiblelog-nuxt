@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <article class="content-column mbl-content">
+  <main role="main" class="content-column mbl-content">
+    <article>
       <nuxt-content :document="doc" />
       <template v-if="doc.slug !== 'overview'">
         <br>
@@ -10,7 +10,7 @@
       </template>
     </article>
     <content-page-footer />
-  </div>
+  </main>
 </template>
 
 <script>
@@ -101,33 +101,6 @@ export default {
 
 h1, h2, h3, h4, h5, h6 {
   clear: both;
-}
-
-/*  For content screenshots that look like a phone screen */
-.phone-frame {
-  float: right;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
-
-  padding: 14px;
-  border-radius: 24px;
-  background: #fff;
-
-  /* separation */
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.08),
-    0 2px 6px rgba(0, 0, 0, 0.04);
-
-  /* size normalization */
-  max-width: 320px;
-}
-
-.phone-frame img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 16px;
 }
 
 @media (max-width: 767px) {

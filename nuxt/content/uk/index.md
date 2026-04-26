@@ -18,10 +18,12 @@ ld_json:
   cta-note="Зареєструйтеся за допомогою електронної пошти або Google"></content-page-hero>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image-src="/screenshots/sc4-daily-goal.webp"
   image-alt="Додаток My Bible Log показує завершену смугу прогресу для досягнення щоденної мети читання"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
-  fetch-priority="high"
+  image-fetch-priority="high"
   title="Чому My Bible Log?"
   subtitle="Читайте Своїм Шляхом"
   description="Більшість планів читання Біблії кажуть вам <em>що</em> читати та <em>коли</em>. <strong>My Bible Log працює інакше.</strong> Ви просто реєструєте те, що вже прочитали — з проповідей, роздумів, малих груп або особистого вивчення — і все це зараховується до вашого прогресу."
@@ -29,8 +31,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc2-achievements.webp"
+  image-src="/screenshots/sc2-achievements.webp"
   image-alt="Додаток My Bible Log нагороджує золотою зіркою за читання книги Біблії"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Залишайтеся Послідовними Без Тиску"
   subtitle="Щоденні Цілі Читання"
@@ -41,8 +45,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc1-reading-suggestions.webp"
+  image-src="/screenshots/sc1-reading-suggestions.webp"
   image-alt="Сторінка Сьогодні додатку My Bible Log показує кілька пропозицій для читання"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Завжди Знайте, Що Читати Далі"
   subtitle="Розумні Пропозиції для Читання"
@@ -50,8 +56,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc7-bible-progress.webp"
+  image-src="/screenshots/sc7-bible-progress.webp"
   image-alt="Додаток My Bible Log показує сегментовану смугу прогресу для читання всієї Біблії"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Бачте Свій Прогрес Одразу"
   subtitle="Відстежуйте Розділи, Книги та Всю Біблію"
@@ -59,8 +67,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc9-calendar.webp"
+  image-src="/screenshots/sc9-calendar.webp"
   image-alt="Календар My Bible Log показує місяць, де багато дат отримали зірку за досягнення щоденної мети читання"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Створіть Звичку, на Якій Можна Роздумувати"
   subtitle="Календар Читання"
@@ -71,8 +81,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc10-notes.webp"
+  image-src="/screenshots/sc10-notes.webp"
   image-alt="Екран нотаток My Bible Log показує кілька віршів для запам'ятовування"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Робіть Нотатки Під Час Читання"
   subtitle="Гнучкі Нотатки для Читання Біблії"
@@ -80,8 +92,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc12-checklist.webp"
+  image-src="/screenshots/sc12-checklist.webp"
   image-alt="Список перевірки розділів My Bible Log з першими чотирма розділами Об'явлення, позначеними як завершені"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Реєструйте Читання за Секунди"
   subtitle="Швидке Реєстрування Розділів"
@@ -89,8 +103,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc8-install-anywhere.webp"
+  image-src="/screenshots/sc8-install-anywhere.webp"
   image-alt="Додаток My Bible Log працює в режимі робочого столу"
+  image-width="1069"
+  image-height="690"
   title="Використовуйте Де Завгодно"
   subtitle="Працює Де Ви Знаходитесь"
   :list="['Використовуйте у вашому браузері', 'Встановіть як додаток на вашому телефоні, планшеті або комп\'ютері', 'Без реклами. Ніколи.', 'Безкоштовно для використання']"

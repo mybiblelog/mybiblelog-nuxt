@@ -18,10 +18,12 @@ ld_json:
   cta-note="이메일 또는 Google로 가입"></content-page-hero>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image-src="/screenshots/sc4-daily-goal.webp"
   image-alt="일일 읽기 목표 달성 시 완료된 진행 표시줄이 나타나는 My Bible Log 앱"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
-  fetch-priority="high"
+  image-fetch-priority="high"
   title="왜 My Bible Log인가요?"
   subtitle="나만의 방식으로 읽기"
   description="대부분의 성경읽기 계획은 <em>무엇</em>을 <em>언제</em> 읽어야 하는지 정해줍니다. <strong>My Bible Log는 다릅니다.</strong> 설교, 묵상, 소모임, 개인공부 등 이미 읽은 부분을 기록만 하면 모든 내용이 진도에 반영됩니다."
@@ -29,8 +31,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc2-achievements.webp"
+  image-src="/screenshots/sc2-achievements.webp"
   image-alt="성경의 한 책을 다 읽으면 금색 별이 제공되는 My Bible Log 앱"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="부담 없이 꾸준하게"
   subtitle="일일 읽기 목표"
@@ -41,8 +45,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc1-reading-suggestions.webp"
+  image-src="/screenshots/sc1-reading-suggestions.webp"
   image-alt="여러 읽기 제안이 표시된 My Bible Log 앱 오늘의 성경 페이지"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="어디를 읽을지 항상 알기"
   subtitle="스마트 읽기 제안"
@@ -50,8 +56,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc7-bible-progress.webp"
+  image-src="/screenshots/sc7-bible-progress.webp"
   image-alt="성경 전체 읽기 진도를 구간별로 보여주는 My Bible Log 앱"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="진행 상황을 한눈에"
   subtitle="장·책·성경 전체 추적"
@@ -59,8 +67,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc9-calendar.webp"
+  image-src="/screenshots/sc9-calendar.webp"
   image-alt="일일 읽기 목표를 달성한 일자에 별을 달아주는 My Bible Log 달력"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="읽기 습관 돌아보기"
   subtitle="성경읽기 달력"
@@ -71,8 +81,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc10-notes.webp"
+  image-src="/screenshots/sc10-notes.webp"
   image-alt="여러 암송 구절이 표시된 My Bible Log 노트 화면"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="읽으며 바로 메모"
   subtitle="유연한 성경 읽기 노트"
@@ -80,8 +92,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc12-checklist.webp"
+  image-src="/screenshots/sc12-checklist.webp"
   image-alt="요한계시록 처음 네 장이 읽기 완료로 표시된 My Bible Log 장별 체크"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="기록은 몇 초 컷"
   subtitle="빠른 장별 기록"
@@ -89,8 +103,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc8-install-anywhere.webp"
+  image-src="/screenshots/sc8-install-anywhere.webp"
   image-alt="데스크톱 모드로 실행 중인 My Bible Log 앱"
+  image-width="1069"
+  image-height="690"
   title="어디서나 사용 가능"
   subtitle="어느 환경에서도 함께합니다"
   :list="['브라우저에서 바로 사용할 수 있습니다', '스마트폰, 태블릿, PC에 앱으로 설치할 수 있습니다', '광고는 없습니다. 영원히.', '무료입니다']"

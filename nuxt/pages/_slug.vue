@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <div :class="{ 'content-column mbl-content': doc?.slug !== 'index' }">
+  <main role="main">
+    <article :class="{ 'content-column mbl-content': doc?.slug !== 'index' }">
       <nuxt-content :document="doc" />
-    </div>
+    </article>
     <content-page-footer />
-  </div>
+  </main>
 </template>
 
 <script>

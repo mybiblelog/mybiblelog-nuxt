@@ -20,6 +20,7 @@ const config: NuxtConfig = {
     capi: true,
     nitro: false,
   },
+  modern: 'client',
   /*
   ** Headers of the page
   */
@@ -128,6 +129,17 @@ const config: NuxtConfig = {
   ** Build configuration
   */
   build: {
+    babel: {
+      presets() {
+        return [
+          ['@nuxt/babel-preset-app', {
+            targets: { esmodules: true },
+            corejs: { version: 3 },
+            useBuiltIns: 'usage',
+          }],
+        ];
+      },
+    },
     /*
     ** You can extend webpack config here
     */

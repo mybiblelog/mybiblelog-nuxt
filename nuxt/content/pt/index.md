@@ -18,10 +18,12 @@ ld_json:
   cta-note="Cadastre-se com e-mail ou Google"></content-page-hero>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image-src="/screenshots/sc4-daily-goal.webp"
   image-alt="O aplicativo My Bible Log mostrando uma barra de progresso concluída para atingir a meta de leitura diária"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
-  fetch-priority="high"
+  image-fetch-priority="high"
   title="Por que My Bible Log?"
   subtitle="Leia do Seu Jeito"
   description="A maioria dos planos de leitura bíblica diz <em>o que</em> ler e <em>quando</em>. <strong>My Bible Log funciona de forma diferente.</strong> Você simplesmente registra o que já leu — de sermões, devocionais, pequenos grupos ou estudo pessoal — e tudo conta para o seu progresso."
@@ -29,8 +31,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc2-achievements.webp"
+  image-src="/screenshots/sc2-achievements.webp"
   image-alt="O aplicativo My Bible Log concedendo uma estrela dourada por ler um livro da Bíblia"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Mantenha-se Consistente Sem Pressão"
   subtitle="Metas de Leitura Diária"
@@ -41,8 +45,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc1-reading-suggestions.webp"
+  image-src="/screenshots/sc1-reading-suggestions.webp"
   image-alt="A página Hoje do aplicativo My Bible Log mostrando várias sugestões de leitura"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Sempre Saiba O Que Ler Em Seguida"
   subtitle="Sugestões Inteligentes de Leitura"
@@ -50,8 +56,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc7-bible-progress.webp"
+  image-src="/screenshots/sc7-bible-progress.webp"
   image-alt="O aplicativo My Bible Log mostrando uma barra de progresso segmentada para ler toda a Bíblia"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Veja Seu Progresso de Relance"
   subtitle="Acompanhe Capítulos, Livros e Toda a Bíblia"
@@ -59,8 +67,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc9-calendar.webp"
+  image-src="/screenshots/sc9-calendar.webp"
   image-alt="O calendário My Bible Log mostrando um mês onde muitas datas ganharam uma estrela por atingir a meta de leitura diária"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Crie um Hábito no Qual Você Pode Refletir"
   subtitle="Calendário de Leitura"
@@ -71,8 +81,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc10-notes.webp"
+  image-src="/screenshots/sc10-notes.webp"
   image-alt="A tela de anotações do My Bible Log mostrando vários versículos para memorizar"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Faça Anotações Enquanto Lê"
   subtitle="Anotações Flexíveis de Leitura Bíblica"
@@ -80,8 +92,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc12-checklist.webp"
+  image-src="/screenshots/sc12-checklist.webp"
   image-alt="A lista de verificação de capítulos do My Bible Log com os primeiros quatro capítulos de Apocalipse marcados como completos"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Registre a Leitura em Segundos"
   subtitle="Registro Rápido de Capítulos"
@@ -89,8 +103,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc8-install-anywhere.webp"
+  image-src="/screenshots/sc8-install-anywhere.webp"
   image-alt="O aplicativo My Bible Log executando no modo desktop"
+  image-width="1069"
+  image-height="690"
   title="Use em Qualquer Lugar"
   subtitle="Funciona Onde Você Estiver"
   :list="['Use no seu navegador', 'Instale como aplicativo no seu telefone, tablet ou computador', 'Sem anúncios. Nunca.', 'Gratuito para usar']"

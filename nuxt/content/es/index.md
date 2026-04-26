@@ -18,10 +18,12 @@ ld_json:
   cta-note="Regístrate con correo electrónico o Google"></content-page-hero>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image-src="/screenshots/sc4-daily-goal.webp"
   image-alt="La aplicación My Bible Log mostrando una barra de progreso completada para alcanzar el objetivo de lectura diaria"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
-  fetch-priority="high"
+  image-fetch-priority="high"
   title="¿Por qué My Bible Log?"
   subtitle="Lee a Tu Manera"
   description="La mayoría de los planes de lectura bíblica te dicen <em>qué</em> leer y <em>cuándo</em>. <strong>My Bible Log funciona de manera diferente.</strong> Simplemente registras lo que ya has leído — de sermones, devocionales, grupos pequeños o estudio personal — y todo cuenta para tu progreso."
@@ -29,8 +31,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc2-achievements.webp"
+  image-src="/screenshots/sc2-achievements.webp"
   image-alt="La aplicación My Bible Log otorgando una estrella dorada por leer un libro de la Biblia"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Mantente Constante Sin Presión"
   subtitle="Objetivos de Lectura Diaria"
@@ -41,8 +45,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc1-reading-suggestions.webp"
+  image-src="/screenshots/sc1-reading-suggestions.webp"
   image-alt="La página Hoy de la aplicación My Bible Log mostrando varias sugerencias de lectura"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Siempre Sepa Qué Leer A Continuación"
   subtitle="Sugerencias Inteligentes de Lectura"
@@ -50,8 +56,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc7-bible-progress.webp"
+  image-src="/screenshots/sc7-bible-progress.webp"
   image-alt="La aplicación My Bible Log mostrando una barra de progreso segmentada para leer toda la Biblia"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Ve Tu Progreso De Un Vistazo"
   subtitle="Rastrea Capítulos, Libros y Toda la Biblia"
@@ -59,8 +67,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc9-calendar.webp"
+  image-src="/screenshots/sc9-calendar.webp"
   image-alt="El calendario My Bible Log mostrando un mes donde muchas fechas han ganado una estrella por alcanzar el objetivo de lectura diaria"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Crea un Hábito en el Que Puedas Reflexionar"
   subtitle="Calendario de Lectura"
@@ -71,8 +81,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc10-notes.webp"
+  image-src="/screenshots/sc10-notes.webp"
   image-alt="La pantalla de notas de My Bible Log mostrando varios versículos para memorizar"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Toma Notas Mientras Lees"
   subtitle="Notas Flexibles de Lectura Bíblica"
@@ -80,8 +92,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc12-checklist.webp"
+  image-src="/screenshots/sc12-checklist.webp"
   image-alt="La lista de verificación de capítulos de My Bible Log con los primeros cuatro capítulos de Apocalipsis marcados como completos"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Registra la Lectura en Segundos"
   subtitle="Registro Rápido de Capítulos"
@@ -89,8 +103,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc8-install-anywhere.webp"
+  image-src="/screenshots/sc8-install-anywhere.webp"
   image-alt="La aplicación My Bible Log ejecutándose en modo escritorio"
+  image-width="1069"
+  image-height="690"
   title="Úsalo En Cualquier Lugar"
   subtitle="Funciona Donde Estés"
   :list="['Úsalo en tu navegador', 'Instálalo como aplicación en tu teléfono, tableta o computadora', 'Sin anuncios. Nunca.', 'Gratis de usar']"
