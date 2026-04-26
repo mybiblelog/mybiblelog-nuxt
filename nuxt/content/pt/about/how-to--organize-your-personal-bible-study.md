@@ -28,7 +28,7 @@ Crie uma tag para pelo menos 3 perguntas que deseja pesquisar na Bíblia. Você 
 * Como a Bíblia fala sobre igreja? Quem ou o que conta como igreja? A Bíblia nos ordena a "ir à igreja"? Tag sugerida: Igreja
 
 <div class="mbl-button-group">
-  <a class="mbl-button mbl-button--light" href="/pt/notas">Ir para a página de Notas</a>
+  <a class="mbl-button mbl-button--light" href="/pt/notes">Ir para a página de Notas</a>
   <a class="mbl-button mbl-button--light" href="/pt/tags">Ir para a página de Tags</a>
 </div>
 
