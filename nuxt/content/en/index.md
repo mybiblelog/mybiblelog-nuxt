@@ -18,10 +18,12 @@ ld_json:
   cta-note="Sign up with email or Google"></content-page-hero>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image-src="/screenshots/sc4-daily-goal.webp"
   image-alt="The My Bible Log app showing a completed progress bar for meeting the daily reading goal"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
-  fetch-priority="high"
+  image-fetch-priority="high"
   title="Why My Bible Log?"
   subtitle="Read Your Way"
   description="Most Bible reading plans tell you <em>what</em> to read and <em>when</em>. <strong>My Bible Log works differently.</strong> You simply log what you've already read — from sermons, devotionals, small groups, or personal study — and it all counts toward your progress."
@@ -29,8 +31,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc2-achievements.webp"
+  image-src="/screenshots/sc2-achievements.webp"
   image-alt="The My Bible Log app awarding a gold star for reading through a book of the Bible"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Stay Consistent Without Pressure"
   subtitle="Daily Reading Goals"
@@ -41,8 +45,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc1-reading-suggestions.webp"
+  image-src="/screenshots/sc1-reading-suggestions.webp"
   image-alt="The My Bible Log app Today page showing several reading suggestions"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Always Know What to Read Next"
   subtitle="Smart Reading Suggestions"
@@ -50,8 +56,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc7-bible-progress.webp"
+  image-src="/screenshots/sc7-bible-progress.webp"
   image-alt="The My Bible Log app showing a segmented progress bar for reading the whole Bible"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="See Your Progress at a Glance"
   subtitle="Track Chapters, Books, and the Whole Bible"
@@ -59,8 +67,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc9-calendar.webp"
+  image-src="/screenshots/sc9-calendar.webp"
   image-alt="The My Bible Log calendar showing a month where many dates have earned a star for meeting the daily reading goal"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Build a Habit You Can Reflect On"
   subtitle="Reading Calendar"
@@ -71,8 +81,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc10-notes.webp"
+  image-src="/screenshots/sc10-notes.webp"
   image-alt="The My Bible Log notes screen showing several memory verses"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Take Notes as You Read"
   subtitle="Flexible Bible Reading Notes"
@@ -80,8 +92,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc12-checklist.webp"
+  image-src="/screenshots/sc12-checklist.webp"
   image-alt="The My Bible Log chapter checklist with the first four chapters of Revelation marked complete"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Log Reading in Seconds"
   subtitle="Quick Chapter Logging"
@@ -89,8 +103,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc8-install-anywhere.webp"
+  image-src="/screenshots/sc8-install-anywhere.webp"
   image-alt="The My Bible Log app running in desktop mode"
+  image-width="1069"
+  image-height="690"
   title="Use It Anywhere"
   subtitle="Works Wherever You Do"
   :list="['Use it in your browser', 'Install it as an app on your phone, tablet, or desktop', 'No ads. Ever.', 'Free to use']"

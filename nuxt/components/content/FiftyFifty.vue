@@ -4,9 +4,11 @@
       <div class="fifty-fifty-image">
         <div :class="imageContainerClass">
           <img
-            :src="image"
+            :src="imageSrc"
             :alt="imageAlt || title"
-            :fetchpriority="fetchPriority || undefined"
+            :width="imageWidth || undefined"
+            :height="imageHeight || undefined"
+            :fetchpriority="imageFetchPriority || undefined"
           >
         </div>
       </div>
@@ -32,7 +34,7 @@
 export default {
   name: 'FiftyFiftyComponent',
   props: {
-    image: {
+    imageSrc: {
       type: String,
       required: true,
     },
@@ -40,9 +42,22 @@ export default {
       type: String,
       default: '',
     },
+    imageWidth: {
+      type: String,
+      default: '',
+    },
+    imageHeight: {
+      type: String,
+      default: '',
+    },
     imageContainerClass: {
       type: String,
       default: '',
+    },
+    imageFetchPriority: {
+      type: String,
+      default: '',
+      validator: value => !value || ['high', 'low', 'auto'].includes(value),
     },
     title: {
       type: String,
@@ -75,11 +90,6 @@ export default {
     reverse: {
       type: [Boolean],
       default: false,
-    },
-    fetchPriority: {
-      type: String,
-      default: '',
-      validator: value => !value || ['high', 'low', 'auto'].includes(value),
     },
   },
 };
@@ -215,20 +225,22 @@ export default {
 }
 
 .fifty-fifty-cta .mbl-button.mbl-button--primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--mbl-on-accent);
   font-weight: 600;
   padding: 0.5rem 2rem;
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 170, 249, 0.3);
+  box-shadow: 0 4px 12px rgba(9, 101, 247, 0.35);
 }
 
 .fifty-fifty-cta .mbl-button.mbl-button--primary:hover {
-  background-color: var(--secondary-color);
-  border-color: var(--secondary-color);
+  background-color: var(--secondary-color-hover);
+  border-color: var(--secondary-color-hover);
+  color: var(--mbl-on-accent);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
+  box-shadow: 0 6px 16px rgba(9, 101, 247, 0.45);
 }
 
 .fifty-fifty-cta .mbl-button.mbl-button--primary:active {

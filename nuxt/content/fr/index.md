@@ -18,10 +18,12 @@ ld_json:
   cta-note="Inscrivez-vous avec un e-mail ou Google"></content-page-hero>
 
 <content-fifty-fifty
-  image="/screenshots/sc4-daily-goal.webp"
+  image-src="/screenshots/sc4-daily-goal.webp"
   image-alt="L'application My Bible Log montrant une barre de progression complétée pour atteindre l'objectif de lecture quotidienne"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
-  fetch-priority="high"
+  image-fetch-priority="high"
   title="Pourquoi My Bible Log ?"
   subtitle="Lisez à Votre Façon"
   description="La plupart des plans de lecture biblique vous disent <em>quoi</em> lire et <em>quand</em>. <strong>My Bible Log fonctionne différemment.</strong> Vous enregistrez simplement ce que vous avez déjà lu — depuis des sermons, des dévotions, des petits groupes ou des études personnelles — et tout compte dans vos progrès."
@@ -29,8 +31,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc2-achievements.webp"
+  image-src="/screenshots/sc2-achievements.webp"
   image-alt="L'application My Bible Log décernant une étoile dorée pour avoir lu un livre de la Bible"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Restez Constant Sans Pression"
   subtitle="Objectifs de Lecture Quotidiens"
@@ -41,8 +45,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc1-reading-suggestions.webp"
+  image-src="/screenshots/sc1-reading-suggestions.webp"
   image-alt="La page Aujourd'hui de l'application My Bible Log montrant plusieurs suggestions de lecture"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Sachez Toujours Quoi Lire Ensuite"
   subtitle="Suggestions de Lecture Intelligentes"
@@ -50,8 +56,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc7-bible-progress.webp"
+  image-src="/screenshots/sc7-bible-progress.webp"
   image-alt="L'application My Bible Log montrant une barre de progression segmentée pour lire toute la Bible"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Voyez Vos Progrès en un Coup d'Œil"
   subtitle="Suivez les Chapitres, les Livres et Toute la Bible"
@@ -59,8 +67,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc9-calendar.webp"
+  image-src="/screenshots/sc9-calendar.webp"
   image-alt="Le calendrier My Bible Log montrant un mois où de nombreuses dates ont gagné une étoile pour avoir atteint l'objectif de lecture quotidienne"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Créez une Habitude sur Laquelle Vous Pouvez Réfléchir"
   subtitle="Calendrier de Lecture"
@@ -71,8 +81,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc10-notes.webp"
+  image-src="/screenshots/sc10-notes.webp"
   image-alt="L'écran de notes My Bible Log montrant plusieurs versets à mémoriser"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Prenez des Notes Pendant Que Vous Lisez"
   subtitle="Notes de Lecture Biblique Flexibles"
@@ -80,8 +92,10 @@ ld_json:
   :reverse="true"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc12-checklist.webp"
+  image-src="/screenshots/sc12-checklist.webp"
   image-alt="La liste de vérification des chapitres My Bible Log avec les quatre premiers chapitres de l'Apocalypse marqués comme complétés"
+  image-width="750"
+  image-height="1334"
   image-container-class="phone-frame"
   title="Enregistrez la Lecture en Quelques Secondes"
   subtitle="Enregistrement Rapide de Chapitres"
@@ -89,8 +103,10 @@ ld_json:
   :reverse="false"></content-fifty-fifty>
 
 <content-fifty-fifty
-  image="/screenshots/sc8-install-anywhere.webp"
+  image-src="/screenshots/sc8-install-anywhere.webp"
   image-alt="L'application My Bible Log fonctionnant en mode bureau"
+  image-width="1069"
+  image-height="690"
   title="Utilisez-le N'importe Où"
   subtitle="Fonctionne Où Que Vous Soyez"
   :list="['Utilisez-le dans votre navigateur', 'Installez-le comme application sur votre téléphone, tablette ou ordinateur', 'Pas de publicité. Jamais.', 'Gratuit à utiliser']"

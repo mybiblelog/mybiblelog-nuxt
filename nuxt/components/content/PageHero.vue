@@ -128,20 +128,22 @@ export default {
 }
 
 .mbl-button.mbl-button--primary.mbl-button--lg {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--mbl-on-accent);
   font-weight: 600;
   padding: 0.5rem 2.5rem;
   font-size: 1.125rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 170, 249, 0.3);
+  box-shadow: 0 4px 12px rgba(9, 101, 247, 0.35);
 }
 
 .mbl-button.mbl-button--primary.mbl-button--lg:hover {
-  background-color: var(--secondary-color);
-  border-color: var(--secondary-color);
+  background-color: var(--secondary-color-hover);
+  border-color: var(--secondary-color-hover);
+  color: var(--mbl-on-accent);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 170, 249, 0.4);
+  box-shadow: 0 6px 16px rgba(9, 101, 247, 0.45);
 }
 
 .mbl-button.mbl-button--primary.mbl-button--lg:active {
