@@ -77,6 +77,9 @@
   /* Calendar date grid: gap “lines” vs outer frame */
   --mbl-calendar-grid-inner: var(--neutral-200);
   --mbl-calendar-grid-outer: var(--neutral-300);
+  /* Today’s date number circle in the month grid */
+  --mbl-calendar-today-date-bg: var(--neutral-200);
+  --mbl-calendar-today-date-color: var(--mbl-text-body);
   /*
    * Viewport / html-body canvas — behind cards and chrome.
    * --mbl-bg is the primary *surface* (cards, nav); it may differ from the outer canvas (e.g. dark: #000 canvas vs #191919 surfaces).
@@ -248,8 +251,12 @@
   --mbl-message-info-fg: #c5e3ff;
   --mbl-message-info-accent: #5b8db8;
   --mbl-star-earned: #d08a2f;
-  --mbl-star-unearned: #2c2c2c;
+  /* Visible on #191919 surfaces; was #2c2c2c (too low contrast) */
+  --mbl-star-unearned: #6e6e6e;
   --mbl-tab-active: var(--mbl-link-bright);
+
+  --mbl-calendar-today-date-bg: var(--mbl-bg-hover-strong);
+  --mbl-calendar-today-date-color: var(--mbl-text-strong);
 
   --mbl-site-title-gradient: linear-gradient(
     20deg,
@@ -315,8 +322,11 @@
     --mbl-message-info-fg: #c5e3ff;
     --mbl-message-info-accent: #5b8db8;
     --mbl-star-earned: #d08a2f;
-    --mbl-star-unearned: #2c2c2c;
+    --mbl-star-unearned: #6e6e6e;
     --mbl-tab-active: var(--mbl-link-bright);
+
+    --mbl-calendar-today-date-bg: var(--mbl-bg-hover-strong);
+    --mbl-calendar-today-date-color: var(--mbl-text-strong);
 
     --mbl-site-title-gradient: linear-gradient(
       20deg,

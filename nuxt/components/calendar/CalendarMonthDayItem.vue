@@ -148,7 +148,8 @@ export default {
 }
 
 .calendar-day--today .date {
-  background-color: var(--neutral-200);
+  background-color: var(--mbl-calendar-today-date-bg);
+  color: var(--mbl-calendar-today-date-color);
 }
 
 .calendar-day--selected .date {
