@@ -170,7 +170,7 @@ export default {
 .progress-list .progress-card {
   margin: 0.5rem 0;
   padding: 0.5rem;
-  background: var(--mbl-bg);
+  background: var(--mbl-bg-elevated);
   border-radius: 0.25rem;
   box-shadow: var(--mbl-shadow-elev-1);
 

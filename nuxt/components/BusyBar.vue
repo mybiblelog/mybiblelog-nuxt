@@ -41,8 +41,8 @@ export default {
       -45deg,
       transparent,
       transparent 1rem,
-      var(--neutral-150) 1rem,
-      var(--neutral-150) 2rem
+      var(--mbl-busy-bar-stripe) 1rem,
+      var(--mbl-busy-bar-stripe) 2rem
     );
   background-size: 200% 200%;
   animation: busyAnimation 10s linear infinite;

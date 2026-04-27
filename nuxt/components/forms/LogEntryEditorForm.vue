@@ -308,6 +308,7 @@ form label {
   color: var(--mbl-link-bright);
   background-color: var(--mbl-bg);
   padding: 0 0.25rem;
+  border-radius: var(--mbl-radius);
   z-index: 1;
   pointer-events: none;
 }
@@ -317,11 +318,20 @@ form input {
   min-height: 3rem;
   padding: 0.5rem;
   padding-top: 1.125rem;
-  border: 2px solid var(--mbl-text-strong, var(--mbl-text));
+  border: 1px solid var(--mbl-border);
   width: unset;
-  border-radius: 0.25rem;
+  border-radius: var(--mbl-radius);
   box-sizing: border-box;
   color: var(--mbl-text);
+}
+
+form input:hover {
+  border-color: var(--mbl-border-strong);
+}
+
+form input:focus {
+  border-color: var(--primary-color);
+  outline: none;
 }
 
 form select {
@@ -329,9 +339,9 @@ form select {
   height: 3rem;
   padding: 0.5rem;
   padding-top: 1.125rem;
-  border: 2px solid var(--mbl-text-strong, var(--mbl-text));
+  border: 1px solid var(--mbl-border);
   width: unset;
-  border-radius: 0.25rem;
+  border-radius: var(--mbl-radius);
   box-sizing: border-box;
   color: var(--mbl-text);
   appearance: none;
@@ -339,6 +349,16 @@ form select {
   background-repeat: no-repeat;
   background-position: right 0.5rem center;
   padding-right: 2rem;
+}
+
+form select:hover {
+  border-color: var(--mbl-border-strong);
+}
+
+form select:focus {
+  border-color: var(--primary-color);
+  /* box-shadow: var(--mbl-focus-ring); */
+  outline: none;
 }
 
 form input:not(:disabled),

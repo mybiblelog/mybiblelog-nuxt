@@ -85,7 +85,7 @@ export default {
   flex-direction: column;
   padding: 1em 0.5em;
   border-radius: 0.25rem;
-  background: var(--mbl-bg);
+  background: var(--mbl-bg-elevated);
   box-shadow: var(--mbl-card-shadow);
   margin: 0.5rem 0;
 }

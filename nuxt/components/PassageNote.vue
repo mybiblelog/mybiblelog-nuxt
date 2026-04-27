@@ -105,7 +105,7 @@ export default {
   padding: 0.5rem 1rem;
   margin: 1rem 0;
   border-radius: 0.25rem;
-  background: var(--mbl-bg);
+  background: var(--mbl-bg-elevated);
   box-shadow: var(--mbl-card-shadow);
 
   display: grid;

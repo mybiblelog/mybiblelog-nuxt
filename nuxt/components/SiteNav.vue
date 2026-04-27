@@ -679,12 +679,7 @@ export default {
   display: inline-block;
   font-weight: 600;
   text-decoration: none;
-  background: linear-gradient(
-    20deg,
-    var(--primary-color) 0%,
-    var(--secondary-color) 50%,
-    var(--tertiary-color) 100%
-  );
+  background: var(--mbl-site-title-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -793,7 +788,7 @@ export default {
   display: block;
   padding: 0.5rem 1rem;
   font-size: 0.9375rem;
-  color: var(--neutral-850);
+  color: var(--mbl-text-subtle);
   text-decoration: none;
 }
 
@@ -801,7 +796,7 @@ export default {
 .site-nav__admin-item:focus-visible,
 .site-nav__account-item:hover,
 .site-nav__account-item:focus-visible {
-  background: var(--neutral-150);
+  background: var(--mbl-bg-hover-light);
   color: var(--mbl-text-stronger);
 }
 

@@ -102,7 +102,7 @@ export default {
 .chapter-report {
   /*  override button styles */
   border: none;
-  background: var(--mbl-bg);
+  background: var(--mbl-bg-elevated);
   cursor: pointer;
 
   margin: 0.5rem;

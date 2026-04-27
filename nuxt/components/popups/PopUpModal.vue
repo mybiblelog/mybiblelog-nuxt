@@ -60,7 +60,8 @@ export default {
 .window {
   background: var(--mbl-bg);
   padding: 2rem;
-  border-radius: 0.25rem;
+  border: 1px solid var(--mbl-border);
+  border-radius: var(--modal-card-border-radius);
   box-shadow: 0 0 0.5rem var(--mbl-overlay-20);
   max-width: 480px;
   margin-left: auto;
