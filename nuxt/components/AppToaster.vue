@@ -56,7 +56,7 @@ export default {
 }
 
 .mbl-notification {
-  box-shadow: 0 0 0 2px #fff, 0 0 5px #000;
+  box-shadow: 0 0 0 2px var(--mbl-bg), 0 0 5px var(--mbl-text-stronger);
   pointer-events: auto;
   margin-bottom: 1rem;
 }

@@ -454,7 +454,7 @@ export default {
 <style scoped>
 
 .selector-note {
-  background: #eee;
+  background: var(--mbl-bg-hover-light);
   padding: 0.2em 0.5em;
   border-radius: 0.2em;
   margin-bottom: 0.5em;
@@ -467,7 +467,7 @@ export default {
 
 .passage-selector .part {
   display: inline;
-  background: #ccc;
+  background: var(--mbl-border-strong);
   padding: 0.5rem 0.75rem;
   margin: 0 0.25rem;
   border-radius: 3px;
@@ -477,8 +477,8 @@ export default {
 }
 
 .passage-selector .part:hover {
-  color: #fff;
-  background: #09f;
+  color: var(--mbl-on-accent);
+  background: var(--mbl-link-bright);
 }
 
 .passage-selector .part:first-child {
@@ -503,8 +503,8 @@ export default {
 
 .button-group--button {
   padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  background: #fff;
+  border: 1px solid var(--mbl-border-strong);
+  background: var(--mbl-bg);
   cursor: pointer;
   transition: 0.2s;
   font-size: 0.9rem;
@@ -512,14 +512,14 @@ export default {
 }
 
 .button-group--button:hover {
-  border-color: #09f;
-  background: #f0f8ff;
+  border-color: var(--mbl-link-bright);
+  background: var(--mbl-message-info-bg);
 }
 
 .button-group--button.active {
-  background: #09f;
-  color: #fff;
-  border-color: #09f;
+  background: var(--mbl-link-bright);
+  color: var(--mbl-on-accent);
+  border-color: var(--mbl-link-bright);
 }
 
 .button-group--button.button-group--button-left {

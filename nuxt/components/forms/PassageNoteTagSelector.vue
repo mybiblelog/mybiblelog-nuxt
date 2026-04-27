@@ -44,7 +44,7 @@ export default {
   methods: {
     passageNoteTagStyle(tag) {
       return {
-        '--tag-color': tag?.color || '#999',
+        '--tag-color': tag?.color || 'var(--mbl-bg-disabled)',
       };
     },
     checkboxChanged() {
@@ -85,25 +85,34 @@ export default {
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  position: relative;
   cursor: pointer;
   max-width: 100%;
   min-width: 0;
   overflow: hidden;
   box-sizing: border-box;
 
-  color: #363636;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-left: 0.35rem solid var(--tag-color);
-  padding: 0.25rem 0.6rem;
+  color: var(--mbl-text);
+  background: var(--mbl-tag-option-bg);
+  border: 1px solid var(--mbl-tag-option-border);
+  padding: 0.25rem 0.6rem 0.25rem 0.5rem;
   border-radius: 0.25rem;
 
   -webkit-user-select: none;
   user-select: none;
+}
 
-  input[type='checkbox'] {
-    flex: 0 0 auto;
-  }
+.passage-note-tag-option input[type='checkbox'] {
+  flex: 0 0 auto;
+}
+
+.passage-note-tag-option::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.85rem;
+  border-radius: 999px;
+  background: var(--tag-color);
+  flex: 0 0 auto;
 }
 
 .passage-note-tag-option__label {
@@ -115,7 +124,7 @@ export default {
 }
 
 .passage-note-tag-option--selected {
-  background: rgba(238, 238, 238, 1);
+  background: var(--mbl-tag-option-selected-bg);
 }
 </style>
 

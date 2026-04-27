@@ -19,7 +19,7 @@
     <div class="progress-list">
       <div v-for="report in allBookReports" :key="report.bookIndex" class="progress-card" @click="$emit('view-book-report', report.bookIndex)">
         <span class="progress-card-icon">
-          <star-icon :fill="report.percentage == 100 ? '#ffd700' : '#ddd'" />
+          <star-icon :fill="report.percentage == 100 ? 'var(--mbl-star-earned)' : 'var(--mbl-star-unearned)'" />
         </span>
         <span class="progress-card-book">{{ report.bookName }}</span>
         <span v-if="anyBooksHaveNotes" class="progress-card-note-count-badge" @click="viewBookNotes(report.bookIndex)">
@@ -170,8 +170,9 @@ export default {
 .progress-list .progress-card {
   margin: 0.5rem 0;
   padding: 0.5rem;
+  background: var(--mbl-bg);
   border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
+  box-shadow: var(--mbl-shadow-elev-1);
 
   display: grid;
   grid-template-columns: auto auto 1fr 3rem;
@@ -186,7 +187,7 @@ export default {
 
 .progress-list .progress-card:hover {
   transition: 0.2s;
-  box-shadow: 0 1px 9px #333;
+  box-shadow: var(--mbl-shadow-elev-2);
 }
 
 .progress-list .progress-card-icon {
@@ -215,8 +216,8 @@ export default {
   width: fit-content;
   margin-right: 1rem;
   font-size: 0.8em;
-  color: #666;
-  background: #efefef;
+  color: var(--mbl-text-subtle);
+  background: var(--mbl-bg-hover-strong);
   margin-left: 1em;
   padding: 0 0.5em;
   border-radius: 0.5em;
@@ -225,8 +226,8 @@ export default {
 }
 
 .progress-list .progress-card-note-count-badge:hover {
-  background: #999;
-  color: #fff;
+  background: var(--mbl-bg-disabled);
+  color: var(--mbl-on-accent);
 }
 
 /* Make the badge easier to click on mobile */

@@ -96,6 +96,6 @@
 .mbl-tabs li a.nuxt-link-exact-active,
 .mbl-tabs li a.nuxt-link-active.router-link-exact-active,
 .mbl-tabs li a.router-link-exact-active {
-  border-bottom-color: var(--neutral-800);
-  color: var(--neutral-800);
+  border-bottom-color: var(--mbl-tab-active);
+  color: var(--mbl-tab-active);
 }

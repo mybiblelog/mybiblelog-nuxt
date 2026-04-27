@@ -133,7 +133,7 @@ export default {
     selectedTags() {
       const tagIds = this.passageNote?.tags ?? [];
       if (!this.passageNoteTags?.length) {
-        return tagIds.map(id => ({ id, label: this.$t('loading'), color: '#333' }));
+        return tagIds.map(id => ({ id, label: this.$t('loading'), color: 'var(--mbl-text-strong)' }));
       }
       return tagIds.map(id => this.passageNoteTags.find(tag => tag.id === id)).filter(Boolean);
     },
@@ -279,7 +279,7 @@ export default {
   align-items: center;
   flex-wrap: wrap;
   padding: 0.25rem 0;
-  border: 0px dashed #ccc;
+  border: 0 solid var(--mbl-border-strong);
   border-top-width: 1px;
 }
 

@@ -35,14 +35,14 @@ export default {
 }
 
 .busy-bar.is-busy {
-  background: #ccc;
+  background: var(--mbl-border-strong);
   background-image:
     repeating-linear-gradient(
       -45deg,
       transparent,
       transparent 1rem,
-      #ddd 1rem,
-      #ddd 2rem
+      var(--neutral-150) 1rem,
+      var(--neutral-150) 2rem
     );
   background-size: 200% 200%;
   animation: busyAnimation 10s linear infinite;

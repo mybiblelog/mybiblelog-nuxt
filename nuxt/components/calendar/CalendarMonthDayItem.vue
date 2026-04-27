@@ -3,8 +3,8 @@
     <div class="date">
       {{ label }}
     </div>
-    <star-icon v-if="primaryPercentage && primaryPercentage >= 100" class="star" width="35%" height="35%" fill="#ffd700" />
-    <star-icon v-else-if="secondaryPercentage && secondaryPercentage >= 100" class="star" width="35%" height="35%" fill="#0077bb" />
+    <star-icon v-if="primaryPercentage && primaryPercentage >= 100" class="star" width="35%" height="35%" fill="var(--mbl-star-earned)" />
+    <star-icon v-else-if="secondaryPercentage && secondaryPercentage >= 100" class="star" width="35%" height="35%" fill="var(--mbl-star-unearned)" />
     <div v-if="day.isCurrentMonth" class="progress-bar">
       <div class="progress-bar-fill secondary" :style="secondaryProgressBarFillStyle" />
       <div class="progress-bar-fill" :style="primaryProgressBarFillStyle" />
@@ -84,8 +84,8 @@ export default {
   position: relative;
   min-height: 70px;
   font-size: 16px;
-  background-color: #fff;
-  color: var(--neutral-600);
+  background-color: var(--mbl-bg);
+  color: var(--mbl-text-body);
   padding: 5px;
   cursor: pointer;
   user-select: none;
@@ -99,7 +99,7 @@ export default {
 }
 
 .calendar-day:hover {
-  background-color: #eee;
+  background-color: var(--mbl-bg-hover-light);
 }
 
 .calendar-day .star {
@@ -138,13 +138,13 @@ export default {
 }
 
 .calendar-day--not-current {
-  color: var(--neutral-300);
+  color: var(--mbl-text-muted);
   transition: 0s;
 }
 
 .calendar-day--not-current,
 .calendar-day--not-current:hover {
-  background-color: var(--neutral-150);
+  background-color: var(--mbl-bg-muted);
 }
 
 .calendar-day--today .date {
@@ -152,8 +152,8 @@ export default {
 }
 
 .calendar-day--selected .date {
-  color: #fff;
-  background-color: #09f;
+  color: var(--mbl-on-accent);
+  background-color: var(--mbl-link-bright);
 }
 
 .calendar-day .progress-bar {
@@ -162,7 +162,7 @@ export default {
   left: 2px;
   right: 2px;
   height: 5px;
-  background: #000;
+  background: var(--mbl-progress-track-bg);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -172,10 +172,10 @@ export default {
   left: 0;
   top: 0;
   bottom: 0;
-  background: #09f;
+  background: var(--mbl-link-bright);
 }
 
 .calendar-day .progress-bar .progress-bar-fill.secondary {
-  background: #0077bb;
+  background: var(--mbl-link-alt);
 }
 </style>

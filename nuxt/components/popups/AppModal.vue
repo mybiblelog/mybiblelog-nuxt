@@ -5,7 +5,6 @@
         v-if="open"
         class="mbl-modal mbl-modal--active"
         role="dialog"
-        :style="modalInlineStyle"
       >
         <div class="mbl-modal__backdrop" @click="close" />
         <div class="mbl-modal__card">

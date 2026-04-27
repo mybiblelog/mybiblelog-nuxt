@@ -289,8 +289,8 @@ form {
   padding: 0.5rem;
   margin-bottom: 0.5rem;
 
-  color: #fff;
-  background: #09f;
+  color: var(--mbl-on-accent);
+  background: var(--mbl-link-bright);
   border-radius: 3px;
   font-weight: bold;
 }
@@ -305,8 +305,8 @@ form label {
   position: absolute;
   top: -0.5rem;
   left: 0.75rem;
-  color: #09f;
-  background-color: #fff;
+  color: var(--mbl-link-bright);
+  background-color: var(--mbl-bg);
   padding: 0 0.25rem;
   z-index: 1;
   pointer-events: none;
@@ -317,10 +317,11 @@ form input {
   min-height: 3rem;
   padding: 0.5rem;
   padding-top: 1.125rem;
-  border: 2px solid #333;
+  border: 2px solid var(--mbl-text-strong, var(--mbl-text));
   width: unset;
   border-radius: 0.25rem;
   box-sizing: border-box;
+  color: var(--mbl-text);
 }
 
 form select {
@@ -328,12 +329,13 @@ form select {
   height: 3rem;
   padding: 0.5rem;
   padding-top: 1.125rem;
-  border: 2px solid #333;
+  border: 2px solid var(--mbl-text-strong, var(--mbl-text));
   width: unset;
   border-radius: 0.25rem;
   box-sizing: border-box;
+  color: var(--mbl-text);
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.5rem center;
   padding-right: 2rem;
@@ -341,7 +343,17 @@ form select {
 
 form input:not(:disabled),
 form select:not(:disabled) {
-  background-color: #fff;
+  background-color: var(--mbl-bg);
+}
+
+[data-theme="dark"] form select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f5f5f5' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) form select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f5f5f5' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  }
 }
 
 @media screen and (max-width: 550px) {

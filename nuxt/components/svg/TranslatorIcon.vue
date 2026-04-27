@@ -25,7 +25,7 @@ export default {
     },
     fill: {
       type: String,
-      default: 'var(--secondary-color)',
+      default: 'currentColor',
     },
   },
 };

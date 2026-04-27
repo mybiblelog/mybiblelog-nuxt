@@ -92,7 +92,7 @@ export default {
     },
     populatedTags(tagIds) {
       if (!this.passageNoteTags || !this.passageNoteTags.length) {
-        return tagIds.map(id => ({ id, label: 'Loading', color: '#333' }));
+        return tagIds.map(id => ({ id, label: 'Loading', color: 'var(--mbl-text-strong)' }));
       }
       return tagIds.map(id => this.passageNoteTags.find(tag => tag.id === id)).filter(Boolean);
     },
@@ -105,7 +105,8 @@ export default {
   padding: 0.5rem 1rem;
   margin: 1rem 0;
   border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
+  background: var(--mbl-bg);
+  box-shadow: var(--mbl-card-shadow);
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -129,7 +130,7 @@ export default {
 }
 
 .passage-note--created-date > span {
-  border-bottom: 1px dotted #ccc;
+  border-bottom: 1px dotted var(--mbl-border-strong);
 }
 
 .passage-note--content {

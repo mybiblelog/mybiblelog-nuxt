@@ -52,9 +52,9 @@ export default {
   align-items: flex-start;
   gap: 1rem;
   padding: 1rem;
-  background-color: #f5f5f5;
+  background-color: var(--mbl-bg-muted);
   border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--neutral-200);
   margin-top: 1rem;
 }
 
@@ -66,8 +66,8 @@ export default {
   height: 56px;
   min-width: 56px;
   border-radius: 50%;
-  background-color: #7a7a7a; /* Gray background */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: var(--mbl-text-muted);
+  box-shadow: 0 4px 12px var(--mbl-overlay-15);
   flex-shrink: 0;
 }
 

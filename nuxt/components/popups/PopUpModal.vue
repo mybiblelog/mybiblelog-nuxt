@@ -24,7 +24,7 @@ export default {
 
 <style scoped>
 .popup-modal {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--mbl-overlay-50);
   position: fixed;
   top: 0;
   bottom: 0;
@@ -58,10 +58,10 @@ export default {
 }
 
 .window {
-  background: #fff;
+  background: var(--mbl-bg);
   padding: 2rem;
   border-radius: 0.25rem;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0.5rem var(--mbl-overlay-20);
   max-width: 480px;
   margin-left: auto;
   margin-right: auto;

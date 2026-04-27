@@ -371,7 +371,7 @@ export default {
 .option-card {
   display: flex;
   align-items: flex-start;
-  border: 2px solid #dbdbdb;
+  border: 2px solid var(--mbl-border);
   border-radius: 4px;
   padding: 1rem;
   cursor: pointer;
@@ -379,13 +379,13 @@ export default {
 }
 
 .option-card:hover {
-  border-color: #3273dc;
-  background-color: #f5f5f5;
+  border-color: var(--mbl-secondary);
+  background-color: var(--mbl-bg-muted);
 }
 
 .option-card.is-selected {
-  border-color: #3273dc;
-  background-color: #e8f4f8;
+  border-color: var(--mbl-secondary);
+  background-color: var(--mbl-message-info-bg);
 }
 
 .option-card-radio {
@@ -428,7 +428,7 @@ export default {
 }
 
 .detail-value {
-  color: #3273dc;
+  color: var(--secondary-color);
   font-weight: 600;
 }
 

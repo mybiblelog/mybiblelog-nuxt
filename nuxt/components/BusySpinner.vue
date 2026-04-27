@@ -21,10 +21,10 @@ export default {
 .busy-spinner {
     display: block;
     font-size: 0;
-    color: #fff;
+    color: var(--mbl-on-accent);
 }
 .busy-spinner.la-dark {
-    color: #333;
+    color: var(--mbl-text-strong);
 }
 .busy-spinner > div {
     display: inline-block;

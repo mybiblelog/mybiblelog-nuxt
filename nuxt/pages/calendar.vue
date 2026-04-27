@@ -178,7 +178,7 @@ export default {
 <style scoped>
 
 .entry-date {
-  border-bottom: 2px solid #09f;
+  border-bottom: 2px solid var(--mbl-link-bright);
   padding: 1rem 0.5rem 0;
   display: flex;
   justify-content: space-between;

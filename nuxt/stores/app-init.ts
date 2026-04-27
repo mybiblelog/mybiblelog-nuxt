@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 import { useAuthStore } from '~/stores/auth';
 import { useLogEntriesStore } from '~/stores/log-entries';
+import { useThemeStore } from '~/stores/theme';
 import { useUserSettingsStore } from '~/stores/user-settings';
 
 const AUTH_COOKIE_NAME = 'auth_token';
@@ -42,6 +43,8 @@ export const useAppInitStore = defineStore('app-init', {
   actions: {
     async serverInit({ req, app }: { req?: { headers?: { cookie?: string } }; app: unknown }): Promise<void> {
       const cookieHeader = req?.headers?.cookie;
+      useThemeStore().initFromCookie(cookieHeader);
+
       if (cookieHeader && cookieHeader.includes(`${AUTH_COOKIE_NAME}=`)) {
         const cookies = parseCookieHeader(cookieHeader);
         const token = cookies[AUTH_COOKIE_NAME];
@@ -59,6 +62,10 @@ export const useAppInitStore = defineStore('app-init', {
     },
 
     clientInit(): void {
+      const themeStore = useThemeStore();
+      themeStore.initFromCookie(typeof document !== 'undefined' ? document.cookie : '');
+      themeStore.initClient();
+
       if (useAuthStore().loggedIn) {
         // On client side, re-trigger user settings load
         // since some settings are stored in LocalStorage

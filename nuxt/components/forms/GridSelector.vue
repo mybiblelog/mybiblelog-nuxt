@@ -64,16 +64,16 @@ export default {
   left: 2px;
   right: 2px;
   bottom: 2px;
-  border: 2px solid #ccc;
+  border: 2px solid var(--mbl-border-strong);
   border-radius: 5px;
   transition: 0.2s;
 }
 
 .grid-selector--option:hover {
-  color: #000;
+  color: var(--mbl-text-stronger);
 }
 
 .grid-selector--option:hover::before {
-  border-color: #09f;
+  border-color: var(--mbl-link-bright);
 }
 </style>

@@ -23,15 +23,15 @@ export default {
     },
     backgroundColor: {
       type: String,
-      default: '#000',
+      default: 'var(--mbl-progress-track-bg)',
     },
     foregroundColor: {
       type: String,
-      default: '#09F',
+      default: 'var(--mbl-link-bright)',
     },
     hoverColor: {
       type: String,
-      default: '#80CCFF',
+      default: 'var(--primary-color)',
     },
     thick: {
       type: Boolean,

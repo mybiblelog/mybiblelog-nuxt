@@ -179,7 +179,7 @@ export default {
 
 ::v-deep .h3-grid-item p {
   margin-bottom: 0.5rem;
-  color: #444;
+  color: var(--mbl-text-body);
   line-height: 1.6;
 }
 
@@ -191,7 +191,7 @@ export default {
 ::v-deep .h3-grid-item ol {
   margin: 0.5rem 0;
   padding-left: 1.5rem;
-  color: #444;
+  color: var(--mbl-text-body);
 }
 
 ::v-deep .h3-grid-item a {

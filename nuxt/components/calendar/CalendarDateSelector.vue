@@ -50,7 +50,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--neutral-600);
+  color: var(--mbl-text-body);
   margin: 0 -1rem;
 }
 
@@ -77,7 +77,7 @@ export default {
   border-left: 0;
   border-top: 0.5rem solid transparent;
   border-bottom: 0.5rem solid transparent;
-  border-right: 1rem solid #ccc;
+  border-right: 1rem solid var(--mbl-border-strong);
 }
 
 .next .icon {
@@ -86,7 +86,7 @@ export default {
   border-right: 0;
   border-top: 0.5rem solid transparent;
   border-bottom: 0.5rem solid transparent;
-  border-left: 1rem solid #ccc;
+  border-left: 1rem solid var(--mbl-border-strong);
 }
 </style>
 

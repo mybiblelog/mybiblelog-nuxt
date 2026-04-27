@@ -9,8 +9,6 @@
 .mbl-message__header {
   align-items: center;
   background-color: var(--mbl-bg-muted);
-  border: 1px solid var(--mbl-border);
-  border-bottom: none;
   border-radius: var(--mbl-radius) var(--mbl-radius) 0 0;
   color: var(--mbl-text);
   display: flex;
@@ -22,13 +20,11 @@
 }
 
 .mbl-message__header + .mbl-message__body {
-  border-top: none;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
 .mbl-message__body {
-  border: 1px solid var(--mbl-border);
   border-radius: var(--mbl-radius);
   padding: 1.25em 1.5em;
 }
@@ -44,13 +40,11 @@
 
 .mbl-message--info .mbl-message__header {
   background-color: var(--mbl-info);
-  border-color: var(--mbl-message-info-border);
   color: var(--mbl-on-accent);
 }
 
 .mbl-message--info .mbl-message__body {
   background-color: var(--mbl-message-info-bg);
-  border-color: var(--mbl-message-info-border);
   color: var(--mbl-message-info-fg);
 }
 

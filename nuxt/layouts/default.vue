@@ -25,6 +25,7 @@ import PassageNoteEditorModal from '@/components/popups/PassageNoteEditorModal.v
 import PassageNoteTagEditorModal from '@/components/popups/PassageNoteTagEditorModal.vue';
 import LogEntryEditorModal from '@/components/popups/LogEntryEditorModal.vue';
 import ActionSheetModal from '@/components/popups/ActionSheetModal.vue';
+import { useThemeStore } from '~/stores/theme';
 
 export default {
   components: {
@@ -39,9 +40,13 @@ export default {
     ActionSheetModal,
   },
   head() {
+    const themeStore = useThemeStore();
+    const dataTheme = themeStore.mode === 'system' ? undefined : themeStore.mode;
     return {
       htmlAttrs: {
         lang: this.$i18n.locale,
+        'data-theme': dataTheme,
+        style: `color-scheme: ${themeStore.resolvedTheme};`,
       },
     };
   },

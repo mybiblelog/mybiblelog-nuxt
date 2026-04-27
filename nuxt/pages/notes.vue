@@ -387,7 +387,7 @@ export default {
   height: 0.5rem;
   border-radius: 999px;
   background: var(--primary-color);
-  box-shadow: 0 0 0 2px white;
+  box-shadow: 0 0 0 2px var(--mbl-bg);
 }
 
 .notes-page__layout {
@@ -462,11 +462,11 @@ export default {
   top: calc(var(--header-height) + 0.5rem - 1px);
   z-index: 10;
 
-  background: white;
+  background: var(--mbl-app-canvas-bg);
   padding: 0.5rem 1rem;
   margin-left:  -0.5rem;
   margin-right:  -0.5rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--mbl-border-soft);
 
   display: flex;
   flex-direction: column;
@@ -485,7 +485,7 @@ export default {
 
 .notes-page__results-summary {
   font-size: 0.95rem;
-  color: rgba(54, 54, 54, 0.85);
+  color: var(--mbl-text-85);
   white-space: normal;
   word-break: break-word;
 }

@@ -145,13 +145,13 @@ export default {
 }
 
 .tap-range-selector--option:hover:not(.selected) {
-  color: #fff;
-  background: #999;
+  color: var(--mbl-on-accent);
+  background: var(--mbl-bg-disabled);
 }
 
 .tap-range-selector--option.selected {
-  color: #09f;
-  border-color: #09f;
+  color: var(--mbl-link-bright);
+  border-color: var(--mbl-link-bright);
 }
 
 .tap-range-selector--option.waiting {
@@ -160,10 +160,10 @@ export default {
 
 @keyframes pulseBorder {
   0%, 100% {
-    border-color: #09f;
+    border-color: var(--mbl-link-bright);
   }
   50% {
-    border-color: #0cf;
+    border-color: var(--primary-color);
   }
 }
 </style>

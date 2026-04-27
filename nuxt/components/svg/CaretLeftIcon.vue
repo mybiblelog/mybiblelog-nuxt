@@ -20,7 +20,7 @@ export default {
     },
     fill: {
       type: String,
-      default: '#c4c4c4',
+      default: 'var(--mbl-border-strong)',
     },
   },
 };

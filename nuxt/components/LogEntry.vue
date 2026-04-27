@@ -85,7 +85,8 @@ export default {
   flex-direction: column;
   padding: 1em 0.5em;
   border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
+  background: var(--mbl-bg);
+  box-shadow: var(--mbl-card-shadow);
   margin: 0.5rem 0;
 }
 
@@ -100,7 +101,7 @@ export default {
   top: -0.5rem;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
-  color: rgb(0, 123, 204);
+  color: var(--mbl-link-muted);
   font-size: 0.8em;
   letter-spacing: 0.05cap;
 }
@@ -108,10 +109,6 @@ export default {
 .log-entry .log-entry-body {
   display: flex;
   justify-content: space-between;
-}
-
-.log-entry .log-entry-body-message {
-  /* no styles */
 }
 
 .log-entry .passage {

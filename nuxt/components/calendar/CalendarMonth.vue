@@ -179,8 +179,7 @@ export default {
 <style scoped>
 .calendar-month {
   position: relative;
-  background-color: var(--neutral-200);
-  color: #2c3e50;
+  color: var(--mbl-text);
 }
 .calendar-month ol,
 .calendar-month li {
@@ -193,7 +192,6 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  background-color: #fff;
   padding-bottom: 10px;
 }
 
@@ -205,9 +203,8 @@ export default {
 }
 
 .day-of-week {
-  color: var(--neutral-600);
+  color: var(--mbl-text-body);
   font-size: 18px;
-  background-color: #fff;
   padding-bottom: 5px;
   padding-top: 10px;
 }
@@ -226,8 +223,9 @@ export default {
 .days-grid {
   height: 100%;
   position: relative;
+  background-color: var(--mbl-calendar-grid-inner);
   grid-column-gap: 1px;
   grid-row-gap: 1px;
-  border: solid 1px var(--neutral-300);
+  border: solid 1px var(--mbl-calendar-grid-outer);
 }
 </style>

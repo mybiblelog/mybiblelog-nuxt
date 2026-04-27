@@ -52,7 +52,7 @@ export default {
 
 .hero-section {
   padding: 4rem 1.5rem;
-  background: linear-gradient(135deg, rgba(0, 170, 249, 0.05) 0%, rgba(9, 101, 247, 0.05) 50%, rgba(0, 209, 178, 0.05) 100%);
+  background: linear-gradient(135deg, var(--mbl-primary-soft) 0%, var(--mbl-secondary-soft) 50%, var(--mbl-tertiary-soft) 100%);
   border-radius: 12px;
   margin: 0 0 2rem;
   text-align: center;
@@ -82,7 +82,7 @@ export default {
 
 .hero-subtitle {
   font-size: 1.5rem;
-  color: #4a4a4a;
+  color: var(--mbl-text-body);
   margin-bottom: 1.5rem;
   font-style: italic;
 }
@@ -96,7 +96,7 @@ export default {
 .hero-description {
   font-size: 1.125rem;
   line-height: 1.7;
-  color: #555;
+  color: var(--mbl-text-soft);
   margin-bottom: 2.5rem;
   max-width: 700px;
   margin-left: auto;
@@ -112,7 +112,7 @@ export default {
 
 .hero-description em {
   font-style: italic;
-  color: #333;
+  color: var(--mbl-text-strong);
 }
 
 .hero-description strong {
@@ -135,7 +135,7 @@ export default {
   padding: 0.5rem 2.5rem;
   font-size: 1.125rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(9, 101, 247, 0.35);
+  box-shadow: 0 4px 12px var(--mbl-primary-glow);
 }
 
 .mbl-button.mbl-button--primary.mbl-button--lg:hover {
@@ -143,7 +143,7 @@ export default {
   border-color: var(--secondary-color-hover);
   color: var(--mbl-on-accent);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(9, 101, 247, 0.45);
+  box-shadow: 0 6px 16px var(--mbl-primary-glow-strong);
 }
 
 .mbl-button.mbl-button--primary.mbl-button--lg:active {
@@ -152,7 +152,7 @@ export default {
 
 .hero-cta-note {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--mbl-text-subtle);
   margin: 0;
 }
 
