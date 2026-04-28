@@ -15,7 +15,7 @@
       <div v-for="bookReport in bookReports" :key="bookReport.bookIndex" class="book-card">
         <div class="book-card--header">
           <div class="book-card--completion-indicator">
-            <check-mark-icon width="100%" height="100%" :fill="bookReport.complete ? '#0c0' : 'transparent'" />
+            <check-mark-icon width="100%" height="100%" :fill="bookReport.complete ? 'var(--mbl-success-bright)' : 'transparent'" />
           </div>
           <div class="book-card--book-name">
             {{ bookReport.bookName }}
@@ -24,10 +24,10 @@
             {{ bookReport.chaptersRead }} / {{ bookReport.totalChapters }}
           </div>
           <div class="book-card--chapter-toggle" :class="{ flipped: expandedBooks[bookReport.bookIndex] }" @click="toggleBook(bookReport.bookIndex)">
-            <caret-down-icon width="2rem" height="2rem" fill="#ccc" />
+            <caret-down-icon width="2rem" height="2rem" fill="var(--mbl-border-strong)" />
           </div>
           <div class="book-card--completion-bar">
-            <completion-bar :percentage="bookReport.percentage" foreground-color="#0c0" />
+            <completion-bar :percentage="bookReport.percentage" foreground-color="var(--mbl-success-bright)" />
           </div>
         </div>
         <div v-if="expandedBooks[bookReport.bookIndex]" class="book-card--chapters">
@@ -36,8 +36,8 @@
               {{ chapterReport.chapterIndex }}
             </div>
             <div class="chapter-card--completion-indicator">
-              <spinner-icon v-if="busyChapter === `${bookReport.bookIndex}.${chapterReport.chapterIndex}`" width="100%" height="100%" :fill="chapterReport.complete ? '#ddd' : '#0c0'" />
-              <check-mark-icon v-else width="100%" height="100%" :fill="chapterReport.complete ? '#0c0' : 'transparent'" />
+              <spinner-icon v-if="busyChapter === `${bookReport.bookIndex}.${chapterReport.chapterIndex}`" width="100%" height="100%" :fill="chapterReport.complete ? 'var(--neutral-150)' : 'var(--mbl-success-bright)'" />
+              <check-mark-icon v-else width="100%" height="100%" :fill="chapterReport.complete ? 'var(--mbl-success-bright)' : 'transparent'" />
             </div>
           </div>
         </div>
@@ -246,7 +246,7 @@ export default {
 .loading-card {
   padding: 1rem 2rem;
   border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
+  box-shadow: var(--mbl-shadow-elev-1);
   margin: 0.5rem 0;
 }
 
@@ -260,8 +260,9 @@ export default {
   grid-template-rows: auto auto;
 
   padding: 0.5rem;
+  background: var(--mbl-bg);
   border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
+  box-shadow: var(--mbl-shadow-elev-1);
   margin: 0.5rem 0;
 
   font-size: 0.8rem;
@@ -330,8 +331,9 @@ export default {
 
 .chapter-card {
   padding: 0.5rem;
+  background: var(--mbl-bg);
   border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
+  box-shadow: var(--mbl-shadow-elev-1);
 
   flex-basis: calc(25% - 1rem);
   position: relative;
@@ -343,7 +345,7 @@ export default {
 
 .chapter-card:hover {
   transition: 0.2s;
-  box-shadow: 0 1px 9px #333;
+  box-shadow: var(--mbl-shadow-elev-2);
 }
 
 .chapter-card--chapter-number {

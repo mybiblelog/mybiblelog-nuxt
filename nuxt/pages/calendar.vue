@@ -19,7 +19,9 @@
             </button>
           </div>
           <log-entry v-for="entry of entryDate.entries" :key="entry.id" :passage="entry" :actions="actionsForLogEntry(entry)" />
-          <log-entry v-if="!entryDate.entries.length" :message="$t('no_entries')" empty="empty" />
+          <div v-if="!entryDate.entries.length" class="calendar-page__no-entries">
+            {{ $t('no_entries') }}
+          </div>
         </div>
       </div>
     </client-only>
@@ -178,7 +180,7 @@ export default {
 <style scoped>
 
 .entry-date {
-  border-bottom: 2px solid #09f;
+  border-bottom: 2px solid var(--mbl-link-bright);
   padding: 1rem 0.5rem 0;
   display: flex;
   justify-content: space-between;
@@ -194,6 +196,10 @@ export default {
 
 .calendar-page__add-entry-button {
   align-self: center;
+}
+
+.calendar-page__no-entries {
+  padding: 0.5rem;
 }
 </style>
 

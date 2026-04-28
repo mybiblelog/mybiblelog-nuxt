@@ -20,11 +20,11 @@ export default {
     },
     backgroundColor: {
       type: String,
-      default: '#000',
+      default: 'var(--mbl-progress-track-bg)',
     },
     foregroundColor: {
       type: String,
-      default: '#09f',
+      default: 'var(--mbl-link-bright)',
     },
   },
   computed: {

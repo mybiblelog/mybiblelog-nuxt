@@ -36,8 +36,8 @@ export default {
   width: 1em;
   height: 1em;
   border-radius: 50%;
-  background-color: #c7c7c7; /* gray circle */
-  color: white; /* white text */
+  background-color: var(--mbl-border-strong);
+  color: var(--mbl-on-accent);
   font-size: 0.6em;
   font-weight: bold;
 }

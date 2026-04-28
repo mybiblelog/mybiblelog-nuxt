@@ -2,7 +2,7 @@
   <button class="chapter-report" @click="openActionSheet">
     <div class="chapter-report--indicator">
       <div class="chapter-report--indicator--icon">
-        <star-icon width="100%" height="100%" :fill="report.percentage == 100 ? '#ffd700' : '#ddd'" />
+        <star-icon width="100%" height="100%" :fill="report.percentage == 100 ? 'var(--mbl-star-earned)' : 'var(--mbl-star-unearned)'" />
       </div>
       <div class="chapter-report--index">
         {{ report.chapterIndex }}
@@ -102,13 +102,13 @@ export default {
 .chapter-report {
   /*  override button styles */
   border: none;
-  background: #fff;
+  background: var(--mbl-bg-elevated);
   cursor: pointer;
 
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
+  box-shadow: var(--mbl-shadow-elev-1);
 
   flex-basis: calc(25% - 1rem);
   position: relative;
@@ -130,7 +130,7 @@ export default {
 
 .chapter-report:hover {
   transition: 0.2s;
-  box-shadow: 0 1px 9px #333;
+  box-shadow: var(--mbl-shadow-elev-2);
 }
 
 .chapter-report--indicator {

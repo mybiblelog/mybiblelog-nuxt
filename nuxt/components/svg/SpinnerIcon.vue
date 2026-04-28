@@ -42,7 +42,7 @@ export default {
     },
     fill: {
       type: String,
-      default: '#ddd',
+      default: 'var(--neutral-150)',
     },
   },
 };

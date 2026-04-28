@@ -1,6 +1,6 @@
 <template>
-  <main role="main" class="content-column mbl-content">
-    <article>
+  <main role="main">
+    <article class="content-column mbl-content">
       <nuxt-content :document="doc" />
       <template v-if="doc.slug !== 'overview'">
         <br>

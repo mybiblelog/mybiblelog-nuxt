@@ -22,7 +22,7 @@
             v-for="tag in selectedTags"
             :key="tag.id"
             class="passage-notes-query-manager__selected-tag"
-            :style="{ '--tag-color': tag?.color || '#999' }"
+            :style="{ '--tag-color': tag?.color || 'var(--mbl-bg-disabled)' }"
           >
             {{ tag.label || tag.id }}
           </span>
@@ -230,7 +230,7 @@ export default {
       const selectedIds = Array.isArray(this.draft.filterTags) ? this.draft.filterTags : [];
       const byId = new Map((this.passageNoteTags || []).map(t => [t.id, t]));
       return selectedIds
-        .map(id => byId.get(id) || { id, label: `${id}`, color: '#999' })
+        .map(id => byId.get(id) || { id, label: `${id}`, color: 'var(--mbl-bg-disabled)' })
         .filter(Boolean);
     },
     hasSelectedPassage() {
@@ -362,21 +362,31 @@ export default {
 .passage-notes-query-manager__selected-tag {
   display: inline-flex;
   align-items: center;
+  position: relative;
+  gap: 0.35rem;
   max-width: 100%;
 
   font-size: 0.85rem;
   line-height: 1.2;
-  padding: 0.15rem 0.5rem;
+  padding: 0.15rem 0.5rem 0.15rem 0.45rem;
   border-radius: 0.25rem;
 
-  color: #363636;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-left: 0.25rem solid var(--tag-color);
+  color: var(--mbl-text);
+  background: var(--mbl-tag-option-bg);
+  border: 1px solid var(--mbl-tag-option-border);
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.passage-notes-query-manager__selected-tag::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.8rem;
+  border-radius: 999px;
+  background: var(--tag-color);
+  flex: 0 0 auto;
 }
 
 .passage-notes-query-manager__actions {
@@ -399,12 +409,12 @@ export default {
   column-gap: 0.35rem;
   row-gap: 0.1rem;
   align-items: start;
+}
 
-  input {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    margin-top: 0.2rem;
-  }
+.passage-notes-query-manager__radio-option input {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  margin-top: 0.2rem;
 }
 
 .passage-notes-query-manager__radio-title {
@@ -416,7 +426,7 @@ export default {
   grid-column: 2;
   grid-row: 2;
   font-size: 0.9em;
-  color: rgba(54, 54, 54, 0.85);
+  color: var(--mbl-text-85);
 }
 </style>
 

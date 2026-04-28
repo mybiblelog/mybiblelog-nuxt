@@ -189,8 +189,9 @@ export default {
   justify-content: space-between;
   padding: 0.5rem 1rem;
   margin: 1rem -0.5rem;
+  background: var(--mbl-bg);
   border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
+  box-shadow: var(--mbl-card-shadow);
 }
 .tag-footer {
   margin-top: 0.25rem;
@@ -227,8 +228,8 @@ export default {
   }
 }
 .passage-note-tag {
-  color: #fff;
-  text-shadow: 0 0 2px #000;
+  color: var(--mbl-on-accent);
+  text-shadow: 0 0 2px var(--mbl-text-stronger);
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   overflow-x: hidden;

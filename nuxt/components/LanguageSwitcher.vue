@@ -105,12 +105,16 @@ export default {
   border: none;
   border-radius: 6px;
   background: transparent;
-  color: #333;
+  color: var(--mbl-text-strong);
   cursor: pointer;
 }
 
 .language-switcher__toolbar-btn:hover {
-  background: var(--neutral-150);
+  background: var(--mbl-bg-hover-light);
+}
+
+.language-switcher__toolbar-btn:active {
+  background: var(--mbl-bg-hover-strong);
 }
 
 .language-switcher__toolbar-btn:focus {
@@ -136,10 +140,10 @@ export default {
   margin: 0;
   border: 1px solid var(--neutral-200);
   border-radius: 8px;
-  background: #fff;
+  background: var(--mbl-bg);
   font-size: 1rem;
   font-family: inherit;
-  color: #333;
+  color: var(--mbl-text-strong);
   text-align: left;
   cursor: pointer;
 }
@@ -190,10 +194,10 @@ export default {
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--neutral-200);
   border-radius: 6px;
-  background: #fff;
+  background: var(--mbl-bg);
   font-size: 0.9375rem;
   font-family: inherit;
-  color: #333;
+  color: var(--mbl-text-strong);
   text-decoration: none;
   text-align: center;
   cursor: pointer;

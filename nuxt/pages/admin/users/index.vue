@@ -46,8 +46,8 @@
                   <div class="flex">
                     User
                     <template v-if="sortOn === SortColumns.email">
-                      <caret-down-icon v-if="sortDirection === 1" width="1.5rem" height="1.5rem" fill="#666" />
-                      <caret-down-icon v-if="sortDirection === -1" class="flipped" width="1.5rem" height="1.5rem" fill="#666" />
+                      <caret-down-icon v-if="sortDirection === 1" width="1.5rem" height="1.5rem" fill="var(--mbl-text-subtle)" />
+                      <caret-down-icon v-if="sortDirection === -1" class="flipped" width="1.5rem" height="1.5rem" fill="var(--mbl-text-subtle)" />
                     </template>
                   </div>
                 </th>
@@ -55,8 +55,8 @@
                   <div class="flex">
                     Join Date
                     <template v-if="sortOn === SortColumns.createdAt">
-                      <caret-down-icon v-if="sortDirection === 1" width="1.5rem" height="1.5rem" fill="#666" />
-                      <caret-down-icon v-if="sortDirection === -1" class="flipped" width="1.5rem" height="1.5rem" fill="#666" />
+                      <caret-down-icon v-if="sortDirection === 1" width="1.5rem" height="1.5rem" fill="var(--mbl-text-subtle)" />
+                      <caret-down-icon v-if="sortDirection === -1" class="flipped" width="1.5rem" height="1.5rem" fill="var(--mbl-text-subtle)" />
                     </template>
                   </div>
                 </th>
@@ -314,7 +314,7 @@ table.table {
 }
 
 .sortable:hover {
-  background-color: #eee;
+  background-color: var(--mbl-bg-hover-light);
 }
 .nowrap {
   white-space: nowrap;

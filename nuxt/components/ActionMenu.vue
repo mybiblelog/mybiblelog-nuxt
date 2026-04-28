@@ -101,11 +101,11 @@ export default {
 }
 
 .action-menu-button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: var(--mbl-overlay-05);
 }
 
 .action-menu-button:focus {
-  outline: 2px solid #09f;
+  outline: 2px solid var(--mbl-link-bright);
   outline-offset: 2px;
 }
 
@@ -114,7 +114,7 @@ export default {
   display: inline-block;
   width: 3px;
   height: 3px;
-  color: #666;
+  color: var(--mbl-text-subtle);
   user-select: none;
   background-color: currentColor;
   border-radius: 50%;
@@ -139,10 +139,10 @@ export default {
   top: 0;
   right: 0;
   margin-top: 0;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: var(--mbl-bg);
+  border: 1px solid var(--mbl-menu-border, var(--mbl-overlay-20));
   border-radius: 0.25rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px var(--mbl-overlay-25);
   min-width: 150px;
   z-index: 39; /* Above overlay */
   overflow: hidden;
@@ -153,11 +153,11 @@ export default {
   cursor: pointer;
   transition: background-color 0.15s;
   white-space: nowrap;
-  color: #333;
+  color: var(--mbl-text-strong);
 }
 
 .action-menu-item:hover {
-  background-color: #f5f5f5;
+  background-color: var(--mbl-bg-muted);
 }
 
 .action-menu-item:first-child {

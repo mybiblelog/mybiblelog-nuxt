@@ -1,5 +1,5 @@
 <template>
-  <div class="log-entry" :class="{ 'empty': empty }">
+  <div class="log-entry">
     <div v-if="message && passage" class="log-entry-header">
       <div class="log-entry-header-message">
         {{ message }}
@@ -40,11 +40,6 @@ export default {
     ActionMenu,
   },
   props: {
-    empty: {
-      // allows the log entry to be displayed without any border or shadow
-      type: Boolean,
-      default: () => false,
-    },
     message: {
       // allows a message to be displayed in the format of a log entry
       // useful for displaying "loading" or "no log entries" messaging
@@ -85,14 +80,9 @@ export default {
   flex-direction: column;
   padding: 1em 0.5em;
   border-radius: 0.25rem;
-  box-shadow: 0 1px 7px #999;
+  background: var(--mbl-bg-elevated);
+  box-shadow: var(--mbl-card-shadow);
   margin: 0.5rem 0;
-}
-
-.log-entry.empty {
-  box-shadow: none;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
 .log-entry .log-entry-header-message {
@@ -100,7 +90,7 @@ export default {
   top: -0.5rem;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
-  color: rgb(0, 123, 204);
+  color: var(--mbl-link-muted);
   font-size: 0.8em;
   letter-spacing: 0.05cap;
 }
@@ -108,10 +98,6 @@ export default {
 .log-entry .log-entry-body {
   display: flex;
   justify-content: space-between;
-}
-
-.log-entry .log-entry-body-message {
-  /* no styles */
 }
 
 .log-entry .passage {

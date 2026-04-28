@@ -593,7 +593,7 @@ export default {
   height: 0.5rem;
   border-radius: 999px;
   background: var(--primary-color);
-  box-shadow: 0 0 0 2px white;
+  box-shadow: 0 0 0 2px var(--mbl-bg);
 }
 
 .log-page__layout {
@@ -666,11 +666,11 @@ export default {
   top: calc(var(--header-height) + 0.5rem - 1px);
   z-index: 10;
 
-  background: white;
+  background: var(--mbl-app-canvas-bg);
   padding: 0.5rem 1rem;
   margin-left: -0.5rem;
   margin-right: -0.5rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--mbl-border-soft);
 
   display: flex;
   flex-direction: column;
@@ -689,7 +689,7 @@ export default {
 
 .log-page__results-summary {
   font-size: 0.95rem;
-  color: rgba(54, 54, 54, 0.85);
+  color: var(--mbl-text-85);
   white-space: normal;
   word-break: break-word;
 }
@@ -710,15 +710,15 @@ export default {
   top: calc(var(--header-height) + 0.5rem + var(--logResultsBarHeight, 0px) - 2px);
   z-index: 9;
 
-  background: white;
-  border-bottom: 1px solid #eee;
+  background: var(--mbl-app-canvas-bg);
+  border-bottom: 1px solid var(--mbl-border-soft);
 
   padding: 0.5rem 0.5rem;
   margin: 0.75rem -0.5rem 0.25rem;
 
   font-size: 0.9rem;
   font-weight: 700;
-  color: rgba(54, 54, 54, 0.9);
+  color: var(--mbl-text-90);
 }
 </style>
 

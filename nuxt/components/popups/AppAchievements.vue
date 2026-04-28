@@ -10,7 +10,7 @@
         class="particle"
         :style="particle.style"
       >
-        <star-icon width="32px" height="32px" fill="#bdf" />
+        <star-icon width="32px" height="32px" fill="var(--mbl-message-info-accent)" />
       </div>
     </div>
     <div class="mbl-title mbl-title--4 mbl-text-center">

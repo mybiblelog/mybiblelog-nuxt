@@ -107,9 +107,9 @@ export default {
 .error-page {
   background: linear-gradient(
     165deg,
-    rgba(0, 170, 249, 0.06) 0%,
+    var(--mbl-primary-soft) 0%,
     var(--mbl-bg-subtle) 42%,
-    rgba(0, 209, 178, 0.05) 100%
+    var(--mbl-tertiary-soft) 100%
   );
   min-height: 100vh;
   display: flex;
@@ -151,8 +151,8 @@ export default {
   padding: 0.35rem 0.65rem;
   border-radius: 999px;
   color: var(--secondary-color);
-  background-color: rgba(9, 101, 247, 0.08);
-  border: 1px solid rgba(9, 101, 247, 0.2);
+  background-color: var(--mbl-secondary-soft-08);
+  border: 1px solid var(--mbl-secondary-soft-20);
 }
 
 .error-page__title {

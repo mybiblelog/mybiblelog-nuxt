@@ -68,6 +68,11 @@
                 {{ $t(item.labelKey) }}
               </nuxt-link>
             </template>
+            <span
+              v-if="authStore.loggedIn"
+              class="site-nav__route-spacer"
+              aria-hidden="true"
+            />
             <div
               v-if="showAdminNav"
               ref="adminNav"
@@ -98,6 +103,45 @@
                 </nuxt-link>
               </div>
             </div>
+            <template v-if="authStore.loggedIn">
+              <div
+                ref="accountNav"
+                class="site-nav__account"
+              >
+                <button
+                  type="button"
+                  class="site-nav__link site-nav__account-trigger"
+                  :aria-expanded="accountDropdownOpen ? 'true' : 'false'"
+                  @click="toggleAccountDropdown"
+                >
+                  {{ $t('account') }}
+                </button>
+                <div
+                  v-if="accountDropdownOpen"
+                  class="site-nav__account-panel"
+                  role="menu"
+                  @click="toggleAccountDropdown"
+                >
+                  <nuxt-link
+                    v-for="item in accountLinkItems"
+                    :key="'desk-account-' + item.id"
+                    class="site-nav__account-item"
+                    :to="localePath(item.to)"
+                    role="menuitem"
+                  >
+                    {{ $t(item.labelKey) }}
+                  </nuxt-link>
+                  <a
+                    v-for="item in accountLogoutItems"
+                    :key="'desk-account-' + item.id"
+                    class="site-nav__account-item"
+                    href="#"
+                    role="menuitem"
+                    @click.prevent="logout"
+                  >{{ $t(item.labelKey) }}</a>
+                </div>
+              </div>
+            </template>
             <span
               v-for="item in authNavTail"
               :key="'desk-auth-' + item.id"
@@ -118,6 +162,7 @@
                 {{ $t(item.labelKey) }}
               </nuxt-link>
             </span>
+            <theme-switcher variant="toolbar" class="site-nav__theme-desktop" />
             <language-switcher variant="toolbar" class="site-nav__locale-desktop" />
           </div>
         </div>
@@ -171,6 +216,27 @@
                 {{ $t(item.labelKey) }}
               </nuxt-link>
             </template>
+            <template v-if="authStore.loggedIn">
+              <div class="site-nav__drawer-subhead">
+                {{ $t('account') }}
+              </div>
+              <nuxt-link
+                v-for="item in accountLinkItems"
+                :key="'drawer-account-' + item.id"
+                class="site-nav__drawer-link site-nav__drawer-link--indent"
+                :to="localePath(item.to)"
+              >
+                {{ $t(item.labelKey) }}
+              </nuxt-link>
+              <a
+                v-for="item in accountLogoutItems"
+                :key="'drawer-account-' + item.id"
+                class="site-nav__drawer-link site-nav__drawer-link--indent"
+                href="#"
+                role="button"
+                @click.prevent="logout"
+              >{{ $t(item.labelKey) }}</a>
+            </template>
             <span
               v-for="item in authNavTail"
               :key="'drawer-auth-' + item.id"
@@ -191,6 +257,7 @@
                 {{ $t(item.labelKey) }}
               </nuxt-link>
             </span>
+            <theme-switcher variant="drawer" class="site-nav__theme-drawer" />
             <language-switcher variant="drawer" class="site-nav__locale-drawer" />
           </div>
         </aside>
@@ -201,11 +268,13 @@
 
 <script>
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 import { useAuthStore } from '~/stores/auth';
 
 /**
  * Ordered main nav (desktop + drawer).
- * Each entry: `{ labelKey, to, authOnly?, spaceBefore? }`.
+ * Each entry: `{ labelKey, to, authOnly?, guestOnly?, spaceBefore? }`.
+ * `guestOnly: true`: hide when logged in (e.g. About).
  * `spaceBefore: true` (default false): desktop only — inserts a flex spacer before this link (`min-width: 3rem`, `flex-grow: 1`) so this link and everything after it in the row sit to the right; ignored in the mobile drawer.
  */
 const ORDERED_ROUTE_NAV = [
@@ -214,8 +283,7 @@ const ORDERED_ROUTE_NAV = [
   { labelKey: 'chapter_checklist', to: '/checklist', authOnly: true },
   { labelKey: 'calendar', to: '/calendar', authOnly: true },
   { labelKey: 'notes', to: '/notes', authOnly: true },
-  { labelKey: 'about', to: '/about/overview', authOnly: false, spaceBefore: true },
-  { labelKey: 'settings', to: '/settings', authOnly: true },
+  { labelKey: 'about', to: '/about/overview', authOnly: false, guestOnly: true, spaceBefore: true },
 ];
 
 const ADMIN_CHILD_LINKS = [
@@ -230,12 +298,15 @@ export default {
   name: 'SiteNav',
   components: {
     LanguageSwitcher,
+    ThemeSwitcher,
   },
   data() {
     return {
       navOpen: false,
       adminDropdownOpen: false,
       adminOutsideListenTimer: null,
+      accountDropdownOpen: false,
+      accountOutsideListenTimer: null,
     };
   },
   head() {
@@ -251,7 +322,10 @@ export default {
     },
     visibleRouteNavItems() {
       const loggedIn = this.authStore.loggedIn;
-      return ORDERED_ROUTE_NAV.filter(item => !item.authOnly || loggedIn);
+      return ORDERED_ROUTE_NAV.filter(
+        item =>
+          (!item.authOnly || loggedIn) && (!item.guestOnly || !loggedIn),
+      );
     },
     showAdminNav() {
       return Boolean(this.authStore.loggedIn && this.authStore.user?.isAdmin);
@@ -259,9 +333,24 @@ export default {
     adminChildLinks() {
       return ADMIN_CHILD_LINKS;
     },
+    accountChildLinks() {
+      if (!this.authStore.loggedIn) {
+        return [];
+      }
+      return [
+        { id: 'settings', type: 'link', labelKey: 'settings', to: '/settings' },
+        { id: 'logout', type: 'logout', labelKey: 'log_out' },
+      ];
+    },
+    accountLinkItems() {
+      return this.accountChildLinks.filter(item => item.type === 'link');
+    },
+    accountLogoutItems() {
+      return this.accountChildLinks.filter(item => item.type === 'logout');
+    },
     authNavTail() {
       if (this.authStore.loggedIn) {
-        return [{ id: 'logout', type: 'logout', labelKey: 'log_out' }];
+        return [];
       }
       return [
         { id: 'register', type: 'link', labelKey: 'sign_up', to: '/register' },
@@ -273,6 +362,7 @@ export default {
     $route() {
       this.navOpen = false;
       this.adminDropdownOpen = false;
+      this.accountDropdownOpen = false;
     },
     adminDropdownOpen(open) {
       if (typeof document === 'undefined') {
@@ -292,6 +382,24 @@ export default {
         }, 0);
       }
     },
+    accountDropdownOpen(open) {
+      if (typeof document === 'undefined') {
+        return;
+      }
+      document.removeEventListener('click', this._onAccountOutsideClick, true);
+      if (this.accountOutsideListenTimer !== null) {
+        clearTimeout(this.accountOutsideListenTimer);
+        this.accountOutsideListenTimer = null;
+      }
+      if (open) {
+        this.accountOutsideListenTimer = setTimeout(() => {
+          this.accountOutsideListenTimer = null;
+          if (this.accountDropdownOpen) {
+            document.addEventListener('click', this._onAccountOutsideClick, true);
+          }
+        }, 0);
+      }
+    },
     navOpen(open) {
       if (typeof document === 'undefined') {
         return;
@@ -306,6 +414,9 @@ export default {
       }
       if (this.adminDropdownOpen) {
         this.adminDropdownOpen = false;
+      }
+      if (this.accountDropdownOpen) {
+        this.accountDropdownOpen = false;
       }
       if (this.navOpen) {
         this.closeNav();
@@ -330,8 +441,12 @@ export default {
   beforeDestroy() {
     document.removeEventListener('keydown', this._onEscape);
     document.removeEventListener('click', this._onAdminOutsideClick, true);
+    document.removeEventListener('click', this._onAccountOutsideClick, true);
     if (this.adminOutsideListenTimer !== null) {
       clearTimeout(this.adminOutsideListenTimer);
+    }
+    if (this.accountOutsideListenTimer !== null) {
+      clearTimeout(this.accountOutsideListenTimer);
     }
     if (this._desktopMq && this._onDesktopMq) {
       if (this._desktopMq.removeEventListener) {
@@ -354,6 +469,15 @@ export default {
     },
     toggleAdminDropdown() {
       this.adminDropdownOpen = !this.adminDropdownOpen;
+      if (this.adminDropdownOpen) {
+        this.accountDropdownOpen = false;
+      }
+    },
+    toggleAccountDropdown() {
+      this.accountDropdownOpen = !this.accountDropdownOpen;
+      if (this.accountDropdownOpen) {
+        this.adminDropdownOpen = false;
+      }
     },
     _onAdminOutsideClick(event) {
       if (!this.adminDropdownOpen) {
@@ -362,6 +486,15 @@ export default {
       const root = this.$refs.adminNav;
       if (root && !root.contains(event.target)) {
         this.adminDropdownOpen = false;
+      }
+    },
+    _onAccountOutsideClick(event) {
+      if (!this.accountDropdownOpen) {
+        return;
+      }
+      const root = this.$refs.accountNav;
+      if (root && !root.contains(event.target)) {
+        this.accountDropdownOpen = false;
       }
     },
     clearDrawerTransitionInlineStyles(el) {
@@ -477,8 +610,8 @@ export default {
 .site-nav__bar {
   position: relative;
   z-index: calc(var(--site-nav-z-bar) + 1);
-  background: #fff;
-  border-bottom: 1px solid var(--neutral-200);
+  background: var(--mbl-bg);
+  border-bottom: 1px solid var(--mbl-border);
 }
 
 .site-nav__inner {
@@ -546,12 +679,7 @@ export default {
   display: inline-block;
   font-weight: 600;
   text-decoration: none;
-  background: linear-gradient(
-    20deg,
-    var(--primary-color) 0%,
-    var(--secondary-color) 50%,
-    var(--tertiary-color) 100%
-  );
+  background: var(--mbl-site-title-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -596,7 +724,7 @@ export default {
   align-items: center;
   padding: 0.5rem 0.65rem;
   font-size: 0.9375rem;
-  color: #666;
+  color: var(--mbl-text-subtle);
   text-decoration: none;
   background: none;
   border: none;
@@ -621,7 +749,7 @@ export default {
 .site-nav__link:hover,
 .site-nav__link:focus-visible,
 .site-nav__link.nuxt-link-active {
-  color: #000;
+  color: var(--mbl-text-stronger);
 }
 
 .site-nav__link:hover::after,
@@ -629,46 +757,57 @@ export default {
   transform: scaleX(1);
 }
 
-.site-nav__admin {
+.site-nav__admin,
+.site-nav__account {
   position: relative;
   display: inline-flex;
 }
 
-.site-nav__admin-trigger::after {
+.site-nav__admin-trigger::after,
+.site-nav__account-trigger::after {
   left: 0.65rem;
   right: 0.65rem;
 }
 
-.site-nav__admin-panel {
+.site-nav__admin-panel,
+.site-nav__account-panel {
   position: absolute;
   top: 100%;
   right: 0;
   margin-top: 0.125rem;
   min-width: 12rem;
   padding: 0.35rem 0;
-  background: #fff;
-  border: 1px solid var(--neutral-200);
+  background: var(--mbl-bg);
+  border: 1px solid var(--mbl-border);
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px var(--mbl-overlay-08);
 }
 
-.site-nav__admin-item {
+.site-nav__admin-item,
+.site-nav__account-item {
   display: block;
   padding: 0.5rem 1rem;
   font-size: 0.9375rem;
-  color: #444;
+  color: var(--mbl-text-subtle);
   text-decoration: none;
 }
 
 .site-nav__admin-item:hover,
-.site-nav__admin-item:focus-visible {
-  background: var(--neutral-150);
-  color: #000;
+.site-nav__admin-item:focus-visible,
+.site-nav__account-item:hover,
+.site-nav__account-item:focus-visible {
+  background: var(--mbl-bg-hover-light);
+  color: var(--mbl-text-stronger);
+}
+
+.site-nav__theme-desktop {
+  flex-shrink: 0;
+  margin-left: 0.25rem;
 }
 
 .site-nav__locale-desktop {
   flex-shrink: 0;
-  margin-left: 0.25rem;
+  margin-left: 0.125rem;
 }
 
 /* Keyed v-for wrapper: children participate in flex layout as if unwrapped. */
@@ -688,12 +827,16 @@ export default {
   border: none;
   border-radius: 6px;
   background: transparent;
-  color: #333;
+  color: var(--mbl-text-strong);
   cursor: pointer;
 }
 
 .site-nav__icon-btn:hover {
-  background: var(--neutral-150);
+  background: var(--mbl-bg-hover-light);
+}
+
+.site-nav__icon-btn:active {
+  background: var(--mbl-bg-hover-strong);
 }
 
 .site-nav__icon-btn:focus {
@@ -733,7 +876,7 @@ export default {
 .site-nav__backdrop {
   position: absolute;
   inset: var(--site-nav-height) 0 0 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: var(--mbl-overlay-35);
   opacity: 1;
 }
 
@@ -742,8 +885,8 @@ export default {
   z-index: var(--site-nav-z-drawer);
   width: min(20rem, 88vw);
   max-height: 100%;
-  background: #fff;
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+  background: var(--mbl-bg);
+  box-shadow: -4px 0 24px var(--mbl-overlay-12);
   outline: none;
 }
 
@@ -759,7 +902,7 @@ export default {
 .site-nav__drawer-link {
   padding: 0.85rem 1.25rem;
   font-size: 1rem;
-  color: #333;
+  color: var(--mbl-text-strong);
   text-decoration: none;
   border: none;
   background: none;
@@ -772,8 +915,13 @@ export default {
 .site-nav__drawer-link:hover,
 .site-nav__drawer-link:focus-visible,
 .site-nav__drawer-link.nuxt-link-active {
-  background: var(--neutral-150);
-  color: #000;
+  background: var(--mbl-bg-hover-light);
+  color: var(--mbl-text-stronger);
+}
+
+.site-nav__drawer-link:active {
+  background: var(--mbl-bg-hover-strong);
+  color: var(--mbl-text-stronger);
 }
 
 .site-nav__drawer-link--indent {
@@ -787,10 +935,15 @@ export default {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #666;
+  color: var(--mbl-text-subtle);
 }
 
 .site-nav__locale-drawer {
+  margin-top: 0.5rem;
+  padding: 0 1rem;
+}
+
+.site-nav__theme-drawer {
   margin-top: 0.5rem;
   padding: 0 1rem;
 }
@@ -833,6 +986,7 @@ export default {
     "log": "Log",
     "notes": "Notes",
     "about": "About",
+    "account": "Account",
     "settings": "Settings",
     "admin": "Admin",
     "users": "Users",
@@ -851,6 +1005,7 @@ export default {
     "log": "Journal",
     "notes": "Notizen",
     "about": "Über",
+    "account": "Konto",
     "settings": "Einstellungen",
     "admin": "Administrator",
     "users": "Benutzer",
@@ -869,6 +1024,7 @@ export default {
     "log": "Registro",
     "notes": "Notas",
     "about": "Acerca de",
+    "account": "Cuenta",
     "settings": "Configuración",
     "admin": "Administrador",
     "users": "Usuarios",
@@ -887,6 +1043,7 @@ export default {
     "log": "Journal",
     "notes": "Notes",
     "about": "À Propos",
+    "account": "Compte",
     "settings": "Paramètres",
     "admin": "Administrateur",
     "users": "Utilisateurs",
@@ -905,6 +1062,7 @@ export default {
     "log": "기록",
     "notes": "노트",
     "about": "소개",
+    "account": "계정",
     "settings": "설정",
     "admin": "관리자",
     "users": "사용자",
@@ -923,6 +1081,7 @@ export default {
     "log": "Registro",
     "notes": "Notas",
     "about": "Sobre",
+    "account": "Conta",
     "settings": "Configurações",
     "admin": "Administrador",
     "users": "Usuários",
@@ -941,6 +1100,7 @@ export default {
     "log": "Журнал",
     "notes": "Нотатки",
     "about": "Про нас",
+    "account": "Обліковий запис",
     "settings": "Налаштування",
     "admin": "Адміністратор",
     "users": "Користувачі",

@@ -332,7 +332,7 @@
       <h2 class="mbl-title mbl-title--4 mbl-styleguide__section-title">
         Modal (static)
       </h2>
-      <div style="position:relative;height:220px;background:#eee;border-radius:6px;overflow:hidden;">
+      <div style="position:relative;height:220px;background:var(--mbl-bg-hover-light);border-radius:6px;overflow:hidden;">
         <div class="mbl-modal mbl-modal--active" style="position:absolute;">
           <div class="mbl-modal__backdrop" />
           <div class="mbl-modal__card" style="max-height:200px;">

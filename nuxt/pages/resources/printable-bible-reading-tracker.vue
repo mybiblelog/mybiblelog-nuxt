@@ -145,7 +145,7 @@ export default {
 }
 
 .book-box {
-  border: 1px solid #000;
+  border: 1px solid var(--mbl-text-stronger);
   margin-bottom: -1px;
   line-height: 1;
 }
@@ -174,7 +174,7 @@ export default {
   display: inline-block;
   width: 0.6rem;
   height: 0.6rem;
-  border: 1px solid #000;
+  border: 1px solid var(--mbl-text-stronger);
   margin: 0.1rem;
   text-align: center;
 }

@@ -154,7 +154,7 @@ export default {
   font-weight: 700;
   margin-bottom: 0.5rem;
   line-height: 1.3;
-  color: #333;
+  color: var(--mbl-text-strong);
 }
 
 @media screen and (max-width: 768px) {
@@ -180,7 +180,7 @@ export default {
 .fifty-fifty-description {
   font-size: 1.125rem;
   line-height: 1.7;
-  color: #555;
+  color: var(--mbl-text-soft);
   margin-bottom: 0.5rem;
 }
 
@@ -199,7 +199,7 @@ export default {
 .fifty-fifty-list li {
   font-size: 1.125rem;
   line-height: 1.7;
-  color: #555;
+  color: var(--mbl-text-soft);
   padding: 0.5rem 0;
   padding-left: 1.5rem;
   position: relative;
@@ -232,7 +232,7 @@ export default {
   padding: 0.5rem 2rem;
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(9, 101, 247, 0.35);
+  box-shadow: 0 4px 12px var(--mbl-primary-glow);
 }
 
 .fifty-fifty-cta .mbl-button.mbl-button--primary:hover {
@@ -240,7 +240,7 @@ export default {
   border-color: var(--secondary-color-hover);
   color: var(--mbl-on-accent);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(9, 101, 247, 0.45);
+  box-shadow: 0 6px 16px var(--mbl-primary-glow-strong);
 }
 
 .fifty-fifty-cta .mbl-button.mbl-button--primary:active {
@@ -249,7 +249,7 @@ export default {
 
 .fifty-fifty-note {
   font-size: 0.875rem;
-  color: #666;
+  color: var(--mbl-text-subtle);
   margin-top: 0.5rem;
   font-style: italic;
 }

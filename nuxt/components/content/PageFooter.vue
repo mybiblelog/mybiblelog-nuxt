@@ -65,8 +65,8 @@ export default {
   min-height: 20vh;
   margin: 4rem 0 0;
   padding: 3rem 0;
-  background: linear-gradient(135deg, rgba(0, 170, 249, 0.05) 0%, rgba(9, 101, 247, 0.05) 50%, rgba(0, 209, 178, 0.05) 100%);
-  border-top: 1px solid rgba(0, 170, 249, 0.1);
+  background: linear-gradient(135deg, var(--mbl-primary-soft) 0%, var(--mbl-secondary-soft) 50%, var(--mbl-tertiary-soft) 100%);
+  border-top: 1px solid var(--mbl-primary-soft-border);
 }
 
 .footer-container {
@@ -110,7 +110,7 @@ export default {
 }
 
 .footer-link {
-  color: #555;
+  color: var(--mbl-text-soft);
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;

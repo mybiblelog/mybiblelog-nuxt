@@ -29,8 +29,8 @@ export default {
 <style scoped>
 .passage-note-tag-pill {
   font-size: 0.8em;
-  color: #fff;
-  text-shadow: 0 0 2px #000, 1px 1px 0 rgba(0,0,0,0.5);
+  color: var(--mbl-on-accent);
+  text-shadow: 0 0 2px var(--mbl-text-stronger), 1px 1px 0 var(--mbl-overlay-50);
   padding: 0 0.5rem;
   border-radius: 0.25rem;
   margin-right: 0.25rem;

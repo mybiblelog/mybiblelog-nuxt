@@ -5,7 +5,7 @@
       :aria-label="$t('floating_action_button.give_feedback')"
       @click="openModal"
     >
-      <feedback-icon fill="white" width="28px" height="28px" />
+      <feedback-icon fill="var(--mbl-on-accent)" width="28px" height="28px" />
     </button>
     <feedback-modal :is-visible="isModalVisible" @close="closeModal" />
   </div>
@@ -52,11 +52,11 @@ export default {
   height: 56px;
   border-radius: 50%;
   background-color: var(--secondary-color);
-  color: white;
+  color: var(--mbl-on-accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px var(--mbl-overlay-15);
   transition: all 0.3s ease;
   z-index: var(--z-index-action-button);
   text-decoration: none;
@@ -66,13 +66,13 @@ export default {
 
 .floating-action-button:hover {
   background-color: var(--secondary-color-hover);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px var(--mbl-overlay-20);
   transform: translateY(-2px);
 }
 
 .floating-action-button:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--mbl-shadow-soft);
 }
 
 @media screen and (max-width: 768px) {

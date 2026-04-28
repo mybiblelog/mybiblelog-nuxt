@@ -102,15 +102,16 @@ export default {
   right: 0;
   bottom: 0;
   z-index: var(--z-index-action-menu);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--mbl-overlay-50);
 }
 
 .action-sheet {
   position: fixed;
   left: 0;
   right: 0;
-  background: #fff;
-  box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.3);
+  background: var(--mbl-bg);
+  border: 1px solid var(--mbl-border);
+  box-shadow: var(--mbl-shadow-overlay);
   z-index: calc(var(--z-index-action-menu) + 1);
   overflow-y: auto;
   max-height: 80vh;
@@ -142,9 +143,9 @@ export default {
   padding: 1.25rem 1.5rem;
   font-weight: 600;
   font-size: 1.1rem;
-  color: #333;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  background-color: #fafafa;
+  color: var(--mbl-text-strong);
+  border-bottom: 1px solid var(--mbl-overlay-15);
+  background-color: var(--mbl-bg-subtle);
 }
 
 @media (max-width: 799px) {
@@ -165,16 +166,16 @@ export default {
   padding: 1rem 1.5rem;
   cursor: pointer;
   transition: background-color 0.15s;
-  color: #333;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--mbl-text-strong);
+  border-bottom: 1px solid var(--mbl-overlay-10);
 }
 
 .action-sheet-item:hover {
-  background-color: #f5f5f5;
+  background-color: var(--mbl-bg-muted);
 }
 
 .action-sheet-item:active {
-  background-color: #e8e8e8;
+  background-color: var(--neutral-150);
 }
 
 .action-sheet-item:last-child {

@@ -36,7 +36,7 @@ export default {
   flex: 1;
   height: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #e0e0e0;
+  background-color: var(--mbl-progress-track-bg);
   transition: background-color 0.3s ease;
 }
 
