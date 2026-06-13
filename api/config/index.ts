@@ -16,6 +16,14 @@ dotenv.config({
 });
 
 const booleanStringDefaultingToTrue = z.enum(['true', 'false']).transform((val) => val !== 'false');
+const emptyStringToUndefined = z.preprocess(
+  (val) => (typeof val === 'string' && val.trim() === '' ? undefined : val),
+  z.string().optional(),
+);
+const emptyStringUrlToUndefined = z.preprocess(
+  (val) => (typeof val === 'string' && val.trim() === '' ? undefined : val),
+  z.string().url().optional(),
+);
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
@@ -29,9 +37,25 @@ const envSchema = z.object({
   RESEND_API_KEY: z.string(),
   MONGODB_URI: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
+  // Comma-separated list of additional Google OAuth client IDs that are allowed
+  // to mint Google ID tokens for this backend (useful for mobile clients).
+  GOOGLE_ALLOWED_CLIENT_IDS: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string(),
   GOOGLE_REDIRECT: z.string(),
   HELLOAO_API_BASE_URL: z.string().url().default('https://bible.helloao.org/api'),
+  // OAuth 2.1 (Auth Code + PKCE) support for mobile app
+  // - Client ID is a logical identifier, not a secret
+  // - Redirect URIs should be exact values, comma-separated
+  OAUTH_MOBILE_CLIENT_ID: z.string().default('mobile'),
+  // Supports exact values and simple prefix wildcards (suffix "*"), e.g. "exp://*"
+  OAUTH_MOBILE_REDIRECT_URIS: z.string().default('biblelog://oauth,exp://*,http://localhost:8081/oauth'),
+  // React Native app support / force-upgrade controls
+  MOBILE_IOS_MIN_VERSION: z.string().default('0.0.0'),
+  MOBILE_ANDROID_MIN_VERSION: z.string().default('0.0.0'),
+  MOBILE_IOS_LATEST_VERSION: emptyStringToUndefined,
+  MOBILE_ANDROID_LATEST_VERSION: emptyStringToUndefined,
+  MOBILE_IOS_STORE_URL: emptyStringUrlToUndefined,
+  MOBILE_ANDROID_STORE_URL: emptyStringUrlToUndefined,
 });
 
 const result = envSchema.safeParse(process.env);
@@ -56,11 +80,35 @@ const config = {
   },
   google: {
     clientId: result.data.GOOGLE_CLIENT_ID,
+    allowedClientIds: [
+      result.data.GOOGLE_CLIENT_ID,
+      ...(result.data.GOOGLE_ALLOWED_CLIENT_IDS
+        ? result.data.GOOGLE_ALLOWED_CLIENT_IDS.split(',').map((s) => s.trim()).filter(Boolean)
+        : []),
+    ],
     clientSecret: result.data.GOOGLE_CLIENT_SECRET,
     redirectUri: result.data.GOOGLE_REDIRECT,
   },
   helloao: {
     apiBaseUrl: result.data.HELLOAO_API_BASE_URL,
+  },
+  oauth: {
+    mobileClientId: result.data.OAUTH_MOBILE_CLIENT_ID,
+    mobileRedirectUris: result.data.OAUTH_MOBILE_REDIRECT_URIS.split(',').map((s) => s.trim()).filter(Boolean),
+  },
+  mobileApp: {
+    minVersion: {
+      ios: result.data.MOBILE_IOS_MIN_VERSION,
+      android: result.data.MOBILE_ANDROID_MIN_VERSION,
+    },
+    latestVersion: {
+      ios: result.data.MOBILE_IOS_LATEST_VERSION,
+      android: result.data.MOBILE_ANDROID_LATEST_VERSION,
+    },
+    storeUrl: {
+      ios: result.data.MOBILE_IOS_STORE_URL,
+      android: result.data.MOBILE_ANDROID_STORE_URL,
+    },
   },
 };
 

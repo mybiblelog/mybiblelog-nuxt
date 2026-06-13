@@ -128,6 +128,15 @@ GOOGLE_CLIENT_ID=xxxxxxxxxx.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=xxxxxxxxxx
 GOOGLE_REDIRECT=http://xxxxxxxxxx:xxxx/google-login
 
+# OAuth (mobile app) — Authorization Code + PKCE
+# Used by the Expo app to obtain a JWT via:
+# - GET  /api/oauth/authorize (browser-based; uses web login session)
+# - POST /api/oauth/token     (PKCE code exchange)
+#
+# Redirect URIs can be exact values or simple prefix wildcards (suffix "*"), e.g. "exp://*"
+OAUTH_MOBILE_CLIENT_ID=mobile
+OAUTH_MOBILE_REDIRECT_URIS=biblelog://oauth,exp://*,http://localhost:8081/oauth
+
 # Google Analytics ID (only needed if verifying GA connection)
 GA_MEASUREMENT_ID=G-xxxxxxxxxx
 
@@ -137,6 +146,14 @@ OPENAI_API_KEY=xxxxxxxxxx
 # Test Data
 TEST_SITE_URL=http://localhost:3000 # for e2e tests
 TEST_BYPASS_SECRET=xxxxxxxxxx # for api tests (do NOT set in prod)
+
+# React Native app support / force-upgrade controls
+MOBILE_IOS_MIN_VERSION=0.0.0
+MOBILE_ANDROID_MIN_VERSION=0.0.0
+MOBILE_IOS_LATEST_VERSION=x.x.x
+MOBILE_ANDROID_LATEST_VERSION=x.x.x
+MOBILE_IOS_STORE_URL=https://apps.apple.com/us/app/xxxxxxxxxx/idxxxxxxxxxx
+MOBILE_ANDROID_STORE_URL=https://play.google.com/store/apps/details?id=xxxxxxxxxx
 
 # Screenshot Script (optional config)
 SCREENSHOT_HEADLESS=false

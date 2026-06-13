@@ -1,5 +1,8 @@
 module.exports = {
   root: true,
+  // The mobile workspace is an Expo/React Native app with its own ESLint
+  // setup (eslint-config-expo) and code style; lint it via `npm run lint -w mobile`.
+  ignorePatterns: ['mobile/'],
   env: {
     browser: true,
     node: true,

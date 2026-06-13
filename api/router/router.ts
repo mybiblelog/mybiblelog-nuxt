@@ -1,6 +1,7 @@
 import express from 'express';
 
 import authRouter from './routes/auth';
+import oauthRouter from './routes/oauth';
 import settingsRouter from './routes/settings';
 import adminRouter from './routes/admin';
 import logEntriesRouter from './routes/log-entries';
@@ -10,10 +11,12 @@ import remindersRouter from './routes/reminders';
 import feedbackRouter from './routes/feedback';
 import scriptureRouter from './routes/scripture';
 import sitemapRouter from './routes/sitemap';
+import mobileAppRouter from './routes/mobile-app';
 
 const apiRouter = express.Router();
 
 apiRouter.use(authRouter);
+apiRouter.use(oauthRouter);
 apiRouter.use(settingsRouter);
 apiRouter.use(adminRouter);
 apiRouter.use(logEntriesRouter);
@@ -23,5 +26,6 @@ apiRouter.use(remindersRouter);
 apiRouter.use(feedbackRouter);
 apiRouter.use(scriptureRouter);
 apiRouter.use(sitemapRouter);
+apiRouter.use(mobileAppRouter);
 
 export default apiRouter;

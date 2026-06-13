@@ -3,6 +3,7 @@ import config from '../../config';
 import rateLimit from '../helpers/rateLimit';
 import authCurrentUser, { AUTH_COOKIE_NAME, setAuthTokenCookie } from '../helpers/authCurrentUser';
 import googleOauth2 from '../helpers/google-oauth2';
+import googleIdToken from '../helpers/google-id-token';
 import { ApiErrorDetailCode } from '../errors/error-codes';
 import useRepositories from '../../repositories/useRepositories';
 import { generateUserJWT, isCodeValid, isEmailVerified, toAuthJSON } from '../../repositories/user-auth';
@@ -548,6 +549,97 @@ router.post('/auth/oauth2/google/verify', async (req, res, next) => {
     next(err);
   }
   /* eslint-enable camelcase */
+});
+
+/**
+ * @swagger
+ * /auth/oauth2/google/id-token:
+ *   post:
+ *     summary: Login with Google ID token (mobile-friendly)
+ *     description: |
+ *       Accepts a Google `id_token` obtained from a native/mobile Google sign-in flow
+ *       and exchanges it for a MyBibleLog JWT token.
+ *
+ *       This is recommended for mobile apps (no redirect/callback handling needed).
+ *     tags: [Authentication]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - idToken
+ *             properties:
+ *               idToken:
+ *                 type: string
+ *               locale:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Google login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - data
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *       400:
+ *         description: Invalid token or validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiErrorResponse'
+ */
+router.post('/auth/oauth2/google/id-token', async (req, res, next) => {
+  await rateLimit(req, { maxRequests: 20, windowMs: 60 * 1000 }); // 20 attempts per minute
+
+  try {
+    const { idToken, locale } = req.body ?? {};
+
+    if (!idToken || typeof idToken !== 'string') {
+      throw new ValidationError([{ code: ApiErrorDetailCode.Required, field: 'idToken' }]);
+    }
+
+    const { googleUserId, email } = await googleIdToken.verifyGoogleIdToken(idToken);
+
+    const { users } = await useRepositories();
+    const existingUser = await users.findByEmail(email);
+
+    if (existingUser) {
+      // Link Google account to existing account if not already linked
+      if (!existingUser.googleId) {
+        await users.linkGoogleAccount(existingUser.id, googleUserId);
+      }
+
+      const token = generateUserJWT(existingUser);
+      setAuthTokenCookie(res, token);
+      return res.json({ data: { token } } satisfies ApiResponse);
+    }
+
+    // Create new user account
+    const user = await users.create({
+      email,
+      emailVerificationCode: '', // Google verified emails don't need verification
+      password: null,
+      googleId: googleUserId,
+      locale,
+    });
+
+    const token = generateUserJWT(user);
+    setAuthTokenCookie(res, token);
+    return res.json({ data: { token } } satisfies ApiResponse);
+  }
+  catch (err) {
+    next(err);
+  }
 });
 
 /**
