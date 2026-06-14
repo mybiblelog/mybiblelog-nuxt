@@ -1,5 +1,11 @@
 import { API_BASE_URL } from "../config";
 
+if (!__DEV__ && API_BASE_URL?.startsWith("http://")) {
+  throw new Error(
+    `API_BASE_URL must use HTTPS in production builds. Got: ${API_BASE_URL}`
+  );
+}
+
 /**
  * Backend is mounted at `/api` (see `api/app.ts`).
  *

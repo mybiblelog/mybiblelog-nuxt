@@ -6,6 +6,7 @@ import { oauthAuthorizationCodes } from '../helpers/oauth-authorization-codes';
 import { isValidPkceCodeChallenge, isValidPkceCodeVerifier, sha256Base64Url } from '../helpers/pkce';
 import useRepositories from '../../repositories/useRepositories';
 import { generateUserJWT } from '../../repositories/user-auth';
+import rateLimit from '../helpers/rateLimit';
 
 const router = express.Router();
 
@@ -38,6 +39,7 @@ function appendQueryParams(rawUrl: string, params: Record<string, string | undef
  */
 router.get('/oauth/authorize', async (req, res, next) => {
   try {
+    rateLimit(req, { maxRequests: 20, windowMs: 60 * 1000 });
     const responseType = String(req.query.response_type ?? '');
     const clientId = String(req.query.client_id ?? '');
     const redirectUri = String(req.query.redirect_uri ?? '');
@@ -84,6 +86,7 @@ router.get('/oauth/authorize', async (req, res, next) => {
  */
 router.post('/oauth/token', async (req, res, next) => {
   try {
+    rateLimit(req, { maxRequests: 10, windowMs: 60 * 1000 });
     const grantType = String(req.body?.grant_type ?? '');
     const code = String(req.body?.code ?? '');
     const redirectUri = String(req.body?.redirect_uri ?? '');

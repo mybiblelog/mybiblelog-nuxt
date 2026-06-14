@@ -1,13 +1,5 @@
+import { OAuth2Client } from 'google-auth-library';
 import config from '../../config';
-
-type GoogleTokenInfoResponse = {
-  aud?: string;
-  sub?: string;
-  email?: string;
-  email_verified?: string | boolean;
-  exp?: string;
-  iss?: string;
-};
 
 export type VerifiedGoogleIdToken = {
   googleUserId: string; // "sub"
@@ -15,57 +7,29 @@ export type VerifiedGoogleIdToken = {
   audience: string;
 };
 
-function isEmailVerified(v: unknown): boolean {
-  if (v === true) return true;
-  if (v === 'true') return true;
-  return false;
-}
-
-function isTokenExpired(expSeconds: unknown): boolean {
-  const n = typeof expSeconds === 'string' ? Number(expSeconds) : NaN;
-  if (!Number.isFinite(n) || n <= 0) return true;
-  return Date.now() >= n * 1000;
-}
+const client = new OAuth2Client();
 
 async function verifyGoogleIdToken(idToken: string): Promise<VerifiedGoogleIdToken> {
-  const res = await fetch(
-    `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`,
-    { method: 'GET' },
-  );
+  // Verifies signature against Google's JWKS and checks exp/aud/iss locally.
+  // Throws if the token is invalid, expired, or not issued for an allowed client.
+  const ticket = await client.verifyIdToken({
+    idToken,
+    audience: config.google.allowedClientIds,
+  });
 
-  if (!res.ok) {
-    // tokeninfo returns 400 for invalid tokens
-    throw new Error(`Invalid Google id_token (status ${res.status})`);
-  }
+  const payload = ticket.getPayload();
+  if (!payload) throw new Error('Google id_token payload missing');
 
-  const info = (await res.json()) as GoogleTokenInfoResponse;
-  const audience = info.aud;
-  const googleUserId = info.sub;
-  const email = info.email;
+  const googleUserId = payload.sub;
+  if (!googleUserId) throw new Error('Google id_token missing subject');
 
-  if (typeof audience !== 'string' || !audience) {
-    throw new Error('Google id_token missing audience');
-  }
+  const email = payload.email;
+  if (typeof email !== 'string' || !email) throw new Error('Google id_token missing email');
 
-  if (!config.google.allowedClientIds.includes(audience)) {
-    throw new Error('Google id_token audience not allowed');
-  }
+  if (!payload.email_verified) throw new Error('Google email not verified');
 
-  if (typeof googleUserId !== 'string' || !googleUserId) {
-    throw new Error('Google id_token missing subject');
-  }
-
-  if (typeof email !== 'string' || !email) {
-    throw new Error('Google id_token missing email');
-  }
-
-  if (!isEmailVerified(info.email_verified)) {
-    throw new Error('Google email not verified');
-  }
-
-  if (isTokenExpired(info.exp)) {
-    throw new Error('Google id_token expired');
-  }
+  const audience = Array.isArray(payload.aud) ? payload.aud[0] : payload.aud;
+  if (!audience) throw new Error('Google id_token missing audience');
 
   return { googleUserId, email, audience };
 }
@@ -73,4 +37,3 @@ async function verifyGoogleIdToken(idToken: string): Promise<VerifiedGoogleIdTok
 export default {
   verifyGoogleIdToken,
 };
-

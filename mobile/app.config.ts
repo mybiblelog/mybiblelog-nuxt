@@ -1,36 +1,9 @@
 import type { ExpoConfig } from "expo/config";
-import dotenv from 'dotenv';
 
-dotenv.config({
-  path: '.env',
-  quiet: true,
-});
-
-// Expo/Metro automatically loads .env from the project root (same directory as this file).
-// Place your .env file at: mobile/.env
-
-// FIXME: this validation should probably live in config.ts instead:
-// - this file is loaded by `expo config` before uploading files to EAS
-// - env vars aren't loaded from .env automatically for that command
-// - this file requires those env vars to be set or it will error
-// - using dotenv to load .env is a workaround, and those loaded env vars aren't even used in the build
-// - so actually, we should move validation to config.ts so we don't need a .env locally to perform a build that doesn't use it
-
-const requiredEnvVars = [
-  "EXPO_PUBLIC_API_BASE_URL",
-] as const;
-
-const missing = requiredEnvVars.filter(
-  (key) => !process.env[key]?.trim()
-);
-
-if (missing.length > 0) {
-  throw new Error(
-    `Missing required env vars at build time: ${missing.join(", ")}. Set them in your .env file or EAS secrets.`
-  );
-}
-
-const apiBaseUrl = process.env.EXPO_PUBLIC_API_BASE_URL!;
+// EXPO_PUBLIC_API_BASE_URL is automatically inlined by Metro from .env at bundle time.
+// Validation runs at app startup in src/config.ts rather than here so that
+// `expo config` / EAS build commands work without a local .env file.
+const apiBaseUrl = process.env.EXPO_PUBLIC_API_BASE_URL ?? "";
 
 export default ({ config }: { config: ExpoConfig }): ExpoConfig => ({
   ...config,

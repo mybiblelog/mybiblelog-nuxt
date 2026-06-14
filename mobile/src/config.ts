@@ -12,4 +12,10 @@ function getConfig(): EnvConfig {
 
 const config = getConfig();
 
+if (!config.apiBaseUrl || config.apiBaseUrl.trim() === "") {
+  throw new Error(
+    "EXPO_PUBLIC_API_BASE_URL is not set. Add it to mobile/.env and rebuild."
+  );
+}
+
 export const API_BASE_URL = config.apiBaseUrl;

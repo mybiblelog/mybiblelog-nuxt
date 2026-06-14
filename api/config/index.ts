@@ -47,8 +47,10 @@ const envSchema = z.object({
   // - Client ID is a logical identifier, not a secret
   // - Redirect URIs should be exact values, comma-separated
   OAUTH_MOBILE_CLIENT_ID: z.string().default('mobile'),
-  // Supports exact values and simple prefix wildcards (suffix "*"), e.g. "exp://*"
-  OAUTH_MOBILE_REDIRECT_URIS: z.string().default('biblelog://oauth,exp://*,http://localhost:8081/oauth'),
+  // Comma-separated exact URIs (or simple prefix wildcards with trailing "*").
+  // Wildcards like "exp://*" match any Expo dev URI — do NOT use in production.
+  // For Expo Go development add: exp://<your-tunnel-host>/--/oauth
+  OAUTH_MOBILE_REDIRECT_URIS: z.string().default('biblelog://oauth,http://localhost:8081/oauth'),
   // React Native app support / force-upgrade controls
   MOBILE_IOS_MIN_VERSION: z.string().default('0.0.0'),
   MOBILE_ANDROID_MIN_VERSION: z.string().default('0.0.0'),
@@ -70,7 +72,7 @@ const config = {
   siteUrl: result.data.SITE_URL,
   apiPort: result.data.API_PORT || '8080',
   testBypassSecret: result.data.TEST_BYPASS_SECRET,
-  jwtSecret: result.data.NODE_ENV === 'production' ? result.data.JWT_SECRET : 'secret',
+  jwtSecret: result.data.JWT_SECRET,
   requireEmailVerification: result.data.REQUIRE_EMAIL_VERIFICATION !== false,
   emailSendingDomain: result.data.EMAIL_SENDING_DOMAIN,
   emailUnsubscribeAddress: result.data.EMAIL_UNSUBSCRIBE_ADDRESS,

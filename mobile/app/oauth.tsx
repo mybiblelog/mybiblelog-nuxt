@@ -49,7 +49,7 @@ export default function OAuthCallback() {
         if (!pending) throw new Error("missing_pending_oauth");
 
         const returnedState = typeof params.state === "string" ? params.state : null;
-        if (pending.state && pending.state !== returnedState) {
+        if (!returnedState || returnedState !== pending.state) {
           throw new Error("state_mismatch");
         }
 
@@ -63,10 +63,7 @@ export default function OAuthCallback() {
           discovery
         );
 
-        const accessToken =
-          (tokenResponse as any)?.accessToken ??
-          (tokenResponse as any)?.access_token ??
-          null;
+        const accessToken = tokenResponse.accessToken;
         if (typeof accessToken !== "string" || accessToken.length === 0) {
           throw new Error("missing_access_token");
         }

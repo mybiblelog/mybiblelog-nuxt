@@ -10,6 +10,7 @@ export type PendingOAuth = {
 };
 
 const STORAGE_KEY = "auth.oauth.pending.v1";
+const MAX_AGE_MS = 10 * 60 * 1000; // 10 minutes — server code TTL is 5m, this gives buffer
 
 function isNonEmptyString(x: unknown): x is string {
   return typeof x === "string" && x.trim().length > 0;
@@ -44,6 +45,8 @@ export async function loadPendingOAuth(): Promise<PendingOAuth | null> {
     ) {
       return null;
     }
+
+    if (Date.now() - p.createdAt > MAX_AGE_MS) return null;
 
     const out: PendingOAuth = {
       clientId: p.clientId,

@@ -33,6 +33,8 @@ class OAuthAuthorizationCodeStore {
       expiresAt: now + ttlMs,
     };
     this.codes.set(code, record);
+    // Evict after TTL so abandoned flows don't leak memory
+    setTimeout(() => this.codes.delete(code), ttlMs + 1000).unref();
     return record;
   }
 

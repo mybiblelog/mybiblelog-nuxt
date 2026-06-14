@@ -7,12 +7,14 @@ import * as AuthSession from "expo-auth-session";
 import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import { savePendingOAuth } from "@/src/auth/pendingOAuth";
+import { OAUTH_CLIENT_ID } from "@/src/auth/oauthConfig";
 
 export default function Login() {
   const t = useT();
@@ -24,7 +26,6 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const oauthClientId = "mobile";
   const discovery = useMemo(
     () => ({
       authorizationEndpoint: `${getApiBaseUrl()}/oauth/authorize`,
@@ -39,7 +40,7 @@ export default function Login() {
 
   const [request, response, promptAsync] = AuthSession.useAuthRequest(
     {
-      clientId: oauthClientId,
+      clientId: OAUTH_CLIENT_ID,
       redirectUri,
       responseType: AuthSession.ResponseType.Code,
       usePKCE: true,
@@ -47,26 +48,29 @@ export default function Login() {
     discovery
   );
 
+  // On native the oauth.tsx deep-link screen handles the token exchange.
+  // On web the deep link resolves in a popup so we handle it here instead.
   useEffect(() => {
+    if (Platform.OS !== "web") return;
     if (response?.type !== "success") return;
-    void (async () => {
-      const code = (response as any)?.params?.code;
-      if (typeof code !== "string" || code.length === 0) {
-        setError(t("auth_generic_error"));
-        return;
-      }
-      const verifier = request?.codeVerifier;
-      if (typeof verifier !== "string" || verifier.length === 0) {
-        setError(t("auth_generic_error"));
-        return;
-      }
+    const code = response.params?.code;
+    if (typeof code !== "string" || code.length === 0) {
+      setError(t("auth_generic_error"));
+      return;
+    }
+    const verifier = request?.codeVerifier;
+    if (typeof verifier !== "string" || verifier.length === 0) {
+      setError(t("auth_generic_error"));
+      return;
+    }
 
-      setIsSubmitting(true);
-      setError(null);
+    setIsSubmitting(true);
+    setError(null);
+    void (async () => {
       try {
         const tokenResponse = await AuthSession.exchangeCodeAsync(
           {
-            clientId: oauthClientId,
+            clientId: OAUTH_CLIENT_ID,
             code,
             redirectUri,
             extraParams: { code_verifier: verifier },
@@ -74,10 +78,7 @@ export default function Login() {
           discovery
         );
 
-        const accessToken =
-          (tokenResponse as any)?.accessToken ??
-          (tokenResponse as any)?.access_token ??
-          null;
+        const accessToken = tokenResponse.accessToken;
         if (typeof accessToken !== "string" || accessToken.length === 0) {
           setIsSubmitting(false);
           setError(t("auth_generic_error"));
@@ -107,7 +108,7 @@ export default function Login() {
         // Persist PKCE details so the `/oauth` callback route can complete login
         // even if the web app reloads on return from the provider.
         await savePendingOAuth({
-          clientId: oauthClientId,
+          clientId: OAUTH_CLIENT_ID,
           redirectUri,
           codeVerifier: verifier,
           state: (request as any)?.state,
