@@ -8,6 +8,7 @@
     "build": "nuxt build",
     "preview": "nuxt preview",
     "start": "nuxt preview --port 3001",
+    "start:heroku": "nuxt preview",
     "clean": "rm -rf node_modules .nuxt .output",
     "pretest": "node test/ensure-nuxt-tsconfig.mjs",
     "test": "vitest run",

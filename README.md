@@ -154,6 +154,22 @@ $ heroku config:set HOST=0.0.0.0
 $ heroku config:set NODE_ENV=production
 ```
 
+### Experimental: deploying the Nuxt 4 app
+
+By default Heroku builds and serves the `nuxt/` (Nuxt 2) app. To build and
+serve the `nuxt4/` app instead, set the `EXPERIMENTAL_DEPLOY_NUXT_4` flag
+(accepted values: `true` or `1`):
+
+```bash
+$ heroku config:set EXPERIMENTAL_DEPLOY_NUXT_4=true
+```
+
+When this flag is set, the `heroku-prebuild`, `heroku-postbuild`, and `start`
+scripts install, build, and run `nuxt4/` (alongside the `api/` backend) in
+place of `nuxt/`. The Nuxt 4 server binds to Heroku's `$PORT` and proxies
+`/api/**` to the Express backend, the same way the Nuxt 2 app does. Unset the
+flag (or set it to anything else) to return to the default Nuxt 2 deployment.
+
 ## Testing
 
 Be sure the local dev server is running before running these scripts against it.
